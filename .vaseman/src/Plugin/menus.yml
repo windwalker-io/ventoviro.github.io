@@ -9,9 +9,10 @@ Start:
   start/error-handling: Error Handling
 Database:
   db/basic: Basic Usage
+  db/read-write: Read and Write
+  db/table-schema: Table and Schema
   db/query-builder: Query Builder
   db/datamapper: DataMapper
-  db/schema-builder: Schema Builder
   db/migration: Migration And Seeding
 Console:
   console/console-basic: Basic Usage

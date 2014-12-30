@@ -113,13 +113,16 @@
                 <a href="../../documentation/db/basic.html">Basic Usage</a>
             </li>
                     <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="uk-active">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/db/schema-builder.html">Schema Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/migration.html">Migration And Seeding</a>
@@ -181,13 +184,346 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Create a DataMapper</h1>
+
+<pre><code class="php">use Windwalker\DataMapper\DataMapper;
+
+$fooMapper = new DataMapper('#__foo');
+
+$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));
+</code></pre>
+
+<h2>Extends It</h2>
+
+<p>You can also create a class to operate specific table:</p>
+
+<pre><code class="php">class FooMapper extends DataMapper
+{
+    protected $table = '#__foo';
+}
+
+$data = (new FooMapper)-&gt;findAll();
+</code></pre>
+
+<p>Or using static:</p>
+
+<pre><code class="php">abstract class FooMapper
+{
+    protected static $instance;
+
+    public static function getInstance()
+    {
+        if (!static::$instance)
+        {
+            static::$instance = new DataMapper('#__foo');
+        }
+
+        return static::$instance;
+    }
+
+    public static function __callStatic($name, $args)
+    {
+        return call_user_func_array(array(static::getInstance(), $name), $args);
+    }
+}
+
+$data = FooMapper::findOne(array('id' =&gt; 5, 'alias' =&gt; 'bar'));
+</code></pre>
+
+<h1>Find Records</h1>
+
+<p>Find method will fetch rows from table, and return <code>DataSet</code> class.</p>
+
+<h2>find()</h2>
+
+<p>Get id = 1 record</p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));
+</code></pre>
+
+<p>Fetch published = 1, and sort by <code>date</code></p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1), 'date');
+</code></pre>
+
+<p>Fetch published = 1, language = en-US, sort by <code>date</code> DESC and start with <code>30</code>, limit <code>10</code>.</p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1, 'language' =&gt; 'en-US'), 'date DESC', 30, 10);
+</code></pre>
+
+<p>Using array, will be <code>IN</code> condition:</p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; array(1,2,3))); // WHERE id IN (1,2,3)
+</code></pre>
+
+<h2>findOne()</h2>
+
+<p>Just return one row.</p>
+
+<pre><code class="php">$foo = $dooMapper-&gt;findOne(array('published' =&gt; 1), 'date');
+</code></pre>
+
+<h2>findAll()</h2>
+
+<p>Equal to <code>find(array(), $order, $start, $limit)</code>.</p>
+
+<h1>Create Records</h1>
+
+<p>Using DataSet to wrap every data, then send this object to create() method, these data will insert to table.</p>
+
+<h2>create()</h2>
+
+<pre><code class="php">use Windwalker\Data\Data;
+use Windwalker\Data\DataSet;
+
+$data1 = new Data;
+$data1-&gt;title = 'Foo';
+$data1-&gt;auhor = 'Magneto';
+
+$data2 = new Data(
+    array(
+        'title' =&gt; 'Bar',
+        'author' =&gt; 'Wolverine'
+    )
+);
+
+$dataset = new DataSet(array($data1, $data2));
+
+$return = $fooMapper-&gt;create($dataset);
+</code></pre>
+
+<p>The return value will be whole dataset and add inserted ids.</p>
+
+<pre><code>Windwalker\Data\DataSet Object
+(
+    [storage:ArrayObject:private] =&gt; Array
+        (
+            [0] =&gt; Windwalker\Data\Data Object
+                (
+                    [title] =&gt; Foo
+                    [auhor] =&gt; Magneto
+                    [id] =&gt; 39
+                )
+
+            [1] =&gt; Windwalker\Data\Data Object
+                (
+                    [title] =&gt; Bar
+                    [auhor] =&gt; Wolverine
+                    [id] =&gt; 40
+                )
+        )
+)
+</code></pre>
+
+<h2>createOne()</h2>
+
+<p>Only insert one row, do not need DataSet.</p>
+
+<pre><code class="php">$data = new Data;
+$data-&gt;title = 'Foo';
+$data-&gt;auhor = 'Magneto';
+
+$fooMapper-&gt;createOne($data);
+</code></pre>
+
+<h1>Update Records</h1>
+
+<p>Update methods help us update rows in table.</p>
+
+<h2>update()</h2>
+
+<pre><code class="php">use Windwalker\Data\Data;
+use Windwalker\Data\DataSet;
+
+$data1 = new Data;
+$data1-&gt;id = 1;
+$data1-&gt;title = 'Foo';
+
+$data2 = new Data(
+    array(
+        'id' =&gt; 2,
+        'title' =&gt; 'Bar'
+    )
+);
+
+$dataset = new DataSet(array($data1, $data2));
+
+$fooMapper-&gt;update($dataset);
+</code></pre>
+
+<h2>updateOne()</h2>
+
+<p>Just update one row.</p>
+
+<pre><code class="php">$data = new Data;
+$data-&gt;id = 1;
+$data-&gt;title = 'Foo';
+
+$fooMapper-&gt;updateOne($data);
+</code></pre>
+
+<h2>updateAll()</h2>
+
+<p>UpdateAll is different from update method, we just send one data object, but using conditions as where
+to update every row match these conditions. We don't need primary key for updateAll().</p>
+
+<pre><code class="php">$data = new Data;
+$data-&gt;published = 0;
+
+$fooMapper-&gt;updateAll($data, array('author' =&gt; 'Mystique'));
+</code></pre>
+
+<h1>Delete</h1>
+
+<p>Delete rows by conditions.</p>
+
+<h2>delete()</h2>
+
+<pre><code class="php">$boolean = $fooMapper-&gt;delete(array('author' =&gt; 'Jean Grey'));
+</code></pre>
+
+<h1>Join Tables</h1>
+
+<p>Using <code>RelationDataMapper</code> to join tables.</p>
+
+<pre><code class="php">$fooMapper = new RelationDataMapper('flower', '#__flower');
+
+$fooMapper-&gt;addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
+    -&gt;addTable('category', '#__categories', array('category.lft &gt;= flower.lft', 'category.rgt &lt;= flower.rgt'), 'INNER');
+
+// Don't forget add alias on where conditions.
+$dataset = $fooMapper-&gt;find(array('flower.id' =&gt; 5));
+</code></pre>
+
+<p>The Join query will be:</p>
+
+<pre><code class="sql">SELECT `flower`.`id`,
+    `flower`.`catid`,
+    `flower`.`title`,
+    `flower`.`user_id`,
+    `flower`.`meaning`,
+    `flower`.`ordering`,
+    `flower`.`state`,
+    `flower`.`params`,
+    `author`.`id` AS `author_id`,
+    `author`.`name` AS `author_name`,
+    `author`.`pass` AS `author_pass`,
+    `category`.`id` AS `category_id`,
+    `category`.`title` AS `category_title`,
+    `category`.`ordering` AS `category_ordering`,
+    `category`.`params` AS `category_params`
+FROM #__foo AS foo
+    LEFT JOIN #__users AS author ON foo.user_id = author.id
+    INNER JOIN #__categories AS category ON category.lft &gt;= foo.lft AND category.rgt &lt;= foo.rgt
+</code></pre>
+
+<h2>Using OR Condition</h2>
+
+<pre><code class="php">$fooMapper-&gt;addTable(
+    'category',
+    '#__categories',
+    'category.lft &gt;= foo.lft OR category.rgt &lt;= foo.rgt',
+    'LEFT'
+);
+</code></pre>
+
+<h1>Compare objects</h1>
+
+<p>Using Compare objects help us set some where conditions which hard to use array to defind.</p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(
+    array(
+        new GteCompare('id', 5),
+        new NeqCompare('name', 'bar')
+        new LtCompare('published', 1),
+        new NinCompare('catid', array(1,2,3,4,5))
+    )
+);
+</code></pre>
+
+<p>This will generate where conditions like below:</p>
+
+<pre><code class="sql">WHERE `id` &gt;= '5'
+    AND `name` != 'bar'
+    AND `published` &lt; '1'
+    AND `catid` NOT IN (1,2,3,4,5)
+</code></pre>
+
+<h2>Available compares:</h2>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Description</th>
+  <th>Operator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>EqCompare</td>
+  <td>Equal</td>
+  <td><code>=</code></td>
+</tr>
+<tr>
+  <td>NeqCompare</td>
+  <td>Not Equal</td>
+  <td><code>!=</code></td>
+</tr>
+<tr>
+  <td>GtCompare</td>
+  <td>Greater than</td>
+  <td><code>&gt;</code></td>
+</tr>
+<tr>
+  <td>GteCompare</td>
+  <td>Greater than or Equal</td>
+  <td><code>&gt;=</code></td>
+</tr>
+<tr>
+  <td>LtCompare</td>
+  <td>Less than</td>
+  <td><code>&lt;</code></td>
+</tr>
+<tr>
+  <td>LteCompare</td>
+  <td>Less than or Equal</td>
+  <td><code>&lt;=</code></td>
+</tr>
+<tr>
+  <td>InCompare</td>
+  <td>In</td>
+  <td><code>IN</code></td>
+</tr>
+<tr>
+  <td>NinCompare</td>
+  <td>Not In</td>
+  <td><code>IN</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Custom Compare</h2>
+
+<pre><code class="php">echo (string) new Compare('title', '%flower%', 'LIKE');
+</code></pre>
+
+<p>Will be</p>
+
+<pre><code class="sql">`title` LIKE `%flower%`
+</code></pre>
+
+<p>See: <a href="https://github.com/ventoviro/windwalker-compare">Windwalker Compare</a></p>
+
+<h1>Using Data and DataSet</h1>
+
+<p>See: <a href="https://github.com/ventoviro/windwalker-data">Windwalker Data</a></p>
 
 
                     <hr />
 
                     <p class="uk-text-center">
-                        Found a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
+                        Found a typo? Help <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation">improve</a> our documentation
                     </p>
                 </article>
             </div>

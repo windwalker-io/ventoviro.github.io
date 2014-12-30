@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>IoC Container | Windwalker - A Modern PHP Framework</title>
+        <title>Table and Schema | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="IoC Container | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Table and Schema | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
         
@@ -72,7 +72,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>IoC Container</h1>
+        <h1>Table and Schema</h1>
     </div>
         </div>
     </section>
@@ -115,7 +115,7 @@
                     <li class="">
                 <a href="../../documentation/db/read-write.html">Read and Write</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/db/table-schema.html">Table and Schema</a>
             </li>
                     <li class="">
@@ -159,7 +159,7 @@
                     <li class="">
                 <a href="../../documentation/more/html-builder.html">HTML Builder</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/more/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
@@ -184,7 +184,108 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Table Command</h1>
+
+<p>Get Table Command.</p>
+
+<pre><code class="php">$table = $db-&gt;getTable('#__articles');
+</code></pre>
+
+<h2>create()</h2>
+
+<p>Create a new table.</p>
+
+<blockquote>
+  <p><em>NOTE:</em> Table has not support foreign key now.</p>
+</blockquote>
+
+<pre><code class="php">use Windwalker\Database\Schema\Column;
+use Windwalker\Database\Schema\Key;
+use Windwalker\Database\Schema\DataType;
+
+$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;addColumn('id', DataType::INTEGER, Column::UNSIGNED, Column::NOT_NULL, '', 'PK', array('primary' =&gt; true))
+    -&gt;addColumn('name', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Name', array('length' =&gt; 255))
+    -&gt;addColumn('alias', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Alias')
+    -&gt;addIndex(Key::TYPE_INDEX, 'idx_name', 'name', 'Test')
+    -&gt;addIndex(Key::TYPE_UNIQUE, 'idx_alias', 'alias', 'Alias Index')
+    -&gt;create(true); // True to add IF NOT EXISTS
+</code></pre>
+
+<p>Using Column type objects:</p>
+
+<pre><code class="php">use Windwalker\Database\Schema\Column;
+
+$table-&gt;addColumn(new Column\Primary('id'))
+    -&gt;addColumn(new Column\Varchar('name'))
+    -&gt;addColumn(new Column\Char('type'))
+    -&gt;addColumn(new Column\Timestamp('created'))
+    -&gt;addColumn(new Column\Bit('state'))
+    -&gt;addColumn(new Column\Integer('uid'))
+    -&gt;addColumn(new Column\Tinyint('status'))
+    -&gt;create();
+</code></pre>
+
+<p>These objects will set default length and attributes for every column, and map the type to different database drivers.</p>
+
+<h2>update()</h2>
+
+<p>Update table schema. Only use on add columns and indexes.</p>
+
+<pre><code class="php">use Windwalker\Database\Schema\Column;
+use Windwalker\Database\Schema\Key;
+
+$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 0, 'State', array('position' =&gt; 'AFTER ordering', 'length' =&gt; 1))
+    -&gt;addIndex(Key::TYPE_INDEX, 'idx_ordering', array('ordering', 'id'))
+    -&gt;update();
+</code></pre>
+
+<h2>save()</h2>
+
+<p>If table exists, using update, otherwise use insert.</p>
+
+<pre><code class="php">use Windwalker\Database\Schema\Column;
+use Windwalker\Database\Schema\Key;
+
+$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 0, 'State', array('position' =&gt; 'AFTER ordering', 'length' =&gt; 1))
+    -&gt;addIndex(Key::TYPE_INDEX, 'idx_ordering', array('ordering', 'id'))
+    -&gt;save();
+</code></pre>
+
+<h2>dropColumn()</h2>
+
+<pre><code class="php">$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;dropColumn('state');
+</code></pre>
+
+<h2>dropIndex()</h2>
+
+<pre><code class="php">use Windwalker\Database\Schema\Key;
+
+$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;dropIndex(Key::TYPE_INDEX, 'idx_state');
+</code></pre>
+
+<h2>rename()</h2>
+
+<pre><code class="php">$table = $db-&gt;getTable('#__foo');
+
+$newTable = $table-&gt;rename('#__bar');
+</code></pre>
+
+<h2>truncate()</h2>
+
+<pre><code class="php">$table = $db-&gt;getTable('#__foo');
+
+$table-&gt;truncate();
+</code></pre>
 
 
                     <hr />

@@ -367,10 +367,15 @@ dl {
 		margin-top: 0;
 	}
 }
+.article-content h1,
+.article-content h2 {
+	border-bottom: 1px solid #eee;
+	padding-bottom: 5px;
+}
 .article-content :not(pre) code {
-	font-size: inherit;
-	color: #666;
-	background-color: #eee;
+	font-size: 15px;
+	color: #333;
+	background-color: #f6f6f6;
 	padding: 1px 8px;
 	word-wrap: break-word;
 	white-space: normal;
@@ -444,7 +449,15 @@ dl {
 	font-family: "monako", consolas, monspace;
 }
 .article-content blockquote {
-	color: #999;
+	margin: 2em 0;
+
+	p {
+		color: #777;
+	}
+
+	code {
+		color: #666;
+	}
 }
 
 // Basic page

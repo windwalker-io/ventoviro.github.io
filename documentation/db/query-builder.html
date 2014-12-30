@@ -112,14 +112,17 @@
                     <li class="">
                 <a href="../../documentation/db/basic.html">Basic Usage</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
                     <li class="uk-active">
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/db/schema-builder.html">Schema Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/migration.html">Migration And Seeding</a>
@@ -181,13 +184,399 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Get Query Builder</h1>
+
+<p>Query Builder help you organize SQL syntax and provides multi-database syntax support. Use Database object to get Query object:</p>
+
+<pre><code class="php">$db = Ioc::getDatabase();
+
+$query = $db-&gt;getQuery(true); // TRUE means get a new query
+</code></pre>
+
+<p>In DatabaseModel</p>
+
+<pre><code class="php">$query = $this-&gt;db-&gt;getQuery(true);
+</code></pre>
+
+<h1>A Simple Select</h1>
+
+<p>This is a example of simple select syntax with where condition.</p>
+
+<pre><code class="php">$query-&gt;select('*')
+    -&gt;from('shakespeare')
+    -&gt;where('year &lt;= 1616');
+
+echo $query;
+</code></pre>
+
+<p>The result:</p>
+
+<pre><code class="sql">SELECT *
+FROM shakespeare
+WHERE year &lt;= 1616
+</code></pre>
+
+<h2>More Select Options</h2>
+
+<pre><code class="php">$query-&gt;select(array('title', 'meta', 'read'))
+    -&gt;from('shakespeare')
+    -&gt;where('year &lt;= 1616')
+    -&gt;where('published &gt; 0')
+    -&gt;order('popular DESC')
+    -&gt;limit(0, 15);
+
+echo $query;
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code class="sql">SELECT title, meta, read
+FROM shakespeare
+WHERE year &lt;= 1616
+    AND published &gt; 0
+ORDER BY popular DESC
+LIMIT 0, 15
+</code></pre>
+
+<h2>Where Conditions</h2>
+
+<p><code>where()</code> method support array as argument.</p>
+
+<pre><code class="php">$query-&gt;select('*')
+    -&gt;from('shakespeare')
+    -&gt;where(array('year &lt;= 1616', 'published &gt; 0'));
+
+echo $query;
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="sql">SELECT *
+FROM shakespeare
+WHERE year &lt;= 1616
+    AND published &gt; 0
+</code></pre>
+
+<p>Using OR condition:</p>
+
+<pre><code class="php">$conditions = array("foo = 'bar'", "flower = 'sakura'");
+
+$conditions = '(' . implode(' OR ', $conditions) . ')';
+
+$query-&gt;select('*')
+    -&gt;from('shakespeare')
+    -&gt;where('year &lt;= 1616')
+    -&gt;where($conditions);
+
+echo $query;
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="sql">SELECT *
+FROM shakespeare
+WHERE year &lt;= 1616
+    AND (foo = 'bar' OR flower = 'sakura')
+</code></pre>
+
+<p>You can use <code>QueryElement</code> to create this:</p>
+
+<pre><code class="php">use Windwalker\Query\QueryElement;
+
+echo new QueryElement('()', $conditions, ' OR ');
+
+// Result also: '(foo = 'bar' OR flower = 'sakura')'
+</code></pre>
+
+<h2>Quote Table And Column Name</h2>
+
+<p>Sometimes we may use the reserve word of SQL, so we have to quote it to make sure syntax correct.</p>
+
+<pre><code class="php">$query-&gt;select('*')
+    -&gt;from($query-&gt;quoteName('shakespeare'))
+    -&gt;where($query-&gt;qn('year') . ' &lt;= 1616'); // qn() is alias of quoteName
+
+echo $query;
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="sql">SELECT *
+FROM `shakespeare`
+WHERE `year` &lt;= 1616
+</code></pre>
+
+<p>Quote name and alias</p>
+
+<pre><code class="php">$query-&gt;quoteName('a.title AS a_title'); // `a`.`title` AS `a_title`
+</code></pre>
+
+<h2>Quote String</h2>
+
+<p>using <code>quote()</code> to quote normal string and <a href="#pass-pdo-into-query-object">escape</a> it.</p>
+
+<pre><code class="php">$query-&gt;select('*')
+    -&gt;from($query-&gt;quoteName('shakespeare'))
+    -&gt;where($query-&gt;qn('year') . ' &lt;= 1616')
+    -&gt;where($query-&gt;qn('foo') . ' = ' . $query-&gt;quote('bar'));
+    -&gt;where($query-&gt;qn('Nick_Fury') . ' = ' . $query-&gt;q("You think you're the only hero?")); // q() is alias of quote()
+
+echo $query;
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="sql">SELECT *
+FROM `shakespeare`
+WHERE `year` &lt;= 1616
+    AND `foo` = 'bar'
+    AND `Nick_Fury` = 'You think you\'re the only hero?'
+</code></pre>
+
+<p>Quote array</p>
+
+<pre><code class="php">$query-&gt;quote(array(1, 2, 3)); // array("'1'", "'2'", "'3'")
+</code></pre>
+
+<h1>Join</h1>
+
+<pre><code class="php">$query-&gt;select('a.*, b.*')
+    -&gt;from('shakespeare AS a')
+    -&gt;join('LEFT', 'libraries AS b', 'a.id = b.work_id')
+    -&gt;where('a.year &lt;= 1616');
+
+echo $query
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="sql">SELECT a.*, b.*
+    FROM shakespeare AS a
+    LEFT JOIN libraries AS b ON a.id = b.work_id
+    WHERE a.year &lt;= 1616
+</code></pre>
+
+<p>Multi-conditions</p>
+
+<pre><code class="php">$query-&gt;join('LEFT', 'libraries AS b', array('a.id = b.work_id', 'a.foo &lt; b.bar')); // Will be AND
+
+$query-&gt;join('LEFT', 'libraries AS b', 'a.id = b.work_id OR a.foo &lt; b.bar');
+</code></pre>
+
+<p>Support Join Type:</p>
+
+<ul>
+<li>LEFT</li>
+<li>RIGHT</li>
+<li>INNER</li>
+<li>OUTER</li>
+</ul>
+
+<h1>Insert</h1>
+
+<pre><code class="php">$query-&gt;insert('shakespeare')
+    -&gt;columns(array('title', 'year'))
+    -&gt;values("'The Tragedy of Julius Caesar', 1599")
+    -&gt;values("'Macbeth', 1606");
+
+echo $query;
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="sql">INSERT INTO shakespeare
+(title, year)
+VALUES
+('The Tragedy of Julius Caesar', 1599),
+('Macbeth', 1606)
+</code></pre>
+
+<p>Values can be array</p>
+
+<pre><code class="php">$query-&gt;insert('shakespeare')
+    -&gt;columns(array('title', 'year'))
+    -&gt;values(
+        array(
+            "'The Tragedy of Julius Caesar', 1599",
+            "'Macbeth', 1606"
+        )
+    );
+
+// OR
+
+$query-&gt;insert('shakespeare')
+    -&gt;columns(array('title', 'year'))
+    -&gt;values(
+        array(
+            $query-&gt;q(array("The Tragedy of Julius Caesar", "1599")),
+            $query-&gt;q(array("Macbeth", "1606"))
+        )
+    );
+</code></pre>
+
+<h1>Update</h1>
+
+<pre><code class="php">$query-&gt;update('shakespeare')
+    -&gt;set('modified = "2014-10-09"')
+    -&gt;set('version = version + 1')
+    -&gt;where('year &lt;= 1616');
+
+echo $query;
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="sql">UPDATE shakespeare
+SET
+    modified = "2014-10-09",
+    version = version + 1
+WHERE year &lt;= 1616
+</code></pre>
+
+<p>Use array</p>
+
+<pre><code class="php">$query-&gt;set(array('modified = "2014-10-09"', 'version = version + 1'));
+</code></pre>
+
+<h1>Delete</h1>
+
+<pre><code class="php">$query-&gt;delete('shakespeare')
+    -&gt;where('year &gt; 1616');
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="sql">DELETE shakespeare WHERE year &gt; 1616
+</code></pre>
+
+<h1>Format</h1>
+
+<pre><code class="php">echo $query-&gt;format('%n = %q', 'title', 'Caesar'); // `title` = 'Caesar'
+</code></pre>
+
+<p>Find and replace sprintf-like tokens in a format string.
+Each token takes one of the following forms:</p>
+
+<pre><code>%%       - A literal percent character.
+%[t]     - Where [t] is a type specifier.
+%[n]$[x] - Where [n] is an argument specifier and [t] is a type specifier.
+</code></pre>
+
+<h2>Types:</h2>
+
+<pre><code>a - Numeric: Replacement text is coerced to a numeric type but not quoted or escaped.
+e - Escape: Replacement text is passed to $this-&gt;escape().
+E - Escape (extra): Replacement text is passed to $this-&gt;escape() with true as the second argument.
+n - Name Quote: Replacement text is passed to $this-&gt;quoteName().
+q - Quote: Replacement text is passed to $this-&gt;quote().
+Q - Quote (no escape): Replacement text is passed to $this-&gt;quote() with false as the second argument.
+r - Raw: Replacement text is used as-is. (Be careful)
+</code></pre>
+
+<h2>Date Types:</h2>
+
+<ul>
+<li>Replacement text automatically quoted (use uppercase for Name Quote).</li>
+<li>Replacement text should be a string in date format or name of a date column.</li>
+</ul>
+
+<pre><code>y/Y - Year
+m/M - Month
+d/D - Day
+h/H - Hour
+i/I - Minute
+s/S - Second
+</code></pre>
+
+<h2>Invariable Types:</h2>
+
+<ul>
+<li>Takes no argument.</li>
+<li>Argument index not incremented.</li>
+</ul>
+
+<pre><code>t - Replacement text is the result of $this-&gt;currentTimestamp().
+z - Replacement text is the result of $this-&gt;nullDate(false).
+Z - Replacement text is the result of $this-&gt;nullDate(true).
+</code></pre>
+
+<h2>Usage:</h2>
+
+<pre><code class="php">$query-&gt;format('SELECT %1$n FROM %2$n WHERE %3$n = %4$a', 'foo', '#__foo', 'bar', 1);
+
+//Returns: SELECT `foo` FROM `#__foo` WHERE `bar` = 1
+</code></pre>
+
+<h2>Notes:</h2>
+
+<p>The argument specifier is optional but recommended for clarity.
+The argument index used for unspecified tokens is incremented only when used.</p>
+
+<h1>Bind Params</h1>
+
+<p>OracleQuery support <code>PreparableInterface</code> now, we can bind params to our query string:</p>
+
+<pre><code class="php">$query-&gt;where('title = :title')
+    -&gt;bind(':title', 'Hamlet');
+</code></pre>
+
+<h1>Query Expression</h1>
+
+<p>An easy way to build expression or function syntax.</p>
+
+<pre><code class="php">echo $query-&gt;expression('FUNCTION', 'a', 'b', 'c');
+
+// FUNCTION(a, b, c)
+</code></pre>
+
+<p>The benefit to using <code>expression()</code> is that it will auto fit different databases.</p>
+
+<pre><code class="php">$mysqlQuery-&gt;expression('CONCAT', array('a', 'b', 'c'));
+
+// CONCAT(a, b, c)
+
+$mysqlQuery-&gt;expression('CONCAT', array('a', 'b', 'c'), "';'");
+
+// CONCAT_WS(';', a, b, c)
+
+$sqliteQuery-&gt;expression('CONCAT', array('a', 'b', 'c'));
+
+// CONCATENATE(a || b || c)
+
+$sqliteQuery-&gt;expression('CONCAT', array('a', 'b', 'c'), "';'");
+
+// CONCATENATE(a || ';' || b || ';' || c)
+</code></pre>
+
+<p>Short alias</p>
+
+<pre><code class="php">echo $query-&gt;expr('FUNCTION', 'a', 'b', 'c');
+</code></pre>
+
+<h1>Query Element</h1>
+
+<p>Help you build a value list:</p>
+
+<pre><code class="php">echo new QueryElement('WHERE', array('a = b', 'c = d'), ' OR ');
+
+// WHERE a = b OR c = d
+</code></pre>
+
+<pre><code class="php">echo new QueryElement('()', array('a = b', 'c = d'), ' OR ');
+
+// (a = b OR c = d)
+</code></pre>
+
+<pre><code class="php">echo new QueryElement('IN()', array(1, 2, 3, 4));
+
+// IN(1, 2, 3, 4)
+</code></pre>
 
 
                     <hr />
 
                     <p class="uk-text-center">
-                        Found a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
+                        Found a typo? Help <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation">improve</a> our documentation
                     </p>
                 </article>
             </div>

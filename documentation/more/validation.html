@@ -113,13 +113,16 @@
                 <a href="../../documentation/db/basic.html">Basic Usage</a>
             </li>
                     <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/db/schema-builder.html">Schema Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/migration.html">Migration And Seeding</a>
@@ -181,13 +184,101 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h2>Simple Validate Process</h2>
+
+<pre><code class="php">use Windwalker\Validator\Rule\EmailValidator;
+
+$validator = new EmailValidator;
+
+$validator-&gt;validate('sakura@flower.com'); // bool(true)
+
+$validator-&gt;validate('sakura'); // bool(false)
+</code></pre>
+
+<h3>Available Validator Rules</h3>
+
+<ul>
+<li>AlnumValidator</li>
+<li>BooleanValidator</li>
+<li>ColorValidator</li>
+<li>CreditcardValidator</li>
+<li>EmailValidator</li>
+<li>EqualsValidator</li>
+<li>IpValidator</li>
+<li>NoneValidator</li>
+<li>PhoneValidator</li>
+<li>RegexValidator</li>
+<li>UrlValidator</li>
+</ul>
+
+<h2>Regex Validator</h2>
+
+<pre><code class="php">use Windwalker\Validator\Rule\RegexValidator;
+
+$validator = new RegexValidator('^[a-zA-Z0-9]*$', 'i');
+
+$validator-&gt;validate('abc_123:978'); // bool(false)
+</code></pre>
+
+<h2>Equals Validator</h2>
+
+<pre><code class="php">use Windwalker\Validator\Rule\EqualsValidator;
+
+$validator = new EqualsValidator('ABC');
+
+$validator-&gt;validate('ABC'); // bool(true)
+</code></pre>
+
+<p>Strict Mode:</p>
+
+<pre><code class="php">$validator = new EqualsValidator(123, true);
+
+$validator-&gt;validate('123'); // bool(false)
+</code></pre>
+
+<h2>Error Message</h2>
+
+<pre><code class="php">$validator-&gt;setMessage('This string is not valid');
+
+if (!$validator-&gt;validate('sakura'))
+{
+    throw new \Exception($validator-&gt;getError());
+}
+</code></pre>
+
+<h2>Create Your Own Validator</h2>
+
+<pre><code class="php">use Windwalker\Validator\AbstractValidator;
+
+class MyValidator extends AbstractValidator
+{
+    public function test($string)
+    {
+        return (bool) strlen($string);
+    }
+}
+
+$validator = new MyValidator;
+
+$validator-&gt;validate('foo');
+</code></pre>
+
+<h2>Extends Regex Validator</h2>
+
+<pre><code class="php">use Windwalker\Validator\Rule\RegexValidator;
+
+class MyRegexValidator extends RegexValidator
+{
+    protected $modified = 'i';
+    protected $regex = '[a-zA-Z]';
+}
+</code></pre>
 
 
                     <hr />
 
                     <p class="uk-text-center">
-                        Found a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
+                        Found a typo? Help <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation">improve</a> our documentation
                     </p>
                 </article>
             </div>
