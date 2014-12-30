@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../media/images/favicon.ico" />
 
-        <title>Getting Started | Windwalker - A Modern PHP Framework</title>
+        <title>Package System | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Getting Started | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Package System | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Vaseman">
 
         
@@ -72,7 +72,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Getting Started</h1>
+        <h1>Package System</h1>
     </div>
         </div>
     </section>
@@ -84,13 +84,13 @@
                 <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Start</li>
 
-                                <li class="uk-active">
+                                <li class="">
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
                                 <li class="">
                 <a href="../documentation/routing-controller.html">Routing And Controller</a>
             </li>
-                                <li class="">
+                                <li class="uk-active">
                 <a href="../documentation/package-system.html">Package System (Bundle)</a>
             </li>
                                 <li class="">
@@ -181,156 +181,121 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <h1>Installation</h1>
+                    <h1>What is Package?</h1>
 
-<h2>Install Starter Application</h2>
+<p>Package is the main component of Windwalker's structure. Here is a image that describe the package system:</p>
 
-<p>Windwalker use <a href="https://getcomposer.org/">Composer</a> as package manager, make sure you <a href="https://getcomposer.org/download/">install composer</a>
- before installing it.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5579031/b4c50ed8-906e-11e4-8964-a1f2d949fc88.png" alt="package" /></p>
 
-<p>To start install Windwalker, please open terminal and type this command:</p>
+<p>From this image, we will know there can be multiple packages and its' own MVC system in Windwalker. That make our application
+ more flexible. For example, we can create a <code>FrontendPackage</code> and an <code>AdminPackage</code> to maintain your front-end and back-end.
+ And an <code>ApiPackage</code> to provide RESTful API for mobile APP.</p>
 
-<pre><code class="bash">$ php composer.phar create-project windwalker/starter project_dir 2.0.* --no-dev
-</code></pre>
+<p>Every package just similar to a little application, it contains MVC, routing, configuration and database schema:</p>
 
-<blockquote>
-  <p>If you want to use unit test or develop Windwalker it-self, remove <code>--no-dev</code> option.</p>
-</blockquote>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png" alt="mockup_3" /></p>
 
-<p>The <a href="https://github.com/ventoviro/windwalker-starter">Starter</a> package is a default application to start a project (like Symfony Standard).
-If you want to use Windwalker as a library, see next section.</p>
+<h2>Use Package as Extension</h2>
 
-<h2>Use Windwalker as Library</h2>
+<p>Package can be extensions for other developer. You can create a package and submit it to <a href="https://packagist.org/">Packagist</a>.
+Then everyone are able to install it by composer.</p>
 
-<p>If you have your own application project and want to include Windwalker as library, just add <code>windwalker/framework</code> to require block in <code>composer.json</code>.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5579085/ff715d8c-906f-11e4-92dc-43c3839e0ef8.png" alt="mockup_2" /></p>
 
-<pre><code class="json">{
-    "require": {
-        "windwalker/framework": "~2.0@stable"
-    }
+<h1>Create Package</h1>
+
+<p>We will use <code>Flower</code> as example package. Create a php class in <code>/src/Flower/FlowerPackage.php</code>:</p>
+
+<pre><code class="php">&lt;?php
+// /src/Flower/FlowerPackage.php
+
+namespace Flower;
+
+use Windwalker\Core\Package\AbstractPackage;
+
+class FlowerPackage extends AbstractPackage
+{
 }
 </code></pre>
 
-<blockquote>
-  <p><code>~2.0</code> means 2.0 to 2.9</p>
-</blockquote>
+<p>Then add this package to <code>/src/Windwalker/Web/Application.php</code>, at the <code>loadPackage()</code> method:</p>
 
-<p>You can also install specific packages instead install whole framework. This is an example to install Session and Form package:</p>
+<pre><code class="php">// /src/Windwalker/Web/Application.php
+use Flower\FlowerPackage;
 
-<pre><code class="json">{
-    "require": {
-        "windwalker/session": "~2.0@stable",
-        "windwalker/form": "~2.0@stable"
+class Application extends WebApplication
+{
+    // ...
+
+    public function loadPackages()
+    {
+        $packages = Windwalker::loadPackages();
+
+        /*
+         * Get Packages for This Application
+         * -----------------------------------------
+         * If you want a package only use in this application or want to override a global package,
+         * set it here. Example: $packages[] = new Flower\FlowerPackage;
+         */
+
+        // Add package here, the array key is package name, you can customize it.
+        $packages['flower'] = new FlowerPackage;
+
+        return $packages;
     }
+
+    // ...
 }
 </code></pre>
 
-<p>See all available packages on <a href="https://packagist.org/packages/windwalker/">Packagist</a></p>
+<p>The array key is package name, you can customize it. For example, If you use <code>$packages['flower']</code>, you can use <code>PackageHelper::getPackage('flower')</code>
+to get this package object. But if you use <code>$packages['bar']</code>, you will have to get it by  <code>PackageHelper::getPackage('bar')</code>.</p>
 
-<h1>Overview</h1>
+<h1>Add Package Routing</h1>
 
-<h2>Open Windwalker Public Root</h2>
+<p>Create <code>routing.yml</code> at <code>/src/Flower</code>, then add some routes:</p>
 
-<p>After installed, use browser open <code>/www</code> then you will see default landing page.</p>
+<pre><code class="apache"># /src/Flower/routing.yml
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5576484/31c9834c-9037-11e4-9f97-8f73d0822043.png" alt="img" /></p>
+sakura:
+    pattern: /sakura(/id)
+    controller: Flower\Controller\Sakura
 
-<h2>The File Structure</h2>
+sakuras:
+    pattern: /sakuras
+    controller: Flower\Controller\Sakuras
 
-<table>
-<thead>
-<tr>
-  <th>Name</th>
-  <th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td><code>/bin</code></td>
-  <td>All executable files, there is a <code>console</code> file can run Windwalker Console</td>
-</tr>
-<tr>
-  <td><code>/etc</code></td>
-  <td>All configuration and routing files.</td>
-</tr>
-<tr>
-  <td><code>-- define.php</code></td>
-  <td>The system path constants.</td>
-</tr>
-<tr>
-  <td><code>-- config.yml</code></td>
-  <td>Basic configuration file.</td>
-</tr>
-<tr>
-  <td><code>-- secret.dist.yml</code></td>
-  <td>Contains some secret information like DB account. <br /> Please rename to <code>secret.yml</code> to use it</td>
-</tr>
-<tr>
-  <td><code>-- routing.yml</code></td>
-  <td>The routing configuration file</td>
-</tr>
-<tr>
-  <td><code>/resources</code></td>
-  <td>Some non-PHP or non-classes files</td>
-</tr>
-<tr>
-  <td><code>-- languages</code></td>
-  <td>Language files, default is INI format</td>
-</tr>
-<tr>
-  <td><code>-- migrations</code></td>
-  <td>Database migration files. See <a href="migration.html">Migration</a></td>
-</tr>
-<tr>
-  <td><code>-- seeders</code></td>
-  <td>Database seeder files. See <a href="seeder.html">Seeder</a></td>
-</tr>
-<tr>
-  <td><code>/src</code></td>
-  <td>All PHP classes files for your project.</td>
-</tr>
-<tr>
-  <td><code>/templates</code></td>
-  <td>The layout files.</td>
-</tr>
-<tr>
-  <td><code>/vendor</code></td>
-  <td>All 3rd libraries files</td>
-</tr>
-<tr>
-  <td><code>/www</code></td>
-  <td>Web public root</td>
-</tr>
-<tr>
-  <td><code>-- media</code></td>
-  <td>Assets files for front-end</td>
-</tr>
-<tr>
-  <td><code>-- .htaccess</code></td>
-  <td>Htaccess config for Apache, you need this file to make mod_rewrite work.</td>
-</tr>
-<tr>
-  <td><code>-- index.php</code></td>
-  <td>System entry.</td>
-</tr>
-<tr>
-  <td><code>-- dev.php</code></td>
-  <td>System entry for Development mode.</td>
-</tr>
-<tr>
-  <td><code>/phpunit.xml.dist</code></td>
-  <td>PHPUnit configuration file. Rebane to <code>phpunit.xml</code> to use.</td>
-</tr>
-<tr>
-  <td><code>/README.md</code></td>
-  <td>Readme file</td>
-</tr>
-<tr>
-  <td><code>/composer.json</code></td>
-  <td>Composer configuration file</td>
-</tr>
-</tbody>
-</table>
+roses:
+    pattern: /roses
+    controller: Flower\Controller\Roses
+</code></pre>
+
+<p>We have to register this routes to root routing file. Open <code>/etc/routing.yml</code> And add this route profile.</p>
+
+<pre><code class="apache"># /etc/routing.yml
+
+flower:
+    pattern: /flower
+    package: flower
+</code></pre>
+
+<p>The <code>package: flower</code> tells Windwalker to import all Flower package's routes, and all patterns will prefix with: <code>/flower</code>, 
+the compiled routes will look like:</p>
+
+<pre><code class="html">flower:sakura:
+    pattern: /flower/sakura(/id)
+    controller: Flower\Controller\Sakura
+
+flower:sakuras:
+    pattern: /flower/sakuras
+    controller: Flower\Controller\Sakuras
+
+flower:roses:
+    pattern: /flower/roses
+    controller: Flower\Controller\Roses
+</code></pre>
+
+<p>Use browser open <code>/flower/sakuras</code>, Windwalker will find <code>Flower\Controller\Sakuras</code> to render page.</p>
 
 
                     <hr />

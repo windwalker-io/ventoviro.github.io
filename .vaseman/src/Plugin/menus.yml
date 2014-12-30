@@ -2,7 +2,7 @@ Start:
   getting-started: Getting Started
   # contribution: Contribution Guide
   routing-controller: Routing And Controller
-  packag-system: Package System (Bundle)
+  package-system: Package System (Bundle)
   request-input: Request And Input
   view-templating: View And Templating
   model-database: Model And Database
