@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../media/images/favicon.ico" />
 
-        <title>Getting Started | Windwalker - A Modern PHP Framework</title>
+        <title>Routing And Controller | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Getting Started | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Routing And Controller | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Vaseman">
 
         
@@ -72,7 +72,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Getting Started</h1>
+        <h1>Routing And Controller</h1>
     </div>
         </div>
     </section>
@@ -84,10 +84,10 @@
                 <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Start</li>
 
-                                <li class="uk-active">
+                                <li class="">
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
-                                <li class="">
+                                <li class="uk-active">
                 <a href="../documentation/routing-controller.html">Routing And Controller</a>
             </li>
                                 <li class="">
@@ -181,156 +181,302 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <h1>Installation</h1>
+                    <h1>Create Simple Routing</h1>
 
-<h2>Install Starter Application</h2>
+<p>Open <code>/etc/routing.yml</code> and add a new route resource.</p>
 
-<p>Windwalker use <a href="https://getcomposer.org/">Composer</a> as package manager, make sure you <a href="https://getcomposer.org/download/">install composer</a>
- before installing it.</p>
-
-<p>To start install Windwalker, please open terminal and type this command:</p>
-
-<pre><code class="bash">$ php composer.phar create-project windwalker/starter project_dir 2.0.* --no-dev
+<pre><code class="http">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controlelr\Sakura
 </code></pre>
 
-<blockquote>
-  <p>If you want to use unit test or develop Windwalker it-self, remove <code>--no-dev</code> option.</p>
-</blockquote>
+<p>If you use browser open <code>/flower/sakura</code>, Windwalker will call <code>Flower\Controller\Sakura\GetController</code> and execute it.</p>
 
-<p>The <a href="https://github.com/ventoviro/windwalker-starter">Starter</a> package is a default application to start a project (like Symfony Standard).
-If you want to use Windwalker as a library, see next section.</p>
+<p>Why is <code>GetController</code>? Windwalker routing follows RESTful pattern to find action, and default method of browser is <code>GET</code>,
+ so <code>GetController</code> will be matched. You can send <code>POST</code> request to <code>/flower/sakura</code>, the <code>SaveController</code> will be executed.</p>
 
-<h2>Use Windwalker as Library</h2>
-
-<p>If you have your own application project and want to include Windwalker as library, just add <code>windwalker/framework</code> to require block in <code>composer.json</code>.</p>
-
-<pre><code class="json">{
-    "require": {
-        "windwalker/framework": "~2.0@stable"
-    }
-}
-</code></pre>
-
-<blockquote>
-  <p><code>~2.0</code> means 2.0 to 2.9</p>
-</blockquote>
-
-<p>You can also install specific packages instead install whole framework. This is an example to install Session and Form package:</p>
-
-<pre><code class="json">{
-    "require": {
-        "windwalker/session": "~2.0@stable",
-        "windwalker/form": "~2.0@stable"
-    }
-}
-</code></pre>
-
-<p>See all available packages on <a href="https://packagist.org/packages/windwalker/">Packagist</a></p>
-
-<h1>Overview</h1>
-
-<h2>Open Windwalker Public Root</h2>
-
-<p>After installed, use browser open <code>/www</code> then you will see default landing page.</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5576484/31c9834c-9037-11e4-9f97-8f73d0822043.png" alt="img" /></p>
-
-<h2>The File Structure</h2>
+<p>This is supported methods:</p>
 
 <table>
 <thead>
 <tr>
-  <th>Name</th>
-  <th>Description</th>
+  <th>Method</th>
+  <th>Mapped Controller</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td><code>/bin</code></td>
-  <td>All executable files, there is a <code>console</code> file can run Windwalker Console</td>
+  <td><code>GET</code></td>
+  <td><code>GetController</code></td>
 </tr>
 <tr>
-  <td><code>/etc</code></td>
-  <td>All configuration and routing files.</td>
+  <td><code>POST</code></td>
+  <td><code>SaveController</code></td>
 </tr>
 <tr>
-  <td><code>-- define.php</code></td>
-  <td>The system path constants.</td>
+  <td><code>PUT</code></td>
+  <td><code>SaveController</code></td>
 </tr>
 <tr>
-  <td><code>-- config.yml</code></td>
-  <td>Basic configuration file.</td>
+  <td><code>PATCH</code></td>
+  <td><code>SaveController</code></td>
 </tr>
 <tr>
-  <td><code>-- secret.dist.yml</code></td>
-  <td>Contains some secret information like DB account. <br /> Please rename to <code>secret.yml</code> to use it</td>
+  <td><code>DELETE</code></td>
+  <td><code>DeleteController</code></td>
 </tr>
 <tr>
-  <td><code>-- routing.yml</code></td>
-  <td>The routing configuration file</td>
+  <td><code>HEAD</code></td>
+  <td><code>HeadController</code></td>
 </tr>
 <tr>
-  <td><code>/resources</code></td>
-  <td>Some non-PHP or non-classes files</td>
-</tr>
-<tr>
-  <td><code>-- languages</code></td>
-  <td>Language files, default is INI format</td>
-</tr>
-<tr>
-  <td><code>-- migrations</code></td>
-  <td>Database migration files. See <a href="migration.html">Migration</a></td>
-</tr>
-<tr>
-  <td><code>-- seeders</code></td>
-  <td>Database seeder files. See <a href="seeder.html">Seeder</a></td>
-</tr>
-<tr>
-  <td><code>/src</code></td>
-  <td>All PHP classes files for your project.</td>
-</tr>
-<tr>
-  <td><code>/templates</code></td>
-  <td>The layout files.</td>
-</tr>
-<tr>
-  <td><code>/vendor</code></td>
-  <td>All 3rd libraries files</td>
-</tr>
-<tr>
-  <td><code>/www</code></td>
-  <td>Web public root</td>
-</tr>
-<tr>
-  <td><code>-- media</code></td>
-  <td>Assets files for front-end</td>
-</tr>
-<tr>
-  <td><code>-- .htaccess</code></td>
-  <td>Htaccess config for Apache, you need this file to make mod_rewrite work.</td>
-</tr>
-<tr>
-  <td><code>-- index.php</code></td>
-  <td>System entry.</td>
-</tr>
-<tr>
-  <td><code>-- dev.php</code></td>
-  <td>System entry for Development mode.</td>
-</tr>
-<tr>
-  <td><code>/phpunit.xml.dist</code></td>
-  <td>PHPUnit configuration file. Rebane to <code>phpunit.xml</code> to use.</td>
-</tr>
-<tr>
-  <td><code>/README.md</code></td>
-  <td>Readme file</td>
-</tr>
-<tr>
-  <td><code>/composer.json</code></td>
-  <td>Composer configuration file</td>
+  <td><code>OPTIONS</code></td>
+  <td><code>OptionsController</code></td>
 </tr>
 </tbody>
 </table>
+
+<blockquote>
+  <p>NOTE: Windwalker mapped POST, PUT and PATCH to <code>SaveController</code>, so we detect it is create or update by primary key exists
+  in input or not. If you want to separate create and update to two controllers, see next section to override actions.</p>
+</blockquote>
+
+<h2>Override Actions</h2>
+
+<p>Add the action attribute:</p>
+
+<pre><code class="http">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controlelr\Sakura
+    action:
+        get: IndexController
+</code></pre>
+
+<p>The GET method will match <code>Flower\Controlelr\Sakura\IndexController</code> because we set a map to find new name. We can set more methods to mapping methods with controllers.</p>
+
+<pre><code class="http">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controlelr\Sakura
+    action:
+        get: IndexController
+        post: CreateController
+        put: UpdateController
+        delete: DeleteController
+</code></pre>
+
+<p>Or use wildcards to map all methods to one controller:</p>
+
+<pre><code class="http">    action:
+        '*': SakuraController
+</code></pre>
+
+<h2>Limit By Methods</h2>
+
+<p>We can limit our route by some options, if the HTTP request not match this rule, this route will be ignored,
+for example this config will only allow GET and POST, the PUT and DELETE will not matched.</p>
+
+<pre><code class="http">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controlelr\Sakura
+    method:
+        - GET
+        - POST
+</code></pre>
+
+<h2>Limit By Other Options</h2>
+
+<pre><code class="apache">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controlelr\Sakura
+    method:
+        - GET
+        - POST
+    # Only http &amp; https
+    scheme: https
+    post: 80
+    sslPort: 443
+</code></pre>
+
+<h1>Use Controller</h1>
+
+<p>Now we use a route like this:</p>
+
+<pre><code class="http">flower:
+    pattern: /flower/(id)
+    controller: Flower\Controlelr\Sakura
+</code></pre>
+
+<p>Lets create a controller at <code>src/Flower/Controller/Sakura/GetController.php</code>:</p>
+
+<pre><code class="php">&lt;?php
+// src/Flower/Controller/Sakura/GetController.php
+
+namespace Flower\Controller\Sakura;
+
+use Windwalker\Core\Controller\Controller;
+
+class GetController extends Controller
+{
+    protected function doExecute()
+    {
+        $id = $this-&gt;input-&gt;get('id');
+
+        return 'Flower id is: ' . $id;
+    }
+}
+</code></pre>
+
+<p>Windwalker Controller follows single action pattern (similar to Joomla New MVC), every controller has only one action (<code>execute()</code>).
+The benefit is that our controllers will be more lighter then other frameworks. You can add more logic to a controller but won't be
+confused by many actions in one class.</p>
+
+<p>Why we don't need to include this file? Windwalker use autoloading to find classes. The <code>/src</code> folder use <a href="http://www.php-fig.org/psr/psr-4/">PSR</a>
+rule to match class namespace with folder structure, it because we have already set <code>"": "src/"</code> in <code>composer.json</code>.</p>
+
+<p>After controller created, type <code>/flower/25</code> in browser. You will see:</p>
+
+<pre><code class="html">Flower id is: 25
+</code></pre>
+
+<p>Congrats, your first page has show.</p>
+
+<h1>Route Pattern</h1>
+
+<h2>Simple Params</h2>
+
+<p>Use <code>()</code> to wrap param name.</p>
+
+<pre><code class="http">    pattern: /flower/(id)/(alias)
+</code></pre>
+
+<p>If uri is <code>/flower/25/article-alias-name</code>, this pattern will be matched, and there will be two variables in input:</p>
+
+<pre><code class="html">[id] =&gt; 25
+[alias] =&gt; article-alias-name
+</code></pre>
+
+<h3>Custom Input Variables</h3>
+
+<pre><code class="http">    pattern: /flower/(id)/(alias)
+    variables:
+        foo: bar
+</code></pre>
+
+<p>The attributes in <code>variables</code> will auto set to input if this route be matched.</p>
+
+<h3>Limit By Requirement</h3>
+
+<p>Use <code>\d+</code> to limit that id need to be integer. If uri is <code>/flower/foo/sakura</code>, this route will not be matched.</p>
+
+<pre><code class="http">    pattern: /flower/(id)/(alias)
+    requirements:
+        id: \d+
+</code></pre>
+
+<h2>Optional Params</h2>
+
+<h3>Single Optional Params</h3>
+
+<p>Use <code>(/...)</code> to wrap param name, this param will be optional param.</p>
+
+<pre><code class="http">    pattern: flower(/id)
+</code></pre>
+
+<p>These 2 uri will be matched.</p>
+
+<pre><code>/flower
+/flower/25
+</code></pre>
+
+<h3>Multiple Optional Params</h3>
+
+<pre><code class="http">    pattern: flower(/year,month,day)
+</code></pre>
+
+<p>These uri will be matched.</p>
+
+<pre><code>/flower
+/flower/2014
+/flower/2014/10
+/flower/2014/10/12
+</code></pre>
+
+<p>And the matched variables will be</p>
+
+<pre><code>Array
+(
+    [year] =&gt; 2014
+    [month] =&gt; 10
+    [day] =&gt; 12
+)
+</code></pre>
+
+<h2>Wildcards</h2>
+
+<p>Use Wildcards to match all params follows our route.</p>
+
+<pre><code class="http">    pattern: /king/(*tags)
+</code></pre>
+
+<p>The routes start by <code>/king</code> will all be matched. For example: <code>/king/john/troilus/and/cressida</code>, will get these variables.</p>
+
+<pre><code>Array
+(
+    [tags] =&gt; Array
+    (
+        [0] =&gt; john
+        [1] =&gt; troilus
+        [2] =&gt; and
+        [3] =&gt; cressida
+    )
+)
+</code></pre>
+
+<h1>Matchers</h1>
+
+<p>Windwalker Router provides some matchers to use different way to match routes.</p>
+
+<p>You can set matcher name in <code>/etc/config.yml</code>:</p>
+
+<pre><code class="http">routing:
+    matcher: default
+</code></pre>
+
+<p>The default matcher is Sequential Matcher.</p>
+
+<h2>Sequential Matcher</h2>
+
+<p>Sequential Matcher use the <a href="http://en.wikipedia.org/wiki/Linear_search">Sequential Search Method</a> to find route.
+It is the slowest matcher but much more customizable. It is the default matcher of Windwalker Router.</p>
+
+<h2>Binary Matcher</h2>
+
+<p>Binary Matcher use the <a href="http://en.wikipedia.org/wiki/Binary_search_algorithm">Binary Search Algorithm</a> to find route.
+This matcher is faster than SequentialMatcher but it will break the ordering of your routes. Binary search will re-sort all routes by pattern characters.</p>
+
+<h2>Trie Matcher</h2>
+
+<p>Trie Matcher use the <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> tree to search route.
+This matcher is the fastest method of Windwalker Router, but the limit is that it need to use an simpler route pattern
+which is not as flexible as the other two matchers.</p>
+
+<h2>Rules of TrieMatcher</h2>
+
+<h3>Simple Params</h3>
+
+<p>only match when the uri segments all exists. If you want to use optional segments, you must add two or more patterns.</p>
+
+<pre><code class="html">/flower
+/flower/:id
+/flower/:id/:alias
+</code></pre>
+
+<h3>Wildcards</h3>
+
+<p>This pattern will convert all segments after <code>/flower</code> to an array which named <code>tags</code>:</p>
+
+<pre><code class="html">/flower/*tags
+</code></pre>
 
 
                     <hr />

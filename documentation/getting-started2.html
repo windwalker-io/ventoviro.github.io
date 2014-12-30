@@ -84,7 +84,7 @@
                 <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Start</li>
 
-                                <li class="uk-active">
+                                <li class="">
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
                                 <li class="">
@@ -205,132 +205,9 @@ If you want to use Windwalker as a library, see next section.</p>
 <p>If you have your own application project and want to include Windwalker as library, just add <code>windwalker/framework</code> to require block in <code>composer.json</code>.</p>
 
 <pre><code class="json">{
-    "require": {
-        "windwalker/framework": "~2.0@stable"
-    }
+
 }
 </code></pre>
-
-<blockquote>
-  <p><code>~2.0</code> means 2.0 to 2.9</p>
-</blockquote>
-
-<p>You can also install specific packages instead install whole framework. This is an example to install Session and Form package:</p>
-
-<pre><code class="json">{
-    "require": {
-        "windwalker/session": "~2.0@stable",
-        "windwalker/form": "~2.0@stable"
-    }
-}
-</code></pre>
-
-<p>See all available packages on <a href="https://packagist.org/packages/windwalker/">Packagist</a></p>
-
-<h1>Overview</h1>
-
-<h2>Open Windwalker Public Root</h2>
-
-<p>After installed, use browser open <code>/www</code> then you will see default landing page.</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5576484/31c9834c-9037-11e4-9f97-8f73d0822043.png" alt="img" /></p>
-
-<h2>The File Structure</h2>
-
-<table>
-<thead>
-<tr>
-  <th>Name</th>
-  <th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td><code>/bin</code></td>
-  <td>All executable files, there is a <code>console</code> file can run Windwalker Console</td>
-</tr>
-<tr>
-  <td><code>/etc</code></td>
-  <td>All configuration and routing files.</td>
-</tr>
-<tr>
-  <td><code>-- define.php</code></td>
-  <td>The system path constants.</td>
-</tr>
-<tr>
-  <td><code>-- config.yml</code></td>
-  <td>Basic configuration file.</td>
-</tr>
-<tr>
-  <td><code>-- secret.dist.yml</code></td>
-  <td>Contains some secret information like DB account. <br /> Please rename to <code>secret.yml</code> to use it</td>
-</tr>
-<tr>
-  <td><code>-- routing.yml</code></td>
-  <td>The routing configuration file</td>
-</tr>
-<tr>
-  <td><code>/resources</code></td>
-  <td>Some non-PHP or non-classes files</td>
-</tr>
-<tr>
-  <td><code>-- languages</code></td>
-  <td>Language files, default is INI format</td>
-</tr>
-<tr>
-  <td><code>-- migrations</code></td>
-  <td>Database migration files. See <a href="migration.html">Migration</a></td>
-</tr>
-<tr>
-  <td><code>-- seeders</code></td>
-  <td>Database seeder files. See <a href="seeder.html">Seeder</a></td>
-</tr>
-<tr>
-  <td><code>/src</code></td>
-  <td>All PHP classes files for your project.</td>
-</tr>
-<tr>
-  <td><code>/templates</code></td>
-  <td>The layout files.</td>
-</tr>
-<tr>
-  <td><code>/vendor</code></td>
-  <td>All 3rd libraries files</td>
-</tr>
-<tr>
-  <td><code>/www</code></td>
-  <td>Web public root</td>
-</tr>
-<tr>
-  <td><code>-- media</code></td>
-  <td>Assets files for front-end</td>
-</tr>
-<tr>
-  <td><code>-- .htaccess</code></td>
-  <td>Htaccess config for Apache, you need this file to make mod_rewrite work.</td>
-</tr>
-<tr>
-  <td><code>-- index.php</code></td>
-  <td>System entry.</td>
-</tr>
-<tr>
-  <td><code>-- dev.php</code></td>
-  <td>System entry for Development mode.</td>
-</tr>
-<tr>
-  <td><code>/phpunit.xml.dist</code></td>
-  <td>PHPUnit configuration file. Rebane to <code>phpunit.xml</code> to use.</td>
-</tr>
-<tr>
-  <td><code>/README.md</code></td>
-  <td>Readme file</td>
-</tr>
-<tr>
-  <td><code>/composer.json</code></td>
-  <td>Composer configuration file</td>
-</tr>
-</tbody>
-</table>
 
 
                     <hr />
