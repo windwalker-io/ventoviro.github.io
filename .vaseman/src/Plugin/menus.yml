@@ -1,31 +1,31 @@
 Start:
-  getting-started: Getting Started
+  start/getting-started: Getting Started
   # contribution: Contribution Guide
-  routing-controller: Routing And Controller
-  package-system: Package System (Bundle)
-  request-input: Request And Input
-  view-templating: View And Templating
-  model-database: Model And Database
-  error-handling: Error Handling
+  start/routing-controller: Routing And Controller
+  start/package-system: Package System (Bundle)
+  start/request-input: Request and Input
+  start/view-templating: View and Templating
+  start/model-database: Model and Database
+  start/error-handling: Error Handling
 Database:
-  basic-db-usage: Basic Usage
-  query-builder: Query Builder
-  datamapper: DataMapper
-  schema-builder: Schema Builder
-  migration: Migration And Seeding
+  db/basic: Basic Usage
+  db/query-builder: Query Builder
+  db/datamapper: DataMapper
+  db/schema-builder: Schema Builder
+  db/migration: Migration And Seeding
 Console:
-  console-basic: Basic Usage
-  custom-command: Custom Commands
+  console/console-basic: Basic Usage
+  console/custom-commands: Custom Commands
 More:
-  authantication: Authentication
-  caching: Caching
-  events: Events
-  facades: Facades
-  form-builder: Form Builder
-  html-builder: HTML Builder
-  ioc-container: IoC Container
-  languages: Languages
-  pagination: Pagination
-  session: Session
-  tests: Tests
-  validation: Validation
+  more/authentication: Authentication
+  more/caching: Caching
+  more/events: Events
+  more/facades: Facades
+  more/form-builder: Form Builder
+  more/html-builder: HTML Builder
+  more/ioc-container: IoC Container
+  more/languages: Languages
+  more/pagination: Pagination
+  more/session: Session
+  more/tests: Tests
+  more/validation: Validation
