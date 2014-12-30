@@ -11,3 +11,4 @@ folders:
 
 # Plugin classes with namespace (Array)
 plugins:
+    - Vaseman\Plugin\MenuPlugin

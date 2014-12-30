@@ -1,57 +1,116 @@
+home: true
+meta:
+    desc: 'Vaseman is a static site and prototype Generator. He is Nothing But Pretty Face'
+og:
+    image: https://cloud.githubusercontent.com/assets/1639206/5567798/9dae1f34-8f86-11e4-89a4-e348102b15e9.png
+---
 {% extends '_global/html.twig' %}
 
+{% block banner %}
+    <div class="banner-title">
+        <h1>Windwalker</h1>
+        <h2>A Modern PHP Framework</h2>
+    </div>
+{% endblock %}
+
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <p align="center">
-                <img class="img-thumbnail" src="http://placehold.it/1140x300" alt="img" />
-            </p>
+    <section id="features" class="main-block">
+        <div class="uk-container uk-container-center">
+            <h1 class="block-title">Features</h1>
 
-            <div class="row">
-                <div class="col-lg-9">
-                    {% set articles = helper.blog.getArticles() %}
+            {# ROW 1 #}
+            <div class="uk-grid" data-uk-grid-match>
+                <div class="uk-width-medium-1-3 feature-block">
+                    <img class="uk-border-rounded" src="{{ uri.media }}images/features/php.png" alt="" />
+                    <h2>Lightweight and Elegant</h2>
+                    <p>
+                        Windwalker is very fast, we use many design patterns like Lazy loading or cache to make sure we have high performance.
 
-                    {% for item in articles %}
-                    <article>
-                        <header>
-                            <h2>
-                                <a href="article.html">
-                                    {{ item.title }}
-                                </a>
-                            </h2>
-                        </header>
-
-                        {{ item.introtext|raw }}
-
-                        <aside>
-                            <a class="btn btn-primary" href="article">
-                                Readon
-                            </a>
-                        </aside>
-                    </article>
-                    {% endfor %}
-
+                    </p>
                 </div>
 
-                <div class="col-lg-3">
-                    <section class="sidebar">
-                        <h3>Menu</h3>
+                <div class="uk-width-medium-1-3 feature-block">
+                    <img class="uk-border-rounded" src="{{ uri.media }}images/features/design.png" alt="" />
+                    <h2>Easy But Powerful</h2>
+                    <p>
+                        We know that learning a new framework is very hard and cost long time,
+                        so Windwalker's interface is very simple and semantic that will not make developer pain.
+                    </p>
+                </div>
 
-                        <ul class="nav nav-pills nav-stacked">
-                            <li class="active"><a href="#">Home</a></li>
-                            {% for item in articles %}
-                            <li>
-                                <a href="article.html">
-                                    {{ item.title }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </section>
+                <div class="uk-width-medium-1-3 feature-block">
+                    <img class="uk-border-rounded" src="{{ uri.media }}images/features/lab.png" alt="" />
+                    <h2>Convention over Config</h2>
+                    <p>
+                        Windwalker try to reduce configuration work, it use minimal config to extend whole system.
+                        But you can still override every part of Windwalker to customize your application.
+                    </p>
+                </div>
+            </div>
+
+            {# ROW 2 #}
+            <div class="uk-grid" data-uk-grid-match>
+                <div class="uk-width-medium-1-3 feature-block">
+                    <img class="uk-border-rounded" src="{{ uri.media }}images/features/php.png" alt="" />
+                    <h2>Fully Decoupled</h2>
+                    <p>
+                        Windwalker packages are very cohesion, we are trying to make every package dose not depend
+                        on too many other packages. You can easy override Windwalker's behavior but don't worry about dependencies.
+                    </p>
+                </div>
+
+                <div class="uk-width-medium-1-3 feature-block">
+                    <img class="uk-border-rounded" src="{{ uri.media }}images/features/design.png" alt="" />
+                    <h2>Extendable</h2>
+                    <p>
+                        The Windwalker package system (like Symfony bundles) help us create complex application for our enterprise.
+                        Also you can create your package as an extension to let other developers install it.
+                    </p>
+                </div>
+
+                <div class="uk-width-medium-1-3 feature-block">
+                    <img class="uk-border-rounded" src="{{ uri.media }}images/features/lab.png" alt="" />
+                    <h2>HHVM Ready</h2>
+                    <p>
+                        After hard working, Windwalker has supported HHVM server and pass all tests.
+                        You can run Windwalker in HHVM server and start your programming.
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
-</div>    
-{% endblock %}
+    </section>
+
+    <section id="start" class="main-block">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid" data-uk-grid-match>
+                <div class="uk-width-medium-1-1 article-content">
+                    <h1 class="page-title">Quick Start</h1>
+                    <p>
+                    <pre class="home-start-code"><code style="font-size: 20px;">$ php composer.phar create-project windwalker/starter your_project 2.*</code></pre>
+                    </p>
+                    <p class="uk-text-center">
+                        <a style="margin-top: 50px; width: 400px" class="download-button uk-button uk-button-hero uk-button-primary"
+                                href="{{ uri.base }}documentation/getting-started.html">
+                            Documentation
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="powered" class="main-block">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid" data-uk-grid-match>
+                <div class="uk-width-medium-1-1">
+                    <h1 class="page-title">Inspired From</h1>
+                    <p class="uk-text-center">
+                        <a target="_blank" href="http://joomla.org">
+                            <img width="400" src="http://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Joomla!-Logo.svg/2000px-Joomla!-Logo.svg.png" alt="Joomla" />
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock body %}

@@ -1,0 +1,34 @@
+{% extends '_global/html.twig' %}
+
+{% block title %}{{ config.title }} | Vaseman, The PHP Static Site Generator{% endblock %}
+
+{% block banner %}
+    <div class="uk-container uk-container-center banner-inner-title">
+        <h1>{{ config.title }}</h1>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+            <div class="uk-width-medium-1-4 uk-container-center">
+                {% include 'sub-menu.twig' %}
+            </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                {#<h1 class="page-title">{{ config.title }}</h1>#}
+
+                <article class="article-content">
+                    {{ content|raw }}
+
+                    <hr />
+
+                    <p class="uk-text-center">
+                        Find a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
+                    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
