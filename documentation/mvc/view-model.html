@@ -206,7 +206,111 @@ variants of MVC like: MVVM, MVP etc.</p>
  And controller's responsibility is just decide binding which models to view. There is a <code>ViewModel</code> between View and Model 
  to handle request from View and get data from Model.</p>
 
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/ModelViewControllerDiagram2.svg/350px-ModelViewControllerDiagram2.svg.png" alt="" /></p>
+<h2>Schematic Diagram</h2>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg" alt="mvc" /></p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587062/82fedd9a-911b-11e4-84c3-96358524d2c8.jpg" alt="ww-mvc" /></p>
+
+<h2>ViewModel</h2>
+
+<p>View is not directly communicate to Model, there is a <code>ViewModel</code> object in the middle of them. You can see ViewModel 
+as a Models manager.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg" alt="view-model" /></p>
+
+<h1>Use ViewModel Pattern in Windwalker</h1>
+
+<p>This is a traditional MVC usage in controller:</p>
+
+<pre><code class="php">&lt;?php
+// doExecute()
+
+$model = new FlowerModel;
+$view = new SakurasHtmlView;
+
+$item = $model-&gt;getItem();
+
+$view['created'] = $item;
+
+return $view-&gt;render();
+</code></pre>
+
+<p>Change some code, we can push Model into View:</p>
+
+<pre><code class="php">// doExecute()
+
+$model = new FlowerModel;
+$view = new SakurasHtmlView;
+
+$view-&gt;setModel($model);
+
+// OR
+$view-&gt;model-&gt;setModel($model);
+
+return $view-&gt;render();
+</code></pre>
+
+<p>Get data in View:</p>
+
+<pre><code class="php">class SakurasHtmlView extends HtmlView
+{
+    protected function prepareData($data)
+    {
+        $data-&gt;item = $this-&gt;model-&gt;getItem();
+    }
+}
+</code></pre>
+
+<p>The <code>$view-&gt;model</code> property is <code>ViewModel</code> object, if we call any method, <code>ViewModel</code> will pass this method to default Model by magic method.
+If Model does not have this method, it will only return <code>null</code>.</p>
+
+<p>You must make sure Model named with <code>XXXModel</code>, the model will guess their name. you can also set name property when declaring Model class. 
+There is some ways to define Model's name:</p>
+
+<pre><code class="php">// Set by config
+$model-&gt;config-&gt;set('name', 'foo');
+
+// Use class name
+class FooModel extends Model {}
+
+// Use property
+class SomeModel extends Model
+{
+    protected $name = 'foo';
+}
+</code></pre>
+
+<h2>Set Multiple Models</h2>
+
+<p>We can get many models and push them into one view.</p>
+
+<pre><code class="php">// In Controller::doExecute()
+
+$model = $this-&gt;getModel();
+$roseModel = $this-&gt;getModel('Rose');
+$oliveModel = $this-&gt;getModel('Olive');
+
+$view-&gt;setModel($model);
+$view-&gt;setModel($roseModel);
+$view-&gt;setModel($oliveModel);
+
+return $view-&gt;render();
+</code></pre>
+
+<p>Use array access to get different models and call methods.</p>
+
+<pre><code class="php">// In View::prepareData()
+
+$data-&gt;items = $this-&gt;model-&gt;getItems();
+$data-&gt;roses = $this-&gt;model['rose']-&gt;getRoses();
+$data-&gt;olives = $this-&gt;model['olive']-&gt;getOlives();
+</code></pre>
+
+<p>If a model not set, and the method name start with <code>get*</code> or <code>load*</code>, it will return <code>null</code>.</p>
+
+<pre><code class="php">$data-&gt;foo = $this-&gt;model['foo']-&gt;getFoo();
+</code></pre>
 
 
                     <hr />

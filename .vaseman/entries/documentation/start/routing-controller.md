@@ -45,7 +45,8 @@ flower:
         get: IndexController
 ```
 
-The GET method will match `Flower\Controlelr\Sakura\IndexController` because we set a map to find new name. We can set more methods to mapping methods with controllers.
+The GET method will match `Flower\Controlelr\Sakura\IndexController` because we set a map to find new name. We can set more 
+methods to mapping methods with controllers.
 
 ``` http
 flower:
