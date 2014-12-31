@@ -5,6 +5,7 @@ Start:
   start/package-system: Package System (Bundle)
   start/request-input: Request and Input
   start/ioc-container: IoC Container
+  start/service-provider: Service Provider
 MVC:
   mvc/use-controller: Use Controller
   mvc/view-templating: View and Templating
@@ -25,6 +26,7 @@ More:
   more/caching: Caching
   more/events: Events
   more/facades: Facades
+  more/widget-renderer: Widget and Renderer
   more/form-builder: Form Builder
   more/html-builder: HTML Builder
   more/languages: Languages

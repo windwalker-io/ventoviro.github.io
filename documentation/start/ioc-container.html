@@ -99,6 +99,9 @@
                     <li class="uk-active">
                 <a href="../../documentation/start/ioc-container.html">IoC Container</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/start/service-provider.html">Service Provider</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">MVC</li>
@@ -164,6 +167,9 @@
                 <a href="../../documentation/more/facades.html">Facades</a>
             </li>
                     <li class="">
+                <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
@@ -194,7 +200,340 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>What is Ioc Container</h1>
+
+<p>Windwalker DI is a <a href="http://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> tools,
+provide us an <a href="http://en.wikipedia.org/wiki/Inversion_of_control">IOC</a> container to manage objects and data.
+We also support service provider to help developers build their service in a universal interface.</p>
+
+<blockquote>
+  <p>For more information about IOC and DI, please see
+  <a href="http://martinfowler.com/articles/injection.html">Inversion of Control Containers and the Dependency Injection pattern</a> by Martin Fowler.</p>
+</blockquote>
+
+<h1>Get IoC Container</h1>
+
+<p>Use internal container in controller and Application:</p>
+
+<pre><code class="php">$session = $this-&gt;container-&gt;get('system.session');
+</code></pre>
+
+<p>Or use <code>Ioc</code> static class to get it:</p>
+
+<pre><code class="php">$container = \Windwalker\Ioc::factory(); // This container is singleton
+</code></pre>
+
+<p>Now we can store objects into it.</p>
+
+<pre><code class="php">$input = new Input;
+
+$container-&gt;set('my.input', $input);
+
+$input = $container-&gt;get('my.input');
+</code></pre>
+
+<p>Or directly get it by <code>Ioc</code>:</p>
+
+<pre><code class="php">\Windwalker\Ioc::get('my.input');
+</code></pre>
+
+<h2>Get Sub Container</h2>
+
+<p>Every package will use a child container, if the key in child container not found, container will search from parent:</p>
+
+<pre><code class="php">// Get FlowerPackage container
+$container = Ioc::factory('flower'); 
+
+// Set something
+$container-&gt;set('sakura', 'Sakura');
+
+// sakura exists
+$sakura = $container-&gt;get('sakura');
+
+// rose not exists, will find from parent.
+$rose = $container-&gt;get('rose');
+</code></pre>
+
+<p>Directly get object from sub container by <code>Ioc</code>:</p>
+
+<pre><code class="php">\Windwalker\Ioc::get('sakura', 'flower');
+</code></pre>
+
+<h1>Lazy Loading</h1>
+
+<p>Sometimes we will hope not create object instantly, we can use callback to create object.</p>
+
+<pre><code class="php">// Set a closure into it
+$container-&gt;set('input', function(Container $container)
+{
+    return new Input;
+});
+
+// Will call this closure when we get it
+$input = $container-&gt;get('input');
+</code></pre>
+
+<p>But if we use <code>set()</code> method to set callback, this object will be recreated when every time we try to get it.</p>
+
+<h1>Shared Object (Singleton)</h1>
+
+<p>Use <code>set('foo', $object, true)</code> or <code>share('foo', $object)</code> to make an object singleton, we'll always get the same instance.</p>
+
+<pre><code class="php">// Share a closure
+$container-&gt;share('input', function(Container $container)
+{
+    return new Input;
+});
+
+// Will will always get same instance
+$input = $container-&gt;get('input');
+
+// The second argument of get() can force create new instance
+$newInput = $container-&gt;get('input', true);
+
+// Use readable constant
+$newInput = $container-&gt;get('input', Container::FORCE_NEW);
+</code></pre>
+
+<h1>Protect Object</h1>
+
+<p>Use <code>protect()</code> to prevent others override your important object.</p>
+
+<pre><code class="php">$container-&gt;protect(
+    'input',
+    function(Container $container)
+    {
+        return new Input;
+    },
+    true // Shared or not
+);
+
+// We can still get this object
+$input = $container-&gt;get('input');
+
+// @Throws OutOfBoundsException
+$container-&gt;set('input', $otherInput);
+</code></pre>
+
+<h1>Alias</h1>
+
+<p>It is convenience to set an alias to key of objects which we often use.</p>
+
+<pre><code class="php">$container-&gt;share('system.application', $app)
+    -&gt;alias('app', 'system.application');
+
+// Same as system.application
+$app = $container-&gt;get('app');
+</code></pre>
+
+<p>So it is a good way that we can build IOC registry:</p>
+
+<pre><code class="php">$config = array(
+    'ioc.registry' =&gt; array(
+        'app'     =&gt; 'system.application',
+        'input'   =&gt; 'system.input',
+        'session' =&gt; 'system.session'
+    )
+);
+
+// Your own IOC class follows your rule
+IOC::setRegistry($config['ioc.registry']);
+IOC::setContainer($container);
+
+// Will get system.session from Container
+$session = IOC::getSession();
+</code></pre>
+
+<h1>Facade</h1>
+
+<p><code>\Windwalker\Ioc</code> provides a facade pattern to quickly get system objects, the benefit to use these methods is that IDE can identify
+which object we get, and provides auto-complete:</p>
+
+<pre><code class="php">$db    = \Windwalker\Ioc::getDatabase();
+$input = \Windwalker\Ioc::getInput();
+$app   = \Windwalker\Ioc::getApplication();
+</code></pre>
+
+<p>See: <a href="#">Ioc Methods</a></p>
+
+<p>If you want to add your own object in <code>Ioc</code>, edit the <code>/src/Windwalker/Ioc.php</code> file:</p>
+
+<pre><code class="php">&lt;?php
+// /src/Windwalker/Ioc.php`
+
+namespace Windwalker;
+
+abstract class Ioc extends \Windwalker\Core\Ioc
+{
+    /**
+     * Add this docblock that your IDE can identify what you get.
+     *
+     * @return  MyObject
+     */
+    public static function getMyObject()
+    {
+        return static::get('my.object');
+    }
+}
+</code></pre>
+
+<h1>Build Object</h1>
+
+<p>Container can build an object and auto inject the needed dependency objects.</p>
+
+<pre><code class="php">use Windwalker\IO\Input;
+use Windwalker\Registry\Registry;
+
+class MyClass
+{
+    public $input;
+    public $config;
+
+    public function __construct(Input $input, Registry $config)
+    {
+        $this-&gt;input = $input;
+        $this-&gt;config = $config;
+    }
+}
+
+$myObject = $container-&gt;buildObject('MyClass');
+
+$myObject-&gt;input; // Input
+$myObject-&gt;config; // Registry
+</code></pre>
+
+<h2>Binding Classes</h2>
+
+<p>Sometimes we hope to inject particular object we want, we can bind a class as key to let Container know what you want to
+instead the dependency object.</p>
+
+<p>Here is a class but dependency to an abstract class, we can bind a sub class to container for use.</p>
+
+<pre><code class="php">use Windwalker\Model\AbstractModel;
+use Windwalker\Registry\Registry;
+
+class MyClass
+{
+    public $model;
+    public $config;
+
+    public function __construct(AbstractModel $model, Registry $config)
+    {
+        $this-&gt;model = $model;
+        $this-&gt;config = $config;
+    }
+}
+
+class MyModel extends AbstractModel
+{
+}
+
+// Bind MyModel as AbstractModel
+$container-&gt;share('Windwalker\\Model\\AbstractModel', function()
+{
+    return new MyModel;
+});
+
+$myObject = $container-&gt;buildObject('MyClass');
+
+$myObject-&gt;model; // MyModel
+</code></pre>
+
+<h1>Extending</h1>
+
+<p>Container allows you to extend an object, the new instance or closure will override the original one, this is a sample:</p>
+
+<pre><code class="php">// Create an item first
+$container-&gt;share('flower', function()
+{
+    return new Flower;
+});
+
+$container-&gt;extend('flower', function($origin, Container $container)
+{
+    $origin-&gt;name = 'sakura';
+
+    return $origin;
+});
+
+$flower = $container-&gt;get('flower');
+
+$flower-&gt;name; // sakura
+</code></pre>
+
+<h1>Container Aware</h1>
+
+<p>The <code>ContainerAwareInterface</code> help us get and set Container as a system, constructor, we often use it on application or controller classes.</p>
+
+<pre><code class="php">use Windwalker\DI\ContainerAwareInterface;
+
+class MyController implements ContainerAwareInterface
+{
+    protected $container;
+
+    public function getContainer()
+    {
+        return $this-&gt;container;
+    }
+
+    public function setContainer(Container $container)
+    {
+        $this-&gt;container = $container;
+    }
+
+    public function execute()
+    {
+        $container = $this-&gt;getContainer();
+    }
+}
+</code></pre>
+
+<h2>Using Trait</h2>
+
+<p>In PHP 5.4, you can use <code>ContainerAwareTrait</code> to create an aware object.</p>
+
+<pre><code class="php">class MyController implements ContainerAwareInterface
+{
+    use ContainerAwareTrait;
+
+    public function execute()
+    {
+        $container = $this-&gt;getContainer();
+    }
+}
+</code></pre>
+
+<h1>Service Providers</h1>
+
+<p>Service providers is an useful way to encapsulate logic of creating objects and services.
+Just implements the <code>Windwalker\DI\ServiceProviderInterface</code>.</p>
+
+<pre><code class="php">use Windwalker\DI\Container;
+use Windwalker\DI\ServiceProviderInterface;
+
+class DatabaseServiceProvider implements ServiceProviderInterface
+{
+    public function register(Container $container)
+    {
+        $container-&gt;share('db', function (Container $container)
+        {
+            $options = $container-&gt;get('config')-&gt;get('database');
+
+            return DatabaseFactory::getDbo($options['driver'], $options);
+        });
+
+        // Or use callable
+        $container-&gt;share('query', array($this, 'getQuery'));
+    }
+
+    public function getQuery(Container $container)
+    {
+        return new MysqlQueery;
+    }
+}
+
+$container-&gt;registerServiceProvider(new DatabaseServiceProvider);
+</code></pre>
 
 
                     <hr />
