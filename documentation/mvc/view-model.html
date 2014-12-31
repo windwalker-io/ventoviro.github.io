@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Migration and Seeding | Windwalker - A Modern PHP Framework</title>
+        <title>View Model | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Migration and Seeding | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="View Model | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
         
@@ -72,7 +72,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Migration and Seeding</h1>
+        <h1>View Model</h1>
     </div>
         </div>
     </section>
@@ -112,7 +112,7 @@
                     <li class="">
                 <a href="../../documentation/mvc/model-database.html">Model and Database</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/mvc/view-model.html">ViewModel</a>
             </li>
         
@@ -134,7 +134,7 @@
                     <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/db/migration.html">Migration And Seeding</a>
             </li>
         
@@ -194,7 +194,19 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>About MVC Interactions</h1>
+
+<p>In most MVC practices, there is no direct communication between View and Model. We called it <strong>Passive View</strong>. But there are many 
+variants of MVC like: MVVM, MVP etc.</p>
+
+<p>Windwalker uses a pattern which is similar to <a href="http://goo.gl/p6Rjwl">Supervising Controller</a>, <a href="http://goo.gl/LJPG">MVVM</a> or <a href="http://goo.gl/y3VzE">MVP</a>
+, View can not communicate to Model, but Controller can binding Model to View, then View is able to get data from Model.</p>
+
+<p>The benefit of this pattern is that View can decide which data they are needed and call Model to get these data.
+ And controller's responsibility is just decide binding which models to view. There is a <code>ViewModel</code> between View and Model 
+ to handle request from View and get data from Model.</p>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/ModelViewControllerDiagram2.svg/350px-ModelViewControllerDiagram2.svg.png" alt="" /></p>
 
 
                     <hr />

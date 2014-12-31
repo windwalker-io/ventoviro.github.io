@@ -4,9 +4,12 @@ Start:
   start/routing-controller: Routing And Controller
   start/package-system: Package System (Bundle)
   start/request-input: Request and Input
-  start/view-templating: View and Templating
-  start/model-database: Model and Database
-  start/error-handling: Error Handling
+  start/ioc-container: IoC Container
+MVC:
+  mvc/use-controller: Use Controller
+  mvc/view-templating: View and Templating
+  mvc/model-database: Model and Database
+  mvc/view-model: ViewModel
 Database:
   db/basic: Basic Usage
   db/read-write: Read and Write
@@ -24,9 +27,9 @@ More:
   more/facades: Facades
   more/form-builder: Form Builder
   more/html-builder: HTML Builder
-  more/ioc-container: IoC Container
   more/languages: Languages
   more/pagination: Pagination
   more/session: Session
   more/tests: Tests
   more/validation: Validation
+  more/error-handling: Error Handling
