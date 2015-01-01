@@ -164,9 +164,6 @@
                 <a href="../../documentation/more/events.html">Events</a>
             </li>
                     <li class="">
-                <a href="../../documentation/more/facades.html">Facades</a>
-            </li>
-                    <li class="">
                 <a href="../../documentation/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
@@ -203,7 +200,145 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Configuration</h1>
+
+<p>Using cache will be very easy in Windwalker, the cache configuration is located at <code>/etc/config.yml</code>.</p>
+
+<pre><code class="yaml">cache:
+    enabled: 0
+    storage: file
+    handler: serialize
+    dir: cache
+    time: 15
+</code></pre>
+
+<p>The <code>enabled</code> property controls global cache start or not, can be close if you want to test your application. <code>storage</code> controls which cache storage method
+ you use, can be <code>file</code>, <code>runtime</code>, <code>memcached</code> or <a href="https://github.com/ventoviro/windwalker-cache#available-storage">more</a>. 
+ About storage and handler, please see <a href="https://github.com/ventoviro/windwalker-cache">Windwalker Cache</a>.</p>
+
+<h1>Use Cache</h1>
+
+<pre><code class="php">$cache = Ioc::getCache();
+
+// OR
+
+$cache = $container-&gt;get('system.cache');
+
+// Store cache item
+$cache-&gt;set('key', 'value');
+
+// Get cache
+$value = $cache-&gt;get('key');
+
+// Check cache item
+$cache-&gt;exists('key');
+</code></pre>
+
+<h1>Auto Fetch Data By Closure</h1>
+
+<p>Using call method to auto detect is cache exists or not.</p>
+
+<pre><code class="php">$data = $cache-&gt;call('flower', function()
+{
+    return array('sakura');
+});
+</code></pre>
+
+<p>It is same as this code:</p>
+
+<pre><code class="php">if (!$cache-&gt;exists('flower'))
+{
+    $cache-&gt;set('flower', array('sakura'));
+}
+
+$data = $cache-&gt;get('flower');
+</code></pre>
+
+<h1>Debug Mode or Cache Disabled</h1>
+
+<p>When debug property in global config se to <code>1</code> or cache disabled, the cache storage will auto set to <code>NullStorage</code>, cache can still be used
+ but no work.</p>
+
+<pre><code class="php">// If cache disabled
+$cache = \Windwalker\Ioc::getCache();
+
+// Cache object can be get and operate, but the key will always not exists.
+if (!$cache-&gt;exists('flower'))
+{
+    $data = $flowerMapper-&gt;loadAll();
+
+    $cache-&gt;set('flower', $data);
+}
+else
+{
+    $data = $cache-&gt;get('flower');
+}
+
+return $data;
+</code></pre>
+
+<h1>Using Custom Cache Object</h1>
+
+<p>The previous we mentioned global cache, but we can still create our custom cache to store values, it will not affected by global config.</p>
+
+<h2>Use CacheFactory</h2>
+
+<p>CacheFactory is a cache creator, it will store each cache object as singleton by different name.</p>
+
+<pre><code class="php">use Windwalker\Core\Cache\CacheFactory;
+
+$myFileCache = CacheFactory::getCache('cache_name', 'file');
+$myRuntimeCache = CacheFactory::getCache('cache_name', 'runtime');
+</code></pre>
+
+<p>Te default cache is runtime cache, it means our data only keep in once runtime but will not save as files.</p>
+
+<h2>Custom Cache Options</h2>
+
+<pre><code class="php">$options = array(
+    'cache_dir' =&gt; WINDWALKLER_ROOT . '/cache', // Only for file storage
+    'cache_time' =&gt; 999 // minutes
+);
+
+$cache = CacheFactory::getCache('cache_name', 'file', 'serialize', $options);
+</code></pre>
+
+<h1>Full Page Cache</h1>
+
+<p>Sometimes we want to store whole html as static page cache. <code>StringHandler</code>  help us save raw string:</p>
+
+<pre><code class="php">use Windwalker\Cache\Cache;
+use Windwalker\Cache\Storage\RawFileStorage;
+
+$cache = CacheFactory::getCache('cache_name', 'file', 'string');
+
+$url = 'http://mysite.com/foo/bar/baz';
+
+if ($cache-&gt;has($url))
+{
+    $html = $cache-&gt;get($url);
+
+    exit();
+}
+
+$view = new View;
+
+$html = $view-&gt;render();
+
+$cache-&gt;set($url, $html);
+
+echo $html;
+</code></pre>
+
+<h2>Supported Handlers</h2>
+
+<ul>
+<li>SerializeHandler</li>
+<li>JsonHandler</li>
+<li>StringHandler</li>
+</ul>
+
+<p><a href="https://github.com/ventoviro/windwalker-cache">More about Windwalker Cache</a></p>
 
 
                     <hr />
