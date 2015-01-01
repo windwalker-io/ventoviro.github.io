@@ -278,7 +278,7 @@ dl dd {
   border-bottom: 1px solid #eee;
   padding-bottom: 5px;
 }
-.article-content :not(pre) code {
+.article-content :not(pre) > code {
   font-size: 15px;
   color: #333;
   background-color: #f6f6f6;
