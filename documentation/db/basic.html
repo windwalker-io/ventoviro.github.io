@@ -167,6 +167,9 @@
                 <a href="../../documentation/more/facades.html">Facades</a>
             </li>
                     <li class="">
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
@@ -200,7 +203,20 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <h1>Get Database</h1>
+                    <h1>Configure Database</h1>
+
+<p>In a new project, you should rename <code>/etc/secret.dist.yml</code> to <code>/etc/secret.yml</code>, and fill your database account information:</p>
+
+<pre><code class="yaml">database:
+    driver: mysql
+    host: localhost
+    user: account
+    password: your_password
+    name: your_db_name
+    prefix: wind_
+</code></pre>
+
+<h1>Get Database</h1>
 
 <p>In DatabaseModel, you can get internal DB object.</p>
 
@@ -218,9 +234,7 @@ $db = $container-&gt;get('system.database');
 
 <p>This is an example of insert data.</p>
 
-<pre><code class="php">$db = DatabaseFactory::getDbo();
-
-$sql = 'INSERT INTO foo_table (title, state) VALUES ("Flower", 1)';
+<pre><code class="php">$sql = 'INSERT INTO foo_table (title, state) VALUES ("Flower", 1)';
 
 $db-&gt;setQuery($sql);
 
@@ -275,19 +289,9 @@ $items = $db-&gt;loadAll('assoc');
 
 <h1>Table Prefix</h1>
 
-<p>Add <code>prefix</code> in options when you create DB object, then DB object will auto replace all <code>#__</code> with prefix in every query:</p>
+<p>Add <code>prefix</code> in <code>secret.yml</code> config file, then DB object will auto replace all <code>#__</code> with prefix in every query:</p>
 
-<pre><code class="php">$options = array(
-    'host'     =&gt; 'localhost',
-    'user'     =&gt; 'db_user',
-    'password' =&gt; 'db_pass',
-    'database' =&gt; 'my_dbname',
-    'prefix'   =&gt; 'foo_'
-);
-
-$db = DatabaseFactory::getDbo('mysql', $options);
-
-$items = $db-&gt;setQuery('SELECT * FROM #__articles')-&gt;loadAll();
+<pre><code class="php">$items = $db-&gt;setQuery('SELECT * FROM #__articles')-&gt;loadAll();
 
 // The query will be `SELECT * FROM foo_articles`
 </code></pre>
@@ -306,18 +310,6 @@ foreach ($iterator as $row)
 
 <pre><code class="php">$count = count($iterator);
 </code></pre>
-
-<h1>Using Commands</h1>
-
-<p>Database Commands is some powerful tool set help us operate database, here is commands documents:</p>
-
-<ul>
-<li><a href="docs/reader.md">Reader Command</a></li>
-<li><a href="docs/writer.md">Writer Command</a></li>
-<li><a href="docs/transaction.md">Transaction Command</a></li>
-<li><a href="docs/database.md">Database Command</a></li>
-<li><a href="docs/table.md">Table Command</a></li>
-</ul>
 
 <h1>Logging</h1>
 
@@ -399,7 +391,7 @@ $db-&gt;setQuery('A WRONG QUERY')-&gt;execute();
             </p>
 
             <p>
-                Copyright &copy; 2014 Windwalker. All Rights Reserved.
+                Copyright &copy; 2015 Windwalker. All Rights Reserved.
             </p>
             <p class="back">
                 <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>

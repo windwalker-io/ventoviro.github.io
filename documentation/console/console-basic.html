@@ -167,6 +167,9 @@
                 <a href="../../documentation/more/facades.html">Facades</a>
             </li>
                     <li class="">
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
@@ -200,7 +203,48 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Use Windwalker Console</h1>
+
+<p>Windwalker Console is a powerful CLI tool set to help us do many things. It is based on <a href="https://github.com/ventoviro/windwalker-console">Windwalker Console Package</a>.</p>
+
+<p>To use Windwalker console, type this command in terminal:</p>
+
+<pre><code class="bash">php bin/console
+</code></pre>
+
+<p>You will see this help information:</p>
+
+<pre><code class="bash">Windwalker Console - version: 2.0
+------------------------------------------------------------
+
+[console Help]
+
+The default application command
+
+Usage:
+  console &lt;command&gt; [option]
+
+
+Options:
+
+  -h | --help       Display this help message.
+  -q | --quiet      Do not output any message.
+  -v | --verbose    Increase the verbosity of messages.
+  --ansi            Set 'off' to suppress ANSI colors on unsupported terminals.
+
+Commands:
+
+  migration    Database migration system.
+  seed         The data seeder help you create fake data.
+  build        Some useful tools for building system.
+
+Welcome to Windwalker Console.
+
+</code></pre>
+
+<p>Currently there are only 3 commands available, we'll add more useful tools in the future.</p>
+
+<p>See: <a href="../db/migration.html">Migration and Seeding</a></p>
 
 
                     <hr />
@@ -233,7 +277,7 @@
             </p>
 
             <p>
-                Copyright &copy; 2014 Windwalker. All Rights Reserved.
+                Copyright &copy; 2015 Windwalker. All Rights Reserved.
             </p>
             <p class="back">
                 <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>

@@ -26,7 +26,7 @@ class FooMapper extends DataMapper
 $data = (new FooMapper)->findAll();
 ```
 
-Or using static:
+Or using static proxy:
 
 ``` php
 abstract class FooMapper
@@ -318,4 +318,4 @@ See: [Windwalker Compare](https://github.com/ventoviro/windwalker-compare)
 
 # Using Data and DataSet
 
-See: [Windwalker Data](https://github.com/ventoviro/windwalker-data)
+See: [Data Object](../more/data-object.html)

@@ -3,6 +3,20 @@ title: Basic Database Usage
 
 ---
 
+# Configure Database
+
+In a new project, you should rename `/etc/secret.dist.yml` to `/etc/secret.yml`, and fill your database account information:
+
+``` yaml
+database:
+    driver: mysql
+    host: localhost
+    user: account
+    password: your_password
+    name: your_db_name
+    prefix: wind_
+```
+
 # Get Database
 
 In DatabaseModel, you can get internal DB object.
@@ -24,8 +38,6 @@ $db = $container->get('system.database');
 This is an example of insert data.
 
 ``` php
-$db = DatabaseFactory::getDbo();
-
 $sql = 'INSERT INTO foo_table (title, state) VALUES ("Flower", 1)';
 
 $db->setQuery($sql);
@@ -84,19 +96,9 @@ $items = $db->loadAll('assoc');
 
 # Table Prefix
 
-Add `prefix` in options when you create DB object, then DB object will auto replace all `#__` with prefix in every query:
+Add `prefix` in `secret.yml` config file, then DB object will auto replace all `#__` with prefix in every query:
 
 ``` php
-$options = array(
-    'host'     => 'localhost',
-    'user'     => 'db_user',
-    'password' => 'db_pass',
-    'database' => 'my_dbname',
-    'prefix'   => 'foo_'
-);
-
-$db = DatabaseFactory::getDbo('mysql', $options);
-
 $items = $db->setQuery('SELECT * FROM #__articles')->loadAll();
 
 // The query will be `SELECT * FROM foo_articles`
@@ -118,16 +120,6 @@ It allows also to count the results.
 ``` php
 $count = count($iterator);
 ```
-
-# Using Commands
-
-Database Commands is some powerful tool set help us operate database, here is commands documents:
-
-- [Reader Command](docs/reader.md)
-- [Writer Command](docs/writer.md)
-- [Transaction Command](docs/transaction.md)
-- [Database Command](docs/database.md)
-- [Table Command](docs/table.md)
 
 # Logging
 

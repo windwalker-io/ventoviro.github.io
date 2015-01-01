@@ -26,6 +26,7 @@ More:
   more/caching: Caching
   more/events: Events
   more/facades: Facades
+  more/data-object: Data Object
   more/widget-renderer: Widget and Renderer
   more/form-builder: Form Builder
   more/html-builder: HTML Builder

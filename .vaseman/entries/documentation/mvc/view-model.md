@@ -19,12 +19,12 @@ The benefit of this pattern is that View can decide which data they are needed a
 
 ![mvc](https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg)
 
-![ww-mvc](https://cloud.githubusercontent.com/assets/1639206/5587062/82fedd9a-911b-11e4-84c3-96358524d2c8.jpg)
+![ww-mvc](https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg)
 
 ## ViewModel
 
-View is not directly communicate to Model, there is a `ViewModel` object in the middle of them. You can see ViewModel 
-as a Models manager. 
+View is not directly communicate to Model, there is a `ViewModel` object between them. You can consider ViewModel 
+as a Model manager. 
 
 ![view-model](https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg)
 

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Table and Schema | Windwalker - A Modern PHP Framework</title>
+        <title>Data Object | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Table and Schema | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Data Object | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
         
@@ -72,7 +72,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Table and Schema</h1>
+        <h1>Data Object</h1>
     </div>
         </div>
     </section>
@@ -128,7 +128,7 @@
                     <li class="">
                 <a href="../../documentation/db/read-write.html">Read and Write</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/db/table-schema.html">Table and Schema</a>
             </li>
                     <li class="">
@@ -166,7 +166,7 @@
                     <li class="">
                 <a href="../../documentation/more/facades.html">Facades</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
@@ -203,107 +203,153 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <h1>Table Command</h1>
+                    <h1>Using Data Object</h1>
 
-<p>Get Table Command.</p>
+<p>The constructor of <code>Data</code> can insert an array or object, it will convert to Data properties.</p>
 
-<pre><code class="php">$table = $db-&gt;getTable('#__articles');
+<pre><code class="php">use Windwalker\Data\Data;
+
+$array = array(
+    'foo' =&gt; 'bar',
+    'flower' =&gt; 'sakura'
+);
+
+$data = new Data($array);
+
+echo $data-&gt;flower; // sakura
 </code></pre>
 
-<h2>create()</h2>
+<h2>Binding object into it</h2>
 
-<p>Create a new table.</p>
+<pre><code class="php">$obj = new \stdClass;
+$obj-&gt;goo = 'yoo';
 
-<blockquote>
-  <p><em>NOTE:</em> Table has not support foreign key now.</p>
-</blockquote>
+$data-&gt;bind($obj);
 
-<pre><code class="php">use Windwalker\Database\Schema\Column;
-use Windwalker\Database\Schema\Key;
-use Windwalker\Database\Schema\DataType;
-
-$table = $db-&gt;getTable('#__articles');
-
-$table-&gt;addColumn('id', DataType::INTEGER, Column::UNSIGNED, Column::NOT_NULL, '', 'PK', array('primary' =&gt; true))
-    -&gt;addColumn('name', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Name', array('length' =&gt; 255))
-    -&gt;addColumn('alias', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Alias')
-    -&gt;addIndex(Key::TYPE_INDEX, 'idx_name', 'name', 'Test')
-    -&gt;addIndex(Key::TYPE_UNIQUE, 'idx_alias', 'alias', 'Alias Index')
-    -&gt;create(true); // True to add IF NOT EXISTS
+echo $data-&gt;goo; // yoo
 </code></pre>
 
-<p>Using Column type objects:</p>
+<h2>Get and Set property</h2>
 
-<pre><code class="php">use Windwalker\Database\Schema\Column;
+<p>Data object has magic method to be getter and setter of any property, we don't need to worry about the property exists or not. Non-exists property will return <code>null</code>.</p>
 
-$table-&gt;addColumn(new Column\Primary('id'))
-    -&gt;addColumn(new Column\Varchar('name'))
-    -&gt;addColumn(new Column\Char('type'))
-    -&gt;addColumn(new Column\Timestamp('created'))
-    -&gt;addColumn(new Column\Bit('state'))
-    -&gt;addColumn(new Column\Integer('uid'))
-    -&gt;addColumn(new Column\Tinyint('status'))
-    -&gt;create();
+<pre><code class="php">echo $data-&gt;foo; // exists
+
+echo $data-&gt;yoo; // Not exists, but no warning, it will return null.
 </code></pre>
 
-<p>These objects will set default length and attributes for every column, and map the type to different database drivers.</p>
+<p>We can also using getter and setter:</p>
 
-<h2>update()</h2>
+<pre><code class="php">$data-&gt;set('flower', 'rose');
 
-<p>Update table schema. Only use on add columns and indexes.</p>
-
-<pre><code class="php">use Windwalker\Database\Schema\Column;
-use Windwalker\Database\Schema\Key;
-
-$table = $db-&gt;getTable('#__articles');
-
-$table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 0, 'State', array('position' =&gt; 'AFTER ordering', 'length' =&gt; 1))
-    -&gt;addIndex(Key::TYPE_INDEX, 'idx_ordering', array('ordering', 'id'))
-    -&gt;update();
+echo $data-&gt;get('flower');
 </code></pre>
 
-<h2>save()</h2>
+<h2>Default Value</h2>
 
-<p>If table exists, using update, otherwise use insert.</p>
+<p>If some property not exists, we can get a default value.</p>
 
-<pre><code class="php">use Windwalker\Database\Schema\Column;
-use Windwalker\Database\Schema\Key;
+<pre><code class="php">echo $data-&gt;get('flower', 'Default value');
 
-$table = $db-&gt;getTable('#__articles');
+// OR
 
-$table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 0, 'State', array('position' =&gt; 'AFTER ordering', 'length' =&gt; 1))
-    -&gt;addIndex(Key::TYPE_INDEX, 'idx_ordering', array('ordering', 'id'))
-    -&gt;save();
+echo $data-&gt;flower ? : 'Default Value';
 </code></pre>
 
-<h2>dropColumn()</h2>
+<h2>Array Access</h2>
 
-<pre><code class="php">$table = $db-&gt;getTable('#__articles');
+<p>Using array access to get property:</p>
 
-$table-&gt;dropColumn('state');
+<pre><code class="php">// Set
+$data['flower'] = 'Sunflower';
+
+// Get
+echo $data['flower'];
 </code></pre>
 
-<h2>dropIndex()</h2>
+<h2>Iterator</h2>
 
-<pre><code class="php">use Windwalker\Database\Schema\Key;
+<p><code>Data</code> object can directly use in foreach as iterator:</p>
 
-$table = $db-&gt;getTable('#__articles');
-
-$table-&gt;dropIndex(Key::TYPE_INDEX, 'idx_state');
+<pre><code class="php">foreach ($data as $key =&gt; $value)
+{
+    echo $key . ' =&gt; ' . $value;
+}
 </code></pre>
 
-<h2>rename()</h2>
+<h2>Null Data</h2>
 
-<pre><code class="php">$table = $db-&gt;getTable('#__foo');
+<p>In PHP, an empty object means not empty, so this code will return FALSE:</p>
 
-$newTable = $table-&gt;rename('#__bar');
+<pre><code class="php">$data = new Data; // Data object with no properties
+
+// IS NULL?
+var_dump(empty($data)); // bool(false)
 </code></pre>
 
-<h2>truncate()</h2>
+<p>So we use <code>isNull()</code> method to detect whether object is empty or not, this is similar to <a href="http://en.wikipedia.org/wiki/Null_Object_pattern">Null Object pattern</a>:</p>
 
-<pre><code class="php">$table = $db-&gt;getTable('#__foo');
+<pre><code class="php">$data = new Data;
 
-$table-&gt;truncate();
+// IS NULL?
+var_dump($data-&gt;isNull()); // bool(true)
+</code></pre>
+
+<p>Another simple way is convert it to array, this also work:</p>
+
+<pre><code class="php">// IS NULL?
+var_dump(empty((array) $data)); // bool(true)
+</code></pre>
+
+<h1>Using DataSet Object</h1>
+
+<p><code>DataSet</code> is a data collection bag for <code>Data</code> object. We can insert array with data in constructor.</p>
+
+<pre><code class="php">use Windwalker\Data\Data;
+use Windwalker\Data\DataSet;
+
+$dataSet = new DataSet(
+    array(
+        new Data(array('id' =&gt; 3, 'title' =&gt; 'Dog')),
+        new Data(array('id' =&gt; 4, 'title' =&gt; 'Cat')),
+    )
+);
+</code></pre>
+
+<h2>Array Access</h2>
+
+<p>Operate <code>DataSet</code> as an array, it use magic method to get and set data.</p>
+
+<pre><code class="php">echo $dataSet[0]-&gt;title; // Dog
+</code></pre>
+
+<p>Push a new element:</p>
+
+<pre><code class="php">$dataSet[] = new Data(array('id' =&gt; 6, 'title' =&gt; 'Lion'));
+</code></pre>
+
+<h2>Iterator</h2>
+
+<p>We can also using iterator to loop all elements:</p>
+
+<pre><code class="php">foreach ($dataSet as $data)
+{
+    echo $data-&gt;title;
+}
+</code></pre>
+
+<h2>The Batch Getter &amp; Setter</h2>
+
+<p>Get values of <code>foo</code> field from all data objects.</p>
+
+<pre><code class="php">// will be an array of every Data's foo property
+$value = $dataset-&gt;foo;
+</code></pre>
+
+<p>Set value to <code>bar</code> field of all object.</p>
+
+<pre><code class="php">// will set 'Fly' to every Data's bar property
+$dataset-&gt;bar = 'Fly';
 </code></pre>
 
 

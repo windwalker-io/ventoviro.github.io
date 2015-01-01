@@ -167,6 +167,9 @@
                 <a href="../../documentation/more/facades.html">Facades</a>
             </li>
                     <li class="">
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
@@ -200,7 +203,105 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Introduction of Service Provider</h1>
+
+<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
+custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+
+<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
+and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+
+<h2>Basic Provider Example</h2>
+
+<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
+
+<h3>Original Way</h3>
+
+<pre><code class="php">// import.mongodb.php
+
+$conn = new MongoDBConnection($config['database']['mongodb']);
+
+return $conn;
+</code></pre>
+
+<p>And include this file:</p>
+
+<pre><code class="php">$mongo = include_once 'import.mongodb.php';
+</code></pre>
+
+<h3>Windwalker Way</h3>
+
+<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
+
+<pre><code class="php">use Windwalker\DI\Container;
+use Windwalker\DI\ServiceProviderInterface;
+
+class MongoDBServiceProvider implements ServiceProviderInterface
+{
+    public function register(Container $container)
+    {
+        $container-&gt;share('mongo.db', function (Container $container)
+        {
+            $config = $container-&gt;get('config');
+
+            return new MongoDBConnection($config-&gt;get('database.mongodb'));
+        });
+    }
+}
+
+</code></pre>
+
+<p>Register this provider to container:</p>
+
+<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
+</code></pre>
+
+<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
+
+<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+
+// OR
+
+$mongo = Ioc::get('mongo.db');
+</code></pre>
+
+<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+
+<h1>Registering Providers</h1>
+
+<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
+you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+
+<pre><code class="php">public function loadProviders()
+{
+    $providers = parent::loadProviders();
+
+    // Default providers ...
+
+    /*
+     * Custom Providers:
+     * -----------------------------------------
+     * You can add your own providers here. If you installed a 3rd party packages from composer,
+     * but this package need some init logic, create a service provider to do this and register it here.
+     */
+
+    // Custom Providers here...
+    $providers['mongodb'] = new MongoDBServiceProvider;
+
+    return $providers;
+}
+</code></pre>
+
+<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+
+<ul>
+<li><code>src/Windwalker/Web/Application.php</code></li>
+<li><code>src/Windwalker/Console/Application/php</code></li>
+<li><code>src/Windwalker.php</code></li>
+</ul>
+
+<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
+for console use, or add it in <code>Windwalker.php</code> for both.</p>
 
 
                     <hr />
@@ -233,7 +334,7 @@
             </p>
 
             <p>
-                Copyright &copy; 2014 Windwalker. All Rights Reserved.
+                Copyright &copy; 2015 Windwalker. All Rights Reserved.
             </p>
             <p class="back">
                 <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
