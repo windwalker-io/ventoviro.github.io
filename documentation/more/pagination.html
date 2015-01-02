@@ -200,7 +200,178 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Start Using Pagination</h1>
+
+<p>Using Pagination in Windwalker is very easy, but you must know how to count pages in your SQL.</p>
+
+<p>A pagination always need 3 integers, <strong>Total rows</strong>, <strong>Items per page</strong>, and <strong>Current page</strong>.</p>
+
+<p>For SQL and programming, this 3 integers will be  <strong>Total</strong>, <strong>Limit</strong>, and <strong>Offset</strong>.</p>
+
+<h2>Count Total Rows</h2>
+
+<p>Some times we will fetch items from database by SQL which looks like this:</p>
+
+<pre><code class="sql">SELECT * 
+FROM sakuras
+WHERE state = 1
+    AND author = 25
+ORDER BY created
+LIMIT 0, 20
+</code></pre>
+
+<p>This is a common way to count total rows by remove <code>LIMIT</code> element and select <code>COUNT(*)</code>.</p>
+
+<pre><code class="sql">SELECT COUNT(*) 
+FROM sakuras
+WHERE state = 1
+    AND author = 25
+ORDER BY created
+</code></pre>
+
+<p>Use the second query we'll fetch total rows of first query without limit.</p>
+
+<h3>Another Way to Count Total</h3>
+
+<p>Use <code>SQL_CALC_FOUND_ROWS</code> in only MySQL.</p>
+
+<pre><code class="php">SELECT SQL_CALC_FOUND_ROWS *
+FROM sakuras
+WHERE state = 1
+    AND author = 25
+ORDER BY created
+LIMIT 0, 20
+</code></pre>
+
+<p>And use <code>SELECT FOUND_ROWS()</code> to fetch total rows, this way will a little faster then first way if you set index correctly
+, but only MySQL works.</p>
+
+<h3>Count Total if SQL has GROUP</h3>
+
+<p>If you add <code>group</code> in your SQL, the <code>COUNT(*)</code> will be incorrect, we must use an inefficient way to count all results.</p>
+
+<p>This is the main query of yours.</p>
+
+<pre><code class="sql">SELECT *
+FROM sakuras AS a
+    LEFT JOIN flowers AS b ON a.flower_id = b.id
+WHERE state = 1
+    AND author = 25
+ORDER BY created
+LIMIT 0, 20
+GROUP a.id
+</code></pre>
+
+<p>Remove <code>LIMIT</code> then execute this SQL:</p>
+
+<pre><code class="sql">SELECT *
+FROM sakuras AS a
+    LEFT JOIN flowers AS b ON a.flower_id = b.id
+WHERE state = 1
+    AND author = 25
+ORDER BY created
+GROUP a.id
+</code></pre>
+
+<p>And use <code>ReaderCommand::count()</code>:</p>
+
+<pre><code class="php">$total = $db-&gt;getReader($sql)-&gt;count();
+</code></pre>
+
+<h2>Create Pagination</h2>
+
+<p>This is an example to fetch rows and total:</p>
+
+<pre><code class="php">$limit = 20;
+$page  = $input-&gt;get('page', 1);
+$start = ($page - 1) * $limit;
+
+$query = $db-&gt;getQuery(true);
+
+// Basic query
+$query-&gt;select('*')
+    -&gt;from('sakuras')
+    -&gt;where('state = 1')
+    -&gt;where('author = 25')
+    -&gt;order('created')
+    -&gt;limit($limit, $start);
+
+// Load rows
+$items = $db-&gt;getReader($query)-&gt;loadObjectList();
+
+// Count total, clear non-necessary sql elements
+$query-&gt;clear(array('select', 'limit', 'offset', 'order'))
+    -&gt;select('COUNT(*)');
+
+$total = $db-&gt;getReader($query)-&gt;loadResult();
+
+// Create pagination object
+$pagination = new Pagination($total, $page, $limit);
+
+// Get PaginationResult object
+$paginData = $pagination-&gt;getResult();
+</code></pre>
+
+<h1>Pagination Result</h1>
+
+<p><code>PaginationResult</code> to an object contains pagination information, you can get these dat from it:</p>
+
+<pre><code class="php">$paginData = $pagination-&gt;getResult();
+
+$paginData-&gt;getFirst();    // page number
+$paginData-&gt;getLess();     // page number
+$paginData-&gt;getPrevious(); // page number
+$paginData-&gt;getPages();    // An array or pages
+$paginData-&gt;getNext();     // page number
+$paginData-&gt;getMore();     // page number
+$paginData-&gt;getLast();     // page number
+
+// Print all
+print_r($paginData-&gt;getAll());
+</code></pre>
+
+<p>The output is:</p>
+
+<pre><code class="html">Array
+(
+    [1] =&gt; first
+    [7] =&gt; less
+    [8] =&gt; lower
+    [9] =&gt; lower
+    [10] =&gt; lower
+    [11] =&gt; lower
+    [12] =&gt; current
+    [13] =&gt; higher
+    [14] =&gt; higher
+    [15] =&gt; higher
+    [16] =&gt; higher
+    [17] =&gt; more
+    [25] =&gt; last
+)
+</code></pre>
+
+<p>You can use this array to build your pagination HTML.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5594615/131c1546-928e-11e4-8103-f90e73f4428d.jpg" alt="pagination" /></p>
+
+<h1>Use Built-in Pagination Template</h1>
+
+<p><code>render()</code> method will auto render pagination HTML, the default template is <code>windwalker.pagination.default</code>. 
+The first argument (route resources name) is required because pagination use <code>Router</code> to get page url.</p>
+
+<pre><code class="php">echo $pagination-&gt;render('flower:sakuras');
+</code></pre>
+
+<h2>Use Your Own Template</h2>
+
+<p>Add your template file in <code>/templates/windwalker/pagination/default.php</code>, Windwalker renderer will auto find it to replace built-in template.</p>
+
+<p>Or use second argument to point to other template:</p>
+
+<pre><code class="php">echo $pagination-&gt;render('flower:sakuras', 'mywidget.pagination');
+</code></pre>
+
+<p>See also: <a href="widget-renderer.html">Widget and Renderer</a></p>
 
 
                     <hr />

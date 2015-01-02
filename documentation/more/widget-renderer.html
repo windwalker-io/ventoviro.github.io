@@ -200,7 +200,118 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>What is Widget Object</h1>
+
+<p>Widget object is a convenience tool to help us render HTML blocks, you can consider it as a backend web component.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5594250/e28c0d56-927d-11e4-8f32-19005916710c.jpg" alt="widget" /></p>
+
+<h1>Create A Widget</h1>
+
+<p>First, add a template file in <code>/templates/sidebar/news.php</code>, this is a news widget.</p>
+
+<pre><code class="html">&lt;ul class="nav news"&gt;
+    &lt;?php foreach ($data-&gt;articles as $article): ?&gt;
+    &lt;li&gt;
+        &lt;a href="&lt;?php echo $article-&gt;link; ?&gt;"&gt;
+            &lt;?php echo $article-&gt;title; ?&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;?php endforeach; ?&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>Now we can use this widget in anywhere, remember add data when rendering it:</p>
+
+<pre><code class="php">use Windwalker\Core\Widget\Widget;
+
+$news = new Widget('sidebar.news');
+
+$news-&gt;render(array('articles' =&gt; $data));
+
+// In PHP 5.4, you can use instantiation object access
+$news = (new Widget('sidebar.news'))-&gt;render(['articles' =&gt; $data]);
+
+// In PHP 5.3, you can use with() to simulate instantiation object access
+$news = with(new Widget('sidebar.news'))-&gt;render(array('articles' =&gt; $data));
+</code></pre>
+
+<p>It will be useful to render widget in View <code>prepareData()</code>:</p>
+
+<pre><code class="php">class SakurasHtmlView extends HtmlView
+{
+    protected function prepareData($data)
+    {
+        $data-&gt;items      = $this-&gt;model-&gt;getItems();
+        $data-&gt;categories = $this-&gt;model['Categories']-&gt;getItems();
+
+        $data-&gt;news       = (new Widget('sidebar.news'))-&gt;render(array('articles' =&gt; $data-&gt;items));
+        $data-&gt;pagination = (new Widget('_global.pagination.pagination'))-&gt;render(array('pages' =&gt; $this-&gt;model-&gt;getPagination()));
+        $data-&gt;categories = (new Widget('sidebar.categories'))-&gt;render(array('categories' =&gt; $data-&gt;categories));
+        $data-&gt;banner     = (new Widget('sidebar.banner'))-&gt;render(array('banner' =&gt; $data-&gt;banner));
+    }
+}
+</code></pre>
+
+<h1>Templating</h1>
+
+<p>By default, widget will find templates from these paths:</p>
+
+<pre><code class="html">[0] =&gt; /templates
+[1] =&gt; /vendor/windwalker/core/src/Core/Resources/Templates
+</code></pre>
+
+<p>You may add your custom path to Widget:</p>
+
+<pre><code class="php">use Windwalker\Utilities\Queue\Priority;
+
+$widget-&gt;addPath('/my/widget/path', Priority::HIGH);
+</code></pre>
+
+<p>Widget also use <a href="https://github.com/ventoviro/windwalker-renderer">Windwalker Renderer</a> to render page, 
+you need to add priority to set the ordering of this path.</p>
+
+<h2>Add Path to Global</h2>
+
+<p>Add your path to global RendererHelper that Widget will always contain this path:</p>
+
+<pre><code class="php">\Windwalker\Core\Renderer\RendererHelper::addPath('/my/widget/path', Priority::ABOVE_NORMAL);
+</code></pre>
+
+<h1>Override Built-in Widgets Templates</h1>
+
+<p>Windwalker has some built-in widgets, it contains: <code>messages</code>, <code>pagination</code>, <code>error pages</code>.</p>
+
+<p>There is an example to override messages template, the global message template is located at</p>
+
+<pre><code class="html">/vendor/windwalker/core/src/Core/Resources/Templates/windwalker/message/default.php
+</code></pre>
+
+<p>So we can add a custom template at:</p>
+
+<pre><code class="html">/templates/windwalker/message/default.php
+</code></pre>
+
+<p>Now all messages in Windwalker will use your template to render.</p>
+
+<blockquote>
+  <p>Override other widgets please see: <a href="pagination.html">Pagination</a> and <a href="error-handling.html">Error Handling</a></p>
+</blockquote>
+
+<h1>Use Blade and Twig</h1>
+
+<p>Similar to View, Windwalker Widget support Blade and Twig engine, you may just create it by newing it:</p>
+
+<pre><code class="php">use Windwalker\Core\Widget\BladeWidget;
+use Windwalker\Core\Widget\TwigWidget;
+
+$news = new BladeWidget('sidebar.news');
+$news = new TwigWidget('sidebar.news');
+</code></pre>
+
+<blockquote>
+  <p>See also: <a href="http://laravel.com/docs/4.2/templates">Blade Templating</a> and <a href="http://twig.sensiolabs.org/documentation">Twig Documentation</a></p>
+</blockquote>
 
 
                     <hr />
