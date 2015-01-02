@@ -1,0 +1,9 @@
+{% extends 'default-page.twig' %}
+
+{% block submenu %}
+    <div class="uk-width-medium-1-4 uk-container-center">
+        {% include 'sub-menu.twig' with {'menu': 'about'} %}
+    </div>
+{% endblock %}
+
+{% block article_footer %}{% endblock %}

@@ -17,9 +17,7 @@ The benefit of this pattern is that View can decide which data they are needed a
 
 ## Schematic Diagram
 
-![mvc](https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg)
-
-![ww-mvc](https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg)
+![mvc](https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg) ![ww-mvc](https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg)
 
 ## ViewModel
 

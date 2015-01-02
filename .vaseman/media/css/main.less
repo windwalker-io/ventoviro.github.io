@@ -203,7 +203,7 @@ dl {
 }
 
 #banner {
-	background: url(../images/banner.jpg) center -343px no-repeat;
+	background: url(../images/banner.jpg) center -325px no-repeat;
 	-webkit-filter: saturate(0.8);
 	height: 200px;
 
@@ -247,8 +247,8 @@ dl {
 	}
 
 	#banner {
-		height              : 550px;
-		background-position : center center;
+		height: 550px;
+		background-position: center center;
 	}
 }
 
@@ -460,6 +460,38 @@ dl {
 	}
 }
 
+.article-content {
+	h1 {
+		position: relative;
+	}
+
+	a.h1-link {
+		position: absolute;
+		top: 0;
+		left: -30px;
+		color: #eee;
+
+		&:hover {
+			color: #ccc;
+		}
+	}
+}
+.table-of-content ul {
+
+	margin-left: 25px;
+	li {
+		list-style: square;
+		line-height: 1.3;
+	}
+	a {
+		color: #666;
+
+		&:hover {
+			color: #333;
+		}
+	}
+}
+
 // Basic page
 .basic-layout {
 
@@ -496,6 +528,17 @@ dl {
 }
 .mini-img {
 	width: 300px;
+}
+
+// Work
+.work-img {
+	border: 1px solid #ccc;
+}
+.work-item {
+	h1, h2, h3, h4, h5, h6 {
+		margin-top: .5em;
+		margin-bottom: 1em;
+	}
 }
 
 #footer {

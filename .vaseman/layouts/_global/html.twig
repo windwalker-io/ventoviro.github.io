@@ -60,13 +60,13 @@
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
-                {#<li class="{{ active == 'about' ? 'uk-ctive' : '' }}">#}
-                    {#<a href="{{ uri.base }}about.html">#}
-                        {#<span class="menu-item-title">About</span>#}
-                    {#</a>#}
-                {#</li>#}
+                <li class="{{ path[0] == 'about' ? 'uk-active' : '' }}">
+                    <a href="{{ uri.base }}about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
 
-                <li class="">
+                <li class="{{ path[0] == 'documentation' ? 'uk-active' : '' }}">
                     <a href="{{ uri.base }}documentation/start/getting-started.html">
                         <span class="menu-item-title">Documentation</span>
                     </a>

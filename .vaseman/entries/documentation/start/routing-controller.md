@@ -114,6 +114,11 @@ Or use wildcards to map all methods to one controller:
         '*': SakuraController
 ```
 
+## Override Methods
+
+If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in HTTP query, this param will override 
+real HTTP method. For example: `&_method=DELETE` will raise `DeleteController`. 
+
 ## Limit By Methods
 
 We can limit our route by some options, if the HTTP request not match this rule, this route will be ignored,
