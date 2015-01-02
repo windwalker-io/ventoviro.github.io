@@ -51,7 +51,7 @@ Before start writing Windwalker, we survey many frameworks, Symfony is too heavy
  after months thinking, we decided to create a framework to fill the missing position between Symfony and Laravel. There are something 
  we can do better than others, we don't want to lose it. 
 
-We know PHP developers has already sick of too many frameworks in this world, so we don't change too many things. We try to make 
+We know PHP developers has already sick of too many frameworks in this world, so we don't change too mush thing. We try to make 
 some architecture similar to current frameworks and common PHP practices, and make the interface VERY VERY simple to understand.
 We hope Windwalker will not bring too much pain on learning it. If you don't want to use Windwalker framework, 
 but there is useful package which you are interested, you may install and use it easily. 

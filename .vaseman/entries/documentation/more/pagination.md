@@ -49,7 +49,7 @@ ORDER BY created
 LIMIT 0, 20
 ```
 
-And use `SELECT FOUND_ROWS()` to fetch total rows, this way will a little faster then first way if you set index correctly
+And use `SELECT FOUND_ROWS()` to fetch total rows, this way will a little faster than first way if you set index correctly
 , but only MySQL works.
 
 ### Count Total if SQL has GROUP
@@ -124,7 +124,7 @@ $paginData = $pagination->getResult();
 
 # Pagination Result
 
-`PaginationResult` to an object contains pagination information, you can get these dat from it:
+`PaginationResult` to an object contains pagination information, you can get pages data from this object:
 
 ``` php
 $paginData = $pagination->getResult();

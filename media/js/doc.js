@@ -34,5 +34,9 @@ $(document).ready(function()
 		h1.prepend($('<a class="h1-link" href="#' + title + '">#</a>'));
 	});
 
-	$('.article-content .table-of-content').prepend(nav).prepend('<h1>Table of Content</h1>');
+	var table = $('<div class="table-of-content"></div>');
+
+	table.prepend(nav).prepend('<h1>Table of Content</h1>');
+
+	$('.article-content').prepend(table);
 });
