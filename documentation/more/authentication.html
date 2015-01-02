@@ -118,6 +118,9 @@
                     <li class="">
                 <a href="../../documentation/mvc/view-model.html">ViewModel</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Database</li>
@@ -200,7 +203,213 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Introduction</h1>
+
+<p>Building user system in Windwalker is very easy, Windwalker includes a simple Authenticate package to handle user auth.</p>
+
+<h1>Default User Package</h1>
+
+<p>In Windwalker Starter, there is an User package in <code>src/Windwalker/User</code> and has been registered to system. 
+You can directly modify it to what you needed.</p>
+
+<p>Before using it, you may run this command to import default user package schema:</p>
+
+<pre><code class="bash">php bin/console migration migrate -p=wwuser
+</code></pre>
+
+<h2>Get User</h2>
+
+<pre><code class="php">use Windwalker\Core\Authenticate\User;
+
+// Get current logged-in user
+$user = User::get();
+
+// Get a user by id
+$user = User::get(12);
+
+// Get user by conditions
+$user = User::get(array('username' =&gt; 'christina'));
+</code></pre>
+
+<h2>Login User</h2>
+
+<pre><code class="php">// Prepare user data
+$credential = new Credential;
+$credential-&gt;username = 'richael2123';
+$credential-&gt;password = '12345678';
+
+$bool = User::login($credential);
+</code></pre>
+
+<p>Remember me:</p>
+
+<pre><code class="php">$bool = User::login($credential, true);
+</code></pre>
+
+<h2>Logout User</h2>
+
+<pre><code class="php">$bool = User::logout();
+</code></pre>
+
+<h2>Save User</h2>
+
+<pre><code class="php">use Windwalker\Crypt\Password;
+
+$user-&gt;username = 'riaok3784';
+$user-&gt;password = 'abc1234';
+
+// Hash password
+$password = new Password;
+
+$user-&gt;password = $password-&gt;create($user-&gt;password);
+
+User::save($user);
+</code></pre>
+
+<h2>Delete User</h2>
+
+<pre><code class="php">// Delete by id
+User::delete(12);
+
+// Delete by conditions
+User::delete(array('username' =&gt; 'richael3784'));
+</code></pre>
+
+<h1>Create Your Own User Handler</h1>
+
+<p>Windwalker Built-in Authenticate system can register a custom user handler, this user handler should implement the <code>UserHandlerInterface</code>:</p>
+
+<pre><code class="php">use Windwalker\Core\Authenticate\UserDataInterface;
+use Windwalker\Core\Authenticate\UserHandlerInterface;
+
+class MyUserHandler implements UserHandlerInterface
+{
+    /**
+     * load
+     *
+     * @param array $conditions
+     *
+     * @return  mixed|false
+     */
+    public function load($conditions) {}
+
+    /**
+     * save
+     *
+     * @param UserDataInterface $user
+     *
+     * @return  UserDataInterface
+     */
+    public function save(UserDataInterface $user) {}
+
+    /**
+     * delete
+     *
+     * @param UserDataInterface $user
+     *
+     * @return  boolean
+     */
+    public function delete(UserDataInterface $user) {}
+
+    /**
+     * login
+     *
+     * @param UserDataInterface $user
+     *
+     * @return  boolean
+     */
+    public function login(UserDataInterface $user) {}
+
+    /**
+     * logout
+     *
+     * @param UserDataInterface $user
+     *
+     * @return bool
+     */
+    public function logout(UserDataInterface $user) {}
+}
+</code></pre>
+
+<p>See: <a href="http://goo.gl/P0b2qk">Default UserHandler</a> to learn how to write your use handler.</p>
+
+<p>Then you may register it before application execute:</p>
+
+<pre><code class="php">use Windwalker\Core\Authenticate\User;
+
+User::setHandler(new MyUserHandler);
+</code></pre>
+
+<h1>Create Authenticate Method</h1>
+
+<p>Windwalker Authenticate allow developers attach multiple methods to match user(See <a href="https://github.com/ventoviro/windwalker-authenticate">Document</a>).</p>
+
+<p>This image described how authenticate methods working.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5595002/07d3235a-92a2-11e4-8f1f-5622e2af7254.jpg" alt="p-2015-01-02-5" /></p>
+
+<h2>Example Method to Find User From Database</h2>
+
+<pre><code class="php">use Windwalker\Authenticate\Authenticate;
+use Windwalker\Authenticate\Credential;
+use Windwalker\Authenticate\Method\AbstractMethod;
+use Windwalker\Crypt\Password;
+use Windwalker\DataMapper\DataMapper;
+
+class DatabaseMethod extends AbstractMethod
+{
+    public function authenticate(Credential $credential)
+    {
+        // Not allow empty password
+        if (!$credential-&gt;username || !$credential-&gt;password)
+        {
+            $this-&gt;status = Authenticate::EMPTY_CREDENTIAL;
+
+            return false;
+        }
+
+        $datamapper = new DataMapper('users');
+
+        // Use user data to find user
+        $user = $datamapper-&gt;findOne(array('username' =&gt; $credential-&gt;username));
+
+        // User not found
+        if ($user-&gt;isNull())
+        {
+            $this-&gt;status = Authenticate::USER_NOT_FOUND;
+
+            return false;
+        }
+
+        // User found, start to verify password
+        $password = new Password;
+
+        if (!$password-&gt;verify($credential-&gt;password, $user-&gt;password))
+        {
+            $this-&gt;status = Authenticate::INVALID_CREDENTIAL;
+
+            return false;
+        }
+
+        // Password verify success, return user data.
+        $credential-&gt;bind($user);
+
+        $this-&gt;status = Authenticate::SUCCESS;
+
+        return true;
+    }
+}
+</code></pre>
+
+<p>Then we must register this method before Application executed:</p>
+
+<pre><code class="php">$auth = \Windwalker\Ioc::getAuthenticate();
+$auth-&gt;addMethod('database', new DatabaseMethod);
+
+// OR
+
+User::addMethod('database', new DatabaseMethod);
+</code></pre>
 
 
                     <hr />

@@ -118,6 +118,9 @@
                     <li class="">
                 <a href="../../documentation/mvc/view-model.html">ViewModel</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Database</li>
@@ -453,6 +456,24 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
     )
 )
 </code></pre>
+
+<h1>Build Route</h1>
+
+<p>Every route in Windwalker has a key, we called it <strong>route name</strong> or <strong>route resources</strong>, this name will help us quickly build route.</p>
+
+<pre><code class="php">use Windwalker\Core\Router;
+
+echo Router::build('flower', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="html">flower/25/foo-bar-baz
+</code></pre>
+
+<p>This is a very useful function that you can change roue name but won't worry of link will be broke.</p>
+
+<p>For much more usage, pleas see: <a href="../mvc/route-redirect.html">Route and Redirect</a></p>
 
 <h1>Matchers</h1>
 

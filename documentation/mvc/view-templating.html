@@ -118,6 +118,9 @@
                     <li class="">
                 <a href="../../documentation/mvc/view-model.html">ViewModel</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Database</li>
@@ -511,6 +514,15 @@ class MyBladeHtmlView extends BladeHtmlView
 $view = new MyBladeHtmlView;
 
 echo $view-&gt;setLayout('flower.sakura')-&gt;render();
+</code></pre>
+
+<h2>Get Data in Blade Engine</h2>
+
+<p>In Blade template we don't need to use <code>$data</code>, all properties are at top level:</p>
+
+<pre><code class="php">{{{ $item-&gt;title }}}
+
+{{ $uri['base.path'] }}
 </code></pre>
 
 <h2>How to Use Blade Engine</h2>

@@ -118,6 +118,9 @@
                     <li class="">
                 <a href="../../documentation/mvc/view-model.html">ViewModel</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Database</li>
@@ -200,7 +203,157 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Introduction</h1>
+
+<p>Windwalker has a matured error handling system, it override the native PHP error handler to provide a flexible interface to fetch error message.</p>
+
+<h1>Exception Handling</h1>
+
+<p>Most of time, we throw exception object to change the program process if error occurred:</p>
+
+<pre><code class="php">try
+{
+    if (/* Something error */)
+    {
+        throw new Exception('Error message');
+    }
+}
+catch (Exception $e)
+{
+    // Handle error or redirect
+}
+</code></pre>
+
+<p>If you didn't catch exception and throw it to the top level:</p>
+
+<pre><code class="php">// no catch() to fetch this exception
+throw new Exception('Error message');
+</code></pre>
+
+<p>In native PHP, it will show this error message. Nothing happened, and there is no information for debugging.</p>
+
+<pre><code class="php">Error message.
+</code></pre>
+
+<p>Windwalker includes <a href="http://filp.github.io/whoops/">Whoops</a> as default error handler, the uncaught exception will show this page:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5594830/cad4448c-9299-11e4-940c-06e5d00ef637.jpg" alt="p-2015-01-02-3" /></p>
+
+<h2>Built-in Error Page</h2>
+
+<p>If you don't want to use Whoops, Widwalker still have it own error handler. If we remove WhoopsProvider from Application:</p>
+
+<pre><code class="php">// src/Windwalker/Web/Application
+
+// ...
+
+public function loadProviders()
+{
+    $providers = parent::loadProviders();
+
+    // $providers['debug']    = new WhoopsProvider;
+    $providers['event']    = new EventProvider;
+    $providers['database'] = new DatabaseProvider;
+
+    // ...
+}
+</code></pre>
+
+<p>Now error page will be a simpler one.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5594840/88661bce-929a-11e4-93fd-5b60cda22f46.jpg" alt="p-2015-01-02-4" /></p>
+
+<h1>Close Error Handler</h1>
+
+<p>These two error handlers will only work if debug mode opened, if we close debug mode:</p>
+
+<pre><code class="yaml"># etc/config.yml
+
+system:
+    debug: 0
+    timezone: 'UTC'
+</code></pre>
+
+<p>The error handler will fallback to PHP native.</p>
+
+<h1>Custom Error Template</h1>
+
+<p>Windwalker error handler also use <a href="widget-renderer.html">Renderer</a> to render page. If you want to show a clean error page only
+contains a title which tell user: <strong>Something error, please contact administrator</strong>, you can override the error template.</p>
+
+<p>Add file to <code>/templates/windwalker/error/default.php</code>:</p>
+
+<pre><code class="php">&lt;?php
+// templates/windwalker/error/default.php`
+
+$exception = $data-&gt;exception;
+?&gt;
+&lt;div style="text-align: center"&gt;
+    &lt;h1&gt;Error: &lt;?php echo $exception-&gt;getCode(); ?&gt;&lt;/h1&gt;
+    &lt;h2&gt;Please contact administrator&lt;/h2&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Or change template name:</p>
+
+<pre><code class="php">\Windwalker\Core\Error\ErrorHandler::setErrorTemplate('my.error.tmpl.file');
+</code></pre>
+
+<h1>ErrorHandler Class</h1>
+
+<p>Windwalker use <code>ErrorHandler</code> class to handle all custom error process.</p>
+
+<h2>Register Error And Exception Handler</h2>
+
+<p>In Application, Windwalker use this code to register PHP error handler to it own.</p>
+
+<pre><code class="php">\Windwalker\Core\Error\ErrorHandler::register();
+</code></pre>
+
+<h2>Restore Error Handler</h2>
+
+<p>If you want to use other error handler, you can restore all error handler have set.</p>
+
+<pre><code class="php">\Windwalker\Core\Error\ErrorHandler::restore();
+</code></pre>
+
+<h2>Override It</h2>
+
+<p>Override Built-in ErrorHandler with our own logic.</p>
+
+<pre><code class="php">use Windwalker\Core\Error\ErrorHandler;
+
+class MyErrorHandler extends ErrorHandler
+{
+    /**
+     * The error handler.
+     *
+     * @param   integer  $code     The level of the error raised, as an integer.
+     * @param   string   $message  The error message, as a string.
+     * @param   string   $file     The filename that the error was raised in, as a string.
+     * @param   integer  $line     The line number the error was raised at, as an integer.
+     * @param   mixed    $context  An array that contains variables in the scope which this error occurred.
+     *
+     * @throws  \ErrorException
+     * @return  void
+     *
+     * @see  http://php.net/manual/en/function.set-error-handler.php
+     */
+    public static function error($code ,$message ,$file, $line, $context)
+    {
+        $content = sprintf('%s. File: %s (line: %s)', $message, $file, $line);
+
+        throw new \ErrorException($content, $code, 1, $file, $line);
+    }
+}
+</code></pre>
+
+<p>Then register it:</p>
+
+<pre><code class="php">MyErrorHandler::register();
+</code></pre>
+
+<p>Now all PHP error will throws ErrorException.</p>
 
 
                     <hr />

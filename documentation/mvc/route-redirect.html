@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Facades | Windwalker - A Modern PHP Framework</title>
+        <title>Route and Redirect | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Facades | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Route and Redirect | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
         
@@ -72,7 +72,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Facades</h1>
+        <h1>Route and Redirect</h1>
     </div>
         </div>
     </section>
@@ -118,8 +118,8 @@
                     <li class="">
                 <a href="../../documentation/mvc/view-model.html">ViewModel</a>
             </li>
-                    <li class="">
-                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
+                    <li class="uk-active">
+                <a href="../../documentation/mvc/route-redirect.html">Route and Redirect</a>
             </li>
         
     <li class="uk-nav-divider"></li>
@@ -203,7 +203,163 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Base URI</h1>
+
+<p>Sometimes you may put your application at sub folder of a domain, Windwalker provides a uri data help you get base uri.</p>
+
+<p>If our application located at <code>http://domain.com/sites/windwalker/</code> and we open <code>/flower/sakura</code> page, we may use this code to get uri data:</p>
+
+<pre><code class="php">$uri = \Windwalker\Ioc::get('uri');
+
+// Get Base path
+echo $uri-&gt;get('current');
+echo $uri-&gt;get('base.path');
+echo $uri-&gt;get('base.full');
+echo $uri-&gt;get('base.host');
+echo $uri-&gt;get('media.path');
+echo $uri-&gt;get('media.full');
+echo $uri-&gt;get('route');
+</code></pre>
+
+<p>We will get:</p>
+
+<pre><code class="html">http://domain.com/sites/windwalker/flower/sakura
+/sites/windwalker/
+http://domain.com/sites/windwalker/
+http://domain.com
+/sites/windwalker/media/
+http://domain.com/sites/windwalker/media/
+flower/sakura
+</code></pre>
+
+<p>These data can help our page link strong whenever we put this application.</p>
+
+<h2>Use base.path</h2>
+
+<p>Use this code:</p>
+
+<pre><code class="php">// We can also use array access
+echo $uri['base.path'] . '/flower/sakura';
+</code></pre>
+
+<p>We'll get a uri start from root, so the relative path will not break.</p>
+
+<pre><code class="html">/sites/windwalker/flower/sakura
+</code></pre>
+
+<h2>Use in View</h2>
+
+<p>View has already included uri object as global variables.</p>
+
+<pre><code class="html">&lt;link href="&lt;?php echo $data-&gt;uri['media.path']; ?&gt;css/bootstrap.min.css"&gt;
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="html">&lt;link href="/sites/windwalker/media/css/bootstrap.min.css"&gt;
+</code></pre>
+
+<h1>Build Route</h1>
+
+<p>Every route in Windwalker has a key, we called it <strong>route name</strong> or <strong>route resources</strong>, this name will help us quickly build route.</p>
+
+<p>For example, this is the routing file:</p>
+
+<pre><code class="yaml">flower_page:
+    pattern: /flower/page/(id)-(alias).html
+    controller: Flower\Controller\Page
+</code></pre>
+
+<p>Then we can build this route by <code>Router::build()</code></p>
+
+<pre><code class="php">use Windwalker\Core\Router;
+
+// Note: don't use \Windwalker\Router\Router
+echo Router::build('flower', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="html">flower/page/25-foo-bar-baz.html
+</code></pre>
+
+<p>This is a very useful function that you can change roue name but won't worry of link will be broke.</p>
+
+<h2>Build Package Route</h2>
+
+<p>If your routes is definded in a package, you must add package alias before route name, and separate by colon <code>:</code>:</p>
+
+<pre><code class="php">use Windwalker\Core\Router;
+
+Router::build('flower:sakuras', array('page' =&gt; $page));
+</code></pre>
+
+<p>Or use PackageRouter, we can ignore package name that Package will auto add it:</p>
+
+<pre><code class="php">$package = PackageHelper::getPackage('flower');
+
+// No necessary to add 'flower:'
+$package-&gt;router-&gt;build('sakuras', array('page' =&gt; $page));
+
+// If you want to build rote in other package, you may re add package name
+$package-&gt;router-&gt;build('user:login');
+</code></pre>
+
+<h2>Build for Http or Html</h2>
+
+<p>Default <code>build()</code> method will not encode URL, so we can use this URL to redirect page, the <code>buildHttp()</code> is an alias of <code>build()</code>.</p>
+
+<p>If we want to build a URL to put on HTML, we must encode it, so we have to use <code>buildHtml()</code> method.</p>
+
+<pre><code class="php">echo Router::buildHttp('flower:sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
+echo Router::buildHtml('flower:sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code class="html">flower/sakuras?foo=bar&amp;baz=yoo
+flower/sakuras?foo=bar&amp;amp;baz=yoo
+</code></pre>
+
+<h2>Relative or Absolute URL</h2>
+
+<p>Router has 3 mode, <code>RAW</code>, <code>PATH</code> or <code>FULL</code>:</p>
+
+<pre><code class="php">echo Router::build('flower:sakuras', array(), Router::TYPE_RAW);
+echo Router::build('flower:sakuras', array(), Router::TYPE_PATH);
+echo Router::build('flower:sakuras', array(), Router::TYPE_FULL);
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code class="html">flower/sakuras
+/sites/windwalker/flower/sakuras
+http://domain.com/sites/windwalker/flower/sakuras
+</code></pre>
+
+<p>The RAW route used to store in database, the PATH route used to print in HTML, the FULL route used to redirect.</p>
+
+<h2>Build Route in Controller</h2>
+
+<p>If you are in controller, we can use PackageRouter to build route, it is more safer because we can auto get current package routes.</p>
+
+<pre><code class="php">// Original way, we have to know package name
+use Windwalker\Core\Router;
+
+$route = Router::buildHttp('flower:sakura');
+
+// Simpler way to let package handle it
+$route = $this-&gt;package-&gt;router-&gt;buildHttp('sakura');
+
+$this-&gt;setRedirect($route);
+</code></pre>
+
+<h2>Build Route in View Template</h2>
+
+<p>View has also includes package router, just build route like this:</p>
+
+<pre><code class="html">&lt;a href="&lt;?php echo $data-&gt;router-&gt;buildHtml('sakura'); ?&gt;"&gt;Link&lt;/a&gt;
+</code></pre>
 
 
                     <hr />

@@ -334,6 +334,16 @@ $view = new MyBladeHtmlView;
 echo $view->setLayout('flower.sakura')->render();
 ```
 
+## Get Data in Blade Engine
+
+In Blade template we don't need to use `$data`, all properties are at top level:
+
+``` php
+{{{ $item->title }}}
+
+{{ $uri['base.path'] }}
+```
+
 ## How to Use Blade Engine
 
 See: [Blade Templating](http://laravel.com/docs/4.2/templates)

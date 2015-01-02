@@ -246,6 +246,26 @@ Array
 )
 ```
 
+# Build Route
+
+Every route in Windwalker has a key, we called it **route name** or **route resources**, this name will help us quickly build route.
+
+``` php
+use Windwalker\Core\Router;
+
+echo Router::build('flower', array('id' => 25, 'alias' => 'foo-bar-baz'));
+```
+
+The output will be:
+
+``` html
+flower/25/foo-bar-baz
+```
+
+This is a very useful function that you can change roue name but won't worry of link will be broke.
+
+For much more usage, pleas see: [Route and Redirect](../mvc/route-redirect.html)
+
 # Matchers
 
 Windwalker Router provides some matchers to use different way to match routes.

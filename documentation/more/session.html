@@ -118,6 +118,9 @@
                     <li class="">
                 <a href="../../documentation/mvc/view-model.html">ViewModel</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Database</li>
@@ -200,7 +203,133 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Configuration</h1>
+
+<p>Session configuration is in <code>/etc/config.yml</code>.</p>
+
+<pre><code class="yaml">session:
+    handler: native
+    expire_time: 15
+</code></pre>
+
+<p>By default, Windwalker use php native to handler session data. The expire time unit is minute.</p>
+
+<h1>Get Session Object</h1>
+
+<pre><code class="php">$session = \Windwalker\Ioc::getSession();
+
+// OR
+
+$session = $container-&gt;get('system.session');
+</code></pre>
+
+<h1>Store And Get Session Data</h1>
+
+<pre><code class="php">$session-&gt;set('flower', 'sakura');
+
+$data = $session-&gt;get('flower', 'default');
+
+$session-&gt;exists('animal'); // bool
+</code></pre>
+
+<h1>Restart Session</h1>
+
+<pre><code class="php">$session-&gt;restart();
+</code></pre>
+
+<h1>Session Bags</h1>
+
+<p>Session bag is a data storage to store data, we can add many bags to Session object and access them.</p>
+
+<h2>Use Default Bag</h2>
+
+<p>Get Default Bag</p>
+
+<pre><code class="php">$session-&gt;getBag('default');
+</code></pre>
+
+<p>Get data from default bag.</p>
+
+<pre><code class="php">$session-&gt;get('foo');
+
+// OR
+$session-&gt;getBag('default')-&gt;get('foo');
+</code></pre>
+
+<h2>Use Custom Bags</h2>
+
+<pre><code class="php">use Windwalker\Session\Bag\SessionBag;
+
+$session-&gt;setBag('mybag', new SessionBag);
+
+// Get data
+$myBag = $session-&gt;getBag('mybag');
+
+$myBag-&gt;set('foo', 'bar');
+$myBag-&gt;get('foo', 'default');
+</code></pre>
+
+<p>We can use Namespace to get data from bags</p>
+
+<pre><code class="php">// Get form default bag
+$session-&gt;get('foo', 'default', 'mybag');
+
+// Get from mybag
+$session-&gt;get('foo', 'default', 'mybag');
+
+// Set to mybag
+$session-&gt;set('foo', 'bar', 'mybag');
+</code></pre>
+
+<h1>Flash Data</h1>
+
+<p>Flash bag is a data temporary storage, if we take data out, the bag will be clear.</p>
+
+<pre><code class="php">$session-&gt;addFlash('Save success.', 'info');
+$session-&gt;addFlash('Login Fail.', 'error');
+
+// Take all messages and clear
+$allMessages = $session-&gt;getFlashes();
+
+// Peek messages but don't clear
+$session-&gt;getFlashBag()-&gt;all();
+</code></pre>
+
+<h1>Handlers</h1>
+
+<p>Windwalker Session provides many handlers to storage session, edit the config file.</p>
+
+<pre><code class="yaml">session:
+    handler: memcached
+    expire_time: 15
+</code></pre>
+
+<h2>Use Database Handler</h2>
+
+<p>Before using database session, we have to add table schema information to session config.</p>
+
+<pre><code class="yaml">session:
+    handler: database
+    expire_time: 15
+    table: sessions
+    id_col: id
+    data_col: data
+    time_col: time
+</code></pre>
+
+<blockquote>
+  <p>NOTE: Database Handler will be implemented in next release.</p>
+</blockquote>
+
+<h2>Available Handlers</h2>
+
+<ul>
+<li>apc</li>
+<li>database</li>
+<li>memcached</li>
+<li>native</li>
+<li>xcache</li>
+</ul>
 
 
                     <hr />

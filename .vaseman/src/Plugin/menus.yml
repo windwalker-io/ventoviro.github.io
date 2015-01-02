@@ -11,6 +11,7 @@ MVC:
   mvc/view-templating: View and Templating
   mvc/model-database: Model and Database
   mvc/view-model: ViewModel
+  mvc/uri-route-building: URI and Route Building
 Database:
   db/basic: Basic Usage
   db/read-write: Read and Write
