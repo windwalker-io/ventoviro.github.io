@@ -5,7 +5,7 @@ title: About
 
 # What is Windwalker
 
-![logo](http://localhost/windwalker/site/media/images/logo/windwalker-logo.png)
+![logo](../media/images/logo/windwalker-logo.png)
 
 ## Windwalker is A Modern PHP framework
 

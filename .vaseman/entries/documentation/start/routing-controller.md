@@ -10,7 +10,7 @@ Open `/etc/routing.yml` and add a new route resource.
 ``` http
 flower:
     pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
+    controller: Flower\Controllr\Sakura
 ```
 
 If you use browser open `/flower/sakura`, Windwalker will call `Flower\Controller\Sakura\GetController` and execute it.
