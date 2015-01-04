@@ -38,7 +38,7 @@ and easy understandable naming.
 # History
 
 For a long time, we are worked on Joomla CMS as a main environment and we are also Joomla contributors.
-Then we created our RAD framework: [Windwalker Joomla RAD](https://github.com/ventoviro/windwalker-joomla-rad) to enhance the speed of 
+Then we created our RAD framework: [Windwalker Joomla RAD](http://rad.windwalker.io) to enhance the speed of
  development.
 
 There are many and many new ideas and technologies we have developed in our internal framework, and we met the bottleneck on using 
@@ -51,10 +51,18 @@ Before start writing Windwalker, we survey many frameworks, Symfony is too heavy
  after months thinking, we decided to create a framework to fill the missing position between Symfony and Laravel. There are something 
  we can do better than others, we don't want to lose it. 
 
-We know PHP developers has already sick of too many frameworks in this world, so we don't change too mush thing. We try to make 
+We know PHP developers has already sick of too many frameworks in this world, so we don't change too much thing. We try to make
 some architecture similar to current frameworks and common PHP practices, and make the interface VERY VERY simple to understand.
 We hope Windwalker will not bring too much pain on learning it. If you don't want to use Windwalker framework, 
 but there is useful package which you are interested, you may install and use it easily. 
+
+# RAD Framework
+
+Windwalker Joomla RAD (Rapid Application Framework) is our main feature, it contains many useful tools like assets manager,
+code generator, database sync and a powerful admin UI interface, but it has not implemented yet in Windwalker PHP framework.
+All those features will be moved to Windwalker after version 2.1 which Windwalker may reach stable.
+
+Please see: [Windwalker Joomla RAD](http://rad.windwalker.io)
 
 # Credits
 
