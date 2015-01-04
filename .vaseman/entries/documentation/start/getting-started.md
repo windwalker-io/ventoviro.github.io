@@ -8,7 +8,7 @@ title: Getting Started
 ## Install Starter Application
 
 Windwalker use [Composer](https://getcomposer.org/) as package manager, make sure you [install composer](https://getcomposer.org/download/)
- before installing it.
+ first.
 
 To start install Windwalker, please open terminal and type this command:
 
