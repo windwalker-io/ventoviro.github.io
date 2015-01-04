@@ -10,7 +10,7 @@ Open `/etc/routing.yml` and add a new route resource.
 ``` http
 flower:
     pattern: /flower/sakura
-    controller: Flower\Controllr\Sakura
+    controller: Flower\Controller\Sakura
 ```
 
 If you use browser open `/flower/sakura`, Windwalker will call `Flower\Controller\Sakura\GetController` and execute it.
@@ -42,7 +42,7 @@ Now we use a route like this:
 ``` http
 flower:
     pattern: /flower/(id)
-    controller: Flower\Controlelr\Sakura
+    controller: Flower\Controller\Sakura
 ```
 
 Lets create a controller at `src/Flower/Controller/Sakura/GetController.php`:
@@ -88,18 +88,18 @@ Add the action attribute:
 ``` http
 flower:
     pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
+    controller: Flower\Controller\Sakura
     action:
         get: IndexController
 ```
 
-The GET method will match `Flower\Controlelr\Sakura\IndexController` because we set a map to find new name. We can set more 
+The GET method will match `Flower\Controller\Sakura\IndexController` because we set a map to find new name. We can set more 
 methods to mapping methods with controllers.
 
 ``` http
 flower:
     pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
+    controller: Flower\Controller\Sakura
     action:
         get: IndexController
         post: CreateController
@@ -127,7 +127,7 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
 ``` http
 flower:
     pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
+    controller: Flower\Controller\Sakura
     method:
         - GET
         - POST
@@ -138,7 +138,7 @@ flower:
 ``` apache
 flower:
     pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
+    controller: Flower\Controller\Sakura
     method:
         - GET
         - POST
