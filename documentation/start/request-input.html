@@ -26,7 +26,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+        <script src="../../media/js/highlight.pack.js"></script>
         <script>
             $(document).ready(function() {
 
@@ -36,7 +36,8 @@
             });
         </script>
 
-            </head>
+            <script src="../../media/js/doc.js"></script>
+    </head>
     <body class="">
     <nav id="header" class="uk-navbar uk-navbar-attached">
         <div class="uk-container uk-container-center">
@@ -52,8 +53,13 @@
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
-                                                                                                
                 <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
                     <a href="../../documentation/start/getting-started.html">
                         <span class="menu-item-title">Documentation</span>
                     </a>
@@ -80,8 +86,8 @@
     <div id="main-body">
             <div class="uk-container uk-container-center">
         <div class="uk-grid">
-            <div class="uk-width-medium-1-4 uk-container-center">
-                <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Start</li>
 
                     <li class="">
@@ -97,13 +103,29 @@
                 <a href="../../documentation/start/request-input.html">Request and Input</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/view-templating.html">View and Templating</a>
+                <a href="../../documentation/start/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/model-database.html">Model and Database</a>
+                <a href="../../documentation/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+
+                    <li class="">
+                <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/error-handling.html">Error Handling</a>
+                <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
             </li>
         
     <li class="uk-nav-divider"></li>
@@ -113,13 +135,16 @@
                 <a href="../../documentation/db/basic.html">Basic Usage</a>
             </li>
                     <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/db/schema-builder.html">Schema Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/migration.html">Migration And Seeding</a>
@@ -148,16 +173,16 @@
                 <a href="../../documentation/more/events.html">Events</a>
             </li>
                     <li class="">
-                <a href="../../documentation/more/facades.html">Facades</a>
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/html-builder.html">HTML Builder</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/more/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/languages.html">Languages</a>
@@ -174,12 +199,17 @@
                     <li class="">
                 <a href="../../documentation/more/validation.html">Validation</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/more-packages.html">More Packages</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>            </div>
+   </ul>    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
-                
                 <article class="article-content">
                     <h1>Get Input Object in Controller</h1>
 
@@ -445,17 +475,15 @@ FilesInput provides a convenient interface for making life a little easier, grou
 
 <p>More about Input, see <a href="https://github.com/ventoviro/windwalker-io">Windwalker IO Package</a></p>
 
+                        <hr />
 
-                    <hr />
-
-                    <p class="uk-text-center">
-                        Found a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
-                    </p>
+    <p class="uk-text-center">
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/start/request-input.md">improve</a> this document.
+    </p>
                 </article>
             </div>
         </div>
     </div>
-
     </div>
 
     <footer id="footer">

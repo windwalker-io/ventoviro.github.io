@@ -26,7 +26,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+        <script src="../../media/js/highlight.pack.js"></script>
         <script>
             $(document).ready(function() {
 
@@ -36,7 +36,8 @@
             });
         </script>
 
-            </head>
+            <script src="../../media/js/doc.js"></script>
+    </head>
     <body class="">
     <nav id="header" class="uk-navbar uk-navbar-attached">
         <div class="uk-container uk-container-center">
@@ -52,8 +53,13 @@
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
-                                                                                                
                 <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
                     <a href="../../documentation/start/getting-started.html">
                         <span class="menu-item-title">Documentation</span>
                     </a>
@@ -80,8 +86,8 @@
     <div id="main-body">
             <div class="uk-container uk-container-center">
         <div class="uk-grid">
-            <div class="uk-width-medium-1-4 uk-container-center">
-                <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Start</li>
 
                     <li class="">
@@ -97,13 +103,29 @@
                 <a href="../../documentation/start/request-input.html">Request and Input</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/view-templating.html">View and Templating</a>
+                <a href="../../documentation/start/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/model-database.html">Model and Database</a>
+                <a href="../../documentation/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+
+                    <li class="">
+                <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/error-handling.html">Error Handling</a>
+                <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
             </li>
         
     <li class="uk-nav-divider"></li>
@@ -113,13 +135,16 @@
                 <a href="../../documentation/db/basic.html">Basic Usage</a>
             </li>
                     <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/db/schema-builder.html">Schema Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/migration.html">Migration And Seeding</a>
@@ -148,16 +173,16 @@
                 <a href="../../documentation/more/events.html">Events</a>
             </li>
                     <li class="">
-                <a href="../../documentation/more/facades.html">Facades</a>
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="uk-active">
                 <a href="../../documentation/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/html-builder.html">HTML Builder</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/more/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/languages.html">Languages</a>
@@ -174,26 +199,531 @@
                     <li class="">
                 <a href="../../documentation/more/validation.html">Validation</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/more-packages.html">More Packages</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>            </div>
+   </ul>    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
-                
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Create A Form</h1>
 
+<p>Create a new form instance and add fields into it.</p>
 
-                    <hr />
+<pre><code class="php">use Windwalker\Form\Field\TextareaField;
+use Windwalker\Form\Form;
+use Windwalker\Form\Field\TextField;
+use Windwalker\Form\Field\PasswordField;
 
-                    <p class="uk-text-center">
-                        Found a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
-                    </p>
+$form = new Form;
+
+$form-&gt;addField(new TextField('username', 'Username'));
+$form-&gt;addField(new PasswordField('password', 'Password'));
+$form-&gt;addField(new TextField('email', 'Email'));
+$form-&gt;addField(new TextareaField('description', 'Description'));
+
+echo $form-&gt;renderFields();
+</code></pre>
+
+<p>Render all fields, and we get this HTML output.</p>
+
+<pre><code class="html">&lt;div id="username-control" class="text-field "&gt;
+    &lt;label id="username-label" for="username"&gt;Username&lt;/label&gt;
+    &lt;input type="text" name="username" id="username" /&gt;
+&lt;/div&gt;
+&lt;div id="password-control" class="password-field "&gt;
+    &lt;label id="password-label" for="password"&gt;Password&lt;/label&gt;
+    &lt;input type="password" name="password" id="password" /&gt;
+&lt;/div&gt;
+&lt;div id="email-control" class="text-field "&gt;
+    &lt;label id="email-label" for="email"&gt;Email&lt;/label&gt;
+    &lt;input type="text" name="email" id="email" /&gt;
+&lt;/div&gt;
+&lt;div id="description-control" class="textarea-field "&gt;
+    &lt;label id="description-label" for="description"&gt;Description&lt;/label&gt;
+    &lt;textarea name="description" id="description"&gt;&lt;/textarea&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5066911/0566a53c-6e77-11e4-9bee-6cc2ee01de21.png" alt="img" /></p>
+
+<h2>Using XML as Configuration</h2>
+
+<pre><code class="xml">&lt;form&gt;
+    &lt;field
+        name="username"
+        type="text"
+        label="Username"
+        /&gt;
+
+    &lt;field
+        name="password"
+        type="password"
+        label="Password"
+        /&gt;
+&lt;/form&gt;
+</code></pre>
+
+<pre><code class="php">$form = new Form;
+
+$form-&gt;loadFile('form.xml');
+</code></pre>
+
+<h1>Form Control</h1>
+
+<pre><code class="php">$control = 'user';
+
+$form = new Form($control);
+
+$form-&gt;addField(new TextField('username', 'Username'));
+
+echo $form-&gt;renderFields();
+</code></pre>
+
+<p>The result will make name as an array.</p>
+
+<pre><code class="html">&lt;div id="user-username-control" class="text-field "&gt;
+    &lt;label id="user-username-label" for="user-username"&gt;Username&lt;/label&gt;
+    &lt;input type="text" name="user[username]" id="user-username" /&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h1>Organize Fields</h1>
+
+<h2>Fieldset</h2>
+
+<p>Fieldset is a category of fields, we can filter our fields by fieldset:</p>
+
+<pre><code class="php">$form = new Form;
+
+$form-&gt;addField(new TextField('flower', 'Flower'), 'plant');
+$form-&gt;addField(new TextField('tree', 'Tree'), 'plant');
+$form-&gt;addField(new TextField('dog', 'Dog'), 'animal');
+$form-&gt;addField(new TextField('cat', 'Cat'), 'animal');
+
+// Only render Flower &amp; Tree
+echo $form-&gt;renderFields('plant');
+
+// Only render Dog &amp; Cat
+echo $form-&gt;renderFields('animal');
+
+// Will render all
+echo $form-&gt;renderFields();
+</code></pre>
+
+<p>Using XML</p>
+
+<pre><code class="xml">&lt;form&gt;
+    &lt;fieldset name="plant"&gt;
+        &lt;field name="flower" label="Flower"/&gt;
+        &lt;field name="tree" label="Tree"/&gt;
+    &lt;/fieldset&gt;
+
+    &lt;fieldset name="animal"&gt;
+        &lt;field name="dog" label="Dog"/&gt;
+        &lt;field name="cat" label="Cat"/&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;
+</code></pre>
+
+<h2>Group</h2>
+
+<p>Group is like fieldset as a category of fields, but it will make name of fields to be array:</p>
+
+<pre><code class="php">$form = new Form;
+
+$form-&gt;addField(new TextField('flower', 'Flower'), null, 'earth');
+$form-&gt;addField(new TextField('bird', 'Bird'), null, 'sky');
+
+// The name will be name="earth[flower]"
+echo $form-&gt;renderFields(null, 'plant');
+
+// The name will be name="sky[dog]"
+echo $form-&gt;renderFields(null, 'animal');
+</code></pre>
+
+<p>Now we can use fieldset and group to organize our fields.</p>
+
+<pre><code class="php">$form = new Form;
+
+$form-&gt;addField(new TextField('flower', 'Flower'), 'plant', 'earth');
+$form-&gt;addField(new TextField('tree', 'Tree'), 'plant', 'earth');
+$form-&gt;addField(new TextField('dog', 'Dog'), 'animal', 'home');
+$form-&gt;addField(new TextField('cat', 'Cat'), 'animal', 'home');
+$form-&gt;addField(new TextField('bird', 'Bird'), 'animal', 'sky');
+
+// Only render Bird
+echo $form-&gt;renderFields('animal', 'sky');
+
+// Only render Dog &amp; Cat &amp; Bird
+echo $form-&gt;renderFields('animal');
+
+// Only render Flower &amp; Tree
+echo $form-&gt;renderFields(null, 'earth');
+
+// Will render all
+echo $form-&gt;renderFields();
+</code></pre>
+
+<p>Using XML</p>
+
+<pre><code class="xml">&lt;form&gt;
+    &lt;group name="earth"&gt;
+        &lt;fieldset name="plant"&gt;
+            &lt;field name="flower" label="Flower"/&gt;
+            &lt;field name="tree" label="Tree"/&gt;
+        &lt;/fieldset&gt;
+    &lt;/group&gt;
+
+    &lt;fieldset name="animal"&gt;
+        &lt;group name="home"&gt;
+            &lt;field name="dog" label="Dog"/&gt;
+            &lt;field name="cat" label="Cat"/&gt;
+        &lt;/group&gt;
+
+        &lt;group name="home"&gt;
+            &lt;field name="bird" label="Bird"/&gt;
+        &lt;/group&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;
+</code></pre>
+
+<h1>Attributes of Fields</h1>
+
+<h2>Name &amp; Label</h2>
+
+<pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'));
+</code></pre>
+
+<h2>Set Attributes</h2>
+
+<pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'))
+    -&gt;set('id', 'my-name')
+    -&gt;set('class', 'col-md-8 form-input')
+    -&gt;set('onclick', 'return false;');
+</code></pre>
+
+<h2>Required, Disabled and Readonly</h2>
+
+<pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'))
+    -&gt;set('id', 'my-name')
+    -&gt;required()
+    -&gt;disabled();
+</code></pre>
+
+<p>Set to false.</p>
+
+<pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'))
+    -&gt;set('id', 'my-name')
+    -&gt;required(false)
+    -&gt;disabled(false);
+</code></pre>
+
+<h2>XML</h2>
+
+<pre><code class="xml">&lt;field
+    name="name"
+    label="Label"
+    id="my-name"
+    required="true"
+    disabled="false"
+/&gt;
+</code></pre>
+
+<h1>Filter</h1>
+
+<pre><code class="php">use Windwalker\Filter\InputFilter;
+
+$form-&gt;addField(new TextField('id', 'ID'))
+    -&gt;setFilter(InputFilter::INTEGER);
+
+// Prepare data
+$data['id'] = '123abc';
+
+// Bind data into form
+$form-&gt;bind($data);
+
+// Do filter
+$form-&gt;filter();
+
+$values = $form-&gt;getValues(); // Array(id = 123)
+</code></pre>
+
+<h1>Validate</h1>
+
+<pre><code class="php">$form-&gt;addField(new TextField('name', 'Name'))
+    -&gt;required();
+
+$form-&gt;addField(new TextField('email', 'Email'))
+    -&gt;setValidator(new EmailValidator);
+
+// Prepare data
+$data['name'] = null;
+$data['email'] = 'foo';
+
+// Bind data into form
+$form-&gt;bind($data);
+
+// Do validate
+$r = $form-&gt;validate();
+
+$results = $form-&gt;getErrors();
+
+var_dump($r); // bool(false)
+
+$results[0]-&gt;getMessage(); // Field Email validate fail.
+$results[1]-&gt;getMessage(); // Field Name value not allow empty.
+</code></pre>
+
+<h1>Field Types</h1>
+
+<h2>Select List</h2>
+
+<pre><code class="php">use Windwalker\Form\Field\ListField;
+use Windwalker\Html\Option;
+
+$selectField = new ListField(
+    'flower',
+    'Flower',
+    array(
+        new Option('', ''),
+        new Option('Yes', 1),
+        new Option('No', 0),
+    )
+);
+
+echo $selectField-&gt;render();
+</code></pre>
+
+<p>The output is:</p>
+
+<pre><code class="html">&lt;div id="flower-control" class="list-field "&gt;
+    &lt;label id="flower-label" for="flower"&gt;Flower&lt;/label&gt;
+    &lt;select name="flower" id="flower" class="stub-flower"&gt;
+        &lt;option selected="selected"&gt;&lt;/option&gt;
+        &lt;option value="1"&gt;Yes&lt;/option&gt;
+        &lt;option value="0"&gt;No&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Multiple List</p>
+
+<pre><code class="php">$selectField-&gt;set('multiple', true);
+</code></pre>
+
+<h2>RadioList</h2>
+
+<pre><code class="php">$form-&gt;addField(new RadioList('flower', 'Flower'))
+    -&gt;addOption(new Option('Yes', 1))
+    -&gt;addOption(new Option('No', 0));
+</code></pre>
+
+<p>We can also add options in constructor:</p>
+
+<pre><code class="php">$field = new RadioList(
+    'flower',
+    'Flower',
+    array(
+        new Option('Yes', 1),
+        new Option('No', 0),
+    )
+);
+</code></pre>
+
+<h1>Available Fields</h1>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>HTML</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>TextField</td>
+  <td><code>&lt;input type="text"&gt;</code></td>
+  <td>The text input field.</td>
+</tr>
+<tr>
+  <td>TextareaField</td>
+  <td><code>&lt;textarea&gt;&lt;/textarea&gt;</code></td>
+  <td>Textarea field.</td>
+</tr>
+<tr>
+  <td>EmailField</td>
+  <td><code>&lt;input type="email"&gt;</code></td>
+  <td>The email text field.</td>
+</tr>
+<tr>
+  <td>HiddenField</td>
+  <td><code>&lt;input type="hidden"&gt;</code></td>
+  <td>Hidden input.</td>
+</tr>
+<tr>
+  <td>PasswordField</td>
+  <td><code>&lt;input type="password"&gt;</code></td>
+  <td>Password field.</td>
+</tr>
+<tr>
+  <td>SpacerField</td>
+  <td><code>&lt;hr&gt;</code></td>
+  <td>The spacer to separate fields and fields.</td>
+</tr>
+<tr>
+  <td>ListField</td>
+  <td><code>&lt;select&gt;</code></td>
+  <td>Select list.</td>
+</tr>
+<tr>
+  <td>CheckboxField</td>
+  <td><code>&lt;input type="checkbox"&gt;</code></td>
+  <td>Single checkbox.</td>
+</tr>
+<tr>
+  <td>CheckboxesField</td>
+  <td><code>&lt;input type="checkbox"&gt;</code></td>
+  <td>Checkbox list.</td>
+</tr>
+<tr>
+  <td>RadioField</td>
+  <td><code>&lt;input type="radio"&gt;</code></td>
+  <td>Radio list.</td>
+</tr>
+<tr>
+  <td>TimezoneField</td>
+  <td><code>&lt;select&gt;</code></td>
+  <td>A timezone select list.</td>
+</tr>
+</tbody>
+</table>
+
+<h1>Custom Fields</h1>
+
+<h2>Custom TextField.</h2>
+
+<pre><code class="php">namespace MyCode\Fields;
+
+class FooField extends TextField
+{
+    protected $type = 'foo';
+
+    public function prepare(&amp;$attrs)
+    {
+        parent::prepare($attrs);
+
+        $attrs['bar'] = $this-&gt;getAttribute('bar');
+    }
+}
+</code></pre>
+
+<p>For XML</p>
+
+<pre><code class="php">\Windwalker\Form\FieldHelper::addNamespace('MyCode\Filter');
+</code></pre>
+
+<pre><code class="xml">&lt;field
+    name="foo"
+    type="foo"
+/&gt;
+</code></pre>
+
+<h2>Custom List field</h2>
+
+<pre><code class="php">namespace MyCode\Fields;
+
+class UsersField extends ListField
+{
+    protected function prepareOptions()
+    {
+        $users = Database::getList('SELECT * FROM users');
+
+        $options = array();
+
+        foreach ($users as $user)
+        {
+            $options[] = new Option($user-&gt;name, $user-&gt;id);
+        }
+
+        return $options;
+    }
+}
+</code></pre>
+
+<h1>Custom Filter</h1>
+
+<pre><code class="php">namespace MyCode\Filter;
+
+class MyFilter implements FilterInterface
+{
+    public function clean($text)
+    {
+        return my_filter_function($text);
+    }
+}
+
+(new TextField('foo', 'Foo'))
+    -&gt;setFilter(new MyFilter);
+</code></pre>
+
+<p>For XML</p>
+
+<pre><code class="php">\Windwalker\Form\FilterHelper::addNamespace('MyCode\Filter');
+</code></pre>
+
+<pre><code class="xml">&lt;field
+    name="foo"
+    type="text"
+    filter="my"
+/&gt;
+</code></pre>
+
+<h1>Custom Validator</h1>
+
+<pre><code class="php">namespace MyCode\Validator;
+
+use Windwalker\Validator\AbstractValidator;
+
+class MyValidator extends AbstractValidator
+{
+    protected function test($value)
+    {
+        return (bool) $value;
+    }
+}
+
+(new TextField('foo', 'Foo'))
+    -&gt;setFilter(new MyValidator);
+</code></pre>
+
+<p>For XML</p>
+
+<pre><code class="php">\Windwalker\Form\ValidatorHelper::addNamespace('MyCode\Validator');
+</code></pre>
+
+<pre><code class="xml">&lt;field
+    name="foo"
+    type="text"
+    filter="my"
+/&gt;
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/more/form-builder.md">improve</a> this document.
+    </p>
                 </article>
             </div>
         </div>
     </div>
-
     </div>
 
     <footer id="footer">

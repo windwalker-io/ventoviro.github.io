@@ -26,7 +26,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+        <script src="../../media/js/highlight.pack.js"></script>
         <script>
             $(document).ready(function() {
 
@@ -36,7 +36,8 @@
             });
         </script>
 
-            </head>
+            <script src="../../media/js/doc.js"></script>
+    </head>
     <body class="">
     <nav id="header" class="uk-navbar uk-navbar-attached">
         <div class="uk-container uk-container-center">
@@ -52,8 +53,13 @@
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
-                                                                                                
                 <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
                     <a href="../../documentation/start/getting-started.html">
                         <span class="menu-item-title">Documentation</span>
                     </a>
@@ -80,8 +86,8 @@
     <div id="main-body">
             <div class="uk-container uk-container-center">
         <div class="uk-grid">
-            <div class="uk-width-medium-1-4 uk-container-center">
-                <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Start</li>
 
                     <li class="">
@@ -97,13 +103,29 @@
                 <a href="../../documentation/start/request-input.html">Request and Input</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/view-templating.html">View and Templating</a>
+                <a href="../../documentation/start/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/model-database.html">Model and Database</a>
+                <a href="../../documentation/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+
+                    <li class="">
+                <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/error-handling.html">Error Handling</a>
+                <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
             </li>
         
     <li class="uk-nav-divider"></li>
@@ -113,13 +135,16 @@
                 <a href="../../documentation/db/basic.html">Basic Usage</a>
             </li>
                     <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/db/schema-builder.html">Schema Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/migration.html">Migration And Seeding</a>
@@ -148,16 +173,16 @@
                 <a href="../../documentation/more/events.html">Events</a>
             </li>
                     <li class="">
-                <a href="../../documentation/more/facades.html">Facades</a>
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/html-builder.html">HTML Builder</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/more/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/languages.html">Languages</a>
@@ -174,12 +199,17 @@
                     <li class="">
                 <a href="../../documentation/more/validation.html">Validation</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/more-packages.html">More Packages</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>            </div>
+   </ul>    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
-                
                 <article class="article-content">
                     <h1>Create Simple Routing</h1>
 
@@ -187,7 +217,7 @@
 
 <pre><code class="http">flower:
     pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
+    controller: Flower\Controllr\Sakura
 </code></pre>
 
 <p>If you use browser open <code>/flower/sakura</code>, Windwalker will call <code>Flower\Controller\Sakura\GetController</code> and execute it.</p>
@@ -195,7 +225,9 @@
 <p>Why is <code>GetController</code>? Windwalker routing follows RESTful pattern to find action, and default method of browser is <code>GET</code>,
  so <code>GetController</code> will be matched. You can send <code>POST</code> request to <code>/flower/sakura</code>, the <code>SaveController</code> will be executed.</p>
 
-<p>This is supported methods:</p>
+<p>This way will be more efficiently because we can reduce routes number to make routing more faster.</p>
+
+<h2>This is supported methods:</h2>
 
 <table>
 <thead>
@@ -237,67 +269,11 @@
 </table>
 
 <blockquote>
-  <p>NOTE: Windwalker mapped POST, PUT and PATCH to <code>SaveController</code>, so we detect it is create or update by primary key exists
-  in input or not. If you want to separate create and update to two controllers, see next section to override actions.</p>
+  <p>NOTE: Windwalker mapped POST, PUT and PATCH to <code>SaveController</code>, this controller will handle both create and update. 
+  If you want to separate create and update to two controllers, see next section to override actions.</p>
 </blockquote>
 
-<h2>Override Actions</h2>
-
-<p>Add the action attribute:</p>
-
-<pre><code class="http">flower:
-    pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
-    action:
-        get: IndexController
-</code></pre>
-
-<p>The GET method will match <code>Flower\Controlelr\Sakura\IndexController</code> because we set a map to find new name. We can set more methods to mapping methods with controllers.</p>
-
-<pre><code class="http">flower:
-    pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
-    action:
-        get: IndexController
-        post: CreateController
-        put: UpdateController
-        delete: DeleteController
-</code></pre>
-
-<p>Or use wildcards to map all methods to one controller:</p>
-
-<pre><code class="http">    action:
-        '*': SakuraController
-</code></pre>
-
-<h2>Limit By Methods</h2>
-
-<p>We can limit our route by some options, if the HTTP request not match this rule, this route will be ignored,
-for example this config will only allow GET and POST, the PUT and DELETE will not matched.</p>
-
-<pre><code class="http">flower:
-    pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
-    method:
-        - GET
-        - POST
-</code></pre>
-
-<h2>Limit By Other Options</h2>
-
-<pre><code class="apache">flower:
-    pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
-    method:
-        - GET
-        - POST
-    # Only http &amp; https
-    scheme: https
-    post: 80
-    sslPort: 443
-</code></pre>
-
-<h1>Use Controller</h1>
+<h2>Use Controller</h2>
 
 <p>Now we use a route like this:</p>
 
@@ -339,6 +315,68 @@ rule to match class namespace with folder structure, it because we have already 
 </code></pre>
 
 <p>Congrats, your first page has show.</p>
+
+<h2>Override Actions</h2>
+
+<p>Add the action attribute:</p>
+
+<pre><code class="http">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controlelr\Sakura
+    action:
+        get: IndexController
+</code></pre>
+
+<p>The GET method will match <code>Flower\Controlelr\Sakura\IndexController</code> because we set a map to find new name. We can set more 
+methods to mapping methods with controllers.</p>
+
+<pre><code class="http">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controlelr\Sakura
+    action:
+        get: IndexController
+        post: CreateController
+        put: UpdateController
+        delete: DeleteController
+</code></pre>
+
+<p>Or use wildcards to map all methods to one controller:</p>
+
+<pre><code class="http">    action:
+        '*': SakuraController
+</code></pre>
+
+<h2>Override Methods</h2>
+
+<p>If you want to send <code>PUT</code> and <code>DELETE</code> method from web form, you may add <code>_method</code> params in HTTP query, this param will override 
+real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code>DeleteController</code>.</p>
+
+<h2>Limit By Methods</h2>
+
+<p>We can limit our route by some options, if the HTTP request not match this rule, this route will be ignored,
+for example this config will only allow GET and POST, the PUT and DELETE will not matched.</p>
+
+<pre><code class="http">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controlelr\Sakura
+    method:
+        - GET
+        - POST
+</code></pre>
+
+<h2>Limit By Other Options</h2>
+
+<pre><code class="apache">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controlelr\Sakura
+    method:
+        - GET
+        - POST
+    # Only http &amp; https
+    scheme: https
+    post: 80
+    sslPort: 443
+</code></pre>
 
 <h1>Route Pattern</h1>
 
@@ -432,6 +470,24 @@ rule to match class namespace with folder structure, it because we have already 
 )
 </code></pre>
 
+<h1>Build Route</h1>
+
+<p>Every route in Windwalker has a key, we called it <strong>route name</strong> or <strong>route resources</strong>, this name will help us quickly build route.</p>
+
+<pre><code class="php">use Windwalker\Core\Router;
+
+echo Router::build('flower', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="html">flower/25/foo-bar-baz
+</code></pre>
+
+<p>This is a very useful function that you can change roue name but won't worry of link will be broke.</p>
+
+<p>For much more usage, pleas see: <a href="../mvc/route-redirect.html">Route and Redirect</a></p>
+
 <h1>Matchers</h1>
 
 <p>Windwalker Router provides some matchers to use different way to match routes.</p>
@@ -478,17 +534,15 @@ which is not as flexible as the other two matchers.</p>
 <pre><code class="html">/flower/*tags
 </code></pre>
 
+                        <hr />
 
-                    <hr />
-
-                    <p class="uk-text-center">
-                        Found a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
-                    </p>
+    <p class="uk-text-center">
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/start/routing-controller.md">improve</a> this document.
+    </p>
                 </article>
             </div>
         </div>
     </div>
-
     </div>
 
     <footer id="footer">

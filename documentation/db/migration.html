@@ -26,7 +26,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+        <script src="../../media/js/highlight.pack.js"></script>
         <script>
             $(document).ready(function() {
 
@@ -36,7 +36,8 @@
             });
         </script>
 
-            </head>
+            <script src="../../media/js/doc.js"></script>
+    </head>
     <body class="">
     <nav id="header" class="uk-navbar uk-navbar-attached">
         <div class="uk-container uk-container-center">
@@ -52,8 +53,13 @@
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
-                                                                                                
                 <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
                     <a href="../../documentation/start/getting-started.html">
                         <span class="menu-item-title">Documentation</span>
                     </a>
@@ -80,8 +86,8 @@
     <div id="main-body">
             <div class="uk-container uk-container-center">
         <div class="uk-grid">
-            <div class="uk-width-medium-1-4 uk-container-center">
-                <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Start</li>
 
                     <li class="">
@@ -97,13 +103,29 @@
                 <a href="../../documentation/start/request-input.html">Request and Input</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/view-templating.html">View and Templating</a>
+                <a href="../../documentation/start/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/model-database.html">Model and Database</a>
+                <a href="../../documentation/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+
+                    <li class="">
+                <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
             </li>
                     <li class="">
-                <a href="../../documentation/start/error-handling.html">Error Handling</a>
+                <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
             </li>
         
     <li class="uk-nav-divider"></li>
@@ -113,13 +135,16 @@
                 <a href="../../documentation/db/basic.html">Basic Usage</a>
             </li>
                     <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/db/schema-builder.html">Schema Builder</a>
             </li>
                     <li class="uk-active">
                 <a href="../../documentation/db/migration.html">Migration And Seeding</a>
@@ -148,16 +173,16 @@
                 <a href="../../documentation/more/events.html">Events</a>
             </li>
                     <li class="">
-                <a href="../../documentation/more/facades.html">Facades</a>
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/html-builder.html">HTML Builder</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/more/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
                 <a href="../../documentation/more/languages.html">Languages</a>
@@ -174,26 +199,346 @@
                     <li class="">
                 <a href="../../documentation/more/validation.html">Validation</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/more-packages.html">More Packages</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>            </div>
+   </ul>    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
-                
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h1>Migration</h1>
+
+<p>Migration is a database version control system, it help our team to manage database schema and stay up to date on newest schema state.
+Every member are allow to create a new schema version, and migration system will help us sync local schema to newest version.</p>
+
+<h2>The Migration Flow</h2>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5591937/ae3fba0e-91db-11e4-88f7-d280f5b0577f.jpg" alt="migration" /></p>
+
+<p>Maybe you are <em>Develop B</em>, and your version is <code>20150112_AddSakuraTable.</code></p>
+
+<p>If migration system found your version is not up to date, you may run <code>migration migrate</code>, then migration system will update schema 
+to the newest version: <code>20150421_AddTableIndex</code></p>
+
+<blockquote>
+  <p>Migrations are typically paired with the <a href="table-schema.html">Schema Builder</a> to easily manage the database schema.</p>
+</blockquote>
+
+<h2>Create A New Version</h2>
+
+<p>To create a migration version, you may use <code>migration create</code> command in console:</p>
+
+<pre><code class="bash">php bin/console migration create InitFlowerTable
+</code></pre>
+
+<p>You'll see this info:</p>
+
+<pre><code class="html">Migration version: 20150101091434_InitFlowerTable.php created.
+File path: /your/project/path/migrations/20150101091434_InitFlowerTable.php
+</code></pre>
+
+<h3>Create to Custom Position</h3>
+
+<p>You may also create migration to other position by <code>--dir</code> or <code>--package</code></p>
+
+<pre><code class="bash"># Create to custom directory 
+php bin/console migration create InitFlowerTable --dir=resources/migrations
+
+# Create to a package's Migration folder
+php bin/console migration create InitFlowerTable --package=flower
+</code></pre>
+
+<h2>Writing Migration</h2>
+
+<p>This is a new migration file. The <code>up()</code> method will run if your version is lower than latest version. The <code>down()</code> method
+will run if you migrate to older version.</p>
+
+<pre><code class="php">&lt;?php
+// src/resources/migrations/20150101091434_InitFlowerTable.php
+
+use Windwalker\Core\Migration\AbstractMigration;
+
+/**
+ * Migration class, version: 20150101091434
+ */
+class InitFlowerTable extends AbstractMigration
+{
+    /**
+     * Migrate Up.
+     */
+    public function up()
+    {
+
+    }
+
+    /**
+     * Migrate Down.
+     */
+    public function down()
+    {
+
+    }
+}
+</code></pre>
+
+<p>Here is an example to create a table:</p>
+
+<pre><code class="php">use Windwalker\Core\Migration\AbstractMigration;
+use Windwalker\Database\Schema\Column;
+use Windwalker\Database\Schema\DataType;
+use Windwalker\Database\Schema\Key;
+
+class InitFlowerTable extends AbstractMigration
+{
+    /**
+     * Migrate Up.
+     */
+    public function up()
+    {
+        $this-&gt;db-&gt;getTable('flowers')
+            -&gt;addColumn('id', DataType::INTEGER, Column::UNSIGNED, Column::NOT_NULL, '', 'PK', array('primary' =&gt; true))
+            -&gt;addColumn('name', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Name', array('length' =&gt; 255))
+            -&gt;addColumn('alias', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Alias')
+            -&gt;addIndex(Key::TYPE_INDEX, 'idx_name', 'name', 'Test')
+            -&gt;addIndex(Key::TYPE_UNIQUE, 'idx_alias', 'alias', 'Alias Index')
+            -&gt;create(true);
+    }
+
+    /**
+     * Migrate Down.
+     */
+    public function down()
+    {
+        $this-&gt;db-&gt;getTable('flowers')-&gt;drop();
+    }
+}
+</code></pre>
+
+<p>We can use more simpler syntax to define table, there is some pre-defined column type object:</p>
+
+<pre><code class="php">$this-&gt;db-&gt;getTable('flowers')
+    -&gt;addColumn(new Column\Primary('id'))
+    -&gt;addColumn(new Column\Varchar('name'))
+    -&gt;addColumn(new Column\Char('type'))
+    -&gt;addColumn(new Column\Timestamp('created'))
+    -&gt;addColumn(new Column\Bit('state'))
+    -&gt;addColumn(new Column\Integer('uid'))
+    -&gt;addColumn(new Column\Tinyint('status'))
+    -&gt;create();
+</code></pre>
+
+<p>See other schema operations: <a href="table-schema.html">Table and Schema</a></p>
+
+<h2>Check Status</h2>
+
+<p>Use this command to show migration status.</p>
+
+<pre><code class="bash">php bin/console migration status
+</code></pre>
+
+<pre><code class="bash"> Status  Version         Migration Name
+-----------------------------------------
+  down   20141105131929  AcmeInit
+  down   20150101091434  InitFlowerTable
+</code></pre>
+
+<h2>Start Migrating</h2>
+
+<p>Use <code>migrate</code> command to start migrating:</p>
+
+<pre><code class="bash">php bin/console migration migrate
+</code></pre>
+
+<p>Terminal will show migrating process.</p>
+
+<pre><code class="html">Migration UP the version: 20141105131929_AcmeInit
+------------------------------------------------------------
+Success
 
 
-                    <hr />
+Migration UP the version: 20150101091434_InitFlowerTable
+------------------------------------------------------------
+Success
+</code></pre>
 
-                    <p class="uk-text-center">
-                        Found a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
-                    </p>
+<h3>Run Package Migration</h3>
+
+<pre><code class="bash">php bin/console migration migrate --package=flower
+</code></pre>
+
+<h3>Migrate to Specific Version</h3>
+
+<pre><code class="bash">php bin/console migration migrate 20141105131929
+</code></pre>
+
+<p>If you use a lower version, this action will be downgrade.</p>
+
+<h1>Seeding</h1>
+
+<p>Windwalker also provides a simple way to help you create fixtures for easy testing. The default seeder class will store in 
+<code>/resources/seeders</code> , the package seeder will store in <code>/src/YourPackage/Seeder</code>.</p>
+
+<h2>Default Seeder</h2>
+
+<p>Every time after you installed Windwalker, there will be a <code>DatabaseSeeder.php</code> in <code>/resources/seeders</code>:</p>
+
+<pre><code class="php">&lt;?php
+// resources/seeders/DatabaseSeeder.php
+
+use Windwalker\Core\Seeder\AbstractSeeder;
+
+class DatabaseSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+    }
+
+    public function doClean()
+    {
+    }
+}
+</code></pre>
+
+<p>If you didn't add <code>--class</code> option, this file will be seeder default entry, we can follow these steps to create our seeders:</p>
+
+<p>Add new Seeder file (Use IDE or code editor)</p>
+
+<pre><code class="php">// resources/seeders/FlowerSeeder.php
+
+/**
+ * This class dose not has Namespace
+ */
+class FlowerSeeder extends \Windwalker\Core\Seeder\AbstractSeeder
+{
+    public function doExecute()
+    {
+        $data = array();
+
+        // Create your fake data...
+
+        foreach ($data as $item)
+        {
+            $this-&gt;db-&gt;getWriter()-&gt;insertOne('flowers', $item);
+        }
+    }
+}
+</code></pre>
+
+<p>Then call this seeder in default DatabaseSeeder:</p>
+
+<pre><code class="php">class DatabaseSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+        // Execute sub seeder 
+        $this-&gt;execute('FlowerSeeder');
+
+        $this-&gt;command-&gt;out('Seeder executed.')-&gt;out();
+    }
+
+    public function doClean()
+    {
+        // Truncate table
+        $this-&gt;db-&gt;getTable('flowers')-&gt;truncate();
+
+        $this-&gt;command-&gt;out('Database clean.')-&gt;out();
+    }
+}
+</code></pre>
+
+<p>Now, use <code>seed import</code> command:</p>
+
+<pre><code class="bash">php bin/console seed import
+</code></pre>
+
+<p>You will see this output, it means seeder execute success:</p>
+
+<pre><code class="html">Import seeder DatabaseSeeder
+Import seeder FlowerSeeder
+Seeder executed.
+</code></pre>
+
+<h2>Package Seeder</h2>
+
+<p>Package Seeder is allow to use namespace as class name. You can just add <code>--class</code> option after command to direct a 
+particular seeder class, or add <code>--package</code> to use package default DatabaseSeeder.</p>
+
+<pre><code class="php">// src/FlowerPackage/Seeder/FlowerSeeder.php
+
+namespace Flower\Seeder;
+
+use Windwalker\Core\Seeder\AbstractSeeder;
+
+class FlowerSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+    }
+}
+</code></pre>
+
+<p>Run this command to execute package seeder:</p>
+
+<pre><code class="bash"># Choose class
+php bin/console seed import --class=Flower\Seeder\MySeeder
+
+# Use default DatabaseSeeder
+php bin/console seed import --package=flower
+</code></pre>
+
+<h1>Fake Data Generator</h1>
+
+<p>Windwalker includes <a href="https://github.com/fzaninotto/Faker">PHP Faker</a> to help you generate random fake data.</p>
+
+<pre><code class="php">class ArticleSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+        // Get Faker
+        $faker = \Faker\Factory::create();
+
+        // Get Users in database
+        $users = (new DataMapper('users'))-&gt;findAll();
+
+        // Article DataMapper
+        $articleMapper = new DataMapper('articles');
+
+        // Create articles for every user in database
+        foreach ($users as $user)
+        {
+            // Every use 10 articles
+            foreach (range(1, 10) as $i)
+            {
+                // Use Faker to generate fake data
+                $article = array(
+                    'title'     =&gt; $faker-&gt;sentence(),
+                    'author'    =&gt; $user-&gt;name,
+                    'author_id' =&gt; $user-&gt;id,
+                    'text'      =&gt; $faker-&gt;paragraphs(3),
+                    'created'   =&gt; $faker-&gt;date()
+                );
+
+                $articleMapper-&gt;createOne($article);
+            }
+        }
+    }
+}
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/db/migration.md">improve</a> this document.
+    </p>
                 </article>
             </div>
         </div>
     </div>
-
     </div>
 
     <footer id="footer">

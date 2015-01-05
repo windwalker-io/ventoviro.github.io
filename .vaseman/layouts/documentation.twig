@@ -1,34 +1,19 @@
-{% extends '_global/html.twig' %}
+{% extends 'default-page.twig' %}
 
-{% block title %}{{ config.title }} | Windwalker - A Modern PHP Framework{% endblock %}
+{% block script %}
+    <script src="{{ uri.media }}js/doc.js"></script>
+{% endblock %}
 
-{% block banner %}
-    <div class="uk-container uk-container-center banner-inner-title">
-        <h1>{{ config.title }}</h1>
+{% block submenu %}
+    <div class="uk-width-medium-1-4 uk-container-center">
+        {% include 'sub-menu.twig' with {'menu': 'documentation'} %}
     </div>
 {% endblock %}
 
-{% block body %}
-    <div class="uk-container uk-container-center">
-        <div class="uk-grid">
-            <div class="uk-width-medium-1-4 uk-container-center">
-                {% include 'sub-menu.twig' %}
-            </div>
+{% block article_footer %}
+    <hr />
 
-            <div class="uk-width-medium-3-4 uk-container-center">
-                {#<h1 class="page-title">{{ config.title }}</h1>#}
-
-                <article class="article-content">
-                    {{ content|raw }}
-
-                    <hr />
-
-                    <p class="uk-text-center">
-                        Found a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
-                    </p>
-                </article>
-            </div>
-        </div>
-    </div>
-
+    <p class="uk-text-center">
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/{{ path|join('/') }}">improve</a> this document.
+    </p>
 {% endblock %}

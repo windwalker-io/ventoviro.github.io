@@ -10,15 +10,17 @@ Open `/etc/routing.yml` and add a new route resource.
 ``` http
 flower:
     pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
+    controller: Flower\Controller\Sakura
 ```
 
 If you use browser open `/flower/sakura`, Windwalker will call `Flower\Controller\Sakura\GetController` and execute it.
 
 Why is `GetController`? Windwalker routing follows RESTful pattern to find action, and default method of browser is `GET`,
  so `GetController` will be matched. You can send `POST` request to `/flower/sakura`, the `SaveController` will be executed.
+ 
+This way will be more efficiently because we can reduce routes number to make routing more faster.
 
-This is supported methods:
+## This is supported methods:
 
 | Method    | Mapped Controller |
 | --------- | --------------- |
@@ -30,78 +32,17 @@ This is supported methods:
 | `HEAD`    | `HeadController` |
 | `OPTIONS` | `OptionsController` |
 
-> NOTE: Windwalker mapped POST, PUT and PATCH to `SaveController`, so we detect it is create or update by primary key exists
-in input or not. If you want to separate create and update to two controllers, see next section to override actions.
+> NOTE: Windwalker mapped POST, PUT and PATCH to `SaveController`, this controller will handle both create and update. 
+If you want to separate create and update to two controllers, see next section to override actions.
 
-## Override Actions
-
-Add the action attribute:
-
-``` http
-flower:
-    pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
-    action:
-        get: IndexController
-```
-
-The GET method will match `Flower\Controlelr\Sakura\IndexController` because we set a map to find new name. We can set more methods to mapping methods with controllers.
-
-``` http
-flower:
-    pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
-    action:
-        get: IndexController
-        post: CreateController
-        put: UpdateController
-        delete: DeleteController
-```
-
-Or use wildcards to map all methods to one controller:
-
-``` http
-    action:
-        '*': SakuraController
-```
-
-## Limit By Methods
-
-We can limit our route by some options, if the HTTP request not match this rule, this route will be ignored,
-for example this config will only allow GET and POST, the PUT and DELETE will not matched.
-
-``` http
-flower:
-    pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
-    method:
-        - GET
-        - POST
-```
-
-## Limit By Other Options
-
-``` apache
-flower:
-    pattern: /flower/sakura
-    controller: Flower\Controlelr\Sakura
-    method:
-        - GET
-        - POST
-    # Only http & https
-    scheme: https
-    post: 80
-    sslPort: 443
-```
-
-# Use Controller
+## Use Controller
 
 Now we use a route like this:
 
 ``` http
 flower:
     pattern: /flower/(id)
-    controller: Flower\Controlelr\Sakura
+    controller: Flower\Controller\Sakura
 ```
 
 Lets create a controller at `src/Flower/Controller/Sakura/GetController.php`:
@@ -139,6 +80,73 @@ Flower id is: 25
 ```
 
 Congrats, your first page has show.
+
+## Override Actions
+
+Add the action attribute:
+
+``` http
+flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    action:
+        get: IndexController
+```
+
+The GET method will match `Flower\Controller\Sakura\IndexController` because we set a map to find new name. We can set more 
+methods to mapping methods with controllers.
+
+``` http
+flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    action:
+        get: IndexController
+        post: CreateController
+        put: UpdateController
+        delete: DeleteController
+```
+
+Or use wildcards to map all methods to one controller:
+
+``` http
+    action:
+        '*': SakuraController
+```
+
+## Override Methods
+
+If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in HTTP query, this param will override 
+real HTTP method. For example: `&_method=DELETE` will raise `DeleteController`. 
+
+## Limit By Methods
+
+We can limit our route by some options, if the HTTP request not match this rule, this route will be ignored,
+for example this config will only allow GET and POST, the PUT and DELETE will not matched.
+
+``` http
+flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    method:
+        - GET
+        - POST
+```
+
+## Limit By Other Options
+
+``` apache
+flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    method:
+        - GET
+        - POST
+    # Only http & https
+    scheme: https
+    post: 80
+    sslPort: 443
+```
 
 # Route Pattern
 
@@ -242,6 +250,26 @@ Array
     )
 )
 ```
+
+# Build Route
+
+Every route in Windwalker has a key, we called it **route name** or **route resources**, this name will help us quickly build route.
+
+``` php
+use Windwalker\Core\Router;
+
+echo Router::build('flower', array('id' => 25, 'alias' => 'foo-bar-baz'));
+```
+
+The output will be:
+
+``` html
+flower/25/foo-bar-baz
+```
+
+This is a very useful function that you can change roue name but won't worry of link will be broke.
+
+For much more usage, pleas see: [Route and Redirect](../mvc/route-redirect.html)
 
 # Matchers
 

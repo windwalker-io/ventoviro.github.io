@@ -113,13 +113,16 @@
                 <a href="../../documentation/db/basic.html">Basic Usage</a>
             </li>
                     <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/db/schema-builder.html">Schema Builder</a>
             </li>
                     <li class="">
                 <a href="../../documentation/db/migration.html">Migration And Seeding</a>
@@ -231,11 +234,23 @@ return $view-&gt;render();
 
 <h2>Use Package Templates</h2>
 
-<p>If your View is in a package, you can put your template at <code>{Package}/Templates</code>, For example, we move <code>default.php</code> 
-to <code>/src/Flower/Templates/flower/sakuras</code>, View will find this position priority than root templates folder. 
+<p>If your View is in a package, you can put your template at <code>{Package}/Templates/{view}</code>, For example, we move <code>default.php</code> 
+to <code>/src/Flower/Templates/sakuras</code>, View will find this position priority than root templates folder. 
 So we can make our templates following package folders.</p>
 
+<h2>The Ordering of Template Paths</h2>
+
+<p>Windwalker will follow this orders to find templates, you can override any template in a higher priority position:</p>
+
+<pre><code>[0] =&gt; /src/[Package]/Templates/[view]
+[1] =&gt; /templates/[package]/[view]
+[2] =&gt; /templates
+[3] =&gt; /vendor/windwalker/core/src/Core/Resources/Templates  &lt;-- Here is core templates
+</code></pre>
+
 <h2>Use other layouts</h2>
+
+<p>The <code>foo.bar.baz</code> will matched <code>foo/bar/baz.php</code> file. If you didn't set any layout name, <code>default</code> will instead.</p>
 
 <pre><code class="php">// Will find: edit.php
 $view-&gt;setLayout('edit')-&gt;render();
@@ -256,14 +271,17 @@ $view-&gt;addPath('/my/template/path1', Priority::HIGH);
 $view-&gt;addPath('/my/template/path2', Priority::NORMAL);
 </code></pre>
 
+<h3>Add to Global</h3>
+
 <p>Add paths to global that we don't need to set it every time, you must run this code before controller executed,
-for example, you can run in <code>onAfterInitialise</code> event (See <a href="../more/event.html">Event</a>) or <code>Package::initialise()</code>:</p>
+for example, you can run in <code>onAfterInitialise</code> event (See <a href="../more/event.html">Event</a>) , <code>YourPackage::initialise()</code> or <code>Application::initialise()</code>:</p>
 
 <pre><code class="php">// Add global paths
 \Windwalker\Core\Renderer\RendererHelper::addPath('/my/path', Priority::ABOVE_NORMAL);
 </code></pre>
 
-<p>See also: <a href="https://github.com/ventoviro/windwalker/tree/staging/src/View#htmlview">Windwalker View</a></p>
+<p>See also: <a href="https://github.com/ventoviro/windwalker/tree/staging/src/View#htmlview">Windwalker View</a>
+/ <a href="http://php.net/manual/en/class.splpriorityqueue.php">SplPriorityQueue</a></p>
 
 <h2>Add Data</h2>
 
@@ -294,9 +312,9 @@ Hello &lt;?php echo $foo;?&gt;
 <p>We are still using default View, but it is not so customizable. Let's extend it to a new View object:</p>
 
 <pre><code class="php">&lt;?php
-// src/Flower/Controller/View/SakurasHtmlView.php
+// src/Flower/View/SakurasHtmlView.php
 
-namespace Flower\Controller\View;
+namespace Flower\View;
 
 use Windwalker\Core\View\HtmlView;
 
@@ -316,7 +334,7 @@ class SakurasHtmlView extends HtmlView
 
 namespace Flower\Controller\Sakuras;
 
-use Flower\Controller\View\SakurasHtmlView;
+use Flower\View\SakurasHtmlView;
 use Windwalker\Core\Controller\Controller;
 
 class GetController extends Controller
@@ -338,20 +356,183 @@ class GetController extends Controller
 <p>The purpose of custom View object is that we can set data format in it, so controller dose not need to worry about 
 how to show data, just consider how to send data into View and redirect pages.</p>
 
-<h2>Use Blade or Twig Engine</h2>
+<h1>PHP Engine</h1>
 
-<pre><code class="php">// Use Blade view
+<p>PHP engine use <a href="https://github.com/ventoviro/windwalker-renderer">Windwalker Renderer</a> to render page, 
+this package provides a simple interface similar to Twig that support template extending.</p>
+
+<h2>Include Sub Template</h2>
+
+<p>Use <code>load()</code> to load other template file as a block. The first argument is file path, the second argument is new data
+to merge with original data.</p>
+
+<pre><code class="php">echo $this-&gt;load('sub.template', array('bar' =&gt; 'baz'));
+</code></pre>
+
+<p>Example to load <code>foo/article.php</code>:</p>
+
+<pre><code class="html">&lt;?php
+// foo/article.php
+
+/** @var  $data  \Windwalker\Data\Data  */
+$title = $data['title'];
+?&gt;
+&lt;h1&gt;&lt;?php echo $this-&gt;escape($title); ?&gt;&lt;/h1&gt;
+
+&lt;?php foreach ($data-&gt;articles as $article): ?&gt;
+    &lt;?php echo $this-&gt;load('foo.article', array('bar' =&gt; 'baz')); ?&gt;
+&lt;?php endforeach; ?&gt;
+</code></pre>
+
+<h2>Extends Parent Template</h2>
+
+<p>In Windwalker Renderer, there is a powerful function like Twig or Blade, we provide <code>extend()</code> method to extends
+parent template. (<code>extends</code> in php is a reserved string, so we can only use <code>extend</code>)</p>
+
+<p>For example, this is the parent <code>_global/html.php</code> template:</p>
+
+<pre><code class="html">&lt;!-- _global/html.php --&gt;
+&lt;Doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;?php $this-&gt;block('title');?&gt;Home&lt;?php $this-&gt;endblock(); ?&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+    &lt;?php $this-&gt;block('body');?&gt;
+        &lt;h2&gt;Home page&lt;/h2&gt;
+    &lt;?php $this-&gt;endblock(); ?&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>And we can extends it in our View:</p>
+
+<pre><code class="html">&lt;?php
+// foo/article.php
+$this-&gt;extend('_global.html');
+?&gt;
+
+&lt;?php $this-&gt;block('title');?&gt;Article&lt;?php $this-&gt;endblock(); ?&gt;
+
+&lt;?php $this-&gt;block('body');?&gt;
+    &lt;article&gt;
+        &lt;h2&gt;Article&lt;/h2&gt;
+        &lt;p&gt;FOO&lt;/p&gt;
+    &lt;/article&gt;
+&lt;?php $this-&gt;endblock(); ?&gt;
+</code></pre>
+
+<p>The result will be:</p>
+
+<pre><code class="html">&lt;Doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Article&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;article&gt;
+            &lt;h2&gt;Article&lt;/h2&gt;
+            &lt;p&gt;FOO&lt;/p&gt;
+        &lt;/article&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2>Show Parent</h2>
+
+<p>We can echo parent data in a block:</p>
+
+<pre><code class="html">&lt;?php $this-&gt;block('body');?&gt;
+    &lt;?php echo $this-&gt;parent(); ?&gt;
+    &lt;article&gt;
+        &lt;h2&gt;Article&lt;/h2&gt;
+        &lt;p&gt;FOO&lt;/p&gt;
+    &lt;/article&gt;
+&lt;?php $this-&gt;endblock(); ?&gt;
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code class="html">&lt;h2&gt;Home page&lt;/h2&gt;
+&lt;article&gt;
+    &lt;h2&gt;Article&lt;/h2&gt;
+    &lt;p&gt;FOO&lt;/p&gt;
+&lt;/article&gt;
+</code></pre>
+
+<p>See: <a href="https://github.com/ventoviro/windwalker-renderer#windwalker-renderer">Windwalker Renderer</a></p>
+
+<h1>Blade Engine</h1>
+
+<p>Blade is a simple, yet powerful templating engine provided with <a href="http://laravel.com/">Laravel</a>. It is driven by template inheritance and sections. 
+All Blade templates should use the <code>.blade.php</code> extension.</p>
+
+<p>There are 2 ways to use Blade engine in View, first is directly create it.</p>
+
+<pre><code class="php">use Windwalker\Core\View\BladeHtmlView;
+
+// Use Blade view
 $view = new BladeHtmlView;
 
-// OR Twig view
+$view['foo'] = $bar;
+
+echo $view-&gt;setLayout('flower.sakura')-&gt;render();
+</code></pre>
+
+<p>The second is extend it.</p>
+
+<pre><code class="php">use Windwalker\Core\View\BladeHtmlView;
+
+class MyBladeHtmlView extends BladeHtmlView
+{
+
+}
+
+$view = new MyBladeHtmlView;
+
+echo $view-&gt;setLayout('flower.sakura')-&gt;render();
+</code></pre>
+
+<h2>How to Use Blade Engine</h2>
+
+<p>See: <a href="http://laravel.com/docs/4.2/templates">Blade Templating</a></p>
+
+<h1>Twig Engine</h1>
+
+<p>Twig is a well-known template language for PHP, created by Sensio. It uses a syntax similar to the Django and Jinja template languages.</p>
+
+<p>There are 2 ways to use Twig engine, similar to Blade engine:</p>
+
+<pre><code class="php">use Windwalker\Core\View\TwigHtmlView;
+
 $view = new TwigHtmlView;
 </code></pre>
+
+<p>OR</p>
+
+<pre><code class="php">use Windwalker\Core\View\TwigHtmlView;
+
+class MyTwigHtmlView extends TwigHtmlView
+{
+
+}
+
+$view = new MyBladeHtmlView;
+</code></pre>
+
+<h2>How to Use Twig</h2>
+
+<p>See: <a href="http://twig.sensiolabs.org/documentation">Twig Documentation</a></p>
 
 
                     <hr />
 
                     <p class="uk-text-center">
-                        Found a typo? Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
+                        Found a typo? Help <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation">improve</a> our documentation
                     </p>
                 </article>
             </div>

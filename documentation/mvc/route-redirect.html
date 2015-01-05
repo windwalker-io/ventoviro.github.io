@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>Route and Redirect | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Route and Redirect | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+        
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="../../media/js/highlight.pack.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                                                                                                
+                <li class="">
+                    <a href="../../documentation/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Route and Redirect</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+            <div class="uk-width-medium-1-4 uk-container-center">
+                <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+        <li class="uk-nav-header">Start</li>
+
+                    <li class="">
+                <a href="../../documentation/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+
+                    <li class="">
+                <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../documentation/mvc/route-redirect.html">Route and Redirect</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+
+                    <li class="">
+                <a href="../../documentation/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+
+                    <li class="">
+                <a href="../../documentation/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+
+                    <li class="">
+                <a href="../../documentation/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/error-handling.html">Error Handling</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>            </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                
+                <article class="article-content">
+                    <h1>Base URI</h1>
+
+<p>Sometimes you may put your application at sub folder of a domain, Windwalker provides a uri data help you get base uri.</p>
+
+<p>If our application located at <code>http://domain.com/sites/windwalker/</code> and we open <code>/flower/sakura</code> page, we may use this code to get uri data:</p>
+
+<pre><code class="php">$uri = \Windwalker\Ioc::get('uri');
+
+// Get Base path
+echo $uri-&gt;get('current');
+echo $uri-&gt;get('base.path');
+echo $uri-&gt;get('base.full');
+echo $uri-&gt;get('base.host');
+echo $uri-&gt;get('media.path');
+echo $uri-&gt;get('media.full');
+echo $uri-&gt;get('route');
+</code></pre>
+
+<p>We will get:</p>
+
+<pre><code class="html">http://domain.com/sites/windwalker/flower/sakura
+/sites/windwalker/
+http://domain.com/sites/windwalker/
+http://domain.com
+/sites/windwalker/media/
+http://domain.com/sites/windwalker/media/
+flower/sakura
+</code></pre>
+
+<p>These data can help our page link strong whenever we put this application.</p>
+
+<h2>Use base.path</h2>
+
+<p>Use this code:</p>
+
+<pre><code class="php">// We can also use array access
+echo $uri['base.path'] . '/flower/sakura';
+</code></pre>
+
+<p>We'll get a uri start from root, so the relative path will not break.</p>
+
+<pre><code class="html">/sites/windwalker/flower/sakura
+</code></pre>
+
+<h2>Use in View</h2>
+
+<p>View has already included uri object as global variables.</p>
+
+<pre><code class="html">&lt;link href="&lt;?php echo $data-&gt;uri['media.path']; ?&gt;css/bootstrap.min.css"&gt;
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="html">&lt;link href="/sites/windwalker/media/css/bootstrap.min.css"&gt;
+</code></pre>
+
+<h1>Build Route</h1>
+
+<p>Every route in Windwalker has a key, we called it <strong>route name</strong> or <strong>route resources</strong>, this name will help us quickly build route.</p>
+
+<p>For example, this is the routing file:</p>
+
+<pre><code class="yaml">flower_page:
+    pattern: /flower/page/(id)-(alias).html
+    controller: Flower\Controller\Page
+</code></pre>
+
+<p>Then we can build this route by <code>Router::build()</code></p>
+
+<pre><code class="php">use Windwalker\Core\Router;
+
+// Note: don't use \Windwalker\Router\Router
+echo Router::build('flower', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="html">flower/page/25-foo-bar-baz.html
+</code></pre>
+
+<p>This is a very useful function that you can change roue name but won't worry of link will be broke.</p>
+
+<h2>Build Package Route</h2>
+
+<p>If your routes is definded in a package, you must add package alias before route name, and separate by colon <code>:</code>:</p>
+
+<pre><code class="php">use Windwalker\Core\Router;
+
+Router::build('flower:sakuras', array('page' =&gt; $page));
+</code></pre>
+
+<p>Or use PackageRouter, we can ignore package name that Package will auto add it:</p>
+
+<pre><code class="php">$package = PackageHelper::getPackage('flower');
+
+// No necessary to add 'flower:'
+$package-&gt;router-&gt;build('sakuras', array('page' =&gt; $page));
+
+// If you want to build rote in other package, you may re add package name
+$package-&gt;router-&gt;build('user:login');
+</code></pre>
+
+<h2>Build for Http or Html</h2>
+
+<p>Default <code>build()</code> method will not encode URL, so we can use this URL to redirect page, the <code>buildHttp()</code> is an alias of <code>build()</code>.</p>
+
+<p>If we want to build a URL to put on HTML, we must encode it, so we have to use <code>buildHtml()</code> method.</p>
+
+<pre><code class="php">echo Router::buildHttp('flower:sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
+echo Router::buildHtml('flower:sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code class="html">flower/sakuras?foo=bar&amp;baz=yoo
+flower/sakuras?foo=bar&amp;amp;baz=yoo
+</code></pre>
+
+<h2>Relative or Absolute URL</h2>
+
+<p>Router has 3 mode, <code>RAW</code>, <code>PATH</code> or <code>FULL</code>:</p>
+
+<pre><code class="php">echo Router::build('flower:sakuras', array(), Router::TYPE_RAW);
+echo Router::build('flower:sakuras', array(), Router::TYPE_PATH);
+echo Router::build('flower:sakuras', array(), Router::TYPE_FULL);
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code class="html">flower/sakuras
+/sites/windwalker/flower/sakuras
+http://domain.com/sites/windwalker/flower/sakuras
+</code></pre>
+
+<p>The RAW route used to store in database, the PATH route used to print in HTML, the FULL route used to redirect.</p>
+
+<h2>Build Route in Controller</h2>
+
+<p>If you are in controller, we can use PackageRouter to build route, it is more safer because we can auto get current package routes.</p>
+
+<pre><code class="php">// Original way, we have to know package name
+use Windwalker\Core\Router;
+
+$route = Router::buildHttp('flower:sakura');
+
+// Simpler way to let package handle it
+$route = $this-&gt;package-&gt;router-&gt;buildHttp('sakura');
+
+$this-&gt;setRedirect($route);
+</code></pre>
+
+<h2>Build Route in View Template</h2>
+
+<p>View has also includes package router, just build route like this:</p>
+
+<pre><code class="html">&lt;a href="&lt;?php echo $data-&gt;router-&gt;buildHtml('sakura'); ?&gt;"&gt;Link&lt;/a&gt;
+</code></pre>
+
+
+                    <hr />
+
+                    <p class="uk-text-center">
+                        Found a typo? Help <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation">improve</a> our documentation
+                    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2015 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>
