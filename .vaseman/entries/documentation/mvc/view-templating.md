@@ -370,7 +370,7 @@ class MyTwigHtmlView extends TwigHtmlView
 
 }
 
-$view = new MyBladeHtmlView;
+$view = new MyTwigHtmlView;
 ```
 
 ## How to Use Twig
