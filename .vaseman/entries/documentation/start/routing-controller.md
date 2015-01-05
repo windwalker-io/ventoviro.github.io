@@ -13,14 +13,13 @@ flower:
     controller: Flower\Controller\Sakura
 ```
 
-If you use browser open `/flower/sakura`, Windwalker will call `Flower\Controller\Sakura\GetController` and execute it.
+If you use browser open `/flower/sakura`, Windwalker will find `Flower\Controller\Sakura\GetController`  and execute it automatically.
 
-Why is `GetController`? Windwalker routing follows RESTful pattern to find action, and default method of browser is `GET`,
- so `GetController` will be matched. You can send `POST` request to `/flower/sakura`, the `SaveController` will be executed.
- 
-This way will be more efficiently because we can reduce routes number to make routing more faster.
+The reason we locate `GetController` is because Windwalker routing supports RESTful protocal for that `Get` is commonly used as default http request method.
 
-## This is supported methods:
+If you send `Post` request then `SaveController` will be executed instead. This is more efficient and faster to the better routing performance.
+
+## Methods supported:
 
 | Method    | Mapped Controller |
 | --------- | --------------- |
@@ -32,8 +31,7 @@ This way will be more efficiently because we can reduce routes number to make ro
 | `HEAD`    | `HeadController` |
 | `OPTIONS` | `OptionsController` |
 
-> NOTE: Windwalker mapped POST, PUT and PATCH to `SaveController`, this controller will handle both create and update. 
-If you want to separate create and update to two controllers, see next section to override actions.
+> NOTE: Windwalker mapped POST, PUT and PATCH to `SaveController`, which includes both create and update. If you want to separate create and update to two controllers, see next section to override actions.
 
 ## Use Controller
 
@@ -45,7 +43,7 @@ flower:
     controller: Flower\Controller\Sakura
 ```
 
-Lets create a controller at `src/Flower/Controller/Sakura/GetController.php`:
+Lets create a controller at path : `src/Flower/Controller/Sakura/GetController.php`:
 
 ``` php
 <?php
@@ -66,20 +64,17 @@ class GetController extends Controller
 }
 ```
 
-Windwalker Controller follows single action pattern (similar to Joomla New MVC), every controller has only one action (`execute()`).
-The benefit is that our controllers will be more lighter then other frameworks. You can add more logic to a controller but won't be
-confused by many actions in one class.
+Windwalker Controller follows single action pattern (similar to Joomla New MVC), every controller has only one action (`execute()`). This way, we keep controller itself as light as possible than other frameworks. You can add more logic to a controller but won't be confused by many actions in one class.
 
-Why we don't need to include this file? Windwalker use autoloading to find classes. The `/src` folder use [PSR](http://www.php-fig.org/psr/psr-4/)
-rule to match class namespace with folder structure, it because we have already set `"": "src/"` in `composer.json`.
+All php clases within `/src` folder hierarchy will be loaded automatically once you add `"": "src/"` as [PSR](http://www.php-fig.org/psr/psr-4/) standard in `composer.json`.
 
-After controller created, type `/flower/25` in browser. You will see:
+After controller created, go to `/flower/25` at your host. You will see:
 
 ``` html
 Flower id is: 25
 ```
 
-Congrats, your first page has show.
+Congratulations! Your first page is finished.
 
 ## Override Actions
 
