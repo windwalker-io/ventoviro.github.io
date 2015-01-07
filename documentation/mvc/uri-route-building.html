@@ -231,16 +231,24 @@ echo $uri-&gt;get('route');
 
 <p>We will get:</p>
 
-<pre><code class="html">http://domain.com/sites/windwalker/flower/sakura
-/sites/windwalker/
-http://domain.com/sites/windwalker/
-http://domain.com
-/sites/windwalker/media/
-http://domain.com/sites/windwalker/media/
-flower/sakura
+<pre><code class="html">http://domain.com/sites/windwalker/flower/sakura &lt;--- current
+/sites/windwalker/                               &lt;--- base.path
+http://domain.com/sites/windwalker/              &lt;--- base.full
+http://domain.com                                &lt;--- base.host
+/sites/windwalker/media/                         &lt;--- media.path
+http://domain.com/sites/windwalker/media/        &lt;--- media.full
+flower/sakura                                    &lt;--- route
 </code></pre>
 
-<p>These data can help our page link strong whenever we put this application.</p>
+<p>These uri data can help our page links be strong whenever we put this application. Fo example, this code will build a full path of link:</p>
+
+<pre><code class="php">echo $link = $uri-&gt;get('base.full') . 'romeo/and/juliet'; 
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code>http://domain.com/sites/windwalker/romeo/and/juliet
+</code></pre>
 
 <h2>Use base.path</h2>
 
@@ -255,9 +263,9 @@ echo $uri['base.path'] . '/flower/sakura';
 <pre><code class="html">/sites/windwalker/flower/sakura
 </code></pre>
 
-<h2>Use in View</h2>
+<h2>Use URI in View</h2>
 
-<p>View has already included uri object as global variables.</p>
+<p>View has already included uri object as a global variable.</p>
 
 <pre><code class="html">&lt;link href="&lt;?php echo $data-&gt;uri['media.path']; ?&gt;css/bootstrap.min.css"&gt;
 </code></pre>
