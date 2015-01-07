@@ -66,7 +66,7 @@ Please see: [Windwalker Joomla RAD](http://rad.windwalker.io)
 
 # Credits
 
-Windwalker incorporated many ideas and work from other well-known Web frameworks. Below is a short list of those Windwalker inspired from.
+Windwalker incorporated many ideas and work from other well-known Web frameworks. Below is a short list of those Windwalker inspired by.
 
 - [Joomla](http://joomla.org) - Most Windwalker packages is based or highly influenced on Joomla.
 - [Laravel](http://laravel.com) - Windwalker referenced the Facades pattern from Laravel.
