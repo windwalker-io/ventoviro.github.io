@@ -25,16 +25,26 @@ echo $uri->get('route');
 We will get:
 
 ``` html
-http://domain.com/sites/windwalker/flower/sakura
-/sites/windwalker/
-http://domain.com/sites/windwalker/
-http://domain.com
-/sites/windwalker/media/
-http://domain.com/sites/windwalker/media/
-flower/sakura
+http://domain.com/sites/windwalker/flower/sakura <--- current
+/sites/windwalker/                               <--- base.path
+http://domain.com/sites/windwalker/              <--- base.full
+http://domain.com                                <--- base.host
+/sites/windwalker/media/                         <--- media.path
+http://domain.com/sites/windwalker/media/        <--- media.full
+flower/sakura                                    <--- route
 ```
 
-These data can help our page link strong whenever we put this application.
+These uri data can help our page links be strong whenever we put this application. Fo example, this code will build a full path of link:
+
+``` html
+echo $link = $uri->get('base.full') . 'romeo/and/juliet'; 
+```
+
+The output will be:
+
+```
+http://domain.com/sites/windwalker/romeo/and/juliet
+```
 
 ## Use base.path
 
