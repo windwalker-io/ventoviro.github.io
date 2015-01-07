@@ -36,7 +36,7 @@ flower/sakura                                    <--- route
 
 These uri data can help our page links be strong whenever we put this application. Fo example, this code will build a full path of link:
 
-``` html
+``` php
 echo $link = $uri->get('base.full') . 'romeo/and/juliet'; 
 ```
 
@@ -61,9 +61,9 @@ We'll get a uri start from root, so the relative path will not break.
 /sites/windwalker/flower/sakura
 ```
 
-## Use in View
+## Use URI in View
 
-View has already included uri object as global variables.
+View has already included uri object as a global variable.
 
 ``` html
 <link href="<?php echo $data->uri['media.path']; ?>css/bootstrap.min.css">
