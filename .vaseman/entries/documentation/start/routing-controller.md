@@ -68,8 +68,6 @@ Windwalker Controller follows single action pattern (similar to Joomla New MVC),
 
 You don't have to include above files because Windwalker use autoloading, which follows [PSR-4](http://www.php-fig.org/psr/psr-4/) standard. Go to `composer.json` you can see the autoloading option is set to `"":"/src"`, so any file under `/src` folder hierarchy will be loaded automatically.
 
-All php classes within `/src` folder hierarchy will be loaded automatically once you add `"": "src/"` as  in `composer.json`.
-
 After controller created, go to `/flower/25` at your host. You will see:
 
 ``` html
