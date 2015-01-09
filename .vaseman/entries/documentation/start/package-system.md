@@ -19,7 +19,7 @@ Every package is pretty much a simple application having MVC, routing, configura
   
 ## Use Package as Extension
 
-Package can be used as extensions developer. You can create a package and submit it to [Packagist](https://packagist.org/).
+Package can be used as extensions for developer. You can create a package and submit it to [Packagist](https://packagist.org/).
 Then anyone can install it by composer.
 
 ![mockup_2](https://cloud.githubusercontent.com/assets/1639206/5579085/ff715d8c-906f-11e4-92dc-43c3839e0ef8.png)
