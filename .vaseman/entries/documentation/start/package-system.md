@@ -9,18 +9,18 @@ Package is the main component of Windwalker's structure. Here is a image that de
 
 ![package](https://cloud.githubusercontent.com/assets/1639206/5579031/b4c50ed8-906e-11e4-8964-a1f2d949fc88.png)
 
-From this image, we will know there can be multiple packages and its' own MVC system in Windwalker. That make our application
- more flexible. For example, we can create a `FrontendPackage` and an `AdminPackage` to maintain your front-end and back-end.
+From above image, we will know there can be multiple packages and its' own MVC system in Windwalker. That makes our application
+ more flexible. For example, we can create a `FrontendPackage` and an `AdminPackage` as front-end and back-end respectively.
  And an `ApiPackage` to provide RESTful API for mobile APP.
  
-Every package just similar to a little application, it contains MVC, routing, configuration and database schema:
+Every package is pretty much a simple application having MVC, routing, configuration and database schema:
 
 ![mockup_3](https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png)
   
 ## Use Package as Extension
 
-Package can be extensions for other developer. You can create a package and submit it to [Packagist](https://packagist.org/).
-Then everyone are able to install it by composer.
+Package can be used as extensions for developer. You can create a package and submit it to [Packagist](https://packagist.org/).
+Then anyone can install it by composer.
 
 ![mockup_2](https://cloud.githubusercontent.com/assets/1639206/5579085/ff715d8c-906f-11e4-92dc-43c3839e0ef8.png)
 
