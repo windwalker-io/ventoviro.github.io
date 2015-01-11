@@ -116,7 +116,7 @@ real HTTP method. For example: `&_method=DELETE` will raise `DeleteController`.
 
 ## Limit By Methods
 
-The HTTP request will be ingnored according if it did not satisfy the fiven conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.
+The HTTP request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.
 
 ``` http
 flower:
@@ -247,7 +247,7 @@ Array
 
 # Build Route
 
-Every route in Windwalker has a key, which allows every single route patter can be access by **route name** or **route resources**, this will be helpful building a route quickly.
+Every route in Windwalker has a key, which allows every single route pattern can be access by **route name** or **route resources**, this will be helpful building a route quickly.
 
 ``` php
 use Windwalker\Core\Router;
