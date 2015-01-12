@@ -116,8 +116,7 @@ real HTTP method. For example: `&_method=DELETE` will raise `DeleteController`.
 
 ## Limit By Methods
 
-We can limit our route by some options, if the HTTP request not match this rule, this route will be ignored,
-for example this config will only allow GET and POST, the PUT and DELETE will not matched.
+The HTTP request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.
 
 ``` http
 flower:
@@ -128,7 +127,7 @@ flower:
         - POST
 ```
 
-## Limit By Other Options
+## Limit By schema
 
 ``` apache
 flower:
@@ -147,13 +146,13 @@ flower:
 
 ## Simple Params
 
-Use `()` to wrap param name.
+Use parenthesis `()` to wrap param name.
 
 ``` http
     pattern: /flower/(id)/(alias)
 ```
 
-If uri is `/flower/25/article-alias-name`, this pattern will be matched, and there will be two variables in input:
+For uri look like : `/flower/25/article-alias-name`, above pattern will be matched and there will be two input params.
 
 ``` html
 [id] => 25
@@ -172,7 +171,7 @@ The attributes in `variables` will auto set to input if this route be matched.
 
 ### Limit By Requirement
 
-Use `\d+` to limit that id need to be integer. If uri is `/flower/foo/sakura`, this route will not be matched.
+Use Regular Expression to validate type of input. For example `\d+` indicates that only `Integer` will be accepted as `id` input.
 
 ``` http
     pattern: /flower/(id)/(alias)
@@ -184,13 +183,13 @@ Use `\d+` to limit that id need to be integer. If uri is `/flower/foo/sakura`, t
 
 ### Single Optional Params
 
-Use `(/...)` to wrap param name, this param will be optional param.
+Use `(/{anyparam})` to wrap an Optional Param.
 
 ``` http
     pattern: flower(/id)
 ```
 
-These 2 uri will be matched.
+Below 2 uris will be matched simultaneously.
 
 ```
 /flower
@@ -203,7 +202,7 @@ These 2 uri will be matched.
     pattern: flower(/year,month,day)
 ```
 
-These uri will be matched.
+All uris below will be matched.
 
 ```
 /flower
@@ -212,7 +211,7 @@ These uri will be matched.
 /flower/2014/10/12
 ```
 
-And the matched variables will be
+Matched variables:
 
 ```
 Array
@@ -225,13 +224,13 @@ Array
 
 ## Wildcards
 
-Use Wildcards to match all params follows our route.
+Use Wildcards to match all the successive params in uri.
 
 ``` http
     pattern: /king/(*tags)
 ```
 
-The routes start by `/king` will all be matched. For example: `/king/john/troilus/and/cressida`, will get these variables.
+Every param after `/king` will all be matched. For example: `/king/john/troilus/and/cressida`, will get these variables.
 
 ```
 Array
@@ -248,23 +247,23 @@ Array
 
 # Build Route
 
-Every route in Windwalker has a key, we called it **route name** or **route resources**, this name will help us quickly build route.
+Every route in Windwalker has a key, which allows every single route pattern can be access by **route name** or **route resources**, this will be helpful building a route quickly.
 
 ``` php
 use Windwalker\Core\Router;
 
-echo Router::build('flower', array('id' => 25, 'alias' => 'foo-bar-baz'));
+echo Router::build('{route name}', array('id' => 25, 'alias' => 'foo-bar-baz'));
 ```
 
 The output will be:
 
 ``` html
-flower/25/foo-bar-baz
+{route name}/25/foo-bar-baz
 ```
 
-This is a very useful function that you can change roue name but won't worry of link will be broke.
+This is a very useful function that you can change roue name but don't need to worry about invalid link.
 
-For much more usage, pleas see: [Route and Redirect](../mvc/route-redirect.html)
+For further information, see: [Route and Redirect](../mvc/route-redirect.html)
 
 # Matchers
 
@@ -287,7 +286,7 @@ It is the slowest matcher but much more customizable. It is the default matcher 
 ## Binary Matcher
 
 Binary Matcher use the [Binary Search Algorithm](http://en.wikipedia.org/wiki/Binary_search_algorithm) to find route.
-This matcher is faster than SequentialMatcher but it will break the ordering of your routes. Binary search will re-sort all routes by pattern characters.
+This matcher is faster than Sequential Matcher but it will break the ordering of your routes. Binary search will re-sort all routes by pattern characters.
 
 ## Trie Matcher
 
