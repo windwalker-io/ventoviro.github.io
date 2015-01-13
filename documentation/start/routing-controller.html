@@ -348,8 +348,7 @@ real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code
 
 <h2>Limit By Methods</h2>
 
-<p>We can limit our route by some options, if the HTTP request not match this rule, this route will be ignored,
-for example this config will only allow GET and POST, the PUT and DELETE will not matched.</p>
+<p>The HTTP request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.</p>
 
 <pre><code class="http">flower:
     pattern: /flower/sakura
@@ -359,7 +358,7 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
         - POST
 </code></pre>
 
-<h2>Limit By Other Options</h2>
+<h2>Limit By schema</h2>
 
 <pre><code class="apache">flower:
     pattern: /flower/sakura
@@ -377,12 +376,12 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
 
 <h2>Simple Params</h2>
 
-<p>Use <code>()</code> to wrap param name.</p>
+<p>Use parenthesis <code>()</code> to wrap param name.</p>
 
 <pre><code class="http">    pattern: /flower/(id)/(alias)
 </code></pre>
 
-<p>If uri is <code>/flower/25/article-alias-name</code>, this pattern will be matched, and there will be two variables in input:</p>
+<p>For uri look like : <code>/flower/25/article-alias-name</code>, above pattern will be matched and there will be two input params.</p>
 
 <pre><code class="html">[id] =&gt; 25
 [alias] =&gt; article-alias-name
@@ -399,7 +398,7 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
 
 <h3>Limit By Requirement</h3>
 
-<p>Use <code>\d+</code> to limit that id need to be integer. If uri is <code>/flower/foo/sakura</code>, this route will not be matched.</p>
+<p>Use Regular Expression to validate type of input. For example <code>\d+</code> indicates that only <code>Integer</code> will be accepted as <code>id</code> input.</p>
 
 <pre><code class="http">    pattern: /flower/(id)/(alias)
     requirements:
@@ -410,12 +409,12 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
 
 <h3>Single Optional Params</h3>
 
-<p>Use <code>(/...)</code> to wrap param name, this param will be optional param.</p>
+<p>Use <code>(/{anyparam})</code> to wrap an Optional Param.</p>
 
 <pre><code class="http">    pattern: flower(/id)
 </code></pre>
 
-<p>These 2 uri will be matched.</p>
+<p>Below 2 uris will be matched simultaneously.</p>
 
 <pre><code>/flower
 /flower/25
@@ -426,7 +425,7 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
 <pre><code class="http">    pattern: flower(/year,month,day)
 </code></pre>
 
-<p>These uri will be matched.</p>
+<p>All uris below will be matched.</p>
 
 <pre><code>/flower
 /flower/2014
@@ -434,7 +433,7 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
 /flower/2014/10/12
 </code></pre>
 
-<p>And the matched variables will be</p>
+<p>Matched variables:</p>
 
 <pre><code>Array
 (
@@ -446,12 +445,12 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
 
 <h2>Wildcards</h2>
 
-<p>Use Wildcards to match all params follows our route.</p>
+<p>Use Wildcards to match all the successive params in uri.</p>
 
 <pre><code class="http">    pattern: /king/(*tags)
 </code></pre>
 
-<p>The routes start by <code>/king</code> will all be matched. For example: <code>/king/john/troilus/and/cressida</code>, will get these variables.</p>
+<p>Every param after <code>/king</code> will all be matched. For example: <code>/king/john/troilus/and/cressida</code>, will get these variables.</p>
 
 <pre><code>Array
 (
@@ -467,21 +466,21 @@ for example this config will only allow GET and POST, the PUT and DELETE will no
 
 <h1>Build Route</h1>
 
-<p>Every route in Windwalker has a key, we called it <strong>route name</strong> or <strong>route resources</strong>, this name will help us quickly build route.</p>
+<p>Every route in Windwalker has a key, which allows every single route pattern can be access by <strong>route name</strong> or <strong>route resources</strong>, this will be helpful building a route quickly.</p>
 
 <pre><code class="php">use Windwalker\Core\Router;
 
-echo Router::build('flower', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
+echo Router::build('{route name}', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
 </code></pre>
 
 <p>The output will be:</p>
 
-<pre><code class="html">flower/25/foo-bar-baz
+<pre><code class="html">{route name}/25/foo-bar-baz
 </code></pre>
 
-<p>This is a very useful function that you can change roue name but won't worry of link will be broke.</p>
+<p>This is a very useful function that you can change roue name but don't need to worry about invalid link.</p>
 
-<p>For much more usage, pleas see: <a href="../mvc/route-redirect.html">Route and Redirect</a></p>
+<p>For further information, see: <a href="../mvc/route-redirect.html">Route and Redirect</a></p>
 
 <h1>Matchers</h1>
 
@@ -503,7 +502,7 @@ It is the slowest matcher but much more customizable. It is the default matcher 
 <h2>Binary Matcher</h2>
 
 <p>Binary Matcher use the <a href="http://en.wikipedia.org/wiki/Binary_search_algorithm">Binary Search Algorithm</a> to find route.
-This matcher is faster than SequentialMatcher but it will break the ordering of your routes. Binary search will re-sort all routes by pattern characters.</p>
+This matcher is faster than Sequential Matcher but it will break the ordering of your routes. Binary search will re-sort all routes by pattern characters.</p>
 
 <h2>Trie Matcher</h2>
 
