@@ -20,7 +20,7 @@ Use internal container in controller and Application:
 $session = $this->container->get('system.session');
 ```
 
-Or use `Ioc` static class to get it:
+Or use static method in `Ioc` class to get it:
 
 ``` php
 $container = \Windwalker\Ioc::factory(); // This container is singleton
@@ -36,7 +36,7 @@ $container->set('my.input', $input);
 $input = $container->get('my.input');
 ```
 
-Or directly get it by `Ioc`:
+Or get it by `Ioc:get()` statically:
 
 ``` php
 \Windwalker\Ioc::get('my.input');
@@ -68,7 +68,7 @@ Directly get object from sub container by `Ioc`:
 
 # Lazy Loading
 
-Sometimes we will hope not create object instantly, we can use callback to create object.
+Use callback function as input value if we do not want to create object instantly.
 
 ``` php
 // Set a closure into it
@@ -81,7 +81,7 @@ $container->set('input', function(Container $container)
 $input = $container->get('input');
 ```
 
-But if we use `set()` method to set callback, this object will be recreated when every time we try to get it.
+But if we use `set()` method to set callback, this object will be re-created everytime.
 
 # Shared Object (Singleton)
 
@@ -97,7 +97,7 @@ $container->share('input', function(Container $container)
 // Will will always get same instance
 $input = $container->get('input');
 
-// The second argument of get() can force create new instance
+// The second argument of get() is whether forced to create new instance or not
 $newInput = $container->get('input', true);
 
 // Use readable constant
@@ -106,7 +106,7 @@ $newInput = $container->get('input', Container::FORCE_NEW);
 
 # Protect Object
 
-Use `protect()` to prevent others override your important object.
+Use `protect()` to prevent others from overriding your important object.
 
 ``` php
 $container->protect(
@@ -195,7 +195,7 @@ abstract class Ioc extends \Windwalker\Core\Ioc
 
 # Build Object
 
-Container can build an object and auto inject the needed dependency objects.
+Container can build an object and automatically inject all the necessary dependencies.
 
 ``` php
 use Windwalker\IO\Input;
@@ -282,7 +282,7 @@ $flower->name; // sakura
 
 # Container Aware
 
-The `ContainerAwareInterface` help us get and set Container as a system, constructor, we often use it on application or controller classes.
+The `ContainerAwareInterface` defines getter & setter of Container as a system, constructor, we often use it on application or controller classes.
 
 ``` php
 use Windwalker\DI\ContainerAwareInterface;
