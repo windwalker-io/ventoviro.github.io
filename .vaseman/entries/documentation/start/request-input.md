@@ -24,7 +24,7 @@ class GetController extends Controller
 
 ## Get Input at Anywhere
 
-The `Input` property only exists in class `Application` and `Controller`. Under any other circumstances to access `Input`, you may use Ioc (DI) Container. This is NOT recommended for it might break software robustness of your application.
+The `Input` property only exists in class `Application` and `Controller`. Under any other situation to access `Input`, you may use Ioc (DI) Container. This is NOT recommended for it might break software robustness of your application.
 
 ``` php
 // Use global Ioc class
@@ -128,7 +128,7 @@ $input->setByPath('foo.bar.baz', $data);
 
 ## Get Value From RESTful methods
 
-We can get other RESTful methods as a new input object.
+We can get other methods as a new input object.
 
 ``` php
 $post = $input->post;
@@ -143,7 +143,7 @@ $delete = $input->delete;
 
 # Get SUPER GLOBALS
 
-Every Super Global will be an Input property.
+Every Super Global will be an independent object.
 
 ``` php
 // These are all Input object
