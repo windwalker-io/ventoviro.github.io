@@ -6,7 +6,7 @@ title: Use Controller
 # Controller Overview
 
 Windwalker Controller is a main entry of a page, after routing, the request input and IoC container will be injected 
-into controller and execute it. Every our code of this page will start at `doExecute()`.
+into controller and execute it. Any code mentioned in this section will be executed in `doExecute()`, the entrance of controller.
 
 Simple usage of controller:
 
@@ -30,14 +30,13 @@ class GetController extends Controller
 ## Single Action Pattern
 
 Windwalker Controller follows single responsibility principle, every controller has only one action (`execute()`).
-The benefit is that our controllers will be more lighter then other frameworks. You can add more logic to a controller but won't be
-confused by many actions in one class.
+The benefit is that our controllers will be much more lighter then other frameworks. You can add more logic to a controller without being confused by too many actions in one class.
 
 ## Use Multiple Actions
 
 But if you want to use multiple actions like traditional practice, Windwalker also support it.
 
-First, your controller should extends to `MultiActionController`:
+First, your controller should extend from `MultiActionController`:
 
 ``` php
 use Flower\Controller\Sakura\SakuraController;
@@ -72,7 +71,7 @@ flower:
 
 The action prefix with double colons will be methods of your controller.
 
-> NOTE: There is a found bug of MultiActionController in 2.0.3 that make it not work, we'll fix it soon after next version.
+> NOTE: There is a known bug of MultiActionController not working in 2.0.3, we'll fix it soon next version.
 
 # Get HTTP Input
 
@@ -194,7 +193,7 @@ Set Message when redirect:
 $this->setRedirect('pages.html', 'Save success', 'success');
 ```
 
-We can override redirect target everywhere when executing.
+We can override redirect target anywhere when executing.
 
 ``` php
 // In doExecute()
