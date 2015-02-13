@@ -71,8 +71,6 @@ flower:
 
 The action prefix with double colons will be methods of your controller.
 
-> NOTE: There is a known bug of MultiActionController not working in 2.0.3, we'll fix it soon next version.
-
 # Get HTTP Input
 
 See: [Request and Input](../start/request-input.html), we can use Input object to get HTTP queries:
