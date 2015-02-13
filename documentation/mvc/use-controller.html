@@ -214,7 +214,7 @@
                     <h1>Controller Overview</h1>
 
 <p>Windwalker Controller is a main entry of a page, after routing, the request input and IoC container will be injected 
-into controller and execute it. Every our code of this page will start at <code>doExecute()</code>.</p>
+into controller and execute it. Any code mentioned in this section will be executed in <code>doExecute()</code>, the entrance of controller.</p>
 
 <p>Simple usage of controller:</p>
 
@@ -237,14 +237,13 @@ class GetController extends Controller
 <h2>Single Action Pattern</h2>
 
 <p>Windwalker Controller follows single responsibility principle, every controller has only one action (<code>execute()</code>).
-The benefit is that our controllers will be more lighter then other frameworks. You can add more logic to a controller but won't be
-confused by many actions in one class.</p>
+The benefit is that our controllers will be much more lighter then other frameworks. You can add more logic to a controller without being confused by too many actions in one class.</p>
 
 <h2>Use Multiple Actions</h2>
 
 <p>But if you want to use multiple actions like traditional practice, Windwalker also support it.</p>
 
-<p>First, your controller should extends to <code>MultiActionController</code>:</p>
+<p>First, your controller should extend from <code>MultiActionController</code>:</p>
 
 <pre><code class="php">use Flower\Controller\Sakura\SakuraController;
 
@@ -276,10 +275,6 @@ class GetController extends MultiActionController
 </code></pre>
 
 <p>The action prefix with double colons will be methods of your controller.</p>
-
-<blockquote>
-  <p>NOTE: There is a found bug of MultiActionController in 2.0.3 that make it not work, we'll fix it soon after next version.</p>
-</blockquote>
 
 <h1>Get HTTP Input</h1>
 
@@ -393,7 +388,7 @@ $model-&gt;setConfig($this-&gt;config);
 <pre><code class="php">$this-&gt;setRedirect('pages.html', 'Save success', 'success');
 </code></pre>
 
-<p>We can override redirect target everywhere when executing.</p>
+<p>We can override redirect target anywhere when executing.</p>
 
 <pre><code class="php">// In doExecute()
 

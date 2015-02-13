@@ -229,7 +229,7 @@ We also support service provider to help developers build their service in a uni
 <pre><code class="php">$session = $this-&gt;container-&gt;get('system.session');
 </code></pre>
 
-<p>Or use <code>Ioc</code> static class to get it:</p>
+<p>Or use static method in <code>Ioc</code> class to get it:</p>
 
 <pre><code class="php">$container = \Windwalker\Ioc::factory(); // This container is singleton
 </code></pre>
@@ -243,7 +243,7 @@ $container-&gt;set('my.input', $input);
 $input = $container-&gt;get('my.input');
 </code></pre>
 
-<p>Or directly get it by <code>Ioc</code>:</p>
+<p>Or get it by <code>Ioc:get()</code> statically:</p>
 
 <pre><code class="php">\Windwalker\Ioc::get('my.input');
 </code></pre>
@@ -272,7 +272,7 @@ $rose = $container-&gt;get('rose');
 
 <h1>Lazy Loading</h1>
 
-<p>Sometimes we will hope not create object instantly, we can use callback to create object.</p>
+<p>Use callback function as input value if we do not want to create object instantly.</p>
 
 <pre><code class="php">// Set a closure into it
 $container-&gt;set('input', function(Container $container)
@@ -284,7 +284,7 @@ $container-&gt;set('input', function(Container $container)
 $input = $container-&gt;get('input');
 </code></pre>
 
-<p>But if we use <code>set()</code> method to set callback, this object will be recreated when every time we try to get it.</p>
+<p>But if we use <code>set()</code> method to set callback, this object will be re-created everytime.</p>
 
 <h1>Shared Object (Singleton)</h1>
 
@@ -299,7 +299,7 @@ $container-&gt;share('input', function(Container $container)
 // Will will always get same instance
 $input = $container-&gt;get('input');
 
-// The second argument of get() can force create new instance
+// The second argument of get() is whether forced to create new instance or not
 $newInput = $container-&gt;get('input', true);
 
 // Use readable constant
@@ -308,7 +308,7 @@ $newInput = $container-&gt;get('input', Container::FORCE_NEW);
 
 <h1>Protect Object</h1>
 
-<p>Use <code>protect()</code> to prevent others override your important object.</p>
+<p>Use <code>protect()</code> to prevent others from overriding your important object.</p>
 
 <pre><code class="php">$container-&gt;protect(
     'input',
@@ -390,7 +390,7 @@ abstract class Ioc extends \Windwalker\Core\Ioc
 
 <h1>Build Object</h1>
 
-<p>Container can build an object and auto inject the needed dependency objects.</p>
+<p>Container can build an object and automatically inject all the necessary dependencies.</p>
 
 <pre><code class="php">use Windwalker\IO\Input;
 use Windwalker\Registry\Registry;
@@ -474,7 +474,7 @@ $flower-&gt;name; // sakura
 
 <h1>Container Aware</h1>
 
-<p>The <code>ContainerAwareInterface</code> help us get and set Container as a system, constructor, we often use it on application or controller classes.</p>
+<p>The <code>ContainerAwareInterface</code> defines getter &amp; setter of Container as a system, constructor, we often use it on application or controller classes.</p>
 
 <pre><code class="php">use Windwalker\DI\ContainerAwareInterface;
 
