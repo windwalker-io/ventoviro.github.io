@@ -5,8 +5,7 @@ title: Request and Input
 
 # Get Input Object in Controller
 
-Last section we have learned how to make controller work, but we have to get some HTTP request queries to make our program do something.
-We can get request by `Input` object, this is how we use it in controller.
+Last section we have learned how to make controller work, now it's time to see how the application receives HTTP request queries and respond. In Windwalker you may access input queries using `Input` object. Below is how it works:
 
 ``` php
 // src/Flower/Controller/Sakuras/GetController.php
@@ -25,8 +24,7 @@ class GetController extends Controller
 
 ## Get Input at Anywhere
 
-There is only `Application` and `Controller` are able to aware Input object. If we have to get Input out of these 2 classes,
-we have to use IoC (DI) Container to get it. Please don't use this way too often because it will break robustness of your program.
+The `Input` property only exists in class `Application` and `Controller`. Under any other situation to access `Input`, you may use Ioc (DI) Container. This is NOT recommended for it might break software robustness of your application.
 
 ``` php
 // Use global Ioc class
@@ -38,9 +36,9 @@ $input = $container->get('system.input');
 
 # How Input Work
 
-Mostly, we will need to get request data from http, the `$_GET`, `$_POST` or `$_REQUEST` provides us these data.
+Mostly, we need to get data from http request which `$_GET`, `$_POST` or `$_REQUEST` provides.
 
-But it is very unsafe if we only use super global variables, the Input object can help us get values from these variables and clean every string.
+But it is very unsafe if we only use super global variables, the Input object can help us get values from these variables and sanitize string.
   
 ``` php
 $input->get('flower'); // Same as $_REQUEST['flower']
@@ -48,7 +46,7 @@ $input->get('flower'); // Same as $_REQUEST['flower']
 $input->set('flower', 'sakura');
 ```
 
-The second argument is default value if request params not exists
+The second argument is default value if request params does not exist.
 
 ``` php
 $input->get('flower', 'default');
@@ -56,7 +54,7 @@ $input->get('flower', 'default');
 
 ## Filter
 
-Input use [Windwalker Filter](https://github.com/ventoviro/windwalker-filter) package to clean request string, the default filter type is `CMD`.
+Input use [Windwalker Filter](https://github.com/ventoviro/windwalker-filter) package to sanitize request string, the default filter type is `CMD`.
 We can use other filter type:
 
 ``` php
@@ -77,7 +75,7 @@ More filter usage please see: [Windwalker Filter](https://github.com/ventoviro/w
 
 ## Get Array
 
-Input is able to get data as array. 
+Input provides option to get data as array. 
 
 ``` php
 // mysite.com/?flower[1]=sakura&flower[2]=olive;
@@ -128,7 +126,7 @@ $value = $input->getByPath('foo.bar.baz', 'default', InputFilter::STRING);
 $input->setByPath('foo.bar.baz', $data);
 ```
 
-## Get Value From Other Methods
+## Get Value From RESTful methods
 
 We can get other methods as a new input object.
 
@@ -145,7 +143,7 @@ $delete = $input->delete;
 
 # Get SUPER GLOBALS
 
-Every Super Global will be an Input object.
+Every Super Global will be an independent object.
 
 ``` php
 // These are all Input object
@@ -160,7 +158,7 @@ $env->set('FOO_BAR', 1);
 
 See: [SUPER GLOBALS](http://php.net/manual/en/language.variables.superglobals.php)
 
-## Get method of current request:
+## Get method according to current request type:
 
 ``` php
 $method = $input->getMethod();
@@ -169,7 +167,7 @@ $method = $input->getMethod();
 # Files Input
 
 The format that PHP returns file data in for arrays can at times be awkward, especially when dealing with arrays of files. 
-FilesInput provides a convenient interface for making life a little easier, grouping the data by file.
+Files Input provides a convenient interface for making life a little easier, grouping the data by file.
 
 Suppose you have a form like:
 
@@ -181,7 +179,7 @@ Suppose you have a form like:
 </form>
 ```
 
-Normally, PHP would put these in an array called `$_FILES` that looked like:
+Normally, PHP put these in array `$_FILES` looks like:
 
 ```
 Array
@@ -243,7 +241,7 @@ Array
 )
 ```
 
-FilesInput produces a result that is cleaner and easier to work with:
+FilesInput rearrange the result with cleaner form to work with:
 
 ``` php
 $files = $input->files->get('flower');
@@ -278,6 +276,6 @@ Array
 )
 ```
 
-Windwalker Input is highly influenced by [Joomla Input](https://github.com/joomla-framework/input)
+Windwalker Input object is profoundly influenced by [Joomla Input](https://github.com/joomla-framework/input)
  
 More about Input, see [Windwalker IO Package](https://github.com/ventoviro/windwalker-io)
