@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Tests | Windwalker - A Modern PHP Framework</title>
+        <title>Config &amp; Setting | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Tests | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Config &amp; Setting | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
         
@@ -78,7 +78,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Tests</h1>
+        <h1>Config &amp; Setting</h1>
     </div>
         </div>
     </section>
@@ -99,7 +99,7 @@
                     <li class="">
                 <a href="../../documentation/start/package-system.html">Package System (Bundle)</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/start/config.html">Config &amp; Setting</a>
             </li>
                     <li class="">
@@ -196,7 +196,7 @@
                     <li class="">
                 <a href="../../documentation/more/session.html">Session</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/more/tests.html">Tests</a>
             </li>
                     <li class="">
@@ -214,54 +214,166 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Use Unit Test</h1>
+                    <h1>How to Configure Your Application</h1>
 
-<p>Windwalker includes <a href="https://phpunit.de/">PHPUnit</a> as default unit test system.</p>
+<p>Windwalker stores config files in <code>/etc</code> folder, you can see <code>config.yml</code> and <code>secret.yml</code> file, the <code>config.yml</code> stores
+some global settings which your application need and will be track by VCS. And the <code>secret.yml</code> stores some customize
+settings which you don't want to track by VCS.</p>
 
-<p>To start a unit test, please rename <code>/phpunit.xml.dist</code> to <code>/phpunit.xml</code> and edit the content:</p>
+<h1>config.yml</h1>
 
-<pre><code class="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;phpunit bootstrap="test/bootstrap.php" colors="false"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    strict="true"
-    syntaxCheck="true"
-    &gt;
-    &lt;php&gt;
-        &lt;ini name="error_reporting" value="32767" /&gt;
+<p>The config.yml looks like above:</p>
 
-        &lt;const name="WINDWALKER_CORE_TEST_DB_DSN_MYSQL"      value="host=localhost;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;
-        &lt;!--&lt;const name="WINDWALKER_CORE_TEST_DB_DSN_POSTGRESQL" value="host=localhost;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;--&gt;
-        &lt;!--&lt;const name="WINDWALKER_CORE_TEST_DB_DSN_ORACLE"     value="host=localhost;port=5432;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;--&gt;
-        &lt;!--&lt;const name="WINDWALKER_CORE_TEST_DB_DSN_MSSQL"      value="host=localhost;port=1521;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;--&gt;
-        &lt;!--&lt;const name="WINDWALKER_CORE_TEST_DB_DSN_SQLITE"     value="host=localhost;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;--&gt;
-    &lt;/php&gt;
-    &lt;testsuites&gt;
-        &lt;testsuite name="Starter"&gt;
-            &lt;directory&gt;src/*/Test&lt;/directory&gt;
-        &lt;/testsuite&gt;
-    &lt;/testsuites&gt;
-&lt;/phpunit&gt;
+<pre><code class="apache">system:
+    debug: 0
+    error_reporting: 0
+    timezone: 'UTC'
+    secret: 'This-token-is-not-safe'
+session:
+    handler: native
+    expire_time: 15
+routing:
+    debug: 0
+cache:
+    enabled: 0
+    storage: file
+    handler: serialize
+    dir: cache
+    time: 15
+language:
+    debug: 0
+    locale: en-GB
+    default: en-GB
+    format: ini
+    path: resources/languages
 </code></pre>
 
-<p>Change the <code>testsuite</code> to:</p>
-
-<pre><code class="xml">&lt;testsuites&gt;
-    &lt;testsuite name="Flower"&gt;
-        &lt;directory&gt;src/Flower/Test&lt;/directory&gt;
-    &lt;/testsuite&gt;
-&lt;/testsuites&gt;
-</code></pre>
-
-<p>Then we can write all test case in <code>/src/Flower/Test</code>.</p>
-
-<p>More about how to writing unit test, please see: <a href="https://phpunit.de/getting-started.html">PHPUnit Tutorial</a></p>
+<table>
+<thead>
+<tr>
+  <th>Key</th>
+  <th>Sub Key</th>
+  <th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>system</code></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>debug</code></td>
+  <td>Enable debug mode or not</td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>error_reporting</code></td>
+  <td>PHP error_reporting setting, set -1 to enable strict mode, set 0 to close all error messages.</td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>timezone</code></td>
+  <td>The default system timezone.</td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>secret</code></td>
+  <td>A random string as secret code to generate some tokens</td>
+</tr>
+<tr>
+  <td><code>session</code></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>handler</code></td>
+  <td>The session handler, <code>native</code> is the native php session handler, you can use <code>database</code> or <code>memcache</code>, please see <a href="https://github.com/ventoviro/windwalker/tree/master/src/Session#windwalker-session">Windwalker Session</a></td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>expire_time</code></td>
+  <td>Session expire time, the unit is minute.</td>
+</tr>
+<tr>
+  <td><code>routing</code></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>debug</code></td>
+  <td>Enable routing debug, see <a href="./documentation/mvc/uri-route-building.html">Routing</a></td>
+</tr>
+<tr>
+  <td><code>cache</code></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>enabled</code></td>
+  <td>Enable system cache.</td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>storage</code></td>
+  <td>Cache storage, FileStorage is the default. See <a href="./documentation/more/caching.html">Caching</a></td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>handler</code></td>
+  <td>Hot cache convert array and object to string.</td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>dir</code></td>
+  <td>Cache storage folder.</td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>time</code></td>
+  <td>Cache TTL time (minute).</td>
+</tr>
+<tr>
+  <td><code>language</code></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>debug</code></td>
+  <td>Enable Language debug.</td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>locale</code></td>
+  <td>The current locale.</td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>default</code></td>
+  <td>The default locale.</td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>format</code></td>
+  <td>The language translate file format. See <a href="https://github.com/ventoviro/windwalker/tree/master/src/Language">Windwalker Language</a></td>
+</tr>
+<tr>
+  <td></td>
+  <td><code>path</code></td>
+  <td>The language file path.</td>
+</tr>
+</tbody>
+</table>
 
                         <hr />
 
     <p class="uk-text-center">
-        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/more/tests.md">improve</a> this document.
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/start/config.md">improve</a> this document.
     </p>
                 </article>
             </div>

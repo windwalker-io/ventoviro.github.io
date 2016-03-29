@@ -1,186 +1,67 @@
 ---
 layout: documentation.twig
-title: Package System
+title: Config & Setting
 
 ---
 
-# What is Package?
+# How to Configure Your Application
 
-Package is the main component of Windwalker's structure. Here is a image that describe the package system:
+Windwalker stores config files in `/etc` folder, you can see `config.yml` and `secret.yml` file, the `config.yml` stores
+some global settings which your application need and will be track by VCS. And the `secret.yml` stores some customize
+settings which you don't want to track by VCS.
 
-![package](https://cloud.githubusercontent.com/assets/1639206/5579031/b4c50ed8-906e-11e4-8964-a1f2d949fc88.png)
+# config.yml
 
-From above image, we will know there can be multiple packages and its' own MVC system in Windwalker. That makes our application
- more flexible. For example, we can create a `FrontendPackage` and an `AdminPackage` as front-end and back-end respectively.
- And an `ApiPackage` to provide RESTful API for mobile APP.
- 
-Every package is pretty much a simple application having MVC, routing, configuration and database schema:
+The config.yml looks like above:
 
-![mockup_3](https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png)
-  
-## Use Package as Extension
-
-Package can be used as extensions for developer. You can create a package and submit it to [Packagist](https://packagist.org/).
-Then anyone can install it by composer.
-
-![mockup_2](https://cloud.githubusercontent.com/assets/1639206/5579085/ff715d8c-906f-11e4-92dc-43c3839e0ef8.png)
-
-# Create Package
-
-We will use `Flower` as example package. Create a php class in `/src/Flower/FlowerPackage.php`:
-
-``` php
-<?php
-// /src/Flower/FlowerPackage.php
-
-namespace Flower;
-
-use Windwalker\Core\Package\AbstractPackage;
-
-class FlowerPackage extends AbstractPackage
-{
-}
+``` apache
+system:
+    debug: 0
+    error_reporting: 0
+    timezone: 'UTC'
+    secret: 'This-token-is-not-safe'
+session:
+    handler: native
+    expire_time: 15
+routing:
+    debug: 0
+cache:
+    enabled: 0
+    storage: file
+    handler: serialize
+    dir: cache
+    time: 15
+language:
+    debug: 0
+    locale: en-GB
+    default: en-GB
+    format: ini
+    path: resources/languages
 ```
 
-Then add this package to `/src/Windwalker/Web/Application.php`, at the `loadPackage()` method:
+| Key | Sub Key | Value |
+| -------- | -- | -- |
+| `system` | | |
+| | `debug` | Enable debug mode or not |
+| | `error_reporting` | PHP error_reporting setting, set -1 to enable strict mode, set 0 to close all error messages. |
+| | `timezone` | The default system timezone. |
+| | `secret` | A random string as secret code to generate some tokens |
+| `session` | |  |
+| | `handler` | The session handler, `native` is the native php session handler, you can use `database` or `memcache`, please see [Windwalker Session](https://github.com/ventoviro/windwalker/tree/master/src/Session#windwalker-session) |
+| | `expire_time` | Session expire time, the unit is minute. |
+| `routing` | |  |
+| | `debug` | Enable routing debug, see [Routing](./documentation/mvc/uri-route-building.html) |
+| `cache` | | |
+| | `enabled` | Enable system cache. |
+| | `storage` | Cache storage, FileStorage is the default. See [Caching](./documentation/more/caching.html) |
+| | `handler` | Hot cache convert array and object to string. |
+| | `dir` | Cache storage folder. |
+| | `time` | Cache TTL time (minute). |
+| `language` | |  |
+| | `debug` | Enable Language debug. |
+| | `locale` | The current locale. |
+| | `default` | The default locale. |
+| | `format` | The language translate file format. See [Windwalker Language](https://github.com/ventoviro/windwalker/tree/master/src/Language) |
+| | `path` | The language file path. |
 
-``` php
-// /src/Windwalker/Web/Application.php
-use Flower\FlowerPackage;
 
-class Application extends WebApplication
-{
-    // ...
-
-    public function loadPackages()
-    {
-        $packages = Windwalker::loadPackages();
-    
-        /*
-         * Get Packages for This Application
-         * -----------------------------------------
-         * If you want a package only use in this application or want to override a global package,
-         * set it here. Example: $packages[] = new Flower\FlowerPackage;
-         */
-    
-        // Add package here, the array key is package name, you can customize it.
-        $packages['flower'] = new FlowerPackage;
-    
-        return $packages;
-    }
-    
-    // ...
-}
-```
-
-The array key is package name alias, you can customize it. For example, If you use `$packages['flower']`, then you can
-use `\Windwalker\Core\Package\PackageHelper::getPackage('flower')` to get this package object. But if you use
-
-``` php
-$packages['bar'] = new FlowerPackage;
-```
-
-You will have to get `FlowerPackage` it by  `\Windwalker\Core\Package\PackageHelper::getPackage('bar')`.
-
-# Add Package Routing
-
-Create `/src/Flower/routing.yml`, then add some routes:
-
-``` yaml
-# /src/Flower/routing.yml
-
-sakura:
-    pattern: /sakura(/id)
-    controller: Sakura
-    
-sakuras:
-    pattern: /sakuras
-    controller: Sakuras
-    
-roses:
-    pattern: /roses
-    controller: Roses
-```
-
-We have to register this routes to root routing file. Open `/etc/routing.yml` And add this route profile.
-
-``` yaml
-# /etc/routing.yml
-
-flower:
-    pattern: /flower
-    package: flower
-```
-
-The `package: flower` tells Windwalker to import all Flower package's routes, and all patterns will prefix with: `/flower/...`,
-the compiled routes will look like:
-
-``` yaml
-flower@sakura:
-    pattern: /flower/sakura(/id)
-    controller: Sakura
-
-flower@sakuras:
-    pattern: /flower/sakuras
-    controller: Sakuras
-
-flower@roses:
-    pattern: /flower/roses
-    controller: Roses
-```
-
-Use browser to open `/flower/sakuras`, Windwalker will find `Flower\Controller\Sakuras\GetController` to render page.
-We can create a controller to match this route:
-
-``` php
-<?php
-// src/Flower/Controller/Sakuras/GetController.php
-
-namespace Flower\Controller\Sakuras;
-
-use Windwalker\Core\Controller\Controller;
-
-class GetController extends Controller
-{
-	protected function doExecute()
-	{
-		return 'Output of Sakuras Controller';
-	}
-}
-```
-
-About how routing and controller work, please see [Routing And Controller](routing-controller.html) section.
-
-# Add & Get Packages
-
-Use `PackageResolver`.
-
-``` php
-$resolver = $container->get('package.resolver');
-
-$resolver->getPackage('flower'); // Get flower package
-
-$resolver->getPackage(); // Get current package
-
-$resoler->addPackage('alias', $package); // Add new package
-```
-
-Use `PackageHelper`, this class is a facade of `PackageResolver`.
-
-``` php
-use Windwalker\Core\Package\PackageHelper;
-
-PackageHelper::getPackage('flower'); // Get flower package
-
-PackageHelper::getPackage(); // Get current package
-
-PackageHelper::addPackage('alias', $package); // Add new package
-```
-
-You can also get package from Application.
-
-``` php
-$app = Ioc::getApplication();
-
-$app->getPackage([$alias|null]);
-```
