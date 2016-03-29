@@ -10,6 +10,7 @@ documentation:
     # contribution: Contribution Guide
     start/routing-controller: Routing And Controller
     start/package-system: Package System (Bundle)
+    start/config: Config & Setting
     start/request-input: Request and Input
     start/ioc-container: IoC Container
     start/service-provider: Service Provider

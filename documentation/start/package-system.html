@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
         <link href="../../media/css/main.css" rel="stylesheet">
@@ -26,7 +26,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="../../media/js/highlight.pack.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
         <script>
             $(document).ready(function() {
 
@@ -278,54 +278,60 @@ class Application extends WebApplication
 }
 </code></pre>
 
-<p>The array key is package name, you can customize it. For example, If you use <code>$packages['flower']</code>, you can use <code>PackageHelper::getPackage('flower')</code>
-to get this package object. But if you use <code>$packages['bar']</code>, you will have to get it by  <code>PackageHelper::getPackage('bar')</code>.</p>
+<p>The array key is package name alias, you can customize it. For example, If you use <code>$packages['flower']</code>, then you can
+use <code>\Windwalker\Core\Package\PackageHelper::getPackage('flower')</code> to get this package object. But if you use</p>
+
+<pre><code class="php">$packages['bar'] = new FlowerPackage;
+</code></pre>
+
+<p>You will have to get <code>FlowerPackage</code> it by  <code>\Windwalker\Core\Package\PackageHelper::getPackage('bar')</code>.</p>
 
 <h1>Add Package Routing</h1>
 
-<p>Create <code>routing.yml</code> at <code>/src/Flower</code>, then add some routes:</p>
+<p>Create <code>/src/Flower/routing.yml</code>, then add some routes:</p>
 
-<pre><code class="apache"># /src/Flower/routing.yml
+<pre><code class="yaml"># /src/Flower/routing.yml
 
 sakura:
     pattern: /sakura(/id)
-    controller: Flower\Controller\Sakura
+    controller: Sakura
 
 sakuras:
     pattern: /sakuras
-    controller: Flower\Controller\Sakuras
+    controller: Sakuras
 
 roses:
     pattern: /roses
-    controller: Flower\Controller\Roses
+    controller: Roses
 </code></pre>
 
 <p>We have to register this routes to root routing file. Open <code>/etc/routing.yml</code> And add this route profile.</p>
 
-<pre><code class="apache"># /etc/routing.yml
+<pre><code class="yaml"># /etc/routing.yml
 
 flower:
     pattern: /flower
     package: flower
 </code></pre>
 
-<p>The <code>package: flower</code> tells Windwalker to import all Flower package's routes, and all patterns will prefix with: <code>/flower</code>, 
+<p>The <code>package: flower</code> tells Windwalker to import all Flower package's routes, and all patterns will prefix with: <code>/flower/...</code>,
 the compiled routes will look like:</p>
 
-<pre><code class="html">flower:sakura:
+<pre><code class="yaml">flower@sakura:
     pattern: /flower/sakura(/id)
-    controller: Flower\Controller\Sakura
+    controller: Sakura
 
-flower:sakuras:
+flower@sakuras:
     pattern: /flower/sakuras
-    controller: Flower\Controller\Sakuras
+    controller: Sakuras
 
-flower:roses:
+flower@roses:
     pattern: /flower/roses
-    controller: Flower\Controller\Roses
+    controller: Roses
 </code></pre>
 
-<p>Use browser open <code>/flower/sakuras</code>, Windwalker will find <code>Flower\Controller\Sakuras</code> to render page. We can create a controller to match this route:</p>
+<p>Use browser to open <code>/flower/sakuras</code>, Windwalker will find <code>Flower\Controller\Sakuras\GetController</code> to render page.
+We can create a controller to match this route:</p>
 
 <pre><code class="php">&lt;?php
 // src/Flower/Controller/Sakuras/GetController.php
@@ -338,12 +344,43 @@ class GetController extends Controller
 {
     protected function doExecute()
     {
-        return 'Sakuras';
+        return 'Output of Sakuras Controller';
     }
 }
 </code></pre>
 
-<p>About how routing and controller working, please see <a href="routing-controller.html">Routing And Controller</a> section.</p>
+<p>About how routing and controller work, please see <a href="routing-controller.html">Routing And Controller</a> section.</p>
+
+<h1>Add &amp; Get Packages</h1>
+
+<p>Use <code>PackageResolver</code>.</p>
+
+<pre><code class="php">$resolver = $container-&gt;get('package.resolver');
+
+$resolver-&gt;getPackage('flower'); // Get flower package
+
+$resolver-&gt;getPackage(); // Get current package
+
+$resoler-&gt;addPackage('alias', $package); // Add new package
+</code></pre>
+
+<p>Use <code>PackageHelper</code>, this class is a facade of <code>PackageResolver</code>.</p>
+
+<pre><code class="php">use Windwalker\Core\Package\PackageHelper;
+
+PackageHelper::getPackage('flower'); // Get flower package
+
+PackageHelper::getPackage(); // Get current package
+
+PackageHelper::addPackage('alias', $package); // Add new package
+</code></pre>
+
+<p>You can also get package from Application.</p>
+
+<pre><code class="php">$app = Ioc::getApplication();
+
+$app-&gt;getPackage([$alias|null]);
+</code></pre>
 
                         <hr />
 
@@ -374,7 +411,7 @@ class GetController extends Controller
             </p>
 
             <p>
-                Copyright &copy; 2015 Windwalker. All Rights Reserved.
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
             </p>
             <p class="back">
                 <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
