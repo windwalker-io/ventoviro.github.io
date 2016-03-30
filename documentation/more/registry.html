@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>View Model | Windwalker - A Modern PHP Framework</title>
+        <title>Registry Object | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="View Model | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Registry Object | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
         
@@ -79,7 +79,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>View Model</h1>
+        <h1>Registry Object</h1>
     </div>
         </div>
     </section>
@@ -125,7 +125,7 @@
                     <li class="">
                 <a href="../../documentation/mvc/model-database.html">Model and Database</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/mvc/view-model.html">ViewModel</a>
             </li>
                     <li class="">
@@ -179,7 +179,7 @@
                     <li class="">
                 <a href="../../documentation/more/data-object.html">Data Object</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/more/registry.html">Registry Object</a>
             </li>
                     <li class="">
@@ -218,126 +218,252 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>About MVC Interactions</h1>
+                    <h1>Getting Started</h1>
 
-<p>In most MVC practices, there is no direct communication between View and Model. We called it <strong>Passive View</strong>. But there are many 
-variants of MVC like: MVVM, MVP etc.</p>
+<p>Windwalker Registry is a storage of nested array or object, help us manage multi-level structures data.</p>
 
-<p>Windwalker uses a pattern which is similar to <a href="http://goo.gl/p6Rjwl">Supervising Controller</a>, <a href="http://goo.gl/LJPG">MVVM</a> or <a href="http://goo.gl/y3VzE">MVP</a>
-, View can not communicate to Model, but Controller can binding Model to View, then View is able to get data from Model.</p>
+<pre><code class="php">use Windwalker\Registry\Registry;
 
-<p>The benefit of this pattern is that View can decide which data they are needed and call Model to get these data.
- And controller's responsibility is just decide binding which models to view. There is a <code>ViewModel</code> between View and Model 
- to handle request from View and get data from Model.</p>
+$registry = new Registry;
 
-<h2>Schematic Diagram</h2>
+// Set a value in the registry.
+$registry-&gt;set('foo', 'bar');
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg" alt="mvc" /> <img src="https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg" alt="ww-mvc" /></p>
+// Get a value from the registry;
+$value = $registry-&gt;get('foo');
 
-<h2>ViewModel</h2>
-
-<p>View is not directly communicate to Model, there is a <code>ViewModel</code> object between them. You can consider ViewModel 
-as a Model manager.</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg" alt="view-model" /></p>
-
-<h1>Use ViewModel Pattern in Windwalker</h1>
-
-<p>This is a traditional MVC usage in controller:</p>
-
-<pre><code class="php">&lt;?php
-// doExecute()
-
-$model = new FlowerModel;
-$view = new SakurasHtmlView;
-
-$item = $model-&gt;getItem();
-
-$view['created'] = $item;
-
-return $view-&gt;render();
 </code></pre>
 
-<p>Change some code, we can push Model into View:</p>
+<h1>Load config by Registry</h1>
 
-<pre><code class="php">// doExecute()
+<pre><code class="php">use Windwalker\Registry\Registry;
 
-$model = new FlowerModel;
-$view = new SakurasHtmlView;
+$registry = new Registry;
 
-$view-&gt;setModel($model);
+// Load by string
+$registry-&gt;loadString('{"foo" : "bar"}');
+
+$registry-&gt;loadString('&lt;root&gt;&lt;/root&gt;', 'xml');
+
+// Load by object or array
+$registry-&gt;load($object);
+
+// Load by file
+$registry-&gt;loadFile($root . '/config/config.json', 'json');
+</code></pre>
+
+<h1>Accessing a Registry by getter &amp; setter</h1>
+
+<h2>Get value</h2>
+
+<pre><code class="php">$registry-&gt;get('foo');
+
+// Get a non-exists value and return default
+$registry-&gt;get('foo', 'default');
 
 // OR
-$view-&gt;model-&gt;setModel($model);
 
-return $view-&gt;render();
+$registry-&gt;get('foo') ?: 'default';
 </code></pre>
 
-<p>Get data in View:</p>
+<h2>Set value</h2>
 
-<pre><code class="php">class SakurasHtmlView extends HtmlView
+<pre><code class="php">// Set value
+$registry-&gt;set('bar', $value);
+
+// Sets a default value if not already assigned.
+$registry-&gt;def('bar', $default);
+</code></pre>
+
+<h2>Accessing children value by path</h2>
+
+<pre><code class="php">$json = '{
+    "parent" : {
+        "child" : "Foo"
+    }
+}';
+
+$registry = new Registry($json);
+
+$registry-&gt;get('parent.child'); // return 'Foo'
+
+$registry-&gt;set('parent.child', $value);
+</code></pre>
+
+<h2>Append &amp; Prepend</h2>
+
+<p>Support <code>push / pop / shift / unshift</code> methods.</p>
+
+<pre><code class="php">$registry-&gt;set('foo.bar', array('fisrt', 'second'));
+
+$registry-&gt;push('foo.bar', 'third');
+
+$registry-&gt;get('foo.bar');
+// Result: Array(first, second, third)
+</code></pre>
+
+<h2>Use other separator</h2>
+
+<pre><code class="php">$registry-&gt;setSeparator('/');
+
+$data = $registry-&gt;get('foo/bar');
+</code></pre>
+
+<h1>Accessing a Registry as an Array</h1>
+
+<p>The <code>Registry</code> class implements <code>ArrayAccess</code> so the properties of the registry can be accessed as an array. Consider the following examples:</p>
+
+<pre><code class="php">// Set a value in the registry.
+$registry['foo'] = 'bar';
+
+// Get a value from the registry;
+$value = $registry['foo'];
+
+// Check if a key in the registry is set.
+if (isset($registry['foo']))
 {
-    protected function prepareData($data)
-    {
-        $data-&gt;item = $this-&gt;model-&gt;getItem();
+    echo 'Say bar.';
+}
+</code></pre>
+
+<h1>Merge Registry</h1>
+
+<h3>Using load* methods to merge two config files.</h3>
+
+<pre><code class="php">$json1 = '{
+    "field" : {
+        "keyA" : "valueA",
+        "keyB" : "valueB"
+    }
+}';
+
+$json2 = '{
+    "field" : {
+        "keyB" : "a new valueB"
+    }
+}';
+
+$registry-&gt;loadString($json1);
+$registry-&gt;loadString($json2);
+</code></pre>
+
+<p>Output</p>
+
+<pre><code>Array(
+    field =&gt; Array(
+        keyA =&gt; valueA
+        keyB =&gt; a new valueB
+    )
+)
+</code></pre>
+
+<h3>Merge Another Registry</h3>
+
+<pre><code class="php">$object1 = '{
+    "foo" : "foo value",
+    "bar" : {
+        "bar1" : "bar value 1",
+        "bar2" : "bar value 2"
+    }
+}';
+
+$object2 = '{
+    "foo" : "foo value",
+    "bar" : {
+        "bar2" : "new bar value 2"
+    }
+}';
+
+$registry1 = new Registry(json_decode($object1));
+$registry2 = new Registry(json_decode($object2));
+
+$registry1-&gt;merge($registry2);
+</code></pre>
+
+<p>If you just want to merge first level, do not hope recursive:</p>
+
+<pre><code class="php">$registry1-&gt;merge($registry2, false); // Set param 2 to false that Registry will only merge first level
+</code></pre>
+
+<p>Merge to a child node:</p>
+
+<pre><code class="php">$registry-&gt;mergeTo('foo.bar', $anotherRegistry);
+</code></pre>
+
+<h1>Dump to file.</h1>
+
+<pre><code class="php">$registry-&gt;toString();
+
+$registry-&gt;toString('xml');
+
+$registry-&gt;toString('ini');
+</code></pre>
+
+<h1>Dump to one dimension</h1>
+
+<pre><code class="php">$array = array(
+    'flower' =&gt; array(
+        'sunflower' =&gt; 'light',
+        'sakura' =&gt; 'samurai'
+    )
+);
+
+$registry = new Registry($array);
+
+// Make data to one dimension
+
+$flatted = $registry-&gt;flatten();
+
+print_r($flatted);
+</code></pre>
+
+<p>The result:</p>
+
+<pre><code>Array
+(
+    [flower.sunflower] =&gt; light
+    [flower.sakura] =&gt; samurai
+)
+</code></pre>
+
+<h1>Using YAML</h1>
+
+<p>Add Symfony YAML component in <code>composer.json</code></p>
+
+<pre><code class="json">{
+    "require-dev": {
+        "symfony/yaml": "~2.0"
     }
 }
 </code></pre>
 
-<p>The <code>$view-&gt;model</code> property is <code>ViewModel</code> object, if we call any method, <code>ViewModel</code> will pass this method to default Model by magic method.
-If Model does not have this method, it will only return <code>null</code>.</p>
+<p>Using <code>yaml</code> format</p>
 
-<p>You must make sure Model named with <code>XXXModel</code>, the model will guess their name. you can also set name property when declaring Model class. 
-There is some ways to define Model's name:</p>
+<pre><code class="php">$registry-&gt;loadFile($yamlFile, 'yaml');
 
-<pre><code class="php">// Set by config
-$model-&gt;config-&gt;set('name', 'foo');
+$registry-&gt;loadString('foo: bar', 'yaml');
 
-// Use class name
-class FooModel extends Model {}
-
-// Use property
-class SomeModel extends Model
-{
-    protected $name = 'foo';
-}
+// Convert to string
+$registry-&gt;toString('yaml');
 </code></pre>
 
-<h2>Set Multiple Models</h2>
+<h1>RegistryHelper</h1>
 
-<p>We can get many models and push them into one view.</p>
+<pre><code class="php">use Windwalker\Registry\RegistryHelper;
 
-<pre><code class="php">// In Controller::doExecute()
+RehistryHelper::loadFaile($file, $format); // File to array
+RehistryHelper::loadString($string, $format); // String to array
+RehistryHelper::toString($array, $format); // Array to string
 
-$model = $this-&gt;getModel();
-$roseModel = $this-&gt;getModel('Rose');
-$oliveModel = $this-&gt;getModel('Olive');
-
-$view-&gt;setModel($model);
-$view-&gt;setModel($roseModel);
-$view-&gt;setModel($oliveModel);
-
-return $view-&gt;render();
-</code></pre>
-
-<p>Use array access to get different models and call methods.</p>
-
-<pre><code class="php">// In View::prepareData()
-
-$data-&gt;items = $this-&gt;model-&gt;getItems();
-$data-&gt;roses = $this-&gt;model['rose']-&gt;getRoses();
-$data-&gt;olives = $this-&gt;model['olive']-&gt;getOlives();
-</code></pre>
-
-<p>If a model not set, and the method name start with <code>get*</code> or <code>load*</code>, it will return <code>null</code>.</p>
-
-<pre><code class="php">$data-&gt;foo = $this-&gt;model['foo']-&gt;getFoo();
+// Use format class
+$json = RehistryHelper::getFormatClass('json'); // Get JsonFormat
+$string = $json::structToString($array);
 </code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/mvc/view-model.md">improve</a> this document.
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/more/registry.md">improve</a> this document.
     </p>
                 </article>
             </div>

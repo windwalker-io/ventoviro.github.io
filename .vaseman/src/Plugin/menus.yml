@@ -36,6 +36,7 @@ documentation:
     more/events: Events
   #  more/facades: Facades
     more/data-object: Data Object
+    more/registry: Registry Object
     more/widget-renderer: Widget and Renderer
     more/form-builder: Form Builder
     more/html-builder: HTML Builder

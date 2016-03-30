@@ -27,6 +27,7 @@
         <script src="../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../media/js/highlight/highlight.yaml.js"></script>
         <script>
             $(document).ready(function() {
 
@@ -179,6 +180,9 @@
                 <a href="../../documentation/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
+                <a href="../../documentation/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
@@ -218,14 +222,14 @@
 
 <p>Open <code>/etc/routing.yml</code> and add a new route resource.</p>
 
-<pre><code class="http">flower:
+<pre><code class="yaml">flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
 </code></pre>
 
 <p>If you use browser open <code>/flower/sakura</code>, Windwalker will find <code>Flower\Controller\Sakura\GetController</code>  and execute it automatically.</p>
 
-<p>The reason we locate <code>GetController</code> is because Windwalker routing supports RESTful protocal for that <code>Get</code> is commonly used as default http request method.</p>
+<p>The reason we locate <code>GetController</code> is because Windwalker routing supports RESTful protocal for that <code>Get</code> is commonly used as default yaml request method.</p>
 
 <p>If you send <code>Post</code> request then <code>SaveController</code> will be executed instead. This is more efficient and faster to the better routing performance.</p>
 
@@ -278,7 +282,7 @@
 
 <p>Now we use a route like this:</p>
 
-<pre><code class="http">flower:
+<pre><code class="yaml">flower:
     pattern: /flower/(id)
     controller: Flower\Controller\Sakura
 </code></pre>
@@ -318,7 +322,7 @@ class GetController extends Controller
 
 <p>Add the action attribute:</p>
 
-<pre><code class="http">flower:
+<pre><code class="yaml">flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
     action:
@@ -328,7 +332,7 @@ class GetController extends Controller
 <p>The GET method will match <code>Flower\Controller\Sakura\IndexController</code> because we set a map to find new name. We can set more 
 methods to mapping methods with controllers.</p>
 
-<pre><code class="http">flower:
+<pre><code class="yaml">flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
     action:
@@ -340,20 +344,20 @@ methods to mapping methods with controllers.</p>
 
 <p>Or use wildcards to map all methods to one controller:</p>
 
-<pre><code class="http">    action:
+<pre><code class="yaml">    action:
         '*': SakuraController
 </code></pre>
 
 <h2>Override Methods</h2>
 
-<p>If you want to send <code>PUT</code> and <code>DELETE</code> method from web form, you may add <code>_method</code> params in HTTP query, this param will override 
-real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code>DeleteController</code>.</p>
+<p>If you want to send <code>PUT</code> and <code>DELETE</code> method from web form, you may add <code>_method</code> params in yaml query, this param will override 
+real yaml method. For example: <code>&amp;_method=DELETE</code> will raise <code>DeleteController</code>.</p>
 
 <h2>Limit By Methods</h2>
 
-<p>The HTTP request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.</p>
+<p>The yaml request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.</p>
 
-<pre><code class="http">flower:
+<pre><code class="yaml">flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
     method:
@@ -363,14 +367,14 @@ real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code
 
 <h2>Limit By schema</h2>
 
-<pre><code class="apache">flower:
+<pre><code class="yaml">flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
     method:
         - GET
         - POST
     # Only http &amp; https
-    scheme: https
+    scheme: http
     post: 80
     sslPort: 443
 </code></pre>
@@ -381,7 +385,7 @@ real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code
 
 <p>Use parenthesis <code>()</code> to wrap param name.</p>
 
-<pre><code class="http">    pattern: /flower/(id)/(alias)
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
 </code></pre>
 
 <p>For uri look like : <code>/flower/25/article-alias-name</code>, above pattern will be matched and there will be two input params.</p>
@@ -392,7 +396,7 @@ real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code
 
 <h3>Custom Input Variables</h3>
 
-<pre><code class="http">    pattern: /flower/(id)/(alias)
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
     variables:
         foo: bar
 </code></pre>
@@ -403,7 +407,7 @@ real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code
 
 <p>Use Regular Expression to validate type of input. For example <code>\d+</code> indicates that only <code>Integer</code> will be accepted as <code>id</code> input.</p>
 
-<pre><code class="http">    pattern: /flower/(id)/(alias)
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
     requirements:
         id: \d+
 </code></pre>
@@ -414,7 +418,7 @@ real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code
 
 <p>Use <code>(/{anyparam})</code> to wrap an Optional Param.</p>
 
-<pre><code class="http">    pattern: flower(/id)
+<pre><code class="yaml">    pattern: flower(/id)
 </code></pre>
 
 <p>Below 2 uris will be matched simultaneously.</p>
@@ -425,7 +429,7 @@ real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code
 
 <h3>Multiple Optional Params</h3>
 
-<pre><code class="http">    pattern: flower(/year,month,day)
+<pre><code class="yaml">    pattern: flower(/year,month,day)
 </code></pre>
 
 <p>All uris below will be matched.</p>
@@ -450,7 +454,7 @@ real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code
 
 <p>Use Wildcards to match all the successive params in uri.</p>
 
-<pre><code class="http">    pattern: /king/(*tags)
+<pre><code class="yaml">    pattern: /king/(*tags)
 </code></pre>
 
 <p>Every param after <code>/king</code> will all be matched. For example: <code>/king/john/troilus/and/cressida</code>, will get these variables.</p>
@@ -491,7 +495,7 @@ echo Router::build('{route name}', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-b
 
 <p>You can set matcher name in <code>/etc/config.yml</code>:</p>
 
-<pre><code class="http">routing:
+<pre><code class="yaml">routing:
     matcher: default
 </code></pre>
 

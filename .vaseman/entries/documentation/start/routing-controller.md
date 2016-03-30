@@ -8,7 +8,7 @@ title: Routing And Controller
 
 Open `/etc/routing.yml` and add a new route resource.
 
-``` http
+``` yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -16,7 +16,7 @@ flower:
 
 If you use browser open `/flower/sakura`, Windwalker will find `Flower\Controller\Sakura\GetController`  and execute it automatically.
 
-The reason we locate `GetController` is because Windwalker routing supports RESTful protocal for that `Get` is commonly used as default http request method.
+The reason we locate `GetController` is because Windwalker routing supports RESTful protocal for that `Get` is commonly used as default yaml request method.
 
 If you send `Post` request then `SaveController` will be executed instead. This is more efficient and faster to the better routing performance.
 
@@ -38,7 +38,7 @@ If you send `Post` request then `SaveController` will be executed instead. This 
 
 Now we use a route like this:
 
-``` http
+``` yaml
 flower:
     pattern: /flower/(id)
     controller: Flower\Controller\Sakura
@@ -81,7 +81,7 @@ Congratulations! Your first page is finished.
 
 Add the action attribute:
 
-``` http
+``` yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -92,7 +92,7 @@ flower:
 The GET method will match `Flower\Controller\Sakura\IndexController` because we set a map to find new name. We can set more 
 methods to mapping methods with controllers.
 
-``` http
+``` yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -105,21 +105,21 @@ flower:
 
 Or use wildcards to map all methods to one controller:
 
-``` http
+``` yaml
     action:
         '*': SakuraController
 ```
 
 ## Override Methods
 
-If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in HTTP query, this param will override 
-real HTTP method. For example: `&_method=DELETE` will raise `DeleteController`. 
+If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in yaml query, this param will override 
+real yaml method. For example: `&_method=DELETE` will raise `DeleteController`. 
 
 ## Limit By Methods
 
-The HTTP request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.
+The yaml request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.
 
-``` http
+``` yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -130,7 +130,7 @@ flower:
 
 ## Limit By schema
 
-``` apache
+``` yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -138,7 +138,7 @@ flower:
         - GET
         - POST
     # Only http & https
-    scheme: https
+    scheme: http
     post: 80
     sslPort: 443
 ```
@@ -149,7 +149,7 @@ flower:
 
 Use parenthesis `()` to wrap param name.
 
-``` http
+``` yaml
     pattern: /flower/(id)/(alias)
 ```
 
@@ -162,7 +162,7 @@ For uri look like : `/flower/25/article-alias-name`, above pattern will be match
 
 ### Custom Input Variables
 
-``` http
+``` yaml
     pattern: /flower/(id)/(alias)
     variables:
         foo: bar
@@ -174,7 +174,7 @@ The attributes in `variables` will auto set to input if this route be matched.
 
 Use Regular Expression to validate type of input. For example `\d+` indicates that only `Integer` will be accepted as `id` input.
 
-``` http
+``` yaml
     pattern: /flower/(id)/(alias)
     requirements:
         id: \d+
@@ -186,7 +186,7 @@ Use Regular Expression to validate type of input. For example `\d+` indicates th
 
 Use `(/{anyparam})` to wrap an Optional Param.
 
-``` http
+``` yaml
     pattern: flower(/id)
 ```
 
@@ -199,7 +199,7 @@ Below 2 uris will be matched simultaneously.
 
 ### Multiple Optional Params
 
-``` http
+``` yaml
     pattern: flower(/year,month,day)
 ```
 
@@ -227,7 +227,7 @@ Array
 
 Use Wildcards to match all the successive params in uri.
 
-``` http
+``` yaml
     pattern: /king/(*tags)
 ```
 
@@ -272,7 +272,7 @@ Windwalker Router provides some matchers to use different way to match routes.
 
 You can set matcher name in `/etc/config.yml`:
 
-``` http
+``` yaml
 routing:
     matcher: default
 ```
