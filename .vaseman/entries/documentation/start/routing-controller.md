@@ -113,7 +113,117 @@ Or use wildcards to map all methods to one controller:
 ## Override Methods
 
 If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in yaml query, this param will override 
-real yaml method. For example: `&_method=DELETE` will raise `DeleteController`. 
+real HTTP method. For example: `&_method=DELETE` will raise `DeleteController`.
+ 
+If you think the HTTP standard methods are not enough to use for you, you can add your custom methods.
+ 
+``` yaml
+    action:
+        export: ExportController
+```
+
+Then use `&_method=EXPORT` and the `ExportController` will be executed.
+
+## Custom Input Variables
+
+``` yaml
+    pattern: /flower/(id)/(alias)
+    variables:
+        foo: bar
+```
+
+The attributes in `variables` will auto set to input request if this route be matched and there is no same param name in HTTP query. 
+So if this route matched, you can get `foo` value in controller:
+
+``` php
+$this->input->get('foo'); // bar
+```
+
+But if you type `/flower/25/alias?foo=yoo`, then you will get `yoo`.
+
+## Extra Params
+
+The `variables` will auto set to input request so it is danger to store some sensitive settings in `variables`, we can set 
+`extra` params instead.
+
+``` yaml
+    pattern: /flower/(id)/(alias)
+    extra:
+        layout: grid
+        user:
+            access: admin
+```
+
+Then you can get this extra params from [global config](./config.html).
+
+``` php
+$config = Ioc::getConfig();
+
+$config->get('route.extra.user.access'); // admin
+
+// OR in controller
+
+$this->app->get('route.extra.user.access'); // admin
+```
+
+## Hooks
+
+You can add `match` and `build` hooks to every route.
+
+``` yaml
+flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    hook:
+        match: MyRouteHandler::match
+        build: MyRouteHandler::build
+```
+
+The hook example:
+
+``` php
+use Windwalker\Core\Router\RestfulRouter;
+use Windwalker\Router\Route;
+
+/**
+ * The MyRouteHelper class.
+ *
+ * @since  {DEPLOY_VERSION}
+ */
+class MyRouteHandler
+{
+	/**
+	 * Match hook, will execute after route matched.
+	 *
+	 * @param RestfulRouter $router   The Router object.
+	 * @param Route         $route    The route object.
+	 * @param array         $method   The method to match route.
+	 * @param array         $options  The options to match route.
+	 *
+	 * @return  void
+	 */
+	public static function match(RestfulRouter $router, Route $route, $method, $options)
+	{
+		// Do something
+	}
+
+	/**
+	 * Build hook, will execute after every route building.
+	 *
+	 * @param RestfulRouter $router   The Router object.
+	 * @param string        $route    The route name.
+	 * @param array         $queries  The HTTP query to build route.
+	 * @param string        $type     Build type, 'raw', 'path' or 'full'.
+	 * @param boolean       $xhtml    Encode special chars or not.
+	 *
+	 * @return  void
+	 */
+	public static function build(RestfulRouter $router, &$route, &$queries, &$type, &$xhtml)
+	{
+		// Do something
+	}
+}
+```
 
 ## Limit By Methods
 
@@ -159,16 +269,6 @@ For uri look like : `/flower/25/article-alias-name`, above pattern will be match
 [id] => 25
 [alias] => article-alias-name
 ```
-
-### Custom Input Variables
-
-``` yaml
-    pattern: /flower/(id)/(alias)
-    variables:
-        foo: bar
-```
-
-The attributes in `variables` will auto set to input if this route be matched.
 
 ### Limit By Requirement
 
@@ -264,7 +364,7 @@ The output will be:
 
 This is a very useful function that you can change roue name but don't need to worry about invalid link.
 
-For further information, see: [Route and Redirect](../mvc/route-redirect.html)
+For further information, see: [Route and Redirect](../mvc/uri-route-building.html)
 
 # Matchers
 

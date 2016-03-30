@@ -230,7 +230,7 @@ Which is your application need and will be track by VCS, .</p>
 
 <h2>secret.yml</h2>
 
-<p>And the <code>secret.yml</code> stores some customize settings which you don't want to track by VCS, for example, the database account
+<p>And the <code>secret.yml</code> stores some customize or sensitive settings which you don't want to track by VCS, for example, the database account
 or the 3rd party service API key, you will not hope to push these information to GitHub or other public VCS service, so we will
 write some keys in <code>secret.dist.yml</code>.</p>
 
@@ -336,6 +336,18 @@ $config['morning.break.first']; // sakura
 
     $config-&gt;loadFile(WINDWALKER_ETC . '/my-config.php', 'php'); // Must return array
 }
+</code></pre>
+
+<h1>Package Config</h1>
+
+<p>Every packages has their own configs. If you have a <code>FlowerPackage</code> and it's alias is <code>flower</code>, create a file to <code>etc/package/flower.yaml</code>.
+Package object will auto load this config file.</p>
+
+<p>You can get package config from package object:</p>
+
+<pre><code class="php">$package = PackageHelper::getPackage('flower');
+
+$package-&gt;get('foo');
 </code></pre>
 
 <h1>Description of Config</h1>

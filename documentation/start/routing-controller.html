@@ -351,7 +351,110 @@ methods to mapping methods with controllers.</p>
 <h2>Override Methods</h2>
 
 <p>If you want to send <code>PUT</code> and <code>DELETE</code> method from web form, you may add <code>_method</code> params in yaml query, this param will override 
-real yaml method. For example: <code>&amp;_method=DELETE</code> will raise <code>DeleteController</code>.</p>
+real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code>DeleteController</code>.</p>
+
+<p>If you think the HTTP standard methods are not enough to use for you, you can add your custom methods.</p>
+
+<pre><code class="yaml">    action:
+        export: ExportController
+</code></pre>
+
+<p>Then use <code>&amp;_method=EXPORT</code> and the <code>ExportController</code> will be executed.</p>
+
+<h2>Custom Input Variables</h2>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+    variables:
+        foo: bar
+</code></pre>
+
+<p>The attributes in <code>variables</code> will auto set to input request if this route be matched and there is no same param name in HTTP query. 
+So if this route matched, you can get <code>foo</code> value in controller:</p>
+
+<pre><code class="php">$this-&gt;input-&gt;get('foo'); // bar
+</code></pre>
+
+<p>But if you type <code>/flower/25/alias?foo=yoo</code>, then you will get <code>yoo</code>.</p>
+
+<h2>Extra Params</h2>
+
+<p>The <code>variables</code> will auto set to input request so it is danger to store some sensitive settings in <code>variables</code>, we can set 
+<code>extra</code> params instead.</p>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+    extra:
+        layout: grid
+        user:
+            access: admin
+</code></pre>
+
+<p>Then you can get this extra params from <a href="./config.html">global config</a>.</p>
+
+<pre><code class="php">$config = Ioc::getConfig();
+
+$config-&gt;get('route.extra.user.access'); // admin
+
+// OR in controller
+
+$this-&gt;app-&gt;get('route.extra.user.access'); // admin
+</code></pre>
+
+<h2>Hooks</h2>
+
+<p>You can add <code>match</code> and <code>build</code> hooks to every route.</p>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    hook:
+        match: MyRouteHandler::match
+        build: MyRouteHandler::build
+</code></pre>
+
+<p>The hook example:</p>
+
+<pre><code class="php">use Windwalker\Core\Router\RestfulRouter;
+use Windwalker\Router\Route;
+
+/**
+ * The MyRouteHelper class.
+ *
+ * @since  {DEPLOY_VERSION}
+ */
+class MyRouteHandler
+{
+    /**
+     * Match hook, will execute after route matched.
+     *
+     * @param RestfulRouter $router   The Router object.
+     * @param Route         $route    The route object.
+     * @param array         $method   The method to match route.
+     * @param array         $options  The options to match route.
+     *
+     * @return  void
+     */
+    public static function match(RestfulRouter $router, Route $route, $method, $options)
+    {
+        // Do something
+    }
+
+    /**
+     * Build hook, will execute after every route building.
+     *
+     * @param RestfulRouter $router   The Router object.
+     * @param string        $route    The route name.
+     * @param array         $queries  The HTTP query to build route.
+     * @param string        $type     Build type, 'raw', 'path' or 'full'.
+     * @param boolean       $xhtml    Encode special chars or not.
+     *
+     * @return  void
+     */
+    public static function build(RestfulRouter $router, &amp;$route, &amp;$queries, &amp;$type, &amp;$xhtml)
+    {
+        // Do something
+    }
+}
+</code></pre>
 
 <h2>Limit By Methods</h2>
 
@@ -393,15 +496,6 @@ real yaml method. For example: <code>&amp;_method=DELETE</code> will raise <code
 <pre><code class="html">[id] =&gt; 25
 [alias] =&gt; article-alias-name
 </code></pre>
-
-<h3>Custom Input Variables</h3>
-
-<pre><code class="yaml">    pattern: /flower/(id)/(alias)
-    variables:
-        foo: bar
-</code></pre>
-
-<p>The attributes in <code>variables</code> will auto set to input if this route be matched.</p>
 
 <h3>Limit By Requirement</h3>
 
@@ -487,7 +581,7 @@ echo Router::build('{route name}', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-b
 
 <p>This is a very useful function that you can change roue name but don't need to worry about invalid link.</p>
 
-<p>For further information, see: <a href="../mvc/route-redirect.html">Route and Redirect</a></p>
+<p>For further information, see: <a href="../mvc/uri-route-building.html">Route and Redirect</a></p>
 
 <h1>Matchers</h1>
 

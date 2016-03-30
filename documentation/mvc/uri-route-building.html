@@ -238,13 +238,13 @@ echo $uri-&gt;get('route');
 
 <p>We will get:</p>
 
-<pre><code class="html">http://domain.com/sites/windwalker/flower/sakura &lt;--- current
-/sites/windwalker/                               &lt;--- base.path
-http://domain.com/sites/windwalker/              &lt;--- base.full
-http://domain.com                                &lt;--- base.host
-/sites/windwalker/media/                         &lt;--- media.path
-http://domain.com/sites/windwalker/media/        &lt;--- media.full
-flower/sakura                                    &lt;--- route
+<pre><code>current    ---&gt; http://domain.com/sites/windwalker/flower/sakura
+base.path  ---&gt; /sites/windwalker/                               
+base.full  ---&gt; http://domain.com/sites/windwalker/            
+base.host  ---&gt; http://domain.com                               
+media.path ---&gt; /sites/windwalker/media/                        
+media.full ---&gt; http://domain.com/sites/windwalker/media/       
+route      ---&gt; flower/sakura                                 
 </code></pre>
 
 <p>These uri data can help our page links be strong whenever we put this application. Fo example, this code will build a full path of link:</p>
@@ -298,7 +298,7 @@ echo $uri['base.path'] . '/flower/sakura';
 <pre><code class="php">use Windwalker\Core\Router;
 
 // Note: don't use \Windwalker\Router\Router
-echo Router::build('flower', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
+echo Router::build('flower_page', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
 </code></pre>
 
 <p>The output will be:</p>
@@ -310,14 +310,14 @@ echo Router::build('flower', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
 
 <h2>Build Package Route</h2>
 
-<p>If your routes is definded in a package, you must add package alias before route name, and separate by colon <code>:</code>:</p>
+<p>If your routes is definded in a package, you must add package alias before route name, and separate by at (<code>@</code>):</p>
 
 <pre><code class="php">use Windwalker\Core\Router;
 
-Router::build('flower:sakuras', array('page' =&gt; $page));
+Router::build('flower@sakuras', array('page' =&gt; $page));
 </code></pre>
 
-<p>Or use PackageRouter, we can ignore package name that Package will auto add it:</p>
+<p>Or use PackageRouter, we can ignore package prefix, Package will auto add it:</p>
 
 <pre><code class="php">$package = PackageHelper::getPackage('flower');
 
@@ -325,17 +325,31 @@ Router::build('flower:sakuras', array('page' =&gt; $page));
 $package-&gt;router-&gt;build('sakuras', array('page' =&gt; $page));
 
 // If you want to build rote in other package, you may re add package name
-$package-&gt;router-&gt;build('user:login');
+$package-&gt;router-&gt;build('user@login');
 </code></pre>
 
 <h2>Build for Http or Html</h2>
 
-<p>Default <code>build()</code> method will not encode URL, so we can use this URL to redirect page, the <code>buildHttp()</code> is an alias of <code>build()</code>.</p>
+<p>Default <code>build()</code> method will not encode URL, so we can use this URL to redirect page, the <code>buildHttp()</code> and <code>http()</code> is an alias of <code>build()</code>.</p>
 
-<p>If we want to build a URL to put on HTML, we must encode it, so we have to use <code>buildHtml()</code> method.</p>
+<pre><code class="php">// flower/sakuras?foo=bar&amp;baz=yoo
 
-<pre><code class="php">echo Router::buildHttp('flower:sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
-echo Router::buildHtml('flower:sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
+echo Router::buildHttp('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
+
+// OR
+
+echo Router::http('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
+</code></pre>
+
+<p>If we want to build a URL to print it in HTML, we must encode it, so we have to use <code>buildHtml()</code> or <code>html()</code> method.</p>
+
+<pre><code class="php">// flower/sakuras?foo=bar&amp;amp;baz=yoo
+
+echo Router::buildHtml('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
+
+// OR
+
+echo Router::html('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']);
 </code></pre>
 
 <p>Result:</p>
@@ -348,9 +362,9 @@ flower/sakuras?foo=bar&amp;amp;baz=yoo
 
 <p>Router has 3 mode, <code>RAW</code>, <code>PATH</code> or <code>FULL</code>:</p>
 
-<pre><code class="php">echo Router::build('flower:sakuras', array(), Router::TYPE_RAW);
-echo Router::build('flower:sakuras', array(), Router::TYPE_PATH);
-echo Router::build('flower:sakuras', array(), Router::TYPE_FULL);
+<pre><code class="php">echo Router::build('flower@sakuras', array(), Router::TYPE_RAW);
+echo Router::build('flower@sakuras', array(), Router::TYPE_PATH);
+echo Router::build('flower@sakuras', array(), Router::TYPE_FULL);
 </code></pre>
 
 <p>Result:</p>
@@ -364,15 +378,15 @@ http://domain.com/sites/windwalker/flower/sakuras
 
 <h2>Build Route in Controller</h2>
 
-<p>If you are in controller, we can use PackageRouter to build route, it is more safer because we can auto get current package routes.</p>
+<p>If you are in controller, we can use PackageRouter to build route, this way is more safer because we can auto get current package routes.</p>
 
 <pre><code class="php">// Original way, we have to know package name
 use Windwalker\Core\Router;
 
-$route = Router::buildHttp('flower:sakura');
+$route = Router::buildHttp('flower@sakura');
 
 // Simpler way to let package handle it
-$route = $this-&gt;package-&gt;router-&gt;buildHttp('sakura');
+$route = $this-&gt;package-&gt;router-&gt;http('sakura');
 
 $this-&gt;setRedirect($route);
 </code></pre>
@@ -381,7 +395,17 @@ $this-&gt;setRedirect($route);
 
 <p>View has also includes package router, just build route like this:</p>
 
-<pre><code class="html">&lt;a href="&lt;?php echo $data-&gt;router-&gt;buildHtml('sakura'); ?&gt;"&gt;Link&lt;/a&gt;
+<pre><code class="html">&lt;a href="&lt;?php echo $data-&gt;router-&gt;html('sakura'); ?&gt;"&gt;Link&lt;/a&gt;
+</code></pre>
+
+<p>In Blade</p>
+
+<pre><code class="php">&lt;a href="{{ $router-&gt;html('sakura') }}"&gt;Link&lt;/a&gt;
+</code></pre>
+
+<p>Twig</p>
+
+<pre><code class="php">&lt;a href="{{ router.html('sakura') }}"&gt;Link&lt;/a&gt;
 </code></pre>
 
                         <hr />

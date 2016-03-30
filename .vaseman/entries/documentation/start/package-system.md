@@ -101,6 +101,9 @@ roses:
     controller: Roses
 ```
 
+Different from the global routing, you don't need to write all controller namespace, just write controller short name, 
+the package will auto find this controller. For example: `controller: Sakura` will find `Flower\Controller\Sakura\{action}` to execute. 
+
 We have to register this routes to root routing file. Open `/etc/routing.yml` And add this route profile.
 
 ``` yaml

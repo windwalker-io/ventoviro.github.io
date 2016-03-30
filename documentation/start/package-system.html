@@ -312,6 +312,9 @@ roses:
     controller: Roses
 </code></pre>
 
+<p>Different from the global routing, you don't need to write all controller namespace, just write controller short name, 
+the package will auto find this controller. For example: <code>controller: Sakura</code> will find <code>Flower\Controller\Sakura\{action}</code> to execute.</p>
+
 <p>We have to register this routes to root routing file. Open <code>/etc/routing.yml</code> And add this route profile.</p>
 
 <pre><code class="yaml"># /etc/routing.yml

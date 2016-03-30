@@ -16,7 +16,7 @@ Which is your application need and will be track by VCS, .
 
 ## secret.yml
 
-And the `secret.yml` stores some customize settings which you don't want to track by VCS, for example, the database account
+And the `secret.yml` stores some customize or sensitive settings which you don't want to track by VCS, for example, the database account
 or the 3rd party service API key, you will not hope to push these information to GitHub or other public VCS service, so we will
 write some keys in `secret.dist.yml`.
 
@@ -133,6 +133,19 @@ protected function loadConfiguration(Registry $config)
     
     $config->loadFile(WINDWALKER_ETC . '/my-config.php', 'php'); // Must return array
 }
+```
+
+# Package Config
+
+Every packages has their own configs. If you have a `FlowerPackage` and it's alias is `flower`, create a file to `etc/package/flower.yaml`.
+Package object will auto load this config file.
+
+You can get package config from package object:
+
+``` php
+$package = PackageHelper::getPackage('flower');
+
+$package->get('foo');
 ```
 
 # Description of Config

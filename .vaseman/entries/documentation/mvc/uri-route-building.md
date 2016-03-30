@@ -10,6 +10,7 @@ Sometimes you may put your application at sub folder of a domain, Windwalker pro
  
 If our application located at `http://domain.com/sites/windwalker/` and we open `/flower/sakura` page, we may use this code to get uri data:
 
+
 ``` php
 $uri = \Windwalker\Ioc::get('uri');
 
@@ -25,14 +26,14 @@ echo $uri->get('route');
 
 We will get:
 
-``` html
-http://domain.com/sites/windwalker/flower/sakura <--- current
-/sites/windwalker/                               <--- base.path
-http://domain.com/sites/windwalker/              <--- base.full
-http://domain.com                                <--- base.host
-/sites/windwalker/media/                         <--- media.path
-http://domain.com/sites/windwalker/media/        <--- media.full
-flower/sakura                                    <--- route
+```
+current    ---> http://domain.com/sites/windwalker/flower/sakura
+base.path  ---> /sites/windwalker/                               
+base.full  ---> http://domain.com/sites/windwalker/            
+base.host  ---> http://domain.com                               
+media.path ---> /sites/windwalker/media/                        
+media.full ---> http://domain.com/sites/windwalker/media/       
+route      ---> flower/sakura                                 
 ```
 
 These uri data can help our page links be strong whenever we put this application. Fo example, this code will build a full path of link:
@@ -94,7 +95,7 @@ Then we can build this route by `Router::build()`
 use Windwalker\Core\Router;
 
 // Note: don't use \Windwalker\Router\Router
-echo Router::build('flower', array('id' => 25, 'alias' => 'foo-bar-baz'));
+echo Router::build('flower_page', array('id' => 25, 'alias' => 'foo-bar-baz'));
 ```
 
 The output will be:
@@ -107,15 +108,15 @@ This is a very useful function that you can change roue name but won't worry of 
 
 ## Build Package Route
 
-If your routes is definded in a package, you must add package alias before route name, and separate by colon `:`:
+If your routes is definded in a package, you must add package alias before route name, and separate by at (`@`):
 
 ``` php
 use Windwalker\Core\Router;
 
-Router::build('flower:sakuras', array('page' => $page));
+Router::build('flower@sakuras', array('page' => $page));
 ```
 
-Or use PackageRouter, we can ignore package name that Package will auto add it:
+Or use PackageRouter, we can ignore package prefix, Package will auto add it:
 
 ``` php
 $package = PackageHelper::getPackage('flower');
@@ -124,18 +125,33 @@ $package = PackageHelper::getPackage('flower');
 $package->router->build('sakuras', array('page' => $page));
 
 // If you want to build rote in other package, you may re add package name
-$package->router->build('user:login');
+$package->router->build('user@login');
 ```
 
 ## Build for Http or Html
 
-Default `build()` method will not encode URL, so we can use this URL to redirect page, the `buildHttp()` is an alias of `build()`.
-
-If we want to build a URL to put on HTML, we must encode it, so we have to use `buildHtml()` method.
+Default `build()` method will not encode URL, so we can use this URL to redirect page, the `buildHttp()` and `http()` is an alias of `build()`.
 
 ``` php
-echo Router::buildHttp('flower:sakuras', ['foo' => 'bar', 'baz' => 'yoo']);
-echo Router::buildHtml('flower:sakuras', ['foo' => 'bar', 'baz' => 'yoo']);
+// flower/sakuras?foo=bar&baz=yoo
+
+echo Router::buildHttp('flower@sakuras', ['foo' => 'bar', 'baz' => 'yoo']);
+
+// OR
+
+echo Router::http('flower@sakuras', ['foo' => 'bar', 'baz' => 'yoo']);
+```
+
+If we want to build a URL to print it in HTML, we must encode it, so we have to use `buildHtml()` or `html()` method.
+
+``` php
+// flower/sakuras?foo=bar&amp;baz=yoo
+
+echo Router::buildHtml('flower@sakuras', ['foo' => 'bar', 'baz' => 'yoo']);
+
+// OR
+
+echo Router::html('flower@sakuras', ['foo' => 'bar', 'baz' => 'yoo']);
 ```
 
 Result:
@@ -150,9 +166,9 @@ flower/sakuras?foo=bar&amp;baz=yoo
 Router has 3 mode, `RAW`, `PATH` or `FULL`:
 
 ``` php
-echo Router::build('flower:sakuras', array(), Router::TYPE_RAW);
-echo Router::build('flower:sakuras', array(), Router::TYPE_PATH);
-echo Router::build('flower:sakuras', array(), Router::TYPE_FULL);
+echo Router::build('flower@sakuras', array(), Router::TYPE_RAW);
+echo Router::build('flower@sakuras', array(), Router::TYPE_PATH);
+echo Router::build('flower@sakuras', array(), Router::TYPE_FULL);
 ```
 
 Result:
@@ -167,16 +183,16 @@ The RAW route used to store in database, the PATH route used to print in HTML, t
 
 ## Build Route in Controller
 
-If you are in controller, we can use PackageRouter to build route, it is more safer because we can auto get current package routes.
+If you are in controller, we can use PackageRouter to build route, this way is more safer because we can auto get current package routes.
 
 ``` php
 // Original way, we have to know package name
 use Windwalker\Core\Router;
 
-$route = Router::buildHttp('flower:sakura');
+$route = Router::buildHttp('flower@sakura');
 
 // Simpler way to let package handle it
-$route = $this->package->router->buildHttp('sakura');
+$route = $this->package->router->http('sakura');
 
 $this->setRedirect($route);
 ```
@@ -186,6 +202,17 @@ $this->setRedirect($route);
 View has also includes package router, just build route like this:
 
 ``` html
-<a href="<?php echo $data->router->buildHtml('sakura'); ?>">Link</a>
+<a href="<?php echo $data->router->html('sakura'); ?>">Link</a>
 ```
 
+In Blade
+
+``` php
+<a href="{{ $router->html('sakura') }}">Link</a>
+```
+
+Twig
+
+``` php
+<a href="{{ router.html('sakura') }}">Link</a>
+```
