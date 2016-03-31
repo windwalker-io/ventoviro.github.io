@@ -45,6 +45,7 @@ documentation:
     more/languages: Languages
     more/pagination: Pagination
     more/session: Session
+    more/datetime: DateTime
     more/tests: Tests
     more/validation: Validation
     more/error-handling: Error Handling

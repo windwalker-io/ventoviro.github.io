@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Read and Write Database | Windwalker - A Modern PHP Framework</title>
+        <title>DateTime | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Read and Write Database | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="DateTime | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
         
@@ -79,7 +79,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Read and Write Database</h1>
+        <h1>DateTime</h1>
     </div>
         </div>
     </section>
@@ -141,7 +141,7 @@
                     <li class="">
                 <a href="../../documentation/db/basic.html">Basic Usage</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/db/read-write.html">Read and Write</a>
             </li>
                     <li class="">
@@ -206,7 +206,7 @@
                     <li class="">
                 <a href="../../documentation/more/session.html">Session</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
@@ -227,342 +227,100 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Reader Command</h1>
+                    <h1>About Windwalker DateTime</h1>
 
-<p>Reader is a command object that help us read records from database, this is a simple example to use Reader.</p>
+<p><code>Windwalker\Core\DateTime\DateTime</code> is sub class of PHP <code>DateTime</code>. This class is based on Joomla <code>JDate</code> and add some new features.</p>
 
-<pre><code class="php">$reader = $db-&gt;getReader();
+<p>All PHP DateTime functions are able used to Windwalker DataTime, see <a href="http://php.net/manual/en/book.datetime.php">PHP DateTime</a></p>
 
-$items = $reader-&gt;setQuery($sql)-&gt;loadObjectList();
+<h1>Construct</h1>
+
+<p>Windwalker DateTime supports Timezone as string.</p>
+
+<pre><code class="php">use Windwalker\Core\DateTime\DateTime;
+
+$dt = new DateTime('now', 'Asia/Taipei');
+</code></pre>
+
+<p>Auto set default timezone so you won't get PHP default timezone notice.</p>
+
+<pre><code class="php">$dt = new DateTime('now', null);
+</code></pre>
+
+<p>Auto get global timezone, if you set timezone in Windwalker config, DateTime will auto load it.</p>
+
+<pre><code class="php">$dt = new DateTime('now', true);
 
 // OR
 
-$items = $db-&gt;getReader($sql)-&gt;loadObjectList();
+$dt = new DateTime('now', DateTime::TZ_LOCALE);
 </code></pre>
 
-<h2>loadObjectList()</h2>
+<h1>Convert Timezone</h1>
 
-<p>Return an array, every element is a record and wrap with an object. This method is same as <code>$db-&gt;loadAll()</code>:</p>
+<p>Windwalker DateTime supports easy methods to convert timezone.</p>
 
-<pre><code class="php">$sql = 'SELECT * FROM foo_table WHERE state = 1';
+<pre><code class="php">$date = '2015-03-31 12:00:00';
 
-$reader = $db-&gt;getReader($sql);
+$date = DateTime::toServerTime($date, [format], [to tz]);
 
-$items = $reader-&gt;loadObjectList();
+$date = DateTime::toLocalTime($date, [format], [to tz]);
+
+// Or convert to other timezone
+
+$date = DateTime::convert($date, [from], [to], [format]);
+$date = DateTime::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');
 </code></pre>
 
-<p>The return value is an array contains all records we found, every record will be an <code>stdClass</code> object.</p>
+<h1>Simple Properties</h1>
 
-<p>We can set object class to store records:</p>
+<pre><code class="php">$datetime = new DateTime;
 
-<pre><code class="php">$items = $reader-&gt;loadObjectList(null, 'Windwalker\\Data\\Data');
-
-// bool(true)
-var_dump($items[0] instanceof \Windwalker\Data\Data);
+$datetime-&gt;daysinmonth;
+$datetime-&gt;dayofweek;
+$datetime-&gt;dayofyear;
+$datetime-&gt;isleapyear;
+$datetime-&gt;day;
+$datetime-&gt;hour;
+$datetime-&gt;minute;
+$datetime-&gt;second;
+$datetime-&gt;month;
+$datetime-&gt;ordinal;
+$datetime-&gt;week;
+$datetime-&gt;year;
 </code></pre>
 
-<p>Use column values as array index. For example, we can use id as array indexes:</p>
+<h1>Pre-define Formats</h1>
 
-<pre><code class="php">$items = $reader-&gt;loadObjectList('id');
+<pre><code class="php">$datetime = new DateTime;
 
-// True
-($items[11]-&gt;id == 11);
+$datetime-&gt;toSql();
+$datetime-&gt;toISO8601();
+$datetime-&gt;toRFC822();
+$datetime-&gt;toUnix();
+
+$date-&gt;format(DateTime::FORMAT_YMD);
+$date-&gt;format(DateTime::FORMAT_YMD_HI);
+$date-&gt;format(DateTime::FORMAT_YMD_HIS);
 </code></pre>
 
-<h2>loadObject()</h2>
+<h1>Get Local Time</h1>
 
-<p>Return only one record and wrap with an object.  This method is same as <code>$db-&gt;loadOne()</code>:</p>
+<p>Add <code>true</code> to get local time, otherwise you will get UTC time.</p>
 
-<pre><code class="php">$sql = 'SELECT * FROM foo_table WHERE id = 1';
+<pre><code class="php">$datetime = new DateTime('now', 'Asia/Taipei');
 
-$reader = $db-&gt;getReader($sql);
-
-$item = $reader-&gt;loadObject();
-</code></pre>
-
-<p>The <code>$item</code> will be a <code>stdClass</code>  object or <code>false</code> (If no any records found). we can set object class:</p>
-
-<pre><code class="php">$item = $reader-&gt;loadObject('MyObject');
-</code></pre>
-
-<p>Then the object will be an instance of <code>MyObject</code>.</p>
-
-<h2>loadArrayList()</h2>
-
-<p>Same as <code>$db-&gt;loadAll('array')</code>, returns an array and every element is an array indexed by column number as
-returned in your result set, starting at column 0, we can set a column as index:</p>
-
-<pre><code class="php">$reader = $db-&gt;getReader($sql);
-
-$items = $reader-&gt;loadArrayList();
-$items = $reader-&gt;loadArrayList('id'); // Use id as index
-</code></pre>
-
-<h2>loadArray()</h2>
-
-<p>Returns an array indexed by column number as returned in your result set, starting at column 0:</p>
-
-<pre><code class="php">$reader = $db-&gt;getReader($sql);
-
-$item = $reader-&gt;loadArray();
-</code></pre>
-
-<h2>loadAssocList()</h2>
-
-<p>Returns an array and every element is an associative array indexed by column name.</p>
-
-<pre><code class="php">$reader = $db-&gt;getReader($sql);
-
-$items = $reader-&gt;loadAssocList();
-$items = $reader-&gt;loadAssocList('id'); // Use id as index
-</code></pre>
-
-<h2>loadAssoc()</h2>
-
-<p>Returns an associative array indexed by column name.</p>
-
-<pre><code class="php">$reader = $db-&gt;getReader($sql);
-
-$item = $reader-&gt;loadAssoc();
-</code></pre>
-
-<h2>loadColumn()</h2>
-
-<p>Fetch values of a column field, please select only one column in this query:</p>
-
-<pre><code class="php">$titles = $db-&gt;getReader('SELECT title FROM article_table')-&gt;loadColumn();
-</code></pre>
-
-<h2>loadResult()</h2>
-
-<p>Fetch only one cell as a value:</p>
-
-<pre><code class="php">// Get article id = 3 title
-$title = $db-&gt;getReader('SELECT title FROM article_table WHERE id = 3')-&gt;loadResult();
-
-// Get total hits
-$sum = $db-&gt;getReader('SELECT SUM(hits) FROM article_table')-&gt;loadResult();
-
-// Get a value
-$id = $db-&gt;getReader('SELECT LAST_INSERT_ID()')-&gt;loadResult();
-</code></pre>
-
-<h2>About PDO Fetch</h2>
-
-<p>See: <a href="http://php.net/manual/en/pdostatement.fetch.php">PHP.net / PDOStatement::fetch</a></p>
-
-<h2>Quick Fetch From Driver</h2>
-
-<h3>DatabaseDriver::loadAll()</h3>
-
-<p>Using a query we set into DB object to fetch records.</p>
-
-<pre><code class="php">$sql = 'SELECT * FROM foo_table WHERE state = 1';
-
-$db-&gt;setQuery($sql);
-
-$items = $db-&gt;loadAll();
-
-// Same as $reader-&gt;loadObjectList('id')
-$items = $db-&gt;loadAll('id');
-
-// Same as $reader-&gt;loadObjectList(null, 'MyObject')
-$items = $db-&gt;loadAll(null, 'MyObject');
-
-// Same as $reader-&gt;loadArrayList()
-$items = $db-&gt;loadAll(null, 'array');
-
-// Same as $reader-&gt;loadAssocList()
-$items = $db-&gt;loadAll(null, 'assoc');
-</code></pre>
-
-<p>The return value is an array contains all records we found.</p>
-
-<h3>DatabaseDriver::loadOne()</h3>
-
-<p>We can only get first record and ignore others:</p>
-
-<pre><code class="php">$db-&gt;setQuery($sql);
-
-$item = $db-&gt;loadOne();
-
-// Same as $reader-&gt;loadObject(null, 'MyObject')
-$item = $db-&gt;loadOne('MyObject');
-
-// Same as $reader-&gt;loadArray()
-$item = $db-&gt;loadOne('array');
-
-// Same as $reader-&gt;loadAssoc()
-$item = $db-&gt;loadOne('assoc');
-</code></pre>
-
-<p>The <code>$item</code> will be a record or <code>false</code> (If no any records found).</p>
-
-<h3>DatabaseDriver::loadColumn()</h3>
-
-<p>Same as <code>$db-&gt;getReader($sql)-&gt;loadColumn()</code>.</p>
-
-<h3>DatabaseDriver::loadResult()</h3>
-
-<p>Same as <code>$db-&gt;getReader($sql)-&gt;loadResult()</code>.</p>
-
-<h2>count()</h2>
-
-<p>Count the total found rows of last query.</p>
-
-<h2>countAffected()</h2>
-
-<p>Count the affected rows of last query.</p>
-
-<h2>insertId()</h2>
-
-<p>Get the last inserted id.</p>
-
-<h1>Writer Command</h1>
-
-<p>Writer object provide us an interface to write data into database.</p>
-
-<h2>insert()</h2>
-
-<p>Using an object or array to store data into a table, argument 3 is the name of primary key that will be added
-to data object if insert success:</p>
-
-<pre><code class="php">$data = array(
-    'title' =&gt; 'Sakura',
-    'created' =&gt; '2014-03-02'
-);
-
-$db-&gt;getWriter()-&gt;insert('#__articles', $data, 'id');
-
-// $data['id'] will be the last inserted id
-echo $data['id'];
-
-// OR using object
-
-$data = new stdClass;
-
-$data-&gt;title = 'Sakura';
-$data-&gt;created = '2014-03-02';
-
-$db-&gt;getWriter()-&gt;insert('#__articles', $data, 'id');
-
-// $data-&gt;id will be the last inserted id
-echo $data-&gt;id;
-</code></pre>
-
-<h2>insertMultiple()</h2>
-
-<p>Insert many records:</p>
-
-<pre><code class="php">$dataSet = array(
-    array(
-        'title' =&gt; 'Sakura',
-        'created' =&gt; '2014-03-02'
-    ),
-    array(
-        'title' =&gt; 'Sunflower',
-        'created' =&gt; '2014-05-02'
-    );
-);
-
-$db-&gt;getWriter()-&gt;insertMultiple('#__articles', $dataSet, 'id');
-
-// $dataSet[0]['id'] will be the last inserted id
-echo $dataSet[0]['id'];
-</code></pre>
-
-<h2>update()</h2>
-
-<p>Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:</p>
-
-<pre><code class="php">$data = new stdClass;
-
-$data-&gt;id = 1;
-$data-&gt;title = 'Sakura2';
-
-$db-&gt;getWriter()-&gt;update('#__articles', $data, 'id');
-
-// Same as `UPDATE #__articles SET title = "Sakura2" WHERE id = 1;`
-</code></pre>
-
-<p>Also we can use array instead of object as data.</p>
-
-<h2>updateMultiple()</h2>
-
-<p>Same as <code>update()</code> but update every record in an array.</p>
-
-<pre><code class="php">$dataSet = array(
-    $data1,
-    $data2
-);
-
-$db-&gt;getWriter()-&gt;updateMultiple('#__articles', $dataSet, 'id');
-</code></pre>
-
-<h2>updateBatch()</h2>
-
-<p>Using where conditions to update some values to every records which matched this condition.</p>
-
-<pre><code class="php">$data = new stdClass;
-
-$data-&gt;state = 0;
-
-// Update all author=13 records to state 0, same as `UPDATE #__articles SET state = 0 WHERE author = 15;`
-$db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, array('author' =&gt; 15));
-</code></pre>
-
-<p>Using other conditions:</p>
-
-<pre><code class="php">$conditions = array(
-    'author' =&gt; 15,
-    'updated &lt; "2014-03-02"',
-    'catid' =&gt; array(1, 2, 3)
-);
-
-$db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, $conditions);
-
-// Same as `UPDATE #__articles SET state = 0 WHERE author = 15 AND updated &lt; "2014-03-02" AND catid IN(1, 2, 3);`
-</code></pre>
-
-<h2>Save &amp; SaveMultiple</h2>
-
-<p><code>save()</code> and <code>saveMultiple()</code> will auto check the primary exists or not. If primary key exists, it will use <code>update</code>,
-if not exists, it will use <code>insert</code> to store data.</p>
-
-<h2>insertId()</h2>
-
-<p>Get the last inserted id.</p>
-
-<h2>countAffected()</h2>
-
-<p>Count the affected rows of last query.</p>
-
-<h1>Transaction Command</h1>
-
-<h2>Start Transaction</h2>
-
-<pre><code class="php">$tran = $this-&gt;db-&gt;getTransaction()-&gt;start();
-
-try
-{
-    $this-&gt;db-&gt;setQuery($sql1)-&gt;execute();
-
-    $this-&gt;db-&gt;setQuery($sql2)-&gt;execute();
-
-    $this-&gt;db-&gt;setQuery($sql3)-&gt;execute();
-}
-catch (\Exception)
-{
-    $tran-&gt;rollback();
-}
-
-$tran-&gt;commit();
+$datetime-&gt;format('Y/m/d H:i:s', true);
+$datetime-&gt;toSql(true);
+$datetime-&gt;toISO8601(true);
+$datetime-&gt;toRFC822(true);
+$datetime-&gt;toUnix(DateTime::TZ_LOCALE); // Same as true
 </code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/db/read-write.md">improve</a> this document.
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/more/datetime.md">improve</a> this document.
     </p>
                 </article>
             </div>
