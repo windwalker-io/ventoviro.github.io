@@ -40,6 +40,28 @@ $value = $cache->get('key');
 $cache->exists('key');
 ```
 
+# Get Cache By CacheFactory
+
+Get cache factory:
+
+``` php
+$cacheFactory = $container->get('cache.factory');
+
+// OR
+
+use Windwalker\Core\Cache\CacheFactory;
+
+$cacheFactory = CacheFactory::getInstance();
+```
+
+Create cache:
+
+``` php
+$cache = $cacheFactory->create('mycache_name', 'file'); // Every name will be singleton object.
+```
+
+If you set `cache.enabled` to `false`, all cache created from `create()` will be `NullStorage`, it won't cache any data.
+
 # Auto Fetch Data By Closure
 
 Using call method to auto detect is cache exists or not. 
@@ -88,9 +110,9 @@ return $data;
 
 # Using Custom Cache Object
 
-The previous we mentioned global cache, but we can still create our custom cache to store values, it will not affected by global config.
+In the above we use global cache, but we can still create our custom cache to store values, it will not affected by global config.
 
-## Use CacheFactory
+## Use `CacheFactory::getCache()`
 
 CacheFactory is a cache creator, it will store each cache object as singleton by different name. 
 
@@ -126,9 +148,9 @@ $cache = CacheFactory::getCache('cache_name', 'file', 'string');
 
 $url = 'http://mysite.com/foo/bar/baz';
 
-if ($cache->has($url))
+if ($cache->exists($url))
 {
-    $html = $cache->get($url);
+    echo $cache->get($url);
     
     exit();
 }
