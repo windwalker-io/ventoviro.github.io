@@ -41,7 +41,9 @@ Error message.
 
 Windwalker includes [Whoops](http://filp.github.io/whoops/) as default error handler, the uncaught exception will show this page:
  
-![p-2015-01-02-3](https://cloud.githubusercontent.com/assets/1639206/5594830/cad4448c-9299-11e4-940c-06e5d00ef637.jpg)
+![160331-0002](https://cloud.githubusercontent.com/assets/1639206/14169526/e84189b8-f75a-11e5-9fcc-85507bf3fe48.jpg)
+
+To enable Pretty error page, you must open DEV mode, please change config `system.debug` to `1` or use `dev.php` to access your site.
 
 ## Built-in Error Page
 
@@ -152,6 +154,13 @@ class MyErrorHandler extends ErrorHandler
 	 */
 	public static function error($code ,$message ,$file, $line, $context)
 	{
+	    if (error_reporting() === 0)
+	    {
+	        // Ignore or log it.
+
+	        return;
+	    }
+
 		$content = sprintf('%s. File: %s (line: %s)', $message, $file, $line);
 
 		throw new \ErrorException($content, $code, 1, $file, $line);
@@ -166,3 +175,9 @@ MyErrorHandler::register();
 ```
 
 Now all PHP error will throws ErrorException.
+
+## Set Error Level
+
+``` php
+ErrorHandler::register(true, E_ALL);
+```

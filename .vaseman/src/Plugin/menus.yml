@@ -48,5 +48,6 @@ documentation:
     more/datetime: DateTime
     more/tests: Tests
     more/validation: Validation
+    more/debugging: Debugging
     more/error-handling: Error Handling
     more/more-packages: More Packages

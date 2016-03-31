@@ -215,6 +215,9 @@
                     <li class="">
                 <a href="../../documentation/more/validation.html">Validation</a>
             </li>
+                    <li class="">
+                <a href="../../documentation/more/debugging.html">Debugging</a>
+            </li>
                     <li class="uk-active">
                 <a href="../../documentation/more/error-handling.html">Error Handling</a>
             </li>
@@ -261,7 +264,9 @@ throw new Exception('Error message');
 
 <p>Windwalker includes <a href="http://filp.github.io/whoops/">Whoops</a> as default error handler, the uncaught exception will show this page:</p>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5594830/cad4448c-9299-11e4-940c-06e5d00ef637.jpg" alt="p-2015-01-02-3" /></p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169526/e84189b8-f75a-11e5-9fcc-85507bf3fe48.jpg" alt="160331-0002" /></p>
+
+<p>To enable Pretty error page, you must open DEV mode, please change config <code>system.debug</code> to <code>1</code> or use <code>dev.php</code> to access your site.</p>
 
 <h2>Built-in Error Page</h2>
 
@@ -365,6 +370,13 @@ class MyErrorHandler extends ErrorHandler
      */
     public static function error($code ,$message ,$file, $line, $context)
     {
+        if (error_reporting() === 0)
+        {
+            // Ignore or log it.
+
+            return;
+        }
+
         $content = sprintf('%s. File: %s (line: %s)', $message, $file, $line);
 
         throw new \ErrorException($content, $code, 1, $file, $line);
@@ -378,6 +390,11 @@ class MyErrorHandler extends ErrorHandler
 </code></pre>
 
 <p>Now all PHP error will throws ErrorException.</p>
+
+<h2>Set Error Level</h2>
+
+<pre><code class="php">ErrorHandler::register(true, E_ALL);
+</code></pre>
 
                         <hr />
 

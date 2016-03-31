@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>DataMapper | Windwalker - A Modern PHP Framework</title>
+        <title>Debugging | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="DataMapper | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Debugging | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
         
@@ -79,7 +79,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>DataMapper</h1>
+        <h1>Debugging</h1>
     </div>
         </div>
     </section>
@@ -153,7 +153,7 @@
                     <li class="">
                 <a href="../../documentation/db/active-record.html">ActiveRecord</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
             </li>
                     <li class="">
@@ -215,7 +215,7 @@
                     <li class="">
                 <a href="../../documentation/more/validation.html">Validation</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/more/debugging.html">Debugging</a>
             </li>
                     <li class="">
@@ -230,416 +230,72 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Create a DataMapper</h1>
+                    <h1>DEV Mode</h1>
 
-<pre><code class="php">use Windwalker\DataMapper\DataMapper;
+<p>Windawlker contains a development mode, you can enable it by setting config <code>system.debug</code> to <code>1</code>, or use <code>dev.php</code> to access your site.</p>
 
-$fooMapper = new DataMapper('#__foo');
+<p>You will see a debug console at the bottom of page.</p>
 
-$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169792/6aabee92-f75c-11e5-9614-1512c6021d77.jpg" alt="160331-0003" /></p>
+
+<h2>Remote Access</h2>
+
+<p>By default, <code>dev.php</code> only support <code>localhost</code>, you can add allow IPs to <code>secret.yml</code> so that you can open dev mode from remote.</p>
+
+<pre><code class="yaml">dev:
+    allow_ips:
+        - 127.0.0.1
+        - 'fe80::1'
+        - '::1'
+        - 123.456.654.321 # Add your ip
 </code></pre>
 
-<h2>Extends It</h2>
+<h2>Close Debug Console</h2>
 
-<p>You can also create a class to operate specific table:</p>
+<p>Debug console will auto push to page when system close, but sometimes we won't want it to show if in ajax or api call.
+Add this line to close it.</p>
 
-<pre><code class="php">class FooMapper extends DataMapper
+<pre><code class="php">use Windwalker\Debugger\Helper\DebuggerHelper;
+
+class AjaxController extends Controller
 {
-    protected $table = '#__foo';
-}
-
-$data = (new FooMapper)-&gt;findAll();
-</code></pre>
-
-<p>Or using static proxy:</p>
-
-<pre><code class="php">abstract class FooMapper
-{
-    protected static $instance;
-
-    public static function getInstance()
+    protected function doExecute()
     {
-        if (!static::$instance)
-        {
-            static::$instance = new DataMapper('#__foo');
-        }
+        // Close debug console
+        DebuggerHelper::disableConsole();
 
-        return static::$instance;
-    }
+        $this-&gt;app-&gt;response-&gt;setMimeType('application/json');
 
-    public static function __callStatic($name, $args)
-    {
-        return call_user_func_array(array(static::getInstance(), $name), $args);
-    }
-}
-
-$data = FooMapper::findOne(array('id' =&gt; 5, 'alias' =&gt; 'bar'));
-</code></pre>
-
-<h1>Find Records</h1>
-
-<p>Find method will fetch rows from table, and return <code>DataSet</code> class.</p>
-
-<h2>find()</h2>
-
-<p>Get id = 1 record</p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));
-</code></pre>
-
-<p>Fetch published = 1, and sort by <code>date</code></p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1), 'date');
-</code></pre>
-
-<p>Fetch published = 1, language = en-US, sort by <code>date</code> DESC and start with <code>30</code>, limit <code>10</code>.</p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1, 'language' =&gt; 'en-US'), 'date DESC', 30, 10);
-</code></pre>
-
-<p>Using array, will be <code>IN</code> condition:</p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; array(1,2,3))); // WHERE id IN (1,2,3)
-</code></pre>
-
-<h2>findOne()</h2>
-
-<p>Just return one row.</p>
-
-<pre><code class="php">$foo = $dooMapper-&gt;findOne(array('published' =&gt; 1), 'date');
-</code></pre>
-
-<h2>findAll()</h2>
-
-<p>Equal to <code>find(array(), $order, $start, $limit)</code>.</p>
-
-<h1>Create Records</h1>
-
-<p>Using DataSet to wrap every data, then send this object to create() method, these data will insert to table.</p>
-
-<h2>create()</h2>
-
-<pre><code class="php">use Windwalker\Data\Data;
-use Windwalker\Data\DataSet;
-
-$data1 = new Data;
-$data1-&gt;title = 'Foo';
-$data1-&gt;auhor = 'Magneto';
-
-$data2 = new Data(
-    array(
-        'title' =&gt; 'Bar',
-        'author' =&gt; 'Wolverine'
-    )
-);
-
-$dataset = new DataSet(array($data1, $data2));
-
-$return = $fooMapper-&gt;create($dataset);
-</code></pre>
-
-<p>The return value will be whole dataset and add inserted ids.</p>
-
-<pre><code>Windwalker\Data\DataSet Object
-(
-    [storage:ArrayObject:private] =&gt; Array
-        (
-            [0] =&gt; Windwalker\Data\Data Object
-                (
-                    [title] =&gt; Foo
-                    [auhor] =&gt; Magneto
-                    [id] =&gt; 39
-                )
-
-            [1] =&gt; Windwalker\Data\Data Object
-                (
-                    [title] =&gt; Bar
-                    [auhor] =&gt; Wolverine
-                    [id] =&gt; 40
-                )
-        )
-)
-</code></pre>
-
-<h2>createOne()</h2>
-
-<p>Only insert one row, do not need DataSet.</p>
-
-<pre><code class="php">$data = new Data;
-$data-&gt;title = 'Foo';
-$data-&gt;auhor = 'Magneto';
-
-$fooMapper-&gt;createOne($data);
-</code></pre>
-
-<h1>Update Records</h1>
-
-<p>Update methods help us update rows in table.</p>
-
-<h2>update()</h2>
-
-<pre><code class="php">use Windwalker\Data\Data;
-use Windwalker\Data\DataSet;
-
-$data1 = new Data;
-$data1-&gt;id = 1;
-$data1-&gt;title = 'Foo';
-
-$data2 = new Data(
-    array(
-        'id' =&gt; 2,
-        'title' =&gt; 'Bar'
-    )
-);
-
-$dataset = new DataSet(array($data1, $data2));
-
-$fooMapper-&gt;update($dataset);
-</code></pre>
-
-<h2>updateOne()</h2>
-
-<p>Just update one row.</p>
-
-<pre><code class="php">$data = new Data;
-$data-&gt;id = 1;
-$data-&gt;title = 'Foo';
-
-$fooMapper-&gt;updateOne($data);
-</code></pre>
-
-<h2>updateAll()</h2>
-
-<p>UpdateAll is different from update method, we just send one data object, but using conditions as where
-to update every row match these conditions. We don't need primary key for updateAll().</p>
-
-<pre><code class="php">$data = new Data;
-$data-&gt;published = 0;
-
-$fooMapper-&gt;updateAll($data, array('author' =&gt; 'Mystique'));
-</code></pre>
-
-<h1>Delete</h1>
-
-<p>Delete rows by conditions.</p>
-
-<h2>delete()</h2>
-
-<pre><code class="php">$boolean = $fooMapper-&gt;delete(array('author' =&gt; 'Jean Grey'));
-</code></pre>
-
-<h1>Join Tables</h1>
-
-<p>Using <code>RelationDataMapper</code> to join tables.</p>
-
-<pre><code class="php">$fooMapper = RelationDataMapper::getInstance('flower', '#__flower')
-    -&gt;addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
-    -&gt;addTable('category', '#__categories', array('category.lft &gt;= flower.lft', 'category.rgt &lt;= flower.rgt'), 'INNER');
-
-// Don't forget add alias on where conditions.
-$dataset = $fooMapper-&gt;find(array('flower.id' =&gt; 5));
-</code></pre>
-
-<p>The Join query will be:</p>
-
-<pre><code class="sql">SELECT `flower`.`id`,
-    `flower`.`catid`,
-    `flower`.`title`,
-    `flower`.`user_id`,
-    `flower`.`meaning`,
-    `flower`.`ordering`,
-    `flower`.`state`,
-    `flower`.`params`,
-    `author`.`id` AS `author_id`,
-    `author`.`name` AS `author_name`,
-    `author`.`pass` AS `author_pass`,
-    `category`.`id` AS `category_id`,
-    `category`.`title` AS `category_title`,
-    `category`.`ordering` AS `category_ordering`,
-    `category`.`params` AS `category_params`
-FROM #__foo AS foo
-    LEFT JOIN #__users AS author ON foo.user_id = author.id
-    INNER JOIN #__categories AS category ON category.lft &gt;= foo.lft AND category.rgt &lt;= foo.rgt
-</code></pre>
-
-<h2>Using OR Condition</h2>
-
-<pre><code class="php">$fooMapper-&gt;addTable(
-    'category',
-    '#__categories',
-    'category.lft &gt;= foo.lft OR category.rgt &lt;= foo.rgt',
-    'LEFT'
-);
-</code></pre>
-
-<h1>Static Access</h1>
-
-<p>Windwalker core 2.1 provides a <code>AbstractDataMapperProxy</code> to help us easily use DataMapper.</p>
-
-<pre><code class="php">use Windwalker\Core\DataMapper\AbstractDataMapperProxy;
-
-class ArticleMapper extends AbstractDataMapperProxy
-{
-    protected static $table = 'articles';
-}
-</code></pre>
-
-<p>Now you can call all methods statically:</p>
-
-<pre><code class="php">$articles = ArticleMapper::find(['state' =&gt; 1]);
-</code></pre>
-
-<h1>Hooks</h1>
-
-<p>In <code>DataMapper</code> or <code>AbstractDataMapperProxy</code>, both supports hooks methods.</p>
-
-<pre><code class="php">class ArticleMapper extends AbstractDataMapperProxy
-{
-    // ...
-
-    public function onAfterDelete(Event $event)
-    {
-        // Delete all tags relative to this article
+        return json_encode(['foo' =&gt; 'bar']);
     }
 }
 </code></pre>
 
-<p>OR add listener.</p>
+<h1>Debugger Package</h1>
 
-<pre><code class="php">$mapper = new ArticleMapper;
+<p>Click buttons on debug console, you will enter the Debugger page.</p>
 
-$mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169994/a78ec270-f75d-11e5-81b9-b14317b32fbe.jpg" alt="160331-0004" /></p>
+
+<p>Windwlker will log last 100 page requests information to help us track system process.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14170049/f8b897d4-f75d-11e5-9cd1-3380e88854fb.jpg" alt="160331-0005" /></p>
+
+<h2>Log your Custom Content</h2>
+
+<p>If you need to log some important information to debug, you can use <code>DebugHelper</code> to add custom data.</p>
+
+<pre><code class="php">DebuggerHelper::addCustomData('My data', "It's not who I am underneath, but it's what I do that defines me.");
 </code></pre>
 
-<p>All events:</p>
+<p>See system page.</p>
 
-<ul>
-<li>onBeforeFind</li>
-<li>onAfterFind</li>
-<li>onBeforeFindOne</li>
-<li>onAfterFindOne</li>
-<li>onBeforeFindAll</li>
-<li>onAfterFindAll</li>
-<li>onBeforeFindColumn</li>
-<li>onAfterFindColumn</li>
-<li>onBeforeCreate</li>
-<li>onAfterCreate</li>
-<li>onBeforeCreateOne</li>
-<li>onAfterCreateOne</li>
-<li>onBeforeUpdate</li>
-<li>onAfterUpdate</li>
-<li>onBeforeUpdateOne</li>
-<li>onAfterUpdateOne</li>
-<li>onBeforeUpdateAll</li>
-<li>onAfterUpdateAll</li>
-<li>onBeforeSave</li>
-<li>onAfterSave</li>
-<li>onBeforeSaveOne</li>
-<li>onAfterSaveOne</li>
-<li>onBeforeFlush</li>
-<li>onAfterFlush</li>
-<li>onBeforeDelete</li>
-<li>onAfterDelete</li>
-</ul>
-
-<p>See <a href="../more/events.html">Event</a></p>
-
-<h1>Compare objects</h1>
-
-<p>Using Compare objects help us set some where conditions which hard to use array to defind.</p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(
-    array(
-        new GteCompare('id', 5),
-        new NeqCompare('name', 'bar')
-        new LtCompare('published', 1),
-        new NinCompare('catid', array(1,2,3,4,5))
-    )
-);
-</code></pre>
-
-<p>This will generate where conditions like below:</p>
-
-<pre><code class="sql">WHERE `id` &gt;= '5'
-    AND `name` != 'bar'
-    AND `published` &lt; '1'
-    AND `catid` NOT IN (1,2,3,4,5)
-</code></pre>
-
-<h2>Available compares:</h2>
-
-<table>
-<thead>
-<tr>
-  <th>Name</th>
-  <th>Description</th>
-  <th>Operator</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>EqCompare</td>
-  <td>Equal</td>
-  <td><code>=</code></td>
-</tr>
-<tr>
-  <td>NeqCompare</td>
-  <td>Not Equal</td>
-  <td><code>!=</code></td>
-</tr>
-<tr>
-  <td>GtCompare</td>
-  <td>Greater than</td>
-  <td><code>&gt;</code></td>
-</tr>
-<tr>
-  <td>GteCompare</td>
-  <td>Greater than or Equal</td>
-  <td><code>&gt;=</code></td>
-</tr>
-<tr>
-  <td>LtCompare</td>
-  <td>Less than</td>
-  <td><code>&lt;</code></td>
-</tr>
-<tr>
-  <td>LteCompare</td>
-  <td>Less than or Equal</td>
-  <td><code>&lt;=</code></td>
-</tr>
-<tr>
-  <td>InCompare</td>
-  <td>In</td>
-  <td><code>IN</code></td>
-</tr>
-<tr>
-  <td>NinCompare</td>
-  <td>Not In</td>
-  <td><code>IN</code></td>
-</tr>
-</tbody>
-</table>
-
-<h2>Custom Compare</h2>
-
-<pre><code class="php">echo (string) new Compare('title', '%flower%', 'LIKE');
-</code></pre>
-
-<p>Will be</p>
-
-<pre><code class="sql">`title` LIKE `%flower%`
-</code></pre>
-
-<p>See: <a href="https://github.com/ventoviro/windwalker-compare">Windwalker Compare</a></p>
-
-<h1>Using Data and DataSet</h1>
-
-<p>See: <a href="../more/data-object.html">Data Object</a></p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg" alt="system" /></p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/db/datamapper.md">improve</a> this document.
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/more/debugging.md">improve</a> this document.
     </p>
                 </article>
             </div>
