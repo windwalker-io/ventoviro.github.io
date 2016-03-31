@@ -138,29 +138,10 @@ $container->share('system.application', $app)
 $app = $container->get('app');
 ```
 
-So it is a good way that we can build IOC registry:
+# Ioc Class
 
-``` php
-$config = array(
-    'ioc.registry' => array(
-        'app'     => 'system.application',
-        'input'   => 'system.input',
-        'session' => 'system.session'
-    )
-);
-
-// Your own IOC class follows your rule
-IOC::setRegistry($config['ioc.registry']);
-IOC::setContainer($container);
-
-// Will get system.session from Container
-$session = IOC::getSession();
-```
-
-# Facade
-
-`\Windwalker\Ioc` provides a facade pattern to quickly get system objects, the benefit to use these methods is that IDE can identify
-which object we get, and provides auto-complete:
+`\Windwalker\Ioc` provides a easy way to get system objects, the benefit to use these methods is that IDE can identify
+what object we get, and provides auto-complete:
 
 ``` php
 $db    = \Windwalker\Ioc::getDatabase();
@@ -168,7 +149,7 @@ $input = \Windwalker\Ioc::getInput();
 $app   = \Windwalker\Ioc::getApplication();
 ```
 
-See: [Ioc Methods](#)
+![160331-0001](https://cloud.githubusercontent.com/assets/1639206/14169419/38066a96-f75a-11e5-91da-a3c433bc4771.jpg)
 
 If you want to add your own object in `Ioc`, edit the `/src/Windwalker/Ioc.php` file:
 
@@ -192,7 +173,11 @@ abstract class Ioc extends \Windwalker\Core\Ioc
 }
 ```
 
+Now you can use this method in everywhere.
 
+``` php
+\Windwalker\Ioc::getMyObject();
+```
 
 # Build Object
 
@@ -351,9 +336,56 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 
     public function getQuery(Container $container)
     {
-        return new MysqlQueery;
+        return new MysqlQuery;
     }
 }
 
 $container->registerServiceProvider(new DatabaseServiceProvider);
+```
+
+# Facade
+
+Windwalker has a Facade class to help us use proxy pattern to call object methods statically
+
+``` php
+// Create a object into conteiner
+$container->share('my.router', new Router);
+```
+
+``` php
+use Windwalker\Core\Facade\AbstractProxyFacade;
+
+class MyRouter extends AbstractProxyFacade
+{
+    // Same as the container key, then we can auto match the object in container.
+    protected static $_key = 'my.router';
+}
+```
+
+Now just call the Router methods statically from `MyRouter`.
+
+``` php
+MyRouter::build('route');
+
+// Same as...
+
+$container->get('my.router')->build('route');
+```
+
+To make IDE support auto-complete, we can add PhpDoc to class.
+
+``` php
+/**
+ * The Router class.
+ *
+ * @method  static  string  build($route, $queries = array(), $type = RestfulRouter::TYPE_RAW, $xhtml = false)
+ *
+ * ...
+ *
+ * @see \Windwalker\Router\Router
+ */
+class MyRouter extends AbstractProxyFacade
+{
+    protected static $_key = 'my.router';
+}
 ```

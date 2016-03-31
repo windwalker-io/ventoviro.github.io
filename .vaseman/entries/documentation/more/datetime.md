@@ -7,7 +7,7 @@ title: DateTime
 
 `Windwalker\Core\DateTime\DateTime` is sub class of PHP `DateTime`. This class is based on Joomla `JDate` and add some new features.
 
-All PHP DateTime functions are able used to Windwalker DataTime, see [PHP DateTime](http://php.net/manual/en/book.datetime.php)
+All PHP DateTime functions are able to use on Windwalker DataTime, see [PHP DateTime](http://php.net/manual/en/book.datetime.php)
 
 # Construct
 
