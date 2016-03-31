@@ -120,6 +120,9 @@
                 <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
             </li>
                     <li class="">
+                <a href="../../documentation/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
             </li>
                     <li class="">
@@ -420,9 +423,8 @@ $fooMapper-&gt;updateAll($data, array('author' =&gt; 'Mystique'));
 
 <p>Using <code>RelationDataMapper</code> to join tables.</p>
 
-<pre><code class="php">$fooMapper = new RelationDataMapper('flower', '#__flower');
-
-$fooMapper-&gt;addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
+<pre><code class="php">$fooMapper = RelationDataMapper::getInstance('flower', '#__flower')
+    -&gt;addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
     -&gt;addTable('category', '#__categories', array('category.lft &gt;= flower.lft', 'category.rgt &lt;= flower.rgt'), 'INNER');
 
 // Don't forget add alias on where conditions.
@@ -460,6 +462,78 @@ FROM #__foo AS foo
     'LEFT'
 );
 </code></pre>
+
+<h1>Static Access</h1>
+
+<p>Windwalker core 2.1 provides a <code>AbstractDataMapperProxy</code> to help us easily use DataMapper.</p>
+
+<pre><code class="php">use Windwalker\Core\DataMapper\AbstractDataMapperProxy;
+
+class ArticleMapper extends AbstractDataMapperProxy
+{
+    protected static $table = 'articles';
+}
+</code></pre>
+
+<p>Now you can call all methods statically:</p>
+
+<pre><code class="php">$articles = ArticleMapper::find(['state' =&gt; 1]);
+</code></pre>
+
+<h1>Hooks</h1>
+
+<p>In <code>DataMapper</code> or <code>AbstractDataMapperProxy</code>, both supports hooks methods.</p>
+
+<pre><code class="php">class ArticleMapper extends AbstractDataMapperProxy
+{
+    // ...
+
+    public function onAfterDelete(Event $event)
+    {
+        // Delete all tags relative to this article
+    }
+}
+</code></pre>
+
+<p>OR add listener.</p>
+
+<pre><code class="php">$mapper = new ArticleMapper;
+
+$mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
+</code></pre>
+
+<p>All events:</p>
+
+<ul>
+<li>onBeforeFind</li>
+<li>onAfterFind</li>
+<li>onBeforeFindOne</li>
+<li>onAfterFindOne</li>
+<li>onBeforeFindAll</li>
+<li>onAfterFindAll</li>
+<li>onBeforeFindColumn</li>
+<li>onAfterFindColumn</li>
+<li>onBeforeCreate</li>
+<li>onAfterCreate</li>
+<li>onBeforeCreateOne</li>
+<li>onAfterCreateOne</li>
+<li>onBeforeUpdate</li>
+<li>onAfterUpdate</li>
+<li>onBeforeUpdateOne</li>
+<li>onAfterUpdateOne</li>
+<li>onBeforeUpdateAll</li>
+<li>onAfterUpdateAll</li>
+<li>onBeforeSave</li>
+<li>onAfterSave</li>
+<li>onBeforeSaveOne</li>
+<li>onAfterSaveOne</li>
+<li>onBeforeFlush</li>
+<li>onAfterFlush</li>
+<li>onBeforeDelete</li>
+<li>onAfterDelete</li>
+</ul>
+
+<p>See <a href="../more/events.html">Event</a></p>
 
 <h1>Compare objects</h1>
 

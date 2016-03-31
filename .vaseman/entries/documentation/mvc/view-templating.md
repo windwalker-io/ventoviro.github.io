@@ -16,7 +16,7 @@ class GetController extends Controller
 {
 	protected function doExecute()
 	{
-		$view = new HtmlView;
+		$view = new PhpHtmlView;
 
 		return $view->render();
 	}
@@ -31,9 +31,6 @@ Then create a php file in `/templates/default.php`. This template will be render
 ?>
 Hello World
 ```
-
-> NOTE: Please check you use `\Windwalker\Core\View\HtmlView` not `\Windwalker\View\HtmlView`
- These 2 classes is similar but not the same.
 
 ## Push Controller Information into View
 
@@ -70,6 +67,25 @@ Windwalker will follow this orders to find templates, you can override any templ
 [3] => /vendor/windwalker/core/src/Core/Resources/Templates  <-- Here is core templates
 ```
 
+## Multilingual Paths
+
+If you want to create different templates for every locales, just add this line in view `prepareData()`.
+
+``` php
+$this->registerMultilingualPaths();
+```
+
+The current and defautl locale will auto added into paths with high priority:
+
+```
+[0] => /src/[Package]/Templates/[view]/zh-TW  <--- current locale
+[1] => /src/[Package]/Templates/[view]/en-GB  <--- default locale
+[2] => /src/[Package]/Templates/[view]
+[3] => /templates/[package]/[view]
+[4] => /templates
+[5] => /vendor/windwalker/core/src/Core/Resources/Templates
+```
+
 ## Use other layouts
 
 The `foo.bar.baz` will matched `foo/bar/baz.php` file. If you didn't set any layout name, `default` will instead.
@@ -102,7 +118,7 @@ for example, you can run in `onAfterInitialise` event (See [Event](../more/event
 
 ``` php
 // Add global paths
-\Windwalker\Core\Renderer\RendererHelper::addPath('/my/path', Priority::ABOVE_NORMAL);
+\Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/path', Priority::ABOVE_NORMAL);
 ```
 
 See also: [Windwalker View](https://github.com/ventoviro/windwalker/tree/staging/src/View#htmlview)
@@ -114,7 +130,7 @@ View can maintain some data and use it in template:
 
 ``` php
 // Set it when construct
-$view = new HtmlView(array('foo' => 'bar'));
+$view = new PhpHtmlView(array('foo' => 'bar'));
 
 // Use setter
 $view->set('foo', 'bar');
@@ -123,7 +139,7 @@ $view->set('foo', 'bar');
 $view['foo'] = 'bar';
 ```
 
-Then we can get this variable in template:
+Then we can get this variables in template:
 
 ``` php
 <?php
@@ -170,14 +186,14 @@ class GetController extends Controller
 {
 	protected function doExecute()
 	{
-		$view = new SakurasHtmlView;
+		$view = $this->getView('Sakuras');
 		
 		// We don't need to push config now, if View located in package folder, 
 		// it will guess all information which is needed. 
 
 		$view['created'] = new \DateTime('now');
 
-		return $view->render();
+		return $view->setLayout('sakuras')->render();
 	}
 }
 ```
@@ -340,9 +356,9 @@ echo $view->setLayout('flower.sakura')->render();
 In Blade template we don't need to use `$data`, all properties are at top level:
 
 ``` php
-{{{ $item->title }}}
+{{ $item->title }}
 
-{{ $uri['base.path'] }}
+{!! $uri['base.path'] !!}
 ```
 
 ## How to Use Blade Engine
@@ -377,3 +393,19 @@ $view = new MyTwigHtmlView;
 ## How to Use Twig
 
 See: [Twig Documentation](http://twig.sensiolabs.org/documentation)
+
+# Global Variables
+
+There is some global variables will auto set into View template, you can easily use them:
+
+| Name | Description |
+| ---- | ----------- |
+| `view` | A data object object to store view name, layout or format etc. |
+| `helper` | the helper proxy object to help us quickly use other helper object. |
+| `uri` | The uri registry object, see [Uri & Route Building](./uri-route-building.html) |
+| `app` | The global application object. |
+| `package` | The current package pbject. |
+| `router` | The router object of current package. |
+| `messages` | The flash messages. |
+| `translator` | The translator object. |
+| `datetime` | The Datetime object of current time. |

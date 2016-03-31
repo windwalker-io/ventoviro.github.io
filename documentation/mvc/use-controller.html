@@ -120,6 +120,9 @@
                 <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
             </li>
                     <li class="">
+                <a href="../../documentation/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
             </li>
                     <li class="">
@@ -248,7 +251,11 @@ The benefit is that our controllers will be much more lighter then other framewo
 
 <h2>Use Multiple Actions</h2>
 
-<p>But if you want to use multiple actions like traditional practice, Windwalker also support it.</p>
+<blockquote>
+  <p>NOTE: Multiple Actions has been deprecated and will be remove after 3.0, Windwalker will only use single action in the future.</p>
+</blockquote>
+
+<p>If you want to use multiple actions like traditional practice, Windwalker also support it.</p>
 
 <p>First, your controller should extend from <code>MultiActionController</code>:</p>
 
@@ -422,7 +429,10 @@ return true;
 
 <p>Flash message is a disposable message in session, if we show it, these messages will be purged.</p>
 
-<pre><code class="php">$this-&gt;addFlash('Message', 'type');
+<pre><code class="php">$this-&gt;addMessage('Message', 'type');
+
+// Multiple messages
+$this-&gt;addMessage(['Message', 'Message2'], 'type');
 
 // OR
 
@@ -435,12 +445,45 @@ $this-&gt;setRedirect('url.html', 'Message', 'type');
 
 <pre><code class="php">$this-&gt;mute(true);
 
-$this-&gt;addFlash('Message'); // This action no use
+$this-&gt;addMessage('Message'); // This action no use
 </code></pre>
 
-<h1>Check Token</h1>
+<h1>CSRF Token</h1>
 
-<p>(Not implemented yet)</p>
+<p>Windwalker provides a simple CSRF token generator, please add this line to your HTML form:</p>
+
+<pre><code class="html">&lt;form action="..." method="post"&gt;
+
+    &lt;!-- ... --&gt;
+
+    &lt;?php echo \Windwalker\Core\Security\CsrfProtection::input(); ?&gt;
+&lt;/form&gt;
+</code></pre>
+
+<p>This will generate a token input in your form. Or you can only add token string to your URL.</p>
+
+<pre><code class="html">&lt;a href="flower/sakura?&lt;?php echo \Windwalker\Core\Security\CsrfProtection::getFormToken(); ?&gt;"&gt;&lt;/a&gt;
+</code></pre>
+
+<p>Then just check token in your Controller.</p>
+
+<pre><code class="php">use Windwalker\Core\Security\CsrfProtection;
+
+// Validate or throw exception
+CsrfProtection::validate();
+
+// Validate or die
+CsrfProtection::validate(true);
+
+// Validate with message
+CsrfProtection::validate([bool], 'Sorry your token is invalid');
+
+// Only check and return boolean
+if (! CsrfProtection::checkToken())
+{
+    throw new \RuntimeException('Invalid Token');
+}
+</code></pre>
 
 <h1>HMVC</h1>
 

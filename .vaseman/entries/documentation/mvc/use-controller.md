@@ -35,7 +35,9 @@ The benefit is that our controllers will be much more lighter then other framewo
 
 ## Use Multiple Actions
 
-But if you want to use multiple actions like traditional practice, Windwalker also support it.
+> NOTE: Multiple Actions has been deprecated and will be remove after 3.0, Windwalker will only use single action in the future.
+
+If you want to use multiple actions like traditional practice, Windwalker also support it.
 
 First, your controller should extend from `MultiActionController`:
 
@@ -221,7 +223,10 @@ return true;
 Flash message is a disposable message in session, if we show it, these messages will be purged.
 
 ``` php
-$this->addFlash('Message', 'type');
+$this->addMessage('Message', 'type');
+
+// Multiple messages
+$this->addMessage(['Message', 'Message2'], 'type');
 
 // OR
 
@@ -235,12 +240,48 @@ If we set controller to mute, this controller will not add any messages:
 ``` php
 $this->mute(true);
 
-$this->addFlash('Message'); // This action no use
+$this->addMessage('Message'); // This action no use
 ```
 
-# Check Token
+# CSRF Token
 
-(Not implemented yet)
+Windwalker provides a simple CSRF token generator, please add this line to your HTML form:
+
+``` html
+<form action="..." method="post">
+    
+    <!-- ... -->
+    
+    <?php echo \Windwalker\Core\Security\CsrfProtection::input(); ?>
+</form>
+```
+
+This will generate a token input in your form. Or you can only add token string to your URL.
+
+``` html
+<a href="flower/sakura?<?php echo \Windwalker\Core\Security\CsrfProtection::getFormToken(); ?>"></a>
+```
+
+Then just check token in your Controller.
+ 
+``` php
+use Windwalker\Core\Security\CsrfProtection;
+
+// Validate or throw exception
+CsrfProtection::validate();
+
+// Validate or die
+CsrfProtection::validate(true);
+
+// Validate with message
+CsrfProtection::validate([bool], 'Sorry your token is invalid');
+
+// Only check and return boolean
+if (! CsrfProtection::checkToken())
+{
+    throw new \RuntimeException('Invalid Token');
+}
+```
 
 # HMVC
 

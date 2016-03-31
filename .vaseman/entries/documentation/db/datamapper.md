@@ -223,9 +223,8 @@ $boolean = $fooMapper->delete(array('author' => 'Jean Grey'));
 Using `RelationDataMapper` to join tables.
 
 ``` php
-$fooMapper = new RelationDataMapper('flower', '#__flower');
-
-$fooMapper->addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
+$fooMapper = RelationDataMapper::getInstance('flower', '#__flower')
+    ->addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
     ->addTable('category', '#__categories', array('category.lft >= flower.lft', 'category.rgt <= flower.rgt'), 'INNER');
 
 // Don't forget add alias on where conditions.
@@ -265,6 +264,80 @@ $fooMapper->addTable(
     'LEFT'
 );
 ```
+
+# Static Access
+
+Windwalker core 2.1 provides a `AbstractDataMapperProxy` to help us easily use DataMapper.
+
+``` php
+use Windwalker\Core\DataMapper\AbstractDataMapperProxy;
+
+class ArticleMapper extends AbstractDataMapperProxy
+{
+	protected static $table = 'articles';
+}
+```
+
+Now you can call all methods statically:
+
+``` php
+$articles = ArticleMapper::find(['state' => 1]);
+```
+
+# Hooks
+
+In `DataMapper` or `AbstractDataMapperProxy`, both supports hooks methods.
+
+``` php
+class ArticleMapper extends AbstractDataMapperProxy
+{
+	// ...
+	
+	public function onAfterDelete(Event $event)
+	{
+		// Delete all tags relative to this article
+	}
+}
+```
+
+OR add listener.
+
+``` php
+$mapper = new ArticleMapper;
+
+$mapper->getDispatcher()->addListener(new MyListener);
+```
+
+All events:
+
+- onBeforeFind
+- onAfterFind
+- onBeforeFindOne
+- onAfterFindOne
+- onBeforeFindAll
+- onAfterFindAll
+- onBeforeFindColumn
+- onAfterFindColumn
+- onBeforeCreate
+- onAfterCreate
+- onBeforeCreateOne
+- onAfterCreateOne
+- onBeforeUpdate
+- onAfterUpdate
+- onBeforeUpdateOne
+- onAfterUpdateOne
+- onBeforeUpdateAll
+- onAfterUpdateAll
+- onBeforeSave
+- onAfterSave
+- onBeforeSaveOne
+- onAfterSaveOne
+- onBeforeFlush
+- onAfterFlush
+- onBeforeDelete
+- onAfterDelete
+
+See [Event](../more/events.html)
 
 # Compare objects
 

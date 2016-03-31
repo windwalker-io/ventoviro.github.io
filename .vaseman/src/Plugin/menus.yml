@@ -16,6 +16,7 @@ documentation:
     start/service-provider: Service Provider
   MVC:
     mvc/use-controller: Use Controller
+    mvc/class-resolvers: Class Resolvers
     mvc/view-templating: View and Templating
     mvc/model-database: Model and Database
     mvc/view-model: ViewModel

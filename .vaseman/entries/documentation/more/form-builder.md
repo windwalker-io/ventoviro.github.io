@@ -18,8 +18,11 @@ $form = new Form;
 
 $form->addField(new TextField('username', 'Username'));
 $form->addField(new PasswordField('password', 'Password'));
-$form->addField(new TextField('email', 'Email'));
-$form->addField(new TextareaField('description', 'Description'));
+
+// Another way
+
+$form->add('email',       new TextField)->label('Email');
+$form->add('description', new TextareaField)->label('Description'));
 
 echo $form->renderFields();
 ```
@@ -69,6 +72,30 @@ Render all fields, and we get this HTML output.
 $form = new Form;
 
 $form->loadFile('form.xml');
+```
+
+# Field Definition Interface
+
+`FieldDefinitionInterface` is a simple interface to help us create an empty space to define form fields.
+ 
+``` php
+use Windwalker\Form\FieldDefinitionInterface;
+
+class MyFieldDefinition implements FieldDefinitionInterface
+{
+	public function define(Form $form)
+	{
+	    $form->add('name', new TextField)->label('Name');
+	}
+}
+```
+
+Then add this definition to Form object.
+
+``` php
+$form = new Form;
+
+$form->defineFormField(new MyFieldDefinition);
 ```
 
 # Form Control
@@ -145,8 +172,13 @@ $form->addField(new TextField('bird', 'Bird'), null, 'sky');
 // The name will be name="earth[flower]"
 echo $form->renderFields(null, 'plant');
 
-// The name will be name="sky[dog]"
+// The name will be name="sky[bird]"
 echo $form->renderFields(null, 'animal');
+```
+
+``` html
+<input type="text" name="earth[flower]" />
+<input type="text" name="sky[bird]" />
 ```
 
 Now we can use fieldset and group to organize our fields.
@@ -195,6 +227,45 @@ Using XML
         </group>
     </fieldset>
 </form>
+```
+
+## Use Wrapper Methods
+
+Windwalker 2.1 supports wrapper method to help us organize form fieldset and group.
+
+``` php
+$form->wrap('fieldset', null, function(Form $form)
+{
+    $form->add('name', new TextField)
+        ->label('Name')
+        ->required();
+
+    $form->add('email', new TextField)
+        ->label('Email')
+        ->required();
+
+    $form->add('password', new PasswordField)
+        ->label('Password')
+        ->set('autocomplete', 'off');
+
+    $form->add('password2', new PasswordField)
+        ->label('Confirm Password')
+        ->set('autocomplete', 'off');
+});
+
+// Use group
+use Windwalker\Html\Option;
+
+$form->wrap('fieldset', 'group', function(Form $form)
+{
+    // State
+    $form->add('state', new Field\RadioField)
+        ->label('State')
+        ->set('class', 'btn-group')
+        ->set('default', 1)
+        ->addOption(new Option('On', '1'))
+        ->addOption(new Option('Off', '0'));
+});
 ```
 
 # Attributes of Fields

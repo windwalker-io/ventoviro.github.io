@@ -120,6 +120,9 @@
                 <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
             </li>
                     <li class="">
+                <a href="../../documentation/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
             </li>
                     <li class="">
@@ -231,8 +234,11 @@ $form = new Form;
 
 $form-&gt;addField(new TextField('username', 'Username'));
 $form-&gt;addField(new PasswordField('password', 'Password'));
-$form-&gt;addField(new TextField('email', 'Email'));
-$form-&gt;addField(new TextareaField('description', 'Description'));
+
+// Another way
+
+$form-&gt;add('email',       new TextField)-&gt;label('Email');
+$form-&gt;add('description', new TextareaField)-&gt;label('Description'));
 
 echo $form-&gt;renderFields();
 </code></pre>
@@ -279,6 +285,28 @@ echo $form-&gt;renderFields();
 <pre><code class="php">$form = new Form;
 
 $form-&gt;loadFile('form.xml');
+</code></pre>
+
+<h1>Field Definition Interface</h1>
+
+<p><code>FieldDefinitionInterface</code> is a simple interface to help us create an empty space to define form fields.</p>
+
+<pre><code class="php">use Windwalker\Form\FieldDefinitionInterface;
+
+class MyFieldDefinition implements FieldDefinitionInterface
+{
+    public function define(Form $form)
+    {
+        $form-&gt;add('name', new TextField)-&gt;label('Name');
+    }
+}
+</code></pre>
+
+<p>Then add this definition to Form object.</p>
+
+<pre><code class="php">$form = new Form;
+
+$form-&gt;defineFormField(new MyFieldDefinition);
 </code></pre>
 
 <h1>Form Control</h1>
@@ -350,8 +378,12 @@ $form-&gt;addField(new TextField('bird', 'Bird'), null, 'sky');
 // The name will be name="earth[flower]"
 echo $form-&gt;renderFields(null, 'plant');
 
-// The name will be name="sky[dog]"
+// The name will be name="sky[bird]"
 echo $form-&gt;renderFields(null, 'animal');
+</code></pre>
+
+<pre><code class="html">&lt;input type="text" name="earth[flower]" /&gt;
+&lt;input type="text" name="sky[bird]" /&gt;
 </code></pre>
 
 <p>Now we can use fieldset and group to organize our fields.</p>
@@ -398,6 +430,44 @@ echo $form-&gt;renderFields();
         &lt;/group&gt;
     &lt;/fieldset&gt;
 &lt;/form&gt;
+</code></pre>
+
+<h2>Use Wrapper Methods</h2>
+
+<p>Windwalker 2.1 supports wrapper method to help us organize form fieldset and group.</p>
+
+<pre><code class="php">$form-&gt;wrap('fieldset', null, function(Form $form)
+{
+    $form-&gt;add('name', new TextField)
+        -&gt;label('Name')
+        -&gt;required();
+
+    $form-&gt;add('email', new TextField)
+        -&gt;label('Email')
+        -&gt;required();
+
+    $form-&gt;add('password', new PasswordField)
+        -&gt;label('Password')
+        -&gt;set('autocomplete', 'off');
+
+    $form-&gt;add('password2', new PasswordField)
+        -&gt;label('Confirm Password')
+        -&gt;set('autocomplete', 'off');
+});
+
+// Use group
+use Windwalker\Html\Option;
+
+$form-&gt;wrap('fieldset', 'group', function(Form $form)
+{
+    // State
+    $form-&gt;add('state', new Field\RadioField)
+        -&gt;label('State')
+        -&gt;set('class', 'btn-group')
+        -&gt;set('default', 1)
+        -&gt;addOption(new Option('On', '1'))
+        -&gt;addOption(new Option('Off', '0'));
+});
 </code></pre>
 
 <h1>Attributes of Fields</h1>
