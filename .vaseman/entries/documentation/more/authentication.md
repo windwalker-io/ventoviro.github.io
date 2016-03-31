@@ -6,7 +6,7 @@ title: Authentication
 
 # Introduction
 
-Building user system in Windwalker is very easy, Windwalker includes a simple Authenticate package to handle user auth.
+Building user system in Windwalker is very easy, Windwalker includes a simple Authentication package to handle user auth.
 
 # Default User Package
 
@@ -22,7 +22,7 @@ php bin/console migration migrate -p=wwuser
 ## Get User
 
 ``` php
-use Windwalker\Core\Authenticate\User;
+use Windwalker\Core\Authentication\User;
 
 // Get current logged-in user
 $user = User::get();
@@ -85,11 +85,11 @@ User::delete(array('username' => 'richael3784'));
 
 # Create Your Own User Handler
 
-Windwalker Built-in Authenticate system can register a custom user handler, this user handler should implement the `UserHandlerInterface`:
+Windwalker Built-in Authentication system can register a custom user handler, this user handler should implement the `UserHandlerInterface`:
 
 ``` php
-use Windwalker\Core\Authenticate\UserDataInterface;
-use Windwalker\Core\Authenticate\UserHandlerInterface;
+use Windwalker\Core\Authentication\UserDataInterface;
+use Windwalker\Core\Authentication\UserHandlerInterface;
 
 class MyUserHandler implements UserHandlerInterface
 {
@@ -145,25 +145,25 @@ See: [Default UserHandler](http://goo.gl/P0b2qk) to learn how to write your use 
 Then you may register it before application execute:
 
 ``` php
-use Windwalker\Core\Authenticate\User;
+use Windwalker\Core\Authentication\User;
 
 User::setHandler(new MyUserHandler);
 ```
 
-# Create Authenticate Method
+# Create Authentication Method
 
-Windwalker Authenticate allow developers attach multiple methods to match user(See [Document](https://github.com/ventoviro/windwalker-authenticate)).
+Windwalker Authentication allow developers attach multiple methods to match user(See [Document](https://github.com/ventoviro/windwalker-authentication)).
 
-This image described how authenticate methods working. 
+This image described how authentication methods working.
 
 ![p-2015-01-02-5](https://cloud.githubusercontent.com/assets/1639206/5595002/07d3235a-92a2-11e4-8f1f-5622e2af7254.jpg)
 
 ## Example Method to Find User From Database
 
 ``` php
-use Windwalker\Authenticate\Authenticate;
-use Windwalker\Authenticate\Credential;
-use Windwalker\Authenticate\Method\AbstractMethod;
+use Windwalker\Authentication\Authentication;
+use Windwalker\Authentication\Credential;
+use Windwalker\Authentication\Method\AbstractMethod;
 use Windwalker\Crypt\Password;
 use Windwalker\DataMapper\DataMapper;
 
@@ -174,7 +174,7 @@ class DatabaseMethod extends AbstractMethod
 		// Not allow empty password
 		if (!$credential->username || !$credential->password)
 		{
-			$this->status = Authenticate::EMPTY_CREDENTIAL;
+			$this->status = Authentication::EMPTY_CREDENTIAL;
 
 			return false;
 		}
@@ -187,7 +187,7 @@ class DatabaseMethod extends AbstractMethod
 		// User not found
 		if ($user->isNull())
 		{
-			$this->status = Authenticate::USER_NOT_FOUND;
+			$this->status = Authentication::USER_NOT_FOUND;
 
 			return false;
 		}
@@ -197,7 +197,7 @@ class DatabaseMethod extends AbstractMethod
 
 		if (!$password->verify($credential->password, $user->password))
 		{
-			$this->status = Authenticate::INVALID_CREDENTIAL;
+			$this->status = Authentication::INVALID_CREDENTIAL;
 
 			return false;
 		}
@@ -205,7 +205,7 @@ class DatabaseMethod extends AbstractMethod
 		// Password verify success, return user data.
 		$credential->bind($user);
 
-		$this->status = Authenticate::SUCCESS;
+		$this->status = Authentication::SUCCESS;
 
 		return true;
 	}
@@ -215,7 +215,7 @@ class DatabaseMethod extends AbstractMethod
 Then we must register this method before Application executed:
 
 ``` php
-$auth = \Windwalker\Ioc::getAuthenticate();
+$auth = \Windwalker\Ioc::getAuthentication();
 $auth->addMethod('database', new DatabaseMethod);
 
 // OR

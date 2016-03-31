@@ -85,6 +85,7 @@ Here is an example to create a table:
 
 ``` php
 use Windwalker\Core\Migration\AbstractMigration;
+use Windwalker\Core\Migration\Schema;
 use Windwalker\Database\Schema\Column;
 use Windwalker\Database\Schema\DataType;
 use Windwalker\Database\Schema\Key;
@@ -96,13 +97,29 @@ class InitFlowerTable extends AbstractMigration
 	 */
 	public function up()
 	{
-        $this->db->getTable('flowers')
-            ->addColumn('id', DataType::INTEGER, Column::UNSIGNED, Column::NOT_NULL, '', 'PK', array('primary' => true))
-			->addColumn('name', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Name', array('length' => 255))
-			->addColumn('alias', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Alias')
-			->addIndex(Key::TYPE_INDEX, 'idx_name', 'name', 'Test')
-			->addIndex(Key::TYPE_UNIQUE, 'idx_alias', 'alias', 'Alias Index')
-			->create(true);
+        $this->createTable('flowers', function(Schema $schema)
+        {
+            $sc->addColumn('id',          new Column\Primary)->comment('Primary Key');
+            $sc->addColumn('category_id', new Column\Integer)->comment('Category ID');
+            $sc->addColumn('title',       new Column\Varchar)->allowNull(false)->comment('Title');
+            $sc->addColumn('alias',       new Column\Varchar)->comment('Alias');
+            $sc->addColumn('image',       new Column\Varchar)->comment('Main Image');
+            $sc->addColumn('introtext',   new Column\Longtext)->comment('Intro Text');
+            $sc->addColumn('fulltext',    new Column\Longtext)->comment('Full Text');
+            $sc->addColumn('state',       new Column\Tinyint)->signed(true)->comment('0: unpublished, 1:published');
+            $sc->addColumn('ordering',    new Column\Integer)->comment('Ordering');
+            $sc->addColumn('created',     new Column\Datetime)->comment('Created Date');
+            $sc->addColumn('created_by',  new Column\Integer)->comment('Author');
+            $sc->addColumn('modified',    new Column\Datetime)->comment('Modified Date');
+            $sc->addColumn('modified_by', new Column\Integer)->comment('Modified User');
+            $sc->addColumn('language',    new Column\Char)->length(7)->comment('Language');
+            $sc->addColumn('params',      new Column\Text)->comment('Params');
+
+            $sc->addIndex(Key::TYPE_INDEX, 'idx_articles_category_id', 'category_id');
+            $sc->addIndex(Key::TYPE_INDEX, 'idx_articles_alias', 'alias');
+            $sc->addIndex(Key::TYPE_INDEX, 'idx_articles_language', 'language');
+            $sc->addIndex(Key::TYPE_INDEX, 'idx_articles_created_by', 'created_by');
+        });
 	}
 
 	/**
@@ -110,23 +127,9 @@ class InitFlowerTable extends AbstractMigration
 	 */
 	public function down()
 	{
-        $this->db->getTable('flowers')->drop();
+        $this->drop('flowers');
 	}
 }
-```
-
-We can use more simpler syntax to define table, there is some pre-defined column type object:
-
-``` php
-$this->db->getTable('flowers')
-	->addColumn(new Column\Primary('id'))
-    ->addColumn(new Column\Varchar('name'))
-    ->addColumn(new Column\Char('type'))
-    ->addColumn(new Column\Timestamp('created'))
-    ->addColumn(new Column\Bit('state'))
-    ->addColumn(new Column\Integer('uid'))
-    ->addColumn(new Column\Tinyint('status'))
-    ->create();
 ```
 
 See other schema operations: [Table and Schema](table-schema.html)
@@ -229,6 +232,10 @@ class FlowerSeeder extends \Windwalker\Core\Seeder\AbstractSeeder
 		foreach ($data as $item)
 		{
 			$this->db->getWriter()->insertOne('flowers', $item);
+
+			// Or use DataMapper
+
+			FlowerMapper::createOne($item);
 		}
 	}
 }
@@ -242,7 +249,7 @@ class DatabaseSeeder extends AbstractSeeder
 	public function doExecute()
 	{
 		// Execute sub seeder 
-		$this->execute('FlowerSeeder');
+		$this->execute(new FlowerSeeder);
 
 		$this->command->out('Seeder executed.')->out();
 	}
@@ -250,7 +257,7 @@ class DatabaseSeeder extends AbstractSeeder
 	public function doClean()
 	{
 		// Truncate table
-		$this->db->getTable('flowers')->truncate();
+		$this->truncate('flowers');
 
 		$this->command->out('Database clean.')->out();
 	}
