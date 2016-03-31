@@ -151,6 +151,9 @@
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="">
+                <a href="../../documentation/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/db/datamapper.html">DataMapper</a>
             </li>
                     <li class="">
@@ -790,6 +793,58 @@ class MyValidator extends AbstractValidator
     type="text"
     filter="my"
 /&gt;
+</code></pre>
+
+<h1>Renderer</h1>
+
+<p>We can add our own custom renderer to render form fields. This is a renderer example.</p>
+
+<pre><code class="php">class MyFormRenderer
+{
+    public static function render(AbstractField $field, Form $form)
+    {
+        switch($field-&gt;getType())
+        {
+            case 'text':
+                return static::renderText($field, $form);
+                break;
+
+            case 'list':
+            case 'radio':
+            case 'checkboxes':
+                return static::renderList($field, $form);
+                break;
+
+            // More...
+
+            default:
+                return static::renderInput($field, $form);
+        }
+    }
+
+    // more ...
+}
+</code></pre>
+
+<p>Add renderer callback to Form:</p>
+
+<pre><code class="php">$form-&gt;setFieldRenderHandler(array('MyFormRenderer', 'render'));
+</code></pre>
+
+<p>Or use invokable object.</p>
+
+<pre><code class="php">class MyFormRenderer
+{
+    public function __invoke(AbstractField $field, Form $form)
+    {
+        // ...
+    }
+
+    // more ...
+}
+</code></pre>
+
+<pre><code class="php">$form-&gt;setFieldRenderHandler(new MyFormRenderer);
 </code></pre>
 
                         <hr />

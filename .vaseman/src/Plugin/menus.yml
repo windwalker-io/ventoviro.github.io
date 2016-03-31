@@ -26,6 +26,7 @@ documentation:
     db/read-write: Read and Write
     db/table-schema: Table and Schema
     db/query-builder: Query Builder
+    db/active-record: ActiveRecord
     db/datamapper: DataMapper
     db/migration: Migration And Seeding
   Console:

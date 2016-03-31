@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Class Resolvers | Windwalker - A Modern PHP Framework</title>
+        <title>ActiveRecord | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Class Resolvers | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="ActiveRecord | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
         
@@ -79,7 +79,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Class Resolvers</h1>
+        <h1>ActiveRecord</h1>
     </div>
         </div>
     </section>
@@ -119,7 +119,7 @@
                     <li class="">
                 <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/mvc/class-resolvers.html">Class Resolvers</a>
             </li>
                     <li class="">
@@ -150,7 +150,7 @@
                     <li class="">
                 <a href="../../documentation/db/query-builder.html">Query Builder</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/db/active-record.html">ActiveRecord</a>
             </li>
                     <li class="">
@@ -224,61 +224,332 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>MVC Resolvers</h1>
+                    <h1>Introduction</h1>
 
-<p>Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
-has a <code>flower</code> package and a route with <code>Sakura</code> controller matched:</p>
+<p>Windwalker Record is a simple ActiveRecord to operate database row.</p>
 
-<pre><code class="php">sakura:
-    pattern: /sakura
-    controller: Sakura
+<h2>New a instance.</h2>
+
+<pre><code class="php">use Windwalker\Record\Record;
+
+// Record object for users table
+$user = new Record('users');
 </code></pre>
 
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists, 
-we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
+<p>Or create a class:</p>
 
-<p>Add this line in package <code>initialise()</code> or any position before package execute.</p>
+<pre><code class="php">use Windwalker\Record\Record;
 
-<pre><code class="php">public function initialise()
+class UserRecord extends Record
 {
-    parent::initialise();
+    protected $table = 'users';
+}
 
-    // Register Animal package namespace to find classes
-    $mvcResolver = $this-&gt;getMvcResolver();
+$user = new UserRecord;
+</code></pre>
 
-    $mvcResolver-&gt;addNamespace('Animal', Priority::NORMAL);
+<h2>Load A Record</h2>
 
-    // OR get from controller
-    $mvcResolver = Ioc::get('mvc.resolver');
+<pre><code class="php">$user-&gt;load(25); // Load by primary key
+
+$user-&gt;load(array('alias' =&gt; $alias)); // Load by field name.
+</code></pre>
+
+<p>Check row exists</p>
+
+<pre><code class="php">if (!$user-&gt;load(25))
+{
+    throw new RuntuneException('User not found');
 }
 </code></pre>
 
-<p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
-It is flexible to help us organize our packages.</p>
+<h2>Bind Data</h2>
 
-<h1>View And Model</h1>
+<pre><code class="php">$data = array(
+    'name'     =&gt; 'Sakura',
+    'username' =&gt; 'sakura',
+    'alias'    =&gt; 'sakura',
+    'password' =&gt; '1234',
+    'desc'     =&gt; 'foo bar.'
+);
 
-<p>You can also use the same way to add default View and Model paths.</p>
+$user-&gt;bind($data);
 
-<pre><code class="php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);
+$user-&gt;name; // Sakura
 </code></pre>
 
-<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
-will find from Animal package as default object.</p>
+<p>If we have a table with only 3 columns:</p>
 
-<p>We can also set default path separately.</p>
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>name</td>
+</tr>
+<tr>
+  <td>username</td>
+</tr>
+<tr>
+  <td>password</td>
+</tr>
+</tbody>
+</table>
 
-<pre><code class="php">$mvcResolver = $this-&gt;getMvcResolver();
+<p>The fields which not in this table will be remove after binding data.</p>
 
-$mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
-$mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
+<pre><code class="php">$user-&gt;alias; // null
 </code></pre>
+
+<p>That makes our fields in Record will always same as DB table.</p>
+
+<h2>Store</h2>
+
+<h3>Create A New Row</h3>
+
+<p>If primary not exists, Record will create a new row in table.</p>
+
+<pre><code class="php">$data = array(
+    'name'     =&gt; 'Sakura',
+    'username' =&gt; 'sakura',
+    'password' =&gt; '1234'
+);
+
+$user-&gt;bind($data);
+
+$user-&gt;store();
+
+echo $user-&gt;id; // Auto generated id
+</code></pre>
+
+<h3>Update A Existing Row</h3>
+
+<p>If primary key exists, Record will update it.</p>
+
+<pre><code class="php">$data = array(
+    'id'       =&gt; 30,
+    'name'     =&gt; 'Sakura',
+    'username' =&gt; 'sakura',
+    'password' =&gt; '1234'
+);
+
+$user-&gt;bind($data);
+
+$user-&gt;store();
+</code></pre>
+
+<h2>Check</h2>
+
+<p>Check method help you validate data.</p>
+
+<pre><code class="php">class UserRecord extends Record
+{
+    // ...
+
+    public function check()
+    {
+        if (!$this['name'])
+        {
+            throw new InvalidArgumentException('Name empty.');
+        }
+
+        return true;
+    }
+}
+</code></pre>
+
+<p>Then we call <code>check()</code> before <code>store()</code>.</p>
+
+<pre><code class="php">$user-&gt;bind($data);
+
+$user-&gt;check();
+
+$user-&gt;store();
+</code></pre>
+
+<h2>Delete</h2>
+
+<pre><code class="php">$user-&gt;load(30);
+$result = $user-&gt;delete(); // boolean
+
+// OR delete by conditions
+
+$result = $user-&gt;delete(30); // boolean
+$result = $user-&gt;delete(array('username' =&gt; $username)); // boolean
+</code></pre>
+
+<h1>NestedRecord</h1>
+
+<p>NestedRecord is a tool help us handle <a href="http://en.wikipedia.org/wiki/Nested_set_model">Nested Set Model</a>.</p>
+
+<h2>Create Table</h2>
+
+<p>Name: <code>categories</code></p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Type</th>
+  <th>Description</th>
+  <th>Need For NestedRecord</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>id</td>
+  <td>int</td>
+  <td>Primary Key</td>
+  <td></td>
+</tr>
+<tr>
+  <td>parent_id</td>
+  <td>int</td>
+  <td>ID of Parent Node</td>
+  <td>V</td>
+</tr>
+<tr>
+  <td>title</td>
+  <td>varchar</td>
+  <td>Category title</td>
+  <td></td>
+</tr>
+<tr>
+  <td>path</td>
+  <td>varchar</td>
+  <td>Node path</td>
+  <td>V</td>
+</tr>
+<tr>
+  <td>lft</td>
+  <td>int</td>
+  <td>Left key</td>
+  <td>V</td>
+</tr>
+<tr>
+  <td>rgt</td>
+  <td>int</td>
+  <td>Right key</td>
+  <td>V</td>
+</tr>
+<tr>
+  <td>level</td>
+  <td>int</td>
+  <td>Node level</td>
+  <td>V</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Initialise</h2>
+
+<p>Every nested set should have a root node.</p>
+
+<pre><code class="php">$cat = new NestedRecord('categories');
+
+$cat-&gt;createRoot();
+</code></pre>
+
+<p>NOTE: The root node id is <code>1</code>.</p>
+
+<h2>Create Node</h2>
+
+<p>Set as first child of ROOT</p>
+
+<pre><code class="php">$cat-&gt;bind($data)
+    -&gt;setLocation(1, NestedRecord::LOCATION_FIRST_CHILD)
+    -&gt;store();
+</code></pre>
+
+<p>Now we will have a new node and it id is <code>2</code>. Create a new node as last child of <code>2</code>.</p>
+
+<pre><code class="php">$cat-&gt;bind($data)
+    -&gt;setLocation(2, NestedRecord::LOCATION_LAST_CHILD)
+    -&gt;store();
+</code></pre>
+
+<p>Available positions:</p>
+
+<ul>
+<li>LOCATION_FIRST_CHILD</li>
+<li>LOCATION_LAST_CHILD</li>
+<li>LOCATION_BEFORE</li>
+<li>LOCATION_AFTER</li>
+</ul>
+
+<h2>Move Node</h2>
+
+<h3>Re Ordering</h3>
+
+<pre><code class="php">$cat-&gt;move(1); // move up
+$cat-&gt;move(-1); // Move down
+</code></pre>
+
+<h3>Move To Other Node</h3>
+
+<p>Move to node <code>3</code> as last child.</p>
+
+<pre><code class="php">$cat-&gt;moveByReference(3, NestedRecord::LOCATION_LAST_CHILD);
+</code></pre>
+
+<h2>Rebuild</h2>
+
+<p>If a tree was not correct, using rebuild to reset all <code>lft</code>, <code>rgt</code> of this branch.</p>
+
+<pre><code class="php">$cat-&gt;load(5);
+$cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
+</code></pre>
+
+<h2>getPath</h2>
+
+<p>Method to get an array of nodes from a given node to its root.</p>
+
+<pre><code class="php">$path = $cat-&gt;getPath();
+</code></pre>
+
+<h2>getTree</h2>
+
+<p>Method to get a node and all its child nodes.</p>
+
+<pre><code class="php">$records = $cat-&gt;getTree();
+</code></pre>
+
+<h1>Hooks</h1>
+
+<p><code>Record</code> object supports hooks to add logic before or after any data operation.</p>
+
+<pre><code class="php">class ArticleRecord extends Record
+{
+    protected $table = 'articles';
+
+    public function onAfterLoad(Event $event)
+    {
+        // Also load tags
+        $this-&gt;tags = TagHelper::getAllTags();
+    }
+}
+</code></pre>
+
+<p>Available events:</p>
+
+<ul>
+<li>onBeforeLoad</li>
+<li>onAfterLoad</li>
+<li>onBeforeStore</li>
+<li>onAfterStore</li>
+<li>onBeforeDelete</li>
+<li>onAfterDelete</li>
+</ul>
+
+<p>See <a href="../more/events.html">Events</a></p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/mvc/class-resolvers.md">improve</a> this document.
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/db/active-record.md">improve</a> this document.
     </p>
                 </article>
             </div>

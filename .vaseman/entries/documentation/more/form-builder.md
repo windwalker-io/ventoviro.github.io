@@ -560,3 +560,58 @@ For XML
 />
 ```
 
+# Renderer
+
+We can add our own custom renderer to render form fields. This is a renderer example.
+
+``` php
+class MyFormRenderer
+{
+    public static function render(AbstractField $field, Form $form)
+    {
+        switch($field->getType())
+        {
+            case 'text':
+                return static::renderText($field, $form);
+                break;
+                
+            case 'list':
+            case 'radio':
+            case 'checkboxes':
+                return static::renderList($field, $form);
+                break;
+                
+            // More...
+                
+            default:
+                return static::renderInput($field, $form);
+        }
+    }
+    
+    // more ...
+}
+```
+
+Add renderer callback to Form:
+
+``` php
+$form->setFieldRenderHandler(array('MyFormRenderer', 'render'));
+```
+
+Or use invokable object.
+
+``` php
+class MyFormRenderer
+{
+    public function __invoke(AbstractField $field, Form $form)
+    {
+        // ...
+    }
+    
+    // more ...
+}
+```
+
+``` php
+$form->setFieldRenderHandler(new MyFormRenderer);
+```
