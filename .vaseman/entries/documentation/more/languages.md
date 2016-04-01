@@ -32,7 +32,7 @@ use Windwalker\Core\Language\Translator;
 Translator::loadFile('main');
 
 // Translate
-echo Language::translate('windwalker.hello.message');
+echo Translator::translate('windwalker.hello.message');
 ```
 
 Add language:
