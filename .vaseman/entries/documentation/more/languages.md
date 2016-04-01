@@ -26,13 +26,13 @@ Format is the default file format, but we can still load other format in the run
 Windwalker language object has a Facade as proxy, just call this static class to use.
 
 ``` php
-use Windwalker\Core\Language\Language;
+use Windwalker\Core\Language\Translator;
 
 // Load en-GB/main.ini file first
-Language::load('main');
+Translator::loadFile('main');
 
 // Translate
-echo Language::translate('WINDWALKER_HELLO_MESSAGE');
+echo Language::translate('windwalker.hello.message');
 ```
 
 Add language:
@@ -40,7 +40,7 @@ Add language:
 ``` ini
 ; resources/languages/en-GB/main.ini
 
-WINDWALKER_HELLO_MESSAGE="Hello World"
+windwalker.hello.message="Hello World"
 ```
 
 The result will be:
@@ -52,7 +52,7 @@ Hello World
 There is a short alias of `translate()`:
 
 ``` php
-echo Language::_('WINDWALKER_HELLO_MESSAGE');
+echo Translator::translate('windwalker.hello.message');
 ```
 
 # Locale and Default Languages
@@ -62,30 +62,30 @@ We set locale to `zh-TW` and default to `en-GB`, then create ini language files:
 ``` ini
 ; resources/languages/en-GB/flower.ini
 
-WINDWALKER_LANGUAGE_TEST_FLOWER="Flower"
-WINDWALKER_LANGUAGE_TEST_SAKURA="Sakura"
+windwalker.language.test.flower="Flower"
+windwalker.language.test.sakura="Sakura"
 ```
 
 ``` ini
 ; resources/languages/zh-TW/flower.ini
 
-WINDWALKER_LANGUAGE_TEST_FLOWER="花"
+windwalker.language.test.flower="花"
 ```
 
 And load them.
 
 ``` php
-Language::load('flower');
+Translator::loadFile('flower');
 ```
 
 Translate string:
 
 ``` php
 // zh-TW has this language key, so it will be translated
-Language::translate('WINDWALKER_LANGUAGE_TEST_FLOWER'); // 花
+Translator::translate('windwalker.language.test.flower'); // 花
 
 // This key not exists in zh-TW, use en-GB as default
-Language::translate('WINDWALKER_LANGUAGE_TEST_SAKURA'); // Sakura
+Translator::translate('windwalker.language.test.sakura'); // Sakura
 ```
 
 ## Key Format
@@ -95,11 +95,11 @@ All language key will be normalised to lowercase and separated by dot (`.`).
 These cases all get same result:
 
 ``` php
-Language::translate('WINDWALKER_LANGUAGE_TEST_FLOWER'); // 花
-Language::translate('WINDWALKER_language_TEST FLOWER'); // 花
-Language::translate('windwalker.language.test.flower'); // 花
-Language::translate('Windwalker Language Test Flower'); // 花
-Language::translate('Windwalker Language, Test Flower~~~!'); // 花
+Translator::translate('WINDWALKER_LANGUAGE_TEST_FLOWER'); // 花
+Translator::translate('WINDWALKER_language_TEST FLOWER'); // 花
+Translator::translate('windwalker.language.test.flower'); // 花
+Translator::translate('Windwalker Language Test Flower'); // 花
+Translator::translate('Windwalker Language, Test Flower~~~!'); // 花
 
 // All keys will be normalise to 'windwalker.language.test.flower'
 ```
@@ -109,11 +109,11 @@ Language::translate('Windwalker Language, Test Flower~~~!'); // 花
 Use `sprintf()` method.
 
 ``` ini
-WINDWALKER_LANGUAGE_TEST_BEAUTIFUL_FLOWER="The %s is beautiful~~~!!!"
+windwalker.language.test.beautiful.flower="The %s is beautiful~~~!!!"
 ```
 
 ``` php
-Language::sprintf('WINDWALKER_LANGUAGE_TEST_BEAUTIFUL_FLOWER', 'Sunflower');
+Translator::sprintf('windwalker.language.test.beautiful.flower', 'Sunflower');
 
 // Result: The Sunflower is beautiful~~~!!!
 ```
@@ -147,17 +147,17 @@ class EnGBLocalise implements LocaliseInterface
 And prepare this language keys.
 
 ``` ini
-WINDWALKER_LANGUAGE_TEST_SUNFLOWER="Sunflower"
-WINDWALKER_LANGUAGE_TEST_SUNFLOWER_0="No Sunflower"
-WINDWALKER_LANGUAGE_TEST_SUNFLOWER_MORE="Sunflowers"
+windwalker.language.test.sunflower="Sunflower"
+windwalker.language.test.sunflower="No Sunflower"
+windwalker.language.test.sunflower="Sunflowers"
 ```
 
 Now we can translate plural string by `plural()`.
 
 ``` php
-Language::plural('Windwalker Language Test Sunflower', 0); // No Sunflower
-Language::plural('Windwalker Language Test Sunflower', 1); // Sunflower
-Language::plural('Windwalker Language Test Sunflower', 2); // Sunflowers
+Translator::plural('windwalker.language.test.sunflower', 0); // No Sunflower
+Translator::plural('windwalker.language.test.sunflower', 1); // Sunflower
+Translator::plural('windwalker.language.test.sunflower', 2); // Sunflowers
 ```
 
 # If Language Key Not Exists
@@ -165,9 +165,9 @@ Language::plural('Windwalker Language Test Sunflower', 2); // Sunflowers
 Language object will return raw string which we send into it.
 
 ``` php
-echo Language::translate('A Not Translated String');
+echo Translator::translate('A Not Translated String');
 echo "\n";
-echo Language::translate('A_NOT_TRANSLATED_STRING');
+echo Translator::translate('A_NOT_TRANSLATED_STRING');
 ```
 
 Result:
@@ -193,8 +193,8 @@ windwalker:
 ```
 
 ``` php
-Language::translate('windwalker.language.test.sakura'); // Sakura
-Language::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
+Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 ```
 
 ## Json
@@ -213,8 +213,8 @@ Language::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 The usage same as yaml.
 
 ``` php
-Language::translate('windwalker.language.test.sakura'); // Sakura
-Language::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
+Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 ```
 
 ## PHP
@@ -236,8 +236,8 @@ The usage same as yaml.
 
 
 ``` php
-Language::translate('windwalker.language.test.sakura'); // Sakura
-Language::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
+Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 ```
 
 > NOTE: We'll support to load different formats in the runtime soon.
@@ -250,14 +250,14 @@ So we can load package languages by second argument:
 
 ``` php
 // Load en-GB/sakura.ini and zh-TW/sakura.ini from Flower package
-Language::load('sakura', 'flower');
+Translator::loadFile('sakura', 'ini', 'flower');
 ```
 
 # Used Keys
 
 ``` php
 // Get keys which have been used.
-Language::getUsed();
+Translator::getUsed();
 ```
 
 # Debugging
@@ -265,17 +265,15 @@ Language::getUsed();
 ## Debug Mode
  
 ``` php
-Language::setDebug(true);
+Translator::setDebug(true);
 ```
 
 We can get non-translated keys in debug mode.
 
 ``` php
-echo Language::translate('A Translation Exists String');
+echo Translator::translate('A Translation Exists String');
 echo "\n";
-echo Language::translate('A Not Translated String');
-
-
+echo Translator::translate('A Not Translated String');
 ```
 
 And the output will be:
@@ -290,11 +288,11 @@ And the output will be:
 Orphans is the language string you used but haven't translated.
 
 ``` php
-Language::setDebug(true);
+Translator::setDebug(true);
 
 // Run your applications
 
-$orphans = Language::getOrphan(); // Array([0] => A Not Translated String);
+$orphans = Translator::getOrphans(); // Array([0] => A Not Translated String);
 ```
 
 ## Check Loaded Languages
@@ -303,4 +301,22 @@ $orphans = Language::getOrphan(); // Array([0] => A Not Translated String);
 $config = \Windwalker\Ioc::getConfig();
 
 $config->get('language.loaded');
+```
+
+# Translate in View Template
+
+Blade
+
+``` php
+@translate('windwalker.language.test.flower')
+@sprintf('windwalker.language.test.flower', 'foo', 'bar')
+@plural('windwalker.language.test.flower', 5)
+```
+
+Twig
+
+``` php
+{{ 'windwalker.language.test.flower' | lang }}
+{{ 'windwalker.language.test.flower' | sprintf('foo', 'bar') }}
+{{ 'windwalker.language.test.flower' | plural(5) }}
 ```
