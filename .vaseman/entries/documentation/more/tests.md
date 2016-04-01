@@ -49,3 +49,63 @@ Change the `testsuite` to:
 Then we can write all test case in `/src/Flower/Test`.
 
 More about how to writing unit test, please see: [PHPUnit Tutorial](https://phpunit.de/getting-started.html)
+
+# Test Cases
+
+Windwlaker Provides some useful TestCase to extends asserts.
+
+## `AbstractBaseTestCase`
+
+``` php
+use Windwalker\Test\TestCase\AbstractBaseTestCase;
+
+class ModelTest extends AbstractBaseTestCase
+{
+	public function testFoo()
+	{
+	    // Minify string to one line and remove extra spaces.
+		$this->assertStringDataEquals('string data', "string  \n  data");
+
+        // Compare string with LF or CRLF
+		$this->assertStringSafeEquals("string \r\ndata", "string \ndata");
+
+        // Match exception type
+		$this->assertExpectedException(function()
+		{
+			throw new \RuntimeException;
+		}, new \RuntimeException /* Or use `RuntimeException` string */);
+	}
+}
+```
+
+## `AbstractDomTestCase`
+
+``` php
+class ModelTest extends AbstractDomTestCase
+{
+
+	public function testFoo()
+	{
+		$dom = <<<DOM
+<root>
+	<node foo="bar" />
+</root>
+DOM;
+
+        // Will minify all string and compare them.
+		$this->assertDomStringEqualsDomString('<root><node foo="bar" /></root>', $dom);
+
+        // Will normalize all string and compare them
+		$this->assertDomFormatEquals('<root><node foo="bar" /></root>', $dom);
+
+		$html = <<<HTML
+<div>
+	<input type="text" value="" />
+</div>
+HTML;
+
+        // Will normalize all string and compare them
+		$this->assertHtmlFormatEquals('<div><input type="text" value="" /></div>', $html);
+	}
+}
+```

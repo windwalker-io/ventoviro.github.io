@@ -274,6 +274,64 @@
 
 <p>More about how to writing unit test, please see: <a href="https://phpunit.de/getting-started.html">PHPUnit Tutorial</a></p>
 
+<h1>Test Cases</h1>
+
+<p>Windwlaker Provides some useful TestCase to extends asserts.</p>
+
+<h2><code>AbstractBaseTestCase</code></h2>
+
+<pre><code class="php">use Windwalker\Test\TestCase\AbstractBaseTestCase;
+
+class ModelTest extends AbstractBaseTestCase
+{
+    public function testFoo()
+    {
+        // Minify string to one line and remove extra spaces.
+        $this-&gt;assertStringDataEquals('string data', "string  \n  data");
+
+        // Compare string with LF or CRLF
+        $this-&gt;assertStringSafeEquals("string \r\ndata", "string \ndata");
+
+        // Match exception type
+        $this-&gt;assertExpectedException(function()
+        {
+            throw new \RuntimeException;
+        }, new \RuntimeException /* Or use `RuntimeException` string */);
+    }
+}
+</code></pre>
+
+<h2><code>AbstractDomTestCase</code></h2>
+
+<pre><code class="php">class ModelTest extends AbstractDomTestCase
+{
+
+    public function testFoo()
+    {
+        $dom = &lt;&lt;&lt;DOM
+&lt;root&gt;
+    &lt;node foo="bar" /&gt;
+&lt;/root&gt;
+DOM;
+
+        // Will minify all string and compare them.
+        $this-&gt;assertDomStringEqualsDomString('&lt;root&gt;&lt;node foo="bar" /&gt;&lt;/root&gt;', $dom);
+
+        // Will normalize all string and compare them
+        $this-&gt;assertDomFormatEquals('&lt;root&gt;&lt;node foo="bar" /&gt;&lt;/root&gt;', $dom);
+
+        $html = &lt;&lt;&lt;HTML
+&lt;div&gt;
+    &lt;input type="text" value="" /&gt;
+&lt;/div&gt;
+HTML;
+
+        // Will normalize all string and compare them
+        $this-&gt;assertHtmlFormatEquals('&lt;div&gt;&lt;input type="text" value="" /&gt;&lt;/div&gt;', $html);
+    }
+}
+</code></pre>
+
                         <hr />
 
     <p class="uk-text-center">
