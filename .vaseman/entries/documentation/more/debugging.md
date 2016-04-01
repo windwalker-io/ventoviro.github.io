@@ -67,3 +67,71 @@ DebuggerHelper::addCustomData('My data', "It's not who I am underneath, but it's
 Go to system page.
 
 ![system](https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg)
+
+# Logging
+
+Windwalker includes [Monolog](https://github.com/Seldaek/monolog) to help us log debugging information.
+
+``` php
+use Windwalker\Core\Logger\Logger;
+
+Logger::log('flower', Logger::INFO, 'log text');
+```
+
+The first argument is category & log file name, this will create a file at `logs/flower.log` with one line:
+
+```
+# logs/flower.log
+
+[2016-04-01 10:17:07] flower.INFO: log text [] []
+```
+
+Add some data at line last.
+
+``` php
+Logger::log('flower', Logger::INFO, 'log text', array('foo' => 'bar'));
+```
+
+```
+# logs/flower.log
+
+[2016-04-01 10:18:42] flower.INFO: log text {"foo":"bar"} []
+```
+
+We can use proxy methods to log data:
+
+``` php
+Logger::debug('category', 'log text');
+Logger::info('category', 'log text');
+Logger::notice('category', 'log text');
+Logger::warning('category', 'log text');
+Logger::error('category', 'log text');
+Logger::critical('category', 'log text');
+Logger::alert('category', 'log text');
+Logger::emergency('category', 'log text');
+```
+
+# Log Levels
+
+The log levels are described by [RFC5424](http://tools.ietf.org/html/rfc5424)
+
+| Name | Code | Description |
+| ---- | ---- | ----------- |
+| DEBUG | 100 | Detailed debug information. |
+| INFO | 200 | Interesting events. Examples: User logs in, SQL logs. |
+| NOTICE | 250 | Normal but significant events. |
+| WARNING | 300 | Exceptional occurrences that are not errors. Examples: Use of deprecated APIs, poor use of an API, undesirable things that are not necessarily wrong. |
+| ERROR | 400 | Runtime errors that do not require immediate action but should typically be logged and monitored. |
+| CRITICAL | 500 | Critical conditions. Example: Application component unavailable, unexpected exception. |
+| ALERT | 550 | Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up. |
+| EMERGENCY | 600 | Emergency: system is unusable. |
+
+You can create a category with level code, all levels below this level will not logged.
+
+``` php
+Logger::createCategory('sakura', Logger::ERROR);
+
+Logger::debug('sakura', 'log text'); // This won't log
+
+Logger::alert('sakura', 'log text'); // This will log
+```

@@ -292,6 +292,109 @@ class AjaxController extends Controller
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg" alt="system" /></p>
 
+<h1>Logging</h1>
+
+<p>Windwalker includes <a href="https://github.com/Seldaek/monolog">Monolog</a> to help us log debugging information.</p>
+
+<pre><code class="php">use Windwalker\Core\Logger\Logger;
+
+Logger::log('flower', Logger::INFO, 'log text');
+</code></pre>
+
+<p>The first argument is category &amp; log file name, this will create a file at <code>logs/flower.log</code> with one line:</p>
+
+<pre><code># logs/flower.log
+
+[2016-04-01 10:17:07] flower.INFO: log text [] []
+</code></pre>
+
+<p>Add some data at line last.</p>
+
+<pre><code class="php">Logger::log('flower', Logger::INFO, 'log text', array('foo' =&gt; 'bar'));
+</code></pre>
+
+<pre><code># logs/flower.log
+
+[2016-04-01 10:18:42] flower.INFO: log text {"foo":"bar"} []
+</code></pre>
+
+<p>We can use proxy methods to log data:</p>
+
+<pre><code class="php">Logger::debug('category', 'log text');
+Logger::info('category', 'log text');
+Logger::notice('category', 'log text');
+Logger::warning('category', 'log text');
+Logger::error('category', 'log text');
+Logger::critical('category', 'log text');
+Logger::alert('category', 'log text');
+Logger::emergency('category', 'log text');
+</code></pre>
+
+<h1>Log Levels</h1>
+
+<p>The log levels are described by <a href="http://tools.ietf.org/html/rfc5424">RFC5424</a></p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Code</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>DEBUG</td>
+  <td>100</td>
+  <td>Detailed debug information.</td>
+</tr>
+<tr>
+  <td>INFO</td>
+  <td>200</td>
+  <td>Interesting events. Examples: User logs in, SQL logs.</td>
+</tr>
+<tr>
+  <td>NOTICE</td>
+  <td>250</td>
+  <td>Normal but significant events.</td>
+</tr>
+<tr>
+  <td>WARNING</td>
+  <td>300</td>
+  <td>Exceptional occurrences that are not errors. Examples: Use of deprecated APIs, poor use of an API, undesirable things that are not necessarily wrong.</td>
+</tr>
+<tr>
+  <td>ERROR</td>
+  <td>400</td>
+  <td>Runtime errors that do not require immediate action but should typically be logged and monitored.</td>
+</tr>
+<tr>
+  <td>CRITICAL</td>
+  <td>500</td>
+  <td>Critical conditions. Example: Application component unavailable, unexpected exception.</td>
+</tr>
+<tr>
+  <td>ALERT</td>
+  <td>550</td>
+  <td>Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up.</td>
+</tr>
+<tr>
+  <td>EMERGENCY</td>
+  <td>600</td>
+  <td>Emergency: system is unusable.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can create a category with level code, all levels below this level will not logged.</p>
+
+<pre><code class="php">Logger::createCategory('sakura', Logger::ERROR);
+
+Logger::debug('sakura', 'log text'); // This won't log
+
+Logger::alert('sakura', 'log text'); // This will log
+</code></pre>
+
                         <hr />
 
     <p class="uk-text-center">

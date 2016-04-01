@@ -85,7 +85,7 @@ you need to add priority to set the ordering of this path.
 Add your path to global RendererHelper that Widget will always contain this path:
 
 ``` php
-\Windwalker\Core\Renderer\RendererHelper::addPath('/my/widget/path', Priority::ABOVE_NORMAL);
+\Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/widget/path', Priority::ABOVE_NORMAL);
 ```
 
 # Override Built-in Widgets Templates
@@ -119,4 +119,14 @@ $news = new BladeWidget('sidebar.news');
 $news = new TwigWidget('sidebar.news');
 ```
 
-> See also: [Blade Templating](http://laravel.com/docs/4.2/templates) and [Twig Documentation](http://twig.sensiolabs.org/documentation)
+> See also: [Blade Templating](https://laravel.com/docs/master/blade) and [Twig Documentation](http://twig.sensiolabs.org/documentation)
+
+# WidgetHelper
+
+Use WidgetHelper to quickly render page.
+
+``` php
+use Windwalker\Core\Widget\WidgetHelper;
+
+$html = WidgetHelper::render('foo.bar', $data, WidgetHelper::ENGINE_BLADE);
+```
