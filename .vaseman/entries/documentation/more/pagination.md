@@ -173,7 +173,7 @@ You can use this array to build your pagination HTML.
 The first argument (route resources name) is required because pagination use `Router` to get page url.
 
 ``` php
-echo $pagination->render('flower:sakuras');
+echo $pagination->render('flower@sakuras');
 ```
 
 ## Use Your Own Template
@@ -183,7 +183,7 @@ Add your template file in `/templates/windwalker/pagination/default.php`, Windwa
 Or use second argument to point to other template:
 
 ``` php
-echo $pagination->render('flower:sakuras', 'mywidget.pagination');
+echo $pagination->render('flower@sakuras', 'mywidget.pagination');
 ```
 
 See also: [Widget and Renderer](widget-renderer.html)
