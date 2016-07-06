@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 composer create-project asika/vaseman vaseman 2.*
 php vaseman/bin/vaseman up
 rm -rf vaseman
