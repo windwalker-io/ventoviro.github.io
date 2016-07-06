@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-composer create-project asika/vaseman vaseman 2.*
-php vaseman/bin/vaseman up
-rm -rf vaseman
+wget https://github.com/asika32764/vaseman/releases/download/2.0.7/vaseman.phar
+php vaseman.phar up
+rm -rf vaseman.phar
