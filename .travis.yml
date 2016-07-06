@@ -6,5 +6,5 @@ php:
 script: bash ./deploy.sh
 env:
   global:
-  - ENCRYPTION_LABEL: "9db503e31020"
+  - ENCRYPTION_LABEL: "19e9267fb6fb"
   - COMMIT_AUTHOR_EMAIL: "asika32764@gmail.com"
