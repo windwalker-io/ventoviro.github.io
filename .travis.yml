@@ -1,5 +1,7 @@
 language: php
 
+sudo: true
+
 php:
     - 5.6
 
@@ -7,4 +9,4 @@ script: bash ./deploy.sh
 env:
   global:
   - ENCRYPTION_LABEL: "<.... encryption label from previous step ....>"
-  - COMMIT_AUTHOR_EMAIL: "you@example.com"
+  - COMMIT_AUTHOR_EMAIL: "asika32764@gmail.com"
