@@ -8,5 +8,5 @@ php:
 script: bash ./deploy.sh
 env:
   global:
-  - ENCRYPTION_LABEL: "<.... encryption label from previous step ....>"
+  - ENCRYPTION_LABEL: "9db503e31020"
   - COMMIT_AUTHOR_EMAIL: "asika32764@gmail.com"
