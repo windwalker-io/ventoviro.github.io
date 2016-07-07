@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>ActiveRecord | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="ActiveRecord | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+        
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../media/js/highlight/highlight.yaml.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../documentation/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>ActiveRecord</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+        <li class="uk-nav-header">Start</li>
+
+                    <li class="">
+                <a href="../../documentation/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+
+                    <li class="">
+                <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+
+                    <li class="">
+                <a href="../../documentation/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../documentation/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+
+                    <li class="">
+                <a href="../../documentation/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+
+                    <li class="">
+                <a href="../../documentation/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/debugging.html">Debugging</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>Introduction</h1>
+
+<p>Windwalker Record is a simple ActiveRecord to operate database row.</p>
+
+<h2>New a instance.</h2>
+
+<pre><code class="php">use Windwalker\Record\Record;
+
+// Record object for users table
+$user = new Record('users');
+</code></pre>
+
+<p>Or create a class:</p>
+
+<pre><code class="php">use Windwalker\Record\Record;
+
+class UserRecord extends Record
+{
+    protected $table = 'users';
+}
+
+$user = new UserRecord;
+</code></pre>
+
+<h2>Load A Record</h2>
+
+<pre><code class="php">$user-&gt;load(25); // Load by primary key
+
+$user-&gt;load(array('alias' =&gt; $alias)); // Load by field name.
+</code></pre>
+
+<p>Check row exists</p>
+
+<pre><code class="php">if (!$user-&gt;load(25))
+{
+    throw new RuntuneException('User not found');
+}
+</code></pre>
+
+<h2>Bind Data</h2>
+
+<pre><code class="php">$data = array(
+    'name'     =&gt; 'Sakura',
+    'username' =&gt; 'sakura',
+    'alias'    =&gt; 'sakura',
+    'password' =&gt; '1234',
+    'desc'     =&gt; 'foo bar.'
+);
+
+$user-&gt;bind($data);
+
+$user-&gt;name; // Sakura
+</code></pre>
+
+<p>If we have a table with only 3 columns:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>name</td>
+</tr>
+<tr>
+  <td>username</td>
+</tr>
+<tr>
+  <td>password</td>
+</tr>
+</tbody>
+</table>
+
+<p>The fields which not in this table will be remove after binding data.</p>
+
+<pre><code class="php">$user-&gt;alias; // null
+</code></pre>
+
+<p>That makes our fields in Record will always same as DB table.</p>
+
+<h2>Store</h2>
+
+<h3>Create A New Row</h3>
+
+<p>If primary not exists, Record will create a new row in table.</p>
+
+<pre><code class="php">$data = array(
+    'name'     =&gt; 'Sakura',
+    'username' =&gt; 'sakura',
+    'password' =&gt; '1234'
+);
+
+$user-&gt;bind($data);
+
+$user-&gt;store();
+
+echo $user-&gt;id; // Auto generated id
+</code></pre>
+
+<h3>Update A Existing Row</h3>
+
+<p>If primary key exists, Record will update it.</p>
+
+<pre><code class="php">$data = array(
+    'id'       =&gt; 30,
+    'name'     =&gt; 'Sakura',
+    'username' =&gt; 'sakura',
+    'password' =&gt; '1234'
+);
+
+$user-&gt;bind($data);
+
+$user-&gt;store();
+</code></pre>
+
+<h2>Check</h2>
+
+<p>Check method help you validate data.</p>
+
+<pre><code class="php">class UserRecord extends Record
+{
+    // ...
+
+    public function check()
+    {
+        if (!$this['name'])
+        {
+            throw new InvalidArgumentException('Name empty.');
+        }
+
+        return true;
+    }
+}
+</code></pre>
+
+<p>Then we call <code>check()</code> before <code>store()</code>.</p>
+
+<pre><code class="php">$user-&gt;bind($data);
+
+$user-&gt;check();
+
+$user-&gt;store();
+</code></pre>
+
+<h2>Delete</h2>
+
+<pre><code class="php">$user-&gt;load(30);
+$result = $user-&gt;delete(); // boolean
+
+// OR delete by conditions
+
+$result = $user-&gt;delete(30); // boolean
+$result = $user-&gt;delete(array('username' =&gt; $username)); // boolean
+</code></pre>
+
+<h1>NestedRecord</h1>
+
+<p>NestedRecord is a tool help us handle <a href="http://en.wikipedia.org/wiki/Nested_set_model">Nested Set Model</a>.</p>
+
+<h2>Create Table</h2>
+
+<p>Name: <code>categories</code></p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Type</th>
+  <th>Description</th>
+  <th>Need For NestedRecord</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>id</td>
+  <td>int</td>
+  <td>Primary Key</td>
+  <td></td>
+</tr>
+<tr>
+  <td>parent_id</td>
+  <td>int</td>
+  <td>ID of Parent Node</td>
+  <td>V</td>
+</tr>
+<tr>
+  <td>title</td>
+  <td>varchar</td>
+  <td>Category title</td>
+  <td></td>
+</tr>
+<tr>
+  <td>path</td>
+  <td>varchar</td>
+  <td>Node path</td>
+  <td>V</td>
+</tr>
+<tr>
+  <td>lft</td>
+  <td>int</td>
+  <td>Left key</td>
+  <td>V</td>
+</tr>
+<tr>
+  <td>rgt</td>
+  <td>int</td>
+  <td>Right key</td>
+  <td>V</td>
+</tr>
+<tr>
+  <td>level</td>
+  <td>int</td>
+  <td>Node level</td>
+  <td>V</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Initialise</h2>
+
+<p>Every nested set should have a root node.</p>
+
+<pre><code class="php">$cat = new NestedRecord('categories');
+
+$cat-&gt;createRoot();
+</code></pre>
+
+<p>NOTE: The root node id is <code>1</code>.</p>
+
+<h2>Create Node</h2>
+
+<p>Set as first child of ROOT</p>
+
+<pre><code class="php">$cat-&gt;bind($data)
+    -&gt;setLocation(1, NestedRecord::LOCATION_FIRST_CHILD)
+    -&gt;store();
+</code></pre>
+
+<p>Now we will have a new node and it id is <code>2</code>. Create a new node as last child of <code>2</code>.</p>
+
+<pre><code class="php">$cat-&gt;bind($data)
+    -&gt;setLocation(2, NestedRecord::LOCATION_LAST_CHILD)
+    -&gt;store();
+</code></pre>
+
+<p>Available positions:</p>
+
+<ul>
+<li>LOCATION_FIRST_CHILD</li>
+<li>LOCATION_LAST_CHILD</li>
+<li>LOCATION_BEFORE</li>
+<li>LOCATION_AFTER</li>
+</ul>
+
+<h2>Move Node</h2>
+
+<h3>Re Ordering</h3>
+
+<pre><code class="php">$cat-&gt;move(1); // move up
+$cat-&gt;move(-1); // Move down
+</code></pre>
+
+<h3>Move To Other Node</h3>
+
+<p>Move to node <code>3</code> as last child.</p>
+
+<pre><code class="php">$cat-&gt;moveByReference(3, NestedRecord::LOCATION_LAST_CHILD);
+</code></pre>
+
+<h2>Rebuild</h2>
+
+<p>If a tree was not correct, using rebuild to reset all <code>lft</code>, <code>rgt</code> of this branch.</p>
+
+<pre><code class="php">$cat-&gt;load(5);
+$cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
+</code></pre>
+
+<h2>getPath</h2>
+
+<p>Method to get an array of nodes from a given node to its root.</p>
+
+<pre><code class="php">$path = $cat-&gt;getPath();
+</code></pre>
+
+<h2>getTree</h2>
+
+<p>Method to get a node and all its child nodes.</p>
+
+<pre><code class="php">$records = $cat-&gt;getTree();
+</code></pre>
+
+<h1>Hooks</h1>
+
+<p><code>Record</code> object supports hooks to add logic before or after any data operation.</p>
+
+<pre><code class="php">class ArticleRecord extends Record
+{
+    protected $table = 'articles';
+
+    public function onAfterLoad(Event $event)
+    {
+        // Also load tags
+        $this-&gt;tags = TagHelper::getAllTags();
+    }
+}
+</code></pre>
+
+<p>Available events:</p>
+
+<ul>
+<li>onBeforeLoad</li>
+<li>onAfterLoad</li>
+<li>onBeforeStore</li>
+<li>onAfterStore</li>
+<li>onBeforeDelete</li>
+<li>onAfterDelete</li>
+</ul>
+
+<p>See <a href="../more/events.html">Events</a></p>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/db/active-record.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>
