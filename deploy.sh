@@ -16,12 +16,15 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]
     exit 0
 fi
 
+echo "Branch $TRAVIS_BRANCH"
+
 # Save some useful information
 REPO=`git config remote.origin.url`
 SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
 SHA=`git rev-parse --verify HEAD`
 
 # Run our compile script
+git checkout $TARGET_BRANCH
 doCompile
 
 # Now let's go have some fun with the cloned repo
