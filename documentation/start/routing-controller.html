@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>Routing And Controller | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Routing And Controller | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+        
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../media/js/highlight/highlight.yaml.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../documentation/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Routing And Controller</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+        <li class="uk-nav-header">Start</li>
+
+                    <li class="">
+                <a href="../../documentation/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../documentation/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+
+                    <li class="">
+                <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+
+                    <li class="">
+                <a href="../../documentation/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+
+                    <li class="">
+                <a href="../../documentation/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+
+                    <li class="">
+                <a href="../../documentation/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/debugging.html">Debugging</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>Create Simple Routing</h1>
+
+<p>Open <code>/etc/routing.yml</code> and add a new route resource.</p>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+</code></pre>
+
+<p>If you use browser open <code>/flower/sakura</code>, Windwalker will find <code>Flower\Controller\Sakura\GetController</code>  and execute it automatically.</p>
+
+<p>The reason we locate <code>GetController</code> is because Windwalker routing supports RESTful protocal for that <code>Get</code> is commonly used as default yaml request method.</p>
+
+<p>If you send <code>Post</code> request then <code>SaveController</code> will be executed instead. This is more efficient and faster to the better routing performance.</p>
+
+<h2>Methods supported:</h2>
+
+<table>
+<thead>
+<tr>
+  <th>Method</th>
+  <th>Mapped Controller</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>GET</code></td>
+  <td><code>GetController</code></td>
+</tr>
+<tr>
+  <td><code>POST</code></td>
+  <td><code>SaveController</code></td>
+</tr>
+<tr>
+  <td><code>PUT</code></td>
+  <td><code>SaveController</code></td>
+</tr>
+<tr>
+  <td><code>PATCH</code></td>
+  <td><code>SaveController</code></td>
+</tr>
+<tr>
+  <td><code>DELETE</code></td>
+  <td><code>DeleteController</code></td>
+</tr>
+<tr>
+  <td><code>HEAD</code></td>
+  <td><code>HeadController</code></td>
+</tr>
+<tr>
+  <td><code>OPTIONS</code></td>
+  <td><code>OptionsController</code></td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+  <p>NOTE: Windwalker mapped POST, PUT and PATCH to <code>SaveController</code>, which includes both create and update. If you want to separate create and update to two controllers, see next section to override actions.</p>
+</blockquote>
+
+<h2>Use Controller</h2>
+
+<p>Now we use a route like this:</p>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/(id)
+    controller: Flower\Controller\Sakura
+</code></pre>
+
+<p>Lets create a controller at path : <code>src/Flower/Controller/Sakura/GetController.php</code>:</p>
+
+<pre><code class="php">&lt;?php
+// src/Flower/Controller/Sakura/GetController.php
+
+namespace Flower\Controller\Sakura;
+
+use Windwalker\Core\Controller\Controller;
+
+class GetController extends Controller
+{
+    protected function doExecute()
+    {
+        $id = $this-&gt;input-&gt;get('id');
+
+        return 'Flower id is: ' . $id;
+    }
+}
+</code></pre>
+
+<p>Windwalker Controller follows single action pattern (similar to Joomla New MVC), every controller has only one action (<code>execute()</code>). This way, we keep controller itself as light as possible than other frameworks. You can add more logic to a controller but won't be confused by many actions in one class.</p>
+
+<p>You don't have to include above files because Windwalker use autoloading, which follows <a href="http://www.php-fig.org/psr/psr-4/">PSR-4</a> standard. Go to <code>composer.json</code> you can see the autoloading option is set to <code>"":"/src"</code>, so any file under <code>/src</code> folder hierarchy will be loaded automatically.</p>
+
+<p>After controller created, go to <code>/flower/25</code> at your host. You will see:</p>
+
+<pre><code class="html">Flower id is: 25
+</code></pre>
+
+<p>Congratulations! Your first page is finished.</p>
+
+<h2>Override Actions</h2>
+
+<p>Add the action attribute:</p>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    action:
+        get: IndexController
+</code></pre>
+
+<p>The GET method will match <code>Flower\Controller\Sakura\IndexController</code> because we set a map to find new name. We can set more 
+methods to mapping methods with controllers.</p>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    action:
+        get: IndexController
+        post: CreateController
+        put: UpdateController
+        delete: DeleteController
+</code></pre>
+
+<p>Or use wildcards to map all methods to one controller:</p>
+
+<pre><code class="yaml">    action:
+        '*': SakuraController
+</code></pre>
+
+<h2>Override Methods</h2>
+
+<p>If you want to send <code>PUT</code> and <code>DELETE</code> method from web form, you may add <code>_method</code> params in yaml query, this param will override 
+real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code>DeleteController</code>.</p>
+
+<p>If you think the HTTP standard methods are not enough to use for you, you can add your custom methods.</p>
+
+<pre><code class="yaml">    action:
+        export: ExportController
+</code></pre>
+
+<p>Then use <code>&amp;_method=EXPORT</code> and the <code>ExportController</code> will be executed.</p>
+
+<h2>Custom Input Variables</h2>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+    variables:
+        foo: bar
+</code></pre>
+
+<p>The attributes in <code>variables</code> will auto set to input request if this route be matched and there is no same param name in HTTP query. 
+So if this route matched, you can get <code>foo</code> value in controller:</p>
+
+<pre><code class="php">$this-&gt;input-&gt;get('foo'); // bar
+</code></pre>
+
+<p>But if you type <code>/flower/25/alias?foo=yoo</code>, then you will get <code>yoo</code>.</p>
+
+<h2>Extra Params</h2>
+
+<p>The <code>variables</code> will auto set to input request so it is danger to store some sensitive settings in <code>variables</code>, we can set 
+<code>extra</code> params instead.</p>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+    extra:
+        layout: grid
+        user:
+            access: admin
+</code></pre>
+
+<p>Then you can get this extra params from <a href="./config.html">global config</a>.</p>
+
+<pre><code class="php">$config = Ioc::getConfig();
+
+$config-&gt;get('route.extra.user.access'); // admin
+
+// OR in controller
+
+$this-&gt;app-&gt;get('route.extra.user.access'); // admin
+</code></pre>
+
+<h2>Hooks</h2>
+
+<p>You can add <code>match</code> and <code>build</code> hooks to every route.</p>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    hook:
+        match: MyRouteHandler::match
+        build: MyRouteHandler::build
+</code></pre>
+
+<p>The hook example:</p>
+
+<pre><code class="php">use Windwalker\Core\Router\RestfulRouter;
+use Windwalker\Router\Route;
+
+/**
+ * The MyRouteHelper class.
+ *
+ * @since  {DEPLOY_VERSION}
+ */
+class MyRouteHandler
+{
+    /**
+     * Match hook, will execute after route matched.
+     *
+     * @param RestfulRouter $router   The Router object.
+     * @param Route         $route    The route object.
+     * @param array         $method   The method to match route.
+     * @param array         $options  The options to match route.
+     *
+     * @return  void
+     */
+    public static function match(RestfulRouter $router, Route $route, $method, $options)
+    {
+        // Do something
+    }
+
+    /**
+     * Build hook, will execute after every route building.
+     *
+     * @param RestfulRouter $router   The Router object.
+     * @param string        $route    The route name.
+     * @param array         $queries  The HTTP query to build route.
+     * @param string        $type     Build type, 'raw', 'path' or 'full'.
+     * @param boolean       $xhtml    Encode special chars or not.
+     *
+     * @return  void
+     */
+    public static function build(RestfulRouter $router, &amp;$route, &amp;$queries, &amp;$type, &amp;$xhtml)
+    {
+        // Do something
+    }
+}
+</code></pre>
+
+<h2>Limit By Methods</h2>
+
+<p>The yaml request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.</p>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    method:
+        - GET
+        - POST
+</code></pre>
+
+<h2>Limit By schema</h2>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    method:
+        - GET
+        - POST
+    # Only http &amp; https
+    scheme: http
+    post: 80
+    sslPort: 443
+</code></pre>
+
+<h1>Route Pattern</h1>
+
+<h2>Simple Params</h2>
+
+<p>Use parenthesis <code>()</code> to wrap param name.</p>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+</code></pre>
+
+<p>For uri look like : <code>/flower/25/article-alias-name</code>, above pattern will be matched and there will be two input params.</p>
+
+<pre><code class="html">[id] =&gt; 25
+[alias] =&gt; article-alias-name
+</code></pre>
+
+<h3>Limit By Requirement</h3>
+
+<p>Use Regular Expression to validate type of input. For example <code>\d+</code> indicates that only <code>Integer</code> will be accepted as <code>id</code> input.</p>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+    requirements:
+        id: \d+
+</code></pre>
+
+<h2>Optional Params</h2>
+
+<h3>Single Optional Params</h3>
+
+<p>Use <code>(/{anyparam})</code> to wrap an Optional Param.</p>
+
+<pre><code class="yaml">    pattern: flower(/id)
+</code></pre>
+
+<p>Below 2 uris will be matched simultaneously.</p>
+
+<pre><code>/flower
+/flower/25
+</code></pre>
+
+<h3>Multiple Optional Params</h3>
+
+<pre><code class="yaml">    pattern: flower(/year,month,day)
+</code></pre>
+
+<p>All uris below will be matched.</p>
+
+<pre><code>/flower
+/flower/2014
+/flower/2014/10
+/flower/2014/10/12
+</code></pre>
+
+<p>Matched variables:</p>
+
+<pre><code>Array
+(
+    [year] =&gt; 2014
+    [month] =&gt; 10
+    [day] =&gt; 12
+)
+</code></pre>
+
+<h2>Wildcards</h2>
+
+<p>Use Wildcards to match all the successive params in uri.</p>
+
+<pre><code class="yaml">    pattern: /king/(*tags)
+</code></pre>
+
+<p>Every param after <code>/king</code> will all be matched. For example: <code>/king/john/troilus/and/cressida</code>, will get these variables.</p>
+
+<pre><code>Array
+(
+    [tags] =&gt; Array
+    (
+        [0] =&gt; john
+        [1] =&gt; troilus
+        [2] =&gt; and
+        [3] =&gt; cressida
+    )
+)
+</code></pre>
+
+<h1>Build Route</h1>
+
+<p>Every route in Windwalker has a key, which allows every single route pattern can be access by <strong>route name</strong> or <strong>route resources</strong>, this will be helpful building a route quickly.</p>
+
+<pre><code class="php">use Windwalker\Core\Router;
+
+echo Router::build('{route name}', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="html">{route name}/25/foo-bar-baz
+</code></pre>
+
+<p>This is a very useful function that you can change roue name but don't need to worry about invalid link.</p>
+
+<p>For further information, see: <a href="../mvc/uri-route-building.html">Route and Redirect</a></p>
+
+<h1>Matchers</h1>
+
+<p>Windwalker Router provides some matchers to use different way to match routes.</p>
+
+<p>You can set matcher name in <code>/etc/config.yml</code>:</p>
+
+<pre><code class="yaml">routing:
+    matcher: default
+</code></pre>
+
+<p>The default matcher is Sequential Matcher.</p>
+
+<h2>Sequential Matcher</h2>
+
+<p>Sequential Matcher use the <a href="http://en.wikipedia.org/wiki/Linear_search">Sequential Search Method</a> to find route.
+It is the slowest matcher but much more customizable. It is the default matcher of Windwalker Router.</p>
+
+<h2>Binary Matcher</h2>
+
+<p>Binary Matcher use the <a href="http://en.wikipedia.org/wiki/Binary_search_algorithm">Binary Search Algorithm</a> to find route.
+This matcher is faster than Sequential Matcher but it will break the ordering of your routes. Binary search will re-sort all routes by pattern characters.</p>
+
+<h2>Trie Matcher</h2>
+
+<p>Trie Matcher use the <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> tree to search route.
+This matcher is the fastest method of Windwalker Router, but the limit is that it need to use an simpler route pattern
+which is not as flexible as the other two matchers.</p>
+
+<h2>Rules of TrieMatcher</h2>
+
+<h3>Simple Params</h3>
+
+<p>only match when the uri segments all exists. If you want to use optional segments, you must add two or more patterns.</p>
+
+<pre><code class="html">/flower
+/flower/:id
+/flower/:id/:alias
+</code></pre>
+
+<h3>Wildcards</h3>
+
+<p>This pattern will convert all segments after <code>/flower</code> to an array which named <code>tags</code>:</p>
+
+<pre><code class="html">/flower/*tags
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/start/routing-controller.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

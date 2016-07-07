@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>IoC Container | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="IoC Container | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+        
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../media/js/highlight/highlight.yaml.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../documentation/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>IoC Container</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+        <li class="uk-nav-header">Start</li>
+
+                    <li class="">
+                <a href="../../documentation/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../documentation/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+
+                    <li class="">
+                <a href="../../documentation/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+
+                    <li class="">
+                <a href="../../documentation/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+
+                    <li class="">
+                <a href="../../documentation/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+
+                    <li class="">
+                <a href="../../documentation/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/debugging.html">Debugging</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>What is Ioc Container</h1>
+
+<p>Windwalker DI is a <a href="http://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> tools,
+provide us an <a href="http://en.wikipedia.org/wiki/Inversion_of_control">IOC</a> container to manage objects and data.
+We also support service provider to help developers build their service in a universal interface.</p>
+
+<blockquote>
+  <p>For more information about IOC and DI, please see
+  <a href="http://martinfowler.com/articles/injection.html">Inversion of Control Containers and the Dependency Injection pattern</a> by Martin Fowler.</p>
+</blockquote>
+
+<h1>Get IoC Container</h1>
+
+<p>Use internal container in controller and Application:</p>
+
+<pre><code class="php">$session = $this-&gt;container-&gt;get('system.session');
+</code></pre>
+
+<p>Or use static method in <code>Ioc</code> class to get it:</p>
+
+<pre><code class="php">$container = \Windwalker\Ioc::factory(); // This container is singleton
+</code></pre>
+
+<p>Now we can store objects into it.</p>
+
+<pre><code class="php">$input = new Input;
+
+$container-&gt;set('my.input', $input);
+
+$input = $container-&gt;get('my.input');
+</code></pre>
+
+<p>Or get it by <code>Ioc:get()</code> statically:</p>
+
+<pre><code class="php">\Windwalker\Ioc::get('my.input');
+</code></pre>
+
+<h2>Get Sub Container</h2>
+
+<p>Every package will use a child container, if the key in child container not found, container will search from parent:</p>
+
+<pre><code class="php">// Get FlowerPackage container
+$container = Ioc::factory('flower'); 
+
+// Set something
+$container-&gt;set('sakura', 'Sakura');
+
+// sakura exists
+$sakura = $container-&gt;get('sakura');
+
+// rose not exists, will find from parent.
+$rose = $container-&gt;get('rose');
+</code></pre>
+
+<p>Directly get object from sub container by <code>Ioc</code>:</p>
+
+<pre><code class="php">\Windwalker\Ioc::get('sakura', 'flower');
+</code></pre>
+
+<h1>Lazy Loading</h1>
+
+<p>Use callback function as input value if we do not want to create object instantly.</p>
+
+<pre><code class="php">// Set a closure into it
+$container-&gt;set('input', function(Container $container)
+{
+    return new Input;
+});
+
+// Will call this closure when we get it
+$input = $container-&gt;get('input');
+</code></pre>
+
+<p>But if we use <code>set()</code> method to set callback, this object will be re-created everytime.</p>
+
+<h1>Shared Object (Singleton)</h1>
+
+<p>Use <code>set('foo', $object, true)</code> or <code>share('foo', $object)</code> to make an object singleton, we'll always get the same instance.</p>
+
+<pre><code class="php">// Share a closure
+$container-&gt;share('input', function(Container $container)
+{
+    return new Input;
+});
+
+// Will will always get same instance
+$input = $container-&gt;get('input');
+
+// The second argument of get() is whether forced to create new instance or not
+$newInput = $container-&gt;get('input', true);
+
+// Use readable constant
+$newInput = $container-&gt;get('input', Container::FORCE_NEW);
+</code></pre>
+
+<h1>Protect Object</h1>
+
+<p>Use <code>protect()</code> to prevent others from overriding your important object.</p>
+
+<pre><code class="php">$container-&gt;protect(
+    'input',
+    function(Container $container)
+    {
+        return new Input;
+    },
+    true // Shared or not
+);
+
+// We can still get this object
+$input = $container-&gt;get('input');
+
+// @Throws OutOfBoundsException
+$container-&gt;set('input', $otherInput);
+</code></pre>
+
+<h1>Alias</h1>
+
+<p>It is convenience to set an alias to key of objects which we often use.</p>
+
+<pre><code class="php">$container-&gt;share('system.application', $app)
+    -&gt;alias('app', 'system.application');
+
+// Same as system.application
+$app = $container-&gt;get('app');
+</code></pre>
+
+<h1>Ioc Class</h1>
+
+<p><code>\Windwalker\Ioc</code> provides a easy way to get system objects, the benefit to use these methods is that IDE can identify
+what object we get, and provides auto-complete:</p>
+
+<pre><code class="php">$db    = \Windwalker\Ioc::getDatabase();
+$input = \Windwalker\Ioc::getInput();
+$app   = \Windwalker\Ioc::getApplication();
+</code></pre>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169419/38066a96-f75a-11e5-91da-a3c433bc4771.jpg" alt="160331-0001" /></p>
+
+<p>If you want to add your own object in <code>Ioc</code>, edit the <code>/src/Windwalker/Ioc.php</code> file:</p>
+
+<pre><code class="php">&lt;?php
+// /src/Windwalker/Ioc.php`
+
+namespace Windwalker;
+
+abstract class Ioc extends \Windwalker\Core\Ioc
+{
+    /**
+     * Add this docblock that your IDE can identify what you get.
+     *
+     * @return  MyObject
+     */
+    public static function getMyObject()
+    {
+        return static::get('my.object');
+    }
+}
+</code></pre>
+
+<p>Now you can use this method in everywhere.</p>
+
+<pre><code class="php">\Windwalker\Ioc::getMyObject();
+</code></pre>
+
+<h1>Build Object</h1>
+
+<p>Container can build an object and automatically inject all the necessary dependencies.</p>
+
+<pre><code class="php">use Windwalker\IO\Input;
+use Windwalker\Registry\Registry;
+
+class MyClass
+{
+    public $input;
+    public $config;
+
+    public function __construct(Input $input, Registry $config)
+    {
+        $this-&gt;input = $input;
+        $this-&gt;config = $config;
+    }
+}
+
+$myObject = $container-&gt;buildObject('MyClass');
+
+$myObject-&gt;input; // Input
+$myObject-&gt;config; // Registry
+</code></pre>
+
+<h2>Binding Classes</h2>
+
+<p>Sometimes we hope to inject particular object we want, we can bind a class as key to let Container know what you want to
+instead the dependency object.</p>
+
+<p>Here is a class but dependency to an abstract class, we can bind a sub class to container for use.</p>
+
+<pre><code class="php">use Windwalker\Model\AbstractModel;
+use Windwalker\Registry\Registry;
+
+class MyClass
+{
+    public $model;
+    public $config;
+
+    public function __construct(AbstractModel $model, Registry $config)
+    {
+        $this-&gt;model = $model;
+        $this-&gt;config = $config;
+    }
+}
+
+class MyModel extends AbstractModel
+{
+}
+
+// Bind MyModel as AbstractModel
+$container-&gt;share('Windwalker\\Model\\AbstractModel', function()
+{
+    return new MyModel;
+});
+
+$myObject = $container-&gt;buildObject('MyClass');
+
+$myObject-&gt;model; // MyModel
+</code></pre>
+
+<h1>Extending</h1>
+
+<p>Container allows you to extend an object, the new instance or closure will override the original one, this is a sample:</p>
+
+<pre><code class="php">// Create an item first
+$container-&gt;share('flower', function()
+{
+    return new Flower;
+});
+
+$container-&gt;extend('flower', function($origin, Container $container)
+{
+    $origin-&gt;name = 'sakura';
+
+    return $origin;
+});
+
+$flower = $container-&gt;get('flower');
+
+$flower-&gt;name; // sakura
+</code></pre>
+
+<h1>Container Aware</h1>
+
+<p>The <code>ContainerAwareInterface</code> defines getter &amp; setter of Container as a system, constructor, we often use it on application or controller classes.</p>
+
+<pre><code class="php">use Windwalker\DI\ContainerAwareInterface;
+
+class MyController implements ContainerAwareInterface
+{
+    protected $container;
+
+    public function getContainer()
+    {
+        return $this-&gt;container;
+    }
+
+    public function setContainer(Container $container)
+    {
+        $this-&gt;container = $container;
+    }
+
+    public function execute()
+    {
+        $container = $this-&gt;getContainer();
+    }
+}
+</code></pre>
+
+<h2>Using Trait</h2>
+
+<p>In PHP 5.4, you can use <code>ContainerAwareTrait</code> to create an aware object.</p>
+
+<pre><code class="php">class MyController implements ContainerAwareInterface
+{
+    use ContainerAwareTrait;
+
+    public function execute()
+    {
+        $container = $this-&gt;getContainer();
+    }
+}
+</code></pre>
+
+<h1>Service Providers</h1>
+
+<p>Service providers is an useful way to encapsulate logic of creating objects and services.
+Just implements the <code>Windwalker\DI\ServiceProviderInterface</code>.</p>
+
+<pre><code class="php">use Windwalker\DI\Container;
+use Windwalker\DI\ServiceProviderInterface;
+
+class DatabaseServiceProvider implements ServiceProviderInterface
+{
+    public function register(Container $container)
+    {
+        $container-&gt;share('db', function (Container $container)
+        {
+            $options = $container-&gt;get('config')-&gt;get('database');
+
+            return DatabaseFactory::getDbo($options['driver'], $options);
+        });
+
+        // Or use callable
+        $container-&gt;share('query', array($this, 'getQuery'));
+    }
+
+    public function getQuery(Container $container)
+    {
+        return new MysqlQuery;
+    }
+}
+
+$container-&gt;registerServiceProvider(new DatabaseServiceProvider);
+</code></pre>
+
+<h1>Facade</h1>
+
+<p>Windwalker has a Facade class to help us use proxy pattern to call object methods statically</p>
+
+<pre><code class="php">// Create a object into conteiner
+$container-&gt;share('my.router', new Router);
+</code></pre>
+
+<pre><code class="php">use Windwalker\Core\Facade\AbstractProxyFacade;
+
+class MyRouter extends AbstractProxyFacade
+{
+    // Same as the container key, then we can auto match the object in container.
+    protected static $_key = 'my.router';
+}
+</code></pre>
+
+<p>Now just call the Router methods statically from <code>MyRouter</code>.</p>
+
+<pre><code class="php">MyRouter::build('route');
+
+// Same as...
+
+$container-&gt;get('my.router')-&gt;build('route');
+</code></pre>
+
+<p>To make IDE support auto-complete, we can add PhpDoc to class.</p>
+
+<pre><code class="php">/**
+ * The Router class.
+ *
+ * @method  static  string  build($route, $queries = array(), $type = RestfulRouter::TYPE_RAW, $xhtml = false)
+ *
+ * ...
+ *
+ * @see \Windwalker\Router\Router
+ */
+class MyRouter extends AbstractProxyFacade
+{
+    protected static $_key = 'my.router';
+}
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/start/ioc-container.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>
