@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-SOURCE_BRANCH="master"
 TARGET_BRANCH="master"
 
 function doCompile {
@@ -10,13 +9,11 @@ function doCompile {
 }
 
 # Pull requests and commits to other branches shouldn't try to deploy, just build to verify
-if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]; then
+if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$TARGET_BRANCH" ]; then
     echo "Skipping deploy; just doing a build."
     doCompile
     exit 0
 fi
-
-echo "Branch $TRAVIS_BRANCH"
 
 # Save some useful information
 REPO=`git config remote.origin.url`
