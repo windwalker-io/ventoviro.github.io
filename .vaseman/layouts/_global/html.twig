@@ -60,6 +60,8 @@
                 <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="{{ uri.media }}images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
             </a>
 
+            {% block version_switcher %}{% endblock %}
+
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
                 <li class="{{ path[0] == 'about' ? 'uk-active' : '' }}">
                     <a href="{{ uri.base }}about/">
@@ -78,8 +80,6 @@
                         <span class="menu-item-title">GitHub</span>
                     </a>
                 </li>
-
-                {% block version_switcher %}{% endblock %}
             </ul>
 
         </div>

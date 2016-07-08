@@ -135,6 +135,16 @@ dl dd {
   color: #fff;
   outline: 0;
 }
+#header #version-switcher {
+  margin-top: 17px;
+}
+@media (max-width: 767px) {
+  #header #version-switcher {
+    position: absolute;
+    right: 15px;
+    top: 0;
+  }
+}
 @media (max-width: 767px) {
   #header #mainmenu {
     position: absolute;
