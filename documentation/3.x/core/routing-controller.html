@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Getting Started | Windwalker - A Modern PHP Framework</title>
+        <title>Routing And Controller | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Getting Started | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Routing And Controller | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/start/getting-started.html">3.x</a>
+                    <a href="../../../documentation/3.x/core/routing-controller.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/start/getting-started.html">2.1</a>
+                    <a href="../../../documentation/2.1/core/routing-controller.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Getting Started</h1>
+        <h1>Routing And Controller</h1>
     </div>
         </div>
     </section>
@@ -128,17 +128,17 @@
                     <li class="">
                 <a href="../../../documentation/3.x/start/installation.html">Installation</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
             </li>
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Core</li>
-                    <li class="">
-                <a href="../../../documentation/3.x/core/routing.html">Routing</a>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/core/routing-controller.html">Routing And Controller</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/core/package-system.html">Packages</a>
+                <a href="../../../documentation/3.x/core/package-system.html">Package System (Bundle)</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/core/config.html">Config &amp; Setting</a>
@@ -266,295 +266,421 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <p>This chapter, we'll start a simple page with MVC to show how to develop simple web application in Windwalker.</p>
+                    <h2>Create Simple Routing</h2>
 
-<p>We assume you install Windwalker in <code>http://localhost/windwalker</code>, so you must use <code>http://localhost/windwalker/www</code> to open Windwalker home page.</p>
+<p>Open <code>/etc/routing.yml</code> and add a new route resource.</p>
 
-<h2>Create First Controller</h2>
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+</code></pre>
 
-<p>Let's create a php class in <code>src/Flower/Controller/Sakura/GetContrtoller.php</code>.</p>
+<p>If you use browser open <code>/flower/sakura</code>, Windwalker will find <code>Flower\Controller\Sakura\GetController</code>  and execute it automatically.</p>
 
-<p>The <code>Flower</code> is package name, and <code>Sakura</code> is controller name, <code>GetController</code> means it is a default <code>GET</code> action, this equals to
-<code>indexAction</code> in other frameworks, while Windwalker uses single action controller, so every controller class only handles one action.</p>
+<p>The reason we locate <code>GetController</code> is because Windwalker routing supports RESTful protocal for that <code>Get</code> is commonly used as default yaml request method.</p>
+
+<p>If you send <code>Post</code> request then <code>SaveController</code> will be executed instead. This is more efficient and faster to the better routing performance.</p>
+
+<h3>Methods supported:</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Method</th>
+  <th>Mapped Controller</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>GET</code></td>
+  <td><code>GetController</code></td>
+</tr>
+<tr>
+  <td><code>POST</code></td>
+  <td><code>SaveController</code></td>
+</tr>
+<tr>
+  <td><code>PUT</code></td>
+  <td><code>SaveController</code></td>
+</tr>
+<tr>
+  <td><code>PATCH</code></td>
+  <td><code>SaveController</code></td>
+</tr>
+<tr>
+  <td><code>DELETE</code></td>
+  <td><code>DeleteController</code></td>
+</tr>
+<tr>
+  <td><code>HEAD</code></td>
+  <td><code>HeadController</code></td>
+</tr>
+<tr>
+  <td><code>OPTIONS</code></td>
+  <td><code>OptionsController</code></td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+  <p>NOTE: Windwalker mapped POST, PUT and PATCH to <code>SaveController</code>, which includes both create and update. If you want to separate create and update to two controllers, see next section to override actions.</p>
+</blockquote>
+
+<h3>Use Controller</h3>
+
+<p>Now we use a route like this:</p>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/(id)
+    controller: Flower\Controller\Sakura
+</code></pre>
+
+<p>Lets create a controller at path : <code>src/Flower/Controller/Sakura/GetController.php</code>:</p>
 
 <pre><code class="php">&lt;?php
 // src/Flower/Controller/Sakura/GetController.php
 
 namespace Flower\Controller\Sakura;
 
-use Windwalker\Core\Controller\AbstractController;
+use Windwalker\Core\Controller\Controller;
 
-/**
- * Sakura Controller
- */
-class GetController extends AbstractController
+class GetController extends Controller
 {
     protected function doExecute()
     {
-        return 'Hello World';
+        $id = $this-&gt;input-&gt;get('id');
+
+        return 'Flower id is: ' . $id;
     }
 }
-
 </code></pre>
 
-<p>Now, open <code>http://path/to/windwalker/www/flower/sakura</code> in browser, you will see <code>Hello World</code>.</p>
+<p>Windwalker Controller follows single action pattern (similar to Joomla New MVC), every controller has only one action (<code>execute()</code>). This way, we keep controller itself as light as possible than other frameworks. You can add more logic to a controller but won't be confused by many actions in one class.</p>
 
-<p>Windwalker Controller follows single responsibility principle, every controller has only one action (<code>execute()</code>).
-You can add more logic to a controller but won't be confused by too many different actions in one class.</p>
+<p>You don't have to include above files because Windwalker use autoloading, which follows <a href="http://www.php-fig.org/psr/psr-4/">PSR-4</a> standard. Go to <code>composer.json</code> you can see the autoloading option is set to <code>"":"/src"</code>, so any file under <code>/src</code> folder hierarchy will be loaded automatically.</p>
 
-<h2>Render View Template</h2>
+<p>After controller created, go to <code>/flower/25</code> at your host. You will see:</p>
 
-<p>We wish we can render a HTML template to browser, so please add a template file to <code>src/Flower/Templates/sakura/default.php</code></p>
-
-<pre><code class="php">&lt;?php
-// src/Flower/Templates/sakura/default.php
-?&gt;
-&lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
+<pre><code class="html">Flower id is: 25
 </code></pre>
 
-<p>And modify <code>GetController::doExecute()</code>, we get a View object, push a variable into it, then all <code>render()</code> method to return template.</p>
+<p>Congratulations! Your first page is finished.</p>
 
-<pre><code class="php">// src/Flower/Controller/Sakura/GetController.php
+<h3>Override Actions</h3>
 
-// ...
+<p>Add the action attribute:</p>
 
-protected function doExecute()
-{
-    $view = $this-&gt;getView();
-
-    $view['name'] = 'Sakura';
-
-    return $view-&gt;render();
-
-    // Another quick way
-    return $this-&gt;renderView('Sakura', 'default', 'php', ['name' =&gt; 'Sakura']);
-}
-
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    action:
+        get: IndexController
 </code></pre>
 
-<p>We'll get <code>&lt;h1&gt;Hello Sakura&lt;/h1&gt;</code> in browser.</p>
+<p>The GET method will match <code>Flower\Controller\Sakura\IndexController</code> because we set a map to find new name. We can set more 
+methods to mapping methods with controllers.</p>
 
-<h3>Add HTML Frame</h3>
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    action:
+        get: IndexController
+        post: CreateController
+        put: UpdateController
+        delete: DeleteController
+</code></pre>
 
-<p>By extends parent layout, we can wrap our template by a parent template.</p>
+<p>Or use wildcards to map all methods to one controller:</p>
 
-<pre><code class="html">&lt;?php
-// src/Flower/Templates/sakura/default.php
+<pre><code class="yaml">    action:
+        '*': SakuraController
+</code></pre>
+
+<h3>Override Methods</h3>
+
+<p>If you want to send <code>PUT</code> and <code>DELETE</code> method from web form, you may add <code>_method</code> params in yaml query, this param will override 
+real HTTP method. For example: <code>&amp;_method=DELETE</code> will raise <code>DeleteController</code>.</p>
+
+<p>If you think the HTTP standard methods are not enough to use for you, you can add your custom methods.</p>
+
+<pre><code class="yaml">    action:
+        export: ExportController
+</code></pre>
+
+<p>Then use <code>&amp;_method=EXPORT</code> and the <code>ExportController</code> will be executed.</p>
+
+<h3>Custom Input Variables</h3>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+    variables:
+        foo: bar
+</code></pre>
+
+<p>The attributes in <code>variables</code> will auto set to input request if this route be matched and there is no same param name in HTTP query. 
+So if this route matched, you can get <code>foo</code> value in controller:</p>
+
+<pre><code class="php">$this-&gt;input-&gt;get('foo'); // bar
+</code></pre>
+
+<p>But if you type <code>/flower/25/alias?foo=yoo</code>, then you will get <code>yoo</code>.</p>
+
+<h3>Extra Params</h3>
+
+<p>The <code>variables</code> will auto set to input request so it is danger to store some sensitive settings in <code>variables</code>, we can set 
+<code>extra</code> params instead.</p>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+    extra:
+        layout: grid
+        user:
+            access: admin
+</code></pre>
+
+<p>Then you can get this extra params from <a href="./config.html">global config</a>.</p>
+
+<pre><code class="php">$config = Ioc::getConfig();
+
+$config-&gt;get('route.extra.user.access'); // admin
+
+// OR in controller
+
+$this-&gt;app-&gt;get('route.extra.user.access'); // admin
+</code></pre>
+
+<h3>Hooks</h3>
+
+<p>You can add <code>match</code> and <code>build</code> hooks to every route.</p>
+
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    hook:
+        match: MyRouteHandler::match
+        build: MyRouteHandler::build
+</code></pre>
+
+<p>The hook example:</p>
+
+<pre><code class="php">use Windwalker\Core\Router\RestfulRouter;
+use Windwalker\Router\Route;
+
 /**
- * @var  $this  \Windwalker\Core\Renderer\PhpRenderer
+ * The MyRouteHelper class.
+ *
+ * @since  {DEPLOY_VERSION}
  */
-?&gt;
-
-&lt;?php $this-&gt;extend('_global.html') ?&gt;
-
-&lt;!-- This will override parent `content` block --&gt;
-&lt;?php $this-&gt;block('content'); ?&gt;
-    &lt;div class="container"&gt;
-        &lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
-    &lt;/div&gt;
-&lt;?php $this-&gt;endblock(); ?&gt;
-</code></pre>
-
-<p>The result</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16676719/cddea284-44ff-11e6-8af7-c759e6826d5d.jpg" alt="p-2016-07-08-001" /></p>
-
-<blockquote>
-  <p>You can find <code>_global.html</code> in <code>templates/_globa/html.php</code>, this is the global template path.</p>
-</blockquote>
-
-<h3>Change View Layout</h3>
-
-<p>We support different template layout for one controller, the default is <code>default</code> layout, now try to add a <code>photo</code> layout.</p>
-
-<pre><code class="html">&lt;?php
-// src/Flower/Templates/sakura/photo.php
-?&gt;
-&lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
-&lt;img src="http://i.imgur.com/WVpwzJ9.jpg" alt="Sakura"&gt;
-</code></pre>
-
-<p>Then we render <code>photo.php</code> by <code>$view-&gt;setLayout('photo')</code>.</p>
-
-<pre><code class="php">// src/Flower/Controller/Sakura/GetController.php
-
-// ...
-
-protected function doExecute()
+class MyRouteHandler
 {
-    $view = $this-&gt;getView();
-
-    $view['name'] = 'Sakura';
-
-    return $view-&gt;setLayout('photo')-&gt;render();
-}
-</code></pre>
-
-<h3>Use Edge Template Engine</h3>
-
-<p>Edge is Windwalker built-in template engine to support Windwalker build flexible layout. It is a clone of Laravel Blade engine now but
-add some new features.</p>
-
-<p>We create a template named <code>default.edge.php</code> or <code>default.blade.php</code>.</p>
-
-<pre><code class="html">{{-- src/Flower/Templates/sakura/default.edge.php --}}
-
-@extends('_global.html')
-
-@section('content')
-&lt;div class="container"&gt;
-    &lt;h1&gt;Hello {{ $name }} in edge engine&lt;/h1&gt;
-&lt;/div&gt;
-@stop
-</code></pre>
-
-<p>Render this template in Controller</p>
-
-<pre><code class="php">protected function doExecute()
-{
-    return $this-&gt;renderView('Sakura', 'default', 'edge', ['name' =&gt; 'Sakura']);
-}
-</code></pre>
-
-<p>Will output</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16676825/8c4911e0-4501-11e6-9495-3c0461e66732.jpg" alt="p-2016-07-08-002" /></p>
-
-<h2>Complete Ths Package</h2>
-
-<p>Our namespace start with <code>Flower\</code>, in Windwalker, we call this "Flower package", currently we haven't create package
- class, but controller and routing are works because Windwalker has a default simple routing help us mapping controller
- with URL, so <code>/flower/sakura</code> will auto direct to <code>Flower\Controller\Sakura\GetController</code>.</p>
-
-<p>Simple routing is very slow so we can disable it in <code>etc/config.yml</code></p>
-
-<pre><code class="yaml"># etc/config.yml
-
-routing:
-    simple_route: false
-</code></pre>
-
-<p>After set <code>simple_route</code> to <code>false</code>, you will see your application return
-<code>RouteNotFoundException (404) Unable to handle request for route "flower/sakura"</code></p>
-
-<p>Now we must prepare a standard package environment so we can use more advanced functions in the future.</p>
-
-<h3>Add Package Class</h3>
-
-<p>Create a <code>FlowerPackage</code> first.</p>
-
-<pre><code class="php">&lt;?php
-// Flower/FlowerPackage.php
-
-namespace Flower;
-
-use Windwalker\Core\Package\AbstractPackage;
-
-class FlowerPackage extends AbstractPackage
-{
-
-}
-</code></pre>
-
-<p>Next, register it to <code>etc/app/web.php</code>, the <code>flower</code> key name is alias of your package, you can customize it if package name conflict.</p>
-
-<pre><code class="php">// ...
-
-    'packages' =&gt; [
-        'flower' =&gt; \Flower\FlowerPackage::class
-    ],
-
-// ...
-</code></pre>
-
-<h3>Register Routing</h3>
-
-<p>And then, add a nre routing profile to <code>etc/routing.yml</code>.</p>
-
-<pre><code class="yaml"># ...
-
-flower:
-    pattern: /flower
-    package: flower
-</code></pre>
-
-<blockquote>
-  <p>You can also do this by using <code>$ php windwalker package install flower</code> in CLI.</p>
-</blockquote>
-
-<p>The last step, create package routing at <code>src/Flower/routing.yml</code>.</p>
-
-<pre><code class="yaml"># src/Flower/routing.yml
-
-sakura:
-    pattern: /sakura
-    controller: Sakura
-</code></pre>
-
-<p>OK, the Sakura page will return. To register a package and routing is a bit of bother, but it will be very
-flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and mny developers.</p>
-
-<h2>Model Repository</h2>
-
-<p>Windwalker provides a simple <code>ModelRepository</code> class to help you organize your data source.</p>
-
-<p>Add SakuraModel class.</p>
-
-<pre><code class="php">&lt;?php
-// src/Flower/Model/SakuraModel.php
-
-namespace Flower\Model;
-
-use Windwalker\Core\Model\ModelRepository;
-
-class SakuraModel extends ModelRepository
-{
-    public function getContent()
+    /**
+     * Match hook, will execute after route matched.
+     *
+     * @param RestfulRouter $router   The Router object.
+     * @param Route         $route    The route object.
+     * @param array         $method   The method to match route.
+     * @param array         $options  The options to match route.
+     *
+     * @return  void
+     */
+    public static function match(RestfulRouter $router, Route $route, $method, $options)
     {
-        return [
-            ['title' =&gt; 'foo'],
-            ['title' =&gt; 'bar'],
-            ['title' =&gt; 'yoo'],
-        ];
+        // Do something
+    }
+
+    /**
+     * Build hook, will execute after every route building.
+     *
+     * @param RestfulRouter $router   The Router object.
+     * @param string        $route    The route name.
+     * @param array         $queries  The HTTP query to build route.
+     * @param string        $type     Build type, 'raw', 'path' or 'full'.
+     * @param boolean       $xhtml    Encode special chars or not.
+     *
+     * @return  void
+     */
+    public static function build(RestfulRouter $router, &amp;$route, &amp;$queries, &amp;$type, &amp;$xhtml)
+    {
+        // Do something
     }
 }
 </code></pre>
 
-<p>Use this Model in controller.</p>
+<h3>Limit By Methods</h3>
 
-<pre><code class="blade">// ...
+<p>The yaml request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.</p>
 
-/** @var SakuraModel $model */
-$model   = $this-&gt;getModel();
-$content = $model-&gt;getContent();
-
-return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $content]);
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    method:
+        - GET
+        - POST
 </code></pre>
 
-<p>Modify the template to loop <code>content</code> variable.</p>
+<h3>Limit By schema</h3>
 
-<pre><code class="html">@extends('_global.html')
-
-@section('content')
-&lt;div class="container"&gt;
-    &lt;h1&gt;Hello Sakura&lt;/h1&gt;
-    &lt;ul&gt;
-        @foreach ($content as $item)
-        &lt;li&gt;{{ $item['title'] }}&lt;/li&gt;
-        @endforeach
-    &lt;/ul&gt;
-&lt;/div&gt;
-@stop
+<pre><code class="yaml">flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    method:
+        - GET
+        - POST
+    ## Only http &amp; https
+    scheme: http
+    post: 80
+    sslPort: 443
 </code></pre>
 
-<p>The result:</p>
+<h2>Route Pattern</h2>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16677127/bb37159e-4504-11e6-8096-9ca92d211738.jpg" alt="p-2016-07-08-003" /></p>
+<h3>Simple Params</h3>
+
+<p>Use parenthesis <code>()</code> to wrap param name.</p>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+</code></pre>
+
+<p>For uri look like : <code>/flower/25/article-alias-name</code>, above pattern will be matched and there will be two input params.</p>
+
+<pre><code class="html">[id] =&gt; 25
+[alias] =&gt; article-alias-name
+</code></pre>
+
+<h5>Limit By Requirement</h5>
+
+<p>Use Regular Expression to validate type of input. For example <code>\d+</code> indicates that only <code>Integer</code> will be accepted as <code>id</code> input.</p>
+
+<pre><code class="yaml">    pattern: /flower/(id)/(alias)
+    requirements:
+        id: \d+
+</code></pre>
+
+<h3>Optional Params</h3>
+
+<h5>Single Optional Params</h5>
+
+<p>Use <code>(/{anyparam})</code> to wrap an Optional Param.</p>
+
+<pre><code class="yaml">    pattern: flower(/id)
+</code></pre>
+
+<p>Below 2 uris will be matched simultaneously.</p>
+
+<pre><code>/flower
+/flower/25
+</code></pre>
+
+<h5>Multiple Optional Params</h5>
+
+<pre><code class="yaml">    pattern: flower(/year,month,day)
+</code></pre>
+
+<p>All uris below will be matched.</p>
+
+<pre><code>/flower
+/flower/2014
+/flower/2014/10
+/flower/2014/10/12
+</code></pre>
+
+<p>Matched variables:</p>
+
+<pre><code>Array
+(
+    [year] =&gt; 2014
+    [month] =&gt; 10
+    [day] =&gt; 12
+)
+</code></pre>
+
+<h3>Wildcards</h3>
+
+<p>Use Wildcards to match all the successive params in uri.</p>
+
+<pre><code class="yaml">    pattern: /king/(*tags)
+</code></pre>
+
+<p>Every param after <code>/king</code> will all be matched. For example: <code>/king/john/troilus/and/cressida</code>, will get these variables.</p>
+
+<pre><code>Array
+(
+    [tags] =&gt; Array
+    (
+        [0] =&gt; john
+        [1] =&gt; troilus
+        [2] =&gt; and
+        [3] =&gt; cressida
+    )
+)
+</code></pre>
+
+<h2>Build Route</h2>
+
+<p>Every route in Windwalker has a key, which allows every single route pattern can be access by <strong>route name</strong> or <strong>route resources</strong>, this will be helpful building a route quickly.</p>
+
+<pre><code class="php">use Windwalker\Core\Router;
+
+echo Router::build('{route name}', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="html">{route name}/25/foo-bar-baz
+</code></pre>
+
+<p>This is a very useful function that you can change roue name but don't need to worry about invalid link.</p>
+
+<p>For further information, see: <a href="../mvc/uri-route-building.html">Route and Redirect</a></p>
+
+<h2>Matchers</h2>
+
+<p>Windwalker Router provides some matchers to use different way to match routes.</p>
+
+<p>You can set matcher name in <code>/etc/config.yml</code>:</p>
+
+<pre><code class="yaml">routing:
+    matcher: default
+</code></pre>
+
+<p>The default matcher is Sequential Matcher.</p>
+
+<h3>Sequential Matcher</h3>
+
+<p>Sequential Matcher use the <a href="http://en.wikipedia.org/wiki/Linear_search">Sequential Search Method</a> to find route.
+It is the slowest matcher but much more customizable. It is the default matcher of Windwalker Router.</p>
+
+<h3>Binary Matcher</h3>
+
+<p>Binary Matcher use the <a href="http://en.wikipedia.org/wiki/Binary_search_algorithm">Binary Search Algorithm</a> to find route.
+This matcher is faster than Sequential Matcher but it will break the ordering of your routes. Binary search will re-sort all routes by pattern characters.</p>
+
+<h3>Trie Matcher</h3>
+
+<p>Trie Matcher use the <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> tree to search route.
+This matcher is the fastest method of Windwalker Router, but the limit is that it need to use an simpler route pattern
+which is not as flexible as the other two matchers.</p>
+
+<h3>Rules of TrieMatcher</h3>
+
+<h5>Simple Params</h5>
+
+<p>only match when the uri segments all exists. If you want to use optional segments, you must add two or more patterns.</p>
+
+<pre><code class="html">/flower
+/flower/:id
+/flower/:id/:alias
+</code></pre>
+
+<h5>Wildcards</h5>
+
+<p>This pattern will convert all segments after <code>/flower</code> to an array which named <code>tags</code>:</p>
+
+<pre><code class="html">/flower/*tags
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/start/getting-started.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/routing-controller.md">improve</a> this document.
     </p>
                 </article>
             </div>

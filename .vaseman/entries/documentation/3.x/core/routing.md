@@ -1,24 +1,77 @@
 ---
 layout: documentation.twig
-title: Routing And Controller
+title: Routing
 
 ---
 
-## Create Simple Routing
+## Simple Routing
 
-Open `/etc/routing.yml` and add a new route resource.
+Windwalker will auto map URL to package and controller.
+
+- `/flower/sakura` ==> `Flower\Controller\Sakura\GetController`
+- `/foo/bar/baz` ==> `Foo\Bar\Controller\Baz\GetController`
+
+The `flower` and `foo/bar` will be namespace of this controller, and the last part (`sakura`, `baz`) will be controller name.
+
+`GetController` is auto added, which means this is a default `GET` request, similar to `indexAction` in other frameworks.
+ Since Windwalker uses single action controller, a controller class only handle one action.
+
+If you send a `POST` request, the `SaveController` will be called instead. So we can use RESTful methods to handle our CRUD.
+
+Simple routing has low performance so we can disable it in `etc/config.yml`
 
 ``` yaml
-flower:
-    pattern: /flower/sakura
-    controller: Flower\Controller\Sakura
+# etc/config.yml
+
+routing:
+    simple_route: false
 ```
 
-If you use browser open `/flower/sakura`, Windwalker will find `Flower\Controller\Sakura\GetController`  and execute it automatically.
+After disabled simple routing, we must register route profile to every page.
 
-The reason we locate `GetController` is because Windwalker routing supports RESTful protocal for that `Get` is commonly used as default yaml request method.
+## Register Routing
 
-If you send `Post` request then `SaveController` will be executed instead. This is more efficient and faster to the better routing performance.
+Open `/etc/routing.yml` and add a new route profile.
+
+``` yaml
+sakura:
+    pattern: /flower/sakura
+    controller: Foo\Controller\Myflower
+```
+
+If you open `/flower/sakura`, Windwalker will auto find `Foo\Controller\Myflower\GetController` to handle this request.
+
+## Routing in Package
+
+If you are writing routing profiles in package, the controller name can be simpler.
+
+``` yaml
+# In Flower package
+# `src/Flower/routing.yml`
+
+sakura:
+    pattern: /sakura
+    controller: Sakura
+```
+
+Then you can register flower package routing to the main `etc/routing.yml`.
+
+``` yaml
+# etc/routing.yml
+
+# ...
+
+flower:
+    pattern: /flower
+    package: flower
+```
+
+After registered flower routing, all routes start with `/flower` will be package route, and `/flower/sakura` URI will still matched
+`Flower\Controller\Sakura\Controller` because package will help us find `Sakura` controller under this namespace.
+
+See [Package -> Routing Section](package-system.html#add-package-routing)
+
+## Routing Params
 
 ### Methods supported:
 
@@ -32,50 +85,8 @@ If you send `Post` request then `SaveController` will be executed instead. This 
 | `HEAD`    | `HeadController` |
 | `OPTIONS` | `OptionsController` |
 
-> NOTE: Windwalker mapped POST, PUT and PATCH to `SaveController`, which includes both create and update. If you want to separate create and update to two controllers, see next section to override actions.
-
-### Use Controller
-
-Now we use a route like this:
-
-``` yaml
-flower:
-    pattern: /flower/(id)
-    controller: Flower\Controller\Sakura
-```
-
-Lets create a controller at path : `src/Flower/Controller/Sakura/GetController.php`:
-
-``` php
-<?php
-// src/Flower/Controller/Sakura/GetController.php
-
-namespace Flower\Controller\Sakura;
-
-use Windwalker\Core\Controller\Controller;
-
-class GetController extends Controller
-{
-	protected function doExecute()
-	{
-		$id = $this->input->get('id');
-
-		return 'Flower id is: ' . $id;
-	}
-}
-```
-
-Windwalker Controller follows single action pattern (similar to Joomla New MVC), every controller has only one action (`execute()`). This way, we keep controller itself as light as possible than other frameworks. You can add more logic to a controller but won't be confused by many actions in one class.
-
-You don't have to include above files because Windwalker use autoloading, which follows [PSR-4](http://www.php-fig.org/psr/psr-4/) standard. Go to `composer.json` you can see the autoloading option is set to `"":"/src"`, so any file under `/src` folder hierarchy will be loaded automatically.
-
-After controller created, go to `/flower/25` at your host. You will see:
-
-``` html
-Flower id is: 25
-```
-
-Congratulations! Your first page is finished.
+> NOTE: Windwalker mapped POST, PUT and PATCH to `SaveController`, which includes both create and update action.
+> If you want to separate create and update to two controllers, see next section to override actions.
 
 ### Override Actions
 
@@ -89,8 +100,8 @@ flower:
         get: IndexController
 ```
 
-The GET method will match `Flower\Controller\Sakura\IndexController` because we set a map to find new name. We can set more 
-methods to mapping methods with controllers.
+Then the GET method will match `Flower\Controller\Sakura\IndexController` because we set a map to find new name. We can set more
+methods to map methods with controllers.
 
 ``` yaml
 flower:
@@ -103,7 +114,7 @@ flower:
         delete: DeleteController
 ```
 
-Or use wildcards to map all methods to one controller:
+Or use wildcard to map all methods to one controller:
 
 ``` yaml
     action:
@@ -112,10 +123,10 @@ Or use wildcards to map all methods to one controller:
 
 ### Override Methods
 
-If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in yaml query, this param will override 
-real HTTP method. For example: `&_method=DELETE` will raise `DeleteController`.
+If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in URL query, this param will override
+real HTTP method. For example, send `&_method=DELETE` will ask Windwalker to use `DeleteController`.
  
-If you think the HTTP standard methods are not enough to use for you, you can add your custom methods.
+If you feel the HTTP standard methods are not enough to use for you, you can add your custom methods.
  
 ``` yaml
     action:
@@ -132,14 +143,14 @@ Then use `&_method=EXPORT` and the `ExportController` will be executed.
         foo: bar
 ```
 
-The attributes in `variables` will auto set to input request if this route be matched and there is no same param name in HTTP query. 
+The attributes in `variables` will auto set to request as default value if this route be matched and there is no same param name in HTTP query.
 So if this route matched, you can get `foo` value in controller:
 
 ``` php
 $this->input->get('foo'); // bar
 ```
 
-But if you type `/flower/25/alias?foo=yoo`, then you will get `yoo`.
+But if you type `/flower/25/alias?foo=yoo`, then you will get `yoo`, the variable will be override by HTTP query.
 
 ### Extra Params
 
@@ -157,12 +168,12 @@ The `variables` will auto set to input request so it is danger to store some sen
 Then you can get this extra params from [global config](./config.html).
 
 ``` php
+// In enywhere
 $config = Ioc::getConfig();
 
 $config->get('route.extra.user.access'); // admin
 
 // OR in controller
-
 $this->app->get('route.extra.user.access'); // admin
 ```
 
@@ -225,7 +236,7 @@ class MyRouteHandler
 }
 ```
 
-### Limit By Methods
+### Allow Methods
 
 The yaml request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.
 
@@ -238,7 +249,7 @@ flower:
         - POST
 ```
 
-### Limit By schema
+### Allow scheme
 
 ``` yaml
 flower:
@@ -270,7 +281,7 @@ For uri look like : `/flower/25/article-alias-name`, above pattern will be match
 [alias] => article-alias-name
 ```
 
-##### Limit By Requirement
+##### Use Requirements to Validate Params
 
 Use Regular Expression to validate type of input. For example `\d+` indicates that only `Integer` will be accepted as `id` input.
 

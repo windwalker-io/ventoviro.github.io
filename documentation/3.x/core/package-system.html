@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Getting Started | Windwalker - A Modern PHP Framework</title>
+        <title>Package System | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Getting Started | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Package System | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/start/getting-started.html">3.x</a>
+                    <a href="../../../documentation/3.x/core/package-system.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/start/getting-started.html">2.1</a>
+                    <a href="../../../documentation/2.1/core/package-system.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Getting Started</h1>
+        <h1>Package System</h1>
     </div>
         </div>
     </section>
@@ -128,7 +128,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/start/installation.html">Installation</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
             </li>
         
@@ -137,7 +137,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/routing.html">Routing</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/core/package-system.html">Packages</a>
             </li>
                     <li class="">
@@ -266,185 +266,34 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <p>This chapter, we'll start a simple page with MVC to show how to develop simple web application in Windwalker.</p>
+                    <h2>What is Package?</h2>
 
-<p>We assume you install Windwalker in <code>http://localhost/windwalker</code>, so you must use <code>http://localhost/windwalker/www</code> to open Windwalker home page.</p>
+<p>Package is an important part of Windwalker's system structure, which helps us organize our code and architecture, make system more modular.
+Here is a image to describe the package system:</p>
 
-<h2>Create First Controller</h2>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5579031/b4c50ed8-906e-11e4-8964-a1f2d949fc88.png" alt="package" /></p>
 
-<p>Let's create a php class in <code>src/Flower/Controller/Sakura/GetContrtoller.php</code>.</p>
+<p>From above image, we will notice that there can be multiple packages and its' own MVC groups in Windwalker. That makes our application
+ more flexible. For example, we can create a <code>FrontendPackage</code> for front-end an <code>AdminPackage</code> as for back-end use.
+ And an <code>ApiPackage</code> to provide RESTful API for mobile APP if we need.</p>
 
-<p>The <code>Flower</code> is package name, and <code>Sakura</code> is controller name, <code>GetController</code> means it is a default <code>GET</code> action, this equals to
-<code>indexAction</code> in other frameworks, while Windwalker uses single action controller, so every controller class only handles one action.</p>
+<p>Every package is pretty much a simple application having MVC, routing, configuration and database schema:</p>
 
-<pre><code class="php">&lt;?php
-// src/Flower/Controller/Sakura/GetController.php
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png" alt="mockup_3" /></p>
 
-namespace Flower\Controller\Sakura;
+<h3>Use Package as Extension</h3>
 
-use Windwalker\Core\Controller\AbstractController;
+<p>Package can be used as extensions for developer. You can create a package and submit it to <a href="https://packagist.org/">Packagist</a>.
+Then anyone can install it by composer.</p>
 
-/**
- * Sakura Controller
- */
-class GetController extends AbstractController
-{
-    protected function doExecute()
-    {
-        return 'Hello World';
-    }
-}
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5579085/ff715d8c-906f-11e4-92dc-43c3839e0ef8.png" alt="mockup_2" /></p>
 
-</code></pre>
+<h2>Create Package</h2>
 
-<p>Now, open <code>http://path/to/windwalker/www/flower/sakura</code> in browser, you will see <code>Hello World</code>.</p>
-
-<p>Windwalker Controller follows single responsibility principle, every controller has only one action (<code>execute()</code>).
-You can add more logic to a controller but won't be confused by too many different actions in one class.</p>
-
-<h2>Render View Template</h2>
-
-<p>We wish we can render a HTML template to browser, so please add a template file to <code>src/Flower/Templates/sakura/default.php</code></p>
+<p>We will use <code>Flower</code> as example package. Create a php class in <code>/src/Flower/FlowerPackage.php</code>:</p>
 
 <pre><code class="php">&lt;?php
-// src/Flower/Templates/sakura/default.php
-?&gt;
-&lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
-</code></pre>
-
-<p>And modify <code>GetController::doExecute()</code>, we get a View object, push a variable into it, then all <code>render()</code> method to return template.</p>
-
-<pre><code class="php">// src/Flower/Controller/Sakura/GetController.php
-
-// ...
-
-protected function doExecute()
-{
-    $view = $this-&gt;getView();
-
-    $view['name'] = 'Sakura';
-
-    return $view-&gt;render();
-
-    // Another quick way
-    return $this-&gt;renderView('Sakura', 'default', 'php', ['name' =&gt; 'Sakura']);
-}
-
-</code></pre>
-
-<p>We'll get <code>&lt;h1&gt;Hello Sakura&lt;/h1&gt;</code> in browser.</p>
-
-<h3>Add HTML Frame</h3>
-
-<p>By extends parent layout, we can wrap our template by a parent template.</p>
-
-<pre><code class="html">&lt;?php
-// src/Flower/Templates/sakura/default.php
-/**
- * @var  $this  \Windwalker\Core\Renderer\PhpRenderer
- */
-?&gt;
-
-&lt;?php $this-&gt;extend('_global.html') ?&gt;
-
-&lt;!-- This will override parent `content` block --&gt;
-&lt;?php $this-&gt;block('content'); ?&gt;
-    &lt;div class="container"&gt;
-        &lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
-    &lt;/div&gt;
-&lt;?php $this-&gt;endblock(); ?&gt;
-</code></pre>
-
-<p>The result</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16676719/cddea284-44ff-11e6-8af7-c759e6826d5d.jpg" alt="p-2016-07-08-001" /></p>
-
-<blockquote>
-  <p>You can find <code>_global.html</code> in <code>templates/_globa/html.php</code>, this is the global template path.</p>
-</blockquote>
-
-<h3>Change View Layout</h3>
-
-<p>We support different template layout for one controller, the default is <code>default</code> layout, now try to add a <code>photo</code> layout.</p>
-
-<pre><code class="html">&lt;?php
-// src/Flower/Templates/sakura/photo.php
-?&gt;
-&lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
-&lt;img src="http://i.imgur.com/WVpwzJ9.jpg" alt="Sakura"&gt;
-</code></pre>
-
-<p>Then we render <code>photo.php</code> by <code>$view-&gt;setLayout('photo')</code>.</p>
-
-<pre><code class="php">// src/Flower/Controller/Sakura/GetController.php
-
-// ...
-
-protected function doExecute()
-{
-    $view = $this-&gt;getView();
-
-    $view['name'] = 'Sakura';
-
-    return $view-&gt;setLayout('photo')-&gt;render();
-}
-</code></pre>
-
-<h3>Use Edge Template Engine</h3>
-
-<p>Edge is Windwalker built-in template engine to support Windwalker build flexible layout. It is a clone of Laravel Blade engine now but
-add some new features.</p>
-
-<p>We create a template named <code>default.edge.php</code> or <code>default.blade.php</code>.</p>
-
-<pre><code class="html">{{-- src/Flower/Templates/sakura/default.edge.php --}}
-
-@extends('_global.html')
-
-@section('content')
-&lt;div class="container"&gt;
-    &lt;h1&gt;Hello {{ $name }} in edge engine&lt;/h1&gt;
-&lt;/div&gt;
-@stop
-</code></pre>
-
-<p>Render this template in Controller</p>
-
-<pre><code class="php">protected function doExecute()
-{
-    return $this-&gt;renderView('Sakura', 'default', 'edge', ['name' =&gt; 'Sakura']);
-}
-</code></pre>
-
-<p>Will output</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16676825/8c4911e0-4501-11e6-9495-3c0461e66732.jpg" alt="p-2016-07-08-002" /></p>
-
-<h2>Complete Ths Package</h2>
-
-<p>Our namespace start with <code>Flower\</code>, in Windwalker, we call this "Flower package", currently we haven't create package
- class, but controller and routing are works because Windwalker has a default simple routing help us mapping controller
- with URL, so <code>/flower/sakura</code> will auto direct to <code>Flower\Controller\Sakura\GetController</code>.</p>
-
-<p>Simple routing is very slow so we can disable it in <code>etc/config.yml</code></p>
-
-<pre><code class="yaml"># etc/config.yml
-
-routing:
-    simple_route: false
-</code></pre>
-
-<p>After set <code>simple_route</code> to <code>false</code>, you will see your application return
-<code>RouteNotFoundException (404) Unable to handle request for route "flower/sakura"</code></p>
-
-<p>Now we must prepare a standard package environment so we can use more advanced functions in the future.</p>
-
-<h3>Add Package Class</h3>
-
-<p>Create a <code>FlowerPackage</code> first.</p>
-
-<pre><code class="php">&lt;?php
-// Flower/FlowerPackage.php
+// /src/Flower/FlowerPackage.php
 
 namespace Flower;
 
@@ -452,109 +301,130 @@ use Windwalker\Core\Package\AbstractPackage;
 
 class FlowerPackage extends AbstractPackage
 {
-
 }
 </code></pre>
 
-<p>Next, register it to <code>etc/app/web.php</code>, the <code>flower</code> key name is alias of your package, you can customize it if package name conflict.</p>
+<p>Then add this package to <code>/etc/windwalker.php</code> file (or <code>web.php</code> if you only want it run in web environment):</p>
 
-<pre><code class="php">// ...
+<pre><code class="php">// etc/app/windwalker.php
+
+// ...
 
     'packages' =&gt; [
-        'flower' =&gt; \Flower\FlowerPackage::class
+        'main' =&gt; \Main\MainPackage::class
+        'flower' =&gt; \Flower\FlowerPackage::class // Add this line
     ],
 
 // ...
 </code></pre>
 
-<h3>Register Routing</h3>
+<p>The array key is package name alias, you can customize it. For example, If you use <code>egg</code> as package alias, then you must
+get this package by <code>\Windwalker\Core\Package\PackageHelper::getPackage('egg')</code>. Mostly we use an alias same with package name,
+but sometimes if there has package name conflict, we can try to use different alias.</p>
 
-<p>And then, add a nre routing profile to <code>etc/routing.yml</code>.</p>
+<h2>Add Package Routing</h2>
 
-<pre><code class="yaml"># ...
+<p>Create <code>/src/Flower/routing.yml</code>, then add some routes:</p>
+
+<pre><code class="yaml">## /src/Flower/routing.yml
+
+sakura:
+    pattern: /sakura(/id)
+    controller: Sakura
+
+sakuras:
+    pattern: /sakuras
+    controller: Sakuras
+
+roses:
+    pattern: /roses
+    controller: Roses
+</code></pre>
+
+<p>Different from the global routing, you don't need to write all controller namespace, just write controller short name, 
+the package will auto find this controller. For example: <code>controller: Sakura</code> will find <code>Flower\Controller\Sakura\{action}</code> to execute.</p>
+
+<p>We have to register this routes to root routing file. Open <code>/etc/routing.yml</code> And add this route profile.</p>
+
+<pre><code class="yaml">## /etc/routing.yml
 
 flower:
     pattern: /flower
     package: flower
 </code></pre>
 
-<blockquote>
-  <p>You can also do this by using <code>$ php windwalker package install flower</code> in CLI.</p>
-</blockquote>
+<p>The <code>package: flower</code> tells Windwalker to import all Flower package's routes, and all patterns will prefix with: <code>/flower/...</code>,
+the compiled routes will look like:</p>
 
-<p>The last step, create package routing at <code>src/Flower/routing.yml</code>.</p>
-
-<pre><code class="yaml"># src/Flower/routing.yml
-
-sakura:
-    pattern: /sakura
+<pre><code class="yaml">flower@sakura:
+    pattern: /flower/sakura(/id)
     controller: Sakura
+
+flower@sakuras:
+    pattern: /flower/sakuras
+    controller: Sakuras
+
+flower@roses:
+    pattern: /flower/roses
+    controller: Roses
 </code></pre>
 
-<p>OK, the Sakura page will return. To register a package and routing is a bit of bother, but it will be very
-flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and mny developers.</p>
-
-<h2>Model Repository</h2>
-
-<p>Windwalker provides a simple <code>ModelRepository</code> class to help you organize your data source.</p>
-
-<p>Add SakuraModel class.</p>
+<p>Use browser open <code>/flower/sakuras</code>, Windwalker will find <code>Flower\Controller\Sakuras\GetController</code> to render page.
+We can create a controller to match this route:</p>
 
 <pre><code class="php">&lt;?php
-// src/Flower/Model/SakuraModel.php
+// src/Flower/Controller/Sakuras/GetController.php
 
-namespace Flower\Model;
+namespace Flower\Controller\Sakuras;
 
-use Windwalker\Core\Model\ModelRepository;
+use Windwalker\Core\Controller\Controller;
 
-class SakuraModel extends ModelRepository
+class GetController extends Controller
 {
-    public function getContent()
+    protected function doExecute()
     {
-        return [
-            ['title' =&gt; 'foo'],
-            ['title' =&gt; 'bar'],
-            ['title' =&gt; 'yoo'],
-        ];
+        return 'Output of Sakuras Controller';
     }
 }
 </code></pre>
 
-<p>Use this Model in controller.</p>
+<p>About how routing and controller work, please see <a href="routing.html">Routing</a> section.</p>
 
-<pre><code class="blade">// ...
+<h2>Add &amp; Get Packages</h2>
 
-/** @var SakuraModel $model */
-$model   = $this-&gt;getModel();
-$content = $model-&gt;getContent();
+<p>Use <code>PackageResolver</code>.</p>
 
-return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $content]);
+<pre><code class="php">$resolver = $container-&gt;get('package.resolver');
+
+$resolver-&gt;getPackage('flower'); // Get flower package
+
+$resolver-&gt;getPackage(); // Get current package
+
+$resoler-&gt;addPackage('alias', $package); // Add new package
 </code></pre>
 
-<p>Modify the template to loop <code>content</code> variable.</p>
+<p>Use <code>PackageHelper</code>, this class is a facade of <code>PackageResolver</code>.</p>
 
-<pre><code class="html">@extends('_global.html')
+<pre><code class="php">use Windwalker\Core\Package\PackageHelper;
 
-@section('content')
-&lt;div class="container"&gt;
-    &lt;h1&gt;Hello Sakura&lt;/h1&gt;
-    &lt;ul&gt;
-        @foreach ($content as $item)
-        &lt;li&gt;{{ $item['title'] }}&lt;/li&gt;
-        @endforeach
-    &lt;/ul&gt;
-&lt;/div&gt;
-@stop
+PackageHelper::getPackage('flower'); // Get flower package
+
+PackageHelper::getPackage(); // Get current package
+
+PackageHelper::addPackage('alias', $package); // Add new package
 </code></pre>
 
-<p>The result:</p>
+<p>You can also get package from Application.</p>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16677127/bb37159e-4504-11e6-8096-9ca92d211738.jpg" alt="p-2016-07-08-003" /></p>
+<pre><code class="php">$app = Ioc::getApplication();
+
+$app-&gt;getPackage([$alias|null]); // NULL will get current package
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/start/getting-started.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/package-system.md">improve</a> this document.
     </p>
                 </article>
             </div>

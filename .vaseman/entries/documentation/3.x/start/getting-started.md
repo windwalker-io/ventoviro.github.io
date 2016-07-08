@@ -38,6 +38,9 @@ class GetController extends AbstractController
 
 Now, open `http://path/to/windwalker/www/flower/sakura` in browser, you will see `Hello World`.
 
+Windwalker Controller follows single responsibility principle, every controller has only one action (`execute()`).
+You can add more logic to a controller but won't be confused by too many different actions in one class.
+
 ## Render View Template
 
 We wish we can render a HTML template to browser, so please add a template file to `src/Flower/Templates/sakura/default.php`
@@ -170,6 +173,8 @@ Our namespace start with `Flower\`, in Windwalker, we call this "Flower package"
 Simple routing is very slow so we can disable it in `etc/config.yml`
 
 ``` yaml
+# etc/config.yml
+
 routing:
     simple_route: false
 ```

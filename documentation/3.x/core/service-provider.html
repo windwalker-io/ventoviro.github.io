@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Getting Started | Windwalker - A Modern PHP Framework</title>
+        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Getting Started | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/start/getting-started.html">3.x</a>
+                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/start/getting-started.html">2.1</a>
+                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Getting Started</h1>
+        <h1>Service Provider</h1>
     </div>
         </div>
     </section>
@@ -128,7 +128,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/start/installation.html">Installation</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
             </li>
         
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -266,295 +266,110 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <p>This chapter, we'll start a simple page with MVC to show how to develop simple web application in Windwalker.</p>
+                    <h2>Introduction of Service Provider</h2>
 
-<p>We assume you install Windwalker in <code>http://localhost/windwalker</code>, so you must use <code>http://localhost/windwalker/www</code> to open Windwalker home page.</p>
+<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
+custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
 
-<h2>Create First Controller</h2>
+<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
+and write all our logic in <code>register()</code> method and set our service objects into container.</p>
 
-<p>Let's create a php class in <code>src/Flower/Controller/Sakura/GetContrtoller.php</code>.</p>
+<h3>Basic Provider Example</h3>
 
-<p>The <code>Flower</code> is package name, and <code>Sakura</code> is controller name, <code>GetController</code> means it is a default <code>GET</code> action, this equals to
-<code>indexAction</code> in other frameworks, while Windwalker uses single action controller, so every controller class only handles one action.</p>
+<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
 
-<pre><code class="php">&lt;?php
-// src/Flower/Controller/Sakura/GetController.php
+<h5>Original Way</h5>
 
-namespace Flower\Controller\Sakura;
+<pre><code class="php">// import.mongodb.php
 
-use Windwalker\Core\Controller\AbstractController;
+$conn = new MongoDBConnection($config['database']['mongodb']);
 
-/**
- * Sakura Controller
- */
-class GetController extends AbstractController
+return $conn;
+</code></pre>
+
+<p>And include this file:</p>
+
+<pre><code class="php">$mongo = include_once 'import.mongodb.php';
+</code></pre>
+
+<h5>Windwalker Way</h5>
+
+<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
+
+<pre><code class="php">use Windwalker\DI\Container;
+use Windwalker\DI\ServiceProviderInterface;
+
+class MongoDBServiceProvider implements ServiceProviderInterface
 {
-    protected function doExecute()
+    public function register(Container $container)
     {
-        return 'Hello World';
+        $container-&gt;share('mongo.db', function (Container $container)
+        {
+            $config = $container-&gt;get('config');
+
+            return new MongoDBConnection($config-&gt;get('database.mongodb'));
+        });
     }
 }
 
 </code></pre>
 
-<p>Now, open <code>http://path/to/windwalker/www/flower/sakura</code> in browser, you will see <code>Hello World</code>.</p>
+<p>Register this provider to container:</p>
 
-<p>Windwalker Controller follows single responsibility principle, every controller has only one action (<code>execute()</code>).
-You can add more logic to a controller but won't be confused by too many different actions in one class.</p>
-
-<h2>Render View Template</h2>
-
-<p>We wish we can render a HTML template to browser, so please add a template file to <code>src/Flower/Templates/sakura/default.php</code></p>
-
-<pre><code class="php">&lt;?php
-// src/Flower/Templates/sakura/default.php
-?&gt;
-&lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
+<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
 </code></pre>
 
-<p>And modify <code>GetController::doExecute()</code>, we get a View object, push a variable into it, then all <code>render()</code> method to return template.</p>
+<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
 
-<pre><code class="php">// src/Flower/Controller/Sakura/GetController.php
+<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
 
-// ...
+// OR
 
-protected function doExecute()
+$mongo = Ioc::get('mongo.db');
+</code></pre>
+
+<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+
+<h2>Registering Providers</h2>
+
+<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
+you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+
+<pre><code class="php">public function loadProviders()
 {
-    $view = $this-&gt;getView();
+    $providers = parent::loadProviders();
 
-    $view['name'] = 'Sakura';
+    // Default providers ...
 
-    return $view-&gt;render();
+    /*
+     * Custom Providers:
+     * -----------------------------------------
+     * You can add your own providers here. If you installed a 3rd party packages from composer,
+     * but this package need some init logic, create a service provider to do this and register it here.
+     */
 
-    // Another quick way
-    return $this-&gt;renderView('Sakura', 'default', 'php', ['name' =&gt; 'Sakura']);
-}
+    // Custom Providers here...
+    $providers['mongodb'] = new MongoDBServiceProvider;
 
-</code></pre>
-
-<p>We'll get <code>&lt;h1&gt;Hello Sakura&lt;/h1&gt;</code> in browser.</p>
-
-<h3>Add HTML Frame</h3>
-
-<p>By extends parent layout, we can wrap our template by a parent template.</p>
-
-<pre><code class="html">&lt;?php
-// src/Flower/Templates/sakura/default.php
-/**
- * @var  $this  \Windwalker\Core\Renderer\PhpRenderer
- */
-?&gt;
-
-&lt;?php $this-&gt;extend('_global.html') ?&gt;
-
-&lt;!-- This will override parent `content` block --&gt;
-&lt;?php $this-&gt;block('content'); ?&gt;
-    &lt;div class="container"&gt;
-        &lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
-    &lt;/div&gt;
-&lt;?php $this-&gt;endblock(); ?&gt;
-</code></pre>
-
-<p>The result</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16676719/cddea284-44ff-11e6-8af7-c759e6826d5d.jpg" alt="p-2016-07-08-001" /></p>
-
-<blockquote>
-  <p>You can find <code>_global.html</code> in <code>templates/_globa/html.php</code>, this is the global template path.</p>
-</blockquote>
-
-<h3>Change View Layout</h3>
-
-<p>We support different template layout for one controller, the default is <code>default</code> layout, now try to add a <code>photo</code> layout.</p>
-
-<pre><code class="html">&lt;?php
-// src/Flower/Templates/sakura/photo.php
-?&gt;
-&lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
-&lt;img src="http://i.imgur.com/WVpwzJ9.jpg" alt="Sakura"&gt;
-</code></pre>
-
-<p>Then we render <code>photo.php</code> by <code>$view-&gt;setLayout('photo')</code>.</p>
-
-<pre><code class="php">// src/Flower/Controller/Sakura/GetController.php
-
-// ...
-
-protected function doExecute()
-{
-    $view = $this-&gt;getView();
-
-    $view['name'] = 'Sakura';
-
-    return $view-&gt;setLayout('photo')-&gt;render();
+    return $providers;
 }
 </code></pre>
 
-<h3>Use Edge Template Engine</h3>
+<p>There are 3 positions in default Windwalker Application we can add providers:</p>
 
-<p>Edge is Windwalker built-in template engine to support Windwalker build flexible layout. It is a clone of Laravel Blade engine now but
-add some new features.</p>
+<ul>
+<li><code>src/Windwalker/Web/Application.php</code></li>
+<li><code>src/Windwalker/Console/Application/php</code></li>
+<li><code>src/Windwalker.php</code></li>
+</ul>
 
-<p>We create a template named <code>default.edge.php</code> or <code>default.blade.php</code>.</p>
-
-<pre><code class="html">{{-- src/Flower/Templates/sakura/default.edge.php --}}
-
-@extends('_global.html')
-
-@section('content')
-&lt;div class="container"&gt;
-    &lt;h1&gt;Hello {{ $name }} in edge engine&lt;/h1&gt;
-&lt;/div&gt;
-@stop
-</code></pre>
-
-<p>Render this template in Controller</p>
-
-<pre><code class="php">protected function doExecute()
-{
-    return $this-&gt;renderView('Sakura', 'default', 'edge', ['name' =&gt; 'Sakura']);
-}
-</code></pre>
-
-<p>Will output</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16676825/8c4911e0-4501-11e6-9495-3c0461e66732.jpg" alt="p-2016-07-08-002" /></p>
-
-<h2>Complete Ths Package</h2>
-
-<p>Our namespace start with <code>Flower\</code>, in Windwalker, we call this "Flower package", currently we haven't create package
- class, but controller and routing are works because Windwalker has a default simple routing help us mapping controller
- with URL, so <code>/flower/sakura</code> will auto direct to <code>Flower\Controller\Sakura\GetController</code>.</p>
-
-<p>Simple routing is very slow so we can disable it in <code>etc/config.yml</code></p>
-
-<pre><code class="yaml"># etc/config.yml
-
-routing:
-    simple_route: false
-</code></pre>
-
-<p>After set <code>simple_route</code> to <code>false</code>, you will see your application return
-<code>RouteNotFoundException (404) Unable to handle request for route "flower/sakura"</code></p>
-
-<p>Now we must prepare a standard package environment so we can use more advanced functions in the future.</p>
-
-<h3>Add Package Class</h3>
-
-<p>Create a <code>FlowerPackage</code> first.</p>
-
-<pre><code class="php">&lt;?php
-// Flower/FlowerPackage.php
-
-namespace Flower;
-
-use Windwalker\Core\Package\AbstractPackage;
-
-class FlowerPackage extends AbstractPackage
-{
-
-}
-</code></pre>
-
-<p>Next, register it to <code>etc/app/web.php</code>, the <code>flower</code> key name is alias of your package, you can customize it if package name conflict.</p>
-
-<pre><code class="php">// ...
-
-    'packages' =&gt; [
-        'flower' =&gt; \Flower\FlowerPackage::class
-    ],
-
-// ...
-</code></pre>
-
-<h3>Register Routing</h3>
-
-<p>And then, add a nre routing profile to <code>etc/routing.yml</code>.</p>
-
-<pre><code class="yaml"># ...
-
-flower:
-    pattern: /flower
-    package: flower
-</code></pre>
-
-<blockquote>
-  <p>You can also do this by using <code>$ php windwalker package install flower</code> in CLI.</p>
-</blockquote>
-
-<p>The last step, create package routing at <code>src/Flower/routing.yml</code>.</p>
-
-<pre><code class="yaml"># src/Flower/routing.yml
-
-sakura:
-    pattern: /sakura
-    controller: Sakura
-</code></pre>
-
-<p>OK, the Sakura page will return. To register a package and routing is a bit of bother, but it will be very
-flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and mny developers.</p>
-
-<h2>Model Repository</h2>
-
-<p>Windwalker provides a simple <code>ModelRepository</code> class to help you organize your data source.</p>
-
-<p>Add SakuraModel class.</p>
-
-<pre><code class="php">&lt;?php
-// src/Flower/Model/SakuraModel.php
-
-namespace Flower\Model;
-
-use Windwalker\Core\Model\ModelRepository;
-
-class SakuraModel extends ModelRepository
-{
-    public function getContent()
-    {
-        return [
-            ['title' =&gt; 'foo'],
-            ['title' =&gt; 'bar'],
-            ['title' =&gt; 'yoo'],
-        ];
-    }
-}
-</code></pre>
-
-<p>Use this Model in controller.</p>
-
-<pre><code class="blade">// ...
-
-/** @var SakuraModel $model */
-$model   = $this-&gt;getModel();
-$content = $model-&gt;getContent();
-
-return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $content]);
-</code></pre>
-
-<p>Modify the template to loop <code>content</code> variable.</p>
-
-<pre><code class="html">@extends('_global.html')
-
-@section('content')
-&lt;div class="container"&gt;
-    &lt;h1&gt;Hello Sakura&lt;/h1&gt;
-    &lt;ul&gt;
-        @foreach ($content as $item)
-        &lt;li&gt;{{ $item['title'] }}&lt;/li&gt;
-        @endforeach
-    &lt;/ul&gt;
-&lt;/div&gt;
-@stop
-</code></pre>
-
-<p>The result:</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16677127/bb37159e-4504-11e6-8096-9ca92d211738.jpg" alt="p-2016-07-08-003" /></p>
+<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
+for console use, or add it in <code>Windwalker.php</code> for both.</p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/start/getting-started.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
     </p>
                 </article>
             </div>

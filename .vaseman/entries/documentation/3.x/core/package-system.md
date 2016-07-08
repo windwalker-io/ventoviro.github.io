@@ -1,17 +1,18 @@
 layout: documentation.twig
-title: Package System
+title: Packages
 
 ---
 
 ## What is Package?
 
-Package is the main component of Windwalker's structure. Here is a image that describe the package system:
+Package is an important part of Windwalker's system structure, which helps us organize our code and architecture, make system more modular.
+Here is a image to describe the package system:
 
 ![package](https://cloud.githubusercontent.com/assets/1639206/5579031/b4c50ed8-906e-11e4-8964-a1f2d949fc88.png)
 
-From above image, we will know there can be multiple packages and its' own MVC system in Windwalker. That makes our application
- more flexible. For example, we can create a `FrontendPackage` and an `AdminPackage` as front-end and back-end respectively.
- And an `ApiPackage` to provide RESTful API for mobile APP.
+From above image, we will notice that there can be multiple packages and its' own MVC groups in Windwalker. That makes our application
+ more flexible. For example, we can create a `FrontendPackage` for front-end an `AdminPackage` as for back-end use.
+ And an `ApiPackage` to provide RESTful API for mobile APP if we need.
  
 Every package is pretty much a simple application having MVC, routing, configuration and database schema:
 
@@ -41,45 +42,24 @@ class FlowerPackage extends AbstractPackage
 }
 ```
 
-Then add this package to `/src/Windwalker/Web/Application.php`, at the `loadPackage()` method:
+Then add this package to `/etc/windwalker.php` file (or `web.php` if you only want it run in web environment):
 
 ``` php
-// /src/Windwalker/Web/Application.php
-use Flower\FlowerPackage;
+// etc/app/windwalker.php
 
-class Application extends WebApplication
-{
-    // ...
+// ...
 
-    public function loadPackages()
-    {
-        $packages = Windwalker::loadPackages();
-    
-        /*
-         * Get Packages for This Application
-         * -----------------------------------------
-         * If you want a package only use in this application or want to override a global package,
-         * set it here. Example: $packages[] = new Flower\FlowerPackage;
-         */
-    
-        // Add package here, the array key is package name, you can customize it.
-        $packages['flower'] = new FlowerPackage;
-    
-        return $packages;
-    }
-    
-    // ...
-}
+    'packages' => [
+        'main' => \Main\MainPackage::class
+        'flower' => \Flower\FlowerPackage::class // Add this line
+    ],
+
+// ...
 ```
 
-The array key is package name alias, you can customize it. For example, If you use `$packages['flower']`, then you can
-use `\Windwalker\Core\Package\PackageHelper::getPackage('flower')` to get this package object. But if you use
-
-``` php
-$packages['bar'] = new FlowerPackage;
-```
-
-You will have to get `FlowerPackage` it by  `\Windwalker\Core\Package\PackageHelper::getPackage('bar')`.
+The array key is package name alias, you can customize it. For example, If you use `egg` as package alias, then you must
+get this package by `\Windwalker\Core\Package\PackageHelper::getPackage('egg')`. Mostly we use an alias same with package name,
+but sometimes if there has package name conflict, we can try to use different alias.
 
 ## Add Package Routing
 
@@ -131,7 +111,7 @@ flower@roses:
     controller: Roses
 ```
 
-Use browser to open `/flower/sakuras`, Windwalker will find `Flower\Controller\Sakuras\GetController` to render page.
+Use browser open `/flower/sakuras`, Windwalker will find `Flower\Controller\Sakuras\GetController` to render page.
 We can create a controller to match this route:
 
 ``` php
@@ -151,7 +131,7 @@ class GetController extends Controller
 }
 ```
 
-About how routing and controller work, please see [Routing And Controller](routing-controller.html) section.
+About how routing and controller work, please see [Routing](routing.html) section.
 
 ## Add & Get Packages
 
@@ -184,5 +164,5 @@ You can also get package from Application.
 ``` php
 $app = Ioc::getApplication();
 
-$app->getPackage([$alias|null]);
+$app->getPackage([$alias|null]); // NULL will get current package
 ```
