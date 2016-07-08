@@ -130,6 +130,11 @@ dl dd {
 #header .uk-navbar-toggle {
   margin-top: 15px;
 }
+#header .uk-dropdown .uk-active a {
+  background: #00a8e6;
+  color: #fff;
+  outline: 0;
+}
 @media (max-width: 767px) {
   #header #mainmenu {
     position: absolute;

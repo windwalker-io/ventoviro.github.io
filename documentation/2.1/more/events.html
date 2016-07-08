@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>Events | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Events | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+
+                    <li class="" data-uk-dropdown="">
+        <a href="../../../documentation/3.x/start/getting-started.html">
+            <span class="menu-item-title">2.1 <i class="uk-icon-caret-down"></i></span>
+        </a>
+
+        <div class="uk-dropdown uk-dropdown-navbar">
+            <ul class="uk-nav uk-nav-navbar">
+                <li class="">
+                    <a href="../../../documentation/3.x/more/events.html">3.x</a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/2.1/more/events.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Events</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/debugging.html">Debugging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>Event Listener (Observer) Pattern</h1>
+
+<p>The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents, 
+called observers, and notifies them automatically of any state changes, usually by calling one of their methods.</p>
+
+<p>See: <a href="http://en.wikipedia.org/wiki/Observer_pattern">Observer pattern on Wikipedia</a></p>
+
+<h2>The Flow</h2>
+
+<p>First, there will be many listeners(observers), we can attach them to a dispatcher object.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5592361/7a569cdc-9206-11e4-829b-846b2c31557e.jpg" alt="p-2015-01-01-8" /></p>
+
+<p>Now, all listeners listened this dispatcher, if some event triggered, this dispatcher will notify all listeners.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5592360/7a4ed9c0-9206-11e4-91aa-d3d50c4388c5.jpg" alt="p-2015-01-01-9" /></p>
+
+<p>So, if any listener has the method which matched the event, dispatcher will call this method.</p>
+
+<h1>Start Using Event</h1>
+
+<p>Create an event object named <code>onBeforeContentSave</code>, and set some arguments.</p>
+
+<pre><code class="php">use Windwalker\Event\Event;
+
+$event = new Event('onBeforeContentSave');
+
+$content = new stdClass;
+
+$event-&gt;setArgument('title', 'My content');
+$event-&gt;setArgument('content', $content);
+</code></pre>
+
+<p>Create your listener:</p>
+
+<pre><code class="php">use Windwalker\Event\EventInterface;
+
+class ContentListener
+{
+    public function onBeforeContentSave(EventInterface $event)
+    {
+        $event-&gt;getArgument('content')-&gt;title = $event-&gt;getArgument('title'); 
+    }
+
+     public function onAfterContentSave(EventInterface $event)
+    {
+        // Do something
+    }
+}
+</code></pre>
+
+<p>Add listener to Dispatcher:</p>
+
+<pre><code class="php">$dispatcher = \Windwalker\Ioc::getDispatcher();
+
+// OR
+
+$dispatcher = $container-&gt;get('system.dispatcher');
+
+// Attach listener
+$dispatcher-&gt;addListener(new ContentListener);
+</code></pre>
+
+<p>Then we trigger the event we created:</p>
+
+<pre><code class="php">// Trigger the onBeforeContentSave
+$dispatcher-&gt;triggerEvent($event);
+
+// ContentListener::onBeforeContentSave will set title into $content object.
+$content-&gt;title == 'My content';
+</code></pre>
+
+<p>If a method name in listener equals to event name, Dispatcher will run this method and inject Event into this method.
+Then we can do many things we want.</p>
+
+<h2>Array Access</h2>
+
+<p>Event can access like array:</p>
+
+<pre><code class="php">// Set
+$event['data'] = $data;
+
+// Get
+$data = $event['data'];
+</code></pre>
+
+<h1>Listeners</h1>
+
+<p>There can be two types of listeners, using class or closure.</p>
+
+<h2>Class Listeners</h2>
+
+<p>Using class, just new an instance</p>
+
+<pre><code class="php">$dispatcher-&gt;addListener(new ContentListener);
+</code></pre>
+
+<p>You may provides priority for every methods.</p>
+
+<pre><code class="php">use Windwalker\Event\ListenerPriority;
+
+// Add priorities
+$dispatcher-&gt;addListener(
+    new ContentListener,
+    array(
+        'onBeforeContentSave' =&gt; ListenerPriority::LOW,
+        'onAfterContentSave' =&gt; ListenerPriority::HIGH
+    )
+);
+
+// Or using an inner method to get all methods
+$dispatcher-&gt;addListener(new ContentListener, ContentListener::getPriorities());
+</code></pre>
+
+<h2>Closure Listeners</h2>
+
+<p>If using closure, you must provide the priority and an event name to listen.</p>
+
+<pre><code class="php">$dispatcher-&gt;addListener(
+    function (EventInterface $event)
+    {
+        // Do something
+    }, 
+    array('onContentSave' =&gt; ListenerPriority::NORMAL)
+);
+</code></pre>
+
+<h1>Dispatcher</h1>
+
+<h2>Trigger An Event Object</h2>
+
+<p>This is the most normal way to trigger an event.</p>
+
+<pre><code class="php">$event = new Event('onFlowerBloom');
+
+$event-&gt;setArgument('flower', 'sakura');
+
+$dispatcher-&gt;triggerEvent($event);
+</code></pre>
+
+<p>Add arguments when triggering event, the arguments will merge with previous arguments you set.</p>
+
+<pre><code class="php">$args = array(
+    'foo' =&gt; 'bar'
+);
+
+$dispatcher-&gt;triggerEvent($event, $args);
+</code></pre>
+
+<h2>Add An Event Then Trigger It Later</h2>
+
+<p>We can add an event into Dispatcher, then use event name to raise it laster.</p>
+
+<pre><code class="php">$event = new Event('onFlowerBloom');
+
+$event-&gt;setArgument('flower', 'sakura');
+
+$dispatcher-&gt;addEvent($event);
+
+// Nothing happen
+
+$dispatcher-&gt;triggerEvent('onFlowerBloom');
+</code></pre>
+
+<h2>Trigger A New Event Instantly</h2>
+
+<p>We don't need create event first, just trigger a string as event name, Dispatcher will create an event instantly.</p>
+
+<pre><code class="php">$args = array(
+    'foo' =&gt; 'bar'
+);
+
+$dispatcher-&gt;triggerEvent('onCloudMoving', $args);
+</code></pre>
+
+<h1>Stopping Event</h1>
+
+<p>If you stop an event, the next listeners in the queue won't be called.</p>
+
+<pre><code class="php">class ContentListener
+{
+    public function onBeforeContentSave(EventInterface $event)
+    {
+        // Stopping the Event propagation.
+        $event-&gt;stop();
+    }
+}
+</code></pre>
+
+<h1>DispatcherAwareInterface and Trait</h1>
+
+<p>In PHP 5.4 or higher, you can use <code>DispatcherAwareTrait</code>.</p>
+
+<pre><code class="php">use Windwalker\Event\DispatcherAwareInterface;
+use Windwalker\Event\DispatcherAwareTrait;
+
+class Application implements DispatcherAwareInterface
+{
+    use DispatcherAwareTrait;
+
+    // ...
+}
+</code></pre>
+
+<h1>Core Events</h1>
+
+<ul>
+<li>onBeforeInitialise</li>
+<li>onAfterInitialise</li>
+<li>onBeforeExecute</li>
+<li>onAfterExecute</li>
+<li>onBeforeRouting</li>
+<li>onAfterRouting</li>
+<li>onBeforeRender</li>
+<li>onAfterRender</li>
+<li>onBeforeRespond</li>
+<li>onAfterRespond</li>
+</ul>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/2.1/more/events.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

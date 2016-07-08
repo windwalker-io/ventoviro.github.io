@@ -4,9 +4,47 @@
     <script src="{{ uri.media }}js/doc.js"></script>
 {% endblock %}
 
+{% block stylesheet %}
+    {{ parent()  }}
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+{% endblock %}
+
+{% block version_switcher %}
+    <li class="" data-uk-dropdown="">
+        <a href="{{ uri.base }}documentation/3.x/start/getting-started.html">
+            <span class="menu-item-title">{{ version }} <i class="uk-icon-caret-down"></i></span>
+        </a>
+
+        <div class="uk-dropdown uk-dropdown-navbar">
+            <ul class="uk-nav uk-nav-navbar">
+                <li class="{{ version == '3.x' ? 'uk-active' : '' }}">
+                    <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '3.x') }}">3.x</a>
+                </li>
+
+                <li class="{{ version == '2.1' ? 'uk-active' : '' }}">
+                    <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '2.1') }}">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+{% endblock %}
+
 {% block submenu %}
     <div class="uk-width-medium-1-4 uk-container-center">
-        {% include 'sub-menu.twig' with {'menu': 'documentation'} %}
+        {% include 'sub-menu.twig' with {'menu': 'documentation', 'version': version} %}
     </div>
 {% endblock %}
 
@@ -14,6 +52,6 @@
     <hr />
 
     <p class="uk-text-center">
-        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/{{ path|join('/') }}">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/{{ path|join('/') }}">improve</a> this document.
     </p>
 {% endblock %}

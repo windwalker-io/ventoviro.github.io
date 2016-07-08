@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+
+                    <li class="" data-uk-dropdown="">
+        <a href="../../../documentation/3.x/start/getting-started.html">
+            <span class="menu-item-title">3.x <i class="uk-icon-caret-down"></i></span>
+        </a>
+
+        <div class="uk-dropdown uk-dropdown-navbar">
+            <ul class="uk-nav uk-nav-navbar">
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/service-provider.html">3.x</a>
+                </li>
+
+                <li class="">
+                    <a href="../../../documentation/2.1/start/service-provider.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Service Provider</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+    </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>Introduction of Service Provider</h1>
+
+<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
+custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+
+<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
+and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+
+<h2>Basic Provider Example</h2>
+
+<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
+
+<h3>Original Way</h3>
+
+<pre><code class="php">// import.mongodb.php
+
+$conn = new MongoDBConnection($config['database']['mongodb']);
+
+return $conn;
+</code></pre>
+
+<p>And include this file:</p>
+
+<pre><code class="php">$mongo = include_once 'import.mongodb.php';
+</code></pre>
+
+<h3>Windwalker Way</h3>
+
+<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
+
+<pre><code class="php">use Windwalker\DI\Container;
+use Windwalker\DI\ServiceProviderInterface;
+
+class MongoDBServiceProvider implements ServiceProviderInterface
+{
+    public function register(Container $container)
+    {
+        $container-&gt;share('mongo.db', function (Container $container)
+        {
+            $config = $container-&gt;get('config');
+
+            return new MongoDBConnection($config-&gt;get('database.mongodb'));
+        });
+    }
+}
+
+</code></pre>
+
+<p>Register this provider to container:</p>
+
+<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
+</code></pre>
+
+<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
+
+<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+
+// OR
+
+$mongo = Ioc::get('mongo.db');
+</code></pre>
+
+<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+
+<h1>Registering Providers</h1>
+
+<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
+you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+
+<pre><code class="php">public function loadProviders()
+{
+    $providers = parent::loadProviders();
+
+    // Default providers ...
+
+    /*
+     * Custom Providers:
+     * -----------------------------------------
+     * You can add your own providers here. If you installed a 3rd party packages from composer,
+     * but this package need some init logic, create a service provider to do this and register it here.
+     */
+
+    // Custom Providers here...
+    $providers['mongodb'] = new MongoDBServiceProvider;
+
+    return $providers;
+}
+</code></pre>
+
+<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+
+<ul>
+<li><code>src/Windwalker/Web/Application.php</code></li>
+<li><code>src/Windwalker/Console/Application/php</code></li>
+<li><code>src/Windwalker.php</code></li>
+</ul>
+
+<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
+for console use, or add it in <code>Windwalker.php</code> for both.</p>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/start/service-provider.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>Registry Object | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Registry Object | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+
+                    <li class="" data-uk-dropdown="">
+        <a href="../../../documentation/3.x/start/getting-started.html">
+            <span class="menu-item-title">2.1 <i class="uk-icon-caret-down"></i></span>
+        </a>
+
+        <div class="uk-dropdown uk-dropdown-navbar">
+            <ul class="uk-nav uk-nav-navbar">
+                <li class="">
+                    <a href="../../../documentation/3.x/more/registry.html">3.x</a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/2.1/more/registry.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Registry Object</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/debugging.html">Debugging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>Getting Started</h1>
+
+<p>Windwalker Registry is a storage of nested array or object, help us manage multi-level structures data.</p>
+
+<pre><code class="php">use Windwalker\Registry\Registry;
+
+$registry = new Registry;
+
+// Set a value in the registry.
+$registry-&gt;set('foo', 'bar');
+
+// Get a value from the registry;
+$value = $registry-&gt;get('foo');
+
+</code></pre>
+
+<h1>Load config by Registry</h1>
+
+<pre><code class="php">use Windwalker\Registry\Registry;
+
+$registry = new Registry;
+
+// Load by string
+$registry-&gt;loadString('{"foo" : "bar"}');
+
+$registry-&gt;loadString('&lt;root&gt;&lt;/root&gt;', 'xml');
+
+// Load by object or array
+$registry-&gt;load($object);
+
+// Load by file
+$registry-&gt;loadFile($root . '/config/config.json', 'json');
+</code></pre>
+
+<h1>Accessing a Registry by getter &amp; setter</h1>
+
+<h2>Get value</h2>
+
+<pre><code class="php">$registry-&gt;get('foo');
+
+// Get a non-exists value and return default
+$registry-&gt;get('foo', 'default');
+
+// OR
+
+$registry-&gt;get('foo') ?: 'default';
+</code></pre>
+
+<h2>Set value</h2>
+
+<pre><code class="php">// Set value
+$registry-&gt;set('bar', $value);
+
+// Sets a default value if not already assigned.
+$registry-&gt;def('bar', $default);
+</code></pre>
+
+<h2>Accessing children value by path</h2>
+
+<pre><code class="php">$json = '{
+    "parent" : {
+        "child" : "Foo"
+    }
+}';
+
+$registry = new Registry($json);
+
+$registry-&gt;get('parent.child'); // return 'Foo'
+
+$registry-&gt;set('parent.child', $value);
+</code></pre>
+
+<h2>Append &amp; Prepend</h2>
+
+<p>Support <code>push / pop / shift / unshift</code> methods.</p>
+
+<pre><code class="php">$registry-&gt;set('foo.bar', array('fisrt', 'second'));
+
+$registry-&gt;push('foo.bar', 'third');
+
+$registry-&gt;get('foo.bar');
+// Result: Array(first, second, third)
+</code></pre>
+
+<h2>Use other separator</h2>
+
+<pre><code class="php">$registry-&gt;setSeparator('/');
+
+$data = $registry-&gt;get('foo/bar');
+</code></pre>
+
+<h1>Accessing a Registry as an Array</h1>
+
+<p>The <code>Registry</code> class implements <code>ArrayAccess</code> so the properties of the registry can be accessed as an array. Consider the following examples:</p>
+
+<pre><code class="php">// Set a value in the registry.
+$registry['foo'] = 'bar';
+
+// Get a value from the registry;
+$value = $registry['foo'];
+
+// Check if a key in the registry is set.
+if (isset($registry['foo']))
+{
+    echo 'Say bar.';
+}
+</code></pre>
+
+<h1>Merge Registry</h1>
+
+<h3>Using load* methods to merge two config files.</h3>
+
+<pre><code class="php">$json1 = '{
+    "field" : {
+        "keyA" : "valueA",
+        "keyB" : "valueB"
+    }
+}';
+
+$json2 = '{
+    "field" : {
+        "keyB" : "a new valueB"
+    }
+}';
+
+$registry-&gt;loadString($json1);
+$registry-&gt;loadString($json2);
+</code></pre>
+
+<p>Output</p>
+
+<pre><code>Array(
+    field =&gt; Array(
+        keyA =&gt; valueA
+        keyB =&gt; a new valueB
+    )
+)
+</code></pre>
+
+<h3>Merge Another Registry</h3>
+
+<pre><code class="php">$object1 = '{
+    "foo" : "foo value",
+    "bar" : {
+        "bar1" : "bar value 1",
+        "bar2" : "bar value 2"
+    }
+}';
+
+$object2 = '{
+    "foo" : "foo value",
+    "bar" : {
+        "bar2" : "new bar value 2"
+    }
+}';
+
+$registry1 = new Registry(json_decode($object1));
+$registry2 = new Registry(json_decode($object2));
+
+$registry1-&gt;merge($registry2);
+</code></pre>
+
+<p>If you just want to merge first level, do not hope recursive:</p>
+
+<pre><code class="php">$registry1-&gt;merge($registry2, false); // Set param 2 to false that Registry will only merge first level
+</code></pre>
+
+<p>Merge to a child node:</p>
+
+<pre><code class="php">$registry-&gt;mergeTo('foo.bar', $anotherRegistry);
+</code></pre>
+
+<h1>Dump to file.</h1>
+
+<pre><code class="php">$registry-&gt;toString();
+
+$registry-&gt;toString('xml');
+
+$registry-&gt;toString('ini');
+</code></pre>
+
+<h1>Dump to one dimension</h1>
+
+<pre><code class="php">$array = array(
+    'flower' =&gt; array(
+        'sunflower' =&gt; 'light',
+        'sakura' =&gt; 'samurai'
+    )
+);
+
+$registry = new Registry($array);
+
+// Make data to one dimension
+
+$flatted = $registry-&gt;flatten();
+
+print_r($flatted);
+</code></pre>
+
+<p>The result:</p>
+
+<pre><code>Array
+(
+    [flower.sunflower] =&gt; light
+    [flower.sakura] =&gt; samurai
+)
+</code></pre>
+
+<h1>Using YAML</h1>
+
+<p>Add Symfony YAML component in <code>composer.json</code></p>
+
+<pre><code class="json">{
+    "require-dev": {
+        "symfony/yaml": "~2.0"
+    }
+}
+</code></pre>
+
+<p>Using <code>yaml</code> format</p>
+
+<pre><code class="php">$registry-&gt;loadFile($yamlFile, 'yaml');
+
+$registry-&gt;loadString('foo: bar', 'yaml');
+
+// Convert to string
+$registry-&gt;toString('yaml');
+</code></pre>
+
+<h1>RegistryHelper</h1>
+
+<pre><code class="php">use Windwalker\Registry\RegistryHelper;
+
+RehistryHelper::loadFaile($file, $format); // File to array
+RehistryHelper::loadString($string, $format); // String to array
+RehistryHelper::toString($array, $format); // Array to string
+
+// Use format class
+$json = RehistryHelper::getFormatClass('json'); // Get JsonFormat
+$string = $json::structToString($array);
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/2.1/more/registry.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

@@ -27,6 +27,14 @@ class MenuPlugin extends AbstractPlugin implements DataProviderInterface
 	 */
 	public function loadProvider(Event $event)
 	{
+		$data = $event['data'];
+
+		// Get version
+		if ($data->path[0] == 'documentation')
+		{
+			$data->version = $data->path[1];
+		}
+		
 		$menus = new Registry;
 		$menus->loadFile(__DIR__ . '/menus.yml', 'yaml');
 

@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>Debugging | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Debugging | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+
+                    <li class="" data-uk-dropdown="">
+        <a href="../../../documentation/3.x/start/getting-started.html">
+            <span class="menu-item-title">2.1 <i class="uk-icon-caret-down"></i></span>
+        </a>
+
+        <div class="uk-dropdown uk-dropdown-navbar">
+            <ul class="uk-nav uk-nav-navbar">
+                <li class="">
+                    <a href="../../../documentation/3.x/more/debugging.html">3.x</a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/2.1/more/debugging.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Debugging</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/debugging.html">Debugging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>DEV Mode</h1>
+
+<p>Windawlker contains a development mode, you can enable it by setting config <code>system.debug</code> to <code>1</code>, or use <code>dev.php</code> to access your site.</p>
+
+<p>You will see a debug console at the bottom of page.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169792/6aabee92-f75c-11e5-9614-1512c6021d77.jpg" alt="160331-0003" /></p>
+
+<h2>Remote Access</h2>
+
+<p>By default, <code>dev.php</code> only support <code>localhost</code>, you can add allow IPs to <code>secret.yml</code> so that you can open dev mode from remote.</p>
+
+<pre><code class="yaml">dev:
+    allow_ips:
+        - 127.0.0.1
+        - 'fe80::1'
+        - '::1'
+        - 123.456.654.321 # Add your ip
+</code></pre>
+
+<h2>Close Debug Console</h2>
+
+<p>Debug console will auto push to page when system close, but sometimes we won't want it to show if in ajax or api call.
+Add this line to close it.</p>
+
+<pre><code class="php">use Windwalker\Debugger\Helper\DebuggerHelper;
+
+class AjaxController extends Controller
+{
+    protected function doExecute()
+    {
+        // Close debug console
+        DebuggerHelper::disableConsole();
+
+        $this-&gt;app-&gt;response-&gt;setMimeType('application/json');
+
+        return json_encode(['foo' =&gt; 'bar']);
+    }
+}
+</code></pre>
+
+<h1>Debugger Package</h1>
+
+<p>Click buttons on debug console, you will enter the Debugger page.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169994/a78ec270-f75d-11e5-81b9-b14317b32fbe.jpg" alt="160331-0004" /></p>
+
+<p>Windwlker will log last 100 page requests information to help us track system process.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14170049/f8b897d4-f75d-11e5-9cd1-3380e88854fb.jpg" alt="160331-0005" /></p>
+
+<h2>Log your Custom Content</h2>
+
+<p>If you need to log some important information to debug, you can use <code>DebugHelper</code> to add custom data.</p>
+
+<pre><code class="php">DebuggerHelper::addCustomData('My data', "It's not who I am underneath, but it's what I do that defines me.");
+</code></pre>
+
+<p>Go to system page.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg" alt="system" /></p>
+
+<h1>Logging</h1>
+
+<p>Windwalker includes <a href="https://github.com/Seldaek/monolog">Monolog</a> to help us log debugging information.</p>
+
+<pre><code class="php">use Windwalker\Core\Logger\Logger;
+
+Logger::log('flower', Logger::INFO, 'log text');
+</code></pre>
+
+<p>The first argument is category &amp; log file name, this will create a file at <code>logs/flower.log</code> with one line:</p>
+
+<pre><code># logs/flower.log
+
+[2016-04-01 10:17:07] flower.INFO: log text [] []
+</code></pre>
+
+<p>Add some data at line last.</p>
+
+<pre><code class="php">Logger::log('flower', Logger::INFO, 'log text', array('foo' =&gt; 'bar'));
+</code></pre>
+
+<pre><code># logs/flower.log
+
+[2016-04-01 10:18:42] flower.INFO: log text {"foo":"bar"} []
+</code></pre>
+
+<p>We can use proxy methods to log data:</p>
+
+<pre><code class="php">Logger::debug('category', 'log text');
+Logger::info('category', 'log text');
+Logger::notice('category', 'log text');
+Logger::warning('category', 'log text');
+Logger::error('category', 'log text');
+Logger::critical('category', 'log text');
+Logger::alert('category', 'log text');
+Logger::emergency('category', 'log text');
+</code></pre>
+
+<h1>Log Levels</h1>
+
+<p>The log levels are described by <a href="http://tools.ietf.org/html/rfc5424">RFC5424</a></p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Code</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>DEBUG</td>
+  <td>100</td>
+  <td>Detailed debug information.</td>
+</tr>
+<tr>
+  <td>INFO</td>
+  <td>200</td>
+  <td>Interesting events. Examples: User logs in, SQL logs.</td>
+</tr>
+<tr>
+  <td>NOTICE</td>
+  <td>250</td>
+  <td>Normal but significant events.</td>
+</tr>
+<tr>
+  <td>WARNING</td>
+  <td>300</td>
+  <td>Exceptional occurrences that are not errors. Examples: Use of deprecated APIs, poor use of an API, undesirable things that are not necessarily wrong.</td>
+</tr>
+<tr>
+  <td>ERROR</td>
+  <td>400</td>
+  <td>Runtime errors that do not require immediate action but should typically be logged and monitored.</td>
+</tr>
+<tr>
+  <td>CRITICAL</td>
+  <td>500</td>
+  <td>Critical conditions. Example: Application component unavailable, unexpected exception.</td>
+</tr>
+<tr>
+  <td>ALERT</td>
+  <td>550</td>
+  <td>Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up.</td>
+</tr>
+<tr>
+  <td>EMERGENCY</td>
+  <td>600</td>
+  <td>Emergency: system is unusable.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can create a category with level code, all levels below this level will not logged.</p>
+
+<pre><code class="php">Logger::createCategory('sakura', Logger::ERROR);
+
+Logger::debug('sakura', 'log text'); // This won't log
+
+Logger::alert('sakura', 'log text'); // This will log
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/2.1/more/debugging.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

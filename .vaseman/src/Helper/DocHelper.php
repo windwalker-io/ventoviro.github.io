@@ -3,6 +3,7 @@
 namespace Vaseman\Helper;
 
 use Windwalker\Core\View\Helper\AbstractHelper;
+use Windwalker\Filesystem\File;
 
 class DocHelper extends AbstractHelper
 {
@@ -13,5 +14,12 @@ class DocHelper extends AbstractHelper
 		$paths = implode('/', $paths);
 
 		return \Windwalker\Filesystem\File::stripExtension($paths);
+	}
+
+	public function getVersionPath($paths, $version)
+	{
+		$paths[1] = $version;
+
+		return File::stripExtension(implode('/', $paths)) . '.html';
 	}
 }

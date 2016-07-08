@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>Table and Schema | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Table and Schema | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+
+                    <li class="" data-uk-dropdown="">
+        <a href="../../../documentation/3.x/start/getting-started.html">
+            <span class="menu-item-title">2.1 <i class="uk-icon-caret-down"></i></span>
+        </a>
+
+        <div class="uk-dropdown uk-dropdown-navbar">
+            <ul class="uk-nav uk-nav-navbar">
+                <li class="">
+                    <a href="../../../documentation/3.x/db/table-schema.html">3.x</a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/2.1/db/table-schema.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Table and Schema</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/debugging.html">Debugging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/2.1/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>Table Command</h1>
+
+<p>Get Table Command.</p>
+
+<pre><code class="php">$table = $db-&gt;getTable('#__articles');
+</code></pre>
+
+<h2>create()</h2>
+
+<p>Create a new table.</p>
+
+<blockquote>
+  <p><em>NOTE:</em> Table has not support foreign key now.</p>
+</blockquote>
+
+<pre><code class="php">use Windwalker\Database\Schema\Column;
+use Windwalker\Database\Schema\Key;
+use Windwalker\Database\Schema\DataType;
+
+$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;addColumn('id', DataType::INTEGER, Column::UNSIGNED, Column::NOT_NULL, '', 'PK', array('primary' =&gt; true))
+    -&gt;addColumn('name', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Name', array('length' =&gt; 255))
+    -&gt;addColumn('alias', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Alias')
+    -&gt;addIndex(Key::TYPE_INDEX, 'idx_name', 'name', 'Test')
+    -&gt;addIndex(Key::TYPE_UNIQUE, 'idx_alias', 'alias', 'Alias Index')
+    -&gt;create(true); // True to add IF NOT EXISTS
+</code></pre>
+
+<p>Using Column type objects:</p>
+
+<pre><code class="php">use Windwalker\Database\Schema\Column;
+
+$table-&gt;addColumn(new Column\Primary('id'))
+    -&gt;addColumn(new Column\Varchar('name'))
+    -&gt;addColumn(new Column\Char('type'))
+    -&gt;addColumn(new Column\Timestamp('created'))
+    -&gt;addColumn(new Column\Bit('state'))
+    -&gt;addColumn(new Column\Integer('uid'))
+    -&gt;addColumn(new Column\Tinyint('status'))
+    -&gt;create();
+</code></pre>
+
+<p>These objects will set default length and attributes for every column, and map the type to different database drivers.</p>
+
+<h2>update()</h2>
+
+<p>Update table schema. Only use on add columns and indexes.</p>
+
+<pre><code class="php">use Windwalker\Database\Schema\Column;
+use Windwalker\Database\Schema\Key;
+
+$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 0, 'State', array('position' =&gt; 'AFTER ordering', 'length' =&gt; 1))
+    -&gt;addIndex(Key::TYPE_INDEX, 'idx_ordering', array('ordering', 'id'))
+    -&gt;update();
+</code></pre>
+
+<h2>save()</h2>
+
+<p>If table exists, using update, otherwise use insert.</p>
+
+<pre><code class="php">use Windwalker\Database\Schema\Column;
+use Windwalker\Database\Schema\Key;
+
+$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 0, 'State', array('position' =&gt; 'AFTER ordering', 'length' =&gt; 1))
+    -&gt;addIndex(Key::TYPE_INDEX, 'idx_ordering', array('ordering', 'id'))
+    -&gt;save();
+</code></pre>
+
+<h2>dropColumn()</h2>
+
+<pre><code class="php">$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;dropColumn('state');
+</code></pre>
+
+<h2>dropIndex()</h2>
+
+<pre><code class="php">use Windwalker\Database\Schema\Key;
+
+$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;dropIndex(Key::TYPE_INDEX, 'idx_state');
+</code></pre>
+
+<h2>rename()</h2>
+
+<pre><code class="php">$table = $db-&gt;getTable('#__foo');
+
+$newTable = $table-&gt;rename('#__bar');
+</code></pre>
+
+<h2>truncate()</h2>
+
+<pre><code class="php">$table = $db-&gt;getTable('#__foo');
+
+$table-&gt;truncate();
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/2.1/db/table-schema.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

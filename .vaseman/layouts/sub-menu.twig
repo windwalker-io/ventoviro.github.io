@@ -1,10 +1,15 @@
 <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
-    {% for title, section in menus[menu] %}
-    <li class="uk-nav-header">{{ title }}</li>
+    {% set menus = menus[menu] %}
 
+    {% if version %}
+        {% set menus = menus[version] %}
+    {% endif %}
+
+    {% for title, section in menus %}
+    <li class="uk-nav-header">{{ title }}</li>
         {% for id, item in section %}
             <li class="{{ helper.doc.getPath(path) == id ? 'uk-active' : '' }}">
-                <a href="{{ uri.base }}{{ menu }}/{{ id }}.html">{{ item }}</a>
+                <a href="{{ uri.base }}{{ menu }}/{{ version }}/{{ id }}.html">{{ item }}</a>
             </li>
         {% endfor %}
 

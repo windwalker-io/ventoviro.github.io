@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>Package System | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Package System | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+
+                    <li class="" data-uk-dropdown="">
+        <a href="../../../documentation/3.x/start/getting-started.html">
+            <span class="menu-item-title">3.x <i class="uk-icon-caret-down"></i></span>
+        </a>
+
+        <div class="uk-dropdown uk-dropdown-navbar">
+            <ul class="uk-nav uk-nav-navbar">
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/package-system.html">3.x</a>
+                </li>
+
+                <li class="">
+                    <a href="../../../documentation/2.1/start/package-system.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Package System</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+    </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>What is Package?</h1>
+
+<p>Package is the main component of Windwalker's structure. Here is a image that describe the package system:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5579031/b4c50ed8-906e-11e4-8964-a1f2d949fc88.png" alt="package" /></p>
+
+<p>From above image, we will know there can be multiple packages and its' own MVC system in Windwalker. That makes our application
+ more flexible. For example, we can create a <code>FrontendPackage</code> and an <code>AdminPackage</code> as front-end and back-end respectively.
+ And an <code>ApiPackage</code> to provide RESTful API for mobile APP.</p>
+
+<p>Every package is pretty much a simple application having MVC, routing, configuration and database schema:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png" alt="mockup_3" /></p>
+
+<h2>Use Package as Extension</h2>
+
+<p>Package can be used as extensions for developer. You can create a package and submit it to <a href="https://packagist.org/">Packagist</a>.
+Then anyone can install it by composer.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5579085/ff715d8c-906f-11e4-92dc-43c3839e0ef8.png" alt="mockup_2" /></p>
+
+<h1>Create Package</h1>
+
+<p>We will use <code>Flower</code> as example package. Create a php class in <code>/src/Flower/FlowerPackage.php</code>:</p>
+
+<pre><code class="php">&lt;?php
+// /src/Flower/FlowerPackage.php
+
+namespace Flower;
+
+use Windwalker\Core\Package\AbstractPackage;
+
+class FlowerPackage extends AbstractPackage
+{
+}
+</code></pre>
+
+<p>Then add this package to <code>/src/Windwalker/Web/Application.php</code>, at the <code>loadPackage()</code> method:</p>
+
+<pre><code class="php">// /src/Windwalker/Web/Application.php
+use Flower\FlowerPackage;
+
+class Application extends WebApplication
+{
+    // ...
+
+    public function loadPackages()
+    {
+        $packages = Windwalker::loadPackages();
+
+        /*
+         * Get Packages for This Application
+         * -----------------------------------------
+         * If you want a package only use in this application or want to override a global package,
+         * set it here. Example: $packages[] = new Flower\FlowerPackage;
+         */
+
+        // Add package here, the array key is package name, you can customize it.
+        $packages['flower'] = new FlowerPackage;
+
+        return $packages;
+    }
+
+    // ...
+}
+</code></pre>
+
+<p>The array key is package name alias, you can customize it. For example, If you use <code>$packages['flower']</code>, then you can
+use <code>\Windwalker\Core\Package\PackageHelper::getPackage('flower')</code> to get this package object. But if you use</p>
+
+<pre><code class="php">$packages['bar'] = new FlowerPackage;
+</code></pre>
+
+<p>You will have to get <code>FlowerPackage</code> it by  <code>\Windwalker\Core\Package\PackageHelper::getPackage('bar')</code>.</p>
+
+<h1>Add Package Routing</h1>
+
+<p>Create <code>/src/Flower/routing.yml</code>, then add some routes:</p>
+
+<pre><code class="yaml"># /src/Flower/routing.yml
+
+sakura:
+    pattern: /sakura(/id)
+    controller: Sakura
+
+sakuras:
+    pattern: /sakuras
+    controller: Sakuras
+
+roses:
+    pattern: /roses
+    controller: Roses
+</code></pre>
+
+<p>Different from the global routing, you don't need to write all controller namespace, just write controller short name, 
+the package will auto find this controller. For example: <code>controller: Sakura</code> will find <code>Flower\Controller\Sakura\{action}</code> to execute.</p>
+
+<p>We have to register this routes to root routing file. Open <code>/etc/routing.yml</code> And add this route profile.</p>
+
+<pre><code class="yaml"># /etc/routing.yml
+
+flower:
+    pattern: /flower
+    package: flower
+</code></pre>
+
+<p>The <code>package: flower</code> tells Windwalker to import all Flower package's routes, and all patterns will prefix with: <code>/flower/...</code>,
+the compiled routes will look like:</p>
+
+<pre><code class="yaml">flower@sakura:
+    pattern: /flower/sakura(/id)
+    controller: Sakura
+
+flower@sakuras:
+    pattern: /flower/sakuras
+    controller: Sakuras
+
+flower@roses:
+    pattern: /flower/roses
+    controller: Roses
+</code></pre>
+
+<p>Use browser to open <code>/flower/sakuras</code>, Windwalker will find <code>Flower\Controller\Sakuras\GetController</code> to render page.
+We can create a controller to match this route:</p>
+
+<pre><code class="php">&lt;?php
+// src/Flower/Controller/Sakuras/GetController.php
+
+namespace Flower\Controller\Sakuras;
+
+use Windwalker\Core\Controller\Controller;
+
+class GetController extends Controller
+{
+    protected function doExecute()
+    {
+        return 'Output of Sakuras Controller';
+    }
+}
+</code></pre>
+
+<p>About how routing and controller work, please see <a href="routing-controller.html">Routing And Controller</a> section.</p>
+
+<h1>Add &amp; Get Packages</h1>
+
+<p>Use <code>PackageResolver</code>.</p>
+
+<pre><code class="php">$resolver = $container-&gt;get('package.resolver');
+
+$resolver-&gt;getPackage('flower'); // Get flower package
+
+$resolver-&gt;getPackage(); // Get current package
+
+$resoler-&gt;addPackage('alias', $package); // Add new package
+</code></pre>
+
+<p>Use <code>PackageHelper</code>, this class is a facade of <code>PackageResolver</code>.</p>
+
+<pre><code class="php">use Windwalker\Core\Package\PackageHelper;
+
+PackageHelper::getPackage('flower'); // Get flower package
+
+PackageHelper::getPackage(); // Get current package
+
+PackageHelper::addPackage('alias', $package); // Add new package
+</code></pre>
+
+<p>You can also get package from Application.</p>
+
+<pre><code class="php">$app = Ioc::getApplication();
+
+$app-&gt;getPackage([$alias|null]);
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/start/package-system.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>
