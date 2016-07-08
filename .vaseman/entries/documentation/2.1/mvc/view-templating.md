@@ -4,7 +4,7 @@ title: View and Templating
 
 ---
 
-# Use Default View Object
+## Use Default View Object
 
 In controller, you can do anything you want, but if you hope to render some template, the View object will help you. 
 In this case, we create a default `HtmlView` to render template:
@@ -32,7 +32,7 @@ Then create a php file in `/templates/default.php`. This template will be render
 Hello World
 ```
 
-## Push Controller Information into View
+### Push Controller Information into View
 
 But this is not a good position to locate template, we will hope it at `templates/flower/sakuras`.
 So add this code to push controller config into View, View will know every thing about Controller:
@@ -50,13 +50,13 @@ return $view->render();
 
 Move template file to `/templates/flower/sakuras/default.php`, and Windwalker will found it.
 
-## Use Package Templates
+### Use Package Templates
 
 If your View is in a package, you can put your template at `{Package}/Templates/{view}`, For example, we move `default.php` 
 to `/src/Flower/Templates/sakuras`, View will find this position priority than root templates folder. 
 So we can make our templates following package folders.
 
-## The Ordering of Template Paths
+### The Ordering of Template Paths
  
 Windwalker will follow this orders to find templates, you can override any template in a higher priority position:
 
@@ -67,7 +67,7 @@ Windwalker will follow this orders to find templates, you can override any templ
 [3] => /vendor/windwalker/core/src/Core/Resources/Templates  <-- Here is core templates
 ```
 
-## Multilingual Paths
+### Multilingual Paths
 
 If you want to create different templates for every locales, just add this line in view `prepareData()`.
 
@@ -86,7 +86,7 @@ The current and defautl locale will auto added into paths with high priority:
 [5] => /vendor/windwalker/core/src/Core/Resources/Templates
 ```
 
-## Use other layouts
+### Use other layouts
 
 The `foo.bar.baz` will matched `foo/bar/baz.php` file. If you didn't set any layout name, `default` will instead.
 
@@ -98,7 +98,7 @@ $view->setLayout('edit')->render();
 $view->setLayout('foo.bar.baz')->render();
 ```
 
-## Custom Template Paths
+### Custom Template Paths
 
 Windwalker View use `SplPriorityQueue` to sort paths, if we want to add path, we should provide the priority flag.
 
@@ -111,7 +111,7 @@ $view->addPath('/my/template/path1', Priority::HIGH);
 $view->addPath('/my/template/path2', Priority::NORMAL);
 ```
 
-### Add to Global
+##### Add to Global
 
 Add paths to global that we don't need to set it every time, you must run this code before controller executed,
 for example, you can run in `onAfterInitialise` event (See [Event](../more/event.html)) , `YourPackage::initialise()` or `Application::initialise()`:
@@ -124,7 +124,7 @@ for example, you can run in `onAfterInitialise` event (See [Event](../more/event
 See also: [Windwalker View](https://github.com/ventoviro/windwalker/tree/staging/src/View#htmlview)
 / [SplPriorityQueue](http://php.net/manual/en/class.splpriorityqueue.php)
 
-## Add Data
+### Add Data
 
 View can maintain some data and use it in template:
 
@@ -150,7 +150,7 @@ $foo = $data->foo;
 Hello <?php echo $foo;?>
 ```
 
-# Create View Classes
+## Create View Classes
 
 We are still using default View, but it is not so customizable. Let's extend it to a new View object:
 
@@ -201,12 +201,12 @@ class GetController extends Controller
 The purpose of custom View object is that we can set data format in it, so controller dose not need to worry about 
 how to show data, just consider how to send data into View and redirect pages.
 
-# PHP Engine
+## PHP Engine
 
 PHP engine use [Windwalker Renderer](https://github.com/ventoviro/windwalker-renderer) to render page, 
 this package provides a simple interface similar to Twig that support template extending.
 
-## Include Sub Template
+### Include Sub Template
 
 Use `load()` to load other template file as a block. The first argument is file path, the second argument is new data
 to merge with original data.
@@ -231,7 +231,7 @@ $title = $data['title'];
 <?php endforeach; ?>
 ```
 
-## Extends Parent Template
+### Extends Parent Template
 
 In Windwalker Renderer, there is a powerful function like Twig or Blade, we provide `extend()` method to extends
 parent template. (`extends` in php is a reserved string, so we can only use `extend`)
@@ -292,7 +292,7 @@ The result will be:
 </html>
 ```
 
-## Show Parent
+### Show Parent
 
 We can echo parent data in a block:
 
@@ -318,7 +318,7 @@ Result:
 
 See: [Windwalker Renderer](https://github.com/ventoviro/windwalker-renderer#windwalker-renderer)
 
-# Blade Engine
+## Blade Engine
 
 Blade is a simple, yet powerful templating engine provided with [Laravel](http://laravel.com/). It is driven by template inheritance and sections. 
 All Blade templates should use the `.blade.php` extension.
@@ -351,7 +351,7 @@ $view = new MyBladeHtmlView;
 echo $view->setLayout('flower.sakura')->render();
 ```
 
-## Get Data in Blade Engine
+### Get Data in Blade Engine
 
 In Blade template we don't need to use `$data`, all properties are at top level:
 
@@ -361,11 +361,11 @@ In Blade template we don't need to use `$data`, all properties are at top level:
 {!! $uri['base.path'] !!}
 ```
 
-## How to Use Blade Engine
+### How to Use Blade Engine
 
 See: [Blade Templating](http://laravel.com/docs/4.2/templates)
 
-# Twig Engine
+## Twig Engine
 
 Twig is a well-known template language for PHP, created by Sensio. It uses a syntax similar to the Django and Jinja template languages.
 
@@ -390,11 +390,11 @@ class MyTwigHtmlView extends TwigHtmlView
 $view = new MyTwigHtmlView;
 ```
 
-## How to Use Twig
+### How to Use Twig
 
 See: [Twig Documentation](http://twig.sensiolabs.org/documentation)
 
-# Global Variables
+## Global Variables
 
 There is some global variables will auto set into View template, you can easily use them:
 

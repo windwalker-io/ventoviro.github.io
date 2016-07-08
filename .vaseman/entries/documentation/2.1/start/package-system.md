@@ -3,7 +3,7 @@ title: Package System
 
 ---
 
-# What is Package?
+## What is Package?
 
 Package is the main component of Windwalker's structure. Here is a image that describe the package system:
 
@@ -17,14 +17,14 @@ Every package is pretty much a simple application having MVC, routing, configura
 
 ![mockup_3](https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png)
   
-## Use Package as Extension
+### Use Package as Extension
 
 Package can be used as extensions for developer. You can create a package and submit it to [Packagist](https://packagist.org/).
 Then anyone can install it by composer.
 
 ![mockup_2](https://cloud.githubusercontent.com/assets/1639206/5579085/ff715d8c-906f-11e4-92dc-43c3839e0ef8.png)
 
-# Create Package
+## Create Package
 
 We will use `Flower` as example package. Create a php class in `/src/Flower/FlowerPackage.php`:
 
@@ -81,12 +81,12 @@ $packages['bar'] = new FlowerPackage;
 
 You will have to get `FlowerPackage` it by  `\Windwalker\Core\Package\PackageHelper::getPackage('bar')`.
 
-# Add Package Routing
+## Add Package Routing
 
 Create `/src/Flower/routing.yml`, then add some routes:
 
 ``` yaml
-# /src/Flower/routing.yml
+## /src/Flower/routing.yml
 
 sakura:
     pattern: /sakura(/id)
@@ -107,7 +107,7 @@ the package will auto find this controller. For example: `controller: Sakura` wi
 We have to register this routes to root routing file. Open `/etc/routing.yml` And add this route profile.
 
 ``` yaml
-# /etc/routing.yml
+## /etc/routing.yml
 
 flower:
     pattern: /flower
@@ -153,7 +153,7 @@ class GetController extends Controller
 
 About how routing and controller work, please see [Routing And Controller](routing-controller.html) section.
 
-# Add & Get Packages
+## Add & Get Packages
 
 Use `PackageResolver`.
 

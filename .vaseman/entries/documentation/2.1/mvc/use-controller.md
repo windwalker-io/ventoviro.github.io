@@ -4,7 +4,7 @@ title: Use Controller
 
 ---
 
-# Controller Overview
+## Controller Overview
 
 Windwalker Controller is a main entry of a page, after routing, the request input and IoC container will be injected 
 into controller and execute it. Any code mentioned in this section will be executed in `doExecute()`, the entrance of controller.
@@ -28,12 +28,12 @@ class GetController extends Controller
 }
 ```
 
-## Single Action Pattern
+### Single Action Pattern
 
 Windwalker Controller follows single responsibility principle, every controller has only one action (`execute()`).
 The benefit is that our controllers will be much more lighter then other frameworks. You can add more logic to a controller without being confused by too many actions in one class.
 
-## Use Multiple Actions
+### Use Multiple Actions
 
 > NOTE: Multiple Actions has been deprecated and will be remove after 3.0, Windwalker will only use single action in the future.
 
@@ -74,7 +74,7 @@ flower:
 
 The action prefix with double colons will be methods of your controller.
 
-# Get HTTP Input
+## Get HTTP Input
 
 See: [Request and Input](../start/request-input.html), we can use Input object to get HTTP queries:
 
@@ -86,7 +86,7 @@ $layout = $this->input->getString('layout', 'default');
 $html = $this->getVar('html');
 ``` 
 
-# Simple Usage of Model and View
+## Simple Usage of Model and View
 
 ``` php
 // In doExecute()
@@ -109,7 +109,7 @@ $view->set('item', $item);
 return $view->setLayout($layout)->render();
 ```
 
-## Use Model and View getter
+### Use Model and View getter
 
 If your model and view located in your package, and follows Windwalker naming convention, you can get Model and View by getter in controller.
 
@@ -145,7 +145,7 @@ $view = $this->getView();
 $JsonView = $this->getView(null, 'json'); // SakuraJsonView
 ```
 
-# Use Container
+## Use Container
 
 Windwalker controller is a Container aware interface, we can directly use container in controller:
 
@@ -161,7 +161,7 @@ $cache->call('user', function() use ($session)
 });
 ```
 
-# Setting Config
+## Setting Config
 
 You can set some config in `$this->config` and pass it into View and Model, then they will know everything about this controller.
 
@@ -180,7 +180,7 @@ If you use getter to get View and Model, config will auto set into them.
 
 Config is a Registry object, see: [Windwalker Registry](https://github.com/ventoviro/windwalker-registry#windwalker-registry)
 
-# Redirect
+## Redirect
 
 Use `setRedirect($url)` to tell controller redirect to other url after executed. 
 
@@ -218,7 +218,7 @@ catch (Exception $e)
 return true;
 ```
 
-# Add Flash Messages
+## Add Flash Messages
 
 Flash message is a disposable message in session, if we show it, these messages will be purged.
 
@@ -233,7 +233,7 @@ $this->addMessage(['Message', 'Message2'], 'type');
 $this->setRedirect('url.html', 'Message', 'type');
 ```
 
-## Mute
+### Mute
 
 If we set controller to mute, this controller will not add any messages:
 
@@ -243,7 +243,7 @@ $this->mute(true);
 $this->addMessage('Message'); // This action no use
 ```
 
-# CSRF Token
+## CSRF Token
 
 Windwalker provides a simple CSRF token generator, please add this line to your HTML form:
 
@@ -283,7 +283,7 @@ if (! CsrfProtection::checkToken())
 }
 ```
 
-# HMVC
+## HMVC
 
 The Hierarchical-Model-View-Controller (HMVC) pattern is a direct extension to the MVC pattern that manages 
 to solve many of the scalability issues already mentioned. HMVC was first described in a blog post entitled 
@@ -329,7 +329,7 @@ $subContainer = Ioc::factory('sub.container');
 $child = new ChildController(null, null, $subContainer, $subContainer->get('package'));
 ```
 
-## Use hmvc() Method
+### Use hmvc() Method
 
 Windwalker provides a `hmvc()` method to make this step more quickly:
 

@@ -170,7 +170,7 @@
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Database</li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/db/basic.html">Basic Usage</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Configure Database</h1>
+                    <h2>Configure Database</h2>
 
 <p>In a new project, you should rename <code>/etc/secret.dist.yml</code> to <code>/etc/secret.yml</code>, and fill your database account information:</p>
 
@@ -273,7 +273,7 @@
     prefix: wind_
 </code></pre>
 
-<h1>Get Database</h1>
+<h2>Get Database</h2>
 
 <p>In DatabaseModel, you can get internal DB object.</p>
 
@@ -287,7 +287,7 @@
 $db = $container-&gt;get('system.database');
 </code></pre>
 
-<h1>Execute A Query</h1>
+<h2>Execute A Query</h2>
 
 <p>This is an example of insert data.</p>
 
@@ -298,9 +298,9 @@ $db-&gt;setQuery($sql);
 $db-&gt;execute();
 </code></pre>
 
-<h1>Fetch records</h1>
+<h2>Fetch records</h2>
 
-<h2>Fetch multiple rows</h2>
+<h3>Fetch multiple rows</h3>
 
 <p>This will fetch multiple rows from table, and every record will be an object.</p>
 
@@ -326,7 +326,7 @@ $items = $db-&gt;loadAll(null, 'assoc');
 $items = $db-&gt;loadAll('id', 'assoc');
 </code></pre>
 
-<h2>Fetch one row</h2>
+<h3>Fetch one row</h3>
 
 <pre><code class="php">$sql = 'SELECT * FROM foo_table WHERE id = 3';
 
@@ -344,7 +344,7 @@ $items = $db-&gt;loadAll('array');
 $items = $db-&gt;loadAll('assoc');
 </code></pre>
 
-<h1>Table Prefix</h1>
+<h2>Table Prefix</h2>
 
 <p>Add <code>prefix</code> in <code>secret.yml</code> config file, then DB object will auto replace all <code>#__</code> with prefix in every query:</p>
 
@@ -353,7 +353,7 @@ $items = $db-&gt;loadAll('assoc');
 // The query will be `SELECT * FROM foo_articles`
 </code></pre>
 
-<h1>Iterating Over Results</h1>
+<h2>Iterating Over Results</h2>
 
 <pre><code class="php">$iterator = $db-&gt;setQuery('SELECT * FROM #__articles WHERE state = 1')-&gt;getIterator();
 
@@ -368,7 +368,7 @@ foreach ($iterator as $row)
 <pre><code class="php">$count = count($iterator);
 </code></pre>
 
-<h1>Logging</h1>
+<h2>Logging</h2>
 
 <p><code>Database\DatabaseDriver</code> implements the <code>Psr\Log\LoggerAwareInterface</code> so is ready for intergrating with a logging package that supports that standard.</p>
 
@@ -381,7 +381,7 @@ foreach ($iterator as $row)
 <li><strong>category</strong> : A value of "databasequery" is used.</li>
 </ul>
 
-<h2>An example to log error by Monolog</h2>
+<h3>An example to log error by Monolog</h3>
 
 <p>Add this to <code>composer.json</code> require block.</p>
 

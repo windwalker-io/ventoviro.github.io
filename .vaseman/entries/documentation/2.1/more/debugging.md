@@ -3,7 +3,7 @@ layout: documentation.twig
 title: Debugging
 ---
 
-# DEV Mode
+## DEV Mode
 
 Windawlker contains a development mode, you can enable it by setting config `system.debug` to `1`, or use `dev.php` to access your site.
 
@@ -11,7 +11,7 @@ You will see a debug console at the bottom of page.
 
 ![160331-0003](https://cloud.githubusercontent.com/assets/1639206/14169792/6aabee92-f75c-11e5-9614-1512c6021d77.jpg)
 
-## Remote Access
+### Remote Access
 
 By default, `dev.php` only support `localhost`, you can add allow IPs to `secret.yml` so that you can open dev mode from remote.
 
@@ -21,10 +21,10 @@ dev:
         - 127.0.0.1
         - 'fe80::1'
         - '::1'
-        - 123.456.654.321 # Add your ip
+        - 123.456.654.321 ## Add your ip
 ```
 
-## Close Debug Console
+### Close Debug Console
 
 Debug console will auto push to page when system close, but sometimes we won't want it to show if in ajax or api call.
 Add this line to close it.
@@ -46,7 +46,7 @@ class AjaxController extends Controller
 }
 ```
 
-# Debugger Package
+## Debugger Package
 
 Click buttons on debug console, you will enter the Debugger page.
 
@@ -56,7 +56,7 @@ Windwlker will log last 100 page requests information to help us track system pr
 
 ![160331-0005](https://cloud.githubusercontent.com/assets/1639206/14170049/f8b897d4-f75d-11e5-9cd1-3380e88854fb.jpg)
 
-## Log your Custom Content
+### Log your Custom Content
 
 If you need to log some important information to debug, you can use `DebugHelper` to add custom data.
 
@@ -68,7 +68,7 @@ Go to system page.
 
 ![system](https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg)
 
-# Logging
+## Logging
 
 Windwalker includes [Monolog](https://github.com/Seldaek/monolog) to help us log debugging information.
 
@@ -81,7 +81,7 @@ Logger::log('flower', Logger::INFO, 'log text');
 The first argument is category & log file name, this will create a file at `logs/flower.log` with one line:
 
 ```
-# logs/flower.log
+## logs/flower.log
 
 [2016-04-01 10:17:07] flower.INFO: log text [] []
 ```
@@ -93,7 +93,7 @@ Logger::log('flower', Logger::INFO, 'log text', array('foo' => 'bar'));
 ```
 
 ```
-# logs/flower.log
+## logs/flower.log
 
 [2016-04-01 10:18:42] flower.INFO: log text {"foo":"bar"} []
 ```
@@ -111,7 +111,7 @@ Logger::alert('category', 'log text');
 Logger::emergency('category', 'log text');
 ```
 
-# Log Levels
+## Log Levels
 
 The log levels are described by [RFC5424](http://tools.ietf.org/html/rfc5424)
 

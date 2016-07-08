@@ -4,11 +4,11 @@ title: HTML Builder
 
 ---
 
-## Html & Dom Builder
+### Html & Dom Builder
 
 This is a convenience class to create XML and HTML element in an OO way.
 
-### DomElement
+##### DomElement
 
 DomElement and DomElements is use to create XML elements.
 
@@ -50,7 +50,7 @@ The output wil be:
 </field>
 ```
 
-### HtmlElement
+##### HtmlElement
 
 HtmlElement is use to create HTML elements, some specific tags will force to unpaired.
 
@@ -71,13 +71,13 @@ Then we will get this HTML:
 <button class="btn btn-mini" onclick="return false;">Click</button>
 ```
 
-#### Get Attributes by Array Access
+####### Get Attributes by Array Access
 
 ``` php
 $class = $html['class'];
 ```
 
-### DomElements & HtmlElements
+##### DomElements & HtmlElements
 
 It is a collection of HtmlElement set.
 
@@ -102,11 +102,11 @@ foreach ($html as $element)
 }
 ```
 
-## XmlHelper
+### XmlHelper
 
 `XmlHelper` using on get attributes of `SimpleXmlElement`.
 
-### Get Attributes
+##### Get Attributes
 
 ``` php
 use Windwalker\Dom\SimpleXml\XmlHelper;
@@ -129,7 +129,7 @@ $name = XmlHelper::getAttribute($element, 'name'); // result: foo
 $name = XmlHelper::get($element, 'name'); // result: foo
 ```
 
-### Get Boolean
+##### Get Boolean
 
 `getBool()` can help us convert some string link `true`, `1`, `yes` to boolean `TRUE` and `no`, `false`, `disabled`, `null`, `none`, `0` string to booleand `FALSE`.
 
@@ -137,11 +137,11 @@ $name = XmlHelper::get($element, 'name'); // result: foo
 $bool = XmlHelper::getBool($element, 'readonly'); // result: (boolean) TRUE
 ```
 
-### Get False
+##### Get False
 
 Just an alias of `getBool()` but FALSE will return `TRUE`.
 
-### Set Default
+##### Set Default
 
 If this attribute not exists, use this value as default, or we use original value from xml.
 
@@ -149,7 +149,7 @@ If this attribute not exists, use this value as default, or we use original valu
 XmlHelper::def($element, 'class', 'input');
 ```
 
-## Select List
+### Select List
 
 ``` php
 use Windwalker\Html\Select\SelectList;
@@ -182,7 +182,7 @@ The result:
 </select>
 ```
 
-### Group Select
+##### Group Select
 
 Use two level array to make options grouped.
 
@@ -227,7 +227,7 @@ The result
 </select>
 ```
 
-## CheckboxList
+### CheckboxList
 
 ``` php
 $select = new CheckboxList(
@@ -270,13 +270,13 @@ If you want to use `div` to wrap all inputs instead `span`, set tag name to obje
 $select->setName('div');
 ```
 
-## RadioList
+### RadioList
 
 Same as Checkboxes, but the input type will be `type="radio"`
 
-## HtmlHelper
+### HtmlHelper
 
-### Repair Tags
+##### Repair Tags
 
 We can using `repair()` method to repair unpaired tags by `php tidy`, if tidy extension not exists, will using simple tag close function to fix it.
 
@@ -288,7 +288,7 @@ $html = \Windwalker\Html\Helper\HtmlHelper::repair($html);
 echo $html; // <p>foo</p>
 ```
 
-### Get JS Object
+##### Get JS Object
 
 This method convert a nested array or object to JSON format that you can inject it to JS code.
 
@@ -310,6 +310,6 @@ Result
 }
 ```
 
-## More Builder
+### More Builder
 
 We'll add more builder object after version 2.1.

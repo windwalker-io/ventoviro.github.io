@@ -4,7 +4,7 @@ title: Registry Object
 
 ---
 
-# Getting Started
+## Getting Started
 
 Windwalker Registry is a storage of nested array or object, help us manage multi-level structures data.
 
@@ -21,7 +21,7 @@ $value = $registry->get('foo');
 
 ```
 
-# Load config by Registry
+## Load config by Registry
 
 ``` php
 use Windwalker\Registry\Registry;
@@ -40,9 +40,9 @@ $registry->load($object);
 $registry->loadFile($root . '/config/config.json', 'json');
 ```
 
-# Accessing a Registry by getter & setter
+## Accessing a Registry by getter & setter
 
-## Get value
+### Get value
 
 ``` php
 $registry->get('foo');
@@ -55,7 +55,7 @@ $registry->get('foo', 'default');
 $registry->get('foo') ?: 'default';
 ```
 
-## Set value
+### Set value
 
 ``` php
 // Set value
@@ -65,7 +65,7 @@ $registry->set('bar', $value);
 $registry->def('bar', $default);
 ```
 
-## Accessing children value by path
+### Accessing children value by path
 
 ``` php
 $json = '{
@@ -81,7 +81,7 @@ $registry->get('parent.child'); // return 'Foo'
 $registry->set('parent.child', $value);
 ```
 
-## Append & Prepend
+### Append & Prepend
 
 Support `push / pop / shift / unshift` methods.
 
@@ -94,7 +94,7 @@ $registry->get('foo.bar');
 // Result: Array(first, second, third)
 ```
 
-## Use other separator
+### Use other separator
 
 ``` php
 $registry->setSeparator('/');
@@ -102,7 +102,7 @@ $registry->setSeparator('/');
 $data = $registry->get('foo/bar');
 ```
 
-# Accessing a Registry as an Array
+## Accessing a Registry as an Array
 
 The `Registry` class implements `ArrayAccess` so the properties of the registry can be accessed as an array. Consider the following examples:
 
@@ -120,9 +120,9 @@ if (isset($registry['foo']))
 }
 ```
 
-# Merge Registry
+## Merge Registry
 
-### Using load* methods to merge two config files.
+##### Using load* methods to merge two config files.
 
 ``` php
 $json1 = '{
@@ -153,7 +153,7 @@ Array(
 )
 ```
 
-### Merge Another Registry
+##### Merge Another Registry
 
 ``` php
 $object1 = '{
@@ -189,7 +189,7 @@ Merge to a child node:
 $registry->mergeTo('foo.bar', $anotherRegistry);
 ```
 
-# Dump to file.
+## Dump to file.
 
 ``` php
 $registry->toString();
@@ -199,7 +199,7 @@ $registry->toString('xml');
 $registry->toString('ini');
 ```
 
-# Dump to one dimension
+## Dump to one dimension
 
 ``` php
 $array = array(
@@ -228,7 +228,7 @@ Array
 )
 ```
 
-# Using YAML
+## Using YAML
 
 Add Symfony YAML component in `composer.json`
 
@@ -251,7 +251,7 @@ $registry->loadString('foo: bar', 'yaml');
 $registry->toString('yaml');
 ```
 
-# RegistryHelper
+## RegistryHelper
 
 ``` php
 use Windwalker\Registry\RegistryHelper;

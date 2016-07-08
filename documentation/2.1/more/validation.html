@@ -242,7 +242,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/tests.html">Tests</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Simple Validate Process</h2>
+                    <h3>Simple Validate Process</h3>
 
 <pre><code class="php">use Windwalker\Validator\Rule\EmailValidator;
 
@@ -271,7 +271,7 @@ $validator-&gt;validate('sakura@flower.com'); // bool(true)
 $validator-&gt;validate('sakura'); // bool(false)
 </code></pre>
 
-<h3>Available Validator Rules</h3>
+<h5>Available Validator Rules</h5>
 
 <ul>
 <li>AlnumValidator</li>
@@ -287,7 +287,7 @@ $validator-&gt;validate('sakura'); // bool(false)
 <li>UrlValidator</li>
 </ul>
 
-<h2>Regex Validator</h2>
+<h3>Regex Validator</h3>
 
 <pre><code class="php">use Windwalker\Validator\Rule\RegexValidator;
 
@@ -296,7 +296,7 @@ $validator = new RegexValidator('^[a-zA-Z0-9]*$', 'i');
 $validator-&gt;validate('abc_123:978'); // bool(false)
 </code></pre>
 
-<h2>Equals Validator</h2>
+<h3>Equals Validator</h3>
 
 <pre><code class="php">use Windwalker\Validator\Rule\EqualsValidator;
 
@@ -312,7 +312,7 @@ $validator-&gt;validate('ABC'); // bool(true)
 $validator-&gt;validate('123'); // bool(false)
 </code></pre>
 
-<h2>Error Message</h2>
+<h3>Error Message</h3>
 
 <pre><code class="php">$validator-&gt;setMessage('This string is not valid');
 
@@ -322,7 +322,7 @@ if (!$validator-&gt;validate('sakura'))
 }
 </code></pre>
 
-<h2>Create Your Own Validator</h2>
+<h3>Create Your Own Validator</h3>
 
 <pre><code class="php">use Windwalker\Validator\AbstractValidator;
 
@@ -339,7 +339,7 @@ $validator = new MyValidator;
 $validator-&gt;validate('foo');
 </code></pre>
 
-<h2>Extends Regex Validator</h2>
+<h3>Extends Regex Validator</h3>
 
 <pre><code class="php">use Windwalker\Validator\Rule\RegexValidator;
 

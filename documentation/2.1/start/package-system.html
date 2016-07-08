@@ -131,7 +131,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/start/routing-controller.html">Routing And Controller</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/start/package-system.html">Package System (Bundle)</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>What is Package?</h1>
+                    <h2>What is Package?</h2>
 
 <p>Package is the main component of Windwalker's structure. Here is a image that describe the package system:</p>
 
@@ -274,14 +274,14 @@
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png" alt="mockup_3" /></p>
 
-<h2>Use Package as Extension</h2>
+<h3>Use Package as Extension</h3>
 
 <p>Package can be used as extensions for developer. You can create a package and submit it to <a href="https://packagist.org/">Packagist</a>.
 Then anyone can install it by composer.</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5579085/ff715d8c-906f-11e4-92dc-43c3839e0ef8.png" alt="mockup_2" /></p>
 
-<h1>Create Package</h1>
+<h2>Create Package</h2>
 
 <p>We will use <code>Flower</code> as example package. Create a php class in <code>/src/Flower/FlowerPackage.php</code>:</p>
 
@@ -335,11 +335,11 @@ use <code>\Windwalker\Core\Package\PackageHelper::getPackage('flower')</code> to
 
 <p>You will have to get <code>FlowerPackage</code> it by  <code>\Windwalker\Core\Package\PackageHelper::getPackage('bar')</code>.</p>
 
-<h1>Add Package Routing</h1>
+<h2>Add Package Routing</h2>
 
 <p>Create <code>/src/Flower/routing.yml</code>, then add some routes:</p>
 
-<pre><code class="yaml"># /src/Flower/routing.yml
+<pre><code class="yaml">## /src/Flower/routing.yml
 
 sakura:
     pattern: /sakura(/id)
@@ -359,7 +359,7 @@ the package will auto find this controller. For example: <code>controller: Sakur
 
 <p>We have to register this routes to root routing file. Open <code>/etc/routing.yml</code> And add this route profile.</p>
 
-<pre><code class="yaml"># /etc/routing.yml
+<pre><code class="yaml">## /etc/routing.yml
 
 flower:
     pattern: /flower
@@ -403,7 +403,7 @@ class GetController extends Controller
 
 <p>About how routing and controller work, please see <a href="routing-controller.html">Routing And Controller</a> section.</p>
 
-<h1>Add &amp; Get Packages</h1>
+<h2>Add &amp; Get Packages</h2>
 
 <p>Use <code>PackageResolver</code>.</p>
 

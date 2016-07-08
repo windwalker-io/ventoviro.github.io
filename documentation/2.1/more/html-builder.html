@@ -224,7 +224,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/form-builder.html">Form Builder</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
@@ -260,11 +260,11 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Html &amp; Dom Builder</h2>
+                    <h3>Html &amp; Dom Builder</h3>
 
 <p>This is a convenience class to create XML and HTML element in an OO way.</p>
 
-<h3>DomElement</h3>
+<h5>DomElement</h5>
 
 <p>DomElement and DomElements is use to create XML elements.</p>
 
@@ -302,7 +302,7 @@ echo $dom = (string) new DomElement('field', $content, $attrs);
 &lt;/field&gt;
 </code></pre>
 
-<h3>HtmlElement</h3>
+<h5>HtmlElement</h5>
 
 <p>HtmlElement is use to create HTML elements, some specific tags will force to unpaired.</p>
 
@@ -321,12 +321,12 @@ $html = (string) new HtmlElement('button', 'Click', $attrs);
 <pre><code class="html">&lt;button class="btn btn-mini" onclick="return false;"&gt;Click&lt;/button&gt;
 </code></pre>
 
-<h4>Get Attributes by Array Access</h4>
+<h6># Get Attributes by Array Access</h6>
 
 <pre><code class="php">$class = $html['class'];
 </code></pre>
 
-<h3>DomElements &amp; HtmlElements</h3>
+<h5>DomElements &amp; HtmlElements</h5>
 
 <p>It is a collection of HtmlElement set.</p>
 
@@ -349,11 +349,11 @@ echo $html;
 }
 </code></pre>
 
-<h2>XmlHelper</h2>
+<h3>XmlHelper</h3>
 
 <p><code>XmlHelper</code> using on get attributes of <code>SimpleXmlElement</code>.</p>
 
-<h3>Get Attributes</h3>
+<h5>Get Attributes</h5>
 
 <pre><code class="php">use Windwalker\Dom\SimpleXml\XmlHelper;
 
@@ -375,25 +375,25 @@ $name = XmlHelper::getAttribute($element, 'name'); // result: foo
 $name = XmlHelper::get($element, 'name'); // result: foo
 </code></pre>
 
-<h3>Get Boolean</h3>
+<h5>Get Boolean</h5>
 
 <p><code>getBool()</code> can help us convert some string link <code>true</code>, <code>1</code>, <code>yes</code> to boolean <code>TRUE</code> and <code>no</code>, <code>false</code>, <code>disabled</code>, <code>null</code>, <code>none</code>, <code>0</code> string to booleand <code>FALSE</code>.</p>
 
 <pre><code class="php">$bool = XmlHelper::getBool($element, 'readonly'); // result: (boolean) TRUE
 </code></pre>
 
-<h3>Get False</h3>
+<h5>Get False</h5>
 
 <p>Just an alias of <code>getBool()</code> but FALSE will return <code>TRUE</code>.</p>
 
-<h3>Set Default</h3>
+<h5>Set Default</h5>
 
 <p>If this attribute not exists, use this value as default, or we use original value from xml.</p>
 
 <pre><code class="php">XmlHelper::def($element, 'class', 'input');
 </code></pre>
 
-<h2>Select List</h2>
+<h3>Select List</h3>
 
 <pre><code class="php">use Windwalker\Html\Select\SelectList;
 use Windwalker\Html\Option;
@@ -424,7 +424,7 @@ echo $select;
 &lt;/select&gt;
 </code></pre>
 
-<h3>Group Select</h3>
+<h5>Group Select</h5>
 
 <p>Use two level array to make options grouped.</p>
 
@@ -467,7 +467,7 @@ echo $select;
 &lt;/select&gt;
 </code></pre>
 
-<h2>CheckboxList</h2>
+<h3>CheckboxList</h3>
 
 <pre><code class="php">$select = new CheckboxList(
     'form[timezone]',
@@ -507,13 +507,13 @@ echo $select;
 <pre><code class="php">$select-&gt;setName('div');
 </code></pre>
 
-<h2>RadioList</h2>
+<h3>RadioList</h3>
 
 <p>Same as Checkboxes, but the input type will be <code>type="radio"</code></p>
 
-<h2>HtmlHelper</h2>
+<h3>HtmlHelper</h3>
 
-<h3>Repair Tags</h3>
+<h5>Repair Tags</h5>
 
 <p>We can using <code>repair()</code> method to repair unpaired tags by <code>php tidy</code>, if tidy extension not exists, will using simple tag close function to fix it.</p>
 
@@ -524,7 +524,7 @@ $html = \Windwalker\Html\Helper\HtmlHelper::repair($html);
 echo $html; // &lt;p&gt;foo&lt;/p&gt;
 </code></pre>
 
-<h3>Get JS Object</h3>
+<h5>Get JS Object</h5>
 
 <p>This method convert a nested array or object to JSON format that you can inject it to JS code.</p>
 
@@ -544,7 +544,7 @@ echo $option = \Windwalker\Html\Helper\HtmlHelper::getJSOBject($option);
 }
 </code></pre>
 
-<h2>More Builder</h2>
+<h3>More Builder</h3>
 
 <p>We'll add more builder object after version 2.1.</p>
 

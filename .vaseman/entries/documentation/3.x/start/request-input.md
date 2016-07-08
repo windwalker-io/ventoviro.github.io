@@ -4,7 +4,7 @@ title: Request and Input
 
 ---
 
-# Get Input Object in Controller
+## Get Input Object in Controller
 
 Last section we have learned how to make controller work, now it's time to see how the application receives HTTP request queries and respond. In Windwalker you may access input queries using `Input` object. Below is how it works:
 
@@ -23,7 +23,7 @@ class GetController extends Controller
 }
 ```
 
-## Get Input at Anywhere
+### Get Input at Anywhere
 
 The `Input` property only exists in class `Application` and `Controller`. Under any other situation to access `Input`, you may use Ioc (DI) Container. This is NOT recommended for it might break software robustness of your application.
 
@@ -35,7 +35,7 @@ $input = Ioc::getInput();
 $input = $container->get('system.input');
 ```
 
-# How Input Work
+## How Input Work
 
 Mostly, we need to get data from http request which `$_GET`, `$_POST` or `$_REQUEST` provides.
 
@@ -53,7 +53,7 @@ The second argument is default value if request params does not exist.
 $input->get('flower', 'default');
 ```
 
-## Filter
+### Filter
 
 Input use [Windwalker Filter](https://github.com/ventoviro/windwalker-filter) package to sanitize request string, the default filter type is `CMD`.
 We can use other filter type:
@@ -74,7 +74,7 @@ $input->getRaw('flower') // <p>to be, or not to be.</p>
 
 More filter usage please see: [Windwalker Filter](https://github.com/ventoviro/windwalker-filter)
 
-## Get Array
+### Get Array
 
 Input provides option to get data as array. 
 
@@ -117,7 +117,7 @@ $input->getArray(array(
 ));
 ```
 
-## Get And Set Multi-Level
+### Get And Set Multi-Level
 
 If we want to get value of `foo[bar][baz]`, just use `setByPath()`:
 
@@ -127,7 +127,7 @@ $value = $input->getByPath('foo.bar.baz', 'default', InputFilter::STRING);
 $input->setByPath('foo.bar.baz', $data);
 ```
 
-## Get Value From RESTful methods
+### Get Value From RESTful methods
 
 We can get other methods as a new input object.
 
@@ -142,7 +142,7 @@ $put    = $input->put;
 $delete = $input->delete;
 ```
 
-# Get SUPER GLOBALS
+## Get SUPER GLOBALS
 
 Every Super Global will be an independent object.
 
@@ -159,13 +159,13 @@ $env->set('FOO_BAR', 1);
 
 See: [SUPER GLOBALS](http://php.net/manual/en/language.variables.superglobals.php)
 
-## Get method according to current request type:
+### Get method according to current request type:
 
 ``` php
 $method = $input->getMethod();
 ```
 
-# Files Input
+## Files Input
 
 The format that PHP returns file data in for arrays can at times be awkward, especially when dealing with arrays of files. 
 Files Input provides a convenient interface for making life a little easier, grouping the data by file.

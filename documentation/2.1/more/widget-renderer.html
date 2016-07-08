@@ -218,7 +218,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/registry.html">Registry Object</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
@@ -260,13 +260,13 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>What is Widget Object</h1>
+                    <h2>What is Widget Object</h2>
 
 <p>Widget object is a convenience tool to help us render HTML blocks, you can consider it as a backend web component.</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5594250/e28c0d56-927d-11e4-8f32-19005916710c.jpg" alt="widget" /></p>
 
-<h1>Create A Widget</h1>
+<h2>Create A Widget</h2>
 
 <p>First, add a template file in <code>/templates/sidebar/news.php</code>, this is a news widget.</p>
 
@@ -313,7 +313,7 @@ $news = with(new Widget('sidebar.news'))-&gt;render(array('articles' =&gt; $data
 }
 </code></pre>
 
-<h1>Templating</h1>
+<h2>Templating</h2>
 
 <p>By default, widget will find templates from these paths:</p>
 
@@ -331,14 +331,14 @@ $widget-&gt;addPath('/my/widget/path', Priority::HIGH);
 <p>Widget also use <a href="https://github.com/ventoviro/windwalker-renderer">Windwalker Renderer</a> to render page, 
 you need to add priority to set the ordering of this path.</p>
 
-<h2>Add Path to Global</h2>
+<h3>Add Path to Global</h3>
 
 <p>Add your path to global RendererHelper that Widget will always contain this path:</p>
 
 <pre><code class="php">\Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/widget/path', Priority::ABOVE_NORMAL);
 </code></pre>
 
-<h1>Override Built-in Widgets Templates</h1>
+<h2>Override Built-in Widgets Templates</h2>
 
 <p>Windwalker has some built-in widgets, it contains: <code>messages</code>, <code>pagination</code>, <code>error pages</code>.</p>
 
@@ -358,7 +358,7 @@ you need to add priority to set the ordering of this path.</p>
   <p>Override other widgets please see: <a href="pagination.html">Pagination</a> and <a href="error-handling.html">Error Handling</a></p>
 </blockquote>
 
-<h1>Use Blade and Twig</h1>
+<h2>Use Blade and Twig</h2>
 
 <p>Similar to View, Windwalker Widget support Blade and Twig engine, you may just create it by newing it:</p>
 
@@ -373,7 +373,7 @@ $news = new TwigWidget('sidebar.news');
   <p>See also: <a href="https://laravel.com/docs/master/blade">Blade Templating</a> and <a href="http://twig.sensiolabs.org/documentation">Twig Documentation</a></p>
 </blockquote>
 
-<h1>WidgetHelper</h1>
+<h2>WidgetHelper</h2>
 
 <p>Use WidgetHelper to quickly render page.</p>
 

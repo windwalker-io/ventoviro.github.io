@@ -236,7 +236,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/session.html">Session</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
@@ -260,13 +260,13 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>About Windwalker DateTime</h1>
+                    <h2>About Windwalker DateTime</h2>
 
 <p><code>Windwalker\Core\DateTime\DateTime</code> is sub class of PHP <code>DateTime</code>. This class is based on Joomla <code>JDate</code> and add some new features.</p>
 
 <p>All PHP DateTime functions are able to use on Windwalker DataTime, see <a href="http://php.net/manual/en/book.datetime.php">PHP DateTime</a></p>
 
-<h1>Construct</h1>
+<h2>Construct</h2>
 
 <p>Windwalker DateTime supports Timezone as string.</p>
 
@@ -289,7 +289,7 @@ $dt = new DateTime('now', 'Asia/Taipei');
 $dt = new DateTime('now', DateTime::TZ_LOCALE);
 </code></pre>
 
-<h1>Convert Timezone</h1>
+<h2>Convert Timezone</h2>
 
 <p>Windwalker DateTime supports easy methods to convert timezone.</p>
 
@@ -305,7 +305,7 @@ $date = DateTime::convert($date, [from], [to], [format]);
 $date = DateTime::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');
 </code></pre>
 
-<h1>Simple Properties</h1>
+<h2>Simple Properties</h2>
 
 <pre><code class="php">$datetime = new DateTime;
 
@@ -323,7 +323,7 @@ $datetime-&gt;week;
 $datetime-&gt;year;
 </code></pre>
 
-<h1>Pre-define Formats</h1>
+<h2>Pre-define Formats</h2>
 
 <pre><code class="php">$datetime = new DateTime;
 
@@ -337,7 +337,7 @@ $date-&gt;format(DateTime::FORMAT_YMD_HI);
 $date-&gt;format(DateTime::FORMAT_YMD_HIS);
 </code></pre>
 
-<h1>Get Local Time</h1>
+<h2>Get Local Time</h2>
 
 <p>Add <code>true</code> to get local time, otherwise you will get UTC time.</p>
 

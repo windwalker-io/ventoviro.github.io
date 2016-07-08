@@ -4,7 +4,7 @@ title: IoC Container
 
 ---
 
-# What is Ioc Container
+## What is Ioc Container
  
 Windwalker DI is a [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) tools,
 provide us an [IOC](http://en.wikipedia.org/wiki/Inversion_of_control) container to manage objects and data.
@@ -13,7 +13,7 @@ We also support service provider to help developers build their service in a uni
 > For more information about IOC and DI, please see
 [Inversion of Control Containers and the Dependency Injection pattern](http://martinfowler.com/articles/injection.html) by Martin Fowler.
 
-# Get IoC Container
+## Get IoC Container
 
 Use internal container in controller and Application:
 
@@ -43,7 +43,7 @@ Or get it by `Ioc:get()` statically:
 \Windwalker\Ioc::get('my.input');
 ```
 
-## Get Sub Container
+### Get Sub Container
 
 Every package will use a child container, if the key in child container not found, container will search from parent:
 
@@ -67,7 +67,7 @@ Directly get object from sub container by `Ioc`:
 \Windwalker\Ioc::get('sakura', 'flower');
 ```
 
-# Lazy Loading
+## Lazy Loading
 
 Use callback function as input value if we do not want to create object instantly.
 
@@ -84,7 +84,7 @@ $input = $container->get('input');
 
 But if we use `set()` method to set callback, this object will be re-created everytime.
 
-# Shared Object (Singleton)
+## Shared Object (Singleton)
 
 Use `set('foo', $object, true)` or `share('foo', $object)` to make an object singleton, we'll always get the same instance.
 
@@ -105,7 +105,7 @@ $newInput = $container->get('input', true);
 $newInput = $container->get('input', Container::FORCE_NEW);
 ```
 
-# Protect Object
+## Protect Object
 
 Use `protect()` to prevent others from overriding your important object.
 
@@ -126,7 +126,7 @@ $input = $container->get('input');
 $container->set('input', $otherInput);
 ```
 
-# Alias
+## Alias
 
 It is convenience to set an alias to key of objects which we often use.
 
@@ -138,7 +138,7 @@ $container->share('system.application', $app)
 $app = $container->get('app');
 ```
 
-# Ioc Class
+## Ioc Class
 
 `\Windwalker\Ioc` provides a easy way to get system objects, the benefit to use these methods is that IDE can identify
 what object we get, and provides auto-complete:
@@ -179,7 +179,7 @@ Now you can use this method in everywhere.
 \Windwalker\Ioc::getMyObject();
 ```
 
-# Build Object
+## Build Object
 
 Container can build an object and automatically inject all the necessary dependencies.
 
@@ -205,7 +205,7 @@ $myObject->input; // Input
 $myObject->config; // Registry
 ```
 
-## Binding Classes
+### Binding Classes
 
 Sometimes we hope to inject particular object we want, we can bind a class as key to let Container know what you want to
 instead the dependency object.
@@ -243,7 +243,7 @@ $myObject = $container->buildObject('MyClass');
 $myObject->model; // MyModel
 ```
 
-# Extending
+## Extending
 
 Container allows you to extend an object, the new instance or closure will override the original one, this is a sample:
 
@@ -266,7 +266,7 @@ $flower = $container->get('flower');
 $flower->name; // sakura
 ```
 
-# Container Aware
+## Container Aware
 
 The `ContainerAwareInterface` defines getter & setter of Container as a system, constructor, we often use it on application or controller classes.
 
@@ -294,7 +294,7 @@ class MyController implements ContainerAwareInterface
 }
 ```
 
-## Using Trait
+### Using Trait
 
 In PHP 5.4, you can use `ContainerAwareTrait` to create an aware object.
 
@@ -310,7 +310,7 @@ class MyController implements ContainerAwareInterface
 }
 ```
 
-# Service Providers
+## Service Providers
 
 Service providers is an useful way to encapsulate logic of creating objects and services.
 Just implements the `Windwalker\DI\ServiceProviderInterface`.
@@ -343,7 +343,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 $container->registerServiceProvider(new DatabaseServiceProvider);
 ```
 
-# Facade
+## Facade
 
 Windwalker has a Facade class to help us use proxy pattern to call object methods statically
 

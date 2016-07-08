@@ -3,13 +3,13 @@ layout: documentation.twig
 title: DateTime
 ---
 
-# About Windwalker DateTime
+## About Windwalker DateTime
 
 `Windwalker\Core\DateTime\DateTime` is sub class of PHP `DateTime`. This class is based on Joomla `JDate` and add some new features.
 
 All PHP DateTime functions are able to use on Windwalker DataTime, see [PHP DateTime](http://php.net/manual/en/book.datetime.php)
 
-# Construct
+## Construct
 
 Windwalker DateTime supports Timezone as string.
 
@@ -35,7 +35,7 @@ $dt = new DateTime('now', true);
 $dt = new DateTime('now', DateTime::TZ_LOCALE);
 ```
 
-# Convert Timezone
+## Convert Timezone
 
 Windwalker DateTime supports easy methods to convert timezone.
   
@@ -52,7 +52,7 @@ $date = DateTime::convert($date, [from], [to], [format]);
 $date = DateTime::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');
 ```
 
-# Simple Properties
+## Simple Properties
 
 ``` php
 $datetime = new DateTime;
@@ -71,7 +71,7 @@ $datetime->week;
 $datetime->year;
 ```
 
-# Pre-define Formats
+## Pre-define Formats
 
 ``` php
 $datetime = new DateTime;
@@ -86,7 +86,7 @@ $date->format(DateTime::FORMAT_YMD_HI);
 $date->format(DateTime::FORMAT_YMD_HIS);
 ```
 
-# Get Local Time
+## Get Local Time
 
 Add `true` to get local time, otherwise you will get UTC time. 
 

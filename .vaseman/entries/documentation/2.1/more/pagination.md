@@ -4,7 +4,7 @@ title: Pagination
 
 ---
 
-# Start Using Pagination
+## Start Using Pagination
 
 Using Pagination in Windwalker is very easy, but you must know how to count pages in your SQL.
 
@@ -12,7 +12,7 @@ A pagination always need 3 integers, **Total rows**, **Items per page**, and **C
  
 For SQL and programming, this 3 integers will be  **Total**, **Limit**, and **Offset**.
    
-## Count Total Rows
+### Count Total Rows
 
 Some times we will fetch items from database by SQL which looks like this:
 
@@ -37,7 +37,7 @@ ORDER BY created
 
 Use the second query we'll fetch total rows of first query without limit.
 
-### Another Way to Count Total
+##### Another Way to Count Total
 
 Use `SQL_CALC_FOUND_ROWS` in only MySQL.
 
@@ -53,7 +53,7 @@ LIMIT 0, 20
 And use `SELECT FOUND_ROWS()` to fetch total rows, this way will a little faster than first way if you set index correctly
 , but only MySQL works.
 
-### Count Total if SQL has GROUP
+##### Count Total if SQL has GROUP
 
 If you add `group` in your SQL, the `COUNT(*)` will be incorrect, we must use an inefficient way to count all results.
 
@@ -88,7 +88,7 @@ And use `ReaderCommand::count()`:
 $total = $db->getReader($sql)->count();
 ```
 
-## Create Pagination
+### Create Pagination
 
 This is an example to fetch rows and total: 
 
@@ -123,7 +123,7 @@ $pagination = new Pagination($total, $page, $limit);
 $paginData = $pagination->getResult();
 ```
 
-# Pagination Result
+## Pagination Result
 
 `PaginationResult` to an object contains pagination information, you can get pages data from this object:
 
@@ -167,7 +167,7 @@ You can use this array to build your pagination HTML.
 
 ![pagination](https://cloud.githubusercontent.com/assets/1639206/5594615/131c1546-928e-11e4-8103-f90e73f4428d.jpg)
 
-# Use Built-in Pagination Template
+## Use Built-in Pagination Template
 
 `render()` method will auto render pagination HTML, the default template is `windwalker.pagination.default`. 
 The first argument (route resources name) is required because pagination use `Router` to get page url.
@@ -176,7 +176,7 @@ The first argument (route resources name) is required because pagination use `Ro
 echo $pagination->render('flower@sakuras');
 ```
 
-## Use Your Own Template
+### Use Your Own Template
 
 Add your template file in `/templates/windwalker/pagination/default.php`, Windwalker renderer will auto find it to replace built-in template.
   

@@ -124,11 +124,146 @@
         <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
     
                 
-    </ul>    </div>
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/debugging.html">Debugging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Introduction of Service Provider</h1>
+                    <h2>Introduction of Service Provider</h2>
 
 <p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
 custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
@@ -136,11 +271,11 @@ custom listeners or 3rd tools. Some libraries need a bootstrapping process, we s
 <p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
 and write all our logic in <code>register()</code> method and set our service objects into container.</p>
 
-<h2>Basic Provider Example</h2>
+<h3>Basic Provider Example</h3>
 
 <p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
 
-<h3>Original Way</h3>
+<h5>Original Way</h5>
 
 <pre><code class="php">// import.mongodb.php
 
@@ -154,7 +289,7 @@ return $conn;
 <pre><code class="php">$mongo = include_once 'import.mongodb.php';
 </code></pre>
 
-<h3>Windwalker Way</h3>
+<h5>Windwalker Way</h5>
 
 <p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
 
@@ -192,7 +327,7 @@ $mongo = Ioc::get('mongo.db');
 
 <p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
 
-<h1>Registering Providers</h1>
+<h2>Registering Providers</h2>
 
 <p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
 you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>

@@ -4,7 +4,7 @@ title: View Model
 
 ---
 
-# About MVC Interactions
+## About MVC Interactions
 
 In most MVC practices, there is no direct communication between View and Model. We called it **Passive View**. But there are many 
 variants of MVC like: MVVM, MVP etc. 
@@ -16,18 +16,18 @@ The benefit of this pattern is that View can decide which data they are needed a
  And controller's responsibility is just decide binding which models to view. There is a `ViewModel` between View and Model 
  to handle request from View and get data from Model.
 
-## Schematic Diagram
+### Schematic Diagram
 
 ![mvc](https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg) ![ww-mvc](https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg)
 
-## ViewModel
+### ViewModel
 
 View is not directly communicate to Model, there is a `ViewModel` object between them. You can consider ViewModel 
 as a Model manager. 
 
 ![view-model](https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg)
 
-# Use ViewModel Pattern in Windwalker
+## Use ViewModel Pattern in Windwalker
 
 This is a traditional MVC usage in controller:
 
@@ -93,7 +93,7 @@ class SomeModel extends Model
 }
 ```
 
-## Set Multiple Models
+### Set Multiple Models
 
 We can get many models and push them into one view.
 

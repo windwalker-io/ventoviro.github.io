@@ -4,7 +4,7 @@ title: Data Object
 
 ---
 
-# Using Data Object
+## Using Data Object
 
 The constructor of `Data` can insert an array or object, it will convert to Data properties.
 
@@ -21,7 +21,7 @@ $data = new Data($array);
 echo $data->flower; // sakura
 ```
 
-## Binding object into it
+### Binding object into it
 
 ``` php
 $obj = new \stdClass;
@@ -32,7 +32,7 @@ $data->bind($obj);
 echo $data->goo; // yoo
 ```
 
-## Get and Set property
+### Get and Set property
 
 Data object has magic method to be getter and setter of any property, we don't need to worry about the property exists or not. Non-exists property will return `null`.
 
@@ -50,7 +50,7 @@ $data->set('flower', 'rose');
 echo $data->get('flower');
 ```
 
-## Default Value
+### Default Value
 
 If some property not exists, we can get a default value.
 
@@ -62,7 +62,7 @@ echo $data->get('flower', 'Default value');
 echo $data->flower ? : 'Default Value';
 ```
 
-## Array Access
+### Array Access
 
 Using array access to get property:
 
@@ -74,7 +74,7 @@ $data['flower'] = 'Sunflower';
 echo $data['flower'];
 ```
 
-## Iterator
+### Iterator
 
 `Data` object can directly use in foreach as iterator:
 
@@ -85,7 +85,7 @@ foreach ($data as $key => $value)
 }
 ```
 
-## Null Data
+### Null Data
 
 In PHP, an empty object means not empty, so this code will return FALSE:
 
@@ -112,7 +112,7 @@ Another simple way is convert it to array, this also work:
 var_dump(empty((array) $data)); // bool(true)
 ```
 
-# Using DataSet Object
+## Using DataSet Object
 
 `DataSet` is a data collection bag for `Data` object. We can insert array with data in constructor.
 
@@ -128,7 +128,7 @@ $dataSet = new DataSet(
 );
 ```
 
-## Array Access
+### Array Access
 
 Operate `DataSet` as an array, it use magic method to get and set data.
 
@@ -142,7 +142,7 @@ Push a new element:
 $dataSet[] = new Data(array('id' => 6, 'title' => 'Lion'));
 ```
 
-## Iterator
+### Iterator
 
 We can also using iterator to loop all elements:
 
@@ -153,7 +153,7 @@ foreach ($dataSet as $data)
 }
 ```
 
-## The Batch Getter & Setter
+### The Batch Getter & Setter
 
 Get values of `foo` field from all data objects.
 

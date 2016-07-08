@@ -124,21 +124,156 @@
         <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
     
                 
-    </ul>    </div>
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/routing-controller.html">Routing And Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/package-system.html">Package System (Bundle)</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/start/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/debugging.html">Debugging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>How to Configure Your Application</h1>
+                    <h2>How to Configure Your Application</h2>
 
 <p>Windwalker stores config files in <code>/etc</code> folder, you can see <code>config.yml</code> and <code>secret.yml</code> file. These two config files will be merged
 in runtime, so settings in secret.yml can override the same key in config.yml.</p>
 
-<h2>config.yml</h2>
+<h3>config.yml</h3>
 
 <p>The <code>config.yml</code> stores some global system settings includes the language locale, session time, cache storage, timezone etc. 
 Which is your application need and will be track by VCS, .</p>
 
-<h2>secret.yml</h2>
+<h3>secret.yml</h3>
 
 <p>And the <code>secret.yml</code> stores some customize or sensitive settings which you don't want to track by VCS, for example, the database account
 or the 3rd party service API key, you will not hope to push these information to GitHub or other public VCS service, so we will
@@ -146,9 +281,9 @@ write some keys in <code>secret.dist.yml</code>.</p>
 
 <p>For example, we can prepare some empty keys in <code>secret.dist.yml</code> then push this file to VCS.</p>
 
-<pre><code class="yaml"># secret.dist.yml
+<pre><code class="yaml">## secret.dist.yml
 
-# Keep NULL to notice developers fill this data. 
+## Keep NULL to notice developers fill this data.
 amazon:
     key: ~
     secret: ~
@@ -156,33 +291,33 @@ amazon:
 
 <p>When Someone clone this project, they must copy <code>secret.dist.yml</code> to <code>secret.yml</code> and fill the keys.</p>
 
-<pre><code class="yaml"># secret.yml
+<pre><code class="yaml">## secret.yml
 
-# Fill real data to use.
+## Fill real data to use.
 amazon:
     key: ************
     secret: *************************
 </code></pre>
 
-<h2>Override config.yml</h2>
+<h3>Override config.yml</h3>
 
 <p>If you set a config in config.yml</p>
 
-<pre><code class="yaml"># config.yml
+<pre><code class="yaml">## config.yml
 
 foo: bar
 </code></pre>
 
 <p>You can override it in secret.yml</p>
 
-<pre><code class="yaml"># secret.yml
+<pre><code class="yaml">## secret.yml
 
 foo: yoo
 </code></pre>
 
 <p>Now the <code>foo</code> value will be <code>yoo</code> not <code>bar</code>.</p>
 
-<h1>Get &amp; Set Config Data</h1>
+<h2>Get &amp; Set Config Data</h2>
 
 <p>In Application, you can use <code>get()</code> to get config.</p>
 
@@ -211,7 +346,7 @@ $foo = $config['foo'];
 
 <p>Config is a Registry object, please see <a href="../more/registry.html">Registry Object</a></p>
 
-<h2>Nested Data</h2>
+<h3>Nested Data</h3>
 
 <p>If you have multi-level config:</p>
 
@@ -229,7 +364,7 @@ $foo = $config['foo'];
 $config['morning.break.first']; // sakura
 </code></pre>
 
-<h1>Add New Config Files</h1>
+<h2>Add New Config Files</h2>
 
 <p>Open <code>src/Windwalker/Web/Application.php</code> and modify <code>loadConfiguration()</code>, you can load any files as config if you want.</p>
 
@@ -248,7 +383,7 @@ $config['morning.break.first']; // sakura
 }
 </code></pre>
 
-<h1>Package Config</h1>
+<h2>Package Config</h2>
 
 <p>Every packages has their own configs. If you have a <code>FlowerPackage</code> and it's alias is <code>flower</code>, create a file to <code>etc/package/flower.yaml</code>.
 Package object will auto load this config file.</p>
@@ -260,7 +395,7 @@ Package object will auto load this config file.</p>
 $package-&gt;get('foo');
 </code></pre>
 
-<h1>Description of Config</h1>
+<h2>Description of Config</h2>
 
 <p>The config.yml looks like above:</p>
 

@@ -4,81 +4,294 @@ title: Getting Started
 
 ---
 
-# Installation
+This chapter, we'll start a simple page with MVC to show how to develop simple web application in Windwalker.
 
-## Install Starter Application
+We assume you install Windwalker in `http://localhost/windwalker`, so you must use `http://localhost/windwalker/www` to open Windwalker home page.
 
-Windwalker use [Composer](https://getcomposer.org/) as package manager, make sure you [install composer](https://getcomposer.org/download/)
- first.
+## Create First Controller
 
-To start install Windwalker, please open terminal and type the following:
+Let's create a php class in `src/Flower/Controller/Sakura/GetContrtoller.php`.
 
-``` bash
-$ php composer.phar create-project windwalker/starter project_dir 2.0.* --no-dev
+The `Flower` is package name, and `Sakura` is controller name, `GetController` means it is a default `GET` action, this equals to
+`indexAction` in other frameworks, while Windwalker uses single action controller, so every controller class only handles one action.
+
+``` php
+<?php
+// src/Flower/Controller/Sakura/GetController.php
+
+namespace Flower\Controller\Sakura;
+
+use Windwalker\Core\Controller\AbstractController;
+
+/**
+ * Sakura Controller
+ */
+class GetController extends AbstractController
+{
+	protected function doExecute()
+	{
+		return 'Hello World';
+	}
+}
+
 ```
 
-> For use of unit test or any development purpose, simply remove `--no-dev` option.
+Now, open `http://path/to/windwalker/www/flower/sakura` in browser, you will see `Hello World`.
 
-The [Starter](https://github.com/ventoviro/windwalker-starter) package is a default application to start a project (like Symfony Standard).
-If you want to use Windwalker as a library, see next section.
+## Render View Template
 
-## Use Windwalker as Library
+We wish we can render a HTML template to browser, so please add a template file to `src/Flower/Templates/sakura/default.php`
 
-Add `windwalker/framework` as your project's dependencies in `composer.json`.
+``` php
+<?php
+// src/Flower/Templates/sakura/default.php
+?>
+<h1>Hello <?php echo $this->escape($name); ?></h1>
+```
 
-``` json
+And modify `GetController::doExecute()`, we get a View object, push a variable into it, then all `render()` method to return template.
+
+``` php
+// src/Flower/Controller/Sakura/GetController.php
+
+// ...
+
+protected function doExecute()
 {
-    "require": {
-        "windwalker/framework": "~2.0@stable"
-    }
+    $view = $this->getView();
+
+    $view['name'] = 'Sakura';
+
+    return $view->render();
+
+    // Another quick way
+    return $this->renderView('Sakura', 'default', 'php', ['name' => 'Sakura']);
+}
+
+```
+
+We'll get `<h1>Hello Sakura</h1>` in browser.
+
+### Add HTML Frame
+
+By extends parent layout, we can wrap our template by a parent template.
+
+``` html
+<?php
+// src/Flower/Templates/sakura/default.php
+/**
+ * @var  $this  \Windwalker\Core\Renderer\PhpRenderer
+ */
+?>
+
+<?php $this->extend('_global.html') ?>
+
+<!-- This will override parent `content` block -->
+<?php $this->block('content'); ?>
+    <div class="container">
+        <h1>Hello <?php echo $this->escape($name); ?></h1>
+    </div>
+<?php $this->endblock(); ?>
+```
+
+The result
+
+![p-2016-07-08-001](https://cloud.githubusercontent.com/assets/1639206/16676719/cddea284-44ff-11e6-8af7-c759e6826d5d.jpg)
+
+> You can find `_global.html` in `templates/_globa/html.php`, this is the global template path.
+
+### Change View Layout
+
+We support different template layout for one controller, the default is `default` layout, now try to add a `photo` layout.
+
+``` html
+<?php
+// src/Flower/Templates/sakura/photo.php
+?>
+<h1>Hello <?php echo $this->escape($name); ?></h1>
+<img src="http://i.imgur.com/WVpwzJ9.jpg" alt="Sakura">
+```
+
+Then we render `photo.php` by `$view->setLayout('photo')`.
+
+``` php
+// src/Flower/Controller/Sakura/GetController.php
+
+// ...
+
+protected function doExecute()
+{
+    $view = $this->getView();
+
+    $view['name'] = 'Sakura';
+
+    return $view->setLayout('photo')->render();
 }
 ```
 
-> `~2.0` is equivalent to 2.0 to 2.9
+### Use Edge Template Engine
 
-You can also pick any child packages rather than the complete framework set. This is an example to install Session and Form package:
+Edge is Windwalker built-in template engine to support Windwalker build flexible layout. It is a clone of Laravel Blade engine now but
+add some new features.
 
-``` json
+We create a template named `default.edge.php` or `default.blade.php`.
+
+``` html
+{{-- src/Flower/Templates/sakura/default.edge.php --}}
+
+@extends('_global.html')
+
+@section('content')
+<div class="container">
+    <h1>Hello {{ $name }} in edge engine</h1>
+</div>
+@stop
+```
+
+Render this template in Controller
+
+``` php
+protected function doExecute()
 {
-    "require": {
-        "windwalker/session": "~2.0@stable",
-        "windwalker/form": "~2.0@stable"
-    }
+    return $this->renderView('Sakura', 'default', 'edge', ['name' => 'Sakura']);
 }
 ```
 
-See all available packages on [Packagist](https://packagist.org/packages/windwalker/)
+Will output
 
-# Overview
+![p-2016-07-08-002](https://cloud.githubusercontent.com/assets/1639206/16676825/8c4911e0-4501-11e6-9495-3c0461e66732.jpg)
 
-## Open Windwalker Public Root
+## Complete Ths Package
 
-After installed, use browser open `/www` then you will see default landing page.
+Our namespace start with `Flower\`, in Windwalker, we call this "Flower package", currently we haven't create package
+ class, but controller and routing are works because Windwalker has a default simple routing help us mapping controller
+ with URL, so `/flower/sakura` will auto direct to `Flower\Controller\Sakura\GetController`.
 
-![img](https://cloud.githubusercontent.com/assets/1639206/5576484/31c9834c-9037-11e4-9f97-8f73d0822043.png)
+Simple routing is very slow so we can disable it in `etc/config.yml`
 
-## File Structure
+``` yaml
+routing:
+    simple_route: false
+```
 
-| Name | Description |
-| ---- | ----------- |
-| `/bin`  | All executable files, there is a `console` file can run Windwalker Console. |
-| `/etc`  | All configuration and routing files. |
-| ` -- define.php`  | The system path constants. |
-| ` -- config.yml`  | Basic configuration file. |
-| ` -- secret.dist.yml`  | Contains some secret information like DB account. <br /> Please rename to `secret.yml` before use. |
-| ` -- routing.yml` | The routing configuration file. |
-| `/resources` | Some non-PHP or non-classes files. |
-| ` -- languages` | Language files, default is `.ini` format |
-| ` -- migrations` | Database migration files. See [Migration](../db/migration.html) |
-| ` -- seeders` | Database seeder files. See [Seeder](../db/seeder.html) |
-| `/src` | All PHP classes in your project. |
-| `/templates` | Layout and template files. |
-| `/vendor` | All 3rd party libraries. |
-| `/www` | Web public root (or /public in general) |
-| ` -- media` | Web front-end assets (image, vedio, css, etc..) |
-| ` -- .htaccess` | Htaccess config for Apache, you need this file to make mod_rewrite work. |
-| ` -- index.php` | Default web application entrance. |
-| ` -- dev.php` | Default web application entrance for dev environment. |
-| `/phpunit.xml.dist` | PHPUnit configuration file. Rename to `phpunit.xml` before use. |
-| `/README.md` | Readme file |
-| `/composer.json` | Composer configuration file |
+After set `simple_route` to `false`, you will see your application return
+`RouteNotFoundException (404) Unable to handle request for route "flower/sakura"`
+
+Now we must prepare a standard package environment so we can use more advanced functions in the future.
+
+### Add Package Class
+
+Create a `FlowerPackage` first.
+
+``` php
+<?php
+// Flower/FlowerPackage.php
+
+namespace Flower;
+
+use Windwalker\Core\Package\AbstractPackage;
+
+class FlowerPackage extends AbstractPackage
+{
+
+}
+```
+
+Next, register it to `etc/app/web.php`, the `flower` key name is alias of your package, you can customize it if package name conflict.
+
+``` php
+// ...
+
+    'packages' => [
+		'flower' => \Flower\FlowerPackage::class
+	],
+
+// ...
+```
+
+### Register Routing
+
+And then, add a nre routing profile to `etc/routing.yml`.
+
+``` yaml
+# ...
+
+flower:
+    pattern: /flower
+    package: flower
+```
+
+> You can also do this by using `$ php windwalker package install flower` in CLI.
+
+The last step, create package routing at `src/Flower/routing.yml`.
+
+``` yaml
+# src/Flower/routing.yml
+
+sakura:
+    pattern: /sakura
+    controller: Sakura
+```
+
+OK, the Sakura page will return. To register a package and routing is a bit of bother, but it will be very
+flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and mny developers.
+
+## Model Repository
+
+Windwalker provides a simple `ModelRepository` class to help you organize your data source.
+
+Add SakuraModel class.
+
+``` php
+<?php
+// src/Flower/Model/SakuraModel.php
+
+namespace Flower\Model;
+
+use Windwalker\Core\Model\ModelRepository;
+
+class SakuraModel extends ModelRepository
+{
+	public function getContent()
+	{
+		return [
+			['title' => 'foo'],
+			['title' => 'bar'],
+			['title' => 'yoo'],
+		];
+	}
+}
+```
+
+Use this Model in controller.
+
+``` blade
+// ...
+
+/** @var SakuraModel $model */
+$model   = $this->getModel();
+$content = $model->getContent();
+
+return $this->renderView('Sakura', 'default', 'edge', ['content' => $content]);
+```
+
+Modify the template to loop `content` variable.
+
+``` html
+@extends('_global.html')
+
+@section('content')
+<div class="container">
+    <h1>Hello Sakura</h1>
+    <ul>
+        @foreach ($content as $item)
+        <li>{{ $item['title'] }}</li>
+        @endforeach
+    </ul>
+</div>
+@stop
+```
+
+The result:
+
+![p-2016-07-08-003](https://cloud.githubusercontent.com/assets/1639206/16677127/bb37159e-4504-11e6-8096-9ca92d211738.jpg)

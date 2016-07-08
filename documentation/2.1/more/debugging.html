@@ -245,7 +245,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/validation.html">Validation</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/debugging.html">Debugging</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>DEV Mode</h1>
+                    <h2>DEV Mode</h2>
 
 <p>Windawlker contains a development mode, you can enable it by setting config <code>system.debug</code> to <code>1</code>, or use <code>dev.php</code> to access your site.</p>
 
@@ -268,7 +268,7 @@
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/14169792/6aabee92-f75c-11e5-9614-1512c6021d77.jpg" alt="160331-0003" /></p>
 
-<h2>Remote Access</h2>
+<h3>Remote Access</h3>
 
 <p>By default, <code>dev.php</code> only support <code>localhost</code>, you can add allow IPs to <code>secret.yml</code> so that you can open dev mode from remote.</p>
 
@@ -277,10 +277,10 @@
         - 127.0.0.1
         - 'fe80::1'
         - '::1'
-        - 123.456.654.321 # Add your ip
+        - 123.456.654.321 ## Add your ip
 </code></pre>
 
-<h2>Close Debug Console</h2>
+<h3>Close Debug Console</h3>
 
 <p>Debug console will auto push to page when system close, but sometimes we won't want it to show if in ajax or api call.
 Add this line to close it.</p>
@@ -301,7 +301,7 @@ class AjaxController extends Controller
 }
 </code></pre>
 
-<h1>Debugger Package</h1>
+<h2>Debugger Package</h2>
 
 <p>Click buttons on debug console, you will enter the Debugger page.</p>
 
@@ -311,7 +311,7 @@ class AjaxController extends Controller
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/14170049/f8b897d4-f75d-11e5-9cd1-3380e88854fb.jpg" alt="160331-0005" /></p>
 
-<h2>Log your Custom Content</h2>
+<h3>Log your Custom Content</h3>
 
 <p>If you need to log some important information to debug, you can use <code>DebugHelper</code> to add custom data.</p>
 
@@ -322,7 +322,7 @@ class AjaxController extends Controller
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg" alt="system" /></p>
 
-<h1>Logging</h1>
+<h2>Logging</h2>
 
 <p>Windwalker includes <a href="https://github.com/Seldaek/monolog">Monolog</a> to help us log debugging information.</p>
 
@@ -333,7 +333,7 @@ Logger::log('flower', Logger::INFO, 'log text');
 
 <p>The first argument is category &amp; log file name, this will create a file at <code>logs/flower.log</code> with one line:</p>
 
-<pre><code># logs/flower.log
+<pre><code>## logs/flower.log
 
 [2016-04-01 10:17:07] flower.INFO: log text [] []
 </code></pre>
@@ -343,7 +343,7 @@ Logger::log('flower', Logger::INFO, 'log text');
 <pre><code class="php">Logger::log('flower', Logger::INFO, 'log text', array('foo' =&gt; 'bar'));
 </code></pre>
 
-<pre><code># logs/flower.log
+<pre><code>## logs/flower.log
 
 [2016-04-01 10:18:42] flower.INFO: log text {"foo":"bar"} []
 </code></pre>
@@ -360,7 +360,7 @@ Logger::alert('category', 'log text');
 Logger::emergency('category', 'log text');
 </code></pre>
 
-<h1>Log Levels</h1>
+<h2>Log Levels</h2>
 
 <p>The log levels are described by <a href="http://tools.ietf.org/html/rfc5424">RFC5424</a></p>
 

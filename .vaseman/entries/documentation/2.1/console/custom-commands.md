@@ -4,7 +4,7 @@ title: Custom Commands
 
 ---
 
-# Introduction of Windwalker Commands
+## Introduction of Windwalker Commands
 
 The Nested Command Structure
 
@@ -42,7 +42,7 @@ class CommandC extend AbstractCommand
 }
 ```
 
-# Declaring Command Class
+## Declaring Command Class
 
 This is an example FlowerCommand declaration:
 
@@ -72,7 +72,7 @@ class FlowerCommand extends Command
 
 ```
 
-## Register Command in Console:
+### Register Command in Console:
 
 We can add our Commands in `src/Windwalker/Console/Application.php`:
 
@@ -107,7 +107,7 @@ Commands:
 
 ```
 
-## Auto Registering
+### Auto Registering
 
 If we create commands in package `Command` folder, every commands will be auto registered to Console:
 
@@ -125,7 +125,7 @@ class FlowerCommand extends Command
 }
 ```
 
-# Get Arguments and Options
+## Get Arguments and Options
 
 We can use this code to get arguments and options, setting them in `FooCommand`.
 
@@ -176,7 +176,7 @@ If we type:
 ``` bash
 $ php bin/console flower Asika --yell
 
-# OR
+## OR
 
 $ php bin/console flower Asika -y
 ```
@@ -191,12 +191,12 @@ HELLO: ASIKA
 get the input option which we want. If we didn't do this, we have to use `$this->io->get('x')` 
 to get option value, but this way do not support option aliases.
 
-# Add Second Level Commands and more...
+## Add Second Level Commands and more...
 
 FlowerCommand is the first level command in our command tree, if we want to add several commands under FlowerCommand, 
 we can use `addCommand()` method. Now we add two `sakura` and `rose` command under `FlowerCommand`.
 
-## Create Command Classes
+### Create Command Classes
 
 We declare `SakuraCommand` and `RoseCommand` class first.
 
@@ -277,7 +277,7 @@ This is Sakura Command executing code.
 Argument1: bloom
 ```
 
-## Get Child by Path
+### Get Child by Path
 
 ``` php
 $command = $console->getCommand('flower/sakura'); // SakuraCommand
@@ -287,7 +287,7 @@ $command = $console->getCommand('flower/sakura'); // SakuraCommand
 $command = $command->getChild('foo/bar/baz');
 ```
 
-# The Prompter
+## The Prompter
 
 Prompter is a set of dialog tools help us asking questions from user.
 
@@ -306,7 +306,7 @@ $prompter = new TextPrompter('Tell me your name: ', $this->io);
 $name = $this->getArgument(0, $prompter);
 ```
 
-## Validate Input Value
+### Validate Input Value
 
 ``` php
 $prompter = new \Windwalker\Console\Prompter\ValidatePrompter;
@@ -382,7 +382,7 @@ No valid number.
 Number validate fail and close
 ```
 
-## Select List
+### Select List
 
 ``` php
 $options = array(
@@ -409,7 +409,7 @@ Which do you want: r
 You choose: r
 ```
 
-## Boolean Prompter
+### Boolean Prompter
 
 BooleanPrompter convert input string to boolean type, the (y, yes, 1) weill be `true`, (n, no, 0, null) will be `false`.
 
@@ -428,7 +428,7 @@ Do you wan to do this [Y/n]: y
 bool(true)
 ```
 
-## Available Prompters
+### Available Prompters
 
 - TextPrompter
 - SelectPrompter

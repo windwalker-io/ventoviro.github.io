@@ -4,7 +4,7 @@ title: Routing And Controller
 
 ---
 
-# Create Simple Routing
+## Create Simple Routing
 
 Open `/etc/routing.yml` and add a new route resource.
 
@@ -20,7 +20,7 @@ The reason we locate `GetController` is because Windwalker routing supports REST
 
 If you send `Post` request then `SaveController` will be executed instead. This is more efficient and faster to the better routing performance.
 
-## Methods supported:
+### Methods supported:
 
 | Method    | Mapped Controller |
 | --------- | --------------- |
@@ -34,7 +34,7 @@ If you send `Post` request then `SaveController` will be executed instead. This 
 
 > NOTE: Windwalker mapped POST, PUT and PATCH to `SaveController`, which includes both create and update. If you want to separate create and update to two controllers, see next section to override actions.
 
-## Use Controller
+### Use Controller
 
 Now we use a route like this:
 
@@ -77,7 +77,7 @@ Flower id is: 25
 
 Congratulations! Your first page is finished.
 
-## Override Actions
+### Override Actions
 
 Add the action attribute:
 
@@ -110,7 +110,7 @@ Or use wildcards to map all methods to one controller:
         '*': SakuraController
 ```
 
-## Override Methods
+### Override Methods
 
 If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in yaml query, this param will override 
 real HTTP method. For example: `&_method=DELETE` will raise `DeleteController`.
@@ -124,7 +124,7 @@ If you think the HTTP standard methods are not enough to use for you, you can ad
 
 Then use `&_method=EXPORT` and the `ExportController` will be executed.
 
-## Custom Input Variables
+### Custom Input Variables
 
 ``` yaml
     pattern: /flower/(id)/(alias)
@@ -141,7 +141,7 @@ $this->input->get('foo'); // bar
 
 But if you type `/flower/25/alias?foo=yoo`, then you will get `yoo`.
 
-## Extra Params
+### Extra Params
 
 The `variables` will auto set to input request so it is danger to store some sensitive settings in `variables`, we can set 
 `extra` params instead.
@@ -166,7 +166,7 @@ $config->get('route.extra.user.access'); // admin
 $this->app->get('route.extra.user.access'); // admin
 ```
 
-## Hooks
+### Hooks
 
 You can add `match` and `build` hooks to every route.
 
@@ -225,7 +225,7 @@ class MyRouteHandler
 }
 ```
 
-## Limit By Methods
+### Limit By Methods
 
 The yaml request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.
 
@@ -238,7 +238,7 @@ flower:
         - POST
 ```
 
-## Limit By schema
+### Limit By schema
 
 ``` yaml
 flower:
@@ -247,15 +247,15 @@ flower:
     method:
         - GET
         - POST
-    # Only http & https
+    ## Only http & https
     scheme: http
     post: 80
     sslPort: 443
 ```
 
-# Route Pattern
+## Route Pattern
 
-## Simple Params
+### Simple Params
 
 Use parenthesis `()` to wrap param name.
 
@@ -270,7 +270,7 @@ For uri look like : `/flower/25/article-alias-name`, above pattern will be match
 [alias] => article-alias-name
 ```
 
-### Limit By Requirement
+##### Limit By Requirement
 
 Use Regular Expression to validate type of input. For example `\d+` indicates that only `Integer` will be accepted as `id` input.
 
@@ -280,9 +280,9 @@ Use Regular Expression to validate type of input. For example `\d+` indicates th
         id: \d+
 ```
 
-## Optional Params
+### Optional Params
 
-### Single Optional Params
+##### Single Optional Params
 
 Use `(/{anyparam})` to wrap an Optional Param.
 
@@ -297,7 +297,7 @@ Below 2 uris will be matched simultaneously.
 /flower/25
 ```
 
-### Multiple Optional Params
+##### Multiple Optional Params
 
 ``` yaml
     pattern: flower(/year,month,day)
@@ -323,7 +323,7 @@ Array
 )
 ```
 
-## Wildcards
+### Wildcards
 
 Use Wildcards to match all the successive params in uri.
 
@@ -346,7 +346,7 @@ Array
 )
 ```
 
-# Build Route
+## Build Route
 
 Every route in Windwalker has a key, which allows every single route pattern can be access by **route name** or **route resources**, this will be helpful building a route quickly.
 
@@ -366,7 +366,7 @@ This is a very useful function that you can change roue name but don't need to w
 
 For further information, see: [Route and Redirect](../mvc/uri-route-building.html)
 
-# Matchers
+## Matchers
 
 Windwalker Router provides some matchers to use different way to match routes.
 
@@ -379,25 +379,25 @@ routing:
 
 The default matcher is Sequential Matcher.
 
-## Sequential Matcher
+### Sequential Matcher
 
 Sequential Matcher use the [Sequential Search Method](http://en.wikipedia.org/wiki/Linear_search) to find route.
 It is the slowest matcher but much more customizable. It is the default matcher of Windwalker Router.
 
-## Binary Matcher
+### Binary Matcher
 
 Binary Matcher use the [Binary Search Algorithm](http://en.wikipedia.org/wiki/Binary_search_algorithm) to find route.
 This matcher is faster than Sequential Matcher but it will break the ordering of your routes. Binary search will re-sort all routes by pattern characters.
 
-## Trie Matcher
+### Trie Matcher
 
 Trie Matcher use the [Trie](http://en.wikipedia.org/wiki/Trie) tree to search route.
 This matcher is the fastest method of Windwalker Router, but the limit is that it need to use an simpler route pattern
 which is not as flexible as the other two matchers.
 
-## Rules of TrieMatcher
+### Rules of TrieMatcher
 
-### Simple Params
+##### Simple Params
 
 only match when the uri segments all exists. If you want to use optional segments, you must add two or more patterns.
 
@@ -407,7 +407,7 @@ only match when the uri segments all exists. If you want to use optional segment
 /flower/:id/:alias
 ```
 
-### Wildcards
+##### Wildcards
 
 This pattern will convert all segments after `/flower` to an array which named `tags`:
 

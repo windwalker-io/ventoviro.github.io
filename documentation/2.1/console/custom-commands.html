@@ -197,7 +197,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/console/console-basic.html">Basic Usage</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/console/custom-commands.html">Custom Commands</a>
             </li>
         
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Introduction of Windwalker Commands</h1>
+                    <h2>Introduction of Windwalker Commands</h2>
 
 <p>The Nested Command Structure</p>
 
@@ -295,7 +295,7 @@
 }
 </code></pre>
 
-<h1>Declaring Command Class</h1>
+<h2>Declaring Command Class</h2>
 
 <p>This is an example FlowerCommand declaration:</p>
 
@@ -324,7 +324,7 @@ class FlowerCommand extends Command
 
 </code></pre>
 
-<h2>Register Command in Console:</h2>
+<h3>Register Command in Console:</h3>
 
 <p>We can add our Commands in <code>src/Windwalker/Console/Application.php</code>:</p>
 
@@ -357,7 +357,7 @@ public function registerCommands()
 
 </code></pre>
 
-<h2>Auto Registering</h2>
+<h3>Auto Registering</h3>
 
 <p>If we create commands in package <code>Command</code> folder, every commands will be auto registered to Console:</p>
 
@@ -374,7 +374,7 @@ class FlowerCommand extends Command
 }
 </code></pre>
 
-<h1>Get Arguments and Options</h1>
+<h2>Get Arguments and Options</h2>
 
 <p>We can use this code to get arguments and options, setting them in <code>FooCommand</code>.</p>
 
@@ -423,7 +423,7 @@ public function doExecute()
 
 <pre><code class="bash">$ php bin/console flower Asika --yell
 
-# OR
+## OR
 
 $ php bin/console flower Asika -y
 </code></pre>
@@ -439,12 +439,12 @@ $ php bin/console flower Asika -y
   to get option value, but this way do not support option aliases.</p>
 </blockquote>
 
-<h1>Add Second Level Commands and more...</h1>
+<h2>Add Second Level Commands and more...</h2>
 
 <p>FlowerCommand is the first level command in our command tree, if we want to add several commands under FlowerCommand, 
 we can use <code>addCommand()</code> method. Now we add two <code>sakura</code> and <code>rose</code> command under <code>FlowerCommand</code>.</p>
 
-<h2>Create Command Classes</h2>
+<h3>Create Command Classes</h3>
 
 <p>We declare <code>SakuraCommand</code> and <code>RoseCommand</code> class first.</p>
 
@@ -519,7 +519,7 @@ public function initialise()
 Argument1: bloom
 </code></pre>
 
-<h2>Get Child by Path</h2>
+<h3>Get Child by Path</h3>
 
 <pre><code class="php">$command = $console-&gt;getCommand('flower/sakura'); // SakuraCommand
 
@@ -528,7 +528,7 @@ Argument1: bloom
 $command = $command-&gt;getChild('foo/bar/baz');
 </code></pre>
 
-<h1>The Prompter</h1>
+<h2>The Prompter</h2>
 
 <p>Prompter is a set of dialog tools help us asking questions from user.</p>
 
@@ -545,7 +545,7 @@ $name = $prompter-&gt;ask('Tell me your name:', 'default');
 $name = $this-&gt;getArgument(0, $prompter);
 </code></pre>
 
-<h2>Validate Input Value</h2>
+<h3>Validate Input Value</h3>
 
 <pre><code class="php">$prompter = new \Windwalker\Console\Prompter\ValidatePrompter;
 
@@ -615,7 +615,7 @@ No valid number.
 Number validate fail and close
 </code></pre>
 
-<h2>Select List</h2>
+<h3>Select List</h3>
 
 <pre><code class="php">$options = array(
     's' =&gt; 'sakura',
@@ -640,7 +640,7 @@ Which do you want: r
 You choose: r
 </code></pre>
 
-<h2>Boolean Prompter</h2>
+<h3>Boolean Prompter</h3>
 
 <p>BooleanPrompter convert input string to boolean type, the (y, yes, 1) weill be <code>true</code>, (n, no, 0, null) will be <code>false</code>.</p>
 
@@ -657,7 +657,7 @@ var_dump($result);
 bool(true)
 </code></pre>
 
-<h2>Available Prompters</h2>
+<h3>Available Prompters</h3>
 
 <ul>
 <li>TextPrompter</li>

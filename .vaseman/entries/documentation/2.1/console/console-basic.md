@@ -4,7 +4,7 @@ title: Console Basic Usage
 
 ---
 
-# Use Windwalker Console
+## Use Windwalker Console
 
 Windwalker Console is a powerful CLI tool set to help us do many things. It is based on [Windwalker Console Package](https://github.com/ventoviro/windwalker-console).
 

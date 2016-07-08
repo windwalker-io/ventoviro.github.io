@@ -182,7 +182,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/db/query-builder.html">Query Builder</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/db/active-record.html">ActiveRecord</a>
             </li>
                     <li class="">
@@ -260,11 +260,11 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Introduction</h1>
+                    <h2>Introduction</h2>
 
 <p>Windwalker Record is a simple ActiveRecord to operate database row.</p>
 
-<h2>New a instance.</h2>
+<h3>New a instance.</h3>
 
 <pre><code class="php">use Windwalker\Record\Record;
 
@@ -284,7 +284,7 @@ class UserRecord extends Record
 $user = new UserRecord;
 </code></pre>
 
-<h2>Load A Record</h2>
+<h3>Load A Record</h3>
 
 <pre><code class="php">$user-&gt;load(25); // Load by primary key
 
@@ -299,7 +299,7 @@ $user-&gt;load(array('alias' =&gt; $alias)); // Load by field name.
 }
 </code></pre>
 
-<h2>Bind Data</h2>
+<h3>Bind Data</h3>
 
 <pre><code class="php">$data = array(
     'name'     =&gt; 'Sakura',
@@ -342,9 +342,9 @@ $user-&gt;name; // Sakura
 
 <p>That makes our fields in Record will always same as DB table.</p>
 
-<h2>Store</h2>
+<h3>Store</h3>
 
-<h3>Create A New Row</h3>
+<h5>Create A New Row</h5>
 
 <p>If primary not exists, Record will create a new row in table.</p>
 
@@ -361,7 +361,7 @@ $user-&gt;store();
 echo $user-&gt;id; // Auto generated id
 </code></pre>
 
-<h3>Update A Existing Row</h3>
+<h5>Update A Existing Row</h5>
 
 <p>If primary key exists, Record will update it.</p>
 
@@ -377,7 +377,7 @@ $user-&gt;bind($data);
 $user-&gt;store();
 </code></pre>
 
-<h2>Check</h2>
+<h3>Check</h3>
 
 <p>Check method help you validate data.</p>
 
@@ -406,7 +406,7 @@ $user-&gt;check();
 $user-&gt;store();
 </code></pre>
 
-<h2>Delete</h2>
+<h3>Delete</h3>
 
 <pre><code class="php">$user-&gt;load(30);
 $result = $user-&gt;delete(); // boolean
@@ -417,11 +417,11 @@ $result = $user-&gt;delete(30); // boolean
 $result = $user-&gt;delete(array('username' =&gt; $username)); // boolean
 </code></pre>
 
-<h1>NestedRecord</h1>
+<h2>NestedRecord</h2>
 
 <p>NestedRecord is a tool help us handle <a href="http://en.wikipedia.org/wiki/Nested_set_model">Nested Set Model</a>.</p>
 
-<h2>Create Table</h2>
+<h3>Create Table</h3>
 
 <p>Name: <code>categories</code></p>
 
@@ -480,7 +480,7 @@ $result = $user-&gt;delete(array('username' =&gt; $username)); // boolean
 </tbody>
 </table>
 
-<h2>Initialise</h2>
+<h3>Initialise</h3>
 
 <p>Every nested set should have a root node.</p>
 
@@ -491,7 +491,7 @@ $cat-&gt;createRoot();
 
 <p>NOTE: The root node id is <code>1</code>.</p>
 
-<h2>Create Node</h2>
+<h3>Create Node</h3>
 
 <p>Set as first child of ROOT</p>
 
@@ -516,22 +516,22 @@ $cat-&gt;createRoot();
 <li>LOCATION_AFTER</li>
 </ul>
 
-<h2>Move Node</h2>
+<h3>Move Node</h3>
 
-<h3>Re Ordering</h3>
+<h5>Re Ordering</h5>
 
 <pre><code class="php">$cat-&gt;move(1); // move up
 $cat-&gt;move(-1); // Move down
 </code></pre>
 
-<h3>Move To Other Node</h3>
+<h5>Move To Other Node</h5>
 
 <p>Move to node <code>3</code> as last child.</p>
 
 <pre><code class="php">$cat-&gt;moveByReference(3, NestedRecord::LOCATION_LAST_CHILD);
 </code></pre>
 
-<h2>Rebuild</h2>
+<h3>Rebuild</h3>
 
 <p>If a tree was not correct, using rebuild to reset all <code>lft</code>, <code>rgt</code> of this branch.</p>
 
@@ -539,21 +539,21 @@ $cat-&gt;move(-1); // Move down
 $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
 </code></pre>
 
-<h2>getPath</h2>
+<h3>getPath</h3>
 
 <p>Method to get an array of nodes from a given node to its root.</p>
 
 <pre><code class="php">$path = $cat-&gt;getPath();
 </code></pre>
 
-<h2>getTree</h2>
+<h3>getTree</h3>
 
 <p>Method to get a node and all its child nodes.</p>
 
 <pre><code class="php">$records = $cat-&gt;getTree();
 </code></pre>
 
-<h1>Hooks</h1>
+<h2>Hooks</h2>
 
 <p><code>Record</code> object supports hooks to add logic before or after any data operation.</p>
 

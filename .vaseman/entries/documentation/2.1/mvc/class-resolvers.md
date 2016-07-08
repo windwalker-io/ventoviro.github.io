@@ -4,7 +4,7 @@ title: Class Resolvers
 
 ---
 
-# MVC Resolvers
+## MVC Resolvers
 
 Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
 has a `flower` package and a route with `Sakura` controller matched:
@@ -38,7 +38,7 @@ public function initialise()
 Now if `Flower\Controller\Sakura\{action}` not exists, Windwalker will find controller from `Animal\Controller\Sakura\{action}`.
 It is flexible to help us organize our packages.
 
-# View And Model
+## View And Model
 
 You can also use the same way to add default View and Model paths.
 

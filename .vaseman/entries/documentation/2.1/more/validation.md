@@ -4,7 +4,7 @@ title: Validation
 
 ---
 
-## Simple Validate Process
+### Simple Validate Process
 
 ``` php
 use Windwalker\Validator\Rule\EmailValidator;
@@ -16,7 +16,7 @@ $validator->validate('sakura@flower.com'); // bool(true)
 $validator->validate('sakura'); // bool(false)
 ```
 
-### Available Validator Rules
+##### Available Validator Rules
 
 - AlnumValidator
 - BooleanValidator
@@ -30,7 +30,7 @@ $validator->validate('sakura'); // bool(false)
 - RegexValidator
 - UrlValidator
 
-## Regex Validator
+### Regex Validator
 
 ``` php
 use Windwalker\Validator\Rule\RegexValidator;
@@ -40,7 +40,7 @@ $validator = new RegexValidator('^[a-zA-Z0-9]*$', 'i');
 $validator->validate('abc_123:978'); // bool(false)
 ```
 
-## Equals Validator
+### Equals Validator
 
 ``` php
 use Windwalker\Validator\Rule\EqualsValidator;
@@ -58,7 +58,7 @@ $validator = new EqualsValidator(123, true);
 $validator->validate('123'); // bool(false)
 ```
 
-## Error Message
+### Error Message
 
 ``` php
 $validator->setMessage('This string is not valid');
@@ -69,7 +69,7 @@ if (!$validator->validate('sakura'))
 }
 ```
 
-## Create Your Own Validator
+### Create Your Own Validator
 
 ``` php
 use Windwalker\Validator\AbstractValidator;
@@ -87,7 +87,7 @@ $validator = new MyValidator;
 $validator->validate('foo');
 ```
 
-## Extends Regex Validator
+### Extends Regex Validator
 
 ``` php
 use Windwalker\Validator\Rule\RegexValidator;

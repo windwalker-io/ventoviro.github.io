@@ -248,7 +248,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/debugging.html">Debugging</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/error-handling.html">Error Handling</a>
             </li>
                     <li class="">
@@ -260,11 +260,11 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Introduction</h1>
+                    <h2>Introduction</h2>
 
 <p>Windwalker has a matured error handling system, it override the native PHP error handler to provide a flexible interface to fetch error message.</p>
 
-<h1>Exception Handling</h1>
+<h2>Exception Handling</h2>
 
 <p>Most of time, we throw exception object to change the program process if error occurred:</p>
 
@@ -298,7 +298,7 @@ throw new Exception('Error message');
 
 <p>To enable Pretty error page, you must open DEV mode, please change config <code>system.debug</code> to <code>1</code> or use <code>dev.php</code> to access your site.</p>
 
-<h2>Built-in Error Page</h2>
+<h3>Built-in Error Page</h3>
 
 <p>If you don't want to use Whoops, Widwalker still have it own error handler. If we remove WhoopsProvider from Application:</p>
 
@@ -322,11 +322,11 @@ public function loadProviders()
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5594840/88661bce-929a-11e4-93fd-5b60cda22f46.jpg" alt="p-2015-01-02-4" /></p>
 
-<h1>Close Error Handler</h1>
+<h2>Close Error Handler</h2>
 
 <p>These two error handlers will only work if debug mode opened, if we close debug mode:</p>
 
-<pre><code class="yaml"># etc/config.yml
+<pre><code class="yaml">## etc/config.yml
 
 system:
     debug: 0
@@ -335,7 +335,7 @@ system:
 
 <p>The error handler will fallback to PHP native.</p>
 
-<h1>Custom Error Template</h1>
+<h2>Custom Error Template</h2>
 
 <p>Windwalker error handler also use <a href="widget-renderer.html">Renderer</a> to render page. If you want to show a clean error page only
 contains a title which tell user: <strong>Something error, please contact administrator</strong>, you can override the error template.</p>
@@ -358,25 +358,25 @@ $exception = $data-&gt;exception;
 <pre><code class="php">\Windwalker\Core\Error\ErrorHandler::setErrorTemplate('my.error.tmpl.file');
 </code></pre>
 
-<h1>ErrorHandler Class</h1>
+<h2>ErrorHandler Class</h2>
 
 <p>Windwalker use <code>ErrorHandler</code> class to handle all custom error process.</p>
 
-<h2>Register Error And Exception Handler</h2>
+<h3>Register Error And Exception Handler</h3>
 
 <p>In Application, Windwalker use this code to register PHP error handler to it own.</p>
 
 <pre><code class="php">\Windwalker\Core\Error\ErrorHandler::register();
 </code></pre>
 
-<h2>Restore Error Handler</h2>
+<h3>Restore Error Handler</h3>
 
 <p>If you want to use other error handler, you can restore all error handler have set.</p>
 
 <pre><code class="php">\Windwalker\Core\Error\ErrorHandler::restore();
 </code></pre>
 
-<h2>Override It</h2>
+<h3>Override It</h3>
 
 <p>Override Built-in ErrorHandler with our own logic.</p>
 
@@ -421,7 +421,7 @@ class MyErrorHandler extends ErrorHandler
 
 <p>Now all PHP error will throws ErrorException.</p>
 
-<h2>Set Error Level</h2>
+<h3>Set Error Level</h3>
 
 <pre><code class="php">ErrorHandler::register(true, E_ALL);
 </code></pre>

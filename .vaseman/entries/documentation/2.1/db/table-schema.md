@@ -4,7 +4,7 @@ title: Table and Schema
 
 ---
 
-# Table Command
+## Table Command
 
 Get Table Command.
 
@@ -12,7 +12,7 @@ Get Table Command.
 $table = $db->getTable('#__articles');
 ```
 
-## create()
+### create()
 
 Create a new table.
 
@@ -50,7 +50,7 @@ $table->addColumn(new Column\Primary('id'))
 
 These objects will set default length and attributes for every column, and map the type to different database drivers.
 
-## update()
+### update()
 
 Update table schema. Only use on add columns and indexes.
 
@@ -65,7 +65,7 @@ $table->addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 
     ->update();
 ```
 
-## save()
+### save()
 
 If table exists, using update, otherwise use insert.
 
@@ -80,7 +80,7 @@ $table->addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 
     ->save();
 ```
 
-## dropColumn()
+### dropColumn()
 
 ``` php
 $table = $db->getTable('#__articles');
@@ -88,7 +88,7 @@ $table = $db->getTable('#__articles');
 $table->dropColumn('state');
 ```
 
-## dropIndex()
+### dropIndex()
 
 ``` php
 use Windwalker\Database\Schema\Key;
@@ -98,7 +98,7 @@ $table = $db->getTable('#__articles');
 $table->dropIndex(Key::TYPE_INDEX, 'idx_state');
 ```
 
-## rename()
+### rename()
 
 ``` php
 $table = $db->getTable('#__foo');
@@ -106,7 +106,7 @@ $table = $db->getTable('#__foo');
 $newTable = $table->rename('#__bar');
 ```
 
-## truncate()
+### truncate()
 
 ``` php
 $table = $db->getTable('#__foo');

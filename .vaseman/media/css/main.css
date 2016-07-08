@@ -377,16 +377,23 @@ dl dd {
 .article-content blockquote code {
   color: #666;
 }
-.article-content h1 {
+.article-content h1,
+.article-content h2,
+.article-content h3 {
   position: relative;
 }
-.article-content a.h1-link {
+.article-content span.title-anchor {
+  position: absolute;
+  height: 1px;
+  top: -90px;
+}
+.article-content a.title-link {
   position: absolute;
   top: 0;
-  left: -30px;
+  left: -25px;
   color: #eee;
 }
-.article-content a.h1-link:hover {
+.article-content a.title-link:hover {
   color: #ccc;
 }
 .table-of-content ul {

@@ -4,11 +4,11 @@ title: ActiveRecord
 
 ---
 
-# Introduction
+## Introduction
 
 Windwalker Record is a simple ActiveRecord to operate database row.
 
-## New a instance.
+### New a instance.
 
 ``` php
 use Windwalker\Record\Record;
@@ -30,7 +30,7 @@ class UserRecord extends Record
 $user = new UserRecord;
 ```
 
-## Load A Record
+### Load A Record
 
 ``` php
 $user->load(25); // Load by primary key
@@ -47,7 +47,7 @@ if (!$user->load(25))
 }
 ```
 
-## Bind Data
+### Bind Data
 
 ``` php
 $data = array(
@@ -79,9 +79,9 @@ $user->alias; // null
 
 That makes our fields in Record will always same as DB table.
 
-## Store
+### Store
 
-### Create A New Row
+##### Create A New Row
 
 If primary not exists, Record will create a new row in table.
 
@@ -99,7 +99,7 @@ $user->store();
 echo $user->id; // Auto generated id
 ```
 
-### Update A Existing Row
+##### Update A Existing Row
 
 If primary key exists, Record will update it.
 
@@ -116,7 +116,7 @@ $user->bind($data);
 $user->store();
 ```
 
-## Check
+### Check
 
 Check method help you validate data.
 
@@ -147,7 +147,7 @@ $user->check();
 $user->store();
 ```
 
-## Delete
+### Delete
 
 ``` php
 $user->load(30);
@@ -159,11 +159,11 @@ $result = $user->delete(30); // boolean
 $result = $user->delete(array('username' => $username)); // boolean
 ```
 
-# NestedRecord
+## NestedRecord
 
 NestedRecord is a tool help us handle [Nested Set Model](http://en.wikipedia.org/wiki/Nested_set_model).
 
-## Create Table
+### Create Table
 
 Name: `categories`
 
@@ -177,7 +177,7 @@ Name: `categories`
 | rgt | int | Right key | V |
 | level | int | Node level | V |
 
-## Initialise
+### Initialise
 
 Every nested set should have a root node.
 
@@ -189,7 +189,7 @@ $cat->createRoot();
 
 NOTE: The root node id is `1`.
 
-## Create Node
+### Create Node
 
 Set as first child of ROOT
 
@@ -214,16 +214,16 @@ Available positions:
 - LOCATION_BEFORE
 - LOCATION_AFTER
 
-## Move Node
+### Move Node
 
-### Re Ordering
+##### Re Ordering
 
 ``` php
 $cat->move(1); // move up
 $cat->move(-1); // Move down
 ```
 
-### Move To Other Node
+##### Move To Other Node
 
 Move to node `3` as last child.
 
@@ -231,7 +231,7 @@ Move to node `3` as last child.
 $cat->moveByReference(3, NestedRecord::LOCATION_LAST_CHILD);
 ```
 
-## Rebuild
+### Rebuild
 
 If a tree was not correct, using rebuild to reset all `lft`, `rgt` of this branch.
 
@@ -240,7 +240,7 @@ $cat->load(5);
 $cat->rebuild(); // Rebuild node: 5 and it's children.
 ```
 
-## getPath
+### getPath
 
 Method to get an array of nodes from a given node to its root.
 
@@ -248,7 +248,7 @@ Method to get an array of nodes from a given node to its root.
 $path = $cat->getPath();
 ```
 
-## getTree
+### getTree
 
 Method to get a node and all its child nodes.
 
@@ -256,7 +256,7 @@ Method to get a node and all its child nodes.
 $records = $cat->getTree();
 ```
 
-# Hooks
+## Hooks
 
 `Record` object supports hooks to add logic before or after any data operation.
 

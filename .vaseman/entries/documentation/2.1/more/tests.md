@@ -4,7 +4,7 @@ title: Tests
 
 ---
 
-# Use Unit Test
+## Use Unit Test
 
 Windwalker includes [PHPUnit](https://phpunit.de/) as default unit test system.
 
@@ -50,11 +50,11 @@ Then we can write all test case in `/src/Flower/Test`.
 
 More about how to writing unit test, please see: [PHPUnit Tutorial](https://phpunit.de/getting-started.html)
 
-# Test Cases
+## Test Cases
 
 Windwlaker Provides some useful TestCase to extends asserts.
 
-## `AbstractBaseTestCase`
+### `AbstractBaseTestCase`
 
 ``` php
 use Windwalker\Test\TestCase\AbstractBaseTestCase;
@@ -78,7 +78,7 @@ class ModelTest extends AbstractBaseTestCase
 }
 ```
 
-## `AbstractDomTestCase`
+### `AbstractDomTestCase`
 
 ``` php
 class ModelTest extends AbstractDomTestCase

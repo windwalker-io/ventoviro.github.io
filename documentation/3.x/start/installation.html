@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Request and Input | Windwalker - A Modern PHP Framework</title>
+        <title>Installation | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Request and Input | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Installation | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/start/request-input.html">3.x</a>
+                    <a href="../../../documentation/3.x/start/installation.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/start/request-input.html">2.1</a>
+                    <a href="../../../documentation/2.1/start/installation.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Request and Input</h1>
+        <h1>Installation</h1>
     </div>
         </div>
     </section>
@@ -125,7 +125,7 @@
     
                 
         <li class="uk-nav-header">Start</li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/start/installation.html">Installation</a>
             </li>
                     <li class="">
@@ -140,7 +140,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/start/config.html">Config &amp; Setting</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/start/request-input.html">Request and Input</a>
             </li>
                     <li class="">
@@ -263,272 +263,191 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Get Input Object in Controller</h2>
+                    <h2>Installation</h2>
 
-<p>Last section we have learned how to make controller work, now it's time to see how the application receives HTTP request queries and respond. In Windwalker you may access input queries using <code>Input</code> object. Below is how it works:</p>
+<h3>Starter Application</h3>
 
-<pre><code class="php">// src/Flower/Controller/Sakuras/GetController.php
+<p>Install via <a href="https://getcomposer.org/">Composer</a></p>
 
-class GetController extends Controller
-{
-    protected function doExecute()
-    {
-        $id = $this-&gt;input-&gt;get('id');
-        $token = $this-&gt;input-&gt;get('token', 'default value');
+<pre><code class="bash">$ composer create-project windwalker/starter project_dir ~3.0 [--dev]
+</code></pre>
 
-        // Do some stuff
+<blockquote>
+  <p>For development purpose, you can add <code>--dev</code> to this command.</p>
+</blockquote>
+
+<p>After project file downloaded, the installation script will ask you some information to initial system environment.</p>
+
+<pre><code class="bash">&gt; Windwalker\Composer\StarterInstaller::rootInstall
+
+Salt to generate secret [Windwalker-577f076209eff]:
+Auto created secret key.
+
+Do you want to use database? [Y/n]: y
+
+Database driver only support mysql/postgresql now.
+Database driver [mysql]:
+Database host [localhost]:
+Database name [acme]: db_name
+Database user [root]: db_user
+Database password: ******
+Table prefix [wind_]:
+
+Database config setting complete.
+
+Install complete.
+</code></pre>
+
+<p>The <a href="https://github.com/ventoviro/windwalker-starter">Starter</a> package is a default application help us start a project.</p>
+
+<h3>Use Windwalker as Library</h3>
+
+<p>If you just want to use Windwalker as a library, add <code>windwalker/framework</code> as your project's dependencies in <code>composer.json</code>.</p>
+
+<pre><code class="json">{
+    "require": {
+        "windwalker/framework": "~3.0"
     }
 }
 </code></pre>
 
-<h3>Get Input at Anywhere</h3>
+<blockquote>
+  <p><code>~3.0</code> is equivalent to 3.0 to 3.9</p>
+</blockquote>
 
-<p>The <code>Input</code> property only exists in class <code>Application</code> and <code>Controller</code>. Under any other situation to access <code>Input</code>, you may use Ioc (DI) Container. This is NOT recommended for it might break software robustness of your application.</p>
+<p>You can also pick any child packages rather than the complete framework set. This is an example to install Session and Form package:</p>
 
-<pre><code class="php">// Use global Ioc class
-$input = Ioc::getInput();
-
-// OR use container object
-$input = $container-&gt;get('system.input');
+<pre><code class="json">{
+    "require": {
+        "windwalker/session": "~3.0",
+        "windwalker/form": "~3.0"
+    }
+}
 </code></pre>
 
-<h2>How Input Work</h2>
-
-<p>Mostly, we need to get data from http request which <code>$_GET</code>, <code>$_POST</code> or <code>$_REQUEST</code> provides.</p>
-
-<p>But it is very unsafe if we only use super global variables, the Input object can help us get values from these variables and sanitize string.</p>
-
-<pre><code class="php">$input-&gt;get('flower'); // Same as $_REQUEST['flower']
-
-$input-&gt;set('flower', 'sakura');
-</code></pre>
-
-<p>The second argument is default value if request params does not exist.</p>
-
-<pre><code class="php">$input-&gt;get('flower', 'default');
-</code></pre>
-
-<h3>Filter</h3>
-
-<p>Input use <a href="https://github.com/ventoviro/windwalker-filter">Windwalker Filter</a> package to sanitize request string, the default filter type is <code>CMD</code>.
-We can use other filter type:</p>
-
-<pre><code class="php">// mysite.com/?flower=&lt;p&gt;to be, or not to be.&lt;/p&gt;;
-
-$input-&gt;get('flower'); // tobeornottobe (Default cmd filter)
-
-$input-&gt;get('flower', 'default_value', InputFilter::STRING); // to be, or not to be
-
-$input-&gt;get('flower', 'default_value', 'string'); // Same as above
-
-$input-&gt;getString('flower'); // to be, or not to be (Same as above, using magic method)
-
-$input-&gt;getRaw('flower') // &lt;p&gt;to be, or not to be.&lt;/p&gt;
-</code></pre>
-
-<p>More filter usage please see: <a href="https://github.com/ventoviro/windwalker-filter">Windwalker Filter</a></p>
-
-<h3>Get Array</h3>
-
-<p>Input provides option to get data as array.</p>
-
-<pre><code class="php">// mysite.com/?flower[1]=sakura&amp;flower[2]=olive;
-
-$input-&gt;get('flower', InputFilter::ARRAY); // Array( [1] =&gt; sakura [2] =&gt; olive)
-</code></pre>
-
-<p>Use <code>getArray()</code> method</p>
-
-<pre><code class="php">// mysite.com/?flower=sakura&amp;foo=bar&amp;king=Richard
-
-// Get all request
-$input-&gt;getArray();
-
-// To retrieve values you want
-$array(
-    'flower' =&gt; '',
-    'king' =&gt; '',
-);
-
-$input-&gt;getArray($array); // Array( [flower] =&gt; sakura [king] =&gt; Richard)
-
-// Specify different filters for each of the inputs:
-$array(
-    'flower' =&gt; InputFilter::CMD,
-    'king' =&gt; InputFilter::STRING,
-);
-
-// Use nested array to get more complicated hierarchies of values
-
-$input-&gt;getArray(array(
-    'windwalker' =&gt; array(
-        'title' =&gt; InputFilter::STRING,
-        'quantity' =&gt; InputFilter::INTEGER,
-        'state' =&gt; 'integer' // Same as above
-    )
-));
-</code></pre>
-
-<h3>Get And Set Multi-Level</h3>
-
-<p>If we want to get value of <code>foo[bar][baz]</code>, just use <code>setByPath()</code>:</p>
-
-<pre><code class="php">$value = $input-&gt;getByPath('foo.bar.baz', 'default', InputFilter::STRING);
-
-$input-&gt;setByPath('foo.bar.baz', $data);
-</code></pre>
-
-<h3>Get Value From RESTful methods</h3>
-
-<p>We can get other methods as a new input object.</p>
-
-<pre><code class="php">$post = $input-&gt;post;
-
-$value = $post-&gt;get('foo', 'bar');
-
-// Other inputs
-$get    = $input-&gt;get;
-$put    = $input-&gt;put;
-$delete = $input-&gt;delete;
-</code></pre>
-
-<h2>Get SUPER GLOBALS</h2>
-
-<p>Every Super Global will be an independent object.</p>
-
-<pre><code class="php">// These are all Input object
-$env     = $input-&gt;env;
-$session = $input-&gt;session;
-$cookie  = $input-&gt;cookie;
-$server  = $input-&gt;server;
-
-$server-&gt;get('REMOTE_ADDR'); // Same as $_SERVER['REMOTE_ADDR'];
-$env-&gt;set('FOO_BAR', 1);
-</code></pre>
-
-<p>See: <a href="http://php.net/manual/en/language.variables.superglobals.php">SUPER GLOBALS</a></p>
-
-<h3>Get method according to current request type:</h3>
-
-<pre><code class="php">$method = $input-&gt;getMethod();
-</code></pre>
-
-<h2>Files Input</h2>
-
-<p>The format that PHP returns file data in for arrays can at times be awkward, especially when dealing with arrays of files. 
-Files Input provides a convenient interface for making life a little easier, grouping the data by file.</p>
-
-<p>Suppose you have a form like:</p>
-
-<pre><code class="html">&lt;form action="..." enctype="multipart/form-data" method="post"&gt;
-    &lt;input type="file" name="flower[test][]" /&gt;
-    &lt;input type="file" name="flower[test][]" /&gt;
-    &lt;input type="submit" value="submit" /&gt;
-&lt;/form&gt;
-</code></pre>
-
-<p>Normally, PHP put these in array <code>$_FILES</code> looks like:</p>
-
-<pre><code>Array
-(
-    [flower] =&gt; Array
-        (
-            [name] =&gt; Array
-                (
-                    [test] =&gt; Array
-                        (
-                            [0] =&gt; flower.png
-                            [1] =&gt; sakura.jpg
-                        )
-
-                )
-
-            [type] =&gt; Array
-                (
-                    [test] =&gt; Array
-                        (
-                            [0] =&gt; image/png
-                            [1] =&gt; image/jpeg
-                        )
-
-                )
-
-            [tmp_name] =&gt; Array
-                (
-                    [test] =&gt; Array
-                        (
-                            [0] =&gt; /tmp/phpUF9Hj
-                            [1] =&gt; /tmp/phpO4Fug
-                        )
-
-                )
-
-            [error] =&gt; Array
-                (
-                    [test] =&gt; Array
-                        (
-                            [0] =&gt; 0
-                            [1] =&gt; 0
-                        )
-
-                )
-
-            [size] =&gt; Array
-                (
-                    [test] =&gt; Array
-                        (
-                            [0] =&gt; 90445
-                            [1] =&gt; 31187
-                        )
-
-                )
-
-        )
-
-)
-</code></pre>
-
-<p>FilesInput rearrange the result with cleaner form to work with:</p>
-
-<pre><code class="php">$files = $input-&gt;files-&gt;get('flower');
-</code></pre>
-
-<p><code>$files</code> then becomes:</p>
-
-<pre><code>Array
-(
-    [test] =&gt; Array
-        (
-            [0] =&gt; Array
-                (
-                    [name] =&gt; youtube_icon.png
-                    [type] =&gt; image/png
-                    [tmp_name] =&gt; /tmp/phpXoIpSD
-                    [error] =&gt; 0
-                    [size] =&gt; 34409
-                )
-
-            [1] =&gt; Array
-                (
-                    [name] =&gt; Younger_Son_2.jpg
-                    [type] =&gt; image/jpeg
-                    [tmp_name] =&gt; /tmp/phpWDE7ye
-                    [error] =&gt; 0
-                    [size] =&gt; 99529
-                )
-
-        )
-)
-</code></pre>
-
-<p>Windwalker Input object is profoundly influenced by <a href="https://github.com/joomla-framework/input">Joomla Input</a></p>
-
-<p>More about Input, see <a href="https://github.com/ventoviro/windwalker-io">Windwalker IO Package</a></p>
+<p>See all available packages on <a href="https://packagist.org/packages/windwalker/">Packagist</a></p>
+
+<h2>Overview</h2>
+
+<h3>Open Windwalker Public Root</h3>
+
+<p>After installed, use browser open <code>/www</code> then you will see default landing page.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5576484/31c9834c-9037-11e4-9f97-8f73d0822043.png" alt="img" /></p>
+
+<h3>File Structure</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>/bin</code></td>
+  <td>All executable files, there is a <code>console</code> file can run Windwalker Console.</td>
+</tr>
+<tr>
+  <td><code>/etc</code></td>
+  <td>All configuration and routing files.</td>
+</tr>
+<tr>
+  <td><code>-- app/*.php</code></td>
+  <td>Basic config files for different environments.</td>
+</tr>
+<tr>
+  <td><code>-- package/*.php</code></td>
+  <td>Config files for every packages.</td>
+</tr>
+<tr>
+  <td><code>-- define.php</code></td>
+  <td>The system path constants.</td>
+</tr>
+<tr>
+  <td><code>-- config.yml</code></td>
+  <td>Basic configuration file.</td>
+</tr>
+<tr>
+  <td><code>-- secret.dist.yml</code></td>
+  <td>Contains some secret information like DB account. <br /> Please rename to <code>secret.yml</code> before use.</td>
+</tr>
+<tr>
+  <td><code>-- routing.yml</code></td>
+  <td>The routing configuration file.</td>
+</tr>
+<tr>
+  <td><code>/resources</code></td>
+  <td>Some non-PHP or non-classes files.</td>
+</tr>
+<tr>
+  <td><code>-- languages</code></td>
+  <td>Language files, default is <code>.ini</code> format</td>
+</tr>
+<tr>
+  <td><code>-- migrations</code></td>
+  <td>Database migration files. See <a href="../db/migration.html">Migration</a></td>
+</tr>
+<tr>
+  <td><code>-- seeders</code></td>
+  <td>Database seeder files. See <a href="../db/seeder.html">Seeder</a></td>
+</tr>
+<tr>
+  <td><code>/src</code></td>
+  <td>All PHP classes in your project.</td>
+</tr>
+<tr>
+  <td><code>/templates</code></td>
+  <td>Layout and template files.</td>
+</tr>
+<tr>
+  <td><code>/vendor</code></td>
+  <td>All 3rd party libraries.</td>
+</tr>
+<tr>
+  <td><code>/www</code></td>
+  <td>Web public root (or /public in general)</td>
+</tr>
+<tr>
+  <td><code>-- asset</code></td>
+  <td>Web front-end assets (image, vedio, css, etc..)</td>
+</tr>
+<tr>
+  <td><code>-- .htaccess</code></td>
+  <td>Htaccess config for Apache, you need this file to make mod_rewrite work.</td>
+</tr>
+<tr>
+  <td><code>-- index.php</code></td>
+  <td>Default web application entrance.</td>
+</tr>
+<tr>
+  <td><code>-- dev.php</code></td>
+  <td>Default web application entrance for dev environment.</td>
+</tr>
+<tr>
+  <td><code>/phpunit.xml.dist</code></td>
+  <td>PHPUnit configuration file. Rename to <code>phpunit.xml</code> before use.</td>
+</tr>
+<tr>
+  <td><code>/README.md</code></td>
+  <td>Readme file</td>
+</tr>
+<tr>
+  <td><code>/composer.json</code></td>
+  <td>Composer configuration file</td>
+</tr>
+<tr>
+  <td><code>.mode</code></td>
+  <td>The env mode config file</td>
+</tr>
+</tbody>
+</table>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/start/request-input.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/start/installation.md">improve</a> this document.
     </p>
                 </article>
             </div>

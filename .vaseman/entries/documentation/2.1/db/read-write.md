@@ -4,7 +4,7 @@ title: Read and Write Database
 
 ---
 
-# Reader Command
+## Reader Command
 
 Reader is a command object that help us read records from database, this is a simple example to use Reader.
 
@@ -18,7 +18,7 @@ $items = $reader->setQuery($sql)->loadObjectList();
 $items = $db->getReader($sql)->loadObjectList();
 ```
 
-## loadObjectList()
+### loadObjectList()
 
 Return an array, every element is a record and wrap with an object. This method is same as `$db->loadAll()`:
 
@@ -50,7 +50,7 @@ $items = $reader->loadObjectList('id');
 ($items[11]->id == 11);
 ```
 
-## loadObject()
+### loadObject()
 
 Return only one record and wrap with an object.  This method is same as `$db->loadOne()`:
 
@@ -70,7 +70,7 @@ $item = $reader->loadObject('MyObject');
 
 Then the object will be an instance of `MyObject`.
 
-## loadArrayList()
+### loadArrayList()
 
 Same as `$db->loadAll('array')`, returns an array and every element is an array indexed by column number as
 returned in your result set, starting at column 0, we can set a column as index:
@@ -82,7 +82,7 @@ $items = $reader->loadArrayList();
 $items = $reader->loadArrayList('id'); // Use id as index
 ```
 
-## loadArray()
+### loadArray()
 
 Returns an array indexed by column number as returned in your result set, starting at column 0:
 
@@ -92,7 +92,7 @@ $reader = $db->getReader($sql);
 $item = $reader->loadArray();
 ```
 
-## loadAssocList()
+### loadAssocList()
 
 Returns an array and every element is an associative array indexed by column name.
 
@@ -103,7 +103,7 @@ $items = $reader->loadAssocList();
 $items = $reader->loadAssocList('id'); // Use id as index
 ```
 
-## loadAssoc()
+### loadAssoc()
 
 Returns an associative array indexed by column name.
 
@@ -113,7 +113,7 @@ $reader = $db->getReader($sql);
 $item = $reader->loadAssoc();
 ```
 
-## loadColumn()
+### loadColumn()
 
 Fetch values of a column field, please select only one column in this query:
 
@@ -121,7 +121,7 @@ Fetch values of a column field, please select only one column in this query:
 $titles = $db->getReader('SELECT title FROM article_table')->loadColumn();
 ```
 
-## loadResult()
+### loadResult()
 
 Fetch only one cell as a value:
 
@@ -136,13 +136,13 @@ $sum = $db->getReader('SELECT SUM(hits) FROM article_table')->loadResult();
 $id = $db->getReader('SELECT LAST_INSERT_ID()')->loadResult();
 ```
 
-## About PDO Fetch
+### About PDO Fetch
 
 See: [PHP.net / PDOStatement::fetch](http://php.net/manual/en/pdostatement.fetch.php)
 
-## Quick Fetch From Driver
+### Quick Fetch From Driver
 
-### DatabaseDriver::loadAll()
+##### DatabaseDriver::loadAll()
 
 Using a query we set into DB object to fetch records.
 
@@ -168,7 +168,7 @@ $items = $db->loadAll(null, 'assoc');
 
 The return value is an array contains all records we found.
 
-### DatabaseDriver::loadOne()
+##### DatabaseDriver::loadOne()
 
 We can only get first record and ignore others:
 
@@ -189,31 +189,31 @@ $item = $db->loadOne('assoc');
 
 The `$item` will be a record or `false` (If no any records found).
 
-### DatabaseDriver::loadColumn()
+##### DatabaseDriver::loadColumn()
 
 Same as `$db->getReader($sql)->loadColumn()`.
 
-### DatabaseDriver::loadResult()
+##### DatabaseDriver::loadResult()
 
 Same as `$db->getReader($sql)->loadResult()`.
 
-## count()
+### count()
 
 Count the total found rows of last query.
 
-## countAffected()
+### countAffected()
 
 Count the affected rows of last query.
 
-## insertId()
+### insertId()
 
 Get the last inserted id.
 
-# Writer Command
+## Writer Command
 
 Writer object provide us an interface to write data into database.
 
-## insert()
+### insert()
 
 Using an object or array to store data into a table, argument 3 is the name of primary key that will be added
 to data object if insert success:
@@ -242,7 +242,7 @@ $db->getWriter()->insert('#__articles', $data, 'id');
 echo $data->id;
 ```
 
-## insertMultiple()
+### insertMultiple()
 
 Insert many records:
 
@@ -264,7 +264,7 @@ $db->getWriter()->insertMultiple('#__articles', $dataSet, 'id');
 echo $dataSet[0]['id'];
 ```
 
-## update()
+### update()
 
 Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:
 
@@ -281,7 +281,7 @@ $db->getWriter()->update('#__articles', $data, 'id');
 
 Also we can use array instead of object as data.
 
-## updateMultiple()
+### updateMultiple()
 
 Same as `update()` but update every record in an array.
 
@@ -294,7 +294,7 @@ $dataSet = array(
 $db->getWriter()->updateMultiple('#__articles', $dataSet, 'id');
 ```
 
-## updateBatch()
+### updateBatch()
 
 Using where conditions to update some values to every records which matched this condition.
 
@@ -321,22 +321,22 @@ $db->getWriter()->updateBatch('#__articles', $data, $conditions);
 // Same as `UPDATE #__articles SET state = 0 WHERE author = 15 AND updated < "2014-03-02" AND catid IN(1, 2, 3);`
 ```
 
-## Save & SaveMultiple
+### Save & SaveMultiple
 
 `save()` and `saveMultiple()` will auto check the primary exists or not. If primary key exists, it will use `update`,
 if not exists, it will use `insert` to store data.
 
-## insertId()
+### insertId()
 
 Get the last inserted id.
 
-## countAffected()
+### countAffected()
 
 Count the affected rows of last query.
 
-# Transaction Command
+## Transaction Command
 
-## Start Transaction
+### Start Transaction
 
 ``` php
 $tran = $this->db->getTransaction()->start();

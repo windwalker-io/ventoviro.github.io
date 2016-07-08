@@ -4,13 +4,13 @@ title: Widget and Renderer
 
 ---
 
-# What is Widget Object
+## What is Widget Object
 
 Widget object is a convenience tool to help us render HTML blocks, you can consider it as a backend web component.  
 
 ![widget](https://cloud.githubusercontent.com/assets/1639206/5594250/e28c0d56-927d-11e4-8f32-19005916710c.jpg)
 
-# Create A Widget
+## Create A Widget
 
 First, add a template file in `/templates/sidebar/news.php`, this is a news widget.
 
@@ -60,7 +60,7 @@ class SakurasHtmlView extends HtmlView
 }
 ```
 
-# Templating
+## Templating
 
 By default, widget will find templates from these paths:
  
@@ -80,7 +80,7 @@ $widget->addPath('/my/widget/path', Priority::HIGH);
 Widget also use [Windwalker Renderer](https://github.com/ventoviro/windwalker-renderer) to render page, 
 you need to add priority to set the ordering of this path.
 
-## Add Path to Global
+### Add Path to Global
 
 Add your path to global RendererHelper that Widget will always contain this path:
 
@@ -88,7 +88,7 @@ Add your path to global RendererHelper that Widget will always contain this path
 \Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/widget/path', Priority::ABOVE_NORMAL);
 ```
 
-# Override Built-in Widgets Templates
+## Override Built-in Widgets Templates
 
 Windwalker has some built-in widgets, it contains: `messages`, `pagination`, `error pages`.
 
@@ -107,7 +107,7 @@ Now all messages in Windwalker will use your template to render.
 
 > Override other widgets please see: [Pagination](pagination.html) and [Error Handling](error-handling.html)
 
-# Use Blade and Twig
+## Use Blade and Twig
 
 Similar to View, Windwalker Widget support Blade and Twig engine, you may just create it by newing it:
 
@@ -121,7 +121,7 @@ $news = new TwigWidget('sidebar.news');
 
 > See also: [Blade Templating](https://laravel.com/docs/master/blade) and [Twig Documentation](http://twig.sensiolabs.org/documentation)
 
-# WidgetHelper
+## WidgetHelper
 
 Use WidgetHelper to quickly render page.
 

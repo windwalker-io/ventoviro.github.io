@@ -4,7 +4,7 @@ title: Model and Database
 
 ---
 
-# Use Model
+## Use Model
 
 Model in Windwalker is not always means we have to operate database, it is a data provider and saver for sharing logic of 
 controller that can prevent our controller too heavy.
@@ -39,7 +39,7 @@ $item = $model->getItem();
 $model->save($item);
 ```
 
-# DatabaseModel
+## DatabaseModel
 
 We can use `DatabaseModel` to operate Database, here is a [CRUD](http://goo.gl/hl5B) example, `db` is preset in Model so we can get it quickly:
 
@@ -83,7 +83,7 @@ class FlowerModel extends DatabaseModel
 }
 ```
 
-# Magic Method
+## Magic Method
 
 Model support a usage similar to NullObject pattern, if we call some method start with `get*()` or `load*()`, and this method not exists,
 Model will not raise error but only return `null`.
@@ -102,7 +102,7 @@ $list = $model->loadList();
 
 So, we can use default Model to provide empty data for some object but won't breaking our program.
  
-# Model State
+## Model State
 
 Windwalker Model is stateful design, use state pattern can help ue create flexible data provider. 
 For example, we can change this state to get different data.
@@ -153,7 +153,7 @@ if (!$users)
 }
 ```
 
-### Simple Way to Access State
+##### Simple Way to Access State
 
 Using `get()` and `set()`
 
@@ -165,7 +165,7 @@ $model->get('where.author', 5);
 $model->set('list.ordering', 'RAND()');
 ```
 
-### State ArrayAccess
+##### State ArrayAccess
 
 ``` php
 // Same as getState()->get();
@@ -175,7 +175,7 @@ $data = $model['list.ordering'];
 $model['list.ordering'] = 'created_time';
 ```
 
-# Model Caching
+## Model Caching
 
 Windwalker Model provides runtime cache interface help us cache data in Model itself (This runtime cache only life in once
 page load, will not exists in next page loading, and won't affected by global configuration).
@@ -203,7 +203,7 @@ class MyModel extends Model
 }
 ```
 
-## Generate Cache id When State Changed
+### Generate Cache id When State Changed
 
 Model state is dynamic, so if we change state, the cache key should be refresh that we can make sure we get same data when state is same,
 but get new data if state is changed.
@@ -227,7 +227,7 @@ public function getData()
 }
 ```
 
-## Custom Cache id Rule
+### Custom Cache id Rule
 
 If you trace `getCacheId()` at the parent, you will see:
 
@@ -258,7 +258,7 @@ public function getCacheId($id = null)
 }
 ```
 
-## Use Callback
+### Use Callback
  
 There is a simple way to quickly use cache, `fetch()` will auto check the cache exists or not and execute the callback to get data:
 

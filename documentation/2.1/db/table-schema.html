@@ -176,7 +176,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/db/read-write.html">Read and Write</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/db/table-schema.html">Table and Schema</a>
             </li>
                     <li class="">
@@ -260,14 +260,14 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Table Command</h1>
+                    <h2>Table Command</h2>
 
 <p>Get Table Command.</p>
 
 <pre><code class="php">$table = $db-&gt;getTable('#__articles');
 </code></pre>
 
-<h2>create()</h2>
+<h3>create()</h3>
 
 <p>Create a new table.</p>
 
@@ -305,7 +305,7 @@ $table-&gt;addColumn(new Column\Primary('id'))
 
 <p>These objects will set default length and attributes for every column, and map the type to different database drivers.</p>
 
-<h2>update()</h2>
+<h3>update()</h3>
 
 <p>Update table schema. Only use on add columns and indexes.</p>
 
@@ -319,7 +319,7 @@ $table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NUL
     -&gt;update();
 </code></pre>
 
-<h2>save()</h2>
+<h3>save()</h3>
 
 <p>If table exists, using update, otherwise use insert.</p>
 
@@ -333,14 +333,14 @@ $table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NUL
     -&gt;save();
 </code></pre>
 
-<h2>dropColumn()</h2>
+<h3>dropColumn()</h3>
 
 <pre><code class="php">$table = $db-&gt;getTable('#__articles');
 
 $table-&gt;dropColumn('state');
 </code></pre>
 
-<h2>dropIndex()</h2>
+<h3>dropIndex()</h3>
 
 <pre><code class="php">use Windwalker\Database\Schema\Key;
 
@@ -349,14 +349,14 @@ $table = $db-&gt;getTable('#__articles');
 $table-&gt;dropIndex(Key::TYPE_INDEX, 'idx_state');
 </code></pre>
 
-<h2>rename()</h2>
+<h3>rename()</h3>
 
 <pre><code class="php">$table = $db-&gt;getTable('#__foo');
 
 $newTable = $table-&gt;rename('#__bar');
 </code></pre>
 
-<h2>truncate()</h2>
+<h3>truncate()</h3>
 
 <pre><code class="php">$table = $db-&gt;getTable('#__foo');
 

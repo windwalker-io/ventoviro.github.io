@@ -1,48 +1,67 @@
 ---
 layout: documentation.twig
-title: Getting Started
+title: Installation
 
 ---
 
 ## Installation
 
-### Install Starter Application
+### Starter Application
 
-Windwalker use [Composer](https://getcomposer.org/) as package manager, make sure you [install composer](https://getcomposer.org/download/)
- first.
-
-To start install Windwalker, please open terminal and type the following:
+Install via [Composer](https://getcomposer.org/)
 
 ``` bash
-$ php composer.phar create-project windwalker/starter project_dir 2.* --no-dev
+$ composer create-project windwalker/starter project_dir ~3.0 [--dev]
 ```
 
-> For use of unit test or any development purpose, simply remove `--no-dev` option.
+> For development purpose, you can add `--dev` to this command.
 
-The [Starter](https://github.com/ventoviro/windwalker-starter) package is a default application to start a project (like Symfony Standard).
-If you want to use Windwalker as a library, see next section.
+After project file downloaded, the installation script will ask you some information to initial system environment.
+
+``` bash
+> Windwalker\Composer\StarterInstaller::rootInstall
+
+Salt to generate secret [Windwalker-577f076209eff]:
+Auto created secret key.
+
+Do you want to use database? [Y/n]: y
+
+Database driver only support mysql/postgresql now.
+Database driver [mysql]:
+Database host [localhost]:
+Database name [acme]: db_name
+Database user [root]: db_user
+Database password: ******
+Table prefix [wind_]:
+
+Database config setting complete.
+
+Install complete.
+```
+
+The [Starter](https://github.com/ventoviro/windwalker-starter) package is a default application help us start a project.
 
 ### Use Windwalker as Library
 
-Add `windwalker/framework` as your project's dependencies in `composer.json`.
+If you just want to use Windwalker as a library, add `windwalker/framework` as your project's dependencies in `composer.json`.
 
 ``` json
 {
     "require": {
-        "windwalker/framework": "~2.0@stable"
+        "windwalker/framework": "~3.0"
     }
 }
 ```
 
-> `~2.0` is equivalent to 2.0 to 2.9
+> `~3.0` is equivalent to 3.0 to 3.9
 
 You can also pick any child packages rather than the complete framework set. This is an example to install Session and Form package:
 
 ``` json
 {
     "require": {
-        "windwalker/session": "~2.0@stable",
-        "windwalker/form": "~2.0@stable"
+        "windwalker/session": "~3.0",
+        "windwalker/form": "~3.0"
     }
 }
 ```
@@ -63,6 +82,8 @@ After installed, use browser open `/www` then you will see default landing page.
 | ---- | ----------- |
 | `/bin`  | All executable files, there is a `console` file can run Windwalker Console. |
 | `/etc`  | All configuration and routing files. |
+| ` -- app/*.php`  | Basic config files for different environments. |
+| ` -- package/*.php`  | Config files for every packages. |
 | ` -- define.php`  | The system path constants. |
 | ` -- config.yml`  | Basic configuration file. |
 | ` -- secret.dist.yml`  | Contains some secret information like DB account. <br /> Please rename to `secret.yml` before use. |
@@ -75,10 +96,11 @@ After installed, use browser open `/www` then you will see default landing page.
 | `/templates` | Layout and template files. |
 | `/vendor` | All 3rd party libraries. |
 | `/www` | Web public root (or /public in general) |
-| ` -- media` | Web front-end assets (image, vedio, css, etc..) |
+| ` -- asset` | Web front-end assets (image, vedio, css, etc..) |
 | ` -- .htaccess` | Htaccess config for Apache, you need this file to make mod_rewrite work. |
 | ` -- index.php` | Default web application entrance. |
 | ` -- dev.php` | Default web application entrance for dev environment. |
 | `/phpunit.xml.dist` | PHPUnit configuration file. Rename to `phpunit.xml` before use. |
 | `/README.md` | Readme file |
 | `/composer.json` | Composer configuration file |
+| `.mode` | The env mode config file |

@@ -4,7 +4,7 @@ title: Languages
 
 ---
 
-# Introduction
+## Introduction
 
 Windwalker use Language package to handle i18n localise. There is a `language` configuration in `/etc/config.yml`:
  
@@ -21,7 +21,7 @@ language:
 
 Format is the default file format, but we can still load other format in the runtime.
 
-# Using Language to Translate String
+## Using Language to Translate String
 
 Windwalker language object has a Facade as proxy, just call this static class to use.
 
@@ -55,7 +55,7 @@ There is a short alias of `translate()`:
 echo Translator::translate('windwalker.hello.message');
 ```
 
-# Locale and Default Languages
+## Locale and Default Languages
 
 We set locale to `zh-TW` and default to `en-GB`, then create ini language files:
 
@@ -88,7 +88,7 @@ Translator::translate('windwalker.language.test.flower'); // 花
 Translator::translate('windwalker.language.test.sakura'); // Sakura
 ```
 
-## Key Format
+### Key Format
 
 All language key will be normalised to lowercase and separated by dot (`.`).
 
@@ -104,7 +104,7 @@ Translator::translate('Windwalker Language, Test Flower~~~!'); // 花
 // All keys will be normalise to 'windwalker.language.test.flower'
 ```
 
-## Replace String
+### Replace String
 
 Use `sprintf()` method.
 
@@ -118,7 +118,7 @@ Translator::sprintf('windwalker.language.test.beautiful.flower', 'Sunflower');
 // Result: The Sunflower is beautiful~~~!!!
 ```
 
-## Plural String
+### Plural String
 
 Create a Localise class:
 
@@ -160,7 +160,7 @@ Translator::plural('windwalker.language.test.sunflower', 1); // Sunflower
 Translator::plural('windwalker.language.test.sunflower', 2); // Sunflowers
 ```
 
-# If Language Key Not Exists
+## If Language Key Not Exists
 
 Language object will return raw string which we send into it.
 
@@ -177,11 +177,11 @@ A Not Translated String
 A_NOT_TRANSLATED_STRING
 ```
 
-# Using Other Formats
+## Using Other Formats
 
 Change the `format` property from config.
 
-## Yaml
+### Yaml
 
 Yaml language file can write as nested structure.
 
@@ -197,7 +197,7 @@ Translator::translate('windwalker.language.test.sakura'); // Sakura
 Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 ```
 
-## Json
+### Json
 
 ``` json
 {
@@ -217,7 +217,7 @@ Translator::translate('windwalker.language.test.sakura'); // Sakura
 Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 ```
 
-## PHP
+### PHP
 
 ``` php
 <?php
@@ -242,7 +242,7 @@ Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 
 > NOTE: We'll support to load different formats in the runtime soon.
 
-# Load Package Languages
+## Load Package Languages
 
 Package language file located at `YourPackage/Languages/xx-XX/language-name.ini`.
 
@@ -253,16 +253,16 @@ So we can load package languages by second argument:
 Translator::loadFile('sakura', 'ini', 'flower');
 ```
 
-# Used Keys
+## Used Keys
 
 ``` php
 // Get keys which have been used.
 Translator::getUsed();
 ```
 
-# Debugging
+## Debugging
 
-## Debug Mode
+### Debug Mode
  
 ``` php
 Translator::setDebug(true);
@@ -283,7 +283,7 @@ And the output will be:
 ??A Not Translated String??
 ```
 
-## Get Orphans
+### Get Orphans
 
 Orphans is the language string you used but haven't translated.
 
@@ -295,7 +295,7 @@ Translator::setDebug(true);
 $orphans = Translator::getOrphans(); // Array([0] => A Not Translated String);
 ```
 
-## Check Loaded Languages
+### Check Loaded Languages
 
 ``` php
 $config = \Windwalker\Ioc::getConfig();
@@ -303,7 +303,7 @@ $config = \Windwalker\Ioc::getConfig();
 $config->get('language.loaded');
 ```
 
-# Translate in View Template
+## Translate in View Template
 
 Blade
 

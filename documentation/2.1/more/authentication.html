@@ -203,7 +203,7 @@
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/authentication.html">Authentication</a>
             </li>
                     <li class="">
@@ -260,11 +260,11 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Introduction</h1>
+                    <h2>Introduction</h2>
 
 <p>Building user system in Windwalker is very easy, Windwalker includes a simple Authentication package to handle user auth.</p>
 
-<h1>Default User Package</h1>
+<h2>Default User Package</h2>
 
 <p>In Windwalker Starter, there is an User package in <code>src/Windwalker/User</code> and has been registered to system. 
 You can directly modify it to what you needed.</p>
@@ -274,7 +274,7 @@ You can directly modify it to what you needed.</p>
 <pre><code class="bash">php bin/console migration migrate -p=wwuser
 </code></pre>
 
-<h2>Get User</h2>
+<h3>Get User</h3>
 
 <pre><code class="php">use Windwalker\Core\Authentication\User;
 
@@ -288,7 +288,7 @@ $user = User::get(12);
 $user = User::get(array('username' =&gt; 'christina'));
 </code></pre>
 
-<h2>Login User</h2>
+<h3>Login User</h3>
 
 <pre><code class="php">// Prepare user data
 $credential = new Credential;
@@ -303,12 +303,12 @@ $bool = User::login($credential);
 <pre><code class="php">$bool = User::login($credential, true);
 </code></pre>
 
-<h2>Logout User</h2>
+<h3>Logout User</h3>
 
 <pre><code class="php">$bool = User::logout();
 </code></pre>
 
-<h2>Save User</h2>
+<h3>Save User</h3>
 
 <pre><code class="php">use Windwalker\Crypt\Password;
 
@@ -323,7 +323,7 @@ $user-&gt;password = $password-&gt;create($user-&gt;password);
 User::save($user);
 </code></pre>
 
-<h2>Delete User</h2>
+<h3>Delete User</h3>
 
 <pre><code class="php">// Delete by id
 User::delete(12);
@@ -332,7 +332,7 @@ User::delete(12);
 User::delete(array('username' =&gt; 'richael3784'));
 </code></pre>
 
-<h1>Create Your Own User Handler</h1>
+<h2>Create Your Own User Handler</h2>
 
 <p>Windwalker Built-in Authentication system can register a custom user handler, this user handler should implement the <code>UserHandlerInterface</code>:</p>
 
@@ -397,7 +397,7 @@ class MyUserHandler implements UserHandlerInterface
 User::setHandler(new MyUserHandler);
 </code></pre>
 
-<h1>Create Authentication Method</h1>
+<h2>Create Authentication Method</h2>
 
 <p>Windwalker Authentication allow developers attach multiple methods to match user(See <a href="https://github.com/ventoviro/windwalker-authentication">Document</a>).</p>
 
@@ -405,7 +405,7 @@ User::setHandler(new MyUserHandler);
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5595002/07d3235a-92a2-11e4-8f1f-5622e2af7254.jpg" alt="p-2015-01-02-5" /></p>
 
-<h2>Example Method to Find User From Database</h2>
+<h3>Example Method to Find User From Database</h3>
 
 <pre><code class="php">use Windwalker\Authentication\Authentication;
 use Windwalker\Authentication\Credential;

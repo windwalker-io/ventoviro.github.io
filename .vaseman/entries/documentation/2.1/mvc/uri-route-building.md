@@ -4,7 +4,7 @@ title: URI and Route Building
 
 ---
 
-# Base URI
+## Base URI
 
 Sometimes you may put your application at sub folder of a domain, Windwalker provides a uri data help you get base uri.
  
@@ -48,7 +48,7 @@ The output will be:
 http://domain.com/sites/windwalker/romeo/and/juliet
 ```
 
-## Use base.path
+### Use base.path
 
 Use this code:
 
@@ -63,7 +63,7 @@ We'll get a uri start from root, so the relative path will not break.
 /sites/windwalker/flower/sakura
 ```
 
-## Use URI in View
+### Use URI in View
 
 View has already included uri object as a global variable.
 
@@ -77,7 +77,7 @@ The output will be:
 <link href="/sites/windwalker/media/css/bootstrap.min.css">
 ```
 
-# Build Route
+## Build Route
 
 Every route in Windwalker has a key, we called it **route name** or **route resources**, this name will help us quickly build route.
 
@@ -106,7 +106,7 @@ flower/page/25-foo-bar-baz.html
 
 This is a very useful function that you can change roue name but won't worry of link will be broke.
 
-## Build Package Route
+### Build Package Route
 
 If your routes is definded in a package, you must add package alias before route name, and separate by at (`@`):
 
@@ -128,7 +128,7 @@ $package->router->build('sakuras', array('page' => $page));
 $package->router->build('user@login');
 ```
 
-## Build for Http or Html
+### Build for Http or Html
 
 Default `build()` method will not encode URL, so we can use this URL to redirect page, the `buildHttp()` and `http()` is an alias of `build()`.
 
@@ -161,7 +161,7 @@ flower/sakuras?foo=bar&baz=yoo
 flower/sakuras?foo=bar&amp;baz=yoo
 ```
 
-## Relative or Absolute URL
+### Relative or Absolute URL
 
 Router has 3 mode, `RAW`, `PATH` or `FULL`:
 
@@ -181,7 +181,7 @@ http://domain.com/sites/windwalker/flower/sakuras
 
 The RAW route used to store in database, the PATH route used to print in HTML, the FULL route used to redirect.
 
-## Build Route in Controller
+### Build Route in Controller
 
 If you are in controller, we can use PackageRouter to build route, this way is more safer because we can auto get current package routes.
 
@@ -197,7 +197,7 @@ $route = $this->package->router->http('sakura');
 $this->setRedirect($route);
 ```
 
-## Build Route in View Template
+### Build Route in View Template
 
 View has also includes package router, just build route like this:
 

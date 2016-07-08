@@ -4,7 +4,7 @@ title: Basic Database Usage
 
 ---
 
-# Configure Database
+## Configure Database
 
 In a new project, you should rename `/etc/secret.dist.yml` to `/etc/secret.yml`, and fill your database account information:
 
@@ -18,7 +18,7 @@ database:
     prefix: wind_
 ```
 
-# Get Database
+## Get Database
 
 In DatabaseModel, you can get internal DB object.
 
@@ -34,7 +34,7 @@ $db = \Windwalker\Ioc::getDatabase();
 $db = $container->get('system.database');
 ```
 
-# Execute A Query
+## Execute A Query
 
 This is an example of insert data.
 
@@ -46,9 +46,9 @@ $db->setQuery($sql);
 $db->execute();
 ```
 
-# Fetch records
+## Fetch records
 
-## Fetch multiple rows
+### Fetch multiple rows
 
 This will fetch multiple rows from table, and every record will be an object.
 
@@ -76,7 +76,7 @@ $items = $db->loadAll(null, 'assoc');
 $items = $db->loadAll('id', 'assoc');
 ```
 
-## Fetch one row
+### Fetch one row
 
 ``` php
 $sql = 'SELECT * FROM foo_table WHERE id = 3';
@@ -95,7 +95,7 @@ $items = $db->loadAll('array');
 $items = $db->loadAll('assoc');
 ```
 
-# Table Prefix
+## Table Prefix
 
 Add `prefix` in `secret.yml` config file, then DB object will auto replace all `#__` with prefix in every query:
 
@@ -105,7 +105,7 @@ $items = $db->setQuery('SELECT * FROM #__articles')->loadAll();
 // The query will be `SELECT * FROM foo_articles`
 ```
 
-# Iterating Over Results
+## Iterating Over Results
 
 ``` php
 $iterator = $db->setQuery('SELECT * FROM #__articles WHERE state = 1')->getIterator();
@@ -122,7 +122,7 @@ It allows also to count the results.
 $count = count($iterator);
 ```
 
-# Logging
+## Logging
 
 `Database\DatabaseDriver` implements the `Psr\Log\LoggerAwareInterface` so is ready for intergrating with a logging package that supports that standard.
 
@@ -133,7 +133,7 @@ If debugging is enabled (using `setDebug(true)`), all queries are logged with a 
 * **sql** : The query that was executed.
 * **category** : A value of "databasequery" is used.
 
-## An example to log error by Monolog
+### An example to log error by Monolog
 
 Add this to `composer.json` require block.
 

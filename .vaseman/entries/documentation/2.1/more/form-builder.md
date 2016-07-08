@@ -4,7 +4,7 @@ title: Form Builder
 
 ---
 
-# Create A Form
+## Create A Form
 
 Create a new form instance and add fields into it.
 
@@ -50,7 +50,7 @@ Render all fields, and we get this HTML output.
 
 ![img](https://cloud.githubusercontent.com/assets/1639206/5066911/0566a53c-6e77-11e4-9bee-6cc2ee01de21.png)
 
-## Using XML as Configuration
+### Using XML as Configuration
 
 ``` xml
 <form>
@@ -74,7 +74,7 @@ $form = new Form;
 $form->loadFile('form.xml');
 ```
 
-# Field Definition Interface
+## Field Definition Interface
 
 `FieldDefinitionInterface` is a simple interface to help us create an empty space to define form fields.
  
@@ -98,7 +98,7 @@ $form = new Form;
 $form->defineFormField(new MyFieldDefinition);
 ```
 
-# Form Control
+## Form Control
 
 ``` php
 $control = 'user';
@@ -119,9 +119,9 @@ The result will make name as an array.
 </div>
 ```
 
-# Organize Fields
+## Organize Fields
 
-## Fieldset
+### Fieldset
 
 Fieldset is a category of fields, we can filter our fields by fieldset:
 
@@ -159,7 +159,7 @@ Using XML
 </form>
 ```
 
-## Group
+### Group
 
 Group is like fieldset as a category of fields, but it will make name of fields to be array:
 
@@ -229,7 +229,7 @@ Using XML
 </form>
 ```
 
-## Use Wrapper Methods
+### Use Wrapper Methods
 
 Windwalker 2.1 supports wrapper method to help us organize form fieldset and group.
 
@@ -268,15 +268,15 @@ $form->wrap('fieldset', 'group', function(Form $form)
 });
 ```
 
-# Attributes of Fields
+## Attributes of Fields
 
-## Name & Label
+### Name & Label
 
 ``` php
 $form->addField(new TextField('name', 'Label'));
 ```
 
-## Set Attributes
+### Set Attributes
 
 ``` php
 $form->addField(new TextField('name', 'Label'))
@@ -285,7 +285,7 @@ $form->addField(new TextField('name', 'Label'))
     ->set('onclick', 'return false;');
 ```
 
-## Required, Disabled and Readonly
+### Required, Disabled and Readonly
 
 ``` php
 $form->addField(new TextField('name', 'Label'))
@@ -303,7 +303,7 @@ $form->addField(new TextField('name', 'Label'))
     ->disabled(false);
 ```
 
-## XML
+### XML
 
 ``` xml
 <field
@@ -315,7 +315,7 @@ $form->addField(new TextField('name', 'Label'))
 />
 ```
 
-# Filter
+## Filter
 
 ``` php
 use Windwalker\Filter\InputFilter;
@@ -335,7 +335,7 @@ $form->filter();
 $values = $form->getValues(); // Array(id = 123)
 ```
 
-# Validate
+## Validate
 
 ``` php
 $form->addField(new TextField('name', 'Name'))
@@ -362,9 +362,9 @@ $results[0]->getMessage(); // Field Email validate fail.
 $results[1]->getMessage(); // Field Name value not allow empty.
 ```
 
-# Field Types
+## Field Types
 
-## Select List
+### Select List
 
 ``` php
 use Windwalker\Form\Field\ListField;
@@ -402,7 +402,7 @@ Multiple List
 $selectField->set('multiple', true);
 ```
 
-## RadioList
+### RadioList
 
 ``` php
 $form->addField(new RadioList('flower', 'Flower'))
@@ -423,7 +423,7 @@ $field = new RadioList(
 );
 ```
 
-# Available Fields
+## Available Fields
 
 | Name | HTML | Description |
 | ---- | ---- | ----------- |
@@ -439,9 +439,9 @@ $field = new RadioList(
 | RadioField    | `<input type="radio">`    | Radio list. |
 | TimezoneField | `<select>`                | A timezone select list. |
 
-# Custom Fields
+## Custom Fields
 
-## Custom TextField.
+### Custom TextField.
 
 ``` php
 namespace MyCode\Fields;
@@ -473,7 +473,7 @@ For XML
 />
 ```
 
-## Custom List field
+### Custom List field
 
 ``` php
 namespace MyCode\Fields;
@@ -496,7 +496,7 @@ class UsersField extends ListField
 }
 ```
 
-# Custom Filter
+## Custom Filter
 
 ``` php
 namespace MyCode\Filter;
@@ -527,7 +527,7 @@ For XML
 />
 ```
 
-# Custom Validator
+## Custom Validator
 
 ``` php
 namespace MyCode\Validator;
@@ -560,7 +560,7 @@ For XML
 />
 ```
 
-# Renderer
+## Renderer
 
 We can add our own custom renderer to render form fields. This is a renderer example.
 

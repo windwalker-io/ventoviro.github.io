@@ -161,7 +161,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/mvc/model-database.html">Model and Database</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/mvc/view-model.html">ViewModel</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>About MVC Interactions</h1>
+                    <h2>About MVC Interactions</h2>
 
 <p>In most MVC practices, there is no direct communication between View and Model. We called it <strong>Passive View</strong>. But there are many 
 variants of MVC like: MVVM, MVP etc.</p>
@@ -272,18 +272,18 @@ variants of MVC like: MVVM, MVP etc.</p>
  And controller's responsibility is just decide binding which models to view. There is a <code>ViewModel</code> between View and Model 
  to handle request from View and get data from Model.</p>
 
-<h2>Schematic Diagram</h2>
+<h3>Schematic Diagram</h3>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg" alt="mvc" /> <img src="https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg" alt="ww-mvc" /></p>
 
-<h2>ViewModel</h2>
+<h3>ViewModel</h3>
 
 <p>View is not directly communicate to Model, there is a <code>ViewModel</code> object between them. You can consider ViewModel 
 as a Model manager.</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg" alt="view-model" /></p>
 
-<h1>Use ViewModel Pattern in Windwalker</h1>
+<h2>Use ViewModel Pattern in Windwalker</h2>
 
 <p>This is a traditional MVC usage in controller:</p>
 
@@ -345,7 +345,7 @@ class SomeModel extends Model
 }
 </code></pre>
 
-<h2>Set Multiple Models</h2>
+<h3>Set Multiple Models</h3>
 
 <p>We can get many models and push them into one view.</p>
 

@@ -4,7 +4,7 @@ title: Session
 
 ---
 
-# Configuration
+## Configuration
 
 Session configuration is in `/etc/config.yml`.
  
@@ -16,7 +16,7 @@ session:
 
 By default, Windwalker use php native to handler session data. The expire time unit is minute.
 
-# Get Session Object
+## Get Session Object
 
 ``` php
 $session = \Windwalker\Ioc::getSession();
@@ -26,7 +26,7 @@ $session = \Windwalker\Ioc::getSession();
 $session = $container->get('system.session');
 ```
 
-# Store And Get Session Data
+## Store And Get Session Data
 
 ``` php
 $session->set('flower', 'sakura');
@@ -36,17 +36,17 @@ $data = $session->get('flower', 'default');
 $session->exists('animal'); // bool
 ```
 
-# Restart Session
+## Restart Session
 
 ``` php
 $session->restart();
 ```
 
-# Session Bags
+## Session Bags
 
 Session bag is a data storage to store data, we can add many bags to Session object and access them.
 
-## Use Default Bag
+### Use Default Bag
 
 Get Default Bag
 
@@ -63,7 +63,7 @@ $session->get('foo');
 $session->getBag('default')->get('foo');
 ```
 
-## Use Custom Bags
+### Use Custom Bags
 
 ``` php
 use Windwalker\Session\Bag\SessionBag;
@@ -90,7 +90,7 @@ $session->get('foo', 'default', 'mybag');
 $session->set('foo', 'bar', 'mybag');
 ```
 
-# Flash Data
+## Flash Data
 
 Flash bag is a data temporary storage, if we take data out, the bag will be clear.
 
@@ -105,7 +105,7 @@ $allMessages = $session->getFlashes();
 $session->getFlashBag()->all();
 ``` 
 
-# Handlers
+## Handlers
 
 Windwalker Session provides many handlers to storage session, edit the config file.
 
@@ -115,7 +115,7 @@ session:
     expire_time: 15
 ```
 
-## Use Database Handler
+### Use Database Handler
 
 Before using database session, we have to add table schema information to session config.
 
@@ -131,7 +131,7 @@ session:
 
 > NOTE: Database Handler will be implemented in next release.
 
-## Available Handlers
+### Available Handlers
 
 - apc
 - database

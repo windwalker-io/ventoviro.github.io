@@ -149,7 +149,7 @@
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">MVC</li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/mvc/use-controller.html">Use Controller</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Controller Overview</h1>
+                    <h2>Controller Overview</h2>
 
 <p>Windwalker Controller is a main entry of a page, after routing, the request input and IoC container will be injected 
 into controller and execute it. Any code mentioned in this section will be executed in <code>doExecute()</code>, the entrance of controller.</p>
@@ -283,12 +283,12 @@ class GetController extends Controller
 }
 </code></pre>
 
-<h2>Single Action Pattern</h2>
+<h3>Single Action Pattern</h3>
 
 <p>Windwalker Controller follows single responsibility principle, every controller has only one action (<code>execute()</code>).
 The benefit is that our controllers will be much more lighter then other frameworks. You can add more logic to a controller without being confused by too many actions in one class.</p>
 
-<h2>Use Multiple Actions</h2>
+<h3>Use Multiple Actions</h3>
 
 <blockquote>
   <p>NOTE: Multiple Actions has been deprecated and will be remove after 3.0, Windwalker will only use single action in the future.</p>
@@ -329,7 +329,7 @@ class GetController extends MultiActionController
 
 <p>The action prefix with double colons will be methods of your controller.</p>
 
-<h1>Get HTTP Input</h1>
+<h2>Get HTTP Input</h2>
 
 <p>See: <a href="../start/request-input.html">Request and Input</a>, we can use Input object to get HTTP queries:</p>
 
@@ -340,7 +340,7 @@ $layout = $this-&gt;input-&gt;getString('layout', 'default');
 $html = $this-&gt;getVar('html');
 </code></pre>
 
-<h1>Simple Usage of Model and View</h1>
+<h2>Simple Usage of Model and View</h2>
 
 <pre><code class="php">// In doExecute()
 
@@ -362,7 +362,7 @@ $view-&gt;set('item', $item);
 return $view-&gt;setLayout($layout)-&gt;render();
 </code></pre>
 
-<h2>Use Model and View getter</h2>
+<h3>Use Model and View getter</h3>
 
 <p>If your model and view located in your package, and follows Windwalker naming convention, you can get Model and View by getter in controller.</p>
 
@@ -396,7 +396,7 @@ $view = $this-&gt;getView();
 $JsonView = $this-&gt;getView(null, 'json'); // SakuraJsonView
 </code></pre>
 
-<h1>Use Container</h1>
+<h2>Use Container</h2>
 
 <p>Windwalker controller is a Container aware interface, we can directly use container in controller:</p>
 
@@ -411,7 +411,7 @@ $cache-&gt;call('user', function() use ($session)
 });
 </code></pre>
 
-<h1>Setting Config</h1>
+<h2>Setting Config</h2>
 
 <p>You can set some config in <code>$this-&gt;config</code> and pass it into View and Model, then they will know everything about this controller.</p>
 
@@ -429,7 +429,7 @@ $model-&gt;setConfig($this-&gt;config);
 
 <p>Config is a Registry object, see: <a href="https://github.com/ventoviro/windwalker-registry#windwalker-registry">Windwalker Registry</a></p>
 
-<h1>Redirect</h1>
+<h2>Redirect</h2>
 
 <p>Use <code>setRedirect($url)</code> to tell controller redirect to other url after executed.</p>
 
@@ -464,7 +464,7 @@ catch (Exception $e)
 return true;
 </code></pre>
 
-<h1>Add Flash Messages</h1>
+<h2>Add Flash Messages</h2>
 
 <p>Flash message is a disposable message in session, if we show it, these messages will be purged.</p>
 
@@ -478,7 +478,7 @@ $this-&gt;addMessage(['Message', 'Message2'], 'type');
 $this-&gt;setRedirect('url.html', 'Message', 'type');
 </code></pre>
 
-<h2>Mute</h2>
+<h3>Mute</h3>
 
 <p>If we set controller to mute, this controller will not add any messages:</p>
 
@@ -487,7 +487,7 @@ $this-&gt;setRedirect('url.html', 'Message', 'type');
 $this-&gt;addMessage('Message'); // This action no use
 </code></pre>
 
-<h1>CSRF Token</h1>
+<h2>CSRF Token</h2>
 
 <p>Windwalker provides a simple CSRF token generator, please add this line to your HTML form:</p>
 
@@ -524,7 +524,7 @@ if (! CsrfProtection::checkToken())
 }
 </code></pre>
 
-<h1>HMVC</h1>
+<h2>HMVC</h2>
 
 <p>The Hierarchical-Model-View-Controller (HMVC) pattern is a direct extension to the MVC pattern that manages 
 to solve many of the scalability issues already mentioned. HMVC was first described in a blog post entitled 
@@ -567,7 +567,7 @@ $subContainer = Ioc::factory('sub.container');
 $child = new ChildController(null, null, $subContainer, $subContainer-&gt;get('package'));
 </code></pre>
 
-<h2>Use hmvc() Method</h2>
+<h3>Use hmvc() Method</h3>
 
 <p>Windwalker provides a <code>hmvc()</code> method to make this step more quickly:</p>
 

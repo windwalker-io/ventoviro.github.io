@@ -4,11 +4,11 @@ title: Error Handling
 
 ---
 
-# Introduction
+## Introduction
 
 Windwalker has a matured error handling system, it override the native PHP error handler to provide a flexible interface to fetch error message.
  
-# Exception Handling
+## Exception Handling
 
 Most of time, we throw exception object to change the program process if error occurred:
 
@@ -45,7 +45,7 @@ Windwalker includes [Whoops](http://filp.github.io/whoops/) as default error han
 
 To enable Pretty error page, you must open DEV mode, please change config `system.debug` to `1` or use `dev.php` to access your site.
 
-## Built-in Error Page
+### Built-in Error Page
 
 If you don't want to use Whoops, Widwalker still have it own error handler. If we remove WhoopsProvider from Application:
  
@@ -70,12 +70,12 @@ Now error page will be a simpler one.
 
 ![p-2015-01-02-4](https://cloud.githubusercontent.com/assets/1639206/5594840/88661bce-929a-11e4-93fd-5b60cda22f46.jpg)
 
-# Close Error Handler
+## Close Error Handler
 
 These two error handlers will only work if debug mode opened, if we close debug mode:
  
 ``` yaml
-# etc/config.yml
+## etc/config.yml
 
 system:
     debug: 0
@@ -84,7 +84,7 @@ system:
 
 The error handler will fallback to PHP native.
 
-# Custom Error Template
+## Custom Error Template
 
 Windwalker error handler also use [Renderer](widget-renderer.html) to render page. If you want to show a clean error page only
 contains a title which tell user: **Something error, please contact administrator**, you can override the error template.
@@ -109,11 +109,11 @@ Or change template name:
 \Windwalker\Core\Error\ErrorHandler::setErrorTemplate('my.error.tmpl.file');
 ```
 
-# ErrorHandler Class
+## ErrorHandler Class
 
 Windwalker use `ErrorHandler` class to handle all custom error process.
 
-## Register Error And Exception Handler
+### Register Error And Exception Handler
 
 In Application, Windwalker use this code to register PHP error handler to it own.
 
@@ -121,7 +121,7 @@ In Application, Windwalker use this code to register PHP error handler to it own
 \Windwalker\Core\Error\ErrorHandler::register();
 ```
 
-## Restore Error Handler
+### Restore Error Handler
 
 If you want to use other error handler, you can restore all error handler have set.
 
@@ -129,7 +129,7 @@ If you want to use other error handler, you can restore all error handler have s
 \Windwalker\Core\Error\ErrorHandler::restore();
 ```
 
-## Override It
+### Override It
 
 Override Built-in ErrorHandler with our own logic.
 
@@ -176,7 +176,7 @@ MyErrorHandler::register();
 
 Now all PHP error will throws ErrorException.
 
-## Set Error Level
+### Set Error Level
 
 ``` php
 ErrorHandler::register(true, E_ALL);

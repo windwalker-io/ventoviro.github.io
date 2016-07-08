@@ -212,7 +212,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/events.html">Events</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Using Data Object</h1>
+                    <h2>Using Data Object</h2>
 
 <p>The constructor of <code>Data</code> can insert an array or object, it will convert to Data properties.</p>
 
@@ -276,7 +276,7 @@ $data = new Data($array);
 echo $data-&gt;flower; // sakura
 </code></pre>
 
-<h2>Binding object into it</h2>
+<h3>Binding object into it</h3>
 
 <pre><code class="php">$obj = new \stdClass;
 $obj-&gt;goo = 'yoo';
@@ -286,7 +286,7 @@ $data-&gt;bind($obj);
 echo $data-&gt;goo; // yoo
 </code></pre>
 
-<h2>Get and Set property</h2>
+<h3>Get and Set property</h3>
 
 <p>Data object has magic method to be getter and setter of any property, we don't need to worry about the property exists or not. Non-exists property will return <code>null</code>.</p>
 
@@ -302,7 +302,7 @@ echo $data-&gt;yoo; // Not exists, but no warning, it will return null.
 echo $data-&gt;get('flower');
 </code></pre>
 
-<h2>Default Value</h2>
+<h3>Default Value</h3>
 
 <p>If some property not exists, we can get a default value.</p>
 
@@ -313,7 +313,7 @@ echo $data-&gt;get('flower');
 echo $data-&gt;flower ? : 'Default Value';
 </code></pre>
 
-<h2>Array Access</h2>
+<h3>Array Access</h3>
 
 <p>Using array access to get property:</p>
 
@@ -324,7 +324,7 @@ $data['flower'] = 'Sunflower';
 echo $data['flower'];
 </code></pre>
 
-<h2>Iterator</h2>
+<h3>Iterator</h3>
 
 <p><code>Data</code> object can directly use in foreach as iterator:</p>
 
@@ -334,7 +334,7 @@ echo $data['flower'];
 }
 </code></pre>
 
-<h2>Null Data</h2>
+<h3>Null Data</h3>
 
 <p>In PHP, an empty object means not empty, so this code will return FALSE:</p>
 
@@ -358,7 +358,7 @@ var_dump($data-&gt;isNull()); // bool(true)
 var_dump(empty((array) $data)); // bool(true)
 </code></pre>
 
-<h1>Using DataSet Object</h1>
+<h2>Using DataSet Object</h2>
 
 <p><code>DataSet</code> is a data collection bag for <code>Data</code> object. We can insert array with data in constructor.</p>
 
@@ -373,7 +373,7 @@ $dataSet = new DataSet(
 );
 </code></pre>
 
-<h2>Array Access</h2>
+<h3>Array Access</h3>
 
 <p>Operate <code>DataSet</code> as an array, it use magic method to get and set data.</p>
 
@@ -385,7 +385,7 @@ $dataSet = new DataSet(
 <pre><code class="php">$dataSet[] = new Data(array('id' =&gt; 6, 'title' =&gt; 'Lion'));
 </code></pre>
 
-<h2>Iterator</h2>
+<h3>Iterator</h3>
 
 <p>We can also using iterator to loop all elements:</p>
 
@@ -395,7 +395,7 @@ $dataSet = new DataSet(
 }
 </code></pre>
 
-<h2>The Batch Getter &amp; Setter</h2>
+<h3>The Batch Getter &amp; Setter</h3>
 
 <p>Get values of <code>foo</code> field from all data objects.</p>
 

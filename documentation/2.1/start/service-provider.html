@@ -143,7 +143,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/start/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/start/service-provider.html">Service Provider</a>
             </li>
         
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Introduction of Service Provider</h1>
+                    <h2>Introduction of Service Provider</h2>
 
 <p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
 custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
@@ -268,11 +268,11 @@ custom listeners or 3rd tools. Some libraries need a bootstrapping process, we s
 <p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
 and write all our logic in <code>register()</code> method and set our service objects into container.</p>
 
-<h2>Basic Provider Example</h2>
+<h3>Basic Provider Example</h3>
 
 <p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
 
-<h3>Original Way</h3>
+<h5>Original Way</h5>
 
 <pre><code class="php">// import.mongodb.php
 
@@ -286,7 +286,7 @@ return $conn;
 <pre><code class="php">$mongo = include_once 'import.mongodb.php';
 </code></pre>
 
-<h3>Windwalker Way</h3>
+<h5>Windwalker Way</h5>
 
 <p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
 
@@ -324,7 +324,7 @@ $mongo = Ioc::get('mongo.db');
 
 <p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
 
-<h1>Registering Providers</h1>
+<h2>Registering Providers</h2>
 
 <p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
 you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>

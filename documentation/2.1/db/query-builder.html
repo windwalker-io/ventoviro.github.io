@@ -179,7 +179,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/db/table-schema.html">Table and Schema</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/db/query-builder.html">Query Builder</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Get Query Builder</h1>
+                    <h2>Get Query Builder</h2>
 
 <p>Query Builder help you organize SQL syntax and provides multi-database syntax support. Use Database object to get Query object:</p>
 
@@ -274,7 +274,7 @@ $query = $db-&gt;getQuery(true); // TRUE means get a new query
 <pre><code class="php">$query = $this-&gt;db-&gt;getQuery(true);
 </code></pre>
 
-<h1>A Simple Select</h1>
+<h2>A Simple Select</h2>
 
 <p>This is a example of simple select syntax with where condition.</p>
 
@@ -292,7 +292,7 @@ FROM shakespeare
 WHERE year &lt;= 1616
 </code></pre>
 
-<h2>More Select Options</h2>
+<h3>More Select Options</h3>
 
 <pre><code class="php">$query-&gt;select(array('title', 'meta', 'read'))
     -&gt;from('shakespeare')
@@ -314,19 +314,19 @@ ORDER BY popular DESC
 LIMIT 15
 </code></pre>
 
-<h3>Limit Process</h3>
+<h5>Limit Process</h5>
 
 <p>For common use, Mysql and some databases use this limit syntax:</p>
 
 <pre><code class="sql">LIMIT {limit}
-# OR
+## OR
 LIMIT {offset}, {limit}
 </code></pre>
 
 <p>Windwalker Query dose not follow this ordering, the Query::limit method look like: <code>limit($limit, $offset)</code>. 
 We must use <code>limit(3, 0)</code> to generate <code>LIMIT 0, 3</code> because it is more semantic on method interface.</p>
 
-<h2>Where Conditions</h2>
+<h3>Where Conditions</h3>
 
 <p><code>where()</code> method support array as argument.</p>
 
@@ -376,7 +376,7 @@ echo new QueryElement('()', $conditions, ' OR ');
 // Result also: '(foo = 'bar' OR flower = 'sakura')'
 </code></pre>
 
-<h2>Quote Table And Column Name</h2>
+<h3>Quote Table And Column Name</h3>
 
 <p>Sometimes we may use the reserve word of SQL, so we have to quote it to make sure syntax correct.</p>
 
@@ -399,7 +399,7 @@ WHERE `year` &lt;= 1616
 <pre><code class="php">$query-&gt;quoteName('a.title AS a_title'); // `a`.`title` AS `a_title`
 </code></pre>
 
-<h2>Quote String</h2>
+<h3>Quote String</h3>
 
 <p>using <code>quote()</code> to quote normal string and <a href="#pass-pdo-into-query-object">escape</a> it.</p>
 
@@ -426,7 +426,7 @@ WHERE `year` &lt;= 1616
 <pre><code class="php">$query-&gt;quote(array(1, 2, 3)); // array("'1'", "'2'", "'3'")
 </code></pre>
 
-<h1>Join</h1>
+<h2>Join</h2>
 
 <pre><code class="php">$query-&gt;select('a.*, b.*')
     -&gt;from('shakespeare AS a')
@@ -460,7 +460,7 @@ $query-&gt;join('LEFT', 'libraries AS b', 'a.id = b.work_id OR a.foo &lt; b.bar'
 <li>OUTER</li>
 </ul>
 
-<h1>Insert</h1>
+<h2>Insert</h2>
 
 <pre><code class="php">$query-&gt;insert('shakespeare')
     -&gt;columns(array('title', 'year'))
@@ -502,7 +502,7 @@ $query-&gt;insert('shakespeare')
     );
 </code></pre>
 
-<h1>Update</h1>
+<h2>Update</h2>
 
 <pre><code class="php">$query-&gt;update('shakespeare')
     -&gt;set('modified = "2014-10-09"')
@@ -526,7 +526,7 @@ WHERE year &lt;= 1616
 <pre><code class="php">$query-&gt;set(array('modified = "2014-10-09"', 'version = version + 1'));
 </code></pre>
 
-<h1>Delete</h1>
+<h2>Delete</h2>
 
 <pre><code class="php">$query-&gt;delete('shakespeare')
     -&gt;where('year &gt; 1616');
@@ -537,7 +537,7 @@ WHERE year &lt;= 1616
 <pre><code class="sql">DELETE shakespeare WHERE year &gt; 1616
 </code></pre>
 
-<h1>Format</h1>
+<h2>Format</h2>
 
 <pre><code class="php">echo $query-&gt;format('%n = %q', 'title', 'Caesar'); // `title` = 'Caesar'
 </code></pre>
@@ -550,7 +550,7 @@ Each token takes one of the following forms:</p>
 %[n]$[x] - Where [n] is an argument specifier and [t] is a type specifier.
 </code></pre>
 
-<h2>Types:</h2>
+<h3>Types:</h3>
 
 <pre><code>a - Numeric: Replacement text is coerced to a numeric type but not quoted or escaped.
 e - Escape: Replacement text is passed to $this-&gt;escape().
@@ -561,7 +561,7 @@ Q - Quote (no escape): Replacement text is passed to $this-&gt;quote() with fals
 r - Raw: Replacement text is used as-is. (Be careful)
 </code></pre>
 
-<h2>Date Types:</h2>
+<h3>Date Types:</h3>
 
 <ul>
 <li>Replacement text automatically quoted (use uppercase for Name Quote).</li>
@@ -576,7 +576,7 @@ i/I - Minute
 s/S - Second
 </code></pre>
 
-<h2>Invariable Types:</h2>
+<h3>Invariable Types:</h3>
 
 <ul>
 <li>Takes no argument.</li>
@@ -588,19 +588,19 @@ z - Replacement text is the result of $this-&gt;nullDate(false).
 Z - Replacement text is the result of $this-&gt;nullDate(true).
 </code></pre>
 
-<h2>Usage:</h2>
+<h3>Usage:</h3>
 
 <pre><code class="php">$query-&gt;format('SELECT %1$n FROM %2$n WHERE %3$n = %4$a', 'foo', '#__foo', 'bar', 1);
 
 //Returns: SELECT `foo` FROM `#__foo` WHERE `bar` = 1
 </code></pre>
 
-<h2>Notes:</h2>
+<h3>Notes:</h3>
 
 <p>The argument specifier is optional but recommended for clarity.
 The argument index used for unspecified tokens is incremented only when used.</p>
 
-<h1>Bind Params</h1>
+<h2>Bind Params</h2>
 
 <p>OracleQuery support <code>PreparableInterface</code> now, we can bind params to our query string:</p>
 
@@ -608,7 +608,7 @@ The argument index used for unspecified tokens is incremented only when used.</p
     -&gt;bind(':title', 'Hamlet');
 </code></pre>
 
-<h1>Query Expression</h1>
+<h2>Query Expression</h2>
 
 <p>An easy way to build expression or function syntax.</p>
 
@@ -641,7 +641,7 @@ $sqliteQuery-&gt;expression('CONCAT', array('a', 'b', 'c'), "';'");
 <pre><code class="php">echo $query-&gt;expr('FUNCTION', 'a', 'b', 'c');
 </code></pre>
 
-<h1>Query Element</h1>
+<h2>Query Element</h2>
 
 <p>Help you build a value list:</p>
 

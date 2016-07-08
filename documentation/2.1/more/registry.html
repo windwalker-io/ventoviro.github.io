@@ -215,7 +215,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/data-object.html">Data Object</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/registry.html">Registry Object</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Getting Started</h1>
+                    <h2>Getting Started</h2>
 
 <p>Windwalker Registry is a storage of nested array or object, help us manage multi-level structures data.</p>
 
@@ -276,7 +276,7 @@ $value = $registry-&gt;get('foo');
 
 </code></pre>
 
-<h1>Load config by Registry</h1>
+<h2>Load config by Registry</h2>
 
 <pre><code class="php">use Windwalker\Registry\Registry;
 
@@ -294,9 +294,9 @@ $registry-&gt;load($object);
 $registry-&gt;loadFile($root . '/config/config.json', 'json');
 </code></pre>
 
-<h1>Accessing a Registry by getter &amp; setter</h1>
+<h2>Accessing a Registry by getter &amp; setter</h2>
 
-<h2>Get value</h2>
+<h3>Get value</h3>
 
 <pre><code class="php">$registry-&gt;get('foo');
 
@@ -308,7 +308,7 @@ $registry-&gt;get('foo', 'default');
 $registry-&gt;get('foo') ?: 'default';
 </code></pre>
 
-<h2>Set value</h2>
+<h3>Set value</h3>
 
 <pre><code class="php">// Set value
 $registry-&gt;set('bar', $value);
@@ -317,7 +317,7 @@ $registry-&gt;set('bar', $value);
 $registry-&gt;def('bar', $default);
 </code></pre>
 
-<h2>Accessing children value by path</h2>
+<h3>Accessing children value by path</h3>
 
 <pre><code class="php">$json = '{
     "parent" : {
@@ -332,7 +332,7 @@ $registry-&gt;get('parent.child'); // return 'Foo'
 $registry-&gt;set('parent.child', $value);
 </code></pre>
 
-<h2>Append &amp; Prepend</h2>
+<h3>Append &amp; Prepend</h3>
 
 <p>Support <code>push / pop / shift / unshift</code> methods.</p>
 
@@ -344,14 +344,14 @@ $registry-&gt;get('foo.bar');
 // Result: Array(first, second, third)
 </code></pre>
 
-<h2>Use other separator</h2>
+<h3>Use other separator</h3>
 
 <pre><code class="php">$registry-&gt;setSeparator('/');
 
 $data = $registry-&gt;get('foo/bar');
 </code></pre>
 
-<h1>Accessing a Registry as an Array</h1>
+<h2>Accessing a Registry as an Array</h2>
 
 <p>The <code>Registry</code> class implements <code>ArrayAccess</code> so the properties of the registry can be accessed as an array. Consider the following examples:</p>
 
@@ -368,9 +368,9 @@ if (isset($registry['foo']))
 }
 </code></pre>
 
-<h1>Merge Registry</h1>
+<h2>Merge Registry</h2>
 
-<h3>Using load* methods to merge two config files.</h3>
+<h5>Using load* methods to merge two config files.</h5>
 
 <pre><code class="php">$json1 = '{
     "field" : {
@@ -399,7 +399,7 @@ $registry-&gt;loadString($json2);
 )
 </code></pre>
 
-<h3>Merge Another Registry</h3>
+<h5>Merge Another Registry</h5>
 
 <pre><code class="php">$object1 = '{
     "foo" : "foo value",
@@ -432,7 +432,7 @@ $registry1-&gt;merge($registry2);
 <pre><code class="php">$registry-&gt;mergeTo('foo.bar', $anotherRegistry);
 </code></pre>
 
-<h1>Dump to file.</h1>
+<h2>Dump to file.</h2>
 
 <pre><code class="php">$registry-&gt;toString();
 
@@ -441,7 +441,7 @@ $registry-&gt;toString('xml');
 $registry-&gt;toString('ini');
 </code></pre>
 
-<h1>Dump to one dimension</h1>
+<h2>Dump to one dimension</h2>
 
 <pre><code class="php">$array = array(
     'flower' =&gt; array(
@@ -468,7 +468,7 @@ print_r($flatted);
 )
 </code></pre>
 
-<h1>Using YAML</h1>
+<h2>Using YAML</h2>
 
 <p>Add Symfony YAML component in <code>composer.json</code></p>
 
@@ -489,7 +489,7 @@ $registry-&gt;loadString('foo: bar', 'yaml');
 $registry-&gt;toString('yaml');
 </code></pre>
 
-<h1>RegistryHelper</h1>
+<h2>RegistryHelper</h2>
 
 <pre><code class="php">use Windwalker\Registry\RegistryHelper;
 

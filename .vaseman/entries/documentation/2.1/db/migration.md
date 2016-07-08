@@ -4,12 +4,12 @@ title: Migration and Seeding
 
 ---
 
-# Migration
+## Migration
 
 Migration is a database version control system, it help our team to manage database schema and stay up to date on newest schema state.
 Every member are allow to create a new schema version, and migration system will help us sync local schema to newest version.
 
-## The Migration Flow
+### The Migration Flow
 
 ![migration](https://cloud.githubusercontent.com/assets/1639206/5591937/ae3fba0e-91db-11e4-88f7-d280f5b0577f.jpg)
 
@@ -20,7 +20,7 @@ to the newest version: `20150421_AddTableIndex`
 
 > Migrations are typically paired with the [Schema Builder](table-schema.html) to easily manage the database schema.
 
-## Create A New Version
+### Create A New Version
 
 To create a migration version, you may use `migration create` command in console:
 
@@ -35,19 +35,19 @@ Migration version: 20150101091434_InitFlowerTable.php created.
 File path: /your/project/path/migrations/20150101091434_InitFlowerTable.php
 ```
 
-### Create to Custom Position
+##### Create to Custom Position
 
 You may also create migration to other position by `--dir` or `--package`
 
 ``` bash
-# Create to custom directory 
+## Create to custom directory
 php bin/console migration create InitFlowerTable --dir=resources/migrations
 
-# Create to a package's Migration folder
+## Create to a package's Migration folder
 php bin/console migration create InitFlowerTable --package=flower
 ```
 
-## Writing Migration
+### Writing Migration
 
 This is a new migration file. The `up()` method will run if your version is lower than latest version. The `down()` method
 will run if you migrate to older version.
@@ -134,7 +134,7 @@ class InitFlowerTable extends AbstractMigration
 
 See other schema operations: [Table and Schema](table-schema.html)
 
-## Check Status
+### Check Status
 
 Use this command to show migration status.
 
@@ -149,7 +149,7 @@ php bin/console migration status
   down   20150101091434  InitFlowerTable
 ```
 
-## Start Migrating
+### Start Migrating
 
 Use `migrate` command to start migrating:
 
@@ -170,13 +170,13 @@ Migration UP the version: 20150101091434_InitFlowerTable
 Success
 ```
 
-### Run Package Migration
+##### Run Package Migration
 
 ``` bash
 php bin/console migration migrate --package=flower
 ```
 
-### Migrate to Specific Version
+##### Migrate to Specific Version
  
 ``` bash
 php bin/console migration migrate 20141105131929
@@ -184,12 +184,12 @@ php bin/console migration migrate 20141105131929
 
 If you use a lower version, this action will be downgrade.
 
-# Seeding
+## Seeding
 
 Windwalker also provides a simple way to help you create fixtures for easy testing. The default seeder class will store in 
 `/resources/seeders` , the package seeder will store in `/src/YourPackage/Seeder`.
 
-## Default Seeder
+### Default Seeder
 
 Every time after you installed Windwalker, there will be a `DatabaseSeeder.php` in `/resources/seeders`:
  
@@ -278,7 +278,7 @@ Import seeder FlowerSeeder
 Seeder executed.
 ```
 
-## Package Seeder
+### Package Seeder
 
 Package Seeder is allow to use namespace as class name. You can just add `--class` option after command to direct a 
 particular seeder class, or add `--package` to use package default DatabaseSeeder.
@@ -301,14 +301,14 @@ class FlowerSeeder extends AbstractSeeder
 Run this command to execute package seeder:
 
 ``` bash
-# Choose class
+## Choose class
 php bin/console seed import --class=Flower\Seeder\MySeeder
  
-# Use default DatabaseSeeder
+## Use default DatabaseSeeder
 php bin/console seed import --package=flower
 ```
 
-# Fake Data Generator
+## Fake Data Generator
 
 Windwalker includes [PHP Faker](https://github.com/fzaninotto/Faker) to help you generate random fake data.
 

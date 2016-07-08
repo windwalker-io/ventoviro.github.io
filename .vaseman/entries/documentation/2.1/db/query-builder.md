@@ -4,7 +4,7 @@ title: Query Builder
 
 ---
 
-# Get Query Builder
+## Get Query Builder
 
 Query Builder help you organize SQL syntax and provides multi-database syntax support. Use Database object to get Query object:
 
@@ -20,7 +20,7 @@ In DatabaseModel
 $query = $this->db->getQuery(true);
 ```
 
-# A Simple Select
+## A Simple Select
 
 This is a example of simple select syntax with where condition.
 
@@ -40,7 +40,7 @@ FROM shakespeare
 WHERE year <= 1616
 ```
 
-## More Select Options
+### More Select Options
 
 ``` php
 $query->select(array('title', 'meta', 'read'))
@@ -64,20 +64,20 @@ ORDER BY popular DESC
 LIMIT 15
 ```
 
-### Limit Process
+##### Limit Process
 
 For common use, Mysql and some databases use this limit syntax:
 
 ``` sql
 LIMIT {limit}
-# OR
+## OR
 LIMIT {offset}, {limit}
 ```
 
 Windwalker Query dose not follow this ordering, the Query::limit method look like: `limit($limit, $offset)`. 
 We must use `limit(3, 0)` to generate `LIMIT 0, 3` because it is more semantic on method interface.
 
-## Where Conditions
+### Where Conditions
 
 `where()` method support array as argument.
 
@@ -132,7 +132,7 @@ echo new QueryElement('()', $conditions, ' OR ');
 // Result also: '(foo = 'bar' OR flower = 'sakura')'
 ```
 
-## Quote Table And Column Name
+### Quote Table And Column Name
 
 Sometimes we may use the reserve word of SQL, so we have to quote it to make sure syntax correct.
 
@@ -158,7 +158,7 @@ Quote name and alias
 $query->quoteName('a.title AS a_title'); // `a`.`title` AS `a_title`
 ```
 
-## Quote String
+### Quote String
 
 using `quote()` to quote normal string and [escape](#pass-pdo-into-query-object) it.
 
@@ -188,7 +188,7 @@ Quote array
 $query->quote(array(1, 2, 3)); // array("'1'", "'2'", "'3'")
 ```
 
-# Join
+## Join
 
 ``` php
 $query->select('a.*, b.*')
@@ -223,7 +223,7 @@ Support Join Type:
 - INNER
 - OUTER
 
-# Insert
+## Insert
 
 ``` php
 $query->insert('shakespeare')
@@ -268,7 +268,7 @@ $query->insert('shakespeare')
     );
 ```
 
-# Update
+## Update
 
 ``` php
 $query->update('shakespeare')
@@ -295,7 +295,7 @@ Use array
 $query->set(array('modified = "2014-10-09"', 'version = version + 1'));
 ```
 
-# Delete
+## Delete
 
 ``` php
 $query->delete('shakespeare')
@@ -308,7 +308,7 @@ Result
 DELETE shakespeare WHERE year > 1616
 ```
 
-# Format
+## Format
 
 ``` php
 echo $query->format('%n = %q', 'title', 'Caesar'); // `title` = 'Caesar'
@@ -321,7 +321,7 @@ Each token takes one of the following forms:
     %[t]     - Where [t] is a type specifier.
     %[n]$[x] - Where [n] is an argument specifier and [t] is a type specifier.
 
-## Types:
+### Types:
 
     a - Numeric: Replacement text is coerced to a numeric type but not quoted or escaped.
     e - Escape: Replacement text is passed to $this->escape().
@@ -331,7 +331,7 @@ Each token takes one of the following forms:
     Q - Quote (no escape): Replacement text is passed to $this->quote() with false as the second argument.
     r - Raw: Replacement text is used as-is. (Be careful)
 
-## Date Types:
+### Date Types:
 
 - Replacement text automatically quoted (use uppercase for Name Quote).
 - Replacement text should be a string in date format or name of a date column.
@@ -345,7 +345,7 @@ i/I - Minute
 s/S - Second
 ```
 
-## Invariable Types:
+### Invariable Types:
 
 - Takes no argument.
 - Argument index not incremented.
@@ -356,7 +356,7 @@ z - Replacement text is the result of $this->nullDate(false).
 Z - Replacement text is the result of $this->nullDate(true).
 ```
 
-## Usage:
+### Usage:
 
 ``` php
 $query->format('SELECT %1$n FROM %2$n WHERE %3$n = %4$a', 'foo', '#__foo', 'bar', 1);
@@ -364,12 +364,12 @@ $query->format('SELECT %1$n FROM %2$n WHERE %3$n = %4$a', 'foo', '#__foo', 'bar'
 //Returns: SELECT `foo` FROM `#__foo` WHERE `bar` = 1
 ```
 
-## Notes:
+### Notes:
 
 The argument specifier is optional but recommended for clarity.
 The argument index used for unspecified tokens is incremented only when used.
 
-# Bind Params
+## Bind Params
 
 OracleQuery support `PreparableInterface` now, we can bind params to our query string:
 
@@ -378,7 +378,7 @@ $query->where('title = :title')
     ->bind(':title', 'Hamlet');
 ```
 
-# Query Expression
+## Query Expression
 
 An easy way to build expression or function syntax.
 
@@ -414,7 +414,7 @@ Short alias
 echo $query->expr('FUNCTION', 'a', 'b', 'c');
 ```
 
-# Query Element
+## Query Element
 
 Help you build a value list:
 

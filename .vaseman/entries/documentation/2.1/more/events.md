@@ -4,14 +4,14 @@ title: Events
 
 ---
 
-# Event Listener (Observer) Pattern
+## Event Listener (Observer) Pattern
 
 The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents, 
 called observers, and notifies them automatically of any state changes, usually by calling one of their methods. 
 
 See: [Observer pattern on Wikipedia](http://en.wikipedia.org/wiki/Observer_pattern)
 
-## The Flow
+### The Flow
 
 First, there will be many listeners(observers), we can attach them to a dispatcher object.
 
@@ -23,7 +23,7 @@ Now, all listeners listened this dispatcher, if some event triggered, this dispa
 
 So, if any listener has the method which matched the event, dispatcher will call this method.
 
-# Start Using Event
+## Start Using Event
 
 Create an event object named `onBeforeContentSave`, and set some arguments.
 
@@ -83,7 +83,7 @@ $content->title == 'My content';
 If a method name in listener equals to event name, Dispatcher will run this method and inject Event into this method.
 Then we can do many things we want.
 
-## Array Access
+### Array Access
 
 Event can access like array:
 
@@ -95,11 +95,11 @@ $event['data'] = $data;
 $data = $event['data'];
 ```
 
-# Listeners
+## Listeners
 
 There can be two types of listeners, using class or closure.
 
-## Class Listeners
+### Class Listeners
 
 Using class, just new an instance
 
@@ -125,7 +125,7 @@ $dispatcher->addListener(
 $dispatcher->addListener(new ContentListener, ContentListener::getPriorities());
 ```
 
-## Closure Listeners
+### Closure Listeners
 
 If using closure, you must provide the priority and an event name to listen.
 
@@ -139,9 +139,9 @@ $dispatcher->addListener(
 );
 ```
 
-# Dispatcher
+## Dispatcher
 
-## Trigger An Event Object
+### Trigger An Event Object
 
 This is the most normal way to trigger an event.
 
@@ -163,7 +163,7 @@ $args = array(
 $dispatcher->triggerEvent($event, $args);
 ```
 
-## Add An Event Then Trigger It Later
+### Add An Event Then Trigger It Later
 
 We can add an event into Dispatcher, then use event name to raise it laster.
 
@@ -179,7 +179,7 @@ $dispatcher->addEvent($event);
 $dispatcher->triggerEvent('onFlowerBloom');
 ```
 
-## Trigger A New Event Instantly
+### Trigger A New Event Instantly
 
 We don't need create event first, just trigger a string as event name, Dispatcher will create an event instantly.
 
@@ -191,7 +191,7 @@ $args = array(
 $dispatcher->triggerEvent('onCloudMoving', $args);
 ```
 
-# Stopping Event
+## Stopping Event
 
 If you stop an event, the next listeners in the queue won't be called.
 
@@ -206,7 +206,7 @@ class ContentListener
 }
 ```
 
-# DispatcherAwareInterface and Trait
+## DispatcherAwareInterface and Trait
 
 In PHP 5.4 or higher, you can use `DispatcherAwareTrait`.
 
@@ -222,7 +222,7 @@ class Application implements DispatcherAwareInterface
 }
 ```
 
-# Core Events
+## Core Events
 
 - onBeforeInitialise
 - onAfterInitialise

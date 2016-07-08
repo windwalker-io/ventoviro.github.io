@@ -173,7 +173,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/db/basic.html">Basic Usage</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/db/read-write.html">Read and Write</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Reader Command</h1>
+                    <h2>Reader Command</h2>
 
 <p>Reader is a command object that help us read records from database, this is a simple example to use Reader.</p>
 
@@ -273,7 +273,7 @@ $items = $reader-&gt;setQuery($sql)-&gt;loadObjectList();
 $items = $db-&gt;getReader($sql)-&gt;loadObjectList();
 </code></pre>
 
-<h2>loadObjectList()</h2>
+<h3>loadObjectList()</h3>
 
 <p>Return an array, every element is a record and wrap with an object. This method is same as <code>$db-&gt;loadAll()</code>:</p>
 
@@ -302,7 +302,7 @@ var_dump($items[0] instanceof \Windwalker\Data\Data);
 ($items[11]-&gt;id == 11);
 </code></pre>
 
-<h2>loadObject()</h2>
+<h3>loadObject()</h3>
 
 <p>Return only one record and wrap with an object.  This method is same as <code>$db-&gt;loadOne()</code>:</p>
 
@@ -320,7 +320,7 @@ $item = $reader-&gt;loadObject();
 
 <p>Then the object will be an instance of <code>MyObject</code>.</p>
 
-<h2>loadArrayList()</h2>
+<h3>loadArrayList()</h3>
 
 <p>Same as <code>$db-&gt;loadAll('array')</code>, returns an array and every element is an array indexed by column number as
 returned in your result set, starting at column 0, we can set a column as index:</p>
@@ -331,7 +331,7 @@ $items = $reader-&gt;loadArrayList();
 $items = $reader-&gt;loadArrayList('id'); // Use id as index
 </code></pre>
 
-<h2>loadArray()</h2>
+<h3>loadArray()</h3>
 
 <p>Returns an array indexed by column number as returned in your result set, starting at column 0:</p>
 
@@ -340,7 +340,7 @@ $items = $reader-&gt;loadArrayList('id'); // Use id as index
 $item = $reader-&gt;loadArray();
 </code></pre>
 
-<h2>loadAssocList()</h2>
+<h3>loadAssocList()</h3>
 
 <p>Returns an array and every element is an associative array indexed by column name.</p>
 
@@ -350,7 +350,7 @@ $items = $reader-&gt;loadAssocList();
 $items = $reader-&gt;loadAssocList('id'); // Use id as index
 </code></pre>
 
-<h2>loadAssoc()</h2>
+<h3>loadAssoc()</h3>
 
 <p>Returns an associative array indexed by column name.</p>
 
@@ -359,14 +359,14 @@ $items = $reader-&gt;loadAssocList('id'); // Use id as index
 $item = $reader-&gt;loadAssoc();
 </code></pre>
 
-<h2>loadColumn()</h2>
+<h3>loadColumn()</h3>
 
 <p>Fetch values of a column field, please select only one column in this query:</p>
 
 <pre><code class="php">$titles = $db-&gt;getReader('SELECT title FROM article_table')-&gt;loadColumn();
 </code></pre>
 
-<h2>loadResult()</h2>
+<h3>loadResult()</h3>
 
 <p>Fetch only one cell as a value:</p>
 
@@ -380,13 +380,13 @@ $sum = $db-&gt;getReader('SELECT SUM(hits) FROM article_table')-&gt;loadResult()
 $id = $db-&gt;getReader('SELECT LAST_INSERT_ID()')-&gt;loadResult();
 </code></pre>
 
-<h2>About PDO Fetch</h2>
+<h3>About PDO Fetch</h3>
 
 <p>See: <a href="http://php.net/manual/en/pdostatement.fetch.php">PHP.net / PDOStatement::fetch</a></p>
 
-<h2>Quick Fetch From Driver</h2>
+<h3>Quick Fetch From Driver</h3>
 
-<h3>DatabaseDriver::loadAll()</h3>
+<h5>DatabaseDriver::loadAll()</h5>
 
 <p>Using a query we set into DB object to fetch records.</p>
 
@@ -411,7 +411,7 @@ $items = $db-&gt;loadAll(null, 'assoc');
 
 <p>The return value is an array contains all records we found.</p>
 
-<h3>DatabaseDriver::loadOne()</h3>
+<h5>DatabaseDriver::loadOne()</h5>
 
 <p>We can only get first record and ignore others:</p>
 
@@ -431,31 +431,31 @@ $item = $db-&gt;loadOne('assoc');
 
 <p>The <code>$item</code> will be a record or <code>false</code> (If no any records found).</p>
 
-<h3>DatabaseDriver::loadColumn()</h3>
+<h5>DatabaseDriver::loadColumn()</h5>
 
 <p>Same as <code>$db-&gt;getReader($sql)-&gt;loadColumn()</code>.</p>
 
-<h3>DatabaseDriver::loadResult()</h3>
+<h5>DatabaseDriver::loadResult()</h5>
 
 <p>Same as <code>$db-&gt;getReader($sql)-&gt;loadResult()</code>.</p>
 
-<h2>count()</h2>
+<h3>count()</h3>
 
 <p>Count the total found rows of last query.</p>
 
-<h2>countAffected()</h2>
+<h3>countAffected()</h3>
 
 <p>Count the affected rows of last query.</p>
 
-<h2>insertId()</h2>
+<h3>insertId()</h3>
 
 <p>Get the last inserted id.</p>
 
-<h1>Writer Command</h1>
+<h2>Writer Command</h2>
 
 <p>Writer object provide us an interface to write data into database.</p>
 
-<h2>insert()</h2>
+<h3>insert()</h3>
 
 <p>Using an object or array to store data into a table, argument 3 is the name of primary key that will be added
 to data object if insert success:</p>
@@ -483,7 +483,7 @@ $db-&gt;getWriter()-&gt;insert('#__articles', $data, 'id');
 echo $data-&gt;id;
 </code></pre>
 
-<h2>insertMultiple()</h2>
+<h3>insertMultiple()</h3>
 
 <p>Insert many records:</p>
 
@@ -504,7 +504,7 @@ $db-&gt;getWriter()-&gt;insertMultiple('#__articles', $dataSet, 'id');
 echo $dataSet[0]['id'];
 </code></pre>
 
-<h2>update()</h2>
+<h3>update()</h3>
 
 <p>Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:</p>
 
@@ -520,7 +520,7 @@ $db-&gt;getWriter()-&gt;update('#__articles', $data, 'id');
 
 <p>Also we can use array instead of object as data.</p>
 
-<h2>updateMultiple()</h2>
+<h3>updateMultiple()</h3>
 
 <p>Same as <code>update()</code> but update every record in an array.</p>
 
@@ -532,7 +532,7 @@ $db-&gt;getWriter()-&gt;update('#__articles', $data, 'id');
 $db-&gt;getWriter()-&gt;updateMultiple('#__articles', $dataSet, 'id');
 </code></pre>
 
-<h2>updateBatch()</h2>
+<h3>updateBatch()</h3>
 
 <p>Using where conditions to update some values to every records which matched this condition.</p>
 
@@ -557,22 +557,22 @@ $db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, $conditions);
 // Same as `UPDATE #__articles SET state = 0 WHERE author = 15 AND updated &lt; "2014-03-02" AND catid IN(1, 2, 3);`
 </code></pre>
 
-<h2>Save &amp; SaveMultiple</h2>
+<h3>Save &amp; SaveMultiple</h3>
 
 <p><code>save()</code> and <code>saveMultiple()</code> will auto check the primary exists or not. If primary key exists, it will use <code>update</code>,
 if not exists, it will use <code>insert</code> to store data.</p>
 
-<h2>insertId()</h2>
+<h3>insertId()</h3>
 
 <p>Get the last inserted id.</p>
 
-<h2>countAffected()</h2>
+<h3>countAffected()</h3>
 
 <p>Count the affected rows of last query.</p>
 
-<h1>Transaction Command</h1>
+<h2>Transaction Command</h2>
 
-<h2>Start Transaction</h2>
+<h3>Start Transaction</h3>
 
 <pre><code class="php">$tran = $this-&gt;db-&gt;getTransaction()-&gt;start();
 

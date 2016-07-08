@@ -4,7 +4,7 @@ title: DataMapper
 
 ---
 
-# Create a DataMapper
+## Create a DataMapper
 
 ``` php
 use Windwalker\DataMapper\DataMapper;
@@ -14,7 +14,7 @@ $fooMapper = new DataMapper('#__foo');
 $fooSet = $fooMapper->find(array('id' => 1));
 ```
 
-## Extends It
+### Extends It
 
 You can also create a class to operate specific table:
 
@@ -53,11 +53,11 @@ abstract class FooMapper
 $data = FooMapper::findOne(array('id' => 5, 'alias' => 'bar'));
 ```
 
-# Find Records
+## Find Records
 
 Find method will fetch rows from table, and return `DataSet` class.
 
-## find()
+### find()
 
 Get id = 1 record
 
@@ -83,7 +83,7 @@ Using array, will be `IN` condition:
 $fooSet = $fooMapper->find(array('id' => array(1,2,3))); // WHERE id IN (1,2,3)
 ```
 
-## findOne()
+### findOne()
 
 Just return one row.
 
@@ -91,15 +91,15 @@ Just return one row.
 $foo = $dooMapper->findOne(array('published' => 1), 'date');
 ```
 
-## findAll()
+### findAll()
 
 Equal to `find(array(), $order, $start, $limit)`.
 
-# Create Records
+## Create Records
 
 Using DataSet to wrap every data, then send this object to create() method, these data will insert to table.
 
-## create()
+### create()
 
 ``` php
 use Windwalker\Data\Data;
@@ -145,7 +145,7 @@ Windwalker\Data\DataSet Object
 )
 ```
 
-## createOne()
+### createOne()
 
 Only insert one row, do not need DataSet.
 
@@ -158,11 +158,11 @@ $fooMapper->createOne($data);
 ```
 
 
-# Update Records
+## Update Records
 
 Update methods help us update rows in table.
 
-## update()
+### update()
 
 ``` php
 use Windwalker\Data\Data;
@@ -184,7 +184,7 @@ $dataset = new DataSet(array($data1, $data2));
 $fooMapper->update($dataset);
 ```
 
-## updateOne()
+### updateOne()
 
 Just update one row.
 
@@ -196,7 +196,7 @@ $data->title = 'Foo';
 $fooMapper->updateOne($data);
 ```
 
-## updateAll()
+### updateAll()
 
 UpdateAll is different from update method, we just send one data object, but using conditions as where
 to update every row match these conditions. We don't need primary key for updateAll().
@@ -208,17 +208,17 @@ $data->published = 0;
 $fooMapper->updateAll($data, array('author' => 'Mystique'));
 ```
 
-# Delete
+## Delete
 
 Delete rows by conditions.
 
-## delete()
+### delete()
 
 ``` php
 $boolean = $fooMapper->delete(array('author' => 'Jean Grey'));
 ```
 
-# Join Tables
+## Join Tables
 
 Using `RelationDataMapper` to join tables.
 
@@ -254,7 +254,7 @@ FROM #__foo AS foo
     INNER JOIN #__categories AS category ON category.lft >= foo.lft AND category.rgt <= foo.rgt
 ```
 
-## Using OR Condition
+### Using OR Condition
 
 ``` php
 $fooMapper->addTable(
@@ -265,7 +265,7 @@ $fooMapper->addTable(
 );
 ```
 
-# Static Access
+## Static Access
 
 Windwalker core 2.1 provides a `AbstractDataMapperProxy` to help us easily use DataMapper.
 
@@ -284,7 +284,7 @@ Now you can call all methods statically:
 $articles = ArticleMapper::find(['state' => 1]);
 ```
 
-# Hooks
+## Hooks
 
 In `DataMapper` or `AbstractDataMapperProxy`, both supports hooks methods.
 
@@ -339,7 +339,7 @@ All events:
 
 See [Event](../more/events.html)
 
-# Compare objects
+## Compare objects
 
 Using Compare objects help us set some where conditions which hard to use array to defind.
 
@@ -363,7 +363,7 @@ WHERE `id` >= '5'
     AND `catid` NOT IN (1,2,3,4,5)
 ```
 
-## Available compares:
+### Available compares:
 
 | Name       | Description      | Operator |
 | ---------- | -----------------| -------- |
@@ -376,7 +376,7 @@ WHERE `id` >= '5'
 | InCompare  | In                    | `IN` |
 | NinCompare | Not In                | `IN` |
 
-## Custom Compare
+### Custom Compare
 
 ``` php
 echo (string) new Compare('title', '%flower%', 'LIKE');
@@ -390,6 +390,6 @@ Will be
 
 See: [Windwalker Compare](https://github.com/ventoviro/windwalker-compare)
 
-# Using Data and DataSet
+## Using Data and DataSet
 
 See: [Data Object](../more/data-object.html)

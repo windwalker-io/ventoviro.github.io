@@ -4,7 +4,7 @@ title: Caching
 
 ---
 
-# Configuration
+## Configuration
 
 Using cache will be very easy in Windwalker, the cache configuration is located at `/etc/config.yml`.
 
@@ -21,7 +21,7 @@ The `enabled` property controls global cache start or not, can be close if you w
  you use, can be `file`, `runtime`, `memcached` or [more](https://github.com/ventoviro/windwalker-cache#available-storage). 
  About storage and handler, please see [Windwalker Cache](https://github.com/ventoviro/windwalker-cache).
  
-# Use Cache
+## Use Cache
 
 ``` php
 $cache = Ioc::getCache();
@@ -40,7 +40,7 @@ $value = $cache->get('key');
 $cache->exists('key');
 ```
 
-# Get Cache By CacheFactory
+## Get Cache By CacheFactory
 
 Get cache factory:
 
@@ -62,7 +62,7 @@ $cache = $cacheFactory->create('mycache_name', 'file'); // Every name will be si
 
 If you set `cache.enabled` to `false`, all cache created from `create()` will be `NullStorage`, it won't cache any data.
 
-# Auto Fetch Data By Closure
+## Auto Fetch Data By Closure
 
 Using call method to auto detect is cache exists or not. 
 
@@ -84,7 +84,7 @@ if (!$cache->exists('flower'))
 $data = $cache->get('flower');
 ```
 
-# Debug Mode or Cache Disabled
+## Debug Mode or Cache Disabled
 
 When debug property in global config se to `1` or cache disabled, the cache storage will auto set to `NullStorage`, cache can still be used
  but no work.
@@ -108,11 +108,11 @@ else
 return $data;
 ```
 
-# Using Custom Cache Object
+## Using Custom Cache Object
 
 In the above we use global cache, but we can still create our custom cache to store values, it will not affected by global config.
 
-## Use `CacheFactory::getCache()`
+### Use `CacheFactory::getCache()`
 
 CacheFactory is a cache creator, it will store each cache object as singleton by different name. 
 
@@ -125,7 +125,7 @@ $myRuntimeCache = CacheFactory::getCache('cache_name', 'runtime');
 
 Te default cache is runtime cache, it means our data only keep in once runtime but will not save as files.
 
-## Custom Cache Options
+### Custom Cache Options
 
 ``` php
 $options = array(
@@ -136,7 +136,7 @@ $options = array(
 $cache = CacheFactory::getCache('cache_name', 'file', 'serialize', $options);
 ```
 
-# Full Page Cache
+## Full Page Cache
 
 Sometimes we want to store whole html as static page cache. `StringHandler`  help us save raw string:
  
@@ -164,7 +164,7 @@ $cache->set($url, $html);
 echo $html;
 ```
 
-## Supported Handlers
+### Supported Handlers
 
 - SerializeHandler
 - JsonHandler

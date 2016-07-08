@@ -188,7 +188,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/db/datamapper.html">DataMapper</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/db/migration.html">Migration And Seeding</a>
             </li>
         
@@ -260,12 +260,12 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Migration</h1>
+                    <h2>Migration</h2>
 
 <p>Migration is a database version control system, it help our team to manage database schema and stay up to date on newest schema state.
 Every member are allow to create a new schema version, and migration system will help us sync local schema to newest version.</p>
 
-<h2>The Migration Flow</h2>
+<h3>The Migration Flow</h3>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5591937/ae3fba0e-91db-11e4-88f7-d280f5b0577f.jpg" alt="migration" /></p>
 
@@ -278,7 +278,7 @@ to the newest version: <code>20150421_AddTableIndex</code></p>
   <p>Migrations are typically paired with the <a href="table-schema.html">Schema Builder</a> to easily manage the database schema.</p>
 </blockquote>
 
-<h2>Create A New Version</h2>
+<h3>Create A New Version</h3>
 
 <p>To create a migration version, you may use <code>migration create</code> command in console:</p>
 
@@ -291,18 +291,18 @@ to the newest version: <code>20150421_AddTableIndex</code></p>
 File path: /your/project/path/migrations/20150101091434_InitFlowerTable.php
 </code></pre>
 
-<h3>Create to Custom Position</h3>
+<h5>Create to Custom Position</h5>
 
 <p>You may also create migration to other position by <code>--dir</code> or <code>--package</code></p>
 
-<pre><code class="bash"># Create to custom directory 
+<pre><code class="bash">## Create to custom directory
 php bin/console migration create InitFlowerTable --dir=resources/migrations
 
-# Create to a package's Migration folder
+## Create to a package's Migration folder
 php bin/console migration create InitFlowerTable --package=flower
 </code></pre>
 
-<h2>Writing Migration</h2>
+<h3>Writing Migration</h3>
 
 <p>This is a new migration file. The <code>up()</code> method will run if your version is lower than latest version. The <code>down()</code> method
 will run if you migrate to older version.</p>
@@ -387,7 +387,7 @@ class InitFlowerTable extends AbstractMigration
 
 <p>See other schema operations: <a href="table-schema.html">Table and Schema</a></p>
 
-<h2>Check Status</h2>
+<h3>Check Status</h3>
 
 <p>Use this command to show migration status.</p>
 
@@ -400,7 +400,7 @@ class InitFlowerTable extends AbstractMigration
   down   20150101091434  InitFlowerTable
 </code></pre>
 
-<h2>Start Migrating</h2>
+<h3>Start Migrating</h3>
 
 <p>Use <code>migrate</code> command to start migrating:</p>
 
@@ -419,24 +419,24 @@ Migration UP the version: 20150101091434_InitFlowerTable
 Success
 </code></pre>
 
-<h3>Run Package Migration</h3>
+<h5>Run Package Migration</h5>
 
 <pre><code class="bash">php bin/console migration migrate --package=flower
 </code></pre>
 
-<h3>Migrate to Specific Version</h3>
+<h5>Migrate to Specific Version</h5>
 
 <pre><code class="bash">php bin/console migration migrate 20141105131929
 </code></pre>
 
 <p>If you use a lower version, this action will be downgrade.</p>
 
-<h1>Seeding</h1>
+<h2>Seeding</h2>
 
 <p>Windwalker also provides a simple way to help you create fixtures for easy testing. The default seeder class will store in 
 <code>/resources/seeders</code> , the package seeder will store in <code>/src/YourPackage/Seeder</code>.</p>
 
-<h2>Default Seeder</h2>
+<h3>Default Seeder</h3>
 
 <p>Every time after you installed Windwalker, there will be a <code>DatabaseSeeder.php</code> in <code>/resources/seeders</code>:</p>
 
@@ -520,7 +520,7 @@ Import seeder FlowerSeeder
 Seeder executed.
 </code></pre>
 
-<h2>Package Seeder</h2>
+<h3>Package Seeder</h3>
 
 <p>Package Seeder is allow to use namespace as class name. You can just add <code>--class</code> option after command to direct a 
 particular seeder class, or add <code>--package</code> to use package default DatabaseSeeder.</p>
@@ -541,14 +541,14 @@ class FlowerSeeder extends AbstractSeeder
 
 <p>Run this command to execute package seeder:</p>
 
-<pre><code class="bash"># Choose class
+<pre><code class="bash">## Choose class
 php bin/console seed import --class=Flower\Seeder\MySeeder
 
-# Use default DatabaseSeeder
+## Use default DatabaseSeeder
 php bin/console seed import --package=flower
 </code></pre>
 
-<h1>Fake Data Generator</h1>
+<h2>Fake Data Generator</h2>
 
 <p>Windwalker includes <a href="https://github.com/fzaninotto/Faker">PHP Faker</a> to help you generate random fake data.</p>
 

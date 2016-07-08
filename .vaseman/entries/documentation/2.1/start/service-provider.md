@@ -4,7 +4,7 @@ title: Service Provider
 
 ---
 
-# Introduction of Service Provider
+## Introduction of Service Provider
 
 Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
 custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.
@@ -12,11 +12,11 @@ custom listeners or 3rd tools. Some libraries need a bootstrapping process, we s
 Service Provider will working with IoC Container, we'll implement the `\Windwalker\DI\ServiceProviderInterface` 
 and write all our logic in `register()` method and set our service objects into container.
  
-## Basic Provider Example
+### Basic Provider Example
 
 Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.
 
-### Original Way
+##### Original Way
 
 ``` php
 // import.mongodb.php
@@ -32,7 +32,7 @@ And include this file:
 $mongo = include_once 'import.mongodb.php';
 ```
 
-### Windwalker Way
+##### Windwalker Way
 
 In Windwalker, we can create a `MongoDBServiceProvider`, and set MongoDB connection to Container.
 
@@ -73,7 +73,7 @@ $mongo = Ioc::get('mongo.db');
 
 About how to use IoC (DI) Container, see: [IoC Container](ioc-container.html)
 
-# Registering Providers
+## Registering Providers
 
 All Service Providers are registered in `Application::loadProviders()`. For example, open `/src/Windwalker/Web/Application.php`, 
 you will see `loadProviders()`, there is an array `$providers` here, help ue override default providers, now we add our Service Provider here:

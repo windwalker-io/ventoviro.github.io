@@ -9,34 +9,37 @@ $(document).ready(function()
 {
 	var article = $('#main-body .article-content');
 
-	var h1s = article.find('h1');
+	var titles = article.find('h2, h3');
 	var lists = [];
 	var nav = $('<ul class="uk-nav"></ul>');
 
-	if (!h1s.length)
+	if (!titles.length)
 	{
 		return;
 	}
-
-	h1s.each(function(i)
+console.log(titles);
+	titles.each(function(i)
 	{
-		var h1 = $(this);
+		var $this = $(this);
 
-		var title = h1.text();
+		var title = $this.text();
 
 		title = title.toLowerCase();
 		title = title.replace(/\s/g, '-');
 
-		h1.attr('id', title);
+		$this.prepend($(`<span id="${title}" class="title-anchor"></span>`));
 
-		nav.append($('<li><a href="#' + title + '">' + h1.text() + '</a></li>')[0]);
+        if ($this.prop("tagName") == 'H2')
+        {
+            nav.append($('<li><a href="#' + title + '">' + $this.text() + '</a></li>')[0]);
+        }
 
-		h1.prepend($('<a class="h1-link" href="#' + title + '">#</a>'));
-	});
+        $this.prepend($('<a class="title-link" href="#' + title + '">#</a>'));
+    });
 
 	var table = $('<div class="table-of-content"></div>');
 
-	table.prepend(nav).prepend('<h1>Table of Content</h1>');
+	table.prepend(nav).prepend('<h2>Table of Content</h2>');
 
 	$('.article-content').prepend(table);
 });

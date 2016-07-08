@@ -221,7 +221,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/widget-renderer.html">Widget and Renderer</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Create A Form</h1>
+                    <h2>Create A Form</h2>
 
 <p>Create a new form instance and add fields into it.</p>
 
@@ -304,7 +304,7 @@ echo $form-&gt;renderFields();
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5066911/0566a53c-6e77-11e4-9bee-6cc2ee01de21.png" alt="img" /></p>
 
-<h2>Using XML as Configuration</h2>
+<h3>Using XML as Configuration</h3>
 
 <pre><code class="xml">&lt;form&gt;
     &lt;field
@@ -326,7 +326,7 @@ echo $form-&gt;renderFields();
 $form-&gt;loadFile('form.xml');
 </code></pre>
 
-<h1>Field Definition Interface</h1>
+<h2>Field Definition Interface</h2>
 
 <p><code>FieldDefinitionInterface</code> is a simple interface to help us create an empty space to define form fields.</p>
 
@@ -348,7 +348,7 @@ class MyFieldDefinition implements FieldDefinitionInterface
 $form-&gt;defineFormField(new MyFieldDefinition);
 </code></pre>
 
-<h1>Form Control</h1>
+<h2>Form Control</h2>
 
 <pre><code class="php">$control = 'user';
 
@@ -367,9 +367,9 @@ echo $form-&gt;renderFields();
 &lt;/div&gt;
 </code></pre>
 
-<h1>Organize Fields</h1>
+<h2>Organize Fields</h2>
 
-<h2>Fieldset</h2>
+<h3>Fieldset</h3>
 
 <p>Fieldset is a category of fields, we can filter our fields by fieldset:</p>
 
@@ -405,7 +405,7 @@ echo $form-&gt;renderFields();
 &lt;/form&gt;
 </code></pre>
 
-<h2>Group</h2>
+<h3>Group</h3>
 
 <p>Group is like fieldset as a category of fields, but it will make name of fields to be array:</p>
 
@@ -471,7 +471,7 @@ echo $form-&gt;renderFields();
 &lt;/form&gt;
 </code></pre>
 
-<h2>Use Wrapper Methods</h2>
+<h3>Use Wrapper Methods</h3>
 
 <p>Windwalker 2.1 supports wrapper method to help us organize form fieldset and group.</p>
 
@@ -509,14 +509,14 @@ $form-&gt;wrap('fieldset', 'group', function(Form $form)
 });
 </code></pre>
 
-<h1>Attributes of Fields</h1>
+<h2>Attributes of Fields</h2>
 
-<h2>Name &amp; Label</h2>
+<h3>Name &amp; Label</h3>
 
 <pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'));
 </code></pre>
 
-<h2>Set Attributes</h2>
+<h3>Set Attributes</h3>
 
 <pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'))
     -&gt;set('id', 'my-name')
@@ -524,7 +524,7 @@ $form-&gt;wrap('fieldset', 'group', function(Form $form)
     -&gt;set('onclick', 'return false;');
 </code></pre>
 
-<h2>Required, Disabled and Readonly</h2>
+<h3>Required, Disabled and Readonly</h3>
 
 <pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'))
     -&gt;set('id', 'my-name')
@@ -540,7 +540,7 @@ $form-&gt;wrap('fieldset', 'group', function(Form $form)
     -&gt;disabled(false);
 </code></pre>
 
-<h2>XML</h2>
+<h3>XML</h3>
 
 <pre><code class="xml">&lt;field
     name="name"
@@ -551,7 +551,7 @@ $form-&gt;wrap('fieldset', 'group', function(Form $form)
 /&gt;
 </code></pre>
 
-<h1>Filter</h1>
+<h2>Filter</h2>
 
 <pre><code class="php">use Windwalker\Filter\InputFilter;
 
@@ -570,7 +570,7 @@ $form-&gt;filter();
 $values = $form-&gt;getValues(); // Array(id = 123)
 </code></pre>
 
-<h1>Validate</h1>
+<h2>Validate</h2>
 
 <pre><code class="php">$form-&gt;addField(new TextField('name', 'Name'))
     -&gt;required();
@@ -596,9 +596,9 @@ $results[0]-&gt;getMessage(); // Field Email validate fail.
 $results[1]-&gt;getMessage(); // Field Name value not allow empty.
 </code></pre>
 
-<h1>Field Types</h1>
+<h2>Field Types</h2>
 
-<h2>Select List</h2>
+<h3>Select List</h3>
 
 <pre><code class="php">use Windwalker\Form\Field\ListField;
 use Windwalker\Html\Option;
@@ -633,7 +633,7 @@ echo $selectField-&gt;render();
 <pre><code class="php">$selectField-&gt;set('multiple', true);
 </code></pre>
 
-<h2>RadioList</h2>
+<h3>RadioList</h3>
 
 <pre><code class="php">$form-&gt;addField(new RadioList('flower', 'Flower'))
     -&gt;addOption(new Option('Yes', 1))
@@ -652,7 +652,7 @@ echo $selectField-&gt;render();
 );
 </code></pre>
 
-<h1>Available Fields</h1>
+<h2>Available Fields</h2>
 
 <table>
 <thead>
@@ -721,9 +721,9 @@ echo $selectField-&gt;render();
 </tbody>
 </table>
 
-<h1>Custom Fields</h1>
+<h2>Custom Fields</h2>
 
-<h2>Custom TextField.</h2>
+<h3>Custom TextField.</h3>
 
 <pre><code class="php">namespace MyCode\Fields;
 
@@ -751,7 +751,7 @@ class FooField extends TextField
 /&gt;
 </code></pre>
 
-<h2>Custom List field</h2>
+<h3>Custom List field</h3>
 
 <pre><code class="php">namespace MyCode\Fields;
 
@@ -773,7 +773,7 @@ class UsersField extends ListField
 }
 </code></pre>
 
-<h1>Custom Filter</h1>
+<h2>Custom Filter</h2>
 
 <pre><code class="php">namespace MyCode\Filter;
 
@@ -801,7 +801,7 @@ class MyFilter implements FilterInterface
 /&gt;
 </code></pre>
 
-<h1>Custom Validator</h1>
+<h2>Custom Validator</h2>
 
 <pre><code class="php">namespace MyCode\Validator;
 
@@ -831,7 +831,7 @@ class MyValidator extends AbstractValidator
 /&gt;
 </code></pre>
 
-<h1>Renderer</h1>
+<h2>Renderer</h2>
 
 <p>We can add our own custom renderer to render form fields. This is a renderer example.</p>
 

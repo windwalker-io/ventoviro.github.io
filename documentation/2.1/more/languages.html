@@ -227,7 +227,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/html-builder.html">HTML Builder</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/languages.html">Languages</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Introduction</h1>
+                    <h2>Introduction</h2>
 
 <p>Windwalker use Language package to handle i18n localise. There is a <code>language</code> configuration in <code>/etc/config.yml</code>:</p>
 
@@ -276,7 +276,7 @@
 
 <p>Format is the default file format, but we can still load other format in the runtime.</p>
 
-<h1>Using Language to Translate String</h1>
+<h2>Using Language to Translate String</h2>
 
 <p>Windwalker language object has a Facade as proxy, just call this static class to use.</p>
 
@@ -306,7 +306,7 @@ windwalker.hello.message="Hello World"
 <pre><code class="php">echo Translator::translate('windwalker.hello.message');
 </code></pre>
 
-<h1>Locale and Default Languages</h1>
+<h2>Locale and Default Languages</h2>
 
 <p>We set locale to <code>zh-TW</code> and default to <code>en-GB</code>, then create ini language files:</p>
 
@@ -335,7 +335,7 @@ Translator::translate('windwalker.language.test.flower'); // 花
 Translator::translate('windwalker.language.test.sakura'); // Sakura
 </code></pre>
 
-<h2>Key Format</h2>
+<h3>Key Format</h3>
 
 <p>All language key will be normalised to lowercase and separated by dot (<code>.</code>).</p>
 
@@ -350,7 +350,7 @@ Translator::translate('Windwalker Language, Test Flower~~~!'); // 花
 // All keys will be normalise to 'windwalker.language.test.flower'
 </code></pre>
 
-<h2>Replace String</h2>
+<h3>Replace String</h3>
 
 <p>Use <code>sprintf()</code> method.</p>
 
@@ -362,7 +362,7 @@ Translator::translate('Windwalker Language, Test Flower~~~!'); // 花
 // Result: The Sunflower is beautiful~~~!!!
 </code></pre>
 
-<h2>Plural String</h2>
+<h3>Plural String</h3>
 
 <p>Create a Localise class:</p>
 
@@ -401,7 +401,7 @@ Translator::plural('windwalker.language.test.sunflower', 1); // Sunflower
 Translator::plural('windwalker.language.test.sunflower', 2); // Sunflowers
 </code></pre>
 
-<h1>If Language Key Not Exists</h1>
+<h2>If Language Key Not Exists</h2>
 
 <p>Language object will return raw string which we send into it.</p>
 
@@ -416,11 +416,11 @@ echo Translator::translate('A_NOT_TRANSLATED_STRING');
 A_NOT_TRANSLATED_STRING
 </code></pre>
 
-<h1>Using Other Formats</h1>
+<h2>Using Other Formats</h2>
 
 <p>Change the <code>format</code> property from config.</p>
 
-<h2>Yaml</h2>
+<h3>Yaml</h3>
 
 <p>Yaml language file can write as nested structure.</p>
 
@@ -434,7 +434,7 @@ A_NOT_TRANSLATED_STRING
 Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 </code></pre>
 
-<h2>Json</h2>
+<h3>Json</h3>
 
 <pre><code class="json">{
     "windwalker" : {
@@ -452,7 +452,7 @@ Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 </code></pre>
 
-<h2>PHP</h2>
+<h3>PHP</h3>
 
 <pre><code class="php">&lt;?php
 
@@ -476,7 +476,7 @@ Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
   <p>NOTE: We'll support to load different formats in the runtime soon.</p>
 </blockquote>
 
-<h1>Load Package Languages</h1>
+<h2>Load Package Languages</h2>
 
 <p>Package language file located at <code>YourPackage/Languages/xx-XX/language-name.ini</code>.</p>
 
@@ -486,15 +486,15 @@ Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
 Translator::loadFile('sakura', 'ini', 'flower');
 </code></pre>
 
-<h1>Used Keys</h1>
+<h2>Used Keys</h2>
 
 <pre><code class="php">// Get keys which have been used.
 Translator::getUsed();
 </code></pre>
 
-<h1>Debugging</h1>
+<h2>Debugging</h2>
 
-<h2>Debug Mode</h2>
+<h3>Debug Mode</h3>
 
 <pre><code class="php">Translator::setDebug(true);
 </code></pre>
@@ -512,7 +512,7 @@ echo Translator::translate('A Not Translated String');
 ??A Not Translated String??
 </code></pre>
 
-<h2>Get Orphans</h2>
+<h3>Get Orphans</h3>
 
 <p>Orphans is the language string you used but haven't translated.</p>
 
@@ -523,14 +523,14 @@ echo Translator::translate('A Not Translated String');
 $orphans = Translator::getOrphans(); // Array([0] =&gt; A Not Translated String);
 </code></pre>
 
-<h2>Check Loaded Languages</h2>
+<h3>Check Loaded Languages</h3>
 
 <pre><code class="php">$config = \Windwalker\Ioc::getConfig();
 
 $config-&gt;get('language.loaded');
 </code></pre>
 
-<h1>Translate in View Template</h1>
+<h2>Translate in View Template</h2>
 
 <p>Blade</p>
 

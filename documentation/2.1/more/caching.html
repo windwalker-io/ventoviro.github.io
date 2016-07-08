@@ -206,7 +206,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/authentication.html">Authentication</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/caching.html">Caching</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Configuration</h1>
+                    <h2>Configuration</h2>
 
 <p>Using cache will be very easy in Windwalker, the cache configuration is located at <code>/etc/config.yml</code>.</p>
 
@@ -276,7 +276,7 @@
  you use, can be <code>file</code>, <code>runtime</code>, <code>memcached</code> or <a href="https://github.com/ventoviro/windwalker-cache#available-storage">more</a>. 
  About storage and handler, please see <a href="https://github.com/ventoviro/windwalker-cache">Windwalker Cache</a>.</p>
 
-<h1>Use Cache</h1>
+<h2>Use Cache</h2>
 
 <pre><code class="php">$cache = Ioc::getCache();
 
@@ -294,7 +294,7 @@ $value = $cache-&gt;get('key');
 $cache-&gt;exists('key');
 </code></pre>
 
-<h1>Get Cache By CacheFactory</h1>
+<h2>Get Cache By CacheFactory</h2>
 
 <p>Get cache factory:</p>
 
@@ -314,7 +314,7 @@ $cacheFactory = CacheFactory::getInstance();
 
 <p>If you set <code>cache.enabled</code> to <code>false</code>, all cache created from <code>create()</code> will be <code>NullStorage</code>, it won't cache any data.</p>
 
-<h1>Auto Fetch Data By Closure</h1>
+<h2>Auto Fetch Data By Closure</h2>
 
 <p>Using call method to auto detect is cache exists or not.</p>
 
@@ -334,7 +334,7 @@ $cacheFactory = CacheFactory::getInstance();
 $data = $cache-&gt;get('flower');
 </code></pre>
 
-<h1>Debug Mode or Cache Disabled</h1>
+<h2>Debug Mode or Cache Disabled</h2>
 
 <p>When debug property in global config se to <code>1</code> or cache disabled, the cache storage will auto set to <code>NullStorage</code>, cache can still be used
  but no work.</p>
@@ -357,11 +357,11 @@ else
 return $data;
 </code></pre>
 
-<h1>Using Custom Cache Object</h1>
+<h2>Using Custom Cache Object</h2>
 
 <p>In the above we use global cache, but we can still create our custom cache to store values, it will not affected by global config.</p>
 
-<h2>Use <code>CacheFactory::getCache()</code></h2>
+<h3>Use <code>CacheFactory::getCache()</code></h3>
 
 <p>CacheFactory is a cache creator, it will store each cache object as singleton by different name.</p>
 
@@ -373,7 +373,7 @@ $myRuntimeCache = CacheFactory::getCache('cache_name', 'runtime');
 
 <p>Te default cache is runtime cache, it means our data only keep in once runtime but will not save as files.</p>
 
-<h2>Custom Cache Options</h2>
+<h3>Custom Cache Options</h3>
 
 <pre><code class="php">$options = array(
     'cache_dir' =&gt; WINDWALKLER_ROOT . '/cache', // Only for file storage
@@ -383,7 +383,7 @@ $myRuntimeCache = CacheFactory::getCache('cache_name', 'runtime');
 $cache = CacheFactory::getCache('cache_name', 'file', 'serialize', $options);
 </code></pre>
 
-<h1>Full Page Cache</h1>
+<h2>Full Page Cache</h2>
 
 <p>Sometimes we want to store whole html as static page cache. <code>StringHandler</code>  help us save raw string:</p>
 
@@ -410,7 +410,7 @@ $cache-&gt;set($url, $html);
 echo $html;
 </code></pre>
 
-<h2>Supported Handlers</h2>
+<h3>Supported Handlers</h3>
 
 <ul>
 <li>SerializeHandler</li>

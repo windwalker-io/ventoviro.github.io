@@ -10,6 +10,7 @@ class DocHelper extends AbstractHelper
 	public function getPath($paths)
 	{
 		array_shift($paths);
+		array_shift($paths);
 
 		$paths = implode('/', $paths);
 

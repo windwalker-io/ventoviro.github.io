@@ -4,11 +4,11 @@ title: Authentication
 
 ---
 
-# Introduction
+## Introduction
 
 Building user system in Windwalker is very easy, Windwalker includes a simple Authentication package to handle user auth.
 
-# Default User Package
+## Default User Package
 
 In Windwalker Starter, there is an User package in `src/Windwalker/User` and has been registered to system. 
 You can directly modify it to what you needed.
@@ -19,7 +19,7 @@ Before using it, you may run this command to import default user package schema:
 php bin/console migration migrate -p=wwuser
 ```
 
-## Get User
+### Get User
 
 ``` php
 use Windwalker\Core\Authentication\User;
@@ -34,7 +34,7 @@ $user = User::get(12);
 $user = User::get(array('username' => 'christina'));
 ```
 
-## Login User
+### Login User
 
 ``` php
 // Prepare user data
@@ -51,13 +51,13 @@ Remember me:
 $bool = User::login($credential, true);
 ```
 
-## Logout User
+### Logout User
 
 ``` php
 $bool = User::logout();
 ```
 
-## Save User
+### Save User
 
 ``` php
 use Windwalker\Crypt\Password;
@@ -73,7 +73,7 @@ $user->password = $password->create($user->password);
 User::save($user);
 ```
 
-## Delete User
+### Delete User
 
 ``` php
 // Delete by id
@@ -83,7 +83,7 @@ User::delete(12);
 User::delete(array('username' => 'richael3784'));
 ```
 
-# Create Your Own User Handler
+## Create Your Own User Handler
 
 Windwalker Built-in Authentication system can register a custom user handler, this user handler should implement the `UserHandlerInterface`:
 
@@ -150,7 +150,7 @@ use Windwalker\Core\Authentication\User;
 User::setHandler(new MyUserHandler);
 ```
 
-# Create Authentication Method
+## Create Authentication Method
 
 Windwalker Authentication allow developers attach multiple methods to match user(See [Document](https://github.com/ventoviro/windwalker-authentication)).
 
@@ -158,7 +158,7 @@ This image described how authentication methods working.
 
 ![p-2015-01-02-5](https://cloud.githubusercontent.com/assets/1639206/5595002/07d3235a-92a2-11e4-8f1f-5622e2af7254.jpg)
 
-## Example Method to Find User From Database
+### Example Method to Find User From Database
 
 ``` php
 use Windwalker\Authentication\Authentication;

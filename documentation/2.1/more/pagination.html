@@ -230,7 +230,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/languages.html">Languages</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/pagination.html">Pagination</a>
             </li>
                     <li class="">
@@ -260,7 +260,7 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Start Using Pagination</h1>
+                    <h2>Start Using Pagination</h2>
 
 <p>Using Pagination in Windwalker is very easy, but you must know how to count pages in your SQL.</p>
 
@@ -268,7 +268,7 @@
 
 <p>For SQL and programming, this 3 integers will be  <strong>Total</strong>, <strong>Limit</strong>, and <strong>Offset</strong>.</p>
 
-<h2>Count Total Rows</h2>
+<h3>Count Total Rows</h3>
 
 <p>Some times we will fetch items from database by SQL which looks like this:</p>
 
@@ -291,7 +291,7 @@ ORDER BY created
 
 <p>Use the second query we'll fetch total rows of first query without limit.</p>
 
-<h3>Another Way to Count Total</h3>
+<h5>Another Way to Count Total</h5>
 
 <p>Use <code>SQL_CALC_FOUND_ROWS</code> in only MySQL.</p>
 
@@ -306,7 +306,7 @@ LIMIT 0, 20
 <p>And use <code>SELECT FOUND_ROWS()</code> to fetch total rows, this way will a little faster than first way if you set index correctly
 , but only MySQL works.</p>
 
-<h3>Count Total if SQL has GROUP</h3>
+<h5>Count Total if SQL has GROUP</h5>
 
 <p>If you add <code>group</code> in your SQL, the <code>COUNT(*)</code> will be incorrect, we must use an inefficient way to count all results.</p>
 
@@ -338,7 +338,7 @@ GROUP a.id
 <pre><code class="php">$total = $db-&gt;getReader($sql)-&gt;count();
 </code></pre>
 
-<h2>Create Pagination</h2>
+<h3>Create Pagination</h3>
 
 <p>This is an example to fetch rows and total:</p>
 
@@ -372,7 +372,7 @@ $pagination = new Pagination($total, $page, $limit);
 $paginData = $pagination-&gt;getResult();
 </code></pre>
 
-<h1>Pagination Result</h1>
+<h2>Pagination Result</h2>
 
 <p><code>PaginationResult</code> to an object contains pagination information, you can get pages data from this object:</p>
 
@@ -414,7 +414,7 @@ print_r($paginData-&gt;getAll());
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5594615/131c1546-928e-11e4-8103-f90e73f4428d.jpg" alt="pagination" /></p>
 
-<h1>Use Built-in Pagination Template</h1>
+<h2>Use Built-in Pagination Template</h2>
 
 <p><code>render()</code> method will auto render pagination HTML, the default template is <code>windwalker.pagination.default</code>. 
 The first argument (route resources name) is required because pagination use <code>Router</code> to get page url.</p>
@@ -422,7 +422,7 @@ The first argument (route resources name) is required because pagination use <co
 <pre><code class="php">echo $pagination-&gt;render('flower@sakuras');
 </code></pre>
 
-<h2>Use Your Own Template</h2>
+<h3>Use Your Own Template</h3>
 
 <p>Add your template file in <code>/templates/windwalker/pagination/default.php</code>, Windwalker renderer will auto find it to replace built-in template.</p>
 

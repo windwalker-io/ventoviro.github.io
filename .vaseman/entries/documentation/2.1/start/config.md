@@ -4,17 +4,17 @@ title: Config & Setting
 
 ---
 
-# How to Configure Your Application
+## How to Configure Your Application
 
 Windwalker stores config files in `/etc` folder, you can see `config.yml` and `secret.yml` file. These two config files will be merged
 in runtime, so settings in secret.yml can override the same key in config.yml.
 
-## config.yml
+### config.yml
 
 The `config.yml` stores some global system settings includes the language locale, session time, cache storage, timezone etc. 
 Which is your application need and will be track by VCS, .
 
-## secret.yml
+### secret.yml
 
 And the `secret.yml` stores some customize or sensitive settings which you don't want to track by VCS, for example, the database account
 or the 3rd party service API key, you will not hope to push these information to GitHub or other public VCS service, so we will
@@ -23,9 +23,9 @@ write some keys in `secret.dist.yml`.
 For example, we can prepare some empty keys in `secret.dist.yml` then push this file to VCS.
 
 ``` yaml
-# secret.dist.yml
+## secret.dist.yml
 
-# Keep NULL to notice developers fill this data. 
+## Keep NULL to notice developers fill this data.
 amazon:
     key: ~
     secret: ~
@@ -34,20 +34,20 @@ amazon:
 When Someone clone this project, they must copy `secret.dist.yml` to `secret.yml` and fill the keys.
 
 ``` yaml
-# secret.yml
+## secret.yml
 
-# Fill real data to use.
+## Fill real data to use.
 amazon:
     key: ************
     secret: *************************
 ```
 
-## Override config.yml
+### Override config.yml
 
 If you set a config in config.yml
 
 ``` yaml
-# config.yml
+## config.yml
 
 foo: bar
 ```
@@ -55,7 +55,7 @@ foo: bar
 You can override it in secret.yml
 
 ``` yaml
-# secret.yml
+## secret.yml
 
 foo: yoo
 ```
@@ -63,7 +63,7 @@ foo: yoo
 Now the `foo` value will be `yoo` not `bar`.
 
 
-# Get & Set Config Data
+## Get & Set Config Data
 
 In Application, you can use `get()` to get config.
 
@@ -95,7 +95,7 @@ $foo = $config['foo'];
 
 Config is a Registry object, please see [Registry Object](../more/registry.html)
 
-## Nested Data
+### Nested Data
 
 If you have multi-level config:
 
@@ -115,7 +115,7 @@ $config->get('morning.break.first'); // sakura
 $config['morning.break.first']; // sakura
 ```
 
-# Add New Config Files
+## Add New Config Files
 
 Open `src/Windwalker/Web/Application.php` and modify `loadConfiguration()`, you can load any files as config if you want.
 
@@ -135,7 +135,7 @@ protected function loadConfiguration(Registry $config)
 }
 ```
 
-# Package Config
+## Package Config
 
 Every packages has their own configs. If you have a `FlowerPackage` and it's alias is `flower`, create a file to `etc/package/flower.yaml`.
 Package object will auto load this config file.
@@ -148,7 +148,7 @@ $package = PackageHelper::getPackage('flower');
 $package->get('foo');
 ```
 
-# Description of Config
+## Description of Config
 
 The config.yml looks like above:
 

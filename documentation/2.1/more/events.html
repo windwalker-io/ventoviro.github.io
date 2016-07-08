@@ -209,7 +209,7 @@
                     <li class="">
                 <a href="../../../documentation/2.1/more/caching.html">Caching</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/2.1/more/events.html">Events</a>
             </li>
                     <li class="">
@@ -260,14 +260,14 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Event Listener (Observer) Pattern</h1>
+                    <h2>Event Listener (Observer) Pattern</h2>
 
 <p>The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents, 
 called observers, and notifies them automatically of any state changes, usually by calling one of their methods.</p>
 
 <p>See: <a href="http://en.wikipedia.org/wiki/Observer_pattern">Observer pattern on Wikipedia</a></p>
 
-<h2>The Flow</h2>
+<h3>The Flow</h3>
 
 <p>First, there will be many listeners(observers), we can attach them to a dispatcher object.</p>
 
@@ -279,7 +279,7 @@ called observers, and notifies them automatically of any state changes, usually 
 
 <p>So, if any listener has the method which matched the event, dispatcher will call this method.</p>
 
-<h1>Start Using Event</h1>
+<h2>Start Using Event</h2>
 
 <p>Create an event object named <code>onBeforeContentSave</code>, and set some arguments.</p>
 
@@ -335,7 +335,7 @@ $content-&gt;title == 'My content';
 <p>If a method name in listener equals to event name, Dispatcher will run this method and inject Event into this method.
 Then we can do many things we want.</p>
 
-<h2>Array Access</h2>
+<h3>Array Access</h3>
 
 <p>Event can access like array:</p>
 
@@ -346,11 +346,11 @@ $event['data'] = $data;
 $data = $event['data'];
 </code></pre>
 
-<h1>Listeners</h1>
+<h2>Listeners</h2>
 
 <p>There can be two types of listeners, using class or closure.</p>
 
-<h2>Class Listeners</h2>
+<h3>Class Listeners</h3>
 
 <p>Using class, just new an instance</p>
 
@@ -374,7 +374,7 @@ $dispatcher-&gt;addListener(
 $dispatcher-&gt;addListener(new ContentListener, ContentListener::getPriorities());
 </code></pre>
 
-<h2>Closure Listeners</h2>
+<h3>Closure Listeners</h3>
 
 <p>If using closure, you must provide the priority and an event name to listen.</p>
 
@@ -387,9 +387,9 @@ $dispatcher-&gt;addListener(new ContentListener, ContentListener::getPriorities(
 );
 </code></pre>
 
-<h1>Dispatcher</h1>
+<h2>Dispatcher</h2>
 
-<h2>Trigger An Event Object</h2>
+<h3>Trigger An Event Object</h3>
 
 <p>This is the most normal way to trigger an event.</p>
 
@@ -409,7 +409,7 @@ $dispatcher-&gt;triggerEvent($event);
 $dispatcher-&gt;triggerEvent($event, $args);
 </code></pre>
 
-<h2>Add An Event Then Trigger It Later</h2>
+<h3>Add An Event Then Trigger It Later</h3>
 
 <p>We can add an event into Dispatcher, then use event name to raise it laster.</p>
 
@@ -424,7 +424,7 @@ $dispatcher-&gt;addEvent($event);
 $dispatcher-&gt;triggerEvent('onFlowerBloom');
 </code></pre>
 
-<h2>Trigger A New Event Instantly</h2>
+<h3>Trigger A New Event Instantly</h3>
 
 <p>We don't need create event first, just trigger a string as event name, Dispatcher will create an event instantly.</p>
 
@@ -435,7 +435,7 @@ $dispatcher-&gt;triggerEvent('onFlowerBloom');
 $dispatcher-&gt;triggerEvent('onCloudMoving', $args);
 </code></pre>
 
-<h1>Stopping Event</h1>
+<h2>Stopping Event</h2>
 
 <p>If you stop an event, the next listeners in the queue won't be called.</p>
 
@@ -449,7 +449,7 @@ $dispatcher-&gt;triggerEvent('onCloudMoving', $args);
 }
 </code></pre>
 
-<h1>DispatcherAwareInterface and Trait</h1>
+<h2>DispatcherAwareInterface and Trait</h2>
 
 <p>In PHP 5.4 or higher, you can use <code>DispatcherAwareTrait</code>.</p>
 
@@ -464,7 +464,7 @@ class Application implements DispatcherAwareInterface
 }
 </code></pre>
 
-<h1>Core Events</h1>
+<h2>Core Events</h2>
 
 <ul>
 <li>onBeforeInitialise</li>
