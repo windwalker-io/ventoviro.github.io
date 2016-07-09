@@ -51,7 +51,7 @@ documentation:
             more/datetime: DateTime
             more/tests: Tests
             more/validation: Validation
-            more/debugging: Debugging
+            more/debugging: Debugging and Logging
             more/error-handling: Error Handling
             more/more-packages: More Packages
     2.1:

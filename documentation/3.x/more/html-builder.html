@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>HTML Builder | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="HTML Builder | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/html-builder.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/html-builder.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>HTML Builder</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -230,7 +230,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
@@ -266,110 +266,298 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h3>Html &amp; Dom Builder</h3>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>This is a convenience class to create XML and HTML element in an OO way.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+<h5>DomElement</h5>
 
-<h3>Basic Provider Example</h3>
+<p>DomElement and DomElements is use to create XML elements.</p>
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
+<pre><code class="php">use Windwalker\Dom\DomElement;
 
-<h5>Original Way</h5>
+$attrs = array('id' =&gt; 'foo', 'class' =&gt; 'bar');
 
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
+echo $dom = (string) new DomElement('field', 'Content', $attrs);
 </code></pre>
 
-<p>And include this file:</p>
+<p>Output:</p>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
+<pre><code class="xml">&lt;field id="foo" class="bar"&gt;Content&lt;/field&gt;
 </code></pre>
 
-<h5>Windwalker Way</h5>
+<p>Add Children</p>
 
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
+<pre><code class="php">use Windwalker\Dom\DomElement;
 
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
+$attrs = array('id' =&gt; 'foo', 'class' =&gt; 'bar');
 
-class MongoDBServiceProvider implements ServiceProviderInterface
+$content = array(
+    new DomElement('option', 'Yes', array('value' =&gt; 1)),
+    new DomElement('option', 'No', array('value' =&gt; 0))
+)
+
+echo $dom = (string) new DomElement('field', $content, $attrs);
+</code></pre>
+
+<p>The output wil be:</p>
+
+<pre><code class="xml">&lt;field id="foo" class="bar"&gt;
+    &lt;option value="1"&gt;Yes&lt;/option&gt;
+    &lt;option value="0"&gt;No&lt;/option&gt;
+&lt;/field&gt;
+</code></pre>
+
+<h5>HtmlElement</h5>
+
+<p>HtmlElement is use to create HTML elements, some specific tags will force to unpaired.</p>
+
+<pre><code class="php">use Windwalker\Dom\HtmlElement;
+
+$attrs = array(
+    'class' =&gt; 'btn btn-mini',
+    'onclick' =&gt; 'return fasle;'
+);
+
+$html = (string) new HtmlElement('button', 'Click', $attrs);
+</code></pre>
+
+<p>Then we will get this HTML:</p>
+
+<pre><code class="html">&lt;button class="btn btn-mini" onclick="return false;"&gt;Click&lt;/button&gt;
+</code></pre>
+
+<h6># Get Attributes by Array Access</h6>
+
+<pre><code class="php">$class = $html['class'];
+</code></pre>
+
+<h5>DomElements &amp; HtmlElements</h5>
+
+<p>It is a collection of HtmlElement set.</p>
+
+<pre><code class="php">$html = new HtmlElements(
+    array(
+        new HtmlElement('p', $content, $attrs),
+        new HtmlElement('div', $content, $attrs),
+        new HtmlElement('a', $content, $attrs)
+    )
+);
+
+echo $html;
+</code></pre>
+
+<p>OR we can iterate it:</p>
+
+<pre><code class="php">foreach ($html as $element)
 {
-    public function register(Container $container)
-    {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
-
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
-    }
-}
-
-</code></pre>
-
-<p>Register this provider to container:</p>
-
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
-
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
-
-// OR
-
-$mongo = Ioc::get('mongo.db');
-</code></pre>
-
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
-
-<h2>Registering Providers</h2>
-
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
-
-<pre><code class="php">public function loadProviders()
-{
-    $providers = parent::loadProviders();
-
-    // Default providers ...
-
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
-
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
+    echo $element;
 }
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<h3>XmlHelper</h3>
 
-<ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
-</ul>
+<p><code>XmlHelper</code> using on get attributes of <code>SimpleXmlElement</code>.</p>
 
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
+<h5>Get Attributes</h5>
+
+<pre><code class="php">use Windwalker\Dom\SimpleXml\XmlHelper;
+
+$xml = &lt;&lt;&lt;XML
+&lt;root&gt;
+    &lt;field name="foo" type="bar" readonly="true"&gt;
+        &lt;option&gt;&lt;/option&gt;
+    &lt;/field&gt;
+&lt;/root&gt;
+XML;
+
+$xml = simple_xml_load_string($xml);
+
+$element = $xml-&gt;xpath('field');
+
+$name = XmlHelper::getAttribute($element, 'name'); // result: foo
+
+// Same as get()
+$name = XmlHelper::get($element, 'name'); // result: foo
+</code></pre>
+
+<h5>Get Boolean</h5>
+
+<p><code>getBool()</code> can help us convert some string link <code>true</code>, <code>1</code>, <code>yes</code> to boolean <code>TRUE</code> and <code>no</code>, <code>false</code>, <code>disabled</code>, <code>null</code>, <code>none</code>, <code>0</code> string to booleand <code>FALSE</code>.</p>
+
+<pre><code class="php">$bool = XmlHelper::getBool($element, 'readonly'); // result: (boolean) TRUE
+</code></pre>
+
+<h5>Get False</h5>
+
+<p>Just an alias of <code>getBool()</code> but FALSE will return <code>TRUE</code>.</p>
+
+<h5>Set Default</h5>
+
+<p>If this attribute not exists, use this value as default, or we use original value from xml.</p>
+
+<pre><code class="php">XmlHelper::def($element, 'class', 'input');
+</code></pre>
+
+<h3>Select List</h3>
+
+<pre><code class="php">use Windwalker\Html\Select\SelectList;
+use Windwalker\Html\Option;
+
+$select = new SelectList(
+    'form[timezone]',
+    array(
+        new Option('Asia - Tokyo', 'Asia/Tokyo', array('class' =&gt; 'opt')),
+        new Option('Asia - Taipei', 'Asia/Taipei'),
+        new Option('Europe - Paris', 'Asia/Paris'),
+        new Option('UTC', 'UTC'),
+    ),
+    array('class' =&gt; 'input-select'),
+    'UTC',
+    false
+);
+
+echo $select;
+</code></pre>
+
+<p>The result:</p>
+
+<pre><code class="html">&lt;select class="input-select" name="form[timezone]"&gt;
+    &lt;option class="opt" value="Asia/Tokyo"&gt;Asia - Tokyo&lt;/option&gt;
+    &lt;option value="Asia/Taipei"&gt;Asia - Taipei&lt;/option&gt;
+    &lt;option value="Asia/Paris"&gt;Europe - Paris&lt;/option&gt;
+    &lt;option value="UTC" selected="selected"&gt;UTC&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+
+<h5>Group Select</h5>
+
+<p>Use two level array to make options grouped.</p>
+
+<pre><code class="php">use Windwalker\Html\Select\CheckboxList;
+
+$select = new SelectList(
+    'form[timezone]',
+    array(
+        'Asia' =&gt; array(
+            new Option('Tokyo', 'Asia/Tokyo', array('class' =&gt; 'opt')),
+            new Option('Taipei', 'Asia/Taipei')
+        ),
+        'Europe' =&gt; array(
+            new Option('Europe - Paris', 'Asia/Paris')
+        )
+        ,
+        new Option('UTC', 'UTC'),
+    ),
+    array('class' =&gt; 'input-select'),
+    'UTC',
+    false
+);
+
+echo $select;
+</code></pre>
+
+<p>The result</p>
+
+<pre><code class="html">&lt;select class="input-select" name="form[timezone]"&gt;
+    &lt;optgroup label="Asia"&gt;
+        &lt;option class="opt" value="Asia/Tokyo"&gt;Tokyo&lt;/option&gt;
+        &lt;option value="Asia/Taipei"&gt;Taipei&lt;/option&gt;
+    &lt;/optgroup&gt;
+
+    &lt;optgroup label="Europe"&gt;
+        &lt;option value="Asia/Paris"&gt;Europe - Paris&lt;/option&gt;
+    &lt;/optgroup&gt;
+
+    &lt;option value="UTC" selected="selected"&gt;UTC&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+
+<h3>CheckboxList</h3>
+
+<pre><code class="php">$select = new CheckboxList(
+    'form[timezone]',
+    array(
+        new Option('Asia - Tokyo', 'Asia/Tokyo', array('class' =&gt; 'opt')),
+        new Option('Asia - Taipei', 'Asia/Taipei'),
+        new Option('Europe - Paris', 'Asia/Paris'),
+        new Option('UTC', 'UTC'),
+    ),
+    array('class' =&gt; 'input-select'),
+    'UTC',
+    false
+);
+
+echo $select;
+</code></pre>
+
+<p>The result</p>
+
+<pre><code class="html">&lt;span class="checkbox-inputs input-select"&gt;
+    &lt;input class="opt" value="Asia/Tokyo" type="checkbox" name="form[timezone][]" id="form-timezone-asia-tokyo" /&gt;
+    &lt;label class="opt" id="form-timezone-asia-tokyo-label" for="form-timezone-asia-tokyo"&gt;Asia - Tokyo&lt;/label&gt;
+
+    &lt;input value="Asia/Taipei" type="checkbox" name="form[timezone][]" id="form-timezone-asia-taipei" /&gt;
+    &lt;label id="form-timezone-asia-taipei-label" for="form-timezone-asia-taipei"&gt;Asia - Taipei&lt;/label&gt;
+
+    &lt;input value="Asia/Paris" type="checkbox" name="form[timezone][]" id="form-timezone-asia-paris" /&gt;
+    &lt;label id="form-timezone-asia-paris-label" for="form-timezone-asia-paris"&gt;Europe - Paris&lt;/label&gt;
+
+    &lt;input value="UTC" checked="checked" type="checkbox" name="form[timezone][]" id="form-timezone-utc" /&gt;
+    &lt;label id="form-timezone-utc-label" for="form-timezone-utc"&gt;UTC&lt;/label&gt;
+&lt;/span&gt;
+</code></pre>
+
+<p>If you want to use <code>div</code> to wrap all inputs instead <code>span</code>, set tag name to object.</p>
+
+<pre><code class="php">$select-&gt;setName('div');
+</code></pre>
+
+<h3>RadioList</h3>
+
+<p>Same as Checkboxes, but the input type will be <code>type="radio"</code></p>
+
+<h3>HtmlHelper</h3>
+
+<h5>Repair Tags</h5>
+
+<p>We can using <code>repair()</code> method to repair unpaired tags by <code>php tidy</code>, if tidy extension not exists, will using simple tag close function to fix it.</p>
+
+<pre><code class="php">$html = '&lt;p&gt;foo&lt;/i&gt;';
+
+$html = \Windwalker\Html\Helper\HtmlHelper::repair($html);
+
+echo $html; // &lt;p&gt;foo&lt;/p&gt;
+</code></pre>
+
+<h5>Get JS Object</h5>
+
+<p>This method convert a nested array or object to JSON format that you can inject it to JS code.</p>
+
+<pre><code class="php">$option = array(
+    'url' =&gt; 'http://foo.com',
+    'foo' =&gt; array('bar', 'yoo')
+);
+
+echo $option = \Windwalker\Html\Helper\HtmlHelper::getJSOBject($option);
+</code></pre>
+
+<p>Result</p>
+
+<pre><code>{
+    "url" : "http://foo.com",
+    "foo" : ["bar", "yoo"]
+}
+</code></pre>
+
+<h3>More Builder</h3>
+
+<p>We'll add more builder object after version 2.1.</p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/html-builder.md">improve</a> this document.
     </p>
                 </article>
             </div>

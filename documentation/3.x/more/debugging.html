@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Debugging and Logging | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Debugging and Logging | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/debugging.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/debugging.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Debugging and Logging</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -251,7 +251,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/validation.html">Validation</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
@@ -266,110 +266,175 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>DEV Mode</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>Windawlker contains a development mode, you can enable it by setting config <code>system.debug</code> to <code>1</code>, or use <code>dev.php</code> to access your site.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+<p>You will see a debug console at the bottom of page.</p>
 
-<h3>Basic Provider Example</h3>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169792/6aabee92-f75c-11e5-9614-1512c6021d77.jpg" alt="160331-0003" /></p>
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
+<h3>Remote Access</h3>
 
-<h5>Original Way</h5>
+<p>By default, <code>dev.php</code> only support <code>localhost</code>, you can add allow IPs to <code>secret.yml</code> so that you can open dev mode from remote.</p>
 
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
+<pre><code class="yaml">dev:
+    allow_ips:
+        - 127.0.0.1
+        - 'fe80::1'
+        - '::1'
+        - 123.456.654.321 ## Add your ip
 </code></pre>
 
-<p>And include this file:</p>
+<h3>Close Debug Console</h3>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
-</code></pre>
+<p>Debug console will auto push to page when system close, but sometimes we won't want it to show if in ajax or api call.
+Add this line to close it.</p>
 
-<h5>Windwalker Way</h5>
+<pre><code class="php">use Windwalker\Debugger\Helper\DebuggerHelper;
 
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
-
-class MongoDBServiceProvider implements ServiceProviderInterface
+class AjaxController extends Controller
 {
-    public function register(Container $container)
+    protected function doExecute()
     {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
+        // Close debug console
+        DebuggerHelper::disableConsole();
 
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
+        $this-&gt;app-&gt;response-&gt;setMimeType('application/json');
+
+        return json_encode(['foo' =&gt; 'bar']);
     }
 }
-
 </code></pre>
 
-<p>Register this provider to container:</p>
+<h2>Debugger Package</h2>
 
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
+<p>Click buttons on debug console, you will enter the Debugger page.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169994/a78ec270-f75d-11e5-81b9-b14317b32fbe.jpg" alt="160331-0004" /></p>
+
+<p>Windwlker will log last 100 page requests information to help us track system process.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14170049/f8b897d4-f75d-11e5-9cd1-3380e88854fb.jpg" alt="160331-0005" /></p>
+
+<h3>Log your Custom Content</h3>
+
+<p>If you need to log some important information to debug, you can use <code>DebugHelper</code> to add custom data.</p>
+
+<pre><code class="php">DebuggerHelper::addCustomData('My data', "It's not who I am underneath, but it's what I do that defines me.");
 </code></pre>
 
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
+<p>Go to system page.</p>
 
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg" alt="system" /></p>
 
-// OR
+<h2>Logging</h2>
 
-$mongo = Ioc::get('mongo.db');
+<p>Windwalker includes <a href="https://github.com/Seldaek/monolog">Monolog</a> to help us log debugging information.</p>
+
+<pre><code class="php">use Windwalker\Core\Logger\Logger;
+
+Logger::log('flower', Logger::INFO, 'log text');
 </code></pre>
 
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+<p>The first argument is category &amp; log file name, this will create a file at <code>logs/flower.log</code> with one line:</p>
 
-<h2>Registering Providers</h2>
+<pre><code>## logs/flower.log
 
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
-
-<pre><code class="php">public function loadProviders()
-{
-    $providers = parent::loadProviders();
-
-    // Default providers ...
-
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
-
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
-}
+[2016-04-01 10:17:07] flower.INFO: log text [] []
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<p>Add some data at line last.</p>
 
-<ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
-</ul>
+<pre><code class="php">Logger::log('flower', Logger::INFO, 'log text', array('foo' =&gt; 'bar'));
+</code></pre>
 
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
+<pre><code>## logs/flower.log
+
+[2016-04-01 10:18:42] flower.INFO: log text {"foo":"bar"} []
+</code></pre>
+
+<p>We can use proxy methods to log data:</p>
+
+<pre><code class="php">Logger::debug('category', 'log text');
+Logger::info('category', 'log text');
+Logger::notice('category', 'log text');
+Logger::warning('category', 'log text');
+Logger::error('category', 'log text');
+Logger::critical('category', 'log text');
+Logger::alert('category', 'log text');
+Logger::emergency('category', 'log text');
+</code></pre>
+
+<h2>Log Levels</h2>
+
+<p>The log levels are described by <a href="http://tools.ietf.org/html/rfc5424">RFC5424</a></p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Code</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>DEBUG</td>
+  <td>100</td>
+  <td>Detailed debug information.</td>
+</tr>
+<tr>
+  <td>INFO</td>
+  <td>200</td>
+  <td>Interesting events. Examples: User logs in, SQL logs.</td>
+</tr>
+<tr>
+  <td>NOTICE</td>
+  <td>250</td>
+  <td>Normal but significant events.</td>
+</tr>
+<tr>
+  <td>WARNING</td>
+  <td>300</td>
+  <td>Exceptional occurrences that are not errors. Examples: Use of deprecated APIs, poor use of an API, undesirable things that are not necessarily wrong.</td>
+</tr>
+<tr>
+  <td>ERROR</td>
+  <td>400</td>
+  <td>Runtime errors that do not require immediate action but should typically be logged and monitored.</td>
+</tr>
+<tr>
+  <td>CRITICAL</td>
+  <td>500</td>
+  <td>Critical conditions. Example: Application component unavailable, unexpected exception.</td>
+</tr>
+<tr>
+  <td>ALERT</td>
+  <td>550</td>
+  <td>Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up.</td>
+</tr>
+<tr>
+  <td>EMERGENCY</td>
+  <td>600</td>
+  <td>Emergency: system is unusable.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can create a category with level code, all levels below this level will not logged.</p>
+
+<pre><code class="php">Logger::createCategory('sakura', Logger::ERROR);
+
+Logger::debug('sakura', 'log text'); // This won't log
+
+Logger::alert('sakura', 'log text'); // This will log
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/debugging.md">improve</a> this document.
     </p>
                 </article>
             </div>

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Error Handling | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Error Handling | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/error-handling.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/error-handling.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Error Handling</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -254,7 +254,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/debugging.html">Debugging and Logging</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
             </li>
                     <li class="">
@@ -266,110 +266,176 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>Introduction</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>Windwalker's error handling system overrided the native PHP error handler to provide a flexible interface to fetch error message.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+<h2>Exception Handling</h2>
 
-<h3>Basic Provider Example</h3>
+<p>Most of time, we throw exception object to change the program process if error occurred:</p>
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
-
-<h5>Original Way</h5>
-
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
-</code></pre>
-
-<p>And include this file:</p>
-
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
-</code></pre>
-
-<h5>Windwalker Way</h5>
-
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
-
-class MongoDBServiceProvider implements ServiceProviderInterface
+<pre><code class="php">try
 {
-    public function register(Container $container)
+    if (/* Something error */)
     {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
-
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
+        throw new Exception('Error message');
     }
 }
-
-</code></pre>
-
-<p>Register this provider to container:</p>
-
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
-
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
-
-// OR
-
-$mongo = Ioc::get('mongo.db');
-</code></pre>
-
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
-
-<h2>Registering Providers</h2>
-
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
-
-<pre><code class="php">public function loadProviders()
+catch (Exception $e)
 {
-    $providers = parent::loadProviders();
-
-    // Default providers ...
-
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
-
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
+    // Handle error or redirect
 }
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<p>If you didn't catch exception and throw it to the top level:</p>
 
-<ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
-</ul>
+<pre><code class="php">// no catch() to fetch this exception
+throw new Exception('Error message');
+</code></pre>
 
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
+<p>The exception you thrown will not be caught and shows a <code>Uncaught Exception error</code> in native PHP.</p>
+
+<pre><code class="php">Fatal error: Uncaught Exception: Error message in Command line code:xxx
+</code></pre>
+
+<p>Nothing happened, and there is no any information and stack trace for debugging.</p>
+
+<p>Windwalker includes <a href="http://filp.github.io/whoops/">Whoops</a> as default error handler, the uncaught exception will show this page:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169526/e84189b8-f75a-11e5-9fcc-85507bf3fe48.jpg" alt="160331-0002" /></p>
+
+<p>To enable Pretty error page, you must open DEBUG mode, please change config <code>system.debug</code> to <code>1</code> or use <code>dev.php</code> to access your site.</p>
+
+<p>See <a href="debugging.html">Debugging and Logging</a></p>
+
+<h3>Built-in Error Page</h3>
+
+<p>Without DEBUG mode, Windwalker contains a default error handler to handle error page. Let's throw an Exception to show error page.</p>
+
+<pre><code class="php">throw new \Exception('Something wrong~~~');
+</code></pre>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16706741/2ca3ff68-45ea-11e6-8dac-1bc0328447cc.jpg" alt="p-2016-07-09-003" /></p>
+
+<p>Override error template to <code>simple</code> or <code>empty</code> in <code>config.yml</code>, so you can hide information in production site.</p>
+
+<pre><code class="yaml"># etc/config.yml
+
+error:
+    # `simple` template will only show plain text message.
+    template: windwalker.error.simple
+
+    # `empty` template will show blank page without anything
+    template: windwalker.error.empty
+
+    # The template engine, you can use `php`, `twig`, `blade`, `edge`
+    engine: php
+</code></pre>
+
+<p>The Simple error page.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16706742/2ca4d9ec-45ea-11e6-8ca1-61790a8d608d.jpg" alt="p-2016-07-09-005" /></p>
+
+<h2>Custom Error Template</h2>
+
+<p>You are allow to create a custom pretty error page, for instance, most site will have a designed 404 page.
+Override the <code>error.template</code> to your one:</p>
+
+<pre><code class="yaml">error:
+    template: flower.error.default
+    engine: edge
+</code></pre>
+
+<p>You are also allow to rewrite default error handler to render your own page:</p>
+
+<pre><code class="php">use Windwalker\Core\Error\ErrorHandler;
+use Windwalker\Core\Widget\WidgetHelper;
+
+ErrorHandler::addHandler(function ($e)
+{
+    echo WidgetHelper::render('flower.error.default', ['e' =&gt; $e], 'edge');
+}, 'default');
+</code></pre>
+
+<p>Use Package controller to render error page, so you are able to organize error page as a package MVC.</p>
+
+<pre><code class="php">ErrorHandler::addHandler(function ($e)
+{
+    echo PackageHelper::getPackage()-&gt;executeTask('Error/GetController', ['e' =&gt; $e])-&gt;getBody();
+}, 'default');
+
+// In src/Flower/Controller/Error/GetController.php
+class GetController extends AbstractController
+{
+    protected function doExecute()
+    {
+        $data = [
+            'e' =&gt; $this-&gt;input-&gt;getRaw('e')
+        ];
+
+        return $this-&gt;renderView('error', 'flower.error.default', 'edge', $data);
+    }
+}
+</code></pre>
+
+<h2>ErrorHandler Class</h2>
+
+<p>Windwalker use <code>ErrorHandler</code> class to handle all custom error process.</p>
+
+<h3>Register Error And Exception Handler</h3>
+
+<p>In Application, Windwalker use this code to register PHP error handler to it own.</p>
+
+<pre><code class="php">\Windwalker\Core\Error\ErrorHandler::register();
+
+// Register shot-down function so you can catch fatal error
+\Windwalker\Core\Error\ErrorHandler::register(true, null, true);
+</code></pre>
+
+<h3>Set Error Level</h3>
+
+<pre><code class="php">ErrorHandler::register(true, E_ALL);
+</code></pre>
+
+<h3>Restore Error Handler</h3>
+
+<p>If you want to use other error handler, you can restore all error handler have set.</p>
+
+<pre><code class="php">\Windwalker\Core\Error\ErrorHandler::restore();
+</code></pre>
+
+<h3>Add More Handlers</h3>
+
+<p>You can log errors when every time error occurred. Add this line in <code>etc/web.php</code>:</p>
+
+<pre><code class="php">// ...
+
+    'error' =&gt; [
+        'handlers' =&gt; [
+            'log' =&gt; \Windwalker\Core\Error\Handler\ErrorLogHandler::class
+        ]
+    ]
+</code></pre>
+
+<p>Now Windwalker will log error in <code>logs/error.log</code></p>
+
+<pre><code class="log">[2016-07-09 08:52:18] error.ERROR: Something wrong~~~ {"code":0} []
+</code></pre>
+
+<p>You can write your own Log Handler by add callback as handler.</p>
+
+<pre><code class="php">ErrorHandler::addHandler('log', function ($e)
+{
+    Logger::error('my-errorlog', $e-&gt;getMessage());
+});
+</code></pre>
+
+<p>See <a href="/debugging.html">Logging</a></p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/error-handling.md">improve</a> this document.
     </p>
                 </article>
             </div>

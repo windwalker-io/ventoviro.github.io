@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Widget and Renderer | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Widget and Renderer | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/widget-renderer.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/widget-renderer.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Widget and Renderer</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -224,7 +224,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
@@ -266,110 +266,132 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>What is Widget Object</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>Widget object is a convenience tool to help us render HTML blocks, you can consider it as a backend web component.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5594250/e28c0d56-927d-11e4-8f32-19005916710c.jpg" alt="widget" /></p>
 
-<h3>Basic Provider Example</h3>
+<h2>Create A Widget</h2>
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
+<p>First, add a template file in <code>/templates/sidebar/news.php</code>, this is a news widget.</p>
 
-<h5>Original Way</h5>
-
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
+<pre><code class="html">&lt;ul class="nav news"&gt;
+    &lt;?php foreach ($data-&gt;articles as $article): ?&gt;
+    &lt;li&gt;
+        &lt;a href="&lt;?php echo $article-&gt;link; ?&gt;"&gt;
+            &lt;?php echo $article-&gt;title; ?&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;?php endforeach; ?&gt;
+&lt;/ul&gt;
 </code></pre>
 
-<p>And include this file:</p>
+<p>Now we can use this widget in anywhere, remember add data when rendering it:</p>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
+<pre><code class="php">use Windwalker\Core\Widget\Widget;
+
+$news = new Widget('sidebar.news');
+
+$news-&gt;render(array('articles' =&gt; $data));
+
+// In PHP 5.4, you can use instantiation object access
+$news = (new Widget('sidebar.news'))-&gt;render(['articles' =&gt; $data]);
+
+// In PHP 5.3, you can use with() to simulate instantiation object access
+$news = with(new Widget('sidebar.news'))-&gt;render(array('articles' =&gt; $data));
 </code></pre>
 
-<h5>Windwalker Way</h5>
+<p>It will be useful to render widget in View <code>prepareData()</code>:</p>
 
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
-
-class MongoDBServiceProvider implements ServiceProviderInterface
+<pre><code class="php">class SakurasHtmlView extends HtmlView
 {
-    public function register(Container $container)
+    protected function prepareData($data)
     {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
+        $data-&gt;items      = $this-&gt;model-&gt;getItems();
+        $data-&gt;categories = $this-&gt;model['Categories']-&gt;getItems();
 
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
+        $data-&gt;news       = (new Widget('sidebar.news'))-&gt;render(array('articles' =&gt; $data-&gt;items));
+        $data-&gt;pagination = (new Widget('_global.pagination.pagination'))-&gt;render(array('pages' =&gt; $this-&gt;model-&gt;getPagination()));
+        $data-&gt;categories = (new Widget('sidebar.categories'))-&gt;render(array('categories' =&gt; $data-&gt;categories));
+        $data-&gt;banner     = (new Widget('sidebar.banner'))-&gt;render(array('banner' =&gt; $data-&gt;banner));
     }
 }
-
 </code></pre>
 
-<p>Register this provider to container:</p>
+<h2>Templating</h2>
 
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
+<p>By default, widget will find templates from these paths:</p>
+
+<pre><code class="html">[0] =&gt; /templates
+[1] =&gt; /vendor/windwalker/core/src/Core/Resources/Templates
 </code></pre>
 
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
+<p>You may add your custom path to Widget:</p>
 
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+<pre><code class="php">use Windwalker\Utilities\Queue\Priority;
 
-// OR
-
-$mongo = Ioc::get('mongo.db');
+$widget-&gt;addPath('/my/widget/path', Priority::HIGH);
 </code></pre>
 
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+<p>Widget also use <a href="https://github.com/ventoviro/windwalker-renderer">Windwalker Renderer</a> to render page, 
+you need to add priority to set the ordering of this path.</p>
 
-<h2>Registering Providers</h2>
+<h3>Add Path to Global</h3>
 
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+<p>Add your path to global RendererHelper that Widget will always contain this path:</p>
 
-<pre><code class="php">public function loadProviders()
-{
-    $providers = parent::loadProviders();
-
-    // Default providers ...
-
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
-
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
-}
+<pre><code class="php">\Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/widget/path', Priority::ABOVE_NORMAL);
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<h2>Override Built-in Widgets Templates</h2>
 
-<ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
-</ul>
+<p>Windwalker has some built-in widgets, it contains: <code>messages</code>, <code>pagination</code>, <code>error pages</code>.</p>
 
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
+<p>There is an example to override messages template, the global message template is located at</p>
+
+<pre><code class="html">/vendor/windwalker/core/src/Core/Resources/Templates/windwalker/message/default.php
+</code></pre>
+
+<p>So we can add a custom template at:</p>
+
+<pre><code class="html">/templates/windwalker/message/default.php
+</code></pre>
+
+<p>Now all messages in Windwalker will use your template to render.</p>
+
+<blockquote>
+  <p>Override other widgets please see: <a href="pagination.html">Pagination</a> and <a href="error-handling.html">Error Handling</a></p>
+</blockquote>
+
+<h2>Use Blade and Twig</h2>
+
+<p>Similar to View, Windwalker Widget support Blade and Twig engine, you may just create it by newing it:</p>
+
+<pre><code class="php">use Windwalker\Core\Widget\BladeWidget;
+use Windwalker\Core\Widget\TwigWidget;
+
+$news = new BladeWidget('sidebar.news');
+$news = new TwigWidget('sidebar.news');
+</code></pre>
+
+<blockquote>
+  <p>See also: <a href="https://laravel.com/docs/master/blade">Blade Templating</a> and <a href="http://twig.sensiolabs.org/documentation">Twig Documentation</a></p>
+</blockquote>
+
+<h2>WidgetHelper</h2>
+
+<p>Use WidgetHelper to quickly render page.</p>
+
+<pre><code class="php">use Windwalker\Core\Widget\WidgetHelper;
+
+$html = WidgetHelper::render('foo.bar', $data, WidgetHelper::ENGINE_BLADE);
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/widget-renderer.md">improve</a> this document.
     </p>
                 </article>
             </div>

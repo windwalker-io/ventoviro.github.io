@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Validation | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Validation | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/validation.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/validation.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Validation</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -248,7 +248,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -266,110 +266,100 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h3>Simple Validate Process</h3>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<pre><code class="php">use Windwalker\Validator\Rule\EmailValidator;
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+$validator = new EmailValidator;
 
-<h3>Basic Provider Example</h3>
+$validator-&gt;validate('sakura@flower.com'); // bool(true)
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
-
-<h5>Original Way</h5>
-
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
+$validator-&gt;validate('sakura'); // bool(false)
 </code></pre>
 
-<p>And include this file:</p>
+<h5>Available Validator Rules</h5>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
+<ul>
+<li>AlnumValidator</li>
+<li>BooleanValidator</li>
+<li>ColorValidator</li>
+<li>CreditcardValidator</li>
+<li>EmailValidator</li>
+<li>EqualsValidator</li>
+<li>IpValidator</li>
+<li>NoneValidator</li>
+<li>PhoneValidator</li>
+<li>RegexValidator</li>
+<li>UrlValidator</li>
+</ul>
+
+<h3>Regex Validator</h3>
+
+<pre><code class="php">use Windwalker\Validator\Rule\RegexValidator;
+
+$validator = new RegexValidator('^[a-zA-Z0-9]*$', 'i');
+
+$validator-&gt;validate('abc_123:978'); // bool(false)
 </code></pre>
 
-<h5>Windwalker Way</h5>
+<h3>Equals Validator</h3>
 
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
+<pre><code class="php">use Windwalker\Validator\Rule\EqualsValidator;
 
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
+$validator = new EqualsValidator('ABC');
 
-class MongoDBServiceProvider implements ServiceProviderInterface
+$validator-&gt;validate('ABC'); // bool(true)
+</code></pre>
+
+<p>Strict Mode:</p>
+
+<pre><code class="php">$validator = new EqualsValidator(123, true);
+
+$validator-&gt;validate('123'); // bool(false)
+</code></pre>
+
+<h3>Error Message</h3>
+
+<pre><code class="php">$validator-&gt;setMessage('This string is not valid');
+
+if (!$validator-&gt;validate('sakura'))
 {
-    public function register(Container $container)
-    {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
+    throw new \Exception($validator-&gt;getError());
+}
+</code></pre>
 
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
+<h3>Create Your Own Validator</h3>
+
+<pre><code class="php">use Windwalker\Validator\AbstractValidator;
+
+class MyValidator extends AbstractValidator
+{
+    public function test($string)
+    {
+        return (bool) strlen($string);
     }
 }
 
+$validator = new MyValidator;
+
+$validator-&gt;validate('foo');
 </code></pre>
 
-<p>Register this provider to container:</p>
+<h3>Extends Regex Validator</h3>
 
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
+<pre><code class="php">use Windwalker\Validator\Rule\RegexValidator;
 
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
-
-// OR
-
-$mongo = Ioc::get('mongo.db');
-</code></pre>
-
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
-
-<h2>Registering Providers</h2>
-
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
-
-<pre><code class="php">public function loadProviders()
+class MyRegexValidator extends RegexValidator
 {
-    $providers = parent::loadProviders();
-
-    // Default providers ...
-
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
-
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
+    protected $modified = 'i';
+    protected $regex = '[a-zA-Z]';
 }
 </code></pre>
-
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
-
-<ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
-</ul>
-
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/validation.md">improve</a> this document.
     </p>
                 </article>
             </div>

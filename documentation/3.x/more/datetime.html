@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>DateTime | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="DateTime | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/datetime.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/datetime.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>DateTime</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -242,7 +242,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/session.html">Session</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
@@ -266,110 +266,100 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>About Windwalker DateTime</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p><code>Windwalker\Core\DateTime\DateTime</code> is sub class of PHP <code>DateTime</code>. This class is based on Joomla <code>JDate</code> and add some new features.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+<p>All PHP DateTime functions are able to use on Windwalker DataTime, see <a href="http://php.net/manual/en/book.datetime.php">PHP DateTime</a></p>
 
-<h3>Basic Provider Example</h3>
+<h2>Construct</h2>
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
+<p>Windwalker DateTime supports Timezone as string.</p>
 
-<h5>Original Way</h5>
+<pre><code class="php">use Windwalker\Core\DateTime\DateTime;
 
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
+$dt = new DateTime('now', 'Asia/Taipei');
 </code></pre>
 
-<p>And include this file:</p>
+<p>Auto set default timezone so you won't get PHP default timezone notice.</p>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
+<pre><code class="php">$dt = new DateTime('now', null);
 </code></pre>
 
-<h5>Windwalker Way</h5>
+<p>Auto get global timezone, if you set timezone in Windwalker config, DateTime will auto load it.</p>
 
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
-
-class MongoDBServiceProvider implements ServiceProviderInterface
-{
-    public function register(Container $container)
-    {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
-
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
-    }
-}
-
-</code></pre>
-
-<p>Register this provider to container:</p>
-
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
-
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+<pre><code class="php">$dt = new DateTime('now', true);
 
 // OR
 
-$mongo = Ioc::get('mongo.db');
+$dt = new DateTime('now', DateTime::TZ_LOCALE);
 </code></pre>
 
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+<h2>Convert Timezone</h2>
 
-<h2>Registering Providers</h2>
+<p>Windwalker DateTime supports easy methods to convert timezone.</p>
 
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+<pre><code class="php">$date = '2015-03-31 12:00:00';
 
-<pre><code class="php">public function loadProviders()
-{
-    $providers = parent::loadProviders();
+$date = DateTime::toServerTime($date, [format], [to tz]);
 
-    // Default providers ...
+$date = DateTime::toLocalTime($date, [format], [to tz]);
 
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
+// Or convert to other timezone
 
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
-}
+$date = DateTime::convert($date, [from], [to], [format]);
+$date = DateTime::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<h2>Simple Properties</h2>
 
-<ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
-</ul>
+<pre><code class="php">$datetime = new DateTime;
 
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
+$datetime-&gt;daysinmonth;
+$datetime-&gt;dayofweek;
+$datetime-&gt;dayofyear;
+$datetime-&gt;isleapyear;
+$datetime-&gt;day;
+$datetime-&gt;hour;
+$datetime-&gt;minute;
+$datetime-&gt;second;
+$datetime-&gt;month;
+$datetime-&gt;ordinal;
+$datetime-&gt;week;
+$datetime-&gt;year;
+</code></pre>
+
+<h2>Pre-define Formats</h2>
+
+<pre><code class="php">$datetime = new DateTime;
+
+$datetime-&gt;toSql();
+$datetime-&gt;toISO8601();
+$datetime-&gt;toRFC822();
+$datetime-&gt;toUnix();
+
+$date-&gt;format(DateTime::FORMAT_YMD);
+$date-&gt;format(DateTime::FORMAT_YMD_HI);
+$date-&gt;format(DateTime::FORMAT_YMD_HIS);
+</code></pre>
+
+<h2>Get Local Time</h2>
+
+<p>Add <code>true</code> to get local time, otherwise you will get UTC time.</p>
+
+<pre><code class="php">$datetime = new DateTime('now', 'Asia/Taipei');
+
+$datetime-&gt;format('Y/m/d H:i:s', true);
+$datetime-&gt;toSql(true);
+$datetime-&gt;toISO8601(true);
+$datetime-&gt;toRFC822(true);
+$datetime-&gt;toUnix(DateTime::TZ_LOCALE); // Same as true
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/datetime.md">improve</a> this document.
     </p>
                 </article>
             </div>

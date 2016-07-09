@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Session | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Session | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/session.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/session.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Session</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -239,7 +239,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/session.html">Session</a>
             </li>
                     <li class="">
@@ -266,110 +266,138 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>Configuration</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>Session configuration is in <code>/etc/config.yml</code>.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
-
-<h3>Basic Provider Example</h3>
-
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
-
-<h5>Original Way</h5>
-
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
+<pre><code class="yaml">session:
+    handler: native
+    expire_time: 15
 </code></pre>
 
-<p>And include this file:</p>
+<p>By default, Windwalker use php native to handler session data. The expire time unit is minute.</p>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
-</code></pre>
+<h2>Get Session Object</h2>
 
-<h5>Windwalker Way</h5>
-
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
-
-class MongoDBServiceProvider implements ServiceProviderInterface
-{
-    public function register(Container $container)
-    {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
-
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
-    }
-}
-
-</code></pre>
-
-<p>Register this provider to container:</p>
-
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
-
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+<pre><code class="php">$session = \Windwalker\Ioc::getSession();
 
 // OR
 
-$mongo = Ioc::get('mongo.db');
+$session = $container-&gt;get('system.session');
 </code></pre>
 
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+<h2>Store And Get Session Data</h2>
 
-<h2>Registering Providers</h2>
+<pre><code class="php">$session-&gt;set('flower', 'sakura');
 
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+$data = $session-&gt;get('flower', 'default');
 
-<pre><code class="php">public function loadProviders()
-{
-    $providers = parent::loadProviders();
-
-    // Default providers ...
-
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
-
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
-}
+$session-&gt;exists('animal'); // bool
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<h2>Restart Session</h2>
+
+<pre><code class="php">$session-&gt;restart();
+</code></pre>
+
+<h2>Session Bags</h2>
+
+<p>Session bag is a data storage to store data, we can add many bags to Session object and access them.</p>
+
+<h3>Use Default Bag</h3>
+
+<p>Get Default Bag</p>
+
+<pre><code class="php">$session-&gt;getBag('default');
+</code></pre>
+
+<p>Get data from default bag.</p>
+
+<pre><code class="php">$session-&gt;get('foo');
+
+// OR
+$session-&gt;getBag('default')-&gt;get('foo');
+</code></pre>
+
+<h3>Use Custom Bags</h3>
+
+<pre><code class="php">use Windwalker\Session\Bag\SessionBag;
+
+$session-&gt;setBag('mybag', new SessionBag);
+
+// Get data
+$myBag = $session-&gt;getBag('mybag');
+
+$myBag-&gt;set('foo', 'bar');
+$myBag-&gt;get('foo', 'default');
+</code></pre>
+
+<p>We can use Namespace to get data from bags</p>
+
+<pre><code class="php">// Get form default bag
+$session-&gt;get('foo', 'default', 'mybag');
+
+// Get from mybag
+$session-&gt;get('foo', 'default', 'mybag');
+
+// Set to mybag
+$session-&gt;set('foo', 'bar', 'mybag');
+</code></pre>
+
+<h2>Flash Data</h2>
+
+<p>Flash bag is a data temporary storage, if we take data out, the bag will be clear.</p>
+
+<pre><code class="php">$session-&gt;addFlash('Save success.', 'info');
+$session-&gt;addFlash('Login Fail.', 'error');
+
+// Take all messages and clear
+$allMessages = $session-&gt;getFlashes();
+
+// Peek messages but don't clear
+$session-&gt;getFlashBag()-&gt;all();
+</code></pre>
+
+<h2>Handlers</h2>
+
+<p>Windwalker Session provides many handlers to storage session, edit the config file.</p>
+
+<pre><code class="yaml">session:
+    handler: memcached
+    expire_time: 15
+</code></pre>
+
+<h3>Use Database Handler</h3>
+
+<p>Before using database session, we have to add table schema information to session config.</p>
+
+<pre><code class="yaml">session:
+    handler: database
+    expire_time: 15
+    table: sessions
+    id_col: id
+    data_col: data
+    time_col: time
+</code></pre>
+
+<blockquote>
+  <p>NOTE: Database Handler will be implemented in next release.</p>
+</blockquote>
+
+<h3>Available Handlers</h3>
 
 <ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
+<li>apc</li>
+<li>database</li>
+<li>memcached</li>
+<li>native</li>
+<li>xcache</li>
 </ul>
-
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/session.md">improve</a> this document.
     </p>
                 </article>
             </div>

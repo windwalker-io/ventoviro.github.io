@@ -252,7 +252,7 @@
                 <a href="../../../documentation/3.x/more/validation.html">Validation</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/debugging.html">Debugging</a>
+                <a href="../../../documentation/3.x/more/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
@@ -266,10 +266,10 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>How to Configure Your Application</h2>
+                    <h2>Global Config</h2>
 
-<p>Windwalker stores config files in <code>/etc</code> folder, you can see <code>config.yml</code> and <code>secret.yml</code> file. These two config files will be merged
-in runtime, so settings in secret.yml can override the same key in config.yml.</p>
+<p>Windwalker stores global config files in <code>/etc</code> folder, you can see <code>config.yml</code> and <code>secret.yml</code> file. These two config files will be merged
+in runtime, so settings in <code>secret.yml</code> will override the same key in <code>config.yml</code>.</p>
 
 <h3>config.yml</h3>
 
@@ -320,6 +320,21 @@ foo: yoo
 
 <p>Now the <code>foo</code> value will be <code>yoo</code> not <code>bar</code>.</p>
 
+<h2>Environment Config</h2>
+
+<p>Environment configs stored ad <code>etc/app/</code>:</p>
+
+<ul>
+<li><code>web.php</code> => Config file for Web</li>
+<li><code>dev.php</code> => Config file for Web development mode</li>
+<li><code>console.php</code> => Config file for CLI</li>
+<li><code>test.php</code> => Config file for test</li>
+<li><code>windwalker.php</code> => Config file for all</li>
+</ul>
+
+<p>Environment config contains some important system settings, you can add providers, listeners and middlewares to
+customize your system process.</p>
+
 <h2>Get &amp; Set Config Data</h2>
 
 <p>In Application, you can use <code>get()</code> to get config.</p>
@@ -347,7 +362,7 @@ $foo = $config-&gt;get('foo');
 $foo = $config['foo'];
 </code></pre>
 
-<p>Config is a Registry object, please see <a href="../more/registry.html">Registry Object</a></p>
+<p>Config is a Structure object, please see <a href="../more/structure.html">Structure Object</a></p>
 
 <h3>Nested Data</h3>
 
@@ -362,191 +377,121 @@ $foo = $config['foo'];
 
 <pre><code class="php">$config-&gt;get('morning.break.first'); // sakura
 
-// OR
+// OR get data by array access
 
 $config['morning.break.first']; // sakura
 </code></pre>
 
 <h2>Add New Config Files</h2>
 
-<p>Open <code>src/Windwalker/Web/Application.php</code> and modify <code>loadConfiguration()</code>, you can load any files as config if you want.</p>
+<p>Open <code>src/app/windwalker.php</code> (or <code>web.php</code>, <code>console.php</code>), add new config file at <code>configs</code> element. Windwalker supports <code>php</code>, <code>json</code> and <code>yaml</code> format
+to save config.</p>
 
-<pre><code class="php">protected function loadConfiguration(Registry $config)
-{
-    Windwalker::loadConfiguration($config);
-
-    $config-&gt;loadFile(WINDWALKER_ETC . '/my-config.yml', 'yaml');
-
-    // Or load other formats
-    $config-&gt;loadFile(WINDWALKER_ETC . '/my-config.ini', 'ini');
-
-    $config-&gt;loadFile(WINDWALKER_ETC . '/my-config.xml', 'xml');
-
-    $config-&gt;loadFile(WINDWALKER_ETC . '/my-config.php', 'php'); // Must return array
-}
+<pre><code class="php">// ...
+    'configs' =&gt; [
+        500 =&gt; WINDWALKER_ETC . '/my-config.yml'
+    ],
+// ...
 </code></pre>
+
+<p>We use numeric keys to support sorting of config files, the bigger is later loaded, so last config will override previous.</p>
 
 <h2>Package Config</h2>
 
-<p>Every packages has their own configs. If you have a <code>FlowerPackage</code> and it's alias is <code>flower</code>, create a file to <code>etc/package/flower.yaml</code>.
-Package object will auto load this config file.</p>
+<p>Every packages has their own configs. If you have a <code>FlowerPackage</code> and it's alias is <code>flower</code>, create a file to <code>etc/package/flower.php</code>.
+The Package object will auto load this config file.</p>
+
+<pre><code class="php">&lt;?php
+// etc/package/flower.php
+
+return [
+    'foo' =&gt; 'bar'
+];
+</code></pre>
 
 <p>You can get package config from package object:</p>
 
 <pre><code class="php">$package = PackageHelper::getPackage('flower');
 
-$package-&gt;get('foo');
+$package-&gt;get('foo'); // bar
 </code></pre>
 
-<h2>Description of Config</h2>
-
-<p>The config.yml looks like above:</p>
+<h2>Description of <code>config.yaml</code></h2>
 
 <pre><code class="yaml">system:
-    debug: 0
-    error_reporting: 0
-    timezone: 'UTC'
-    secret: 'This-token-is-not-safe'
-session:
-    handler: native
-    expire_time: 15
-routing:
-    debug: 0
-cache:
-    enabled: 0
-    storage: file
-    handler: serialize
-    dir: cache
-    time: 15
-language:
-    debug: 0
-    locale: en-GB
-    default: en-GB
-    format: ini
-    path: resources/languages
-</code></pre>
+    # Enanle debug mode, will disable cache, and log some errors.
+    debug: false
 
-<table>
-<thead>
-<tr>
-  <th>Key</th>
-  <th>Sub Key</th>
-  <th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td><code>system</code></td>
-  <td></td>
-  <td></td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>debug</code></td>
-  <td>Enable debug mode or not</td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>error_reporting</code></td>
-  <td>PHP error_reporting setting, set -1 to enable strict mode, set 0 to close all error messages.</td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>timezone</code></td>
-  <td>The default system timezone.</td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>secret</code></td>
-  <td>A random string as secret code to generate some tokens</td>
-</tr>
-<tr>
-  <td><code>session</code></td>
-  <td></td>
-  <td></td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>handler</code></td>
-  <td>The session handler, <code>native</code> is the native php session handler, you can use <code>database</code> or <code>memcache</code>, please see <a href="https://github.com/ventoviro/windwalker/tree/master/src/Session#windwalker-session">Windwalker Session</a></td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>expire_time</code></td>
-  <td>Session expire time, the unit is minute.</td>
-</tr>
-<tr>
-  <td><code>routing</code></td>
-  <td></td>
-  <td></td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>debug</code></td>
-  <td>Enable routing debug, see <a href="./documentation/mvc/uri-route-building.html">Routing</a></td>
-</tr>
-<tr>
-  <td><code>cache</code></td>
-  <td></td>
-  <td></td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>enabled</code></td>
-  <td>Enable system cache.</td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>storage</code></td>
-  <td>Cache storage, FileStorage is the default. See <a href="./documentation/more/caching.html">Caching</a></td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>handler</code></td>
-  <td>Hot cache convert array and object to string.</td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>dir</code></td>
-  <td>Cache storage folder.</td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>time</code></td>
-  <td>Cache TTL time (minute).</td>
-</tr>
-<tr>
-  <td><code>language</code></td>
-  <td></td>
-  <td></td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>debug</code></td>
-  <td>Enable Language debug.</td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>locale</code></td>
-  <td>The current locale.</td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>default</code></td>
-  <td>The default locale.</td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>format</code></td>
-  <td>The language translate file format. See <a href="https://github.com/ventoviro/windwalker/tree/master/src/Language">Windwalker Language</a></td>
-</tr>
-<tr>
-  <td></td>
-  <td><code>path</code></td>
-  <td>The language file path.</td>
-</tr>
-</tbody>
-</table>
+    # The PHP error reporting level, 0 is hide all errors, -1 is the biggest report level.
+    error_reporting: 0
+
+    # Default system timezone.
+    timezone: 'UTC'
+
+    # Secret code will be a salt to generate hashs when system running,
+    # Will be replace when Windwalker installation.
+    secret: 'This-token-is-not-safe'
+
+error:
+    # The error template &amp; renderer engine
+    template: windwalker.error.default
+    engine: php
+
+session:
+    # Session handler, supports `native`, `database`, `apc`, `memcached`
+    handler: native
+    # By minutes
+    expire_time: 15
+
+routing:
+    # Enable routing debug, if route key not found when you generate routs,
+    # will raise error and stop application.
+    debug: 1
+
+    # Simple routing help us auto find controller by URL: `{package}/{controller}` without routing config,
+    # Disable this function will enhance performance.
+    simple_route: 0
+
+cache:
+    # Disabled cache will make all cache as null storage and not stored to storage.
+    # But you can use CacheFactory::createCache('mycache') to ignore this settings.
+    enabled: false
+
+    # The default sotrage, you can use other storages by use `CacheManager::getCache('name', 'storage')`
+    # Support storages: file / raw_file / memcached / null / redis / array / runtime_array
+    storage: file
+
+    # Cache serializer decided how to serialize and store data into storage.
+    # Support serializers: php / json / string / raw
+    serializer: php
+
+    # Cache time (minutes)
+    time: 15
+
+language:
+    # Language debug will mark untranslated string by `??` and stored orphan in Languages object.
+    debug: false
+
+    # The current locale
+    locale: en-GB
+
+    # The default locale, if translated string in current locale not found, will fallback to default locale.
+    default: en-GB
+
+    # Dfault languaghe file format, you can use other foramt in runtime by `Translator::loadFile($file, 'yaml')`
+    format: ini
+
+console:
+    # Custom script, add some commends here to batch execute. Example:
+    # script:
+    #     foo:
+    #         - git pull
+    #         - composer install
+    #         - php windwalker migration migrate
+    #
+    # Then just run `$ php windwalker run foo`
+    script: ~
+</code></pre>
 
                         <hr />
 

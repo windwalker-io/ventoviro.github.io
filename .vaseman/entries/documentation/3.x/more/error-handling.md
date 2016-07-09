@@ -7,7 +7,7 @@ title: Error Handling
 ## Introduction
 
 Windwalker's error handling system overrided the native PHP error handler to provide a flexible interface to fetch error message.
- 
+
 ## Exception Handling
 
 Most of time, we throw exception object to change the program process if error occurred:
@@ -42,7 +42,7 @@ Fatal error: Uncaught Exception: Error message in Command line code:xxx
 Nothing happened, and there is no any information and stack trace for debugging.
 
 Windwalker includes [Whoops](http://filp.github.io/whoops/) as default error handler, the uncaught exception will show this page:
- 
+
 ![160331-0002](https://cloud.githubusercontent.com/assets/1639206/14169526/e84189b8-f75a-11e5-9fcc-85507bf3fe48.jpg)
 
 To enable Pretty error page, you must open DEBUG mode, please change config `system.debug` to `1` or use `dev.php` to access your site.

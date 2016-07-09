@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Languages | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Languages | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/languages.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/languages.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Languages</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -233,7 +233,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/languages.html">Languages</a>
             </li>
                     <li class="">
@@ -266,110 +266,296 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>Introduction</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>Windwalker use Language package to handle i18n localise. There is a <code>language</code> configuration in <code>/etc/config.yml</code>:</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
-
-<h3>Basic Provider Example</h3>
-
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
-
-<h5>Original Way</h5>
-
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
+<pre><code class="yaml">language:
+    debug: 0
+    locale: zh-TW
+    default: en-GB
+    format: ini
+    path: resources/languages
 </code></pre>
 
-<p>And include this file:</p>
+<p><code>locale</code> means current language, and <code>default</code> will tell language object that if current translate not exists, fallback to which language as default.</p>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
+<p>Format is the default file format, but we can still load other format in the runtime.</p>
+
+<h2>Using Language to Translate String</h2>
+
+<p>Windwalker language object has a Facade as proxy, just call this static class to use.</p>
+
+<pre><code class="php">use Windwalker\Core\Language\Translator;
+
+// Load en-GB/main.ini file first
+Translator::loadFile('main');
+
+// Translate
+echo Translator::translate('windwalker.hello.message');
 </code></pre>
 
-<h5>Windwalker Way</h5>
+<p>Add language:</p>
 
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
+<pre><code class="ini">; resources/languages/en-GB/main.ini
 
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
+windwalker.hello.message="Hello World"
+</code></pre>
 
-class MongoDBServiceProvider implements ServiceProviderInterface
+<p>The result will be:</p>
+
+<pre><code class="html">Hello World
+</code></pre>
+
+<p>There is a short alias of <code>translate()</code>:</p>
+
+<pre><code class="php">echo Translator::translate('windwalker.hello.message');
+</code></pre>
+
+<h2>Locale and Default Languages</h2>
+
+<p>We set locale to <code>zh-TW</code> and default to <code>en-GB</code>, then create ini language files:</p>
+
+<pre><code class="ini">; resources/languages/en-GB/flower.ini
+
+windwalker.language.test.flower="Flower"
+windwalker.language.test.sakura="Sakura"
+</code></pre>
+
+<pre><code class="ini">; resources/languages/zh-TW/flower.ini
+
+windwalker.language.test.flower="花"
+</code></pre>
+
+<p>And load them.</p>
+
+<pre><code class="php">Translator::loadFile('flower');
+</code></pre>
+
+<p>Translate string:</p>
+
+<pre><code class="php">// zh-TW has this language key, so it will be translated
+Translator::translate('windwalker.language.test.flower'); // 花
+
+// This key not exists in zh-TW, use en-GB as default
+Translator::translate('windwalker.language.test.sakura'); // Sakura
+</code></pre>
+
+<h3>Key Format</h3>
+
+<p>All language key will be normalised to lowercase and separated by dot (<code>.</code>).</p>
+
+<p>These cases all get same result:</p>
+
+<pre><code class="php">Translator::translate('WINDWALKER_LANGUAGE_TEST_FLOWER'); // 花
+Translator::translate('WINDWALKER_language_TEST FLOWER'); // 花
+Translator::translate('windwalker.language.test.flower'); // 花
+Translator::translate('Windwalker Language Test Flower'); // 花
+Translator::translate('Windwalker Language, Test Flower~~~!'); // 花
+
+// All keys will be normalise to 'windwalker.language.test.flower'
+</code></pre>
+
+<h3>Replace String</h3>
+
+<p>Use <code>sprintf()</code> method.</p>
+
+<pre><code class="ini">windwalker.language.test.beautiful.flower="The %s is beautiful~~~!!!"
+</code></pre>
+
+<pre><code class="php">Translator::sprintf('windwalker.language.test.beautiful.flower', 'Sunflower');
+
+// Result: The Sunflower is beautiful~~~!!!
+</code></pre>
+
+<h3>Plural String</h3>
+
+<p>Create a Localise class:</p>
+
+<pre><code class="php">// An example of EnGB Localise
+namespace Windwalker\Language\Localise;
+
+class EnGBLocalise implements LocaliseInterface
 {
-    public function register(Container $container)
+    public function getPluralSuffix($count = 1)
     {
-        $container-&gt;share('mongo.db', function (Container $container)
+        if ($count == 0)
         {
-            $config = $container-&gt;get('config');
+            return '0';
+        }
+        elseif ($count == 1)
+        {
+            return '';
+        }
 
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
+        return 'more';
     }
 }
-
 </code></pre>
 
-<p>Register this provider to container:</p>
+<p>And prepare this language keys.</p>
 
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
+<pre><code class="ini">windwalker.language.test.sunflower="Sunflower"
+windwalker.language.test.sunflower="No Sunflower"
+windwalker.language.test.sunflower="Sunflowers"
 </code></pre>
 
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
+<p>Now we can translate plural string by <code>plural()</code>.</p>
 
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
-
-// OR
-
-$mongo = Ioc::get('mongo.db');
+<pre><code class="php">Translator::plural('windwalker.language.test.sunflower', 0); // No Sunflower
+Translator::plural('windwalker.language.test.sunflower', 1); // Sunflower
+Translator::plural('windwalker.language.test.sunflower', 2); // Sunflowers
 </code></pre>
 
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+<h2>If Language Key Not Exists</h2>
 
-<h2>Registering Providers</h2>
+<p>Language object will return raw string which we send into it.</p>
 
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+<pre><code class="php">echo Translator::translate('A Not Translated String');
+echo "\n";
+echo Translator::translate('A_NOT_TRANSLATED_STRING');
+</code></pre>
 
-<pre><code class="php">public function loadProviders()
-{
-    $providers = parent::loadProviders();
+<p>Result:</p>
 
-    // Default providers ...
+<pre><code>A Not Translated String
+A_NOT_TRANSLATED_STRING
+</code></pre>
 
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
+<h2>Using Other Formats</h2>
 
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
+<p>Change the <code>format</code> property from config.</p>
 
-    return $providers;
+<h3>Yaml</h3>
+
+<p>Yaml language file can write as nested structure.</p>
+
+<pre><code class="yaml">windwalker:
+    language.test:
+        sakura: Sakura
+        olive: Olive
+</code></pre>
+
+<pre><code class="php">Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
+</code></pre>
+
+<h3>Json</h3>
+
+<pre><code class="json">{
+    "windwalker" : {
+        "language-test" : {
+            "sakura" : "Sakura",
+            "olive" : "Olive"
+        }
+    }
 }
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<p>The usage same as yaml.</p>
 
-<ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
-</ul>
+<pre><code class="php">Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
+</code></pre>
 
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
+<h3>PHP</h3>
+
+<pre><code class="php">&lt;?php
+
+return array(
+    'WINDWALKER_LANGUAGE_TEST_FLOWER' =&gt; "Flower",
+    'WINDWALKER_LANGUAGE' =&gt; array(
+            'TEST' =&gt; array(
+                'SAKURA' =&gt; "Sakura"
+            )
+        )
+);
+</code></pre>
+
+<p>The usage same as yaml.</p>
+
+<pre><code class="php">Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
+</code></pre>
+
+<blockquote>
+  <p>NOTE: We'll support to load different formats in the runtime soon.</p>
+</blockquote>
+
+<h2>Load Package Languages</h2>
+
+<p>Package language file located at <code>YourPackage/Languages/xx-XX/language-name.ini</code>.</p>
+
+<p>So we can load package languages by second argument:</p>
+
+<pre><code class="php">// Load en-GB/sakura.ini and zh-TW/sakura.ini from Flower package
+Translator::loadFile('sakura', 'ini', 'flower');
+</code></pre>
+
+<h2>Used Keys</h2>
+
+<pre><code class="php">// Get keys which have been used.
+Translator::getUsed();
+</code></pre>
+
+<h2>Debugging</h2>
+
+<h3>Debug Mode</h3>
+
+<pre><code class="php">Translator::setDebug(true);
+</code></pre>
+
+<p>We can get non-translated keys in debug mode.</p>
+
+<pre><code class="php">echo Translator::translate('A Translation Exists String');
+echo "\n";
+echo Translator::translate('A Not Translated String');
+</code></pre>
+
+<p>And the output will be:</p>
+
+<pre><code class="html">**A Translation Exists String**
+??A Not Translated String??
+</code></pre>
+
+<h3>Get Orphans</h3>
+
+<p>Orphans is the language string you used but haven't translated.</p>
+
+<pre><code class="php">Translator::setDebug(true);
+
+// Run your applications
+
+$orphans = Translator::getOrphans(); // Array([0] =&gt; A Not Translated String);
+</code></pre>
+
+<h3>Check Loaded Languages</h3>
+
+<pre><code class="php">$config = \Windwalker\Ioc::getConfig();
+
+$config-&gt;get('language.loaded');
+</code></pre>
+
+<h2>Translate in View Template</h2>
+
+<p>Blade</p>
+
+<pre><code class="php">@translate('windwalker.language.test.flower')
+@sprintf('windwalker.language.test.flower', 'foo', 'bar')
+@plural('windwalker.language.test.flower', 5)
+</code></pre>
+
+<p>Twig</p>
+
+<pre><code class="php">{{ 'windwalker.language.test.flower' | lang }}
+{{ 'windwalker.language.test.flower' | sprintf('foo', 'bar') }}
+{{ 'windwalker.language.test.flower' | plural(5) }}
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/languages.md">improve</a> this document.
     </p>
                 </article>
             </div>

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Tests | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Tests | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/tests.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/tests.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Tests</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -245,7 +245,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
             </li>
                     <li class="">
@@ -266,110 +266,112 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>Use Unit Test</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>Windwalker includes <a href="https://phpunit.de/">PHPUnit</a> as default unit test system.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+<p>To start a unit test, please rename <code>/phpunit.xml.dist</code> to <code>/phpunit.xml</code> and edit the content:</p>
 
-<h3>Basic Provider Example</h3>
+<pre><code class="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;phpunit bootstrap="test/bootstrap.php" colors="false"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    strict="true"
+    syntaxCheck="true"
+    &gt;
+    &lt;php&gt;
+        &lt;ini name="error_reporting" value="32767" /&gt;
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
-
-<h5>Original Way</h5>
-
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
+        &lt;const name="WINDWALKER_CORE_TEST_DB_DSN_MYSQL"      value="host=localhost;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;
+        &lt;!--&lt;const name="WINDWALKER_CORE_TEST_DB_DSN_POSTGRESQL" value="host=localhost;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;--&gt;
+        &lt;!--&lt;const name="WINDWALKER_CORE_TEST_DB_DSN_ORACLE"     value="host=localhost;port=5432;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;--&gt;
+        &lt;!--&lt;const name="WINDWALKER_CORE_TEST_DB_DSN_MSSQL"      value="host=localhost;port=1521;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;--&gt;
+        &lt;!--&lt;const name="WINDWALKER_CORE_TEST_DB_DSN_SQLITE"     value="host=localhost;dbname=windwalker_test;user=root;pass=;prefix=ww_" /&gt;--&gt;
+    &lt;/php&gt;
+    &lt;testsuites&gt;
+        &lt;testsuite name="Starter"&gt;
+            &lt;directory&gt;src/*/Test&lt;/directory&gt;
+        &lt;/testsuite&gt;
+    &lt;/testsuites&gt;
+&lt;/phpunit&gt;
 </code></pre>
 
-<p>And include this file:</p>
+<p>Change the <code>testsuite</code> to:</p>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
+<pre><code class="xml">&lt;testsuites&gt;
+    &lt;testsuite name="Flower"&gt;
+        &lt;directory&gt;src/Flower/Test&lt;/directory&gt;
+    &lt;/testsuite&gt;
+&lt;/testsuites&gt;
 </code></pre>
 
-<h5>Windwalker Way</h5>
+<p>Then we can write all test case in <code>/src/Flower/Test</code>.</p>
 
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
+<p>More about how to writing unit test, please see: <a href="https://phpunit.de/getting-started.html">PHPUnit Tutorial</a></p>
 
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
+<h2>Test Cases</h2>
 
-class MongoDBServiceProvider implements ServiceProviderInterface
+<p>Windwlaker Provides some useful TestCase to extends asserts.</p>
+
+<h3><code>AbstractBaseTestCase</code></h3>
+
+<pre><code class="php">use Windwalker\Test\TestCase\AbstractBaseTestCase;
+
+class ModelTest extends AbstractBaseTestCase
 {
-    public function register(Container $container)
+    public function testFoo()
     {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
+        // Minify string to one line and remove extra spaces.
+        $this-&gt;assertStringDataEquals('string data', "string  \n  data");
 
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
+        // Compare string with LF or CRLF
+        $this-&gt;assertStringSafeEquals("string \r\ndata", "string \ndata");
+
+        // Match exception type
+        $this-&gt;assertExpectedException(function()
+        {
+            throw new \RuntimeException;
+        }, new \RuntimeException /* Or use `RuntimeException` string */);
     }
 }
-
 </code></pre>
 
-<p>Register this provider to container:</p>
+<h3><code>AbstractDomTestCase</code></h3>
 
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
-
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
-
-// OR
-
-$mongo = Ioc::get('mongo.db');
-</code></pre>
-
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
-
-<h2>Registering Providers</h2>
-
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
-
-<pre><code class="php">public function loadProviders()
+<pre><code class="php">class ModelTest extends AbstractDomTestCase
 {
-    $providers = parent::loadProviders();
 
-    // Default providers ...
+    public function testFoo()
+    {
+        $dom = &lt;&lt;&lt;DOM
+&lt;root&gt;
+    &lt;node foo="bar" /&gt;
+&lt;/root&gt;
+DOM;
 
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
+        // Will minify all string and compare them.
+        $this-&gt;assertDomStringEqualsDomString('&lt;root&gt;&lt;node foo="bar" /&gt;&lt;/root&gt;', $dom);
 
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
+        // Will normalize all string and compare them
+        $this-&gt;assertDomFormatEquals('&lt;root&gt;&lt;node foo="bar" /&gt;&lt;/root&gt;', $dom);
 
-    return $providers;
+        $html = &lt;&lt;&lt;HTML
+&lt;div&gt;
+    &lt;input type="text" value="" /&gt;
+&lt;/div&gt;
+HTML;
+
+        // Will normalize all string and compare them
+        $this-&gt;assertHtmlFormatEquals('&lt;div&gt;&lt;input type="text" value="" /&gt;&lt;/div&gt;', $html);
+    }
 }
 </code></pre>
-
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
-
-<ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
-</ul>
-
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/tests.md">improve</a> this document.
     </p>
                 </article>
             </div>

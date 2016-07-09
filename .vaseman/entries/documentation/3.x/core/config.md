@@ -4,10 +4,10 @@ title: Config & Setting
 
 ---
 
-## How to Configure Your Application
+## Global Config
 
-Windwalker stores config files in `/etc` folder, you can see `config.yml` and `secret.yml` file. These two config files will be merged
-in runtime, so settings in secret.yml can override the same key in config.yml.
+Windwalker stores global config files in `/etc` folder, you can see `config.yml` and `secret.yml` file. These two config files will be merged
+in runtime, so settings in `secret.yml` will override the same key in `config.yml`.
 
 ### config.yml
 
@@ -62,6 +62,18 @@ foo: yoo
 
 Now the `foo` value will be `yoo` not `bar`.
 
+## Environment Config
+
+Environment configs stored ad `etc/app/`:
+
+- `web.php` => Config file for Web
+- `dev.php` => Config file for Web development mode
+- `console.php` => Config file for CLI
+- `test.php` => Config file for test
+- `windwalker.php` => Config file for all
+
+Environment config contains some important system settings, you can add providers, listeners and middlewares to
+customize your system process.
 
 ## Get & Set Config Data
 
@@ -93,7 +105,7 @@ $foo = $config->get('foo');
 $foo = $config['foo'];
 ```
 
-Config is a Registry object, please see [Registry Object](../more/registry.html)
+Config is a Structure object, please see [Structure Object](../more/structure.html)
 
 ### Nested Data
 
@@ -110,96 +122,123 @@ Please use dot (`.`) as separator:
 ``` php
 $config->get('morning.break.first'); // sakura
 
-// OR
+// OR get data by array access
 
 $config['morning.break.first']; // sakura
 ```
 
 ## Add New Config Files
 
-Open `src/Windwalker/Web/Application.php` and modify `loadConfiguration()`, you can load any files as config if you want.
+Open `src/app/windwalker.php` (or `web.php`, `console.php`), add new config file at `configs` element. Windwalker supports `php`, `json` and `yaml` format
+to save config.
 
 ``` php
-protected function loadConfiguration(Registry $config)
-{
-    Windwalker::loadConfiguration($config);
-    
-    $config->loadFile(WINDWALKER_ETC . '/my-config.yml', 'yaml');
-    
-    // Or load other formats
-    $config->loadFile(WINDWALKER_ETC . '/my-config.ini', 'ini');
-    
-    $config->loadFile(WINDWALKER_ETC . '/my-config.xml', 'xml');
-    
-    $config->loadFile(WINDWALKER_ETC . '/my-config.php', 'php'); // Must return array
-}
+// ...
+    'configs' => [
+        500 => WINDWALKER_ETC . '/my-config.yml'
+    ],
+// ...
 ```
+
+We use numeric keys to support sorting of config files, the bigger is later loaded, so last config will override previous.
 
 ## Package Config
 
-Every packages has their own configs. If you have a `FlowerPackage` and it's alias is `flower`, create a file to `etc/package/flower.yaml`.
-Package object will auto load this config file.
+Every packages has their own configs. If you have a `FlowerPackage` and it's alias is `flower`, create a file to `etc/package/flower.php`.
+The Package object will auto load this config file.
+
+``` php
+<?php
+// etc/package/flower.php
+
+return [
+    'foo' => 'bar'
+];
+```
 
 You can get package config from package object:
 
 ``` php
 $package = PackageHelper::getPackage('flower');
 
-$package->get('foo');
+$package->get('foo'); // bar
 ```
 
-## Description of Config
-
-The config.yml looks like above:
+## Description of `config.yaml`
 
 ``` yaml
 system:
-    debug: 0
+    # Enanle debug mode, will disable cache, and log some errors.
+    debug: false
+
+    # The PHP error reporting level, 0 is hide all errors, -1 is the biggest report level.
     error_reporting: 0
+
+    # Default system timezone.
     timezone: 'UTC'
+
+    # Secret code will be a salt to generate hashs when system running,
+    # Will be replace when Windwalker installation.
     secret: 'This-token-is-not-safe'
+
+error:
+    # The error template & renderer engine
+    template: windwalker.error.default
+    engine: php
+
 session:
+    # Session handler, supports `native`, `database`, `apc`, `memcached`
     handler: native
+    # By minutes
     expire_time: 15
+
 routing:
-    debug: 0
+    # Enable routing debug, if route key not found when you generate routs,
+    # will raise error and stop application.
+    debug: 1
+
+    # Simple routing help us auto find controller by URL: `{package}/{controller}` without routing config,
+    # Disable this function will enhance performance.
+    simple_route: 0
+
 cache:
-    enabled: 0
+    # Disabled cache will make all cache as null storage and not stored to storage.
+    # But you can use CacheFactory::createCache('mycache') to ignore this settings.
+    enabled: false
+
+    # The default sotrage, you can use other storages by use `CacheManager::getCache('name', 'storage')`
+    # Support storages: file / raw_file / memcached / null / redis / array / runtime_array
     storage: file
-    handler: serialize
-    dir: cache
+
+    # Cache serializer decided how to serialize and store data into storage.
+    # Support serializers: php / json / string / raw
+    serializer: php
+
+    # Cache time (minutes)
     time: 15
+
 language:
-    debug: 0
+    # Language debug will mark untranslated string by `??` and stored orphan in Languages object.
+    debug: false
+
+    # The current locale
     locale: en-GB
+
+    # The default locale, if translated string in current locale not found, will fallback to default locale.
     default: en-GB
+
+    # Dfault languaghe file format, you can use other foramt in runtime by `Translator::loadFile($file, 'yaml')`
     format: ini
-    path: resources/languages
+
+console:
+    # Custom script, add some commends here to batch execute. Example:
+    # script:
+    #     foo:
+    #         - git pull
+    #         - composer install
+    #         - php windwalker migration migrate
+    #
+    # Then just run `$ php windwalker run foo`
+    script: ~
 ```
-
-| Key | Sub Key | Value |
-| -------- | -- | -- |
-| `system` | | |
-| | `debug` | Enable debug mode or not |
-| | `error_reporting` | PHP error_reporting setting, set -1 to enable strict mode, set 0 to close all error messages. |
-| | `timezone` | The default system timezone. |
-| | `secret` | A random string as secret code to generate some tokens |
-| `session` | |  |
-| | `handler` | The session handler, `native` is the native php session handler, you can use `database` or `memcache`, please see [Windwalker Session](https://github.com/ventoviro/windwalker/tree/master/src/Session#windwalker-session) |
-| | `expire_time` | Session expire time, the unit is minute. |
-| `routing` | |  |
-| | `debug` | Enable routing debug, see [Routing](./documentation/mvc/uri-route-building.html) |
-| `cache` | | |
-| | `enabled` | Enable system cache. |
-| | `storage` | Cache storage, FileStorage is the default. See [Caching](./documentation/more/caching.html) |
-| | `handler` | Hot cache convert array and object to string. |
-| | `dir` | Cache storage folder. |
-| | `time` | Cache TTL time (minute). |
-| `language` | |  |
-| | `debug` | Enable Language debug. |
-| | `locale` | The current locale. |
-| | `default` | The default locale. |
-| | `format` | The language translate file format. See [Windwalker Language](https://github.com/ventoviro/windwalker/tree/master/src/Language) |
-| | `path` | The language file path. |
-
 

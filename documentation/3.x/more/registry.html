@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Registry Object | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Registry Object | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/registry.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/registry.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Registry Object</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -221,7 +221,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
             </li>
                     <li class="">
@@ -266,110 +266,252 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>Getting Started</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>Windwalker Registry is a storage of nested array or object, help us manage multi-level structures data.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+<pre><code class="php">use Windwalker\Registry\Registry;
 
-<h3>Basic Provider Example</h3>
+$registry = new Registry;
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
+// Set a value in the registry.
+$registry-&gt;set('foo', 'bar');
 
-<h5>Original Way</h5>
-
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
-</code></pre>
-
-<p>And include this file:</p>
-
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
-</code></pre>
-
-<h5>Windwalker Way</h5>
-
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
-
-class MongoDBServiceProvider implements ServiceProviderInterface
-{
-    public function register(Container $container)
-    {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
-
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
-    }
-}
+// Get a value from the registry;
+$value = $registry-&gt;get('foo');
 
 </code></pre>
 
-<p>Register this provider to container:</p>
+<h2>Load config by Registry</h2>
 
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
+<pre><code class="php">use Windwalker\Registry\Registry;
+
+$registry = new Registry;
+
+// Load by string
+$registry-&gt;loadString('{"foo" : "bar"}');
+
+$registry-&gt;loadString('&lt;root&gt;&lt;/root&gt;', 'xml');
+
+// Load by object or array
+$registry-&gt;load($object);
+
+// Load by file
+$registry-&gt;loadFile($root . '/config/config.json', 'json');
 </code></pre>
 
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
+<h2>Accessing a Registry by getter &amp; setter</h2>
 
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+<h3>Get value</h3>
+
+<pre><code class="php">$registry-&gt;get('foo');
+
+// Get a non-exists value and return default
+$registry-&gt;get('foo', 'default');
 
 // OR
 
-$mongo = Ioc::get('mongo.db');
+$registry-&gt;get('foo') ?: 'default';
 </code></pre>
 
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+<h3>Set value</h3>
 
-<h2>Registering Providers</h2>
+<pre><code class="php">// Set value
+$registry-&gt;set('bar', $value);
 
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+// Sets a default value if not already assigned.
+$registry-&gt;def('bar', $default);
+</code></pre>
 
-<pre><code class="php">public function loadProviders()
+<h3>Accessing children value by path</h3>
+
+<pre><code class="php">$json = '{
+    "parent" : {
+        "child" : "Foo"
+    }
+}';
+
+$registry = new Registry($json);
+
+$registry-&gt;get('parent.child'); // return 'Foo'
+
+$registry-&gt;set('parent.child', $value);
+</code></pre>
+
+<h3>Append &amp; Prepend</h3>
+
+<p>Support <code>push / pop / shift / unshift</code> methods.</p>
+
+<pre><code class="php">$registry-&gt;set('foo.bar', array('fisrt', 'second'));
+
+$registry-&gt;push('foo.bar', 'third');
+
+$registry-&gt;get('foo.bar');
+// Result: Array(first, second, third)
+</code></pre>
+
+<h3>Use other separator</h3>
+
+<pre><code class="php">$registry-&gt;setSeparator('/');
+
+$data = $registry-&gt;get('foo/bar');
+</code></pre>
+
+<h2>Accessing a Registry as an Array</h2>
+
+<p>The <code>Registry</code> class implements <code>ArrayAccess</code> so the properties of the registry can be accessed as an array. Consider the following examples:</p>
+
+<pre><code class="php">// Set a value in the registry.
+$registry['foo'] = 'bar';
+
+// Get a value from the registry;
+$value = $registry['foo'];
+
+// Check if a key in the registry is set.
+if (isset($registry['foo']))
 {
-    $providers = parent::loadProviders();
-
-    // Default providers ...
-
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
-
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
+    echo 'Say bar.';
 }
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<h2>Merge Registry</h2>
 
-<ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
-</ul>
+<h5>Using load* methods to merge two config files.</h5>
 
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
+<pre><code class="php">$json1 = '{
+    "field" : {
+        "keyA" : "valueA",
+        "keyB" : "valueB"
+    }
+}';
+
+$json2 = '{
+    "field" : {
+        "keyB" : "a new valueB"
+    }
+}';
+
+$registry-&gt;loadString($json1);
+$registry-&gt;loadString($json2);
+</code></pre>
+
+<p>Output</p>
+
+<pre><code>Array(
+    field =&gt; Array(
+        keyA =&gt; valueA
+        keyB =&gt; a new valueB
+    )
+)
+</code></pre>
+
+<h5>Merge Another Registry</h5>
+
+<pre><code class="php">$object1 = '{
+    "foo" : "foo value",
+    "bar" : {
+        "bar1" : "bar value 1",
+        "bar2" : "bar value 2"
+    }
+}';
+
+$object2 = '{
+    "foo" : "foo value",
+    "bar" : {
+        "bar2" : "new bar value 2"
+    }
+}';
+
+$registry1 = new Registry(json_decode($object1));
+$registry2 = new Registry(json_decode($object2));
+
+$registry1-&gt;merge($registry2);
+</code></pre>
+
+<p>If you just want to merge first level, do not hope recursive:</p>
+
+<pre><code class="php">$registry1-&gt;merge($registry2, false); // Set param 2 to false that Registry will only merge first level
+</code></pre>
+
+<p>Merge to a child node:</p>
+
+<pre><code class="php">$registry-&gt;mergeTo('foo.bar', $anotherRegistry);
+</code></pre>
+
+<h2>Dump to file.</h2>
+
+<pre><code class="php">$registry-&gt;toString();
+
+$registry-&gt;toString('xml');
+
+$registry-&gt;toString('ini');
+</code></pre>
+
+<h2>Dump to one dimension</h2>
+
+<pre><code class="php">$array = array(
+    'flower' =&gt; array(
+        'sunflower' =&gt; 'light',
+        'sakura' =&gt; 'samurai'
+    )
+);
+
+$registry = new Registry($array);
+
+// Make data to one dimension
+
+$flatted = $registry-&gt;flatten();
+
+print_r($flatted);
+</code></pre>
+
+<p>The result:</p>
+
+<pre><code>Array
+(
+    [flower.sunflower] =&gt; light
+    [flower.sakura] =&gt; samurai
+)
+</code></pre>
+
+<h2>Using YAML</h2>
+
+<p>Add Symfony YAML component in <code>composer.json</code></p>
+
+<pre><code class="json">{
+    "require-dev": {
+        "symfony/yaml": "~2.0"
+    }
+}
+</code></pre>
+
+<p>Using <code>yaml</code> format</p>
+
+<pre><code class="php">$registry-&gt;loadFile($yamlFile, 'yaml');
+
+$registry-&gt;loadString('foo: bar', 'yaml');
+
+// Convert to string
+$registry-&gt;toString('yaml');
+</code></pre>
+
+<h2>RegistryHelper</h2>
+
+<pre><code class="php">use Windwalker\Registry\RegistryHelper;
+
+RehistryHelper::loadFaile($file, $format); // File to array
+RehistryHelper::loadString($string, $format); // String to array
+RehistryHelper::toString($array, $format); // Array to string
+
+// Use format class
+$json = RehistryHelper::getFormatClass('json'); // Get JsonFormat
+$string = $json::structToString($array);
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/registry.md">improve</a> this document.
     </p>
                 </article>
             </div>

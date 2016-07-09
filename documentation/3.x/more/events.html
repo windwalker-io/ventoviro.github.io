@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Events | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Events | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/events.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/events.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Events</h1>
     </div>
         </div>
     </section>
@@ -149,7 +149,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
@@ -215,7 +215,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/caching.html">Caching</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/events.html">Events</a>
             </li>
                     <li class="">
@@ -266,110 +266,229 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>Event Listener (Observer) Pattern</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents, 
+called observers, and notifies them automatically of any state changes, usually by calling one of their methods.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
+<p>See: <a href="http://en.wikipedia.org/wiki/Observer_pattern">Observer pattern on Wikipedia</a></p>
 
-<h3>Basic Provider Example</h3>
+<h3>The Flow</h3>
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
+<p>First, there will be many listeners(observers), we can attach them to a dispatcher object.</p>
 
-<h5>Original Way</h5>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5592361/7a569cdc-9206-11e4-829b-846b2c31557e.jpg" alt="p-2015-01-01-8" /></p>
 
-<pre><code class="php">// import.mongodb.php
+<p>Now, all listeners listened this dispatcher, if some event triggered, this dispatcher will notify all listeners.</p>
 
-$conn = new MongoDBConnection($config['database']['mongodb']);
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5592360/7a4ed9c0-9206-11e4-91aa-d3d50c4388c5.jpg" alt="p-2015-01-01-9" /></p>
 
-return $conn;
+<p>So, if any listener has the method which matched the event, dispatcher will call this method.</p>
+
+<h2>Start Using Event</h2>
+
+<p>Create an event object named <code>onBeforeContentSave</code>, and set some arguments.</p>
+
+<pre><code class="php">use Windwalker\Event\Event;
+
+$event = new Event('onBeforeContentSave');
+
+$content = new stdClass;
+
+$event-&gt;setArgument('title', 'My content');
+$event-&gt;setArgument('content', $content);
 </code></pre>
 
-<p>And include this file:</p>
+<p>Create your listener:</p>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
-</code></pre>
+<pre><code class="php">use Windwalker\Event\EventInterface;
 
-<h5>Windwalker Way</h5>
-
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
-
-class MongoDBServiceProvider implements ServiceProviderInterface
+class ContentListener
 {
-    public function register(Container $container)
+    public function onBeforeContentSave(EventInterface $event)
     {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
+        $event-&gt;getArgument('content')-&gt;title = $event-&gt;getArgument('title'); 
+    }
 
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
+     public function onAfterContentSave(EventInterface $event)
+    {
+        // Do something
     }
 }
-
 </code></pre>
 
-<p>Register this provider to container:</p>
+<p>Add listener to Dispatcher:</p>
 
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
-
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+<pre><code class="php">$dispatcher = \Windwalker\Ioc::getDispatcher();
 
 // OR
 
-$mongo = Ioc::get('mongo.db');
+$dispatcher = $container-&gt;get('system.dispatcher');
+
+// Attach listener
+$dispatcher-&gt;addListener(new ContentListener);
 </code></pre>
 
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+<p>Then we trigger the event we created:</p>
 
-<h2>Registering Providers</h2>
+<pre><code class="php">// Trigger the onBeforeContentSave
+$dispatcher-&gt;triggerEvent($event);
 
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+// ContentListener::onBeforeContentSave will set title into $content object.
+$content-&gt;title == 'My content';
+</code></pre>
 
-<pre><code class="php">public function loadProviders()
+<p>If a method name in listener equals to event name, Dispatcher will run this method and inject Event into this method.
+Then we can do many things we want.</p>
+
+<h3>Array Access</h3>
+
+<p>Event can access like array:</p>
+
+<pre><code class="php">// Set
+$event['data'] = $data;
+
+// Get
+$data = $event['data'];
+</code></pre>
+
+<h2>Listeners</h2>
+
+<p>There can be two types of listeners, using class or closure.</p>
+
+<h3>Class Listeners</h3>
+
+<p>Using class, just new an instance</p>
+
+<pre><code class="php">$dispatcher-&gt;addListener(new ContentListener);
+</code></pre>
+
+<p>You may provides priority for every methods.</p>
+
+<pre><code class="php">use Windwalker\Event\ListenerPriority;
+
+// Add priorities
+$dispatcher-&gt;addListener(
+    new ContentListener,
+    array(
+        'onBeforeContentSave' =&gt; ListenerPriority::LOW,
+        'onAfterContentSave' =&gt; ListenerPriority::HIGH
+    )
+);
+
+// Or using an inner method to get all methods
+$dispatcher-&gt;addListener(new ContentListener, ContentListener::getPriorities());
+</code></pre>
+
+<h3>Closure Listeners</h3>
+
+<p>If using closure, you must provide the priority and an event name to listen.</p>
+
+<pre><code class="php">$dispatcher-&gt;addListener(
+    function (EventInterface $event)
+    {
+        // Do something
+    }, 
+    array('onContentSave' =&gt; ListenerPriority::NORMAL)
+);
+</code></pre>
+
+<h2>Dispatcher</h2>
+
+<h3>Trigger An Event Object</h3>
+
+<p>This is the most normal way to trigger an event.</p>
+
+<pre><code class="php">$event = new Event('onFlowerBloom');
+
+$event-&gt;setArgument('flower', 'sakura');
+
+$dispatcher-&gt;triggerEvent($event);
+</code></pre>
+
+<p>Add arguments when triggering event, the arguments will merge with previous arguments you set.</p>
+
+<pre><code class="php">$args = array(
+    'foo' =&gt; 'bar'
+);
+
+$dispatcher-&gt;triggerEvent($event, $args);
+</code></pre>
+
+<h3>Add An Event Then Trigger It Later</h3>
+
+<p>We can add an event into Dispatcher, then use event name to raise it laster.</p>
+
+<pre><code class="php">$event = new Event('onFlowerBloom');
+
+$event-&gt;setArgument('flower', 'sakura');
+
+$dispatcher-&gt;addEvent($event);
+
+// Nothing happen
+
+$dispatcher-&gt;triggerEvent('onFlowerBloom');
+</code></pre>
+
+<h3>Trigger A New Event Instantly</h3>
+
+<p>We don't need create event first, just trigger a string as event name, Dispatcher will create an event instantly.</p>
+
+<pre><code class="php">$args = array(
+    'foo' =&gt; 'bar'
+);
+
+$dispatcher-&gt;triggerEvent('onCloudMoving', $args);
+</code></pre>
+
+<h2>Stopping Event</h2>
+
+<p>If you stop an event, the next listeners in the queue won't be called.</p>
+
+<pre><code class="php">class ContentListener
 {
-    $providers = parent::loadProviders();
-
-    // Default providers ...
-
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
-
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
+    public function onBeforeContentSave(EventInterface $event)
+    {
+        // Stopping the Event propagation.
+        $event-&gt;stop();
+    }
 }
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<h2>DispatcherAwareInterface and Trait</h2>
+
+<p>In PHP 5.4 or higher, you can use <code>DispatcherAwareTrait</code>.</p>
+
+<pre><code class="php">use Windwalker\Event\DispatcherAwareInterface;
+use Windwalker\Event\DispatcherAwareTrait;
+
+class Application implements DispatcherAwareInterface
+{
+    use DispatcherAwareTrait;
+
+    // ...
+}
+</code></pre>
+
+<h2>Core Events</h2>
 
 <ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
+<li>onBeforeInitialise</li>
+<li>onAfterInitialise</li>
+<li>onBeforeExecute</li>
+<li>onAfterExecute</li>
+<li>onBeforeRouting</li>
+<li>onAfterRouting</li>
+<li>onBeforeRender</li>
+<li>onAfterRender</li>
+<li>onBeforeRespond</li>
+<li>onAfterRespond</li>
 </ul>
-
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/events.md">improve</a> this document.
     </p>
                 </article>
             </div>
