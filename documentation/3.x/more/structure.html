@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Authentication | Windwalker - A Modern PHP Framework</title>
+        <title>Structure Object | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Authentication | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Structure Object | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/more/authentication.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/structure.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/more/authentication.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/structure.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Authentication</h1>
+        <h1>Structure Object</h1>
     </div>
         </div>
     </section>
@@ -209,7 +209,7 @@
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
             </li>
                     <li class="">
@@ -269,222 +269,250 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <blockquote>
-  <p>NOTE: This page is out-of-dated, will be rewrite in the future.</p>
-</blockquote>
+                    <h2>Getting Started</h2>
 
-<h2>Introduction</h2>
+<pre><code class="php">use Windwalker\Structure\Structure;
 
-<p>Building user system in Windwalker is very easy, Windwalker includes a simple Authentication package to handle user auth.</p>
+$structure = new Structure;
 
-<h2>Default User Package</h2>
+// Set a value in the structure.
+$structure-&gt;set('foo', 'bar');
 
-<p>In Windwalker Starter, there is an User package in <code>src/Windwalker/User</code> and has been registered to system. 
-You can directly modify it to what you needed.</p>
+// Get a value from the structure;
+$value = $structure-&gt;get('foo');
 
-<p>Before using it, you may run this command to import default user package schema:</p>
-
-<pre><code class="bash">php bin/console migration migrate -p=wwuser
 </code></pre>
 
-<h3>Get User</h3>
+<h2>Load config by Structure</h2>
 
-<pre><code class="php">use Windwalker\Core\Authentication\User;
+<pre><code class="php">use Windwalker\Structure\Structure;
 
-// Get current logged-in user
-$user = User::get();
+$structure = new Structure;
 
-// Get a user by id
-$user = User::get(12);
+// Load by string
+$structure-&gt;loadString('{"foo" : "bar"}');
 
-// Get user by conditions
-$user = User::get(array('username' =&gt; 'christina'));
+$structure-&gt;loadString('&lt;root&gt;&lt;/root&gt;', 'xml');
+
+// Load by object or array
+$structure-&gt;load($object);
+
+// Load by file
+$structure-&gt;loadFile($root . '/config/config.json', 'json');
 </code></pre>
 
-<h3>Login User</h3>
+<h2>Accessing a Structure by getter &amp; setter</h2>
 
-<pre><code class="php">// Prepare user data
-$credential = new Credential;
-$credential-&gt;username = 'richael2123';
-$credential-&gt;password = '12345678';
+<h3>Get value</h3>
 
-$bool = User::login($credential);
+<pre><code class="php">$structure-&gt;get('foo');
+
+// Get a non-exists value and return default
+$structure-&gt;get('foo', 'default');
+
+// OR
+
+$structure-&gt;get('foo') ?: 'default';
 </code></pre>
 
-<p>Remember me:</p>
+<h3>Set value</h3>
 
-<pre><code class="php">$bool = User::login($credential, true);
+<pre><code class="php">// Set value
+$structure-&gt;set('bar', $value);
+
+// Sets a default value if not already assigned.
+$structure-&gt;def('bar', $default);
 </code></pre>
 
-<h3>Logout User</h3>
+<h3>Accessing children value by path</h3>
 
-<pre><code class="php">$bool = User::logout();
+<pre><code class="php">$json = '{
+    "parent" : {
+        "child" : "Foo"
+    }
+}';
+
+$structure = new Structure($json);
+
+$structure-&gt;get('parent.child'); // return 'Foo'
+
+$structure-&gt;set('parent.child', $value);
 </code></pre>
 
-<h3>Save User</h3>
+<h3>Append &amp; Prepend</h3>
 
-<pre><code class="php">use Windwalker\Crypt\Password;
+<p>Support <code>push / pop / shift / unshift</code> methods.</p>
 
-$user-&gt;username = 'riaok3784';
-$user-&gt;password = 'abc1234';
+<pre><code class="php">$structure-&gt;set('foo.bar', array('fisrt', 'second'));
 
-// Hash password
-$password = new Password;
+$structure-&gt;push('foo.bar', 'third');
 
-$user-&gt;password = $password-&gt;create($user-&gt;password);
-
-User::save($user);
+$structure-&gt;get('foo.bar');
+// Result: Array(first, second, third)
 </code></pre>
 
-<h3>Delete User</h3>
+<h3>Use other separator</h3>
 
-<pre><code class="php">// Delete by id
-User::delete(12);
+<pre><code class="php">$structure-&gt;setSeparator('/');
 
-// Delete by conditions
-User::delete(array('username' =&gt; 'richael3784'));
+$data = $structure-&gt;get('foo/bar');
 </code></pre>
 
-<h2>Create Your Own User Handler</h2>
+<h2>Accessing a Structure as an Array</h2>
 
-<p>Windwalker Built-in Authentication system can register a custom user handler, this user handler should implement the <code>UserHandlerInterface</code>:</p>
+<p>The <code>Structure</code> class implements <code>ArrayAccess</code> so the properties of the structure can be accessed as an array. Consider the following examples:</p>
 
-<pre><code class="php">use Windwalker\Core\Authentication\UserDataInterface;
-use Windwalker\Core\Authentication\UserHandlerInterface;
+<pre><code class="php">// Set a value in the structure.
+$structure['foo'] = 'bar';
 
-class MyUserHandler implements UserHandlerInterface
+// Get a value from the structure;
+$value = $structure['foo'];
+
+// Check if a key in the structure is set.
+if (isset($structure['foo']))
 {
-    /**
-     * load
-     *
-     * @param array $conditions
-     *
-     * @return  mixed|false
-     */
-    public function load($conditions) {}
-
-    /**
-     * save
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  UserDataInterface
-     */
-    public function save(UserDataInterface $user) {}
-
-    /**
-     * delete
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  boolean
-     */
-    public function delete(UserDataInterface $user) {}
-
-    /**
-     * login
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  boolean
-     */
-    public function login(UserDataInterface $user) {}
-
-    /**
-     * logout
-     *
-     * @param UserDataInterface $user
-     *
-     * @return bool
-     */
-    public function logout(UserDataInterface $user) {}
+    echo 'Say bar.';
 }
 </code></pre>
 
-<p>See: <a href="http://goo.gl/P0b2qk">Default UserHandler</a> to learn how to write your use handler.</p>
+<h2>Merge Structure</h2>
 
-<p>Then you may register it before application execute:</p>
+<h4>Using load* methods to merge two config files.</h4>
 
-<pre><code class="php">use Windwalker\Core\Authentication\User;
+<pre><code class="php">$json1 = '{
+    "field" : {
+        "keyA" : "valueA",
+        "keyB" : "valueB"
+    }
+}';
 
-User::setHandler(new MyUserHandler);
+$json2 = '{
+    "field" : {
+        "keyB" : "a new valueB"
+    }
+}';
+
+$structure-&gt;loadString($json1);
+$structure-&gt;loadString($json2);
 </code></pre>
 
-<h2>Create Authentication Method</h2>
+<p>Output</p>
 
-<p>Windwalker Authentication allow developers attach multiple methods to match user(See <a href="https://github.com/ventoviro/windwalker-authentication">Document</a>).</p>
+<pre><code>Array(
+    field =&gt; Array(
+        keyA =&gt; valueA
+        keyB =&gt; a new valueB
+    )
+)
+</code></pre>
 
-<p>This image described how authentication methods working.</p>
+<h4>Merge Another Structure</h4>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5595002/07d3235a-92a2-11e4-8f1f-5622e2af7254.jpg" alt="p-2015-01-02-5" /></p>
+<pre><code class="php">$object1 = '{
+    "foo" : "foo value",
+    "bar" : {
+        "bar1" : "bar value 1",
+        "bar2" : "bar value 2"
+    }
+}';
 
-<h3>Example Method to Find User From Database</h3>
+$object2 = '{
+    "foo" : "foo value",
+    "bar" : {
+        "bar2" : "new bar value 2"
+    }
+}';
 
-<pre><code class="php">use Windwalker\Authentication\Authentication;
-use Windwalker\Authentication\Credential;
-use Windwalker\Authentication\Method\AbstractMethod;
-use Windwalker\Crypt\Password;
-use Windwalker\DataMapper\DataMapper;
+$structure1 = new Structure(json_decode($object1));
+$structure2 = new Structure(json_decode($object2));
 
-class DatabaseMethod extends AbstractMethod
-{
-    public function authenticate(Credential $credential)
-    {
-        // Not allow empty password
-        if (!$credential-&gt;username || !$credential-&gt;password)
-        {
-            $this-&gt;status = Authentication::EMPTY_CREDENTIAL;
+$structure1-&gt;merge($structure2);
+</code></pre>
 
-            return false;
-        }
+<p>If you just want to merge first level, do not hope recursive:</p>
 
-        $datamapper = new DataMapper('users');
+<pre><code class="php">$structure1-&gt;merge($structure2, false); // Set param 2 to false that Structure will only merge first level
+</code></pre>
 
-        // Use user data to find user
-        $user = $datamapper-&gt;findOne(array('username' =&gt; $credential-&gt;username));
+<p>Merge to a child node:</p>
 
-        // User not found
-        if ($user-&gt;isNull())
-        {
-            $this-&gt;status = Authentication::USER_NOT_FOUND;
+<pre><code class="php">$structure-&gt;mergeTo('foo.bar', $anotherStructure);
+</code></pre>
 
-            return false;
-        }
+<h2>Dump to file.</h2>
 
-        // User found, start to verify password
-        $password = new Password;
+<pre><code class="php">$structure-&gt;toString();
 
-        if (!$password-&gt;verify($credential-&gt;password, $user-&gt;password))
-        {
-            $this-&gt;status = Authentication::INVALID_CREDENTIAL;
+$structure-&gt;toString('xml');
 
-            return false;
-        }
+$structure-&gt;toString('ini');
+</code></pre>
 
-        // Password verify success, return user data.
-        $credential-&gt;bind($user);
+<h2>Dump to one dimension</h2>
 
-        $this-&gt;status = Authentication::SUCCESS;
+<pre><code class="php">$array = array(
+    'flower' =&gt; array(
+        'sunflower' =&gt; 'light',
+        'sakura' =&gt; 'samurai'
+    )
+);
 
-        return true;
+$structure = new Structure($array);
+
+// Make data to one dimension
+
+$flatted = $structure-&gt;flatten();
+
+print_r($flatted);
+</code></pre>
+
+<p>The result:</p>
+
+<pre><code>Array
+(
+    [flower.sunflower] =&gt; light
+    [flower.sakura] =&gt; samurai
+)
+</code></pre>
+
+<h2>Using YAML</h2>
+
+<p>Add Symfony YAML component in <code>composer.json</code></p>
+
+<pre><code class="json">{
+    "require-dev": {
+        "symfony/yaml": "~3.0"
     }
 }
 </code></pre>
 
-<p>Then we must register this method before Application executed:</p>
+<p>Using <code>yaml</code> format</p>
 
-<pre><code class="php">$auth = \Windwalker\Ioc::getAuthentication();
-$auth-&gt;addMethod('database', new DatabaseMethod);
+<pre><code class="php">$structure-&gt;loadFile($yamlFile, 'yaml');
 
-// OR
+$structure-&gt;loadString('foo: bar', 'yaml');
 
-User::addMethod('database', new DatabaseMethod);
+// Convert to string
+$structure-&gt;toString('yaml');
+</code></pre>
+
+<h2>StructureHelper</h2>
+
+<pre><code class="php">use Windwalker\Structure\StructureHelper;
+
+StructureHelper::loadFaile($file, $format); // File to array
+StructureHelper::loadString($string, $format); // String to array
+StructureHelper::toString($array, $format); // Array to string
+
+// Use format class
+$json = StructureHelper::getFormatClass('json'); // Get JsonFormat
+$string = $json::structToString($array);
 </code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/authentication.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/structure.md">improve</a> this document.
     </p>
                 </article>
             </div>

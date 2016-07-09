@@ -44,6 +44,7 @@ documentation:
             more/registry: Registry Object
             more/widget-renderer: Widget and Renderer
             more/form-builder: Form Builder
+            more/form-definition: Form Definition
             more/html-builder: HTML Builder
             more/languages: Languages
             more/pagination: Pagination

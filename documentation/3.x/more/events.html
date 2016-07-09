@@ -231,6 +231,9 @@
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
@@ -323,7 +326,7 @@ class ContentListener
 
 // OR
 
-$dispatcher = $container-&gt;get('system.dispatcher');
+$dispatcher = $container-&gt;get('dispatcher');
 
 // Attach listener
 $dispatcher-&gt;addListener(new ContentListener);
@@ -391,6 +394,14 @@ $dispatcher-&gt;addListener(new ContentListener, ContentListener::getPriorities(
     }, 
     array('onContentSave' =&gt; ListenerPriority::NORMAL)
 );
+</code></pre>
+
+<p>Or use <code>listen()</code> method.</p>
+
+<pre><code class="php">$dispatcher-&gt;listen('onContentSave', function (EventInterface $event)
+{
+    // Do something
+}, ListenerPriority::NORMAL);
 </code></pre>
 
 <h2>Dispatcher</h2>
@@ -470,19 +481,80 @@ class Application implements DispatcherAwareInterface
 }
 </code></pre>
 
-<h2>Core Events</h2>
+<h2>Default Events</h2>
+
+<h3>Core</h3>
 
 <ul>
-<li>onBeforeInitialise</li>
 <li>onAfterInitialise</li>
+<li>onAfterBoot</li>
 <li>onBeforeExecute</li>
-<li>onAfterExecute</li>
 <li>onBeforeRouting</li>
+<li>onRouterBeforeRouteMatch</li>
+<li>onRouterAfterRouteMatch</li>
+<li>onAfterRouteMatched</li>
 <li>onAfterRouting</li>
-<li>onBeforeRender</li>
-<li>onAfterRender</li>
+<li>onPackageBeforeExecute</li>
+<li>onPackageAfterExecute</li>
+<li>onAfterExecute</li>
 <li>onBeforeRespond</li>
 <li>onAfterRespond</li>
+<li>onBeforeRedirect</li>
+</ul>
+
+<h3>Controller</h3>
+
+<ul>
+<li>onControllerBeforeExecute</li>
+<li>onControllerAfterExecute</li>
+</ul>
+
+<h3>View</h3>
+
+<ul>
+<li>onViewAfterHandleData</li>
+<li>onViewBeforeRender</li>
+<li>onViewAfterRender</li>
+</ul>
+
+<h3>Renderer</h3>
+
+<ul>
+<li>onRendererPrepareGlobals</li>
+</ul>
+
+<h3>Asset</h3>
+
+<ul>
+<li>onAssetRenderStyles</li>
+<li>onAssetRenderScripts</li>
+</ul>
+
+<h3>User</h3>
+
+<ul>
+<li>onLoadAuthenticationMethods</li>
+<li>onLoadAuthorisationPolicies</li>
+<li>onUserBeforeLogin</li>
+<li>onUserAuthorisation</li>
+<li>onUserAfterLogin</li>
+<li>onUserLoginFailure</li>
+<li>onUserBeforeLogout</li>
+<li>onUserAfterLogout</li>
+<li>onUserLogoutFailure</li>
+<li>onUserBeforeSave</li>
+<li>onUserSaveFailure</li>
+<li>onUserAfterSave</li>
+<li>onUserBeforeDelete</li>
+<li>onUserDeleteFailure</li>
+<li>onUseAfterDelete</li>
+</ul>
+
+<h3>Mailer</h3>
+
+<ul>
+<li>onMailerAfterCreateMessage</li>
+<li>onMailerBeforeSend</li>
 </ul>
 
                         <hr />

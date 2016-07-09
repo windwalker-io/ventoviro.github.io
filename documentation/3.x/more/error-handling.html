@@ -231,6 +231,9 @@
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
@@ -351,6 +354,9 @@ Override the <code>error.template</code> to your one:</p>
 <pre><code class="php">use Windwalker\Core\Error\ErrorHandler;
 use Windwalker\Core\Widget\WidgetHelper;
 
+/**
+ * @param \Exception|\Throwable $e
+ */
 ErrorHandler::addHandler(function ($e)
 {
     echo WidgetHelper::render('flower.error.default', ['e' =&gt; $e], 'edge');
@@ -424,7 +430,10 @@ class GetController extends AbstractController
 
 <p>You can write your own Log Handler by add callback as handler.</p>
 
-<pre><code class="php">ErrorHandler::addHandler('log', function ($e)
+<pre><code class="php">/**
+ * @param \Exception|\Throwable $e
+ */
+ErrorHandler::addHandler('log', function ($e)
 {
     Logger::error('my-errorlog', $e-&gt;getMessage());
 });

@@ -96,6 +96,9 @@ You are also allow to rewrite default error handler to render your own page:
 use Windwalker\Core\Error\ErrorHandler;
 use Windwalker\Core\Widget\WidgetHelper;
 
+/**
+ * @param \Exception|\Throwable $e
+ */
 ErrorHandler::addHandler(function ($e)
 {
     echo WidgetHelper::render('flower.error.default', ['e' => $e], 'edge');
@@ -176,6 +179,9 @@ Now Windwalker will log error in `logs/error.log`
 You can write your own Log Handler by add callback as handler.
 
 ``` php
+/**
+ * @param \Exception|\Throwable $e
+ */
 ErrorHandler::addHandler('log', function ($e)
 {
     Logger::error('my-errorlog', $e->getMessage());

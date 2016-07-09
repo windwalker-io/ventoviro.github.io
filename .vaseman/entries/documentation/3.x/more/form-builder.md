@@ -18,11 +18,8 @@ $form = new Form;
 
 $form->addField(new TextField('username', 'Username'));
 $form->addField(new PasswordField('password', 'Password'));
-
-// Another way
-
-$form->add('email',       new TextField)->label('Email');
-$form->add('description', new TextareaField)->label('Description'));
+$form->addField(new TextField('email', 'Email'));
+$form->addField(new TextareaField('description', 'Description'));
 
 echo $form->renderFields();
 ```
@@ -50,6 +47,19 @@ Render all fields, and we get this HTML output.
 
 ![img](https://cloud.githubusercontent.com/assets/1639206/5066911/0566a53c-6e77-11e4-9bee-6cc2ee01de21.png)
 
+### Use `add()`
+
+`add()` is a simple alias of `addField()` to make Field support chaining.
+
+``` php
+$form->add('username', new TextField)
+    ->label('Username')
+    ->setClass('input-large')
+    ->defauleValue('foo')
+    ->set('placeholder', 'Enter username')
+    ->required();
+```
+
 ### Using XML as Configuration
 
 ``` xml
@@ -72,30 +82,6 @@ Render all fields, and we get this HTML output.
 $form = new Form;
 
 $form->loadFile('form.xml');
-```
-
-## Field Definition Interface
-
-`FieldDefinitionInterface` is a simple interface to help us create an empty space to define form fields.
- 
-``` php
-use Windwalker\Form\FieldDefinitionInterface;
-
-class MyFieldDefinition implements FieldDefinitionInterface
-{
-	public function define(Form $form)
-	{
-	    $form->add('name', new TextField)->label('Name');
-	}
-}
-```
-
-Then add this definition to Form object.
-
-``` php
-$form = new Form;
-
-$form->defineFormField(new MyFieldDefinition);
 ```
 
 ## Form Control
@@ -143,6 +129,22 @@ echo $form->renderFields('animal');
 echo $form->renderFields();
 ```
 
+Use callback to wrap fieldset.
+
+``` php
+$form->fieldset('plant', function (Form $form)
+{
+	$form->addField(new TextField('flower', 'Flower'));
+	$form->addField(new TextField('tree', 'Tree'));
+});
+
+$form->fieldset('animal', function (Form $form)
+{
+	$form->addField(new TextField('flower', 'Flower'));
+	$form->addField(new TextField('tree', 'Tree'));
+});
+```
+
 Using XML
 
 ``` xml
@@ -172,13 +174,8 @@ $form->addField(new TextField('bird', 'Bird'), null, 'sky');
 // The name will be name="earth[flower]"
 echo $form->renderFields(null, 'plant');
 
-// The name will be name="sky[bird]"
+// The name will be name="sky[dog]"
 echo $form->renderFields(null, 'animal');
-```
-
-``` html
-<input type="text" name="earth[flower]" />
-<input type="text" name="sky[bird]" />
 ```
 
 Now we can use fieldset and group to organize our fields.
@@ -205,6 +202,31 @@ echo $form->renderFields(null, 'earth');
 echo $form->renderFields();
 ```
 
+Use callback to wrap group:
+
+``` php
+$form->group('earth', function (Form $form)
+{
+	$form->addField(new TextField('flower', 'Flower'));
+	$form->addField(new TextField('tree', 'Tree'));
+});
+```
+
+Wrap with fieldset and group:
+
+``` php
+$form->wrap('plant', 'earth', function (Form $form)
+{
+	$form->addField(new TextField('flower', 'Flower'));
+	$form->addField(new TextField('tree', 'Tree'));
+});
+
+$form->wrap('animal', 'sky', function (Form $form)
+{
+	$form->addField(new TextField('bird', 'Bird'));
+});
+```
+
 Using XML
 
 ``` xml
@@ -229,43 +251,12 @@ Using XML
 </form>
 ```
 
-### Use Wrapper Methods
-
-Windwalker 2.1 supports wrapper method to help us organize form fieldset and group.
+Control and group supports multi-level by `/` or `.` separator:
 
 ``` php
-$form->wrap('fieldset', null, function(Form $form)
-{
-    $form->add('name', new TextField)
-        ->label('Name')
-        ->required();
+$form = new Form('foo/bar');
 
-    $form->add('email', new TextField)
-        ->label('Email')
-        ->required();
-
-    $form->add('password', new PasswordField)
-        ->label('Password')
-        ->set('autocomplete', 'off');
-
-    $form->add('password2', new PasswordField)
-        ->label('Confirm Password')
-        ->set('autocomplete', 'off');
-});
-
-// Use group
-use Windwalker\Html\Option;
-
-$form->wrap('fieldset', 'group', function(Form $form)
-{
-    // State
-    $form->add('state', new Field\RadioField)
-        ->label('State')
-        ->set('class', 'btn-group')
-        ->set('default', 1)
-        ->addOption(new Option('On', '1'))
-        ->addOption(new Option('Off', '0'));
-});
+$form->group('egg/bread', ...);
 ```
 
 ## Attributes of Fields
@@ -279,7 +270,8 @@ $form->addField(new TextField('name', 'Label'));
 ### Set Attributes
 
 ``` php
-$form->addField(new TextField('name', 'Label'))
+$form->addField(new TextField('name'))
+    ->label('Label')
     ->set('id', 'my-name')
     ->set('class', 'col-md-8 form-input')
     ->set('onclick', 'return false;');
@@ -438,6 +430,10 @@ $field = new RadioList(
 | CheckboxesField | `<input type="checkbox">` | Checkbox list. |
 | RadioField    | `<input type="radio">`    | Radio list. |
 | TimezoneField | `<select>`                | A timezone select list. |
+| ButtonField   | `<button>`                | Create a custom button. |
+| CustomHtmlField | `...`                   | Create any HTML you want with `set('content', ...)`. |
+
+See every fields' `prepare()` method you will know available attributes.
 
 ## Custom Fields
 
@@ -560,58 +556,33 @@ For XML
 />
 ```
 
-## Renderer
+## Form Renderer
 
-We can add our own custom renderer to render form fields. This is a renderer example.
+If you wish to override core HTML output, use `FormRendererInterface` to render your fields.
 
 ``` php
-class MyFormRenderer
+class MyFormRenderer implements \Windwalker\Form\Renderer\FormRendererInterface
 {
-    public static function render(AbstractField $field, Form $form)
-    {
-        switch($field->getType())
-        {
-            case 'text':
-                return static::renderText($field, $form);
-                break;
-                
-            case 'list':
-            case 'radio':
-            case 'checkboxes':
-                return static::renderList($field, $form);
-                break;
-                
-            // More...
-                
-            default:
-                return static::renderInput($field, $form);
-        }
-    }
-    
-    // more ...
+	public function renderField(AbstractField $field, array $attribs = array())
+	{
+	    $attribs['class'] .= ' my-custom-style';
+
+		return new \Windwalker\Dom\HtmlElement('div', array(
+			$field->renderLabel(), // Will load $this->renderLabel()
+			$field->renderInput(), // Will load $this->renderInput()
+		), $attribs);
+	}
+
+	public function renderLabel(AbstractField $field, array $attribs = array())
+	{
+		return ...; // Render different field types
+	}
+
+	public function renderInput(AbstractField $field, array $attribs = array())
+	{
+		return ...; // Render different field types
+	}
 }
-```
 
-Add renderer callback to Form:
-
-``` php
-$form->setFieldRenderHandler(array('MyFormRenderer', 'render'));
-```
-
-Or use invokable object.
-
-``` php
-class MyFormRenderer
-{
-    public function __invoke(AbstractField $field, Form $form)
-    {
-        // ...
-    }
-    
-    // more ...
-}
-```
-
-``` php
-$form->setFieldRenderHandler(new MyFormRenderer);
+$form->setRenderer(new MyFormRenderer);
 ```

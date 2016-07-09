@@ -64,7 +64,7 @@ $dispatcher = \Windwalker\Ioc::getDispatcher();
 
 // OR
 
-$dispatcher = $container->get('system.dispatcher');
+$dispatcher = $container->get('dispatcher');
 
 // Attach listener
 $dispatcher->addListener(new ContentListener);
@@ -137,6 +137,15 @@ $dispatcher->addListener(
     }, 
     array('onContentSave' => ListenerPriority::NORMAL)
 );
+```
+
+Or use `listen()` method.
+
+``` php
+$dispatcher->listen('onContentSave', function (EventInterface $event)
+{
+    // Do something
+}, ListenerPriority::NORMAL);
 ```
 
 ## Dispatcher
@@ -222,15 +231,64 @@ class Application implements DispatcherAwareInterface
 }
 ```
 
-## Core Events
+## Default Events
 
-- onBeforeInitialise
+### Core
+
 - onAfterInitialise
+- onAfterBoot
 - onBeforeExecute
-- onAfterExecute
 - onBeforeRouting
+- onRouterBeforeRouteMatch
+- onRouterAfterRouteMatch
+- onAfterRouteMatched
 - onAfterRouting
-- onBeforeRender
-- onAfterRender
+- onPackageBeforeExecute
+- onPackageAfterExecute
+- onAfterExecute
 - onBeforeRespond
 - onAfterRespond
+- onBeforeRedirect
+
+### Controller
+
+- onControllerBeforeExecute
+- onControllerAfterExecute
+
+### View
+
+- onViewAfterHandleData
+- onViewBeforeRender
+- onViewAfterRender
+
+### Renderer
+
+- onRendererPrepareGlobals
+
+### Asset
+
+- onAssetRenderStyles
+- onAssetRenderScripts
+
+### User
+
+- onLoadAuthenticationMethods
+- onLoadAuthorisationPolicies
+- onUserBeforeLogin
+- onUserAuthorisation
+- onUserAfterLogin
+- onUserLoginFailure
+- onUserBeforeLogout
+- onUserAfterLogout
+- onUserLogoutFailure
+- onUserBeforeSave
+- onUserSaveFailure
+- onUserAfterSave
+- onUserBeforeDelete
+- onUserDeleteFailure
+- onUseAfterDelete
+
+### Mailer
+
+- onMailerAfterCreateMessage
+- onMailerBeforeSend

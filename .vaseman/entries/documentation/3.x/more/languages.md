@@ -305,12 +305,15 @@ $config->get('language.loaded');
 
 ## Translate in View Template
 
-Blade
+Blade & Edge
 
 ``` php
 @translate('windwalker.language.test.flower')
 @sprintf('windwalker.language.test.flower', 'foo', 'bar')
 @plural('windwalker.language.test.flower', 5)
+
+// only in Edge
+@lang('windwalker.language.test.flower')
 ```
 
 Twig

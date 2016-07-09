@@ -230,6 +230,9 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
             </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
                     <li class="uk-active">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
@@ -266,11 +269,11 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h3>Html &amp; Dom Builder</h3>
+                    <h2>Html &amp; Dom Builder</h2>
 
 <p>This is a convenience class to create XML and HTML element in an OO way.</p>
 
-<h5>DomElement</h5>
+<h3>DomElement</h3>
 
 <p>DomElement and DomElements is use to create XML elements.</p>
 
@@ -295,12 +298,12 @@ $attrs = array('id' =&gt; 'foo', 'class' =&gt; 'bar');
 $content = array(
     new DomElement('option', 'Yes', array('value' =&gt; 1)),
     new DomElement('option', 'No', array('value' =&gt; 0))
-)
+);
 
 echo $dom = (string) new DomElement('field', $content, $attrs);
 </code></pre>
 
-<p>The output wil be:</p>
+<p>The output will be:</p>
 
 <pre><code class="xml">&lt;field id="foo" class="bar"&gt;
     &lt;option value="1"&gt;Yes&lt;/option&gt;
@@ -308,7 +311,7 @@ echo $dom = (string) new DomElement('field', $content, $attrs);
 &lt;/field&gt;
 </code></pre>
 
-<h5>HtmlElement</h5>
+<h3>HtmlElement</h3>
 
 <p>HtmlElement is use to create HTML elements, some specific tags will force to unpaired.</p>
 
@@ -316,7 +319,7 @@ echo $dom = (string) new DomElement('field', $content, $attrs);
 
 $attrs = array(
     'class' =&gt; 'btn btn-mini',
-    'onclick' =&gt; 'return fasle;'
+    'onclick' =&gt; 'return false;'
 );
 
 $html = (string) new HtmlElement('button', 'Click', $attrs);
@@ -327,12 +330,12 @@ $html = (string) new HtmlElement('button', 'Click', $attrs);
 <pre><code class="html">&lt;button class="btn btn-mini" onclick="return false;"&gt;Click&lt;/button&gt;
 </code></pre>
 
-<h6># Get Attributes by Array Access</h6>
+<h4>Get Attributes by Array Access</h4>
 
 <pre><code class="php">$class = $html['class'];
 </code></pre>
 
-<h5>DomElements &amp; HtmlElements</h5>
+<h3>DomElements &amp; HtmlElements</h3>
 
 <p>It is a collection of HtmlElement set.</p>
 
@@ -355,51 +358,49 @@ echo $html;
 }
 </code></pre>
 
-<h3>XmlHelper</h3>
+<h3>Attributes</h3>
 
-<p><code>XmlHelper</code> using on get attributes of <code>SimpleXmlElement</code>.</p>
+<pre><code class="php">$html = new HtmlElement('input', array(
+    'data-string' =&gt; 'string',
+    'data-empty' =&gt; '',
+    'data-true'  =&gt; true,
+    'data-false' =&gt; false,
+    'data-null'  =&gt; null,
 
-<h5>Get Attributes</h5>
+    // Special attributes
+    'checked'    =&gt; 'checked',
+    'disabled'   =&gt; true,
+    'readonly'   =&gt; false
+));
 
-<pre><code class="php">use Windwalker\Dom\SimpleXml\XmlHelper;
-
-$xml = &lt;&lt;&lt;XML
-&lt;root&gt;
-    &lt;field name="foo" type="bar" readonly="true"&gt;
-        &lt;option&gt;&lt;/option&gt;
-    &lt;/field&gt;
-&lt;/root&gt;
-XML;
-
-$xml = simple_xml_load_string($xml);
-
-$element = $xml-&gt;xpath('field');
-
-$name = XmlHelper::getAttribute($element, 'name'); // result: foo
-
-// Same as get()
-$name = XmlHelper::get($element, 'name'); // result: foo
+echo $html;
 </code></pre>
 
-<h5>Get Boolean</h5>
+<p>Result</p>
 
-<p><code>getBool()</code> can help us convert some string link <code>true</code>, <code>1</code>, <code>yes</code> to boolean <code>TRUE</code> and <code>no</code>, <code>false</code>, <code>disabled</code>, <code>null</code>, <code>none</code>, <code>0</code> string to booleand <code>FALSE</code>.</p>
-
-<pre><code class="php">$bool = XmlHelper::getBool($element, 'readonly'); // result: (boolean) TRUE
+<pre><code class="html">&lt;input data-string="string" data-empty="" data-true checked="checked" disabled="disabled"&gt;
 </code></pre>
 
-<h5>Get False</h5>
+<h2>Formatter</h2>
 
-<p>Just an alias of <code>getBool()</code> but FALSE will return <code>TRUE</code>.</p>
+<p><code>DomFormatter</code> and <code>HtmlFormatter</code> will help us format <code>XML</code> / <code>HTML</code> string.</p>
 
-<h5>Set Default</h5>
+<pre><code class="php">$xml = '&lt;field id="foo" class="bar"&gt;&lt;option value="1"&gt;Yes&lt;/option&gt;&lt;option value="0"&gt;No&lt;/option&gt;&lt;/field&gt;';
 
-<p>If this attribute not exists, use this value as default, or we use original value from xml.</p>
-
-<pre><code class="php">XmlHelper::def($element, 'class', 'input');
+DomFormatter::format($xml);
 </code></pre>
 
-<h3>Select List</h3>
+<p>Result</p>
+
+<pre><code class="xml">&lt;field id="foo" class="bar"&gt;
+    &lt;option value="1"&gt;Yes&lt;/option&gt;
+    &lt;option value="0"&gt;No&lt;/option&gt;
+&lt;/field&gt;
+</code></pre>
+
+<p><code>HtmlFormatter</code> will convert some tags to unpaired element, e.g. <code>&lt;img&gt;</code>.</p>
+
+<h2>Select List</h2>
 
 <pre><code class="php">use Windwalker\Html\Select\SelectList;
 use Windwalker\Html\Option;
@@ -430,7 +431,7 @@ echo $select;
 &lt;/select&gt;
 </code></pre>
 
-<h5>Group Select</h5>
+<h3>Group Select</h3>
 
 <p>Use two level array to make options grouped.</p>
 
@@ -472,6 +473,8 @@ echo $select;
     &lt;option value="UTC" selected="selected"&gt;UTC&lt;/option&gt;
 &lt;/select&gt;
 </code></pre>
+
+<h2>Input List</h2>
 
 <h3>CheckboxList</h3>
 
@@ -517,9 +520,432 @@ echo $select;
 
 <p>Same as Checkboxes, but the input type will be <code>type="radio"</code></p>
 
-<h3>HtmlHelper</h3>
+<h2>Enumeration List</h2>
 
-<h5>Repair Tags</h5>
+<h3>UL List</h3>
+
+<pre><code class="php">use Windwalker\Html\Enum\ListItem;
+use Windwalker\Html\Enum\UList;
+
+echo new UList([
+    new ListItem('Foo'),
+    new ListItem('Bar', ['class' =&gt; 'baz']),
+]);
+
+// OR
+
+echo (new UList)
+    -&gt;item('new ListItem('Foo'))
+    -&gt;item('Bar', ['class' =&gt; 'baz']);
+</code></pre>
+
+<p>Output</p>
+
+<pre><code class="html">&lt;ul&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li class="baz"&gt;Bar&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<h3>OL List</h3>
+
+<pre><code class="php">echo (new OList)
+    -&gt;item('new ListItem('Foo'))
+    -&gt;item('Bar', ['class' =&gt; 'baz']);
+</code></pre>
+
+<p>Output</p>
+
+<pre><code class="html">&lt;ol&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li class="baz"&gt;Bar&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+
+<h3>Description List</h3>
+
+<pre><code class="php">use Windwalker\Html\Enum\DList;
+use Windwalker\Html\Enum\DListDescription;
+use Windwalker\Html\Enum\DListTitle;
+
+echo (new DList)
+    -&gt;addDescription('Foo', 'foo desc')
+    -&gt;addDescription('Bar', 'bar desc');
+
+// OR
+
+echo (new DList)
+    -&gt;title('Foo')-&gt;desc('foo desc')
+    -&gt;title('Bar')-&gt;desc('bar desc');
+
+// OR
+
+echo (new DList)
+    -&gt;item(new DListTitle('Foo'))-&gt;item(new DListDescription('foo desc'))
+    -&gt;item(new DListTitle('Bar'))-&gt;item(new DListDescription('bar desc'));
+</code></pre>
+
+<p>Output</p>
+
+<pre><code class="html">&lt;dl&gt;
+    &lt;dt&gt;Foo&lt;/dt&gt;
+    &lt;dd&gt;foo desc&lt;/dd&gt;
+
+    &lt;dt&gt;Bar&lt;/dt&gt;
+    &lt;dd&gt;bar desc&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre>
+
+<h2>Form Wrapper</h2>
+
+<pre><code class="php">use Windwalker\Html\Form\FormWrapper;
+use Windwalker\Html\Form\InputElement;
+
+echo FormWrapper::create([
+    new InputElement('hidden', 'id'),
+    new InputElement('text', 'title'),
+], ['action' =&gt; 'http://foo.com']);
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code class="html">&lt;form action="http://foo.com"&gt;
+    &lt;input type="hidden" name="id" value="" /&gt;
+    &lt;input type="text" name="title" value="" /&gt;
+&lt;/form&gt;
+</code></pre>
+
+<p>Use <code>start()</code> and <code>end()</code></p>
+
+<pre><code class="php">echo FormWrapper::start('my-form', 'post', 'http://foo.com', FormWrapper::ENCTYPE_FORM_DATA, ['id' =&gt; 'admin-form']);
+    // Echo inputs
+echo FormWrapper::end();
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code class="html">&lt;form name="my-form" id="admin-form" method="post" action="http://foo.com" enctype="multipart/form-data"&gt;
+    &lt;!-- inputs --&gt;
+&lt;/form&gt;
+</code></pre>
+
+<p>Add CSRF token automatically:</p>
+
+<pre><code class="php">$token = MySession::getFormToken();
+
+FormWrapper::setTokenHandler(function () use ($token)
+{
+    return new InputElement('hidden', $token, 1);
+});
+
+echo FormWrapper::start('my-form', 'post', 'http://foo.com', FormWrapper::ENCTYPE_FORM_DATA, ['id' =&gt; 'admin-form']);
+echo FormWrapper::end();
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code class="html">&lt;form name="my-form" id="admin-form" method="post" action="http://foo.com" enctype="multipart/form-data"&gt;
+    &lt;!-- inputs --&gt;
+    &lt;input type="hidden" name="e6900955e2cb8d2503f663e85eb2e7e9" value="1" /&gt;
+&lt;/form&gt;
+</code></pre>
+
+<h2>Table Generator</h2>
+
+<h3>Grid</h3>
+
+<p>Grid is a HTML table generator, see this example:</p>
+
+<pre><code class="php">use Windwalker\Html\Grid\Grid;
+
+$grid = new Grid(['class' =&gt; 'table table-bordered']);
+
+// Pre-set table columns and give them a name.
+$grid-&gt;setColumns(['a', 'b', 'c']);
+
+// Create first TR row, set it as &lt;thead&gt;
+$grid-&gt;addRow(['class' =&gt; 'head'], Grid::ROW_HEAD);
+
+// Set &lt;th&gt; value
+$grid-&gt;setRowCell('a', 'A');
+$grid-&gt;setRowCell('b', 'B');
+$grid-&gt;setRowCell('c', 'C');
+
+// Loop 3 rows
+foreach (range(1, 3) as $i)
+{
+    // Add a TR with class row-x
+    $grid-&gt;addRow(['class' =&gt; 'row-' . $i]);
+
+    // Set every &lt;td&gt; value
+    $grid-&gt;setRowCell('a', 'a1');
+    $grid-&gt;setRowCell('b', 'b1');
+    $grid-&gt;setRowCell('c', 'c1');
+}
+
+// Add &lt;tfoot&gt;
+$grid-&gt;addRow(['class' =&gt; 'foot'], Grid::ROW_FOOT);
+$grid-&gt;setRowCell('a', 'Table footer', ['colspan' =&gt; 3]);
+
+echo $grid;
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code class="html">&lt;table class="table table-bordered"&gt;
+    &lt;thead&gt;
+        &lt;tr class="head"&gt;
+            &lt;th&gt;A&lt;/th&gt;
+            &lt;th&gt;B&lt;/th&gt;
+            &lt;th&gt;C&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr class="row-1"&gt;
+            &lt;td&gt;a1&lt;/td&gt;
+            &lt;td&gt;b1&lt;/td&gt;
+            &lt;td&gt;c1&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr class="row-2"&gt;
+            &lt;td&gt;a1&lt;/td&gt;
+            &lt;td&gt;b1&lt;/td&gt;
+            &lt;td&gt;c1&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr class="row-3"&gt;
+            &lt;td&gt;a1&lt;/td&gt;
+            &lt;td&gt;b1&lt;/td&gt;
+            &lt;td&gt;c1&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;tfoot&gt;
+        &lt;tr class="foot"&gt;
+            &lt;td colspan="3"&gt;Table footer&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tfoot&gt;
+&lt;/table&gt;
+</code></pre>
+
+<table class="table table-bordered">
+    <thead>
+        <tr class="head">
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="row-1">
+            <td>a1</td>
+            <td>b1</td>
+            <td>c1</td>
+        </tr>
+        <tr class="row-2">
+            <td>a1</td>
+            <td>b1</td>
+            <td>c1</td>
+        </tr>
+        <tr class="row-3">
+            <td>a1</td>
+            <td>b1</td>
+            <td>c1</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr class="foot">
+            <td colspan="3">Table footer</td>
+        </tr>
+    </tfoot>
+</table>
+
+<h3>KeyValue Grid</h3>
+
+<p><code>KeyValueGrid</code> provides simple key-value table to show data similar to description list.</p>
+
+<pre><code class="php">use Windwalker\Html\Grid\KeyValueGrid;
+
+$items = [
+    'Foo' =&gt; 'foo value',
+    'Bar' =&gt; 'bar value',
+    'Yoo' =&gt; 'yoo value',
+];
+
+$grid = new KeyValueGrid;
+
+$grid-&gt;addHeader('Key', 'Value');
+
+foreach ($items as $key =&gt; $value)
+{
+    $grid-&gt;addItem($key, $value);
+}
+
+echo $grid;
+</code></pre>
+
+<table>
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Foo</td>
+            <td>foo value</td>
+        </tr>
+        <tr>
+            <td>Bar</td>
+            <td>bar value</td>
+        </tr>
+        <tr>
+            <td>Yoo</td>
+            <td>yoo value</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Add row title:</p>
+
+<pre><code class="php">$items = [
+    'Foo' =&gt; 'foo value',
+    'Bar' =&gt; 'bar value',
+    'Yoo' =&gt; 'yoo value',
+];
+
+$grid = new KeyValueGrid;
+
+$grid-&gt;addHeader('Key', 'Value');
+
+// Add a row title
+$grid-&gt;addTitle('This is a subtitle');
+
+foreach ($items as $key =&gt; $value)
+{
+    $grid-&gt;addItem($key, $value);
+}
+
+// Add a row title
+$grid-&gt;addTitle('This is another subtitle');
+
+foreach ($items as $key =&gt; $value)
+{
+    $grid-&gt;addItem($key, $value);
+}
+
+echo $grid;
+</code></pre>
+
+<table>
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2">This is a subtitle</td>
+        </tr>
+        <tr>
+            <td>Foo</td>
+            <td>foo value</td>
+        </tr>
+        <tr>
+            <td>Bar</td>
+            <td>bar value</td>
+        </tr>
+        <tr>
+            <td>Yoo</td>
+            <td>yoo value</td>
+        </tr>
+        <tr>
+            <td colspan="2">This is another subtitle</td>
+        </tr>
+        <tr>
+            <td>Foo</td>
+            <td>foo value</td>
+        </tr>
+        <tr>
+            <td>Bar</td>
+            <td>bar value</td>
+        </tr>
+        <tr>
+            <td>Yoo</td>
+            <td>yoo value</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Use <code>addItems()</code> or <code>configure()</code> to batch add items.</p>
+
+<pre><code class="php">$grid-&gt;addItems($items);
+
+// Or run a callback for every item
+$grid-&gt;configure($items, function (KeyValueGrid $grid, $key, $value)
+{
+    if ($value)
+    {
+        $grid-&gt;addItem($key, $value);
+    }
+});
+</code></pre>
+
+<h2>Media Elements</h2>
+
+<h3>Audio</h3>
+
+<pre><code class="php">echo (new Audio)
+    -&gt;controls(true)
+    -&gt;autoplay(true)
+    -&gt;loop(true)
+    -&gt;setNoSupportHint('Your browser do not support this format')
+    -&gt;addMp3Source('http://foo.com/bar.mp3')
+    -&gt;addOggSource('http://foo.com/bar.ogg')
+    -&gt;addWavSource('http://foo.com/bar.wav');
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code class="html"><br />&lt;audio controls autoplay loop&gt;
+    &lt;source src="http://foo.com/bar.mp3" type="audio/mpeg" /&gt;
+    &lt;source src="http://foo.com/bar.ogg" type="audio/ogg" /&gt;
+    &lt;source src="http://foo.com/bar.wav" type="audio/wav" /&gt;
+    Your browser do not support this format
+&lt;/audio&gt;
+</code></pre>
+
+<p>See <a href="http://www.w3schools.com/html/html5_audio.asp">HTML5 Audio Tag</a> and <a href="http://www.w3schools.com/tags/tag_source.asp">Tag Source</a></p>
+
+<h3>Video</h3>
+
+<pre><code class="php">echo (new Video)
+    -&gt;controls(true)
+    -&gt;autoplay(true)
+    -&gt;loop(true)
+    -&gt;preload(true)
+    -&gt;poster('http://foo.com/cover.jpg')
+    -&gt;setNoSupportHint('Your browser do not support this format')
+    -&gt;setMainSource('http://foo.com/bar.mp4')
+    -&gt;addMp4Source('http://foo.com/bar.mp4')
+    -&gt;addOggSource('http://foo.com/bar.ogg')
+    -&gt;addWebMSource('http://foo.com/bar.webm');
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code class="html"><br />&lt;video controls autoplay loop preload poster="http://foo.com/cover.jpg" src="http://foo.com/bar.mp4"&gt;
+    &lt;source src="http://foo.com/bar.mp4" type="video/mp4" /&gt;
+    &lt;source src="http://foo.com/bar.ogg" type="video/ogg" /&gt;
+    &lt;source src="http://foo.com/bar.webm" type="video/webm" /&gt;
+    Your browser do not support this format
+&lt;/video&gt;
+</code></pre>
+
+<p>See <a href="http://www.w3schools.com/html/html5_video.asp">HTML5 Video Tag</a> and <a href="http://www.w3schools.com/tags/tag_source.asp">Tag Source</a></p>
+
+<h2>HtmlHelper</h2>
+
+<h3>Repair Tags</h3>
 
 <p>We can using <code>repair()</code> method to repair unpaired tags by <code>php tidy</code>, if tidy extension not exists, will using simple tag close function to fix it.</p>
 
@@ -530,29 +956,87 @@ $html = \Windwalker\Html\Helper\HtmlHelper::repair($html);
 echo $html; // &lt;p&gt;foo&lt;/p&gt;
 </code></pre>
 
-<h5>Get JS Object</h5>
+<h3>Get JS Object</h3>
 
 <p>This method convert a nested array or object to JSON format that you can inject it to JS code.</p>
 
-<pre><code class="php">$option = array(
+<pre><code class="php">use Windwalker\Html\Helper\HtmlHelper;
+
+$option = array(
     'url' =&gt; 'http://foo.com',
     'foo' =&gt; array('bar', 'yoo')
 );
 
-echo $option = \Windwalker\Html\Helper\HtmlHelper::getJSOBject($option);
+echo $option = HtmlHelper::getJSOBject($option);
 </code></pre>
 
 <p>Result</p>
 
 <pre><code>{
-    "url" : "http://foo.com",
-    "foo" : ["bar", "yoo"]
+    url: "http://foo.com",
+    foo: ["bar", "yoo"]
 }
 </code></pre>
 
-<h3>More Builder</h3>
+<p>Add <code>\\</code> before a value that this method will not quote it as string.</p>
 
-<p>We'll add more builder object after version 2.1.</p>
+<pre><code class="php">$option = array(
+    'callback' =&gt; '\\function () { }'
+);
+
+echo $option = HtmlHelper::getJSOBject($option);
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="javascript">{
+    callback: function () { }
+}
+</code></pre>
+
+<h2>XmlHelper</h2>
+
+<p><code>XmlHelper</code> using on get attributes of <code>SimpleXmlElement</code>.</p>
+
+<h3>Get Attributes</h3>
+
+<pre><code class="php">use Windwalker\Dom\SimpleXml\XmlHelper;
+
+$xml = &lt;&lt;&lt;XML
+&lt;root&gt;
+    &lt;field name="foo" type="bar" readonly="true"&gt;
+        &lt;option&gt;&lt;/option&gt;
+    &lt;/field&gt;
+&lt;/root&gt;
+XML;
+
+$xml = simple_xml_load_string($xml);
+
+$element = $xml-&gt;xpath('field');
+
+$name = XmlHelper::getAttribute($element, 'name'); // result: foo
+
+// Same as get()
+$name = XmlHelper::get($element, 'name'); // result: foo
+</code></pre>
+
+<h3>Get Boolean</h3>
+
+<p><code>getBool()</code> can help us convert some string link <code>true</code>, <code>1</code>, <code>yes</code> to boolean <code>TRUE</code> and <code>no</code>, <code>false</code>, <code>disabled</code>, <code>null</code>, <code>none</code>, <code>0</code> string to booleand <code>FALSE</code>.</p>
+
+<pre><code class="php">$bool = XmlHelper::getBool($element, 'readonly'); // result: (boolean) TRUE
+</code></pre>
+
+<h3>Get False</h3>
+
+<p>Just an alias of <code>getBool()</code> but FALSE will return <code>TRUE</code>.</p>
+
+<h3>Set Default</h3>
+
+<p>If this attribute not exists, use this value as default, or we use original value from xml.</p>
+
+<pre><code class="php">XmlHelper::def($element, 'class', 'input');
+</code></pre>
 
                         <hr />
 

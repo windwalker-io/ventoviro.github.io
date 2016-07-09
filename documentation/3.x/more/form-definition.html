@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Authentication | Windwalker - A Modern PHP Framework</title>
+        <title>Form Definition | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Authentication | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Form Definition | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -76,11 +76,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/more/authentication.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/form-definition.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/more/authentication.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/form-definition.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Authentication</h1>
+        <h1>Form Definition</h1>
     </div>
         </div>
     </section>
@@ -209,7 +209,7 @@
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
             </li>
                     <li class="">
@@ -230,7 +230,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
             </li>
                     <li class="">
@@ -269,222 +269,156 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <blockquote>
-  <p>NOTE: This page is out-of-dated, will be rewrite in the future.</p>
-</blockquote>
+                    <h2>Use <code>AbstractFieldDefinition</code></h2>
 
-<h2>Introduction</h2>
+<p>Windwalker provides a simple interface to define form field. Just create a class extends to <code>Windwalker\Core\Form\AbstractFieldDefinition</code>
+and add field type by <code>$this-&gt;{type}('{name}')</code>.</p>
 
-<p>Building user system in Windwalker is very easy, Windwalker includes a simple Authentication package to handle user auth.</p>
+<pre><code class="php">&lt;?php
 
-<h2>Default User Package</h2>
+use Windwalker\Core\Form\AbstractFieldDefinition;
+use Windwalker\Form\Form;
 
-<p>In Windwalker Starter, there is an User package in <code>src/Windwalker/User</code> and has been registered to system. 
-You can directly modify it to what you needed.</p>
-
-<p>Before using it, you may run this command to import default user package schema:</p>
-
-<pre><code class="bash">php bin/console migration migrate -p=wwuser
-</code></pre>
-
-<h3>Get User</h3>
-
-<pre><code class="php">use Windwalker\Core\Authentication\User;
-
-// Get current logged-in user
-$user = User::get();
-
-// Get a user by id
-$user = User::get(12);
-
-// Get user by conditions
-$user = User::get(array('username' =&gt; 'christina'));
-</code></pre>
-
-<h3>Login User</h3>
-
-<pre><code class="php">// Prepare user data
-$credential = new Credential;
-$credential-&gt;username = 'richael2123';
-$credential-&gt;password = '12345678';
-
-$bool = User::login($credential);
-</code></pre>
-
-<p>Remember me:</p>
-
-<pre><code class="php">$bool = User::login($credential, true);
-</code></pre>
-
-<h3>Logout User</h3>
-
-<pre><code class="php">$bool = User::logout();
-</code></pre>
-
-<h3>Save User</h3>
-
-<pre><code class="php">use Windwalker\Crypt\Password;
-
-$user-&gt;username = 'riaok3784';
-$user-&gt;password = 'abc1234';
-
-// Hash password
-$password = new Password;
-
-$user-&gt;password = $password-&gt;create($user-&gt;password);
-
-User::save($user);
-</code></pre>
-
-<h3>Delete User</h3>
-
-<pre><code class="php">// Delete by id
-User::delete(12);
-
-// Delete by conditions
-User::delete(array('username' =&gt; 'richael3784'));
-</code></pre>
-
-<h2>Create Your Own User Handler</h2>
-
-<p>Windwalker Built-in Authentication system can register a custom user handler, this user handler should implement the <code>UserHandlerInterface</code>:</p>
-
-<pre><code class="php">use Windwalker\Core\Authentication\UserDataInterface;
-use Windwalker\Core\Authentication\UserHandlerInterface;
-
-class MyUserHandler implements UserHandlerInterface
+class EditDefinition extends AbstractFieldDefinition
 {
-    /**
-     * load
-     *
-     * @param array $conditions
-     *
-     * @return  mixed|false
-     */
-    public function load($conditions) {}
-
-    /**
-     * save
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  UserDataInterface
-     */
-    public function save(UserDataInterface $user) {}
-
-    /**
-     * delete
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  boolean
-     */
-    public function delete(UserDataInterface $user) {}
-
-    /**
-     * login
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  boolean
-     */
-    public function login(UserDataInterface $user) {}
-
-    /**
-     * logout
-     *
-     * @param UserDataInterface $user
-     *
-     * @return bool
-     */
-    public function logout(UserDataInterface $user) {}
-}
-</code></pre>
-
-<p>See: <a href="http://goo.gl/P0b2qk">Default UserHandler</a> to learn how to write your use handler.</p>
-
-<p>Then you may register it before application execute:</p>
-
-<pre><code class="php">use Windwalker\Core\Authentication\User;
-
-User::setHandler(new MyUserHandler);
-</code></pre>
-
-<h2>Create Authentication Method</h2>
-
-<p>Windwalker Authentication allow developers attach multiple methods to match user(See <a href="https://github.com/ventoviro/windwalker-authentication">Document</a>).</p>
-
-<p>This image described how authentication methods working.</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5595002/07d3235a-92a2-11e4-8f1f-5622e2af7254.jpg" alt="p-2015-01-02-5" /></p>
-
-<h3>Example Method to Find User From Database</h3>
-
-<pre><code class="php">use Windwalker\Authentication\Authentication;
-use Windwalker\Authentication\Credential;
-use Windwalker\Authentication\Method\AbstractMethod;
-use Windwalker\Crypt\Password;
-use Windwalker\DataMapper\DataMapper;
-
-class DatabaseMethod extends AbstractMethod
-{
-    public function authenticate(Credential $credential)
+    protected function doDefine(Form $form)
     {
-        // Not allow empty password
-        if (!$credential-&gt;username || !$credential-&gt;password)
+        $this-&gt;fieldset('basic', function (Form $form)
         {
-            $this-&gt;status = Authentication::EMPTY_CREDENTIAL;
+            $this-&gt;hidden('id');
 
-            return false;
-        }
+            $this-&gt;text('title')-&gt;label('Title')
+                -&gt;setClass('input-large')
+                -&gt;set('placeholder', 'Please enter title')
+                -&gt;required();
 
-        $datamapper = new DataMapper('users');
-
-        // Use user data to find user
-        $user = $datamapper-&gt;findOne(array('username' =&gt; $credential-&gt;username));
-
-        // User not found
-        if ($user-&gt;isNull())
-        {
-            $this-&gt;status = Authentication::USER_NOT_FOUND;
-
-            return false;
-        }
-
-        // User found, start to verify password
-        $password = new Password;
-
-        if (!$password-&gt;verify($credential-&gt;password, $user-&gt;password))
-        {
-            $this-&gt;status = Authentication::INVALID_CREDENTIAL;
-
-            return false;
-        }
-
-        // Password verify success, return user data.
-        $credential-&gt;bind($user);
-
-        $this-&gt;status = Authentication::SUCCESS;
-
-        return true;
+            $this-&gt;textarea('content')-&gt;label('Content')
+                -&gt;set('rows', 15)
+                -&gt;required();
+        });
     }
 }
 </code></pre>
 
-<p>Then we must register this method before Application executed:</p>
+<p>Then register this class to <code>Form</code>:</p>
 
-<pre><code class="php">$auth = \Windwalker\Ioc::getAuthentication();
-$auth-&gt;addMethod('database', new DatabaseMethod);
+<pre><code class="php">use Windwalker\Form\Form;
 
-// OR
+$form = new Form;
+$form-&gt;defineFormFields(new EditDefinition);
 
-User::addMethod('database', new DatabaseMethod);
+echo $form-&gt;renderFields('basic');
+</code></pre>
+
+<p>The output:</p>
+
+<pre><code class="php">&lt;div id="input-id-control" class="hidden-field "&gt;
+    &lt;label id="input-id-label" for="input-id"&gt;&lt;/label&gt;
+    &lt;input type="hidden" name="id" id="input-id" /&gt;
+&lt;/div&gt;
+&lt;div id="input-title-control" class="text-field "&gt;
+    &lt;label id="input-title-label" for="input-title"&gt;&lt;span class="windwalker-input-required-hint"&gt;*&lt;/span&gt; Title&lt;/label&gt;
+    &lt;input type="text" name="title" id="input-title" class="input-large" placeholder="Please enter title" value="" required /&gt;
+&lt;/div&gt;
+&lt;div id="input-content-control" class="textarea-field "&gt;
+    &lt;label id="input-content-label" for="input-content"&gt;&lt;span class="windwalker-input-required-hint"&gt;*&lt;/span&gt; Content&lt;/label&gt;
+    &lt;textarea name="content" id="input-content" required rows="15"&gt;&lt;/textarea&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3>Custom Field Class</h3>
+
+<p>You can also use <code>add()</code> method to add custom field class:</p>
+
+<pre><code class="php">use Windwalker\Form\Field\AbstractField;
+
+class MyField extends AbstractField
+{
+    // ...
+}
+</code></pre>
+
+<pre><code class="php">// in AbstractFieldDefinition
+
+$this-&gt;add('field_name', new MyField);
+</code></pre>
+
+<p>There has three methods: <code>fieldset()</code>, <code>group()</code> and <code>wrap()</code> are alias to methods with same name in <code>Form</code>, See <a href="form-builder.html">Form Builder</a></p>
+
+<h3>Available Fields</h3>
+
+<ul>
+<li><code>text($name = null, $label = null)</code></li>
+<li><code>button($name = null, $label = null)</code></li>
+<li><code>checkbox($name = null, $label = null)</code></li>
+<li><code>checkboxes($name = null, $label = null)</code></li>
+<li><code>customHtml($name = null, $label = null)</code></li>
+<li><code>email($name = null, $label = null)</code></li>
+<li><code>hidden($name = null, $label = null)</code></li>
+<li><code>list($name = null, $label = null)</code></li>
+<li><code>password($name = null, $label = null)</code></li>
+<li><code>radio($name = null, $label = null)</code></li>
+<li><code>spacer($name = null, $label = null)</code></li>
+<li><code>textarea($name = null, $label = null)</code></li>
+<li><code>timezone($name = null, $label = null)</code></li>
+</ul>
+
+<h2>Add Custom Methods by Traits</h2>
+
+<p>If you have a lot of custom fields, you can register them to <code>AbstractFieldDefinition</code>.</p>
+
+<p>First, you must put all fields in one folder with same namespace, and all field classes' name should follows <code>{Name}Field</code> rule.
+And create a <code>trait</code> with boot method.</p>
+
+<pre><code class="php">/**
+ * The MyFieldTrait class.
+ *
+ * @method  \MyPackage\Field\FooField foo($name = null, $label = null)
+ * @method  \MyPackage\Field\BarField bar($name = null, $label = null)
+ * @method  \MyPackage\Field\BazField baz($name = null, $label = null)
+ */
+trait MyFieldTrait
+{
+    public function bootMyFieldTrait()
+    {
+        $this-&gt;addNamespace('MyPackage\Field');
+    }
+}
+</code></pre>
+
+<p>Use this trait in your definition class, then you are able to use <code>foo()</code> to get <code>MyPackage\Field\FooField</code>:</p>
+
+<pre><code class="php">class EditDefinition extends AbstractFieldDefinition
+{
+    use MyFieldTrait;
+
+    protected function doDefine(Form $form)
+    {
+        // ...
+
+        $this-&gt;foo('field_name')
+            -&gt;label('Foo');
+    }
+}
+</code></pre>
+
+<p>If your field naming convention not follows default rule, you can add a method to create it.</p>
+
+<pre><code class="php">trait MyFieldTrait
+{
+    // ...
+
+    public function sakura($name = null, $label = null)
+    {
+        return new MyFieldSakura($name, $label);
+    }
+}
 </code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/authentication.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/form-definition.md">improve</a> this document.
     </p>
                 </article>
             </div>

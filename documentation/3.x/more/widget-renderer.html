@@ -231,6 +231,9 @@
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
@@ -297,9 +300,6 @@ $news-&gt;render(array('articles' =&gt; $data));
 
 // In PHP 5.4, you can use instantiation object access
 $news = (new Widget('sidebar.news'))-&gt;render(['articles' =&gt; $data]);
-
-// In PHP 5.3, you can use with() to simulate instantiation object access
-$news = with(new Widget('sidebar.news'))-&gt;render(array('articles' =&gt; $data));
 </code></pre>
 
 <p>It will be useful to render widget in View <code>prepareData()</code>:</p>
@@ -323,69 +323,150 @@ $news = with(new Widget('sidebar.news'))-&gt;render(array('articles' =&gt; $data
 
 <p>By default, widget will find templates from these paths:</p>
 
-<pre><code class="html">[0] =&gt; /templates
-[1] =&gt; /vendor/windwalker/core/src/Core/Resources/Templates
+<pre><code class="html">- {ROOT}/src/{package}/Templates/{Locale}
+- {ROOT}/src/{package}/Templates
+- {ROOT}/templates
+- {ROOT}/vendor/windwalker/core/src/Core/Resources/Templates
 </code></pre>
 
-<p>You may add your custom path to Widget:</p>
+<p>You can add your custom path to Widget:</p>
 
-<pre><code class="php">use Windwalker\Utilities\Queue\Priority;
+<pre><code class="php">use Windwalker\Utilities\Queue\PriorityQueue;
 
-$widget-&gt;addPath('/my/widget/path', Priority::HIGH);
+$widget-&gt;addPath('/my/widget/path', PriorityQueue::HIGH);
 </code></pre>
 
 <p>Widget also use <a href="https://github.com/ventoviro/windwalker-renderer">Windwalker Renderer</a> to render page, 
 you need to add priority to set the ordering of this path.</p>
 
+<h3>Set Package</h3>
+
+<p>By default, Widget will auto guess current package, but you can set custom package to direct to different template paths.</p>
+
+<pre><code class="php">// Add package name, Widget will auto resolve package
+$news = new Widget('sidebar.news', 'php', 'package_name');
+
+// OR add package object
+
+$news = new Widget('sidebar.news', 'php', $package);
+</code></pre>
+
 <h3>Add Path to Global</h3>
 
 <p>Add your path to global RendererHelper that Widget will always contain this path:</p>
 
-<pre><code class="php">\Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/widget/path', Priority::ABOVE_NORMAL);
+<pre><code class="php">\Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/widget/path', PriorityQueue::ABOVE_NORMAL);
+</code></pre>
+
+<h3>Add Shared Variables</h3>
+
+<pre><code class="php">$widget = new Widget('flower.sakura');
+$widget-&gt;set('foo', 'bar');
+
+echo $widget-&gt;render($data1);
+echo $widget-&gt;render($data2);
 </code></pre>
 
 <h2>Override Built-in Widgets Templates</h2>
 
 <p>Windwalker has some built-in widgets, it contains: <code>messages</code>, <code>pagination</code>, <code>error pages</code>.</p>
 
-<p>There is an example to override messages template, the global message template is located at</p>
+<p>There is an example to override messages template. The global message template is located at</p>
 
-<pre><code class="html">/vendor/windwalker/core/src/Core/Resources/Templates/windwalker/message/default.php
+<pre><code>{ROOT}/vendor/windwalker/core/src/Core/Resources/Templates/windwalker/message/default.php
 </code></pre>
 
 <p>So we can add a custom template at:</p>
 
-<pre><code class="html">/templates/windwalker/message/default.php
+<pre><code>{ROOT}/templates/windwalker/message/default.php
 </code></pre>
 
-<p>Now all messages in Windwalker will use your template to render.</p>
+<p>Now all messages in Windwalker will select your template since the new file path is priority to origin file.</p>
 
 <blockquote>
   <p>Override other widgets please see: <a href="pagination.html">Pagination</a> and <a href="error-handling.html">Error Handling</a></p>
 </blockquote>
 
-<h2>Use Blade and Twig</h2>
+<h2>Use Edge and Twig</h2>
 
 <p>Similar to View, Windwalker Widget support Blade and Twig engine, you may just create it by newing it:</p>
 
-<pre><code class="php">use Windwalker\Core\Widget\BladeWidget;
-use Windwalker\Core\Widget\TwigWidget;
+<pre><code class="php">use Windwalker\Core\Widget\WidgetHelper;
 
-$news = new BladeWidget('sidebar.news');
-$news = new TwigWidget('sidebar.news');
+// Use constant
+WidgetHelper::createWidget('sidebar.news', WidgetHelper::EDGE);
+
+// Use string
+WidgetHelper::createWidget('sidebar.news', 'twig');
 </code></pre>
 
 <blockquote>
   <p>See also: <a href="https://laravel.com/docs/master/blade">Blade Templating</a> and <a href="http://twig.sensiolabs.org/documentation">Twig Documentation</a></p>
 </blockquote>
 
-<h2>WidgetHelper</h2>
+<h2>Render by WidgetHelper</h2>
 
 <p>Use WidgetHelper to quickly render page.</p>
 
 <pre><code class="php">use Windwalker\Core\Widget\WidgetHelper;
 
-$html = WidgetHelper::render('foo.bar', $data, WidgetHelper::ENGINE_BLADE);
+$html = WidgetHelper::render('foo.bar', $data, WidgetHelper::EDGE);
+</code></pre>
+
+<h2>Create Custom Widget Class</h2>
+
+<p>Create custom Widget class to quickly render specific template.</p>
+
+<pre><code class="php">use Windwalker\DataMapper\DataMapper;
+
+class NewsWidget extends Widget
+{
+    /**
+     * Optional property to set engine.
+     */
+    protected $renderer = 'edge';
+
+    /**
+     * Optional property to find template.
+     */
+    protected $layout = 'sidebar.news';
+
+    /**
+     * Optional property to locate package.
+     */
+    protected $package = 'flower';
+
+    protected function prepareData($data)
+    {
+        $data-&gt;items = (new DataMapper('articles'))-&gt;limit(10, 20)-&gt;find();
+    }
+}
+</code></pre>
+
+<pre><code class="php">echo (new NewsWidget)-&gt;render();
+</code></pre>
+
+<h2>Render Widget in Template</h2>
+
+<p>WidgetHelper instance has been inject to global renderer variables, we can use it to quickly render widget.</p>
+
+<p>In php template</p>
+
+<pre><code class="php">&lt;?php echo $widget-&gt;render('sidebar,.news', $data, 'edge'); ?&gt;
+</code></pre>
+
+<p>In Blade or Edge</p>
+
+<pre><code class="html">{!! $widget-&gt;render('sidebar,.news', $data, 'edge') !!}
+
+OR
+
+@widget('sidebar,.news', $data, 'edge')
+</code></pre>
+
+<p>Twig</p>
+
+<pre><code class="twig">{{ widget.render('sidebar,.news', $data, 'edge') | raw }}
 </code></pre>
 
                         <hr />

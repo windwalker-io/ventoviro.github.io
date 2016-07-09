@@ -231,6 +231,9 @@
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="uk-active">
@@ -538,11 +541,14 @@ $config-&gt;get('language.loaded');
 
 <h2>Translate in View Template</h2>
 
-<p>Blade</p>
+<p>Blade &amp; Edge</p>
 
 <pre><code class="php">@translate('windwalker.language.test.flower')
 @sprintf('windwalker.language.test.flower', 'foo', 'bar')
 @plural('windwalker.language.test.flower', 5)
+
+// only in Edge
+@lang('windwalker.language.test.flower')
 </code></pre>
 
 <p>Twig</p>

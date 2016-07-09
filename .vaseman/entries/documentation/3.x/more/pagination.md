@@ -167,24 +167,58 @@ You can use this array to build your pagination HTML.
 
 ![pagination](https://cloud.githubusercontent.com/assets/1639206/5594615/131c1546-928e-11e4-8103-f90e73f4428d.jpg)
 
-## Use Built-in Pagination Template
+## UPagination Template
 
-`render()` method will auto render pagination HTML, the default template is `windwalker.pagination.default`. 
-The first argument (route resources name) is required because pagination use `Router` to get page url.
-
-``` php
-echo $pagination->render('flower@sakuras');
-```
-
-### Use Your Own Template
-
-Add your template file in `/templates/windwalker/pagination/default.php`, Windwalker renderer will auto find it to replace built-in template.
-  
-Or use second argument to point to other template:
+`render()` method will auto render pagination HTML, the default template is `windwalker.pagination.default`.
 
 ``` php
-echo $pagination->render('flower@sakuras', 'mywidget.pagination');
+echo $pagination->render()
 ```
 
-See also: [Widget and Renderer](widget-renderer.html)
+Set custom template:
 
+``` php
+$pagination->template('mytemplate.pagination', 'edge')->render();
+```
+
+Set custom route for building page URL.
+
+``` php
+$pagination->route('tag')->render();
+
+// OR add package
+
+$pagination->route('package@tag')->render();
+````
+
+Sometimes we may need more params in URL query:
+
+``` php
+$pagination->route('tag', ['title' => $title])->render();
+```
+
+Set Router object to Pagination if you have custom Router object.
+
+``` php
+echo $pagination->setRouter($router)
+    ->route('tag', ['title' => $title])
+    ->template('mytemplate.pagination', 'edge')
+    ->render();
+```
+
+## Simple Pagination
+
+Windwalker supports simple pagination if you have a big table and you don't want to count totals.
+
+``` php
+// Use -1 as total.
+echo (new Pagination($current, $limit, -1))
+    ->template('windwalker.pagination.simple')
+    ->render();
+```
+
+Or quick create by static:
+
+``` php
+echo Pagination::simple($current, $limit)->render();
+```

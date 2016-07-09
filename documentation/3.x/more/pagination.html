@@ -231,6 +231,9 @@
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
@@ -420,24 +423,55 @@ print_r($paginData-&gt;getAll());
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5594615/131c1546-928e-11e4-8103-f90e73f4428d.jpg" alt="pagination" /></p>
 
-<h2>Use Built-in Pagination Template</h2>
+<h2>UPagination Template</h2>
 
-<p><code>render()</code> method will auto render pagination HTML, the default template is <code>windwalker.pagination.default</code>. 
-The first argument (route resources name) is required because pagination use <code>Router</code> to get page url.</p>
+<p><code>render()</code> method will auto render pagination HTML, the default template is <code>windwalker.pagination.default</code>.</p>
 
-<pre><code class="php">echo $pagination-&gt;render('flower@sakuras');
+<pre><code class="php">echo $pagination-&gt;render()
 </code></pre>
 
-<h3>Use Your Own Template</h3>
+<p>Set custom template:</p>
 
-<p>Add your template file in <code>/templates/windwalker/pagination/default.php</code>, Windwalker renderer will auto find it to replace built-in template.</p>
-
-<p>Or use second argument to point to other template:</p>
-
-<pre><code class="php">echo $pagination-&gt;render('flower@sakuras', 'mywidget.pagination');
+<pre><code class="php">$pagination-&gt;template('mytemplate.pagination', 'edge')-&gt;render();
 </code></pre>
 
-<p>See also: <a href="widget-renderer.html">Widget and Renderer</a></p>
+<p>Set custom route for building page URL.</p>
+
+<pre><code class="php">$pagination-&gt;route('tag')-&gt;render();
+
+// OR add package
+
+$pagination-&gt;route('package@tag')-&gt;render();
+````
+
+Sometimes we may need more params in URL query:
+
+``` php
+$pagination-&gt;route('tag', ['title' =&gt; $title])-&gt;render();
+</code></pre>
+
+<p>Set Router object to Pagination if you have custom Router object.</p>
+
+<pre><code class="php">echo $pagination-&gt;setRouter($router)
+    -&gt;route('tag', ['title' =&gt; $title])
+    -&gt;template('mytemplate.pagination', 'edge')
+    -&gt;render();
+</code></pre>
+
+<h2>Simple Pagination</h2>
+
+<p>Windwalker supports simple pagination if you have a big table and you don't want to count totals.</p>
+
+<pre><code class="php">// Use -1 as total.
+echo (new Pagination($current, $limit, -1))
+    -&gt;template('windwalker.pagination.simple')
+    -&gt;render();
+</code></pre>
+
+<p>Or quick create by static:</p>
+
+<pre><code class="php">echo Pagination::simple($current, $limit)-&gt;render();
+</code></pre>
 
                         <hr />
 
