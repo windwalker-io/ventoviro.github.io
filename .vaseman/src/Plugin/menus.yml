@@ -21,6 +21,7 @@ documentation:
             mvc/use-controller: Use Controller
             mvc/class-resolvers: Class Resolvers
             mvc/view-templating: View and Templating
+            mvc/edge: Edge Templates
             mvc/model-database: Model and Database
             mvc/view-model: ViewModel
             mvc/uri-route-building: URI and Route Building

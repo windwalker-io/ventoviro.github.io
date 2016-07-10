@@ -6,11 +6,11 @@ title: Service Provider
 
 ## Introduction of Service Provider
 
-Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
+Service Provider is an useful way to encapsulate logic for creating objects and services. For example, a mailer library,
 custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.
 
-Service Provider will working with IoC Container, we'll implement the `\Windwalker\DI\ServiceProviderInterface` 
-and write all our logic in `register()` method and set our service objects into container.
+Service Provider works with IoC Container, we must implement the `\Windwalker\DI\ServiceProviderInterface`
+and write all our logic in `register()` and `boot()` method then set our objects into container.
  
 ### Basic Provider Example
 
@@ -19,8 +19,9 @@ Take a look of this example code, in a original way, if we have a MongoDB driver
 ##### Original Way
 
 ``` php
-// import.mongodb.php
+// ./import.mongodb.php
 
+// This is a fake MongoDB connector
 $conn = new MongoDBConnection($config['database']['mongodb']);
 
 return $conn;
@@ -29,12 +30,14 @@ return $conn;
 And include this file:
 
 ``` php
-$mongo = include_once 'import.mongodb.php';
+$mongo = include_once __DIR__ . '/import.mongodb.php';
 ```
+
+This is not the best practice to include a 3rd service in our system, so we use provider to handle it.
 
 ##### Windwalker Way
 
-In Windwalker, we can create a `MongoDBServiceProvider`, and set MongoDB connection to Container.
+In Windwalker, Create a `MongoDBServiceProvider`, and set MongoDB connection to Container.
 
 ``` php
 use Windwalker\DI\Container;
@@ -44,24 +47,26 @@ class MongoDBServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container)
     {
-        $container->share('mongo.db', function (Container $container)
-        {
-            $config = $container->get('config');
+        $closure = function (Container $container)
+       {
+           $config = $container->get('config');
 
-            return new MongoDBConnection($config->get('database.mongodb'));
-        });
+           return new MongoDBConnection($config->get('database.mongodb'));
+       }
+
+        $container->share(MongoDBServiceProvider::class, $closure)->alias('mongo.db', MongoDBServiceProvider::class);
     }
 }
 
 ```
 
-Register this provider to container:
+Register this provider in container:
 
 ``` php
 $container->registerServiceProvider(new MongoDBServiceProvider);
 ```
 
-Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:
+Then get this object from Container, the `MongoDBConnection` will be lazy loading, MongoDB will connected after your first get it:
 
 ``` php
 $mongo = $container->get('mongo.db');
@@ -75,36 +80,44 @@ About how to use IoC (DI) Container, see: [IoC Container](ioc-container.html)
 
 ## Registering Providers
 
-All Service Providers are registered in `Application::loadProviders()`. For example, open `/src/Windwalker/Web/Application.php`, 
-you will see `loadProviders()`, there is an array `$providers` here, help ue override default providers, now we add our Service Provider here:
+All Service Providers are registered in config, add your own or 3rd providers in `etc/app/windwalker.php` or `etc/app/web.php`:
 
 ``` php
-public function loadProviders()
-{
-    $providers = parent::loadProviders();
+// etc/app/windwalker.php
 
-    // Default providers ...
+// ...
 
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
+    'providers' => [
+        'mongodb' => MongoDBServiceProvider::class
+    ]
 
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
-}
+// ...
 ```
 
-There are 3 positions in default Windwalker Application we can add providers:
+## Boot Service
 
-- `src/Windwalker/Web/Application.php`
-- `src/Windwalker/Console/Application/php`
-- `src/Windwalker.php`
+If the service need to be boot when system initializing, we can add a `boot()` method to provider class.
+This is an error handler provider example, we must register error handler instantly after providers registered.
 
-If you want to use service for Web application, add provider in `Web\Application`, else you can add provider in `Console\Application`
-for console use, or add it in `Windwalker.php` for both.
+``` php
+class ErrorHandlingProvider implements ServiceProviderInterface
+{
+	public function boot(Container $container)
+	{
+		$handler = $container->get('error.handler');
 
+		// Register instantly after providers registered.
+		$handler->register();
+	}
+
+	public function register(Container $container)
+	{
+		$closure = function (Container $container)
+		{
+			return $container->createSharedObject(ErrorManager::class);
+		};
+
+		$container->share('error.handler', $closure);
+	}
+}
+```

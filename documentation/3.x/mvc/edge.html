@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>Edge Templates | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Edge Templates | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+                <div id="version-switcher" class="uk-button-dropdown uk-float-right" data-uk-dropdown="">
+        <a class="uk-button uk-button-primary" href="../../../documentation/3.x/start/getting-started.html">
+            3.x <i class="uk-icon-caret-down"></i>
+        </a>
+
+        <div class="uk-dropdown">
+            <ul class="uk-nav uk-nav-dropdown">
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/mvc/edge.html">3.x</a>
+                </li>
+
+                <li class="">
+                    <a href="../../../documentation/2.1/mvc/edge.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Edge Templates</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Core</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <p>Edge is a <a href="https://laravel.com/docs/5.1/blade">Blade</a> compatible template engine, provides same syntax to support
+Blade template files, but has more powerful extending interfaces.</p>
+
+<h2>Use Edge Engine in View</h2>
+
+<p>Get Edge View in Controller</p>
+
+<pre><code class="php">$view = $this-&gt;getView('sakura', 'html', 'edge');
+
+$view-&gt;set('title', 'Hello World~~~!');
+</code></pre>
+
+<p>Or set renderer in view class:</p>
+
+<pre><code class="php">use Windwalker\Core\View\HtmlView;
+
+class SakuraHtmlView extends HtmlView
+{
+    protected $renderer = 'edge'; // Or RendererHelper::EDGE
+}
+</code></pre>
+
+<p>Then we create a template file in <code>src/Flower/Templates/sakura/default.edge.php</code> or (<code>default.blade.php</code>):</p>
+
+<pre><code class="blade">&lt;h1&gt;{{ $title }}&lt;/h1&gt;
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code class="html">&lt;h1&gt;Hello World~~~!&lt;/h1&gt;
+</code></pre>
+
+<h2>Edge Syntax</h2>
+
+<p>Most of Edge syntax are same as Blade.</p>
+
+<h3>Echoing Data</h3>
+
+<p>Display a variable by <code>{{ ... }}</code></p>
+
+<pre><code class="blade">Hello {{ $title }}
+</code></pre>
+
+<p>Unescaped echoing.</p>
+
+<pre><code class="blade">My name is {!! $form-&gt;input('name') !!}
+</code></pre>
+
+<h3>Control Structures</h3>
+
+<h4>If Statement</h4>
+
+<p>Use <code>@if ... @else</code> directive.</p>
+
+<pre><code class="blade">@if (count($flower) == 1)
+    I have one flower!
+@elseif (count($flower) &gt; 1)
+    I have many flkowers!
+@else
+    I don't have any flower!
+@endif
+</code></pre>
+
+<p>Unless directive</p>
+
+<pre><code class="html">@unless ($user-&gt;isAdmin())
+    You are not logged in.
+@endunless
+</code></pre>
+
+<h3>Loops</h3>
+
+<p>Edge provides simple directives similar to PHP loop structure.</p>
+
+<pre><code class="blade">@for ($i = 0; $i &lt; 10; $i++)
+    The current value is {{ $i }}
+@endfor
+
+@foreach ($users as $user)
+    &lt;p&gt;This user is: {{ $user-&gt;name }}&lt;/p&gt;
+@endforeach
+
+@forelse ($articles as $article)
+    &lt;li&gt;{{ $article-&gt;title }}&lt;/li&gt;
+@empty
+    &lt;p&gt;No article here&lt;/p&gt;
+@endforelse
+
+@while (true)
+    &lt;p&gt;I'm looping forever.&lt;/p&gt;
+@endwhile
+</code></pre>
+
+<p>You might need to break or skip a loop.</p>
+
+<pre><code class="blade">@foreach ($users as $user)
+
+    @if (!$user-&gt;id)
+        @continue
+    @endif
+
+    &lt;p&gt;This user is: {{ $user-&gt;name }}&lt;/p&gt;
+
+    @if ($user-&gt;id &gt;= 10)
+        @break
+    @endif
+
+@endforeach
+</code></pre>
+
+<p>Or add conditions to these two directives.</p>
+
+<pre><code class="blade">@continue(!$user-&gt;id)
+
+@break($user-&gt;id &gt;= 10)
+</code></pre>
+
+<h2>Layouts</h2>
+
+<p>We can define some sections in a root template.</p>
+
+<pre><code class="html">&lt;!-- tmpl/layouts/root.edge.php --&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;@yield('page_title')&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        @section('body')
+            The is root body
+        @show
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Now we can add an child template to extends root template.</p>
+
+<pre><code class="blade">@extends('layouts.root')
+
+@section('page_title', 'My Page Title')
+
+@section('content')
+    &lt;p&gt;This is my body content.&lt;/p&gt;
+@endsection
+</code></pre>
+
+<p>The final template rendered:</p>
+
+<pre><code class="html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My Page Title&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;This is my body content.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>More directive and usages please see <a href="https://laravel.com/docs/5.2/blade#defining-a-layout">Blade</a></p>
+
+<h2>Extending Edge</h2>
+
+<p>We can create Extension class to add multiple directives and global variables to Edge.</p>
+
+<pre><code class="php">class MyExtension implements \Windwalker\Edge\Extension\EdgeExtensionInterface
+{
+    public function getName()
+    {
+        return 'my_extension';
+    }
+
+    public function getDirectives()
+    {
+        return array(
+            'upper' =&gt; array($this, 'upper'),
+            'lower' =&gt; array($this, 'lower'),
+        );
+    }
+
+    public function getGlobals()
+    {
+        return array(
+            'flower' =&gt; 'sakura'
+        );
+    }
+
+    public function getParsers()
+    {
+        return array();
+    }
+
+    public function upper($expression)
+    {
+        return "&lt;?php echo strtoupper$expression; ?&gt;";
+    }
+
+    public function lower($expression)
+    {
+        return "&lt;?php echo strtolower$expression; ?&gt;";
+    }
+}
+
+// Inject this extension to Edge
+
+\Windwalker\Renderer\Edge\GlobalContainer::addExtension(new MyExtension[, $name = null]);
+</code></pre>
+
+<p>Use our new directive:</p>
+
+<pre><code class="blade">&lt;h1&gt;@upport('hello')&lt;/h2&gt;
+
+&lt;!-- Result: &lt;h1&gt;HELLO&lt;/h1&gt; --&gt;
+</code></pre>
+
+<p>See <a href="https://github.com/ventoviro/windwalker/tree/master/src/Edge">Edge Package</a></p>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/mvc/edge.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>
