@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Class Resolvers | Windwalker - A Modern PHP Framework</title>
+        <title>Crypt | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Class Resolvers | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Crypt | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/mvc/class-resolvers.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/crypt.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/mvc/class-resolvers.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/crypt.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Class Resolvers</h1>
+        <h1>Crypt</h1>
     </div>
         </div>
     </section>
@@ -162,7 +162,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
             </li>
                     <li class="">
@@ -264,7 +264,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/structure.html">Structure Object</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/crypt.html">Crypt</a>
             </li>
                     <li class="">
@@ -300,58 +300,103 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Resolvers</h2>
+                    <h2>Password Hashing</h2>
 
-<p>Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
-has a <code>flower</code> package and a route with <code>Sakura</code> controller matched:</p>
+<p><code>Password</code> object is a simple object to encrypt user's password, it is impossible to decrypt password hash, <code>Password</code> object
+uses a one-way algorithm.</p>
 
-<pre><code class="php">sakura:
-    pattern: /sakura
-    controller: Sakura
+<h3>Create Password</h3>
+
+<pre><code class="php">use Windwalker\Crypt\Password;
+
+$password = new Password;
+
+$pass = $password-&gt;create('pass1234');
+
+// $2y$10$csNfML/FJlKwaHR8xREgZuhp0pqSqeg.jdACqDsKO/MCHDkTuIZEa
 </code></pre>
 
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists, 
-we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
+<p>Using other hash algorithm</p>
 
-<p>Add this line in package <code>boot()</code> or any position before package execute.</p>
+<pre><code class="php">use Windwalker\Crypt\Password;
 
-<pre><code class="php">public function boot()
-{
-    parent::boot();
+$password = new Password(Password::SHA256);
 
-    // Register Animal package namespace to find classes
-    $mvcResolver = $this-&gt;getMvcResolver();
-
-    $mvcResolver-&gt;addNamespace('Animal', Priority::NORMAL);
-}
+$pass = $password-&gt;create('pass1234');
 </code></pre>
 
-<p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
-It is flexible to help us organize our packages.</p>
+<p>Set cost and salt:</p>
 
-<h2>View And Model</h2>
+<pre><code class="php">use Windwalker\Crypt\Password;
 
-<p>You can also use the same way to add default View and Model paths.</p>
+// The Blowfish algorithm should set cost number between 4 to 31.
+// We are suggest not higher than 15, else it will be too slow.
+$password = new Password(Password::BLOWFISH, 15, md5('to be or not to be.'));
 
-<pre><code class="php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);
+$pass = $password-&gt;create('pass1234');
+
+// Note the Sha256 and Sha512 should set cost number higher than 1000
+$password = new Password(Password::BLOWFISH, 5000, md5('to be or not to be.'));
+
+$pass = $password-&gt;create('pass1234');
 </code></pre>
 
-<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
-will find from Animal package as default object.</p>
+<h3>Available algorithms</h3>
 
-<p>We can also set default path separately.</p>
+<ul>
+<li>Password::MD5</li>
+<li>Password::BLOWFISH</li>
+<li>Password::SHA256</li>
+<li>Password::SHA512</li>
+</ul>
 
-<pre><code class="php">$mvcResolver = $this-&gt;getMvcResolver();
+<h3>Verify Password</h3>
 
-$mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
-$mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
+<p>We don't need to care the hash algorithm, Password object will auto detect the algorithm type:</p>
+
+<pre><code class="php">$bool = $password-&gt;verify('pass1234', $pass);
 </code></pre>
+
+<h2>Symmetric-Key Algorithm Encryption</h2>
+
+<p>The <code>Crypt</code> object provides different ciphers to encrypt/decrypt your data. Most of these ciphers must use
+PHP openssl functions to work. If your PHP are not available for openssl extension, you can use <code>PhpAesCipher</code>
+as default cipher, it is a native PHP implementation of AES by <a href="http://www.phpaes.com/">PHP AES</a>.</p>
+
+<h3>Use Cipher</h3>
+
+<pre><code class="php">use Windwalker\Crypt\Cipher\BlowfishCipher;
+use Windwalker\Crypt\Crypt;
+
+$crypt = new Crypt(new BlowfishCipher, 'My private key');
+
+$encrypted = $crypt-&gt;encrypt('My Text');
+
+$bool = $crypt-&gt;verify('My Text', $encrypted, 'My private key'); // True
+</code></pre>
+
+<p>Get the plain text back:</p>
+
+<pre><code class="php">$crypt = new Crypt(new BlowfishCipher, 'My private key');
+
+$encrypted = $crypt-&gt;encrypt('My Text');
+
+$text = $crypt-&gt;decrypt($encrypted);
+</code></pre>
+
+<h3>Available Ciphers</h3>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Blowfish_(cipher)">BlowfishCipher</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">Aes56Cipher</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Triple_DES">Des3Cipher</a></li>
+<li>PhpAesCipher - Only use this when system not support openssl.</li>
+</ul>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/mvc/class-resolvers.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/crypt.md">improve</a> this document.
     </p>
                 </article>
             </div>

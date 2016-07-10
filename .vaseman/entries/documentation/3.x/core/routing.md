@@ -114,6 +114,17 @@ flower:
         delete: DeleteController
 ```
 
+Use `|` as OR condition:
+
+``` yaml
+flower:
+    pattern: /flower/sakura
+    controller: Flower\Controller\Sakura
+    action:
+        get|post|put: IndexController
+        delete: false # false means not allowed
+```
+
 Or use wildcard to map all methods to one controller:
 
 ``` yaml

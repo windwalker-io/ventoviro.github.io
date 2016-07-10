@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Class Resolvers | Windwalker - A Modern PHP Framework</title>
+        <title>Debugging and Logging | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Class Resolvers | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Debugging and Logging | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/mvc/class-resolvers.html">3.x</a>
+                    <a href="../../../documentation/3.x/services/debugging.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/mvc/class-resolvers.html">2.1</a>
+                    <a href="../../../documentation/2.1/services/debugging.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Class Resolvers</h1>
+        <h1>Debugging and Logging</h1>
     </div>
         </div>
     </section>
@@ -162,7 +162,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
             </li>
                     <li class="">
@@ -237,7 +237,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
@@ -300,58 +300,175 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Resolvers</h2>
+                    <h2>DEV Mode</h2>
 
-<p>Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
-has a <code>flower</code> package and a route with <code>Sakura</code> controller matched:</p>
+<p>Windawlker contains a development mode, you can enable it by setting config <code>system.debug</code> to <code>1</code>, or use <code>dev.php</code> to access your site.</p>
 
-<pre><code class="php">sakura:
-    pattern: /sakura
-    controller: Sakura
+<p>You will see a debug console at the bottom of page.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169792/6aabee92-f75c-11e5-9614-1512c6021d77.jpg" alt="160331-0003" /></p>
+
+<h3>Remote Access</h3>
+
+<p>By default, <code>dev.php</code> only support <code>localhost</code>, you can add allow IPs to <code>secret.yml</code> so that you can open dev mode from remote.</p>
+
+<pre><code class="yaml">dev:
+    allow_ips:
+        - 127.0.0.1
+        - 'fe80::1'
+        - '::1'
+        - 123.456.654.321 ## Add your ip
 </code></pre>
 
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists, 
-we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
+<h3>Close Debug Console</h3>
 
-<p>Add this line in package <code>boot()</code> or any position before package execute.</p>
+<p>Debug console will auto push to page when system close, but sometimes we won't want it to show if in ajax or api call.
+Add this line to close it.</p>
 
-<pre><code class="php">public function boot()
+<pre><code class="php">use Windwalker\Debugger\Helper\DebuggerHelper;
+
+class AjaxController extends Controller
 {
-    parent::boot();
+    protected function doExecute()
+    {
+        // Close debug console
+        DebuggerHelper::disableConsole();
 
-    // Register Animal package namespace to find classes
-    $mvcResolver = $this-&gt;getMvcResolver();
+        $this-&gt;app-&gt;response-&gt;setMimeType('application/json');
 
-    $mvcResolver-&gt;addNamespace('Animal', Priority::NORMAL);
+        return json_encode(['foo' =&gt; 'bar']);
+    }
 }
 </code></pre>
 
-<p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
-It is flexible to help us organize our packages.</p>
+<h2>Debugger Package</h2>
 
-<h2>View And Model</h2>
+<p>Click buttons on debug console, you will enter the Debugger page.</p>
 
-<p>You can also use the same way to add default View and Model paths.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169994/a78ec270-f75d-11e5-81b9-b14317b32fbe.jpg" alt="160331-0004" /></p>
 
-<pre><code class="php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);
+<p>Windwlker will log last 100 page requests information to help us track system process.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14170049/f8b897d4-f75d-11e5-9cd1-3380e88854fb.jpg" alt="160331-0005" /></p>
+
+<h3>Log your Custom Content</h3>
+
+<p>If you need to log some important information to debug, you can use <code>DebugHelper</code> to add custom data.</p>
+
+<pre><code class="php">DebuggerHelper::addCustomData('My data', "It's not who I am underneath, but it's what I do that defines me.");
 </code></pre>
 
-<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
-will find from Animal package as default object.</p>
+<p>Go to system page.</p>
 
-<p>We can also set default path separately.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg" alt="system" /></p>
 
-<pre><code class="php">$mvcResolver = $this-&gt;getMvcResolver();
+<h2>Logging</h2>
 
-$mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
-$mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
+<p>Windwalker includes <a href="https://github.com/Seldaek/monolog">Monolog</a> to help us log debugging information.</p>
+
+<pre><code class="php">use Windwalker\Core\Logger\Logger;
+
+Logger::log('flower', Logger::INFO, 'log text');
+</code></pre>
+
+<p>The first argument is category &amp; log file name, this will create a file at <code>logs/flower.log</code> with one line:</p>
+
+<pre><code>## logs/flower.log
+
+[2016-04-01 10:17:07] flower.INFO: log text [] []
+</code></pre>
+
+<p>Add some data at line last.</p>
+
+<pre><code class="php">Logger::log('flower', Logger::INFO, 'log text', array('foo' =&gt; 'bar'));
+</code></pre>
+
+<pre><code>## logs/flower.log
+
+[2016-04-01 10:18:42] flower.INFO: log text {"foo":"bar"} []
+</code></pre>
+
+<p>We can use proxy methods to log data:</p>
+
+<pre><code class="php">Logger::debug('category', 'log text');
+Logger::info('category', 'log text');
+Logger::notice('category', 'log text');
+Logger::warning('category', 'log text');
+Logger::error('category', 'log text');
+Logger::critical('category', 'log text');
+Logger::alert('category', 'log text');
+Logger::emergency('category', 'log text');
+</code></pre>
+
+<h2>Log Levels</h2>
+
+<p>The log levels are described by <a href="http://tools.ietf.org/html/rfc5424">RFC5424</a></p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Code</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>DEBUG</td>
+  <td>100</td>
+  <td>Detailed debug information.</td>
+</tr>
+<tr>
+  <td>INFO</td>
+  <td>200</td>
+  <td>Interesting events. Examples: User logs in, SQL logs.</td>
+</tr>
+<tr>
+  <td>NOTICE</td>
+  <td>250</td>
+  <td>Normal but significant events.</td>
+</tr>
+<tr>
+  <td>WARNING</td>
+  <td>300</td>
+  <td>Exceptional occurrences that are not errors. Examples: Use of deprecated APIs, poor use of an API, undesirable things that are not necessarily wrong.</td>
+</tr>
+<tr>
+  <td>ERROR</td>
+  <td>400</td>
+  <td>Runtime errors that do not require immediate action but should typically be logged and monitored.</td>
+</tr>
+<tr>
+  <td>CRITICAL</td>
+  <td>500</td>
+  <td>Critical conditions. Example: Application component unavailable, unexpected exception.</td>
+</tr>
+<tr>
+  <td>ALERT</td>
+  <td>550</td>
+  <td>Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up.</td>
+</tr>
+<tr>
+  <td>EMERGENCY</td>
+  <td>600</td>
+  <td>Emergency: system is unusable.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can create a category with level code, all levels below this level will not logged.</p>
+
+<pre><code class="php">Logger::createCategory('sakura', Logger::ERROR);
+
+Logger::debug('sakura', 'log text'); // This won't log
+
+Logger::alert('sakura', 'log text'); // This will log
 </code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/mvc/class-resolvers.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/services/debugging.md">improve</a> this document.
     </p>
                 </article>
             </div>

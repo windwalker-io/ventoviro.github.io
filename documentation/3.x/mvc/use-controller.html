@@ -148,6 +148,9 @@
                 <a href="../../../documentation/3.x/core/request-input.html">Request and Input</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/core/psr7-middlewares.html">Psr7 and Middlewares</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
                     <li class="">
@@ -234,6 +237,12 @@
                     <li class="">
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/error-handling.html">Error Handling</a>
+            </li>
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
@@ -250,7 +259,13 @@
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
+                <a href="../../../documentation/3.x/more/http-stream.html">Http and Stream</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/structure.html">Structure Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/crypt.html">Crypt</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -259,22 +274,22 @@
                 <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/more/filesystem.html">Filesystem</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/more/string.html">String</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/validation.html">Validation</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/debugging.html">Debugging and Logging</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/more-packages.html">More Packages</a>
@@ -518,6 +533,59 @@ otherwise controller will call <code>processSuccess()</code> to handle success l
 }
 </code></pre>
 
+<h2>Json Response</h2>
+
+<p>Use JsonResponse to return json <code>content-type</code> in <code>doExecute()</code></p>
+
+<pre><code class="php">use Windwalker\Http\Response\JsonResponse;
+
+// in doExecute()
+
+$this-&gt;response = new JsonResponse;
+
+// The returned data will auto convert to json
+return ['foo' =&gt; 'bar'];
+</code></pre>
+
+<p>Use trait to auto prepare json response.</p>
+
+<pre><code class="php">use Windwalker\Core\Controller\Traits\JsonResponseTrait;
+
+class GetController extends AbstractController
+{
+    use JsonResponseTrait;
+</code></pre>
+
+<p>Add <code>JsonApiTrait</code> to return a standard api format:</p>
+
+<pre><code class="php">use Windwalker\Core\Controller\Traits\JsonResponseTrait;
+use Windwalker\Core\Controller\Traits\JsonApiTrait;
+
+class GetController extends AbstractController
+{
+    use JsonResponseTrait;
+    use JsonApiTrait;
+
+    public function doExecute()
+    {
+        $this-&gt;addMessage('Hello');
+
+        return return ['foo' =&gt; 'bar'];
+    }
+</code></pre>
+
+<p>Output data:</p>
+
+<pre><code class="php">{
+    "success": true,
+    "code": 200,
+    "message": "Hello"
+    "data": {
+        "foo": "bar"
+    }
+}
+</code></pre>
+
 <h2>Validate Middleware</h2>
 
 <p>Add <code>ValidateErrorHandlingMiddleware</code> so controller can catch <code>ValidateFailException</code> to handle multiple invalid data messages.</p>
@@ -620,15 +688,13 @@ if (! CsrfProtection::checkToken())
 }
 </code></pre>
 
-<p>Use middleware to auto check CSRF token:</p>
+<p>Use trait to auto check CSRF token:</p>
 
-<pre><code class="php">use Windwalker\Core\Controller\Middleware\CsrfProtectionMiddleware;
+<pre><code class="php">use Windwalker\Core\Controller\Traits\CsrfProtectionTrait;
 
 class SaveController extends AbstractController
 {
-    protected $middlewares = [
-        CsrfProtectionMiddleware::class
-    ];
+    use CsrfProtectionTrait;
 
     // ...
 </code></pre>
@@ -783,6 +849,11 @@ protected function init()
 // ...
 </code></pre>
 
+<blockquote>
+  <p>Controller interface is different from application and package, it is not Psr7 invokable,
+  so we must use another interface to execute middlewares.</p>
+</blockquote>
+
 <h3>Create Custom Middleware</h3>
 
 <p>Use callback as middleware:</p>
@@ -828,6 +899,38 @@ class MyMiddleware extends AbstractControllerMiddleware
     800 =&gt; MyMiddleware::class
 ];
 </code></pre>
+
+<h2>Traits</h2>
+
+<p>Controller is an instance of <code>BootableTrait</code>, which can auto boot used traits.</p>
+
+<p>Create a trait with a method named <code>boot{TraitName}()</code>:</p>
+
+<pre><code class="php">trait MyTestTrait
+{
+    public function bootMyTestTrait()
+    {
+        $this-&gt;adMiddleware(...);
+    }
+}
+</code></pre>
+
+<p>Now use it in controller and it will be auto booted.</p>
+
+<pre><code class="php">class GetController extends AbstractController
+{
+    use MyTestTrait;
+}
+</code></pre>
+
+<h3>Built-in Traits</h3>
+
+<ul>
+<li><code>Windwalker\Core\Controller\Traits\JsonResponseTrait</code></li>
+<li><code>Windwalker\Core\Controller\Traits\JsonApiTrait</code></li>
+<li><code>Windwalker\Core\Controller\Traits\HtmlResponseTrait</code></li>
+<li><code>Windwalker\Core\Controller\Traits\CsrfProtectionTrait</code></li>
+</ul>
 
                         <hr />
 

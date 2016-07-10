@@ -246,6 +246,63 @@ class SaveController extends AbstractController
 }
 ```
 
+## Json Response
+
+Use JsonResponse to return json `content-type` in `doExecute()`
+
+``` php
+use Windwalker\Http\Response\JsonResponse;
+
+// in doExecute()
+
+$this->response = new JsonResponse;
+
+// The returned data will auto convert to json
+return ['foo' => 'bar'];
+```
+
+Use trait to auto prepare json response.
+
+``` php
+use Windwalker\Core\Controller\Traits\JsonResponseTrait;
+
+class GetController extends AbstractController
+{
+    use JsonResponseTrait;
+```
+
+Add `JsonApiTrait` to return a standard api format:
+
+``` php
+use Windwalker\Core\Controller\Traits\JsonResponseTrait;
+use Windwalker\Core\Controller\Traits\JsonApiTrait;
+
+class GetController extends AbstractController
+{
+    use JsonResponseTrait;
+    use JsonApiTrait;
+
+    public function doExecute()
+    {
+        $this->addMessage('Hello');
+
+        return return ['foo' => 'bar'];
+    }
+```
+
+Output data:
+
+``` php
+{
+    "success": true,
+    "code": 200,
+    "message": "Hello"
+    "data": {
+        "foo": "bar"
+    }
+}
+```
+
 ## Validate Middleware
 
 Add `ValidateErrorHandlingMiddleware` so controller can catch `ValidateFailException` to handle multiple invalid data messages.
@@ -354,16 +411,14 @@ if (! CsrfProtection::checkToken())
 }
 ```
 
-Use middleware to auto check CSRF token:
+Use trait to auto check CSRF token:
 
 ``` php
-use Windwalker\Core\Controller\Middleware\CsrfProtectionMiddleware;
+use Windwalker\Core\Controller\Traits\CsrfProtectionTrait;
 
 class SaveController extends AbstractController
 {
-	protected $middlewares = [
-		CsrfProtectionMiddleware::class
-	];
+	use CsrfProtectionTrait;
 
 	// ...
 ```
@@ -530,6 +585,9 @@ protected function init()
 // ...
 ```
 
+> Controller interface is different from application and package, it is not Psr7 invokable,
+> so we must use another interface to execute middlewares.
+
 ### Create Custom Middleware
 
 Use callback as middleware:
@@ -579,3 +637,34 @@ protected $middlewares = [
 ];
 ```
 
+## Traits
+
+Controller is an instance of `BootableTrait`, which can auto boot used traits.
+
+Create a trait with a method named `boot{TraitName}()`:
+
+``` php
+trait MyTestTrait
+{
+    public function bootMyTestTrait()
+    {
+        $this->adMiddleware(...);
+    }
+}
+```
+
+Now use it in controller and it will be auto booted.
+
+``` php
+class GetController extends AbstractController
+{
+    use MyTestTrait;
+}
+```
+
+### Built-in Traits
+
+- `Windwalker\Core\Controller\Traits\JsonResponseTrait`
+- `Windwalker\Core\Controller\Traits\JsonApiTrait`
+- `Windwalker\Core\Controller\Traits\HtmlResponseTrait`
+- `Windwalker\Core\Controller\Traits\CsrfProtectionTrait`

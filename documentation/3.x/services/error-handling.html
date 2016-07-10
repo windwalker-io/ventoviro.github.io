@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Class Resolvers | Windwalker - A Modern PHP Framework</title>
+        <title>Error Handling | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Class Resolvers | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Error Handling | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/mvc/class-resolvers.html">3.x</a>
+                    <a href="../../../documentation/3.x/services/error-handling.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/mvc/class-resolvers.html">2.1</a>
+                    <a href="../../../documentation/2.1/services/error-handling.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Class Resolvers</h1>
+        <h1>Error Handling</h1>
     </div>
         </div>
     </section>
@@ -162,7 +162,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
             </li>
                     <li class="">
@@ -240,7 +240,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/services/error-handling.html">Error Handling</a>
             </li>
         
@@ -300,58 +300,182 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Resolvers</h2>
+                    <h2>Introduction</h2>
 
-<p>Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
-has a <code>flower</code> package and a route with <code>Sakura</code> controller matched:</p>
+<p>Windwalker's error handling system overrided the native PHP error handler to provide a flexible interface to fetch error message.</p>
 
-<pre><code class="php">sakura:
-    pattern: /sakura
-    controller: Sakura
-</code></pre>
+<h2>Exception Handling</h2>
 
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists, 
-we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
+<p>Most of time, we throw exception object to change the program process if error occurred:</p>
 
-<p>Add this line in package <code>boot()</code> or any position before package execute.</p>
-
-<pre><code class="php">public function boot()
+<pre><code class="php">try
 {
-    parent::boot();
-
-    // Register Animal package namespace to find classes
-    $mvcResolver = $this-&gt;getMvcResolver();
-
-    $mvcResolver-&gt;addNamespace('Animal', Priority::NORMAL);
+    if (/* Something error */)
+    {
+        throw new Exception('Error message');
+    }
+}
+catch (Exception $e)
+{
+    // Handle error or redirect
 }
 </code></pre>
 
-<p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
-It is flexible to help us organize our packages.</p>
+<p>If you didn't catch exception and throw it to the top level:</p>
 
-<h2>View And Model</h2>
-
-<p>You can also use the same way to add default View and Model paths.</p>
-
-<pre><code class="php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);
+<pre><code class="php">// no catch() to fetch this exception
+throw new Exception('Error message');
 </code></pre>
 
-<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
-will find from Animal package as default object.</p>
+<p>The exception you thrown will not be caught and shows a <code>Uncaught Exception error</code> in native PHP.</p>
 
-<p>We can also set default path separately.</p>
-
-<pre><code class="php">$mvcResolver = $this-&gt;getMvcResolver();
-
-$mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
-$mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
+<pre><code class="php">Fatal error: Uncaught Exception: Error message in Command line code:xxx
 </code></pre>
+
+<p>Nothing happened, and there is no any information and stack trace for debugging.</p>
+
+<p>Windwalker includes <a href="http://filp.github.io/whoops/">Whoops</a> as default error handler, the uncaught exception will show this page:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14169526/e84189b8-f75a-11e5-9fcc-85507bf3fe48.jpg" alt="160331-0002" /></p>
+
+<p>To enable Pretty error page, you must open DEBUG mode, please change config <code>system.debug</code> to <code>1</code> or use <code>dev.php</code> to access your site.</p>
+
+<p>See <a href="debugging.html">Debugging and Logging</a></p>
+
+<h3>Built-in Error Page</h3>
+
+<p>Without DEBUG mode, Windwalker contains a default error handler to handle error page. Let's throw an Exception to show error page.</p>
+
+<pre><code class="php">throw new \Exception('Something wrong~~~');
+</code></pre>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16706741/2ca3ff68-45ea-11e6-8dac-1bc0328447cc.jpg" alt="p-2016-07-09-003" /></p>
+
+<p>Override error template to <code>simple</code> or <code>empty</code> in <code>config.yml</code>, so you can hide information in production site.</p>
+
+<pre><code class="yaml"># etc/config.yml
+
+error:
+    # `simple` template will only show plain text message.
+    template: windwalker.error.simple
+
+    # `empty` template will show blank page without anything
+    template: windwalker.error.empty
+
+    # The template engine, you can use `php`, `twig`, `blade`, `edge`
+    engine: php
+</code></pre>
+
+<p>The Simple error page.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16706742/2ca4d9ec-45ea-11e6-8ca1-61790a8d608d.jpg" alt="p-2016-07-09-005" /></p>
+
+<h2>Custom Error Template</h2>
+
+<p>You are allow to create a custom pretty error page, for instance, most site will have a designed 404 page.
+Override the <code>error.template</code> to your one:</p>
+
+<pre><code class="yaml">error:
+    template: flower.error.default
+    engine: edge
+</code></pre>
+
+<p>You are also allow to rewrite default error handler to render your own page:</p>
+
+<pre><code class="php">use Windwalker\Core\Error\ErrorHandler;
+use Windwalker\Core\Widget\WidgetHelper;
+
+/**
+ * @param \Exception|\Throwable $e
+ */
+ErrorHandler::addHandler(function ($e)
+{
+    echo WidgetHelper::render('flower.error.default', ['e' =&gt; $e], 'edge');
+}, 'default');
+</code></pre>
+
+<p>Use Package controller to render error page, so you are able to organize error page as a package MVC.</p>
+
+<pre><code class="php">ErrorHandler::addHandler(function ($e)
+{
+    echo PackageHelper::getPackage()-&gt;executeTask('Error/GetController', ['e' =&gt; $e])-&gt;getBody();
+}, 'default');
+
+// In src/Flower/Controller/Error/GetController.php
+class GetController extends AbstractController
+{
+    protected function doExecute()
+    {
+        $data = [
+            'e' =&gt; $this-&gt;input-&gt;getRaw('e')
+        ];
+
+        return $this-&gt;renderView('error', 'flower.error.default', 'edge', $data);
+    }
+}
+</code></pre>
+
+<h2>ErrorHandler Class</h2>
+
+<p>Windwalker use <code>ErrorHandler</code> class to handle all custom error process.</p>
+
+<h3>Register Error And Exception Handler</h3>
+
+<p>In Application, Windwalker use this code to register PHP error handler to it own.</p>
+
+<pre><code class="php">\Windwalker\Core\Error\ErrorHandler::register();
+
+// Register shot-down function so you can catch fatal error
+\Windwalker\Core\Error\ErrorHandler::register(true, null, true);
+</code></pre>
+
+<h3>Set Error Level</h3>
+
+<pre><code class="php">ErrorHandler::register(true, E_ALL);
+</code></pre>
+
+<h3>Restore Error Handler</h3>
+
+<p>If you want to use other error handler, you can restore all error handler have set.</p>
+
+<pre><code class="php">\Windwalker\Core\Error\ErrorHandler::restore();
+</code></pre>
+
+<h3>Add More Handlers</h3>
+
+<p>You can log errors when every time error occurred. Add this line in <code>etc/web.php</code>:</p>
+
+<pre><code class="php">// ...
+
+    'error' =&gt; [
+        'handlers' =&gt; [
+            'log' =&gt; \Windwalker\Core\Error\Handler\ErrorLogHandler::class
+        ]
+    ]
+</code></pre>
+
+<p>Now Windwalker will log error in <code>logs/error.log</code></p>
+
+<pre><code class="log">[2016-07-09 08:52:18] error.ERROR: Something wrong~~~ {"code":0} []
+</code></pre>
+
+<p>You can write your own Log Handler by add callback as handler.</p>
+
+<pre><code class="php">/**
+ * @param \Exception|\Throwable $e
+ */
+ErrorHandler::addHandler('log', function ($e)
+{
+    Logger::error('my-errorlog', $e-&gt;getMessage());
+});
+</code></pre>
+
+<p>See <a href="/debugging.html">Logging</a></p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/mvc/class-resolvers.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/services/error-handling.md">improve</a> this document.
     </p>
                 </article>
             </div>

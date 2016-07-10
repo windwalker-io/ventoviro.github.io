@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Class Resolvers | Windwalker - A Modern PHP Framework</title>
+        <title>Psr7 and Middlewares | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Class Resolvers | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Psr7 and Middlewares | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/mvc/class-resolvers.html">3.x</a>
+                    <a href="../../../documentation/3.x/core/psr7-middlewares.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/mvc/class-resolvers.html">2.1</a>
+                    <a href="../../../documentation/2.1/core/psr7-middlewares.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Class Resolvers</h1>
+        <h1>Psr7 and Middlewares</h1>
     </div>
         </div>
     </section>
@@ -147,7 +147,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/core/request-input.html">Request and Input</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/core/psr7-middlewares.html">Psr7 and Middlewares</a>
             </li>
                     <li class="">
@@ -162,7 +162,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
             </li>
                     <li class="">
@@ -300,58 +300,197 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Resolvers</h2>
+                    <p>Windwlaker Application follows <a href="http://www.php-fig.org/psr/psr-7/">PSR7 Http Messages</a> standard, provides an interface
+to handle request and response.</p>
 
-<p>Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
-has a <code>flower</code> package and a route with <code>Sakura</code> controller matched:</p>
+<h2>Get Request and Response</h2>
 
-<pre><code class="php">sakura:
-    pattern: /sakura
-    controller: Sakura
+<pre><code class="php">$app = \Windwalker\Ioc::getApplication();
+
+$request = $app-&gt;request;
+$response = $app-&gt;response;
 </code></pre>
 
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists, 
-we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
+<p>Get Request data:</p>
 
-<p>Add this line in package <code>boot()</code> or any position before package execute.</p>
+<pre><code class="php">$request-&gt;getHeaders();
+$request-&gt;getSeverParams();
+$request-&gt;getUploadedFiles();
+</code></pre>
 
-<pre><code class="php">public function boot()
+<p>Set response body:</p>
+
+<pre><code class="php">$response-&gt;getBody()-&gt;write('Hello World');
+</code></pre>
+
+<p>Set Response headers:</p>
+
+<pre><code class="php">// Response is immutable so we must reutrn new object.
+$response = $response-&gt;withHeader('X-Foo', 'Bar');
+
+// Set new object back to app
+$app-&gt;setResponse($response);
+</code></pre>
+
+<p>Use Json response:</p>
+
+<pre><code class="php">use Windwalker\Http\Response\JsonResponse;
+
+$app-&gt;setResponse(new JsonResponse(['foo' =&gt; 'bar']));
+</code></pre>
+
+<p>See <a href="https://github.com/ventoviro/windwalker-http">Windwalker Http Package</a></p>
+
+<h2>Middlewares</h2>
+
+<p>We can add middleware to process before and after logic when application running, create a middleware class:</p>
+
+<pre><code class="php">use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Windwalker\Middleware\MiddlewareInterface;
+
+class MyMiddleware extends AbstractWebMiddleware
 {
-    parent::boot();
+    /**
+     * Middleware logic to be invoked.
+     *
+     * @param   Request                      $request  The request.
+     * @param   Response                     $response The response.
+     * @param   callable|MiddlewareInterface $next     The next middleware.
+     *
+     * @return  Response
+     */
+    public function __invoke(Request $request, Response $response, $next = null)
+    {
+        // Perform before
 
-    // Register Animal package namespace to find classes
-    $mvcResolver = $this-&gt;getMvcResolver();
+        $response = $next($request, $response);
 
-    $mvcResolver-&gt;addNamespace('Animal', Priority::NORMAL);
+        // Perform after
+
+        return $response;
+    }
 }
 </code></pre>
 
-<p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
-It is flexible to help us organize our packages.</p>
+<p>Register this middleware to <code>etc/app/web.php</code> (of <code>dev.php</code> if only use in debug mode).
+Use numeric key name to control the execution ordering, the biggest number will execute first,
+and the smaller number will nearer to core logic.</p>
 
-<h2>View And Model</h2>
+<pre><code class="php">// ...
 
-<p>You can also use the same way to add default View and Model paths.</p>
-
-<pre><code class="php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);
+    'middlewares' =&gt; [
+        //900  =&gt; \Windwalker\Core\Application\Middleware\SessionRaiseMiddleware::class,
+        //800  =&gt; \Windwalker\Core\Application\Middleware\RoutingMiddleware::class,
+        500 =&gt; MyMiddleware::class
+    ]
 </code></pre>
 
-<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
-will find from Animal package as default object.</p>
+<p>You can also use callback as middleware:</p>
 
-<p>We can also set default path separately.</p>
+<pre><code class="php">// ...
 
-<pre><code class="php">$mvcResolver = $this-&gt;getMvcResolver();
+    'middlewares' =&gt; [
+        500 =&gt; ['MyClass', 'execute']
+    ]
+</code></pre>
 
-$mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
-$mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
+<p>If you want to use <code>Closure</code> as middleware, do not add it to config file since it will break the cache serializer,
+add it in application <code>init()</code>.</p>
+
+<pre><code class="php">&lt;?php
+// src/Windwalker/Web/Application.php
+
+namespace Windwalker\Web;
+
+use Windwalker\Core\Application\WebApplication;
+use Windwalker\Core\Provider;
+
+class Application extends WebApplication
+{
+    // ...
+
+    protected function init()
+    {
+        parent::init();
+
+        $this-&gt;addMiddleware(function (Request $request, Response $response, $next = null)
+        {
+            // ...
+        });
+    }
+</code></pre>
+
+<p>Or write a trait to add group of middlewares:</p>
+
+<pre><code class="php">trait MyMiddlewaresTrait
+{
+    // Must have boot{TraitName}() method then application will suto boot it
+    // since it is a BootableTrait instance
+    public function bootMyMiddlewaresTrait()
+    {
+        $this-&gt;addMiddleware(MyMiddleware::class, 600);
+        $this-&gt;addMiddleware(function () { ... }, 400);
+        $this-&gt;addMiddleware([$this, 'callback'], 400);
+    }
+}
+</code></pre>
+
+<p>Then use it in Application:</p>
+
+<pre><code class="php">class Application extends WebApplication
+{
+    use MyMiddlewaresTrait;
+
+    // ...
+</code></pre>
+
+<h2>Middleware in Package</h2>
+
+<p>Package uses same interface as application so we can also use <code>AbstractWebMiddleware</code> or Psr7 invokable callable
+as package middleware.</p>
+
+<p>Add middleware in package config:</p>
+
+<pre><code class="php">// etc/package/flower.php
+// OR
+// src/Flower/Resources/config/config.dist.php
+
+    'middlewares' =&gt; [
+        500 =&gt; MyMiddleware::class
+    ]
+</code></pre>
+
+<p>You can also add middleware runtime in package <code>boot()</code> method:</p>
+
+<pre><code class="php">class FlowerPackage extends AbstractPackage
+{
+    // ...
+
+    protected function boot()
+    {
+        parent::boot();
+
+        $this-&gt;addMiddleware(function (Request $request, Response $response, $next = null)
+        {
+            // ...
+        });
+    }
+</code></pre>
+
+<p>Also supports trait:</p>
+
+<pre><code class="php">class FlowerPackage extends AbstractPackage
+{
+    use MyMiddlewaresTrait;
+
+    // ...
 </code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/mvc/class-resolvers.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/core/psr7-middlewares.md">improve</a> this document.
     </p>
                 </article>
             </div>

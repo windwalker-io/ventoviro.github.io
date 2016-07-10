@@ -15,6 +15,7 @@ documentation:
             core/package-system: Packages
             core/config: Config & Setting
             core/request-input: Request and Input
+            core/psr7-middlewares: Psr7 and Middlewares
             core/ioc-container: IoC Container
             core/service-provider: Service Provider
         MVC:
@@ -44,20 +45,24 @@ documentation:
             services/languages: Languages
             services/session: Session
             services/widget-renderer: Widget and Renderer
+            services/debugging: Debugging and Logging
+            services/error-handling: Error Handling
         Console:
             console/console-basic: Basic Usage
             console/custom-commands: Custom Commands
         More:
             more/data-object: Data Object
-            more/registry: Registry Object
+            more/http-stream: Http and Stream
+            more/structure: Structure Object
+            more/crypt: Crypt
             more/form-builder: Form Builder
             more/form-definition: Form Definition
+            more/filesystem: Filesystem
             more/html-builder: HTML Builder
             more/pagination: Pagination
+            more/string: String
             more/tests: Tests
             more/validation: Validation
-            more/debugging: Debugging and Logging
-            more/error-handling: Error Handling
             more/more-packages: More Packages
     2.1:
         Start:

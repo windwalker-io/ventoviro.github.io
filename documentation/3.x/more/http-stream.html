@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Class Resolvers | Windwalker - A Modern PHP Framework</title>
+        <title>Http and Stream | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Class Resolvers | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Http and Stream | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/mvc/class-resolvers.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/http-stream.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/mvc/class-resolvers.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/http-stream.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Class Resolvers</h1>
+        <h1>Http and Stream</h1>
     </div>
         </div>
     </section>
@@ -162,7 +162,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
             </li>
                     <li class="">
@@ -258,7 +258,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/http-stream.html">Http and Stream</a>
             </li>
                     <li class="">
@@ -300,58 +300,295 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Resolvers</h2>
+                    <h2>Make A Request</h2>
 
-<p>Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
-has a <code>flower</code> package and a route with <code>Sakura</code> controller matched:</p>
+<p>HttpClient is a simple class to make restful request.</p>
 
-<pre><code class="php">sakura:
-    pattern: /sakura
-    controller: Sakura
+<pre><code class="php">use Windwalker\Http\HttpClient;
+
+$http = new HttpClient;
+
+$response = $http-&gt;get('http://example.com/?foo=bar');
+
+// This is PSR7 ResponseInterface
+(string) $response-&gt;getBody();
 </code></pre>
 
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists, 
-we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
+<h3>Other Methods</h3>
 
-<p>Add this line in package <code>boot()</code> or any position before package execute.</p>
+<pre><code class="php">$http = new HttpClient;
 
-<pre><code class="php">public function boot()
+// The post data can be query string or array
+$response = $http-&gt;post('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
+$response = $http-&gt;put('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
+$response = $http-&gt;patch('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
+$response = $http-&gt;delete('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
+
+$response = $http-&gt;head('http://example.com/?foo=bar');
+$response = $http-&gt;trace('http://example.com/?foo=bar');
+$response = $http-&gt;options('http://example.com/?foo=bar');
+
+// With headers
+$response = $http-&gt;get('http://example.com/', null, array('X-Foo' =&gt; 'Bar'));
+
+// Use request()
+$response = $http-&gt;request('POST', 'http://example.com/?foo=bar', 'this=is&amp;post=data');
+</code></pre>
+
+<h3>Use Psr RequestInterface to Make Request</h3>
+
+<p>Psr7 Request is a immutable object, you have to get the return object every operation.</p>
+
+<pre><code class="php">use Windwalker\Http\Request;
+
+$request = new Request;
+
+// Note: You have to get the return value.
+// Every change will return new object.
+$request = $request-&gt;withRequestTarget('http://example.com/flower/sakura')
+    -&gt;withMethod('POST')
+    -&gt;withAddedHeader('Authorization', 'Bearer ' . $token)
+    -&gt;withAddedHeader('Content-Type', 'application/text');
+
+// OR
+$request = new Request(
+    'http://example.com/flower/sakura',
+    'POST',
+    'php://memory',
+    array(
+        'Authorization' =&gt; 'Bearer ' . $token,
+        'Content-Type'  =&gt; 'application/json',
+    )
+);
+
+// This is a POST request so we write post data to body
+$request-&gt;getBody()-&gt;write('this=is&amp;post=data');
+
+$http = new HttpClient;
+
+// Send request
+$response = $http-&gt;send($request);
+</code></pre>
+
+<p>Use Uri and Json output.</p>
+
+<pre><code class="php">use Windwalker\Http\Request;
+use Windwalker\Uri\PsrUri;
+
+$request = (new Request)
+    -&gt;withUri(new PsrUri('http://example.com'))
+    -&gt;withMethod('POST')
+    -&gt;withAddedHeader('Authorization', 'Bearer ' . $token)
+    -&gt;withAddedHeader('Content-Type', 'application/json') // Use JSON
+
+    // Note: Request will ignore path and query in Uri
+    // So we have to set RequestTarget here
+    -&gt;withRequestTarget('/path/of/uri?flower=sakura');
+
+// If you want to set a non-origin-form request target, set the
+// request-target explicitly:
+$request = $request-&gt;withRequestTarget((string) $uri);       // absolute-form
+$request = $request-&gt;withRequestTarget($uri-&gt;getAuthority(); // authority-form
+$request = $request-&gt;withRequestTarget('*');                 // asterisk-form
+
+// This is JSON request so we encode data here
+$request-&gt;getBody()-&gt;write(json_encode($data));
+$response = $http-&gt;send($request);
+
+$response-&gt;getStatusCode(); // 200 is OK
+</code></pre>
+
+<h3>Custom Transports and Options</h3>
+
+<p>Now support Curl and Steam 2 transports.</p>
+
+<pre><code class="php">use Windwalker\Http\Transport\CurlTransport;
+
+$options = array(
+    'certpath' =&gt; '/custom/cert.pem'
+);
+
+$transport = new CurlTransport($options);
+
+// Set transport when client new
+$http = new HttpClient(array(), $transport);
+</code></pre>
+
+<p>Set custom CURL options:</p>
+
+<pre><code class="php">$options = array(
+    'options' =&gt; array(
+        CURLOPT_SSL_VERIFYHOST =&gt; false,
+        CURLOPT_SSL_VERIFYPEER =&gt; true
+    )
+);
+
+$httpOptions = array(
+    'headers' =&gt; array(
+        'X-Foo' =&gt; 'Bar'
+    )
+);
+
+$http = new HttpClient($httpOptions, new CurlTransport($options));
+</code></pre>
+
+<h3>Download Remote File</h3>
+
+<pre><code class="php">$http = new HttpClient;
+
+$dest = '/path/to/local/file.zip';
+
+$response = $http-&gt;download('http://example.com/file.zip', $dest);
+
+if ($response-&gt;getStatusCode() != 200)
 {
-    parent::boot();
-
-    // Register Animal package namespace to find classes
-    $mvcResolver = $this-&gt;getMvcResolver();
-
-    $mvcResolver-&gt;addNamespace('Animal', Priority::NORMAL);
+    // Error
 }
 </code></pre>
 
-<p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
-It is flexible to help us organize our packages.</p>
+<h3>Response Interface</h3>
 
-<h2>View And Model</h2>
+<p>Response object holds a Stream object to store returned string.</p>
 
-<p>You can also use the same way to add default View and Model paths.</p>
+<pre><code class="php">// The return value is: 'FOO BAR'
+$body = $response-&gt;getBody();
 
-<pre><code class="php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);
+// Simply to string
+(string) $body; // FOO BAR
+
+$body-&gt;seek(2);
+$body-&gt;getContents(); // O BAR
+
+$body-&gt;rewind();
+$body-&gt;read(5); // FOO B
+
+$body-&gt;getSize(); // 7
 </code></pre>
 
-<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
-will find from Animal package as default object.</p>
+<h2>Uri</h2>
 
-<p>We can also set default path separately.</p>
+<p><code>Uri</code> is a simple Uri object to modify URL but not Psr UriInterface.</p>
 
-<pre><code class="php">$mvcResolver = $this-&gt;getMvcResolver();
+<p>The methods provided in the <code>Uri</code> class allow you to manipulate all aspects of a uri. For example, suppose you wanted to set a new uri, add in a port, and then also post a username and password to authenticate a .htaccess security file. You could use the following syntax:</p>
 
-$mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
-$mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
+<pre><code class="php">// new uri object
+$uri = new Windwalker\Uri\Uri;
+
+$uri-&gt;setHost('http://localhost');
+$uri-&gt;setPort('8888');
+$uri-&gt;setUser('myUser');
+$uri-&gt;setPass('myPass');
+
+echo $uri-&gt;__toString();
 </code></pre>
+
+<p>This will output:</p>
+
+<pre><code>myUser:myPass@http://localhost:8888
+</code></pre>
+
+<p>If you wanted to add a specific filepath after the host you could use the <code>setPath()</code> method:</p>
+
+<pre><code class="php">// set path
+$uri-&gt;setPath('path/to/file.php');
+</code></pre>
+
+<p>Which will output</p>
+
+<pre><code>myUser:myPass@http://localhost:8888path/to/file.php
+</code></pre>
+
+<p>Adding a URL query:</p>
+
+<pre><code class="php">// url query
+$uri-&gt;setQuery('foo=bar');
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>myUser:myPass@http://localhost:8888path/to/file.php?foo=bar
+</code></pre>
+
+<h3>PsrUri</h3>
+
+<p><code>PsrUri</code> is a Uri object implemented the Psr UriInterface.</p>
+
+<p>This object is also immutable, so we must get return value as new object every change.</p>
+
+<pre><code class="php">$uri = (new PsrUri('http://example.com'))
+    -&gt;withScheme('https')
+    -&gt;withUserInfo('user', 'pass')
+    -&gt;withPath('/path/to/target')
+    -&gt;withQuery('flower=sakura')
+    -&gt;withFragment('#hash');
+
+(string) $uri; // https://user:pass@example.com/path/to/target?flower=sakura#fragment
+</code></pre>
+
+<h2>Stream</h2>
+
+<p>Stream is a powerful stream wrapper.</p>
+
+<p>Read write data to memory:</p>
+
+<pre><code class="php">$stream = new Stream('php://memory', 'wb+');
+
+$stream-&gt;write('Foo Bar');
+
+$stream-&gt;rewind(); // Back to begin
+
+// Now we take something we wrote into memory
+
+$stream-&gt;__toString(); // get: Foo Bar
+
+// OR
+
+$stream-&gt;rewind();
+$stream-&gt;getContents(); // get: Foo Bar
+</code></pre>
+
+<p>Read data from <code>php://input</code></p>
+
+<pre><code class="php">$stream = new PhpInputSteam;
+
+$data = $stream-&gt;__toString(); // foo=bar
+
+$query = \Windwalker\Uri\UriHelper::parseQuery($data); // array('foo' =&gt; 'bar')
+</code></pre>
+
+<p>Read file:</p>
+
+<pre><code class="php">$stream = new Stream('/path/to/file.txt', 'r+');
+
+$stream-&gt;__toString(); // Read
+
+$steam-&gt;seek($stream-&gt;getSize());
+$steam-&gt;write('new string'); // Write
+</code></pre>
+
+<p>Quick copy stream.</p>
+
+<pre><code class="php">// Remote source
+$src = new Stream('http://example/test.txt');
+
+// Local store
+$dest = new Stream('/path/to/local/test.txt');
+
+// Do copy
+\Windwalker\Http\Helper\StreamHelper::copy($src, $dest);
+
+// Get Data
+$dest-&gt;rewind();
+$data = $dest-&gt;getContents();
+</code></pre>
+
+<p>See: <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md#13-streams">Psr7 StreamInterface</a>
+/ <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md#34-psrhttpmessagestreaminterface">API</a></p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/mvc/class-resolvers.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/http-stream.md">improve</a> this document.
     </p>
                 </article>
             </div>

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Class Resolvers | Windwalker - A Modern PHP Framework</title>
+        <title>String | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Class Resolvers | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="String | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/mvc/class-resolvers.html">3.x</a>
+                    <a href="../../../documentation/3.x/more/string.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/mvc/class-resolvers.html">2.1</a>
+                    <a href="../../../documentation/2.1/more/string.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Class Resolvers</h1>
+        <h1>String</h1>
     </div>
         </div>
     </section>
@@ -162,7 +162,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
             </li>
                     <li class="">
@@ -282,7 +282,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/more/string.html">String</a>
             </li>
                     <li class="">
@@ -300,58 +300,199 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Resolvers</h2>
+                    <h2>Simple Template Engine</h2>
 
-<p>Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
-has a <code>flower</code> package and a route with <code>Sakura</code> controller matched:</p>
+<p>Simple variable replace.</p>
 
-<pre><code class="php">sakura:
-    pattern: /sakura
-    controller: Sakura
+<pre><code class="php">use Windwalker\String\SimpleTemplate;
+
+$string = 'Hello my name is: {{ name }}~~~!!!';
+
+SimpleTemplate::render($string, array('name' =&gt; 'Simon')); // Hello my name is Simon~~~!!!
 </code></pre>
 
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists, 
-we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
+<p>Multi-level variable.</p>
 
-<p>Add this line in package <code>boot()</code> or any position before package execute.</p>
+<pre><code class="php">$string = 'Hello my name is: {{ user.name }} and ID is: {{ user.id }}~~~!!!';
 
-<pre><code class="php">public function boot()
+$array = array(
+    'user' =&gt; array(
+        'name' =&gt; 'Simon',
+        'id' =&gt; 123
+    )
+);
+
+SimpleTemplate::render($string, $array); // Hello my name is Simon and ID is: 123~~~!!!
+</code></pre>
+
+<p>Custom Tags:</p>
+
+<pre><code class="php">$string = 'Hello my name is: {$ name $}~~~!!!';
+
+SimpleTemplate::render($string, array('name' =&gt; 'Simon'), array('{$', '$}'); // Hello my name is Simon~~~!!!
+</code></pre>
+
+<h2>Utf8String</h2>
+
+<p>Utf8String is a wrap of <code>phputf8</code> library:</p>
+
+<pre><code class="php">use Windwalker\String\Utf8String;
+
+$string = '這是一個最美的小情歌';
+
+Utf8String::substr($string, 0, 5); // '這是一個最'
+Utf8String::strlen($string); // 10
+
+// More methods
+Utf8String::is_ascii($string);
+
+Utf8String::strpos($str, $search, $offset = false);
+
+Utf8String::strrpos($str, $search, $offset = 0);
+
+Utf8String::strtolower($string);
+
+Utf8String::strtoupper($string);
+
+Utf8String::str_ireplace($search, $replace, $str, $count = null);
+
+Utf8String::str_split($str, $split_len = 1);
+
+Utf8String::strcasecmp($str1, $str2, $locale = false);
+
+Utf8String::strcmp($str1, $str2, $locale = false);
+
+Utf8String::strcspn($str, $mask, $start = null, $length = null);
+
+Utf8String::stristr($str, $search);
+
+Utf8String::strrev($string);
+
+Utf8String::strspn($str, $mask, $start = null, $length = null);
+
+Utf8String::substr_replace($str, $repl, $start, $length = null);
+
+Utf8String::ltrim($str, $charlist = null);
+
+Utf8String::rtrim($str, $charlist = null);
+
+Utf8String::trim($str, $charlist = null);
+
+Utf8String::ucfirst($str, $delimiter = null, $newDelimiter = null);
+
+Utf8String::ucwords($string);
+
+Utf8String::transcode($source, $from_encoding, $to_encoding); // Equals to iconv())
+
+Utf8String::valid($string);
+
+Utf8String::compliant($string);
+
+Utf8String::unicode_to_utf8($string);
+
+Utf8String::unicode_to_utf16($string);
+</code></pre>
+
+<h2>StringHelper</h2>
+
+<h3>Empty String Determine</h3>
+
+<p>isEmpty()</p>
+
+<pre><code class="php">use Windwalker\String\StringHelper;
+
+StringHelper::isEmpty('');      // true
+StringHelper::isEmpty(0);       // false
+StringHelper::isEmpty(array()); // true
+StringHelper::isEmpty(null);    // true
+</code></pre>
+
+<p>isZero()</p>
+
+<pre><code class="php">StringHelper::isZero(0);    // true
+StringHelper::isZero('0');  // true
+StringHelper::isZero('');   // false
+StringHelper::isZero(null); // false
+</code></pre>
+
+<h3>Quote</h3>
+
+<p>An useful method to quate a string.</p>
+
+<pre><code class="php">// Default quote is `"`
+StringHelper::quote('foo'); // "foo"
+
+// Custom quotes
+StringHelper::quote('foo', array('{{', '}}')); // {{foo}}
+
+// Backquote
+StringHelper::backquote('foo'); // `foo`
+</code></pre>
+
+<h3>More Methods</h3>
+
+<p>increment()</p>
+
+<pre><code class="php">StringHelper::increment('Title'); // Title (2)
+StringHelper::increment('Title', StringHelper::INCREMENT_STYLE_DASH); // Title-2
+</code></pre>
+
+<p>at()</p>
+
+<pre><code class="php">StringHelper::at('歡迎光臨', 2); // 光
+</code></pre>
+
+<p>collapseWhitespace()</p>
+
+<pre><code class="php">StringHelper::collapseWhitespace('Welcome   to   Windwalker'); // 'Welcome to Windwalker'
+</code></pre>
+
+<p>endsWith()</p>
+
+<pre><code class="php">StringHelper::endsWith('歡迎光臨', '光臨' [, $caseSensive = true]); // true
+</code></pre>
+
+<p>startsWith()</p>
+
+<pre><code class="php">StringHelper::startsWith('歡迎光臨', '歡迎' [, $caseSensive = true]); // true
+</code></pre>
+
+<pre><code class="php">// Default callback is array_push
+StringHelper::explode('.', 'foo.bar', 3); // array('foo', 'bar', null);
+
+// Shift null
+StringHelper::explode('.', 'foo.bar', 3, 'array_shift'); // array(null, 'foo', 'bar');
+
+// Limit
+StringHelper::explode('.', 'foo.bar.yoo', 2); // array('foo', 'bar.yoo');
+
+// Useful to use list()
+
+list($foo, $bar, $yoo) = StringHelper::explode('.', 'foo.bar', 3);
+</code></pre>
+
+<h2>StringInflector</h2>
+
+<pre><code class="php">use Windwalker\String\StringInflector;
+
+$inflector = StringInflector::getInstance();
+$string = 'category';
+
+if ($inflector-&gt;isSingular($string))
 {
-    parent::boot();
-
-    // Register Animal package namespace to find classes
-    $mvcResolver = $this-&gt;getMvcResolver();
-
-    $mvcResolver-&gt;addNamespace('Animal', Priority::NORMAL);
+    $string = $inflector-&gt;toPular(); // categories
 }
-</code></pre>
 
-<p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
-It is flexible to help us organize our packages.</p>
-
-<h2>View And Model</h2>
-
-<p>You can also use the same way to add default View and Model paths.</p>
-
-<pre><code class="php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);
-</code></pre>
-
-<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
-will find from Animal package as default object.</p>
-
-<p>We can also set default path separately.</p>
-
-<pre><code class="php">$mvcResolver = $this-&gt;getMvcResolver();
-
-$mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
-$mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
+if ($inflector-&gt;isPlural($string))
+{
+    $string = $inflector-&gt;toSingular(); // category
+}
 </code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/mvc/class-resolvers.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/string.md">improve</a> this document.
     </p>
                 </article>
             </div>

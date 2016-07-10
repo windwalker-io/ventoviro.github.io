@@ -28,8 +28,8 @@ We will get:
 ```
 current  ---> http://domain.com/sites/windwalker/flower/sakura
 full     ---> http://domain.com/sites/windwalker/flower/sakura?foo=bar
-path     ---> /sites/windwalker/
-root     ---> http://domain.com/sites/windwalker/
+path     ---> /sites/windwalker
+root     ---> http://domain.com/sites/windwalker
 host     ---> http://domain.com
 route    ---> flower/sakura
 ```
