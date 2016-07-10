@@ -271,15 +271,13 @@ class GetController extends AbstractController
     use JsonResponseTrait;
 ```
 
-Add `JsonApiTrait` to return a standard api format:
+Use `JsonApiTrait` to return a standard api format:
 
 ``` php
-use Windwalker\Core\Controller\Traits\JsonResponseTrait;
 use Windwalker\Core\Controller\Traits\JsonApiTrait;
 
 class GetController extends AbstractController
 {
-    use JsonResponseTrait;
     use JsonApiTrait;
 
     public function doExecute()

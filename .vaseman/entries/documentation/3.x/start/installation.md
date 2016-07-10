@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Installation
+redirect:
+    2.1: start/getting-started
 
 ---
 

@@ -4,6 +4,7 @@ namespace Vaseman\Helper;
 
 use Windwalker\Core\View\Helper\AbstractHelper;
 use Windwalker\Filesystem\File;
+use Windwalker\Registry\Registry;
 
 class DocHelper extends AbstractHelper
 {
@@ -17,10 +18,21 @@ class DocHelper extends AbstractHelper
 		return \Windwalker\Filesystem\File::stripExtension($paths);
 	}
 
-	public function getVersionPath($paths, $version)
+	public function getVersionPath($paths, $version, $config)
 	{
-		$paths[1] = $version;
+		$config = new Registry($config);
+		$config->setSeparator('/');
 
-		return File::stripExtension(implode('/', $paths)) . '.html';
+		if ($config['redirect/' . $version])
+		{
+			$path = 'documentation/' . $version . '/' . $config['redirect/' . $version];
+		}
+		else
+		{
+			$paths[1] = $version;
+			$path = File::stripExtension(implode('/', $paths));
+		}
+
+		return $path . '.html';
 	}
 }

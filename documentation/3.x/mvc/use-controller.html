@@ -95,7 +95,7 @@
                 </li>
 
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/start/getting-started.html">
+                    <a href="../../../documentation/3.x/start/installation.html">
                         <span class="menu-item-title">Documentation</span>
                     </a>
                 </li>
@@ -556,14 +556,12 @@ class GetController extends AbstractController
     use JsonResponseTrait;
 </code></pre>
 
-<p>Add <code>JsonApiTrait</code> to return a standard api format:</p>
+<p>Use <code>JsonApiTrait</code> to return a standard api format:</p>
 
-<pre><code class="php">use Windwalker\Core\Controller\Traits\JsonResponseTrait;
-use Windwalker\Core\Controller\Traits\JsonApiTrait;
+<pre><code class="php">use Windwalker\Core\Controller\Traits\JsonApiTrait;
 
 class GetController extends AbstractController
 {
-    use JsonResponseTrait;
     use JsonApiTrait;
 
     public function doExecute()

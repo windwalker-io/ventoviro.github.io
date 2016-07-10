@@ -31,11 +31,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="{{ version == '3.x' ? 'uk-active' : '' }}">
-                    <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '3.x') }}">3.x</a>
+                    <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '3.x', config) }}">3.x</a>
                 </li>
 
                 <li class="{{ version == '2.1' ? 'uk-active' : '' }}">
-                    <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '2.1') }}">2.1</a>
+                    <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '2.1', config) }}">2.1</a>
                 </li>
             </ul>
         </div>
