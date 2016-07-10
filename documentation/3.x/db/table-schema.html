@@ -203,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -214,22 +247,10 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -241,16 +262,7 @@
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -280,80 +292,156 @@
 <pre><code class="php">$table = $db-&gt;getTable('#__articles');
 </code></pre>
 
-<h3>create()</h3>
+<h2>create()</h2>
 
 <p>Create a new table.</p>
 
-<blockquote>
-  <p><em>NOTE:</em> Table has not support foreign key now.</p>
-</blockquote>
+<pre><code class="php">use Windwalker\Database\Schema\Schema;
 
-<pre><code class="php">use Windwalker\Database\Schema\Column;
-use Windwalker\Database\Schema\Key;
+$table = $db-&gt;getTable('#__articles');
+
+$table-&gt;create(function (Schema $schema)
+{
+    $schema-&gt;primary('id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Primary Key');
+    $schema-&gt;integer('category_id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Cat Key');
+    $schema-&gt;varchar('title')-&gt;allowNull(false)-&gt;comment('Title');
+    $schema-&gt;varchar('slug')-&gt;length(123)-&gt;allowNull(false)-&gt;comment('Slug');
+    $schema-&gt;text('content')-&gt;allowNull(false)-&gt;comment('Content');
+
+    $schema-&gt;addIndex('category_id');
+    $schema-&gt;addIndex(array('category_id', 'title'));
+    $schema-&gt;addUniqueKey('slug');
+}, true); // True to add IF NOT EXISTS
+</code></pre>
+
+<p>Available types in <code>Schema</code> object:</p>
+
+<ul>
+<li>primary (An <code>integer</code> column with primary key and auto-increment)</li>
+<li>integer</li>
+<li>tinyint</li>
+<li>bit</li>
+<li>float</li>
+<li>double</li>
+<li>decimal</li>
+<li>char</li>
+<li>varchar</li>
+<li>datetime</li>
+<li>timestamp</li>
+<li>text</li>
+<li>longtext</li>
+</ul>
+
+<h3>Using Column type objects:</h3>
+
+<pre><code class="php">use Windwalker\Database\Schema\Schema;
+use Windwalker\Database\Schema\Column\Varchar;
+
+    // ...
+
+    $schema-&gt;add('title', new Varchar)-&gt;allowNull(false)-&gt;comment('Title');
+
+    // ...
+</code></pre>
+
+<p>You can create your own Column type if you want, just extends <code>Windwalker\Database\Schema\Column</code> object.</p>
+
+<h2>Type Mapping</h2>
+
+<p>Windwalker supports MySQL and Postgresql now, and we'll add more database driver in the future. Every SQL platform has their
+ own data types, so Windwalker has a <code>DataType</code> class to help us choose correct these types to current SQL.</p>
+
+<p>For example, Postgresql has no <code>datatime</code> type, but MySQL does, so if we create a table with <code>datetime</code>, Windwalker will
+ convert this type to <code>timestamp</code> if we use postgresql driver.</p>
+
+<pre><code class="php">    // ...
+
+    $schema-&gt;datetime('created'); // Will be `timestamp` if use pgsql
+
+    // ...
+</code></pre>
+
+<p>We can get type detail by <code>DataType</code> class.</p>
+
+<pre><code class="php">use Windwalker\Database\Driver\Mysql\MysqlType;
+use Windwalker\Database\Driver\Postgresql\PostgresqlType;
 use Windwalker\Database\Schema\DataType;
 
-$table = $db-&gt;getTable('#__articles');
+// Mysql has `set` type, but pgsql not.
+// We'll get `text` instead
+$type = PostgresqlType::getType('set'); // text
 
-$table-&gt;addColumn('id', DataType::INTEGER, Column::UNSIGNED, Column::NOT_NULL, '', 'PK', array('primary' =&gt; true))
-    -&gt;addColumn('name', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Name', array('length' =&gt; 255))
-    -&gt;addColumn('alias', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Alias')
-    -&gt;addIndex(Key::TYPE_INDEX, 'idx_name', 'name', 'Test')
-    -&gt;addIndex(Key::TYPE_UNIQUE, 'idx_alias', 'alias', 'Alias Index')
-    -&gt;create(true); // True to add IF NOT EXISTS
+// Most SQL use `integer` type, but MySQL is `int`
+$type = MysqlType::getPhpType('integer'); // int
+
+// Get default length, varchar default length in MySQL is 255
+// Every type has a constant so we can get it easily if your IDE supports auto-complete
+MysqlType::getLength(MysqlType::VARCHAR); // 255
+
+// Get SQL type map to php type
+gettype($entity-&gt;created) == MysqlType::getPhpType(DataType::DATETIME); // Will be `string`
+gettype($entity-&gt;state) == MysqlType::getPhpType(DataType::TINYINT); // Will be `int`
+
+// Get valid default value
+MysqlType::getDefaultValue(DataType::DATETIME); // `0000-00-00 00:00:00`
+MysqlType::getDefaultValue(DataType::TINYINT); // `0`
 </code></pre>
 
-<p>Using Column type objects:</p>
+<h3>Add Indexes</h3>
 
-<pre><code class="php">use Windwalker\Database\Schema\Column;
+<p>We can add a single name or a set of columns name, the index name will auto created.</p>
 
-$table-&gt;addColumn(new Column\Primary('id'))
-    -&gt;addColumn(new Column\Varchar('name'))
-    -&gt;addColumn(new Column\Char('type'))
-    -&gt;addColumn(new Column\Timestamp('created'))
-    -&gt;addColumn(new Column\Bit('state'))
-    -&gt;addColumn(new Column\Integer('uid'))
-    -&gt;addColumn(new Column\Tinyint('status'))
-    -&gt;create();
+<pre><code class="php">$schema-&gt;addIndex('foo'); // idx_tablename_foo
+$schema-&gt;addIndex(array('foo', 'bar')); // idx_tablename_foo_bar
 </code></pre>
 
-<p>These objects will set default length and attributes for every column, and map the type to different database drivers.</p>
+<p>You can also set a custom name</p>
 
-<h3>update()</h3>
-
-<p>Update table schema. Only use on add columns and indexes.</p>
-
-<pre><code class="php">use Windwalker\Database\Schema\Column;
-use Windwalker\Database\Schema\Key;
-
-$table = $db-&gt;getTable('#__articles');
-
-$table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 0, 'State', array('position' =&gt; 'AFTER ordering', 'length' =&gt; 1))
-    -&gt;addIndex(Key::TYPE_INDEX, 'idx_ordering', array('ordering', 'id'))
-    -&gt;update();
+<pre><code class="php">$schema-&gt;addIndex(array('foo', 'bar'), 'idx_custom_name');
 </code></pre>
 
-<h3>save()</h3>
+<h2>update()</h2>
+
+<pre><code class="php">// Will add category_id column and a index
+$table-&gt;create(function (Schema $schema)
+{
+    $schema-&gt;integer('category_id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Cat Key');
+
+    $schema-&gt;addIndex('category_id');
+});
+</code></pre>
+
+<h2>save()</h2>
 
 <p>If table exists, using update, otherwise use insert.</p>
 
-<pre><code class="php">use Windwalker\Database\Schema\Column;
-use Windwalker\Database\Schema\Key;
+<pre><code class="php">// Will create table if not exists, and add columns if not in table.
+$table-&gt;save(function (Schema $schema)
+{
+    $schema-&gt;primary('id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Primary Key');
+    $schema-&gt;integer('category_id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Cat Key');
+    $schema-&gt;varchar('title')-&gt;allowNull(false)-&gt;comment('Title');
+    $schema-&gt;varchar('slug')-&gt;length(123)-&gt;allowNull(false)-&gt;comment('Slug');
+    $schema-&gt;text('content')-&gt;allowNull(false)-&gt;comment('Content');
 
-$table = $db-&gt;getTable('#__articles');
-
-$table-&gt;addColumn('state', DataType::TINYINT, Column::SIGNED, Column::NOT_NULL, 0, 'State', array('position' =&gt; 'AFTER ordering', 'length' =&gt; 1))
-    -&gt;addIndex(Key::TYPE_INDEX, 'idx_ordering', array('ordering', 'id'))
-    -&gt;save();
+    $schema-&gt;addIndex('category_id');
+    $schema-&gt;addIndex(array('category_id', 'title'));
+    $schema-&gt;addUniqueKey('slug');
+}, true); // True to add IF NOT EXISTS
 </code></pre>
 
-<h3>dropColumn()</h3>
+<h2>dropColumn()</h2>
+
+<p>Instantly drop column.</p>
 
 <pre><code class="php">$table = $db-&gt;getTable('#__articles');
 
 $table-&gt;dropColumn('state');
 </code></pre>
 
-<h3>dropIndex()</h3>
+<h2>dropIndex()</h2>
+
+<p>Instantly drop index.</p>
 
 <pre><code class="php">use Windwalker\Database\Schema\Key;
 
@@ -362,18 +450,41 @@ $table = $db-&gt;getTable('#__articles');
 $table-&gt;dropIndex(Key::TYPE_INDEX, 'idx_state');
 </code></pre>
 
-<h3>rename()</h3>
+<h2>changeColumn() &amp; modifyColumn()</h2>
+
+<pre><code class="php">// Modify `foo` column to new type or length
+$table-&gt;modifyColumn(
+    (new Varchar('foo'))-&gt;length(123)-&gt;comment('Foo')
+);
+
+// Modify column `foo` to varchar and rename it to `new_name`
+$table-&gt;changeColumn('foo', new Varchar('new_name'));
+</code></pre>
+
+<h2>Rename Table</h2>
 
 <pre><code class="php">$table = $db-&gt;getTable('#__foo');
 
 $newTable = $table-&gt;rename('#__bar');
 </code></pre>
 
-<h3>truncate()</h3>
+<h2>Truncate Table</h2>
 
 <pre><code class="php">$table = $db-&gt;getTable('#__foo');
 
 $table-&gt;truncate();
+</code></pre>
+
+<h2>Get Column</h2>
+
+<pre><code class="php">// Get full columns data
+$table-&gt;getColumnDetails();
+
+// Get single column data
+$table-&gt;getColumnDetail('name');
+
+// Get an array with columns name
+$table-&gt;getColumns();
 </code></pre>
 
                         <hr />

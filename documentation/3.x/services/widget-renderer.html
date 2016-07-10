@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Registry Object | Windwalker - A Modern PHP Framework</title>
+        <title>Widget and Renderer | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Registry Object | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Widget and Renderer | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -43,6 +43,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
         <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script src="../../../media/js/highlight/highlight.blade.js"></script>
         <script>
             $(document).ready(function() {
 
@@ -76,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/more/registry.html">3.x</a>
+                    <a href="../../../documentation/3.x/services/widget-renderer.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/more/registry.html">2.1</a>
+                    <a href="../../../documentation/2.1/services/widget-renderer.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Registry Object</h1>
+        <h1>Widget and Renderer</h1>
     </div>
         </div>
     </section>
@@ -165,6 +166,9 @@
                 <a href="../../../documentation/3.x/mvc/view-templating.html">View and Templating</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/mvc/model-database.html">Model and Database</a>
             </li>
                     <li class="">
@@ -199,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -210,22 +247,10 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
-                    <li class="uk-active">
-                <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
-            </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
+                <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -237,16 +262,7 @@
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -269,252 +285,210 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Getting Started</h2>
+                    <h2>What is Widget Object</h2>
 
-<p>Windwalker Registry is a storage of nested array or object, help us manage multi-level structures data.</p>
+<p>Widget object is a convenience tool to help us render HTML blocks, you can consider it as a backend web component.</p>
 
-<pre><code class="php">use Windwalker\Registry\Registry;
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5594250/e28c0d56-927d-11e4-8f32-19005916710c.jpg" alt="widget" /></p>
 
-$registry = new Registry;
+<h2>Create A Widget</h2>
 
-// Set a value in the registry.
-$registry-&gt;set('foo', 'bar');
+<p>First, add a template file in <code>/templates/sidebar/news.php</code>, this is a news widget.</p>
 
-// Get a value from the registry;
-$value = $registry-&gt;get('foo');
-
+<pre><code class="html">&lt;ul class="nav news"&gt;
+    &lt;?php foreach ($data-&gt;articles as $article): ?&gt;
+    &lt;li&gt;
+        &lt;a href="&lt;?php echo $article-&gt;link; ?&gt;"&gt;
+            &lt;?php echo $article-&gt;title; ?&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;?php endforeach; ?&gt;
+&lt;/ul&gt;
 </code></pre>
 
-<h2>Load config by Registry</h2>
+<p>Now we can use this widget in anywhere, remember add data when rendering it:</p>
 
-<pre><code class="php">use Windwalker\Registry\Registry;
+<pre><code class="php">use Windwalker\Core\Widget\Widget;
 
-$registry = new Registry;
+$news = new Widget('sidebar.news');
 
-// Load by string
-$registry-&gt;loadString('{"foo" : "bar"}');
+$news-&gt;render(array('articles' =&gt; $data));
 
-$registry-&gt;loadString('&lt;root&gt;&lt;/root&gt;', 'xml');
-
-// Load by object or array
-$registry-&gt;load($object);
-
-// Load by file
-$registry-&gt;loadFile($root . '/config/config.json', 'json');
+// In PHP 5.4, you can use instantiation object access
+$news = (new Widget('sidebar.news'))-&gt;render(['articles' =&gt; $data]);
 </code></pre>
 
-<h2>Accessing a Registry by getter &amp; setter</h2>
+<p>It will be useful to render widget in View <code>prepareData()</code>:</p>
 
-<h3>Get value</h3>
-
-<pre><code class="php">$registry-&gt;get('foo');
-
-// Get a non-exists value and return default
-$registry-&gt;get('foo', 'default');
-
-// OR
-
-$registry-&gt;get('foo') ?: 'default';
-</code></pre>
-
-<h3>Set value</h3>
-
-<pre><code class="php">// Set value
-$registry-&gt;set('bar', $value);
-
-// Sets a default value if not already assigned.
-$registry-&gt;def('bar', $default);
-</code></pre>
-
-<h3>Accessing children value by path</h3>
-
-<pre><code class="php">$json = '{
-    "parent" : {
-        "child" : "Foo"
-    }
-}';
-
-$registry = new Registry($json);
-
-$registry-&gt;get('parent.child'); // return 'Foo'
-
-$registry-&gt;set('parent.child', $value);
-</code></pre>
-
-<h3>Append &amp; Prepend</h3>
-
-<p>Support <code>push / pop / shift / unshift</code> methods.</p>
-
-<pre><code class="php">$registry-&gt;set('foo.bar', array('fisrt', 'second'));
-
-$registry-&gt;push('foo.bar', 'third');
-
-$registry-&gt;get('foo.bar');
-// Result: Array(first, second, third)
-</code></pre>
-
-<h3>Use other separator</h3>
-
-<pre><code class="php">$registry-&gt;setSeparator('/');
-
-$data = $registry-&gt;get('foo/bar');
-</code></pre>
-
-<h2>Accessing a Registry as an Array</h2>
-
-<p>The <code>Registry</code> class implements <code>ArrayAccess</code> so the properties of the registry can be accessed as an array. Consider the following examples:</p>
-
-<pre><code class="php">// Set a value in the registry.
-$registry['foo'] = 'bar';
-
-// Get a value from the registry;
-$value = $registry['foo'];
-
-// Check if a key in the registry is set.
-if (isset($registry['foo']))
+<pre><code class="php">class SakurasHtmlView extends HtmlView
 {
-    echo 'Say bar.';
-}
-</code></pre>
+    protected function prepareData($data)
+    {
+        $data-&gt;items      = $this-&gt;model-&gt;getItems();
+        $data-&gt;categories = $this-&gt;model['Categories']-&gt;getItems();
 
-<h2>Merge Registry</h2>
-
-<h5>Using load* methods to merge two config files.</h5>
-
-<pre><code class="php">$json1 = '{
-    "field" : {
-        "keyA" : "valueA",
-        "keyB" : "valueB"
-    }
-}';
-
-$json2 = '{
-    "field" : {
-        "keyB" : "a new valueB"
-    }
-}';
-
-$registry-&gt;loadString($json1);
-$registry-&gt;loadString($json2);
-</code></pre>
-
-<p>Output</p>
-
-<pre><code>Array(
-    field =&gt; Array(
-        keyA =&gt; valueA
-        keyB =&gt; a new valueB
-    )
-)
-</code></pre>
-
-<h5>Merge Another Registry</h5>
-
-<pre><code class="php">$object1 = '{
-    "foo" : "foo value",
-    "bar" : {
-        "bar1" : "bar value 1",
-        "bar2" : "bar value 2"
-    }
-}';
-
-$object2 = '{
-    "foo" : "foo value",
-    "bar" : {
-        "bar2" : "new bar value 2"
-    }
-}';
-
-$registry1 = new Registry(json_decode($object1));
-$registry2 = new Registry(json_decode($object2));
-
-$registry1-&gt;merge($registry2);
-</code></pre>
-
-<p>If you just want to merge first level, do not hope recursive:</p>
-
-<pre><code class="php">$registry1-&gt;merge($registry2, false); // Set param 2 to false that Registry will only merge first level
-</code></pre>
-
-<p>Merge to a child node:</p>
-
-<pre><code class="php">$registry-&gt;mergeTo('foo.bar', $anotherRegistry);
-</code></pre>
-
-<h2>Dump to file.</h2>
-
-<pre><code class="php">$registry-&gt;toString();
-
-$registry-&gt;toString('xml');
-
-$registry-&gt;toString('ini');
-</code></pre>
-
-<h2>Dump to one dimension</h2>
-
-<pre><code class="php">$array = array(
-    'flower' =&gt; array(
-        'sunflower' =&gt; 'light',
-        'sakura' =&gt; 'samurai'
-    )
-);
-
-$registry = new Registry($array);
-
-// Make data to one dimension
-
-$flatted = $registry-&gt;flatten();
-
-print_r($flatted);
-</code></pre>
-
-<p>The result:</p>
-
-<pre><code>Array
-(
-    [flower.sunflower] =&gt; light
-    [flower.sakura] =&gt; samurai
-)
-</code></pre>
-
-<h2>Using YAML</h2>
-
-<p>Add Symfony YAML component in <code>composer.json</code></p>
-
-<pre><code class="json">{
-    "require-dev": {
-        "symfony/yaml": "~2.0"
+        $data-&gt;news       = (new Widget('sidebar.news'))-&gt;render(array('articles' =&gt; $data-&gt;items));
+        $data-&gt;pagination = (new Widget('_global.pagination.pagination'))-&gt;render(array('pages' =&gt; $this-&gt;model-&gt;getPagination()));
+        $data-&gt;categories = (new Widget('sidebar.categories'))-&gt;render(array('categories' =&gt; $data-&gt;categories));
+        $data-&gt;banner     = (new Widget('sidebar.banner'))-&gt;render(array('banner' =&gt; $data-&gt;banner));
     }
 }
 </code></pre>
 
-<p>Using <code>yaml</code> format</p>
+<h2>Templating</h2>
 
-<pre><code class="php">$registry-&gt;loadFile($yamlFile, 'yaml');
+<p>By default, widget will find templates from these paths:</p>
 
-$registry-&gt;loadString('foo: bar', 'yaml');
-
-// Convert to string
-$registry-&gt;toString('yaml');
+<pre><code class="html">- {ROOT}/src/{package}/Templates/{Locale}
+- {ROOT}/src/{package}/Templates
+- {ROOT}/templates
+- {ROOT}/vendor/windwalker/core/src/Core/Resources/Templates
 </code></pre>
 
-<h2>RegistryHelper</h2>
+<p>You can add your custom path to Widget:</p>
 
-<pre><code class="php">use Windwalker\Registry\RegistryHelper;
+<pre><code class="php">use Windwalker\Utilities\Queue\PriorityQueue;
 
-RehistryHelper::loadFaile($file, $format); // File to array
-RehistryHelper::loadString($string, $format); // String to array
-RehistryHelper::toString($array, $format); // Array to string
+$widget-&gt;addPath('/my/widget/path', PriorityQueue::HIGH);
+</code></pre>
 
-// Use format class
-$json = RehistryHelper::getFormatClass('json'); // Get JsonFormat
-$string = $json::structToString($array);
+<p>Widget also use <a href="https://github.com/ventoviro/windwalker-renderer">Windwalker Renderer</a> to render page, 
+you need to add priority to set the ordering of this path.</p>
+
+<h3>Set Package</h3>
+
+<p>By default, Widget will auto guess current package, but you can set custom package to direct to different template paths.</p>
+
+<pre><code class="php">// Add package name, Widget will auto resolve package
+$news = new Widget('sidebar.news', 'php', 'package_name');
+
+// OR add package object
+
+$news = new Widget('sidebar.news', 'php', $package);
+</code></pre>
+
+<h3>Add Path to Global</h3>
+
+<p>Add your path to global RendererHelper that Widget will always contain this path:</p>
+
+<pre><code class="php">\Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/widget/path', PriorityQueue::ABOVE_NORMAL);
+</code></pre>
+
+<h3>Add Shared Variables</h3>
+
+<pre><code class="php">$widget = new Widget('flower.sakura');
+$widget-&gt;set('foo', 'bar');
+
+echo $widget-&gt;render($data1);
+echo $widget-&gt;render($data2);
+</code></pre>
+
+<h2>Override Built-in Widgets Templates</h2>
+
+<p>Windwalker has some built-in widgets, it contains: <code>messages</code>, <code>pagination</code>, <code>error pages</code>.</p>
+
+<p>There is an example to override messages template. The global message template is located at</p>
+
+<pre><code>{ROOT}/vendor/windwalker/core/src/Core/Resources/Templates/windwalker/message/default.php
+</code></pre>
+
+<p>So we can add a custom template at:</p>
+
+<pre><code>{ROOT}/templates/windwalker/message/default.php
+</code></pre>
+
+<p>Now all messages in Windwalker will select your template since the new file path is priority to origin file.</p>
+
+<blockquote>
+  <p>Override other widgets please see: <a href="pagination.html">Pagination</a> and <a href="error-handling.html">Error Handling</a></p>
+</blockquote>
+
+<h2>Use Edge and Twig</h2>
+
+<p>Similar to View, Windwalker Widget support Blade and Twig engine, you may just create it by newing it:</p>
+
+<pre><code class="php">use Windwalker\Core\Widget\WidgetHelper;
+
+// Use constant
+WidgetHelper::createWidget('sidebar.news', WidgetHelper::EDGE);
+
+// Use string
+WidgetHelper::createWidget('sidebar.news', 'twig');
+</code></pre>
+
+<blockquote>
+  <p>See also: <a href="https://laravel.com/docs/master/blade">Blade Templating</a> and <a href="http://twig.sensiolabs.org/documentation">Twig Documentation</a></p>
+</blockquote>
+
+<h2>Render by WidgetHelper</h2>
+
+<p>Use WidgetHelper to quickly render page.</p>
+
+<pre><code class="php">use Windwalker\Core\Widget\WidgetHelper;
+
+$html = WidgetHelper::render('foo.bar', $data, WidgetHelper::EDGE);
+</code></pre>
+
+<h2>Create Custom Widget Class</h2>
+
+<p>Create custom Widget class to quickly render specific template.</p>
+
+<pre><code class="php">use Windwalker\DataMapper\DataMapper;
+
+class NewsWidget extends Widget
+{
+    /**
+     * Optional property to set engine.
+     */
+    protected $renderer = 'edge';
+
+    /**
+     * Optional property to find template.
+     */
+    protected $layout = 'sidebar.news';
+
+    /**
+     * Optional property to locate package.
+     */
+    protected $package = 'flower';
+
+    protected function prepareData($data)
+    {
+        $data-&gt;items = (new DataMapper('articles'))-&gt;limit(10, 20)-&gt;find();
+    }
+}
+</code></pre>
+
+<pre><code class="php">echo (new NewsWidget)-&gt;render();
+</code></pre>
+
+<h2>Render Widget in Template</h2>
+
+<p>WidgetHelper instance has been inject to global renderer variables, we can use it to quickly render widget.</p>
+
+<p>In php template</p>
+
+<pre><code class="php">&lt;?php echo $widget-&gt;render('sidebar,.news', $data, 'edge'); ?&gt;
+</code></pre>
+
+<p>In Blade or Edge</p>
+
+<pre><code class="html">{!! $widget-&gt;render('sidebar,.news', $data, 'edge') !!}
+
+OR
+
+@widget('sidebar,.news', $data, 'edge')
+</code></pre>
+
+<p>Twig</p>
+
+<pre><code class="twig">{{ widget.render('sidebar,.news', $data, 'edge') | raw }}
 </code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/registry.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/services/widget-renderer.md">improve</a> this document.
     </p>
                 </article>
             </div>

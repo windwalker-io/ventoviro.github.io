@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Service Provider | Windwalker - A Modern PHP Framework</title>
+        <title>Caching | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Service Provider | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Caching | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -43,6 +43,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
         <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script src="../../../media/js/highlight/highlight.blade.js"></script>
         <script>
             $(document).ready(function() {
 
@@ -76,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/start/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/services/caching.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/start/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/services/caching.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Service Provider</h1>
+        <h1>Caching</h1>
     </div>
         </div>
     </section>
@@ -131,23 +132,26 @@
                     <li class="">
                 <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
             </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Core</li>
                     <li class="">
-                <a href="../../../documentation/3.x/start/routing-controller.html">Routing And Controller</a>
+                <a href="../../../documentation/3.x/core/routing.html">Routing</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/start/package-system.html">Package System (Bundle)</a>
+                <a href="../../../documentation/3.x/core/package-system.html">Packages</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/start/config.html">Config &amp; Setting</a>
+                <a href="../../../documentation/3.x/core/config.html">Config &amp; Setting</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/start/request-input.html">Request and Input</a>
+                <a href="../../../documentation/3.x/core/request-input.html">Request and Input</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/start/ioc-container.html">IoC Container</a>
+                <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
             </li>
-                    <li class="uk-active">
-                <a href="../../../documentation/3.x/start/service-provider.html">Service Provider</a>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
             </li>
         
     <li class="uk-nav-divider"></li>
@@ -160,6 +164,9 @@
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/edge.html">Edge Templates</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/mvc/model-database.html">Model and Database</a>
@@ -196,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -207,40 +247,22 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
+                <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -249,7 +271,7 @@
                 <a href="../../../documentation/3.x/more/validation.html">Validation</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/debugging.html">Debugging</a>
+                <a href="../../../documentation/3.x/more/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
@@ -263,110 +285,171 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction of Service Provider</h2>
+                    <h2>Configuration</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
-custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
+<p>Using cache will be very easy in Windwalker, the cache configuration is located at <code>/etc/config.yml</code>.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
-and write all our logic in <code>register()</code> method and set our service objects into container.</p>
-
-<h3>Basic Provider Example</h3>
-
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
-
-<h5>Original Way</h5>
-
-<pre><code class="php">// import.mongodb.php
-
-$conn = new MongoDBConnection($config['database']['mongodb']);
-
-return $conn;
+<pre><code class="yaml">cache:
+    enabled: 0
+    storage: file
+    serializer: php
+    time: 15
 </code></pre>
 
-<p>And include this file:</p>
+<p>The <code>enabled</code> property controls global cache start or not, can be close if you want to test your application. <code>storage</code> controls which cache storage method
+ you use, can be <code>file</code>, <code>runtime</code>, <code>memcached</code> or <a href="https://github.com/ventoviro/windwalker-cache#available-storage">more</a>. 
+ About storage and handler, please see <a href="https://github.com/ventoviro/windwalker-cache">Windwalker Cache</a>.</p>
 
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
-</code></pre>
+<h2>Use Cache</h2>
 
-<h5>Windwalker Way</h5>
-
-<p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
-use Windwalker\DI\ServiceProviderInterface;
-
-class MongoDBServiceProvider implements ServiceProviderInterface
-{
-    public function register(Container $container)
-    {
-        $container-&gt;share('mongo.db', function (Container $container)
-        {
-            $config = $container-&gt;get('config');
-
-            return new MongoDBConnection($config-&gt;get('database.mongodb'));
-        });
-    }
-}
-
-</code></pre>
-
-<p>Register this provider to container:</p>
-
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
-
-<p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+<pre><code class="php">$cache = Ioc::getCache();
 
 // OR
 
-$mongo = Ioc::get('mongo.db');
+$cache = $container-&gt;get('system.cache');
+
+// Store cache item
+$cache-&gt;set('key', 'value');
+
+// Get cache
+$value = $cache-&gt;get('key');
+
+// Check cache item
+$cache-&gt;exists('key');
 </code></pre>
 
-<p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
+<h2>Get Cache By CacheFactory</h2>
 
-<h2>Registering Providers</h2>
+<p>Get cache factory:</p>
 
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
-you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
+<pre><code class="php">$cacheFactory = $container-&gt;get('cache.factory');
 
-<pre><code class="php">public function loadProviders()
+// OR
+
+use Windwalker\Core\Cache\CacheFactory;
+
+$cacheFactory = CacheFactory::getInstance();
+</code></pre>
+
+<p>Create cache:</p>
+
+<pre><code class="php">$cache = $cacheFactory-&gt;create('mycache_name', 'file'); // Every name will be singleton object.
+</code></pre>
+
+<p>If you set <code>cache.enabled</code> to <code>false</code>, all cache created from <code>create()</code> will be <code>NullStorage</code>, it won't cache any data.</p>
+
+<h2>Auto Fetch Data By Closure</h2>
+
+<p>Using call method to auto detect is cache exists or not.</p>
+
+<pre><code class="php">$data = $cache-&gt;call('flower', function()
 {
-    $providers = parent::loadProviders();
-
-    // Default providers ...
-
-    /*
-     * Custom Providers:
-     * -----------------------------------------
-     * You can add your own providers here. If you installed a 3rd party packages from composer,
-     * but this package need some init logic, create a service provider to do this and register it here.
-     */
-
-    // Custom Providers here...
-    $providers['mongodb'] = new MongoDBServiceProvider;
-
-    return $providers;
-}
+    return array('sakura');
+});
 </code></pre>
 
-<p>There are 3 positions in default Windwalker Application we can add providers:</p>
+<p>It is same as this code:</p>
+
+<pre><code class="php">if (!$cache-&gt;exists('flower'))
+{
+    $cache-&gt;set('flower', array('sakura'));
+}
+
+$data = $cache-&gt;get('flower');
+</code></pre>
+
+<h2>Debug Mode or Cache Disabled</h2>
+
+<p>When debug property in global config se to <code>1</code> or cache disabled, the cache storage will auto set to <code>NullStorage</code>, cache can still be used
+ but no work.</p>
+
+<pre><code class="php">// If cache disabled
+$cache = \Windwalker\Ioc::getCache();
+
+// Cache object can be get and operate, but the key will always not exists.
+if (!$cache-&gt;exists('flower'))
+{
+    $data = $flowerMapper-&gt;loadAll();
+
+    $cache-&gt;set('flower', $data);
+}
+else
+{
+    $data = $cache-&gt;get('flower');
+}
+
+return $data;
+</code></pre>
+
+<h2>Using Custom Cache Object</h2>
+
+<p>In the above we use global cache, but we can still create our custom cache to store values, it will not affected by global config.</p>
+
+<h3>Use <code>CacheFactory::getCache()</code></h3>
+
+<p>CacheFactory is a cache creator, it will store each cache object as singleton by different name.</p>
+
+<pre><code class="php">use Windwalker\Core\Cache\CacheFactory;
+
+$myFileCache = CacheFactory::getCache('cache_name', 'file');
+$myArrayCache = CacheFactory::getCache('cache_name', 'array');
+</code></pre>
+
+<p>Te default cache is runtime cache, it means our data only keep in once runtime but will not save as files.</p>
+
+<h3>Custom Cache Options</h3>
+
+<pre><code class="php">$options = array(
+    'cache_dir' =&gt; WINDWALKLER_CACHE, // Only for file storage
+    'cache_time' =&gt; 999 // minutes
+);
+
+$cache = CacheFactory::getCache('cache_name', 'file', 'php', $options);
+</code></pre>
+
+<h2>Full Page Cache</h2>
+
+<p>Sometimes we want to store whole html as static page cache. <code>StringSerializer</code>  help us save raw string:</p>
+
+<pre><code class="php">use Windwalker\Cache\Cache;
+use Windwalker\Cache\Storage\RawFileStorage;
+
+$cache = CacheFactory::getCache('cache_name', 'file', 'string');
+
+$url = 'http://mysite.com/foo/bar/baz';
+
+if ($cache-&gt;exists($url))
+{
+    echo $cache-&gt;get($url);
+
+    exit();
+}
+
+$view = new View;
+
+$html = $view-&gt;render();
+
+$cache-&gt;set($url, $html);
+
+echo $html;
+</code></pre>
+
+<h3>Supported Serializers</h3>
 
 <ul>
-<li><code>src/Windwalker/Web/Application.php</code></li>
-<li><code>src/Windwalker/Console/Application/php</code></li>
-<li><code>src/Windwalker.php</code></li>
+<li>PhpSerializer (<code>php</code>)</li>
+<li>PhpFileSerializer (<code>php_file</code>)</li>
+<li>JsonSerializer (<code>json</code>)</li>
+<li>StringSerializer (<code>string</code>)</li>
+<li>RawSerializer (<code>raw</code>)</li>
 </ul>
 
-<p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
-for console use, or add it in <code>Windwalker.php</code> for both.</p>
+<p>See <a href="https://github.com/ventoviro/windwalker-cache">Windwalker Cache</a></p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/start/service-provider.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/services/caching.md">improve</a> this document.
     </p>
                 </article>
             </div>

@@ -203,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -214,22 +247,10 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -241,16 +262,7 @@
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -327,16 +339,16 @@ ORDER BY popular DESC
 LIMIT 15
 </code></pre>
 
-<h5>Limit Process</h5>
+<h3>Limit Process</h3>
 
 <p>For common use, Mysql and some databases use this limit syntax:</p>
 
 <pre><code class="sql">LIMIT {limit}
-## OR
+# OR
 LIMIT {offset}, {limit}
 </code></pre>
 
-<p>Windwalker Query dose not follow this ordering, the Query::limit method look like: <code>limit($limit, $offset)</code>. 
+<p>Windwalker Query dose not follow this ordering, the Query::limit method look like: <code>limit($limit, $offset)</code>.
 We must use <code>limit(3, 0)</code> to generate <code>LIMIT 0, 3</code> because it is more semantic on method interface.</p>
 
 <h3>Where Conditions</h3>
@@ -358,16 +370,32 @@ WHERE year &lt;= 1616
     AND published &gt; 0
 </code></pre>
 
-<p>Using OR condition:</p>
+<p>There are many ways you can use <code>where()</code> method:</p>
 
-<pre><code class="php">$conditions = array("foo = 'bar'", "flower = 'sakura'");
+<pre><code class="php">// Use array
+$query-&gt;where(array('a = b', 'c = d')); // a = b AND c = d
 
-$conditions = '(' . implode(' OR ', $conditions) . ')';
+// Use format
+$query-&gt;where('%q = %n', 'flower', 'sakura'); // `flower` = 'sakura'
 
-$query-&gt;select('*')
+// Use bind
+$query-&gt;where('`flower` = :name')-&gt;bind('name', $name); // `flower` = 'sakura'
+
+// Or bind an array data
+$query-&gt;where('`flower` = :name')-&gt;bind($array); // `flower` = 'sakura'
+</code></pre>
+
+<p>See <a href="#format">Query Format</a></p>
+
+<p><code>orWhere()</code>:</p>
+
+<pre><code class="php">$query-&gt;select('*')
     -&gt;from('shakespeare')
     -&gt;where('year &lt;= 1616')
-    -&gt;where($conditions);
+    -&gt;orWhere(array(
+        "foo = 'bar'",
+        "flower = 'sakura'"
+    ));
 
 echo $query;
 </code></pre>
@@ -380,11 +408,18 @@ WHERE year &lt;= 1616
     AND (foo = 'bar' OR flower = 'sakura')
 </code></pre>
 
-<p>You can use <code>QueryElement</code> to create this:</p>
+<p>Build where by callback:</p>
 
-<pre><code class="php">use Windwalker\Query\QueryElement;
+<pre><code class="php">$query-&gt;orWhere(function (Query $query)
+{
+    $query-&gt;where("foo = 'bar'")
+        -&gt;where("flower = 'sakura'");
+});
+</code></pre>
 
-echo new QueryElement('()', $conditions, ' OR ');
+<p>You can use <code>QueryElement</code> to create an <code>()</code> element:</p>
+
+<pre><code class="php">echo $query-&gt;element('()', $conditions, ' OR ');
 
 // Result also: '(foo = 'bar' OR flower = 'sakura')'
 </code></pre>
@@ -615,10 +650,22 @@ The argument index used for unspecified tokens is incremented only when used.</p
 
 <h2>Bind Params</h2>
 
-<p>OracleQuery support <code>PreparableInterface</code> now, we can bind params to our query string:</p>
+<p>We can bind params to our query string:</p>
 
-<pre><code class="php">$query-&gt;where('title = :title')
+<pre><code class="php">// Bind data
+$query-&gt;where('title = :title')
     -&gt;bind(':title', 'Hamlet');
+
+// Now do execute of this query
+$bounded =&amp; $query-&gt;getBounded();
+
+foreach ($bounded as $key =&gt; $data)
+{
+    $pdo-&gt;bindParam($key, $data-&gt;value, $data-&gt;dataType, $data-&gt;length, $data-&gt;driverOptions);
+}
+
+// Or use Windwalker Database
+$db-&gt;setQuery($query)-&gt;loadAll();
 </code></pre>
 
 <h2>Query Expression</h2>
@@ -658,7 +705,9 @@ $sqliteQuery-&gt;expression('CONCAT', array('a', 'b', 'c'), "';'");
 
 <p>Help you build a value list:</p>
 
-<pre><code class="php">echo new QueryElement('WHERE', array('a = b', 'c = d'), ' OR ');
+<pre><code class="php">echo $query-&gt;element('WHERE', array('a = b', 'c = d'), ' OR ');
+// OR create Element object
+echo new QueryElement('WHERE', array('a = b', 'c = d'), ' OR ');
 
 // WHERE a = b OR c = d
 </code></pre>

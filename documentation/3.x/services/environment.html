@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Authentication | Windwalker - A Modern PHP Framework</title>
+        <title>Environment | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Authentication | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Environment | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/more/authentication.html">3.x</a>
+                    <a href="../../../documentation/3.x/services/environment.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/more/authentication.html">2.1</a>
+                    <a href="../../../documentation/2.1/services/environment.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Authentication</h1>
+        <h1>Environment</h1>
     </div>
         </div>
     </section>
@@ -203,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -213,23 +246,11 @@
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
-                    <li class="uk-active">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -241,16 +262,7 @@
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -273,222 +285,249 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <blockquote>
-  <p>NOTE: This page is out-of-dated, will be rewrite in the future.</p>
-</blockquote>
+                    <p>Environment object help us get browser and server information.</p>
 
-<h2>Introduction</h2>
+<h2>Get Environment Object</h2>
 
-<p>Building user system in Windwalker is very easy, Windwalker includes a simple Authentication package to handle user auth.</p>
+<pre><code class="php">// Get from Application
+$env = $app-&gt;environment;
 
-<h2>Default User Package</h2>
+// Get from Ioc
+$env = \Windwalker\Ioc::getEnvironment();
 
-<p>In Windwalker Starter, there is an User package in <code>src/Windwalker/User</code> and has been registered to system. 
-You can directly modify it to what you needed.</p>
-
-<p>Before using it, you may run this command to import default user package schema:</p>
-
-<pre><code class="bash">php bin/console migration migrate -p=wwuser
+// Get from container
+$env = $this-&gt;container-&gt;get('environment');
 </code></pre>
 
-<h3>Get User</h3>
+<p>Environment contains two objects, <code>Browser</code> to get browser information, and <code>Platform</code> to get server information.</p>
 
-<pre><code class="php">use Windwalker\Core\Authentication\User;
+<h2>The Platform Object</h2>
 
-// Get current logged-in user
-$user = User::get();
+<p>Get platform object:</p>
 
-// Get a user by id
-$user = User::get(12);
-
-// Get user by conditions
-$user = User::get(array('username' =&gt; 'christina'));
-</code></pre>
-
-<h3>Login User</h3>
-
-<pre><code class="php">// Prepare user data
-$credential = new Credential;
-$credential-&gt;username = 'richael2123';
-$credential-&gt;password = '12345678';
-
-$bool = User::login($credential);
-</code></pre>
-
-<p>Remember me:</p>
-
-<pre><code class="php">$bool = User::login($credential, true);
-</code></pre>
-
-<h3>Logout User</h3>
-
-<pre><code class="php">$bool = User::logout();
-</code></pre>
-
-<h3>Save User</h3>
-
-<pre><code class="php">use Windwalker\Crypt\Password;
-
-$user-&gt;username = 'riaok3784';
-$user-&gt;password = 'abc1234';
-
-// Hash password
-$password = new Password;
-
-$user-&gt;password = $password-&gt;create($user-&gt;password);
-
-User::save($user);
-</code></pre>
-
-<h3>Delete User</h3>
-
-<pre><code class="php">// Delete by id
-User::delete(12);
-
-// Delete by conditions
-User::delete(array('username' =&gt; 'richael3784'));
-</code></pre>
-
-<h2>Create Your Own User Handler</h2>
-
-<p>Windwalker Built-in Authentication system can register a custom user handler, this user handler should implement the <code>UserHandlerInterface</code>:</p>
-
-<pre><code class="php">use Windwalker\Core\Authentication\UserDataInterface;
-use Windwalker\Core\Authentication\UserHandlerInterface;
-
-class MyUserHandler implements UserHandlerInterface
-{
-    /**
-     * load
-     *
-     * @param array $conditions
-     *
-     * @return  mixed|false
-     */
-    public function load($conditions) {}
-
-    /**
-     * save
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  UserDataInterface
-     */
-    public function save(UserDataInterface $user) {}
-
-    /**
-     * delete
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  boolean
-     */
-    public function delete(UserDataInterface $user) {}
-
-    /**
-     * login
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  boolean
-     */
-    public function login(UserDataInterface $user) {}
-
-    /**
-     * logout
-     *
-     * @param UserDataInterface $user
-     *
-     * @return bool
-     */
-    public function logout(UserDataInterface $user) {}
-}
-</code></pre>
-
-<p>See: <a href="http://goo.gl/P0b2qk">Default UserHandler</a> to learn how to write your use handler.</p>
-
-<p>Then you may register it before application execute:</p>
-
-<pre><code class="php">use Windwalker\Core\Authentication\User;
-
-User::setHandler(new MyUserHandler);
-</code></pre>
-
-<h2>Create Authentication Method</h2>
-
-<p>Windwalker Authentication allow developers attach multiple methods to match user(See <a href="https://github.com/ventoviro/windwalker-authentication">Document</a>).</p>
-
-<p>This image described how authentication methods working.</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5595002/07d3235a-92a2-11e4-8f1f-5622e2af7254.jpg" alt="p-2015-01-02-5" /></p>
-
-<h3>Example Method to Find User From Database</h3>
-
-<pre><code class="php">use Windwalker\Authentication\Authentication;
-use Windwalker\Authentication\Credential;
-use Windwalker\Authentication\Method\AbstractMethod;
-use Windwalker\Crypt\Password;
-use Windwalker\DataMapper\DataMapper;
-
-class DatabaseMethod extends AbstractMethod
-{
-    public function authenticate(Credential $credential)
-    {
-        // Not allow empty password
-        if (!$credential-&gt;username || !$credential-&gt;password)
-        {
-            $this-&gt;status = Authentication::EMPTY_CREDENTIAL;
-
-            return false;
-        }
-
-        $datamapper = new DataMapper('users');
-
-        // Use user data to find user
-        $user = $datamapper-&gt;findOne(array('username' =&gt; $credential-&gt;username));
-
-        // User not found
-        if ($user-&gt;isNull())
-        {
-            $this-&gt;status = Authentication::USER_NOT_FOUND;
-
-            return false;
-        }
-
-        // User found, start to verify password
-        $password = new Password;
-
-        if (!$password-&gt;verify($credential-&gt;password, $user-&gt;password))
-        {
-            $this-&gt;status = Authentication::INVALID_CREDENTIAL;
-
-            return false;
-        }
-
-        // Password verify success, return user data.
-        $credential-&gt;bind($user);
-
-        $this-&gt;status = Authentication::SUCCESS;
-
-        return true;
-    }
-}
-</code></pre>
-
-<p>Then we must register this method before Application executed:</p>
-
-<pre><code class="php">$auth = \Windwalker\Ioc::getAuthentication();
-$auth-&gt;addMethod('database', new DatabaseMethod);
+<pre><code class="php">$platform = $env-&gt;platform;
 
 // OR
 
-User::addMethod('database', new DatabaseMethod);
+$platform = $app-&gt;platform;
+</code></pre>
+
+<h3>Detect Running Environment</h3>
+
+<pre><code class="php">$platform-&gt;isWeb();
+$platform-&gt;isCli();
+</code></pre>
+
+<p>Same as:</p>
+
+<pre><code class="php">use Windwalker\Environment\PhpHelper;
+
+PhpHelper:isWeb();
+PhpHelper::isCli();
+</code></pre>
+
+<h3>Detect System OS</h3>
+
+<p>Get server OS information. The <code>getOS()</code> return first 3 letters from <code>getUname()</code>. The Uname is same as <code>PHP_OS</code>.
+(<a href="https://gist.github.com/asika32764/90e49a82c124858c9e1a">List of <code>PHP_OS</code></a>)</p>
+
+<pre><code class="php">$platform-&gt;getOS();  // WIN, UNI, LIN, DAR ... etc.
+$platform-&gt;getUname(); // PHP_OS
+
+$platform-&gt;isWin();
+$platform-&gt;isLinux();
+$platform-&gt;isUnix();
+</code></pre>
+
+<h3>Get System Path</h3>
+
+<pre><code class="php">$platform-&gt;getWorkingDirectory();
+
+$platform-&gt;getRoot();
+
+$platform-&gt;getEntry();
+
+$platform-&gt;getServerPublicRoot();
+
+$platform-&gt;getRequestUri();
+</code></pre>
+
+<h4>getWorkingDirectory()</h4>
+
+<p>If in Web environment, this method return running script directory.</p>
+
+<p>If in CLI environment, this method return current terminal working dir(same as <code>pwd</code> command).</p>
+
+<h4>getRoot(<code>[$full = true]</code>)</h4>
+
+<p>Get running script root directory.</p>
+
+<p>Set first argument to <code>false</code>, will return relative path from DocumentRoot in Web,
+or return relative path from working dir in CLI.</p>
+
+<h4>getEntry(<code>[$full = true]</code>)</h4>
+
+<p>Get running script file name.</p>
+
+<p>Set first argument to <code>false</code>, will return relative path from DocumentRoot in Web,
+or return relative path from working dir in CLI.</p>
+
+<h4>getServerPublicRoot()</h4>
+
+<p>Return the Http server DocumentRoot, same as <code>$_SERVER['DOCUMENT_ROOT']</code>.</p>
+
+<h4>getRequestUri(<code>[$withParams = true]</code>)</h4>
+
+<p>Call this method will return the URI path as <code>$_SERVER['REQUEST_URI']</code> with Http queries.</p>
+
+<pre><code>/path/foo/?bar=baz
+</code></pre>
+
+<p>Set first argument to <code>false</code> will return request path without params, same as <code>$_SERVER['PHP_SELF']</code>.</p>
+
+<pre><code>/path/foo/
+</code></pre>
+
+<h3>Get Request Information</h3>
+
+<pre><code class="php">$platform-&gt;getHost();
+$platform-&gt;getScheme();
+$platform-&gt;getPort();
+</code></pre>
+
+<h2>The PhpHelper</h2>
+
+<p>PhpHelper provides some useful methods to know about our PHP status.</p>
+
+<h3>Check PHP Running Environment</h3>
+
+<pre><code class="php">PhpHelper::isWeb();
+PhpHelper::isCli();
+PhpHelper::isHHVM();
+PhpHelper::isPHP();
+PhpHelper::isEmbed();
+</code></pre>
+
+<h3>Get PHP Version</h3>
+
+<p>If is PHP, return <code>PHP_VERSION</code>. If is HHVM, return <code>HHVM_VERSION</code>.</p>
+
+<pre><code class="php">PhpHelper::getVersion()
+</code></pre>
+
+<h3>Set Debug Mode</h3>
+
+<p><code>setStrict()</code> will set <code>error_reporting()</code> to <code>-1</code>.</p>
+
+<p><code>setMuted()</code> will set <code>error_reporting()</code> to <code>0</code>.</p>
+
+<pre><code class="php">PhpHelper::setStrict();
+PhpHelper::setMuted();
+</code></pre>
+
+<h3>Check Extensions</h3>
+
+<pre><code class="php">PhpHelper::hasXdebug();
+PhpHelper::hasPcntl();
+PhpHelper::hasCurl();
+PhpHelper::hasMcrypt();
+</code></pre>
+
+<h2>The Browser Object</h2>
+
+<p>Get browser object:</p>
+
+<pre><code class="php">$browser = $env-&gt;browser;
+
+// OR
+
+$browser = $app-&gt;browser;
+</code></pre>
+
+<h3>Detect Browser</h3>
+
+<pre><code class="php">// Check is IE
+$browser-&gt;getBrowser() == Browser::IE;
+</code></pre>
+
+<p>Available Browser Detection</p>
+
+<ul>
+<li>IE</li>
+<li>EDGE</li>
+<li>FIREFOX</li>
+<li>CHROME</li>
+<li>SAFARI</li>
+<li>OPERA</li>
+<li>ANDROID_TABLET</li>
+<li>VIVALDI</li>
+</ul>
+
+<h3>Detect Browser Version</h3>
+
+<pre><code class="php">$version = $browser-&gt;getBrowserVersion();
+
+// Check version
+$version &gt;= 11;
+</code></pre>
+
+<h3>Detect Browser Engine</h3>
+
+<pre><code class="php">$engine = $browser-&gt;getEngine();
+
+// Check engine
+$engine == Browser::ENGINE_WEBKIT
+</code></pre>
+
+<p>Available Engines</p>
+
+<ul>
+<li>ENGINE_TRIDENT</li>
+<li>ENGINE_EDGE_HTML</li>
+<li>ENGINE_WEBKIT</li>
+<li>ENGINE_GECKO</li>
+<li>ENGINE_PRESTO</li>
+<li>ENGINE_KHTML</li>
+<li>ENGINE_AMAYA</li>
+</ul>
+
+<h3>Detect User's OS or Device</h3>
+
+<pre><code class="php">$device = $browser-&gt;getDevice();
+
+// Check platform
+$device == Browser::DEVICE_ANDROID
+</code></pre>
+
+<p>Available Platforms</p>
+
+<ul>
+<li>DEVICE_WINDOWS</li>
+<li>DEVICE_WINDOWS_PHONE</li>
+<li>DEVICE_WINDOWS_CE</li>
+<li>DEVICE_IPHONE</li>
+<li>DEVICE_IPAD</li>
+<li>DEVICE_IPOD</li>
+<li>DEVICE_MAC</li>
+<li>DEVICE_BLACKBERRY</li>
+<li>DEVICE_ANDROID</li>
+<li>DEVICE_LINUX</li>
+</ul>
+
+<h3>Other Detection</h3>
+
+<pre><code class="php">$browser-&gt;isRobot();
+$browser-&gt;isMobile();
+$browser-&gt;getLanguages();
+$browser-&gt;getEncodings();
+$browser-&gt;isSSLConnection();
+$browser-&gt;getUserAgent();
 </code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/authentication.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/services/environment.md">improve</a> this document.
     </p>
                 </article>
             </div>

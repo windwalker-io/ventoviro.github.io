@@ -203,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -214,22 +247,10 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -241,16 +262,7 @@
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -304,7 +316,9 @@ $db = $container-&gt;get('system.database');
 
 <p>This is an example of insert data.</p>
 
-<pre><code class="php">$sql = 'INSERT INTO foo_table (title, state) VALUES ("Flower", 1)';
+<pre><code class="php">$db = DatabaseFactory::getDbo();
+
+$sql = 'INSERT INTO foo_table (title, state) VALUES ("Flower", 1)';
 
 $db-&gt;setQuery($sql);
 
@@ -332,7 +346,7 @@ $items = $db-&gt;loadAll(null, 'MyObject');
 // Record as array with number as indexes
 $items = $db-&gt;loadAll(null, 'array');
 
-// Record as array with column name as indexes
+// Record as array with column name as numeric indexes
 $items = $db-&gt;loadAll(null, 'assoc');
 
 // Use id column as $items index
@@ -359,9 +373,19 @@ $items = $db-&gt;loadAll('assoc');
 
 <h2>Table Prefix</h2>
 
-<p>Add <code>prefix</code> in <code>secret.yml</code> config file, then DB object will auto replace all <code>#__</code> with prefix in every query:</p>
+<p>Add <code>prefix</code> in options when you create DB object, then DB object will auto replace all <code>#__</code> with prefix in every query:</p>
 
-<pre><code class="php">$items = $db-&gt;setQuery('SELECT * FROM #__articles')-&gt;loadAll();
+<pre><code class="php">$options = array(
+    'host'     =&gt; 'localhost',
+    'user'     =&gt; 'db_user',
+    'password' =&gt; 'db_pass',
+    'database' =&gt; 'my_dbname',
+    'prefix'   =&gt; 'foo_'
+);
+
+$db = DatabaseFactory::getDbo('mysql', $options);
+
+$items = $db-&gt;setQuery('SELECT * FROM #__articles')-&gt;loadAll();
 
 // The query will be `SELECT * FROM foo_articles`
 </code></pre>
@@ -380,6 +404,18 @@ foreach ($iterator as $row)
 
 <pre><code class="php">$count = count($iterator);
 </code></pre>
+
+<h2>Using Command</h2>
+
+<p>Database Command is some powerful tool set help us operate database, here is commands documents:</p>
+
+<ul>
+<li><a href="docs/reader.md">Reader Command</a></li>
+<li><a href="docs/writer.md">Writer Command</a></li>
+<li><a href="docs/transaction.md">Transaction Command</a></li>
+<li><a href="docs/database.md">Database Command</a></li>
+<li><a href="docs/table.md">Table Command</a></li>
+</ul>
 
 <h2>Logging</h2>
 
@@ -406,6 +442,7 @@ foreach ($iterator as $row)
 <pre><code class="php">use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
+use Windwalker\Database\Middleware\DbLoggingMiddleware;
 
 // Create logger object
 $logger = new Logger('sql');
@@ -417,7 +454,7 @@ $logger-&gt;pushHandler(new StreamHandler('path/to/log/sql.log', Logger::DEBUG))
 $logger-&gt;pushProcessor(new PsrLogMessageProcessor);
 
 // Push into DB
-$db-&gt;setLogger($logger);
+$db-&gt;addMiddleware(new DbLoggingMiddleware($logger));
 $db-&gt;setDebug(true);
 
 // Do something

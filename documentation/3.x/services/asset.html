@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Facades | Windwalker - A Modern PHP Framework</title>
+        <title>Asset Manager | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Facades | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Asset Manager | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/more/facades.html">3.x</a>
+                    <a href="../../../documentation/3.x/services/asset.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/more/facades.html">2.1</a>
+                    <a href="../../../documentation/2.1/services/asset.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Facades</h1>
+        <h1>Asset Manager</h1>
     </div>
         </div>
     </section>
@@ -203,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -214,22 +247,10 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -241,16 +262,7 @@
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -273,12 +285,204 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <p>Still working</p>
+                    <h2>Get Assets Path</h2>
+
+<p>Windwalker stores asset files in <code>/www/asset</code>, we can get the path or full URL of this folder:</p>
+
+<pre><code class="php">use Windwalker\Core\Asset\Asset;
+
+echo Asset::path(); // /path/to/windwalker/asset
+echo Asset::root(); // http://domain.com/path/to/windwlaker/asset
+</code></pre>
+
+<p>You can simply use <code>$asset-&gt;path</code> in view template:</p>
+
+<pre><code class="html">&lt;script src="&lt;?php echo $asset-&gt;path; ?&gt;/js/bootstrap.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<h3>Set Full Asset Uri</h3>
+
+<p>Add <code>asset.uri</code> to config if you store assets in cloud storage:</p>
+
+<pre><code class="yaml">asset:
+    uri: https://foo.s3.amazonaws.com/assets
+</code></pre>
+
+<p>Now <code>$asset-&gt;path</code> and <code>$asset-&gt;root</code> will be <code>https://foo.s3.amazonaws.com/assets</code>.</p>
+
+<h2>Use Asset to Include CSS &amp; JS</h2>
+
+<pre><code class="php">use Windwalker\Core\Asset\Asset;
+
+Asset::addCSS('css/bootstrap.css');
+Asset::addJS('js/bootstrap.js');
+
+// In template
+$asset-&gt;addCSS('css/bootstrap.css');
+$asset-&gt;addJS('js/bootstrap.js');
+</code></pre>
+
+<p>Windwalker will auto includes these files in <code>&lt;head&gt;</code>:</p>
+
+<pre><code class="html">&lt;link rel="stylesheet" href="/windwalker/www/asset/css/bootstrap.css?ee8f77834fabe4188265a599a77f2c21" /&gt;
+
+&lt;script src="/windwalker/www/asset/js/bootstrap.js?ee8f77834fabe4188265a599a77f2c21"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>If you are not use default template, you must confirm your template has rendered styles and scripts:</p>
+
+<pre><code class="html">&lt;?php echo $asset-&gt;renderStyles(true); ?&gt;
+
+&lt;?php echo $asset-&gt;renderScripts(true); ?&gt;
+</code></pre>
+
+<h3>Include Compressed Files</h3>
+
+<p>You can add <code>.min</code> to file name, Windwalker will auto check compressed file exists or not, and will fallback to normal file if
+there has no min file.</p>
+
+<p>And in DEBUG mode, Windwalker will force include uncompressed file if exists, otherwise fallback to min file.</p>
+
+<pre><code class="php">// If `bootstrap.css` exists but `bootstrap.min.css` not
+Asset::addCSS('css/bootstrap.min.css'); // bootstrap.css
+Asset::addCSS('css/bootstrap.css'); // bootstrap.css
+
+// If `bootstrap.min.css` exists but `bootstrap.css` not
+Asset::addCSS('css/bootstrap.min.css'); // bootstrap.min.css
+Asset::addCSS('css/bootstrap.css'); // bootstrap.min.css
+
+// If both exists in DEBUG mode
+Asset::addCSS('css/bootstrap.min.css'); // bootstrap.css
+Asset::addCSS('css/bootstrap.css'); // bootstrap.css
+
+// If both exists and not in DEBUG mode
+Asset::addCSS('css/bootstrap.min.css'); // bootstrap.min.css
+Asset::addCSS('css/bootstrap.css'); // bootstrap.min.css
+</code></pre>
+
+<h2>Asset Versions</h2>
+
+<p>Windwalker auto add version hash string to every asset URL. In DEBUG mode, this version string will always refresh
+after page reload. And in normal mode, AssetManager will hash version by the modified time of every asset files to make sure
+version not changed, but can be refresh if any file has been modified.</p>
+
+<p>You can add your own version to specific asset file:</p>
+
+<pre><code class="php">Asset::addCSS('css/bootstrap.css', md5('1.0.5'));
+</code></pre>
+
+<p>Or add an md5 sum in cache folder, so all assets will use this cached version that make better performance.</p>
+
+<pre><code class="bash">$ php windwlaker asset makesum
+Create SUM: d9edf273fc270b99e1c5a0f5d9a96b3d at {ROOT}/cache/asset/MD5SUM
+</code></pre>
+
+<blockquote>
+  <p>You must run this command after every new version of you system deployed, otherwise the end users' browser may cache
+  the old assets files and will break your front-end application.</p>
+</blockquote>
+
+<h2>Asset Template</h2>
+
+<p>Sometimes your Widget need push a JS template to the bottom of <code>&lt;body&gt;</code>, we can wrap this template by <code>AssetTemplate</code>:</p>
+
+<pre><code class="html">&lt;script&gt;
+    alert(jQuery('#hello').html());
+&lt;/script&gt;
+
+&lt;?php $asset-&gt;getTemplate()-&gt;startTemplate('asset.name'); ?&gt;
+&lt;script id="hello" type="text/template"&gt;
+    &lt;h1&gt;Hello &lt;?php echo $content; ?&gt;&lt;/h1&gt;
+&lt;/script&gt;
+&lt;?php $asset-&gt;getTemplate()-&gt;endTemplate(); ?&gt;
+</code></pre>
+
+<p>Make sure your template has render asset template as bottom of body:</p>
+
+<pre><code class="html">...
+
+&lt;?php echo $asset-&gt;getTemplate()-&gt;renderTemplates(); ?&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p>Simple tag in Edge and Blade:</p>
+
+<pre><code class="blade">@assetTemplate('asset.name')
+&lt;script id="hello" type="text/template"&gt;
+    &lt;h1&gt;Hello {{ $content }}&lt;/h1&gt;
+&lt;/script&gt;
+@endTemplate()
+</code></pre>
+
+<h2>Asset Dependency</h2>
+
+<p><code>Windwalker\Core\Asset\AbstractScript</code> is a dependency manager, we can create methods as dependency handler and call it anywhere.</p>
+
+<p>This is an example to load a <code>sakura.js</code> and init it for different HTML selectors, and it is dependent on <code>flower.js</code>.</p>
+
+<pre><code class="php">namespace Flower\Script;
+
+use Windwalker\Core\Asset\AbstractScript;
+
+class FlowerScript extends AbstractScript
+{
+    public static function core()
+    {
+        if (!static::inited(__METHOD__))
+        {
+            // flower.js need jquery.js first
+            JQueryScript::core();
+
+            static::addJS('flower.min.js');
+            static::addCSS('flower.min.css');
+        }
+    }
+
+    public static function sakura($selector = '.hasSakura', $options = array())
+    {
+        // Include asset file first.
+        if (!static::inited(__METHOD__))
+        {
+            // We need flower.js first
+            static::core();
+
+            // If not in debug mode, Windwalker will auto get min file instead.
+            static::addJS('sakura.js');
+        }
+
+        // Call only once if arguments are same
+        if (!static::inited(__METHOD__, func_get_args()))
+        {
+            $defaultOptions = array(
+                'foo' =&gt; 'bar',
+                'callback' =&gt; '\\function () {}' // Start with \\ will not be quote
+            );
+
+            // Recursive merge options to defaultOptions.
+            $options = $asset::getJSObject($defaultOptions, $options);
+
+            $js = &lt;&lt;&lt;JS
+jQuery(document).ready(function($) {
+    $('$selector').sakuraInit($options);
+});
+JS;
+
+            // Add inline JS in &lt;head&gt;
+            static::internalJS($js);
+        }
+    }
+}
+</code></pre>
+
+<p>Now use this code to include Bootstrap Calendar every where:</p>
+
+<pre><code class="php">\Flower\Script\FlowerScript::sakura('.mySakura', array('foo' =&gt; 'baz'));
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/facades.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/services/asset.md">improve</a> this document.
     </p>
                 </article>
             </div>

@@ -203,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -214,22 +247,10 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -241,16 +262,7 @@
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -304,7 +316,7 @@ to the newest version: <code>20150421_AddTableIndex</code></p>
 File path: /your/project/path/migrations/20150101091434_InitFlowerTable.php
 </code></pre>
 
-<h5>Create to Custom Position</h5>
+<h3>Create to Custom Position</h3>
 
 <p>You may also create migration to other position by <code>--dir</code> or <code>--package</code></p>
 
@@ -363,29 +375,28 @@ class InitFlowerTable extends AbstractMigration
      */
     public function up()
     {
-        $this-&gt;createTable('flowers', function(Schema $schema)
+        $this-&gt;createTable(Table::SAKURAS, function(Schema $schema)
         {
-            $sc-&gt;addColumn('id',          new Column\Primary)-&gt;comment('Primary Key');
-            $sc-&gt;addColumn('category_id', new Column\Integer)-&gt;comment('Category ID');
-            $sc-&gt;addColumn('title',       new Column\Varchar)-&gt;allowNull(false)-&gt;comment('Title');
-            $sc-&gt;addColumn('alias',       new Column\Varchar)-&gt;comment('Alias');
-            $sc-&gt;addColumn('image',       new Column\Varchar)-&gt;comment('Main Image');
-            $sc-&gt;addColumn('introtext',   new Column\Longtext)-&gt;comment('Intro Text');
-            $sc-&gt;addColumn('fulltext',    new Column\Longtext)-&gt;comment('Full Text');
-            $sc-&gt;addColumn('state',       new Column\Tinyint)-&gt;signed(true)-&gt;comment('0: unpublished, 1:published');
-            $sc-&gt;addColumn('ordering',    new Column\Integer)-&gt;comment('Ordering');
-            $sc-&gt;addColumn('created',     new Column\Datetime)-&gt;comment('Created Date');
-            $sc-&gt;addColumn('created_by',  new Column\Integer)-&gt;comment('Author');
-            $sc-&gt;addColumn('modified',    new Column\Datetime)-&gt;comment('Modified Date');
-            $sc-&gt;addColumn('modified_by', new Column\Integer)-&gt;comment('Modified User');
-            $sc-&gt;addColumn('language',    new Column\Char)-&gt;length(7)-&gt;comment('Language');
-            $sc-&gt;addColumn('params',      new Column\Text)-&gt;comment('Params');
+            $schema-&gt;primary('id')-&gt;allowNull(false)-&gt;signed(false)-&gt;comment('Primary Key');
+            $schema-&gt;varchar('title')-&gt;comment('Title');
+            $schema-&gt;varchar('alias')-&gt;comment('Alias');
+            $schema-&gt;varchar('url')-&gt;comment('URL');
+            $schema-&gt;text('introtext')-&gt;comment('Intro Text');
+            $schema-&gt;text('fulltext')-&gt;comment('Full Text');
+            $schema-&gt;varchar('image')-&gt;comment('Main Image');
+            $schema-&gt;tinyint('state')-&gt;signed(true)-&gt;comment('0: unpublished, 1:published');
+            $schema-&gt;integer('ordering')-&gt;comment('Ordering');
+            $schema-&gt;datetime('created')-&gt;comment('Created Date');
+            $schema-&gt;integer('created_by')-&gt;comment('Author');
+            $schema-&gt;datetime('modified')-&gt;comment('Modified Date');
+            $schema-&gt;integer('modified_by')-&gt;comment('Modified User');
+            $schema-&gt;char('language')-&gt;length(7)-&gt;comment('Language');
+            $schema-&gt;text('params')-&gt;comment('Params');
 
-            $sc-&gt;addIndex(Key::TYPE_INDEX, 'idx_articles_category_id', 'category_id');
-            $sc-&gt;addIndex(Key::TYPE_INDEX, 'idx_articles_alias', 'alias');
-            $sc-&gt;addIndex(Key::TYPE_INDEX, 'idx_articles_language', 'language');
-            $sc-&gt;addIndex(Key::TYPE_INDEX, 'idx_articles_created_by', 'created_by');
-        });
+            $schema-&gt;addIndex('alias');
+            $schema-&gt;addIndex('language');
+            $schema-&gt;addIndex('created_by');
+        }, true);
     }
 
     /**
@@ -432,12 +443,18 @@ Migration UP the version: 20150101091434_InitFlowerTable
 Success
 </code></pre>
 
-<h5>Run Package Migration</h5>
+<blockquote>
+  <p>NOTE: Migration will be blocked if your system in <code>prod</code> mode, modify or create <code>.mode</code> file in system root to <code>dev</code> that can
+  allow migration works. Don't forget change back to <code>prod</code> after you updated your system.
+  You can also use command to change mode <code>$ php windwalker system mode [dev|prod]</code></p>
+</blockquote>
+
+<h3>Run Package Migration</h3>
 
 <pre><code class="bash">php bin/console migration migrate --package=flower
 </code></pre>
 
-<h5>Migrate to Specific Version</h5>
+<h3>Migrate to Specific Version</h3>
 
 <pre><code class="bash">php bin/console migration migrate 20141105131929
 </code></pre>
@@ -451,20 +468,20 @@ Success
 
 <h3>Default Seeder</h3>
 
-<p>Every time after you installed Windwalker, there will be a <code>DatabaseSeeder.php</code> in <code>/resources/seeders</code>:</p>
+<p>Every time after you installed Windwalker, there will be a <code>MainSeeder.php</code> in <code>/resources/seeders</code>:</p>
 
 <pre><code class="php">&lt;?php
-// resources/seeders/DatabaseSeeder.php
+// resources/seeders/MainSeeder.php
 
 use Windwalker\Core\Seeder\AbstractSeeder;
 
-class DatabaseSeeder extends AbstractSeeder
+class MainSeeder extends AbstractSeeder
 {
     public function doExecute()
     {
     }
 
-    public function doClean()
+    public function doClear()
     {
     }
 }
@@ -492,29 +509,40 @@ class FlowerSeeder extends \Windwalker\Core\Seeder\AbstractSeeder
             $this-&gt;db-&gt;getWriter()-&gt;insertOne('flowers', $item);
 
             // Or use DataMapper
-
             FlowerMapper::createOne($item);
+
+            $this-&gt;outCounting(); // Show inserted count
         }
+    }
+
+    public function doClear()
+    {
+        // Truncate table
+        $this-&gt;truncate('flowers');
     }
 }
 </code></pre>
 
-<p>Then call this seeder in default DatabaseSeeder:</p>
+<p>Then call this seeder in default MainSeeder:</p>
 
-<pre><code class="php">class DatabaseSeeder extends AbstractSeeder
+<pre><code class="php">class MainSeeder extends AbstractSeeder
 {
     public function doExecute()
     {
         // Execute sub seeder 
-        $this-&gt;execute(new FlowerSeeder);
+        $this-&gt;execute(FlowerSeeder::class);
+        $this-&gt;execute(SakuraSeeder::class);
+        $this-&gt;execute(RoseSeeder::class);
 
         $this-&gt;command-&gt;out('Seeder executed.')-&gt;out();
     }
 
-    public function doClean()
+    public function doClear()
     {
         // Truncate table
-        $this-&gt;truncate('flowers');
+        $this-&gt;clear(FlowerSeeder::class);
+        $this-&gt;clear(SakuraSeeder::class);
+        $this-&gt;clear(RoseSeeder::class);
 
         $this-&gt;command-&gt;out('Database clean.')-&gt;out();
     }
@@ -528,19 +556,18 @@ class FlowerSeeder extends \Windwalker\Core\Seeder\AbstractSeeder
 
 <p>You will see this output, it means seeder execute success:</p>
 
-<pre><code class="html">Import seeder DatabaseSeeder
+<pre><code class="html">Import seeder MainSeeder
 Import seeder FlowerSeeder
+Import seeder SakuraSeeder
+Import seeder RoseSeeder
 Seeder executed.
 </code></pre>
 
 <h3>Package Seeder</h3>
 
-<p>Package Seeder is allow to use namespace as class name. You can just add <code>--class</code> option after command to direct a 
-particular seeder class, or add <code>--package</code> to use package default DatabaseSeeder.</p>
+<p>Package Seeder is allow to use namespace as class name. Add <code>--package|-p</code> to use package default <code>MainSeeder</code>.</p>
 
 <pre><code class="php">// src/FlowerPackage/Seeder/FlowerSeeder.php
-
-namespace Flower\Seeder;
 
 use Windwalker\Core\Seeder\AbstractSeeder;
 
@@ -554,11 +581,11 @@ class FlowerSeeder extends AbstractSeeder
 
 <p>Run this command to execute package seeder:</p>
 
-<pre><code class="bash">## Choose class
+<pre><code class="bash">## Choose class if your seeder has namespace
 php bin/console seed import --class=Flower\Seeder\MySeeder
 
-## Use default DatabaseSeeder
-php bin/console seed import --package=flower
+## Use package default MainSeeder
+php bin/console seed import -p=flower
 </code></pre>
 
 <h2>Fake Data Generator</h2>

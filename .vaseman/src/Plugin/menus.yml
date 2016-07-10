@@ -33,24 +33,27 @@ documentation:
             db/active-record: ActiveRecord
             db/datamapper: DataMapper
             db/migration: Migration And Seeding
+        Services:
+            services/authentication: Authentication
+            services/authorisation: Authorisation
+            services/asset: Asset Manager
+            services/caching: Caching
+            services/datetime: DateTime
+            services/environment: Environment
+            services/events: Events
+            services/languages: Languages
+            services/session: Session
+            services/widget-renderer: Widget and Renderer
         Console:
             console/console-basic: Basic Usage
             console/custom-commands: Custom Commands
         More:
-            more/authentication: Authentication
-            more/caching: Caching
-            more/events: Events
-          #  more/facades: Facades
             more/data-object: Data Object
             more/registry: Registry Object
-            more/widget-renderer: Widget and Renderer
             more/form-builder: Form Builder
             more/form-definition: Form Definition
             more/html-builder: HTML Builder
-            more/languages: Languages
             more/pagination: Pagination
-            more/session: Session
-            more/datetime: DateTime
             more/tests: Tests
             more/validation: Validation
             more/debugging: Debugging and Logging

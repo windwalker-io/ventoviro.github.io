@@ -35,7 +35,7 @@ Migration version: 20150101091434_InitFlowerTable.php created.
 File path: /your/project/path/migrations/20150101091434_InitFlowerTable.php
 ```
 
-##### Create to Custom Position
+### Create to Custom Position
 
 You may also create migration to other position by `--dir` or `--package`
 
@@ -97,29 +97,28 @@ class InitFlowerTable extends AbstractMigration
 	 */
 	public function up()
 	{
-        $this->createTable('flowers', function(Schema $schema)
+        $this->createTable(Table::SAKURAS, function(Schema $schema)
         {
-            $sc->addColumn('id',          new Column\Primary)->comment('Primary Key');
-            $sc->addColumn('category_id', new Column\Integer)->comment('Category ID');
-            $sc->addColumn('title',       new Column\Varchar)->allowNull(false)->comment('Title');
-            $sc->addColumn('alias',       new Column\Varchar)->comment('Alias');
-            $sc->addColumn('image',       new Column\Varchar)->comment('Main Image');
-            $sc->addColumn('introtext',   new Column\Longtext)->comment('Intro Text');
-            $sc->addColumn('fulltext',    new Column\Longtext)->comment('Full Text');
-            $sc->addColumn('state',       new Column\Tinyint)->signed(true)->comment('0: unpublished, 1:published');
-            $sc->addColumn('ordering',    new Column\Integer)->comment('Ordering');
-            $sc->addColumn('created',     new Column\Datetime)->comment('Created Date');
-            $sc->addColumn('created_by',  new Column\Integer)->comment('Author');
-            $sc->addColumn('modified',    new Column\Datetime)->comment('Modified Date');
-            $sc->addColumn('modified_by', new Column\Integer)->comment('Modified User');
-            $sc->addColumn('language',    new Column\Char)->length(7)->comment('Language');
-            $sc->addColumn('params',      new Column\Text)->comment('Params');
+            $schema->primary('id')->allowNull(false)->signed(false)->comment('Primary Key');
+            $schema->varchar('title')->comment('Title');
+            $schema->varchar('alias')->comment('Alias');
+            $schema->varchar('url')->comment('URL');
+            $schema->text('introtext')->comment('Intro Text');
+            $schema->text('fulltext')->comment('Full Text');
+            $schema->varchar('image')->comment('Main Image');
+            $schema->tinyint('state')->signed(true)->comment('0: unpublished, 1:published');
+            $schema->integer('ordering')->comment('Ordering');
+            $schema->datetime('created')->comment('Created Date');
+            $schema->integer('created_by')->comment('Author');
+            $schema->datetime('modified')->comment('Modified Date');
+            $schema->integer('modified_by')->comment('Modified User');
+            $schema->char('language')->length(7)->comment('Language');
+            $schema->text('params')->comment('Params');
 
-            $sc->addIndex(Key::TYPE_INDEX, 'idx_articles_category_id', 'category_id');
-            $sc->addIndex(Key::TYPE_INDEX, 'idx_articles_alias', 'alias');
-            $sc->addIndex(Key::TYPE_INDEX, 'idx_articles_language', 'language');
-            $sc->addIndex(Key::TYPE_INDEX, 'idx_articles_created_by', 'created_by');
-        });
+            $schema->addIndex('alias');
+            $schema->addIndex('language');
+            $schema->addIndex('created_by');
+        }, true);
 	}
 
 	/**
@@ -170,13 +169,17 @@ Migration UP the version: 20150101091434_InitFlowerTable
 Success
 ```
 
-##### Run Package Migration
+> NOTE: Migration will be blocked if your system in `prod` mode, modify or create `.mode` file in system root to `dev` that can
+allow migration works. Don't forget change back to `prod` after you updated your system.
+> You can also use command to change mode `$ php windwalker system mode [dev|prod]`
+
+### Run Package Migration
 
 ``` bash
 php bin/console migration migrate --package=flower
 ```
 
-##### Migrate to Specific Version
+### Migrate to Specific Version
  
 ``` bash
 php bin/console migration migrate 20141105131929
@@ -191,21 +194,21 @@ Windwalker also provides a simple way to help you create fixtures for easy testi
 
 ### Default Seeder
 
-Every time after you installed Windwalker, there will be a `DatabaseSeeder.php` in `/resources/seeders`:
+Every time after you installed Windwalker, there will be a `MainSeeder.php` in `/resources/seeders`:
  
 ``` php
 <?php
-// resources/seeders/DatabaseSeeder.php
+// resources/seeders/MainSeeder.php
 
 use Windwalker\Core\Seeder\AbstractSeeder;
 
-class DatabaseSeeder extends AbstractSeeder
+class MainSeeder extends AbstractSeeder
 {
 	public function doExecute()
 	{
 	}
 
-	public function doClean()
+	public function doClear()
 	{
 	}
 }
@@ -234,30 +237,41 @@ class FlowerSeeder extends \Windwalker\Core\Seeder\AbstractSeeder
 			$this->db->getWriter()->insertOne('flowers', $item);
 
 			// Or use DataMapper
-
 			FlowerMapper::createOne($item);
+
+			$this->outCounting(); // Show inserted count
 		}
 	}
+
+	public function doClear()
+    {
+        // Truncate table
+        $this->truncate('flowers');
+    }
 }
 ```
 
-Then call this seeder in default DatabaseSeeder:
+Then call this seeder in default MainSeeder:
 
 ``` php
-class DatabaseSeeder extends AbstractSeeder
+class MainSeeder extends AbstractSeeder
 {
 	public function doExecute()
 	{
 		// Execute sub seeder 
-		$this->execute(new FlowerSeeder);
+		$this->execute(FlowerSeeder::class);
+		$this->execute(SakuraSeeder::class);
+		$this->execute(RoseSeeder::class);
 
 		$this->command->out('Seeder executed.')->out();
 	}
 
-	public function doClean()
+	public function doClear()
 	{
 		// Truncate table
-		$this->truncate('flowers');
+		$this->clear(FlowerSeeder::class);
+		$this->clear(SakuraSeeder::class);
+        $this->clear(RoseSeeder::class);
 
 		$this->command->out('Database clean.')->out();
 	}
@@ -273,20 +287,19 @@ php bin/console seed import
 You will see this output, it means seeder execute success:
 
 ``` html
-Import seeder DatabaseSeeder
+Import seeder MainSeeder
 Import seeder FlowerSeeder
+Import seeder SakuraSeeder
+Import seeder RoseSeeder
 Seeder executed.
 ```
 
 ### Package Seeder
 
-Package Seeder is allow to use namespace as class name. You can just add `--class` option after command to direct a 
-particular seeder class, or add `--package` to use package default DatabaseSeeder.
+Package Seeder is allow to use namespace as class name. Add `--package|-p` to use package default `MainSeeder`.
 
 ``` php
 // src/FlowerPackage/Seeder/FlowerSeeder.php
-
-namespace Flower\Seeder;
 
 use Windwalker\Core\Seeder\AbstractSeeder;
 
@@ -301,11 +314,11 @@ class FlowerSeeder extends AbstractSeeder
 Run this command to execute package seeder:
 
 ``` bash
-## Choose class
+## Choose class if your seeder has namespace
 php bin/console seed import --class=Flower\Seeder\MySeeder
  
-## Use default DatabaseSeeder
-php bin/console seed import --package=flower
+## Use package default MainSeeder
+php bin/console seed import -p=flower
 ```
 
 ## Fake Data Generator

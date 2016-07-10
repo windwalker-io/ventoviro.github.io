@@ -64,17 +64,17 @@ ORDER BY popular DESC
 LIMIT 15
 ```
 
-##### Limit Process
+### Limit Process
 
 For common use, Mysql and some databases use this limit syntax:
 
 ``` sql
 LIMIT {limit}
-## OR
+# OR
 LIMIT {offset}, {limit}
 ```
 
-Windwalker Query dose not follow this ordering, the Query::limit method look like: `limit($limit, $offset)`. 
+Windwalker Query dose not follow this ordering, the Query::limit method look like: `limit($limit, $offset)`.
 We must use `limit(3, 0)` to generate `LIMIT 0, 3` because it is more semantic on method interface.
 
 ### Where Conditions
@@ -98,17 +98,34 @@ WHERE year <= 1616
     AND published > 0
 ```
 
-Using OR condition:
+There are many ways you can use `where()` method:
 
 ``` php
-$conditions = array("foo = 'bar'", "flower = 'sakura'");
+// Use array
+$query->where(array('a = b', 'c = d')); // a = b AND c = d
 
-$conditions = '(' . implode(' OR ', $conditions) . ')';
+// Use format
+$query->where('%q = %n', 'flower', 'sakura'); // `flower` = 'sakura'
 
+// Use bind
+$query->where('`flower` = :name')->bind('name', $name); // `flower` = 'sakura'
+
+// Or bind an array data
+$query->where('`flower` = :name')->bind($array); // `flower` = 'sakura'
+```
+
+See [Query Format](#format)
+
+`orWhere()`:
+
+``` php
 $query->select('*')
     ->from('shakespeare')
     ->where('year <= 1616')
-    ->where($conditions);
+    ->orWhere(array(
+        "foo = 'bar'",
+        "flower = 'sakura'"
+    ));
 
 echo $query;
 ```
@@ -122,12 +139,20 @@ WHERE year <= 1616
     AND (foo = 'bar' OR flower = 'sakura')
 ```
 
-You can use `QueryElement` to create this:
+Build where by callback:
 
 ``` php
-use Windwalker\Query\QueryElement;
+$query->orWhere(function (Query $query)
+{
+    $query->where("foo = 'bar'")
+		->where("flower = 'sakura'");
+});
+```
 
-echo new QueryElement('()', $conditions, ' OR ');
+You can use `QueryElement` to create an `()` element:
+
+``` php
+echo $query->element('()', $conditions, ' OR ');
 
 // Result also: '(foo = 'bar' OR flower = 'sakura')'
 ```
@@ -371,11 +396,23 @@ The argument index used for unspecified tokens is incremented only when used.
 
 ## Bind Params
 
-OracleQuery support `PreparableInterface` now, we can bind params to our query string:
+We can bind params to our query string:
 
 ``` php
+// Bind data
 $query->where('title = :title')
     ->bind(':title', 'Hamlet');
+
+// Now do execute of this query
+$bounded =& $query->getBounded();
+
+foreach ($bounded as $key => $data)
+{
+    $pdo->bindParam($key, $data->value, $data->dataType, $data->length, $data->driverOptions);
+}
+
+// Or use Windwalker Database
+$db->setQuery($query)->loadAll();
 ```
 
 ## Query Expression
@@ -419,6 +456,8 @@ echo $query->expr('FUNCTION', 'a', 'b', 'c');
 Help you build a value list:
 
 ``` php
+echo $query->element('WHERE', array('a = b', 'c = d'), ' OR ');
+// OR create Element object
 echo new QueryElement('WHERE', array('a = b', 'c = d'), ' OR ');
 
 // WHERE a = b OR c = d
@@ -435,4 +474,3 @@ echo new QueryElement('IN()', array(1, 2, 3, 4));
 
 // IN(1, 2, 3, 4)
 ```
-

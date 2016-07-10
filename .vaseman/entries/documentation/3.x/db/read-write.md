@@ -18,6 +18,21 @@ $items = $reader->setQuery($sql)->loadObjectList();
 $items = $db->getReader($sql)->loadObjectList();
 ```
 
+### Query Statement
+
+Every reader is a different query statement.
+
+``` php
+$stat1 = $db->getReader($sql1);
+$stat2 = $db->getReader($sql2);
+
+// Thses 2 object will be diferent connection cursors so they can load items parallelly.
+foreach ($stat1 as $item1)
+{
+    $stat2->loadObjectList();
+}
+```
+
 ### loadObjectList()
 
 Return an array, every element is a record and wrap with an object. This method is same as `$db->loadAll()`:
@@ -136,13 +151,24 @@ $sum = $db->getReader('SELECT SUM(hits) FROM article_table')->loadResult();
 $id = $db->getReader('SELECT LAST_INSERT_ID()')->loadResult();
 ```
 
+### Run as Iterator
+
+``` php
+$reader = $db->getReader($sql);
+
+foreach ($reader as $item)
+{
+    $item->title;
+}
+```
+
 ### About PDO Fetch
 
 See: [PHP.net / PDOStatement::fetch](http://php.net/manual/en/pdostatement.fetch.php)
 
 ### Quick Fetch From Driver
 
-##### DatabaseDriver::loadAll()
+#### DatabaseDriver::loadAll()
 
 Using a query we set into DB object to fetch records.
 
@@ -168,7 +194,7 @@ $items = $db->loadAll(null, 'assoc');
 
 The return value is an array contains all records we found.
 
-##### DatabaseDriver::loadOne()
+#### DatabaseDriver::loadOne()
 
 We can only get first record and ignore others:
 
@@ -189,11 +215,11 @@ $item = $db->loadOne('assoc');
 
 The `$item` will be a record or `false` (If no any records found).
 
-##### DatabaseDriver::loadColumn()
+#### DatabaseDriver::loadColumn()
 
 Same as `$db->getReader($sql)->loadColumn()`.
 
-##### DatabaseDriver::loadResult()
+#### DatabaseDriver::loadResult()
 
 Same as `$db->getReader($sql)->loadResult()`.
 
@@ -209,22 +235,24 @@ Count the affected rows of last query.
 
 Get the last inserted id.
 
+-----
+
 ## Writer Command
 
 Writer object provide us an interface to write data into database.
 
-### insert()
+### insertOne()
 
 Using an object or array to store data into a table, argument 3 is the name of primary key that will be added
 to data object if insert success:
 
 ``` php
 $data = array(
-    'title' => 'Sakura',
-    'created' => '2014-03-02'
+	'title' => 'Sakura',
+	'created' => '2014-03-02'
 );
 
-$db->getWriter()->insert('#__articles', $data, 'id');
+$db->getWriter()->insertOne('#__articles', $data, 'id');
 
 // $data['id'] will be the last inserted id
 echo $data['id'];
@@ -236,7 +264,7 @@ $data = new stdClass;
 $data->title = 'Sakura';
 $data->created = '2014-03-02';
 
-$db->getWriter()->insert('#__articles', $data, 'id');
+$db->getWriter()->insertOne('#__articles', $data, 'id');
 
 // $data->id will be the last inserted id
 echo $data->id;
@@ -264,7 +292,7 @@ $db->getWriter()->insertMultiple('#__articles', $dataSet, 'id');
 echo $dataSet[0]['id'];
 ```
 
-### update()
+### updateOne()
 
 Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:
 
@@ -274,7 +302,7 @@ $data = new stdClass;
 $data->id = 1;
 $data->title = 'Sakura2';
 
-$db->getWriter()->update('#__articles', $data, 'id');
+$db->getWriter()->updateOne('#__articles', $data, 'id');
 
 // Same as `UPDATE #__articles SET title = "Sakura2" WHERE id = 1;`
 ```
@@ -321,10 +349,22 @@ $db->getWriter()->updateBatch('#__articles', $data, $conditions);
 // Same as `UPDATE #__articles SET state = 0 WHERE author = 15 AND updated < "2014-03-02" AND catid IN(1, 2, 3);`
 ```
 
+See [Conditions](conditions.md)
+
 ### Save & SaveMultiple
 
 `save()` and `saveMultiple()` will auto check the primary exists or not. If primary key exists, it will use `update`,
 if not exists, it will use `insert` to store data.
+
+### Delete
+
+Use conditions to delete data.
+
+``` php
+$db->getWriter()->delete('table', array('id' => 5));
+```
+
+See [Conditions](conditions.md)
 
 ### insertId()
 
@@ -356,3 +396,60 @@ catch (\Exception)
 
 $tran->commit();
 ```
+
+## Database Command
+
+How to get Database Command:
+
+``` php
+$database = $db->getDatabase('flower');
+```
+
+### create()
+
+Create a new database.
+
+``` php
+$database = $db->getDatabase('flower');
+
+$database->create();
+```
+
+### drop()
+
+Drop a database.
+
+``` php
+$database = $db->getDatabase('flower');
+
+$database->drop();
+```
+
+### rename()
+
+Rename a database.
+
+``` php
+$database = $db->getDatabase('flower');
+
+// The return value is a new command object
+$newDatabaseCommand = $database->rename('flower2');
+
+$newDatabaseCommand->getName(); // flower2
+```
+
+### getTables()
+
+Get table name list.
+
+``` php
+$database = $db->getDatabase('flower');
+
+$tables = $database->getTables();
+```
+
+### getTableDetail() & getTableDetails()
+
+Get tables information detail.
+
+

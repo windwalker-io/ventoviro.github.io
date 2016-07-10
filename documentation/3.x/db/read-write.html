@@ -203,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -214,22 +247,10 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -241,16 +262,7 @@
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -284,6 +296,20 @@ $items = $reader-&gt;setQuery($sql)-&gt;loadObjectList();
 // OR
 
 $items = $db-&gt;getReader($sql)-&gt;loadObjectList();
+</code></pre>
+
+<h3>Query Statement</h3>
+
+<p>Every reader is a different query statement.</p>
+
+<pre><code class="php">$stat1 = $db-&gt;getReader($sql1);
+$stat2 = $db-&gt;getReader($sql2);
+
+// Thses 2 object will be diferent connection cursors so they can load items parallelly.
+foreach ($stat1 as $item1)
+{
+    $stat2-&gt;loadObjectList();
+}
 </code></pre>
 
 <h3>loadObjectList()</h3>
@@ -393,13 +419,23 @@ $sum = $db-&gt;getReader('SELECT SUM(hits) FROM article_table')-&gt;loadResult()
 $id = $db-&gt;getReader('SELECT LAST_INSERT_ID()')-&gt;loadResult();
 </code></pre>
 
+<h3>Run as Iterator</h3>
+
+<pre><code class="php">$reader = $db-&gt;getReader($sql);
+
+foreach ($reader as $item)
+{
+    $item-&gt;title;
+}
+</code></pre>
+
 <h3>About PDO Fetch</h3>
 
 <p>See: <a href="http://php.net/manual/en/pdostatement.fetch.php">PHP.net / PDOStatement::fetch</a></p>
 
 <h3>Quick Fetch From Driver</h3>
 
-<h5>DatabaseDriver::loadAll()</h5>
+<h4>DatabaseDriver::loadAll()</h4>
 
 <p>Using a query we set into DB object to fetch records.</p>
 
@@ -424,7 +460,7 @@ $items = $db-&gt;loadAll(null, 'assoc');
 
 <p>The return value is an array contains all records we found.</p>
 
-<h5>DatabaseDriver::loadOne()</h5>
+<h4>DatabaseDriver::loadOne()</h4>
 
 <p>We can only get first record and ignore others:</p>
 
@@ -444,11 +480,11 @@ $item = $db-&gt;loadOne('assoc');
 
 <p>The <code>$item</code> will be a record or <code>false</code> (If no any records found).</p>
 
-<h5>DatabaseDriver::loadColumn()</h5>
+<h4>DatabaseDriver::loadColumn()</h4>
 
 <p>Same as <code>$db-&gt;getReader($sql)-&gt;loadColumn()</code>.</p>
 
-<h5>DatabaseDriver::loadResult()</h5>
+<h4>DatabaseDriver::loadResult()</h4>
 
 <p>Same as <code>$db-&gt;getReader($sql)-&gt;loadResult()</code>.</p>
 
@@ -464,11 +500,13 @@ $item = $db-&gt;loadOne('assoc');
 
 <p>Get the last inserted id.</p>
 
+<hr />
+
 <h2>Writer Command</h2>
 
 <p>Writer object provide us an interface to write data into database.</p>
 
-<h3>insert()</h3>
+<h3>insertOne()</h3>
 
 <p>Using an object or array to store data into a table, argument 3 is the name of primary key that will be added
 to data object if insert success:</p>
@@ -478,7 +516,7 @@ to data object if insert success:</p>
     'created' =&gt; '2014-03-02'
 );
 
-$db-&gt;getWriter()-&gt;insert('#__articles', $data, 'id');
+$db-&gt;getWriter()-&gt;insertOne('#__articles', $data, 'id');
 
 // $data['id'] will be the last inserted id
 echo $data['id'];
@@ -490,7 +528,7 @@ $data = new stdClass;
 $data-&gt;title = 'Sakura';
 $data-&gt;created = '2014-03-02';
 
-$db-&gt;getWriter()-&gt;insert('#__articles', $data, 'id');
+$db-&gt;getWriter()-&gt;insertOne('#__articles', $data, 'id');
 
 // $data-&gt;id will be the last inserted id
 echo $data-&gt;id;
@@ -517,7 +555,7 @@ $db-&gt;getWriter()-&gt;insertMultiple('#__articles', $dataSet, 'id');
 echo $dataSet[0]['id'];
 </code></pre>
 
-<h3>update()</h3>
+<h3>updateOne()</h3>
 
 <p>Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:</p>
 
@@ -526,7 +564,7 @@ echo $dataSet[0]['id'];
 $data-&gt;id = 1;
 $data-&gt;title = 'Sakura2';
 
-$db-&gt;getWriter()-&gt;update('#__articles', $data, 'id');
+$db-&gt;getWriter()-&gt;updateOne('#__articles', $data, 'id');
 
 // Same as `UPDATE #__articles SET title = "Sakura2" WHERE id = 1;`
 </code></pre>
@@ -570,10 +608,21 @@ $db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, $conditions);
 // Same as `UPDATE #__articles SET state = 0 WHERE author = 15 AND updated &lt; "2014-03-02" AND catid IN(1, 2, 3);`
 </code></pre>
 
+<p>See <a href="conditions.md">Conditions</a></p>
+
 <h3>Save &amp; SaveMultiple</h3>
 
 <p><code>save()</code> and <code>saveMultiple()</code> will auto check the primary exists or not. If primary key exists, it will use <code>update</code>,
 if not exists, it will use <code>insert</code> to store data.</p>
+
+<h3>Delete</h3>
+
+<p>Use conditions to delete data.</p>
+
+<pre><code class="php">$db-&gt;getWriter()-&gt;delete('table', array('id' =&gt; 5));
+</code></pre>
+
+<p>See <a href="conditions.md">Conditions</a></p>
 
 <h3>insertId()</h3>
 
@@ -604,6 +653,56 @@ catch (\Exception)
 
 $tran-&gt;commit();
 </code></pre>
+
+<h2>Database Command</h2>
+
+<p>How to get Database Command:</p>
+
+<pre><code class="php">$database = $db-&gt;getDatabase('flower');
+</code></pre>
+
+<h3>create()</h3>
+
+<p>Create a new database.</p>
+
+<pre><code class="php">$database = $db-&gt;getDatabase('flower');
+
+$database-&gt;create();
+</code></pre>
+
+<h3>drop()</h3>
+
+<p>Drop a database.</p>
+
+<pre><code class="php">$database = $db-&gt;getDatabase('flower');
+
+$database-&gt;drop();
+</code></pre>
+
+<h3>rename()</h3>
+
+<p>Rename a database.</p>
+
+<pre><code class="php">$database = $db-&gt;getDatabase('flower');
+
+// The return value is a new command object
+$newDatabaseCommand = $database-&gt;rename('flower2');
+
+$newDatabaseCommand-&gt;getName(); // flower2
+</code></pre>
+
+<h3>getTables()</h3>
+
+<p>Get table name list.</p>
+
+<pre><code class="php">$database = $db-&gt;getDatabase('flower');
+
+$tables = $database-&gt;getTables();
+</code></pre>
+
+<h3>getTableDetail() &amp; getTableDetails()</h3>
+
+<p>Get tables information detail.</p>
 
                         <hr />
 

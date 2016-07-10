@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Languages | Windwalker - A Modern PHP Framework</title>
+        <title>Session | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Languages | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Session | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/more/languages.html">3.x</a>
+                    <a href="../../../documentation/3.x/services/session.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/more/languages.html">2.1</a>
+                    <a href="../../../documentation/2.1/services/session.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Languages</h1>
+        <h1>Session</h1>
     </div>
         </div>
     </section>
@@ -203,6 +203,39 @@
             </li>
         
     <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Services</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/languages.html">Languages</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Console</li>
                     <li class="">
                 <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
@@ -214,22 +247,10 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">More</li>
                     <li class="">
-                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/events.html">Events</a>
-            </li>
-                    <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
@@ -240,17 +261,8 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
             </li>
-                    <li class="uk-active">
-                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
-            </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/session.html">Session</a>
-            </li>
-                    <li class="">
-                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
             </li>
                     <li class="">
                 <a href="../../../documentation/3.x/more/tests.html">Tests</a>
@@ -273,299 +285,138 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Introduction</h2>
+                    <h2>Configuration</h2>
 
-<p>Windwalker use Language package to handle i18n localise. There is a <code>language</code> configuration in <code>/etc/config.yml</code>:</p>
+<p>Session configuration is in <code>/etc/config.yml</code>.</p>
 
-<pre><code class="yaml">language:
-    debug: 0
-    locale: zh-TW
-    default: en-GB
-    format: ini
-    path: resources/languages
+<pre><code class="yaml">session:
+    handler: native
+    expire_time: 15
 </code></pre>
 
-<p><code>locale</code> means current language, and <code>default</code> will tell language object that if current translate not exists, fallback to which language as default.</p>
+<p>By default, Windwalker use php native to handler session data. The expire time unit is minute.</p>
 
-<p>Format is the default file format, but we can still load other format in the runtime.</p>
+<h2>Get Session Object</h2>
 
-<h2>Using Language to Translate String</h2>
+<pre><code class="php">$session = \Windwalker\Ioc::getSession();
 
-<p>Windwalker language object has a Facade as proxy, just call this static class to use.</p>
+// OR
 
-<pre><code class="php">use Windwalker\Core\Language\Translator;
-
-// Load en-GB/main.ini file first
-Translator::loadFile('main');
-
-// Translate
-echo Translator::translate('windwalker.hello.message');
+$session = $container-&gt;get('system.session');
 </code></pre>
 
-<p>Add language:</p>
+<h2>Store And Get Session Data</h2>
 
-<pre><code class="ini">; resources/languages/en-GB/main.ini
+<pre><code class="php">$session-&gt;set('flower', 'sakura');
 
-windwalker.hello.message="Hello World"
+$data = $session-&gt;get('flower', 'default');
+
+$session-&gt;exists('animal'); // bool
 </code></pre>
 
-<p>The result will be:</p>
+<h2>Restart Session</h2>
 
-<pre><code class="html">Hello World
+<pre><code class="php">$session-&gt;restart();
 </code></pre>
 
-<p>There is a short alias of <code>translate()</code>:</p>
+<h2>Session Bags</h2>
 
-<pre><code class="php">echo Translator::translate('windwalker.hello.message');
+<p>Session bag is a data storage to store data, we can add many bags to Session object and access them.</p>
+
+<h3>Use Default Bag</h3>
+
+<p>Get Default Bag</p>
+
+<pre><code class="php">$session-&gt;getBag('default');
 </code></pre>
 
-<h2>Locale and Default Languages</h2>
+<p>Get data from default bag.</p>
 
-<p>We set locale to <code>zh-TW</code> and default to <code>en-GB</code>, then create ini language files:</p>
+<pre><code class="php">$session-&gt;get('foo');
 
-<pre><code class="ini">; resources/languages/en-GB/flower.ini
-
-windwalker.language.test.flower="Flower"
-windwalker.language.test.sakura="Sakura"
+// OR
+$session-&gt;getBag('default')-&gt;get('foo');
 </code></pre>
 
-<pre><code class="ini">; resources/languages/zh-TW/flower.ini
+<h3>Use Custom Bags</h3>
 
-windwalker.language.test.flower="花"
+<pre><code class="php">use Windwalker\Session\Bag\SessionBag;
+
+$session-&gt;setBag('mybag', new SessionBag);
+
+// Get data
+$myBag = $session-&gt;getBag('mybag');
+
+$myBag-&gt;set('foo', 'bar');
+$myBag-&gt;get('foo', 'default');
 </code></pre>
 
-<p>And load them.</p>
+<p>We can use Namespace to get data from bags</p>
 
-<pre><code class="php">Translator::loadFile('flower');
+<pre><code class="php">// Get form default bag
+$session-&gt;get('foo', 'default', 'mybag');
+
+// Get from mybag
+$session-&gt;get('foo', 'default', 'mybag');
+
+// Set to mybag
+$session-&gt;set('foo', 'bar', 'mybag');
 </code></pre>
 
-<p>Translate string:</p>
+<h2>Flash Data</h2>
 
-<pre><code class="php">// zh-TW has this language key, so it will be translated
-Translator::translate('windwalker.language.test.flower'); // 花
+<p>Flash bag is a data temporary storage, if we take data out, the bag will be clear.</p>
 
-// This key not exists in zh-TW, use en-GB as default
-Translator::translate('windwalker.language.test.sakura'); // Sakura
+<pre><code class="php">$session-&gt;addFlash('Save success.', 'info');
+$session-&gt;addFlash('Login Fail.', 'error');
+
+// Take all messages and clear
+$allMessages = $session-&gt;getFlashes();
+
+// Peek messages but don't clear
+$session-&gt;getFlashBag()-&gt;all();
 </code></pre>
 
-<h3>Key Format</h3>
+<h2>Handlers</h2>
 
-<p>All language key will be normalised to lowercase and separated by dot (<code>.</code>).</p>
+<p>Windwalker Session provides many handlers to storage session, edit the config file.</p>
 
-<p>These cases all get same result:</p>
-
-<pre><code class="php">Translator::translate('WINDWALKER_LANGUAGE_TEST_FLOWER'); // 花
-Translator::translate('WINDWALKER_language_TEST FLOWER'); // 花
-Translator::translate('windwalker.language.test.flower'); // 花
-Translator::translate('Windwalker Language Test Flower'); // 花
-Translator::translate('Windwalker Language, Test Flower~~~!'); // 花
-
-// All keys will be normalise to 'windwalker.language.test.flower'
+<pre><code class="yaml">session:
+    handler: memcached
+    expire_time: 15
 </code></pre>
 
-<h3>Replace String</h3>
+<h3>Use Database Handler</h3>
 
-<p>Use <code>sprintf()</code> method.</p>
+<p>Before using database session, we have to add table schema information to session config.</p>
 
-<pre><code class="ini">windwalker.language.test.beautiful.flower="The %s is beautiful~~~!!!"
-</code></pre>
-
-<pre><code class="php">Translator::sprintf('windwalker.language.test.beautiful.flower', 'Sunflower');
-
-// Result: The Sunflower is beautiful~~~!!!
-</code></pre>
-
-<h3>Plural String</h3>
-
-<p>Create a Localise class:</p>
-
-<pre><code class="php">// An example of EnGB Localise
-namespace Windwalker\Language\Localise;
-
-class EnGBLocalise implements LocaliseInterface
-{
-    public function getPluralSuffix($count = 1)
-    {
-        if ($count == 0)
-        {
-            return '0';
-        }
-        elseif ($count == 1)
-        {
-            return '';
-        }
-
-        return 'more';
-    }
-}
-</code></pre>
-
-<p>And prepare this language keys.</p>
-
-<pre><code class="ini">windwalker.language.test.sunflower="Sunflower"
-windwalker.language.test.sunflower="No Sunflower"
-windwalker.language.test.sunflower="Sunflowers"
-</code></pre>
-
-<p>Now we can translate plural string by <code>plural()</code>.</p>
-
-<pre><code class="php">Translator::plural('windwalker.language.test.sunflower', 0); // No Sunflower
-Translator::plural('windwalker.language.test.sunflower', 1); // Sunflower
-Translator::plural('windwalker.language.test.sunflower', 2); // Sunflowers
-</code></pre>
-
-<h2>If Language Key Not Exists</h2>
-
-<p>Language object will return raw string which we send into it.</p>
-
-<pre><code class="php">echo Translator::translate('A Not Translated String');
-echo "\n";
-echo Translator::translate('A_NOT_TRANSLATED_STRING');
-</code></pre>
-
-<p>Result:</p>
-
-<pre><code>A Not Translated String
-A_NOT_TRANSLATED_STRING
-</code></pre>
-
-<h2>Using Other Formats</h2>
-
-<p>Change the <code>format</code> property from config.</p>
-
-<h3>Yaml</h3>
-
-<p>Yaml language file can write as nested structure.</p>
-
-<pre><code class="yaml">windwalker:
-    language.test:
-        sakura: Sakura
-        olive: Olive
-</code></pre>
-
-<pre><code class="php">Translator::translate('windwalker.language.test.sakura'); // Sakura
-Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
-</code></pre>
-
-<h3>Json</h3>
-
-<pre><code class="json">{
-    "windwalker" : {
-        "language-test" : {
-            "sakura" : "Sakura",
-            "olive" : "Olive"
-        }
-    }
-}
-</code></pre>
-
-<p>The usage same as yaml.</p>
-
-<pre><code class="php">Translator::translate('windwalker.language.test.sakura'); // Sakura
-Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
-</code></pre>
-
-<h3>PHP</h3>
-
-<pre><code class="php">&lt;?php
-
-return array(
-    'WINDWALKER_LANGUAGE_TEST_FLOWER' =&gt; "Flower",
-    'WINDWALKER_LANGUAGE' =&gt; array(
-            'TEST' =&gt; array(
-                'SAKURA' =&gt; "Sakura"
-            )
-        )
-);
-</code></pre>
-
-<p>The usage same as yaml.</p>
-
-<pre><code class="php">Translator::translate('windwalker.language.test.sakura'); // Sakura
-Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
+<pre><code class="yaml">session:
+    handler: database
+    expire_time: 15
+    table: sessions
+    id_col: id
+    data_col: data
+    time_col: time
 </code></pre>
 
 <blockquote>
-  <p>NOTE: We'll support to load different formats in the runtime soon.</p>
+  <p>NOTE: Database Handler will be implemented in next release.</p>
 </blockquote>
 
-<h2>Load Package Languages</h2>
+<h3>Available Handlers</h3>
 
-<p>Package language file located at <code>YourPackage/Languages/xx-XX/language-name.ini</code>.</p>
-
-<p>So we can load package languages by second argument:</p>
-
-<pre><code class="php">// Load en-GB/sakura.ini and zh-TW/sakura.ini from Flower package
-Translator::loadFile('sakura', 'ini', 'flower');
-</code></pre>
-
-<h2>Used Keys</h2>
-
-<pre><code class="php">// Get keys which have been used.
-Translator::getUsed();
-</code></pre>
-
-<h2>Debugging</h2>
-
-<h3>Debug Mode</h3>
-
-<pre><code class="php">Translator::setDebug(true);
-</code></pre>
-
-<p>We can get non-translated keys in debug mode.</p>
-
-<pre><code class="php">echo Translator::translate('A Translation Exists String');
-echo "\n";
-echo Translator::translate('A Not Translated String');
-</code></pre>
-
-<p>And the output will be:</p>
-
-<pre><code class="html">**A Translation Exists String**
-??A Not Translated String??
-</code></pre>
-
-<h3>Get Orphans</h3>
-
-<p>Orphans is the language string you used but haven't translated.</p>
-
-<pre><code class="php">Translator::setDebug(true);
-
-// Run your applications
-
-$orphans = Translator::getOrphans(); // Array([0] =&gt; A Not Translated String);
-</code></pre>
-
-<h3>Check Loaded Languages</h3>
-
-<pre><code class="php">$config = \Windwalker\Ioc::getConfig();
-
-$config-&gt;get('language.loaded');
-</code></pre>
-
-<h2>Translate in View Template</h2>
-
-<p>Blade &amp; Edge</p>
-
-<pre><code class="php">@translate('windwalker.language.test.flower')
-@sprintf('windwalker.language.test.flower', 'foo', 'bar')
-@plural('windwalker.language.test.flower', 5)
-
-// only in Edge
-@lang('windwalker.language.test.flower')
-</code></pre>
-
-<p>Twig</p>
-
-<pre><code class="php">{{ 'windwalker.language.test.flower' | lang }}
-{{ 'windwalker.language.test.flower' | sprintf('foo', 'bar') }}
-{{ 'windwalker.language.test.flower' | plural(5) }}
-</code></pre>
+<ul>
+<li>apc</li>
+<li>database</li>
+<li>memcached</li>
+<li>native</li>
+<li>xcache</li>
+</ul>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/languages.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/services/session.md">improve</a> this document.
     </p>
                 </article>
             </div>
