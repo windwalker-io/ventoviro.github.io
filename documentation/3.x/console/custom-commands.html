@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>Custom Commands | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Custom Commands | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+                <div id="version-switcher" class="uk-button-dropdown uk-float-right" data-uk-dropdown="">
+        <a class="uk-button uk-button-primary" href="../../../documentation/3.x/start/getting-started.html">
+            3.x <i class="uk-icon-caret-down"></i>
+        </a>
+
+        <div class="uk-dropdown">
+            <ul class="uk-nav uk-nav-dropdown">
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/console/custom-commands.html">3.x</a>
+                </li>
+
+                <li class="">
+                    <a href="../../../documentation/2.1/console/custom-commands.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Custom Commands</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Core</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h2>Introduction of Windwalker Commands</h2>
+
+<p>The Nested Command Structure</p>
+
+<pre><code>          Console Application (RootCommand)
+                         |
+              ----------------------
+              |                    |
+          CommandA              CommandB
+              |                    |
+        ------------          ------------
+        |          |          |          |
+    CommandC   CommandD    CommandE   CommandF
+</code></pre>
+
+<p>If we type:</p>
+
+<pre><code class="bash">php cli/console commandA commandC foo bar -a -bc -d=e --flower=sakura
+</code></pre>
+
+<p>Then we will been direct to <code>CommandC</code> class, and the following <code>foo bar</code> will be arguments.</p>
+
+<pre><code class="php">class CommandC extend AbstractCommand
+{
+    public function execute()
+    {
+        $arg1 = $this-&gt;getArgument(0); // foo
+        $arg2 = $this-&gt;getArgument(0); // bar
+
+        $opt = $this-&gt;io-&gt;get('d') // e
+        $opt = $this-&gt;io-&gt;get('flower') // sakura
+    }
+}
+</code></pre>
+
+<h2>Declaring Command Class</h2>
+
+<p>This is an example FlowerCommand declaration:</p>
+
+<pre><code class="php">use Windwalker\Console\Command\Command;
+
+class FlowerCommand extends Command
+{
+    protected $name  = 'flower';
+    protected $usage = 'flower command [--option]';
+    protected $help  = 'flower help information';
+    protected $description = 'This is first level flower command.';
+
+    public function initialise()
+    {
+        // We can also set help message in initialise method 
+        $this-&gt;description('This is first level flower command.')
+            -&gt;usage('flower &lt;command&gt; [--option]')
+            -&gt;help('flower help information');
+    }
+
+    public function doExecute()
+    {
+        $this-&gt;out('This is Flower Command executing.');
+    }
+}
+
+</code></pre>
+
+<h3>Register Command in Console:</h3>
+
+<p>We can add our Commands in <code>src/Windwalker/Console/Application.php</code>:</p>
+
+<pre><code class="php">// src/Windwalker/Console/Application.php
+
+public function registerCommands()
+{
+    parent::registerCommands();
+
+    /*
+     * Register Commands
+     * --------------------------------------------
+     * Register your own commands here, make sure you have call the parent, some important
+     * system command has registered at parent::registerCommands().
+     */
+
+    // Your commands here.
+    $this-&gt;addCommand(new FlowerCommand);
+}
+</code></pre>
+
+<p>Then type <code>php bin/console -h</code> will see our new command:</p>
+
+<pre><code class="bash">Commands:
+
+  migration    Database migration system.
+  seed         The data seeder help you create fake data.
+  build        Some useful tools for building system.
+  flower       This is first level flower command.
+
+</code></pre>
+
+<h3>Auto Registering</h3>
+
+<p>If we create commands in package <code>Command</code> folder, every commands will be auto registered to Console:</p>
+
+<pre><code class="php">// src/Flower/Command/FlowerCommand.php
+
+namespace Flower\Command;
+
+use Windwalker\Console\Command\Command;
+
+// This class will auto register to console because it is located in package's Command folder
+class FlowerCommand extends Command
+{
+    // ...
+}
+</code></pre>
+
+<h2>Get Arguments and Options</h2>
+
+<p>We can use this code to get arguments and options, setting them in <code>FooCommand</code>.</p>
+
+<pre><code class="php">// src/Flower/Command/FlowerCommand.php
+
+public function initialise()
+{
+    // Define options first that we can set option aliases.
+    $this-&gt;addOption(array('y', 'yell')) // First element `y` will be option name, others will be alias
+        -&gt;alias('Y') // Add a new alias
+        -&gt;defaultValue(0)
+        -&gt;description('Yell will make output upper case.');
+
+    // Global options will pass to every child.
+    $this-&gt;addGlobalOption('s')
+        -&gt;defaultValue(0)
+        -&gt;description('Yell will make output upper case.');
+}
+
+public function doExecute()
+{
+    $name = #this-&gt;getArgument(0);
+
+    if (!$name)
+    {
+        $this-&gt;io-&gt;in('Please enter a name: ');
+    }
+
+    $reply = 'Hello ' . $name;
+
+    if ($this-&gt;getOption('y'))
+    {
+        $reply = strtoupper($reply);
+    }
+
+    if ($this-&gt;getOption('q'))
+    {
+        $reply = strtolower($reply);
+    }
+
+    $this-&gt;out($reply);
+}
+</code></pre>
+
+<p>If we type:</p>
+
+<pre><code class="bash">$ php bin/console flower Asika --yell
+
+## OR
+
+$ php bin/console flower Asika -y
+</code></pre>
+
+<p>The <code>getOption()</code> method will auto detect option aliases, then we can get:</p>
+
+<pre><code>HELLO: ASIKA
+</code></pre>
+
+<blockquote>
+  <p>Note: We have to use <code>$this-&gt;addOption()</code> to define options first, then the <code>$this-&gt;getOption('x')</code> will be able to 
+  get the input option which we want. If we didn't do this, we have to use <code>$this-&gt;io-&gt;get('x')</code> 
+  to get option value, but this way do not support option aliases.</p>
+</blockquote>
+
+<h2>Add Second Level Commands and more...</h2>
+
+<p>FlowerCommand is the first level command in our command tree, if we want to add several commands under FlowerCommand, 
+we can use <code>addCommand()</code> method. Now we add two <code>sakura</code> and <code>rose</code> command under <code>FlowerCommand</code>.</p>
+
+<h3>Create Command Classes</h3>
+
+<p>We declare <code>SakuraCommand</code> and <code>RoseCommand</code> class first.</p>
+
+<pre><code class="php">// src/Flower/Command/Flower/SakuraCommand.php
+
+namespace Flower\Command\Flower;
+
+use Windwalker\Console\Command\Command;
+
+class SakuraCommand extends Command
+{
+    protected $name = 'sakura';
+    protected $usage = 'sakura command [--option]';
+    protected $help  = 'sakura help';
+    protected $description = 'This is second level sakura command.';
+
+    public function initialise()
+    {
+        $this-&gt;addOption(new Option(array('y', 'yell'), 0))
+            -&gt;addGlobalOption(new Option('s', 0, 'desc'));
+    }
+
+    public function doExecute()
+    {
+        $this-&gt;out('This is Sakura Command executing.');
+
+        $arg1 = $this-&gt;getArgument(0);
+
+        if ($arg1)
+        {
+            $this-&gt;out('Argument1: ' . $arg1);
+        }
+    }
+}
+</code></pre>
+
+<p>Then register them to <code>FlowerCommand</code>:</p>
+
+<pre><code class="php">&lt;?php
+// src/Flower/Command/FlowerCommand.php
+
+use Flower\Command\Flower\SakuraCommand;
+use Flower\Command\Flower\RoseCommand;
+
+// ...
+
+public function initialise()
+{
+    $this-&gt;addCommand(new SakuraCommand)
+        -&gt;addCommand(new RoseCommand);
+}
+</code></pre>
+
+<p>OK, let's typing:</p>
+
+<pre><code class="bash">php bin/console flower sakura
+</code></pre>
+
+<p>We will get:</p>
+
+<pre><code>This is Sakura Command executing code.
+</code></pre>
+
+<p>And typing</p>
+
+<pre><code class="bash">$ cli/console.php flower sakura bloom
+</code></pre>
+
+<p>will get:</p>
+
+<pre><code>This is Sakura Command executing code.
+Argument1: bloom
+</code></pre>
+
+<h3>Get Child by Path</h3>
+
+<pre><code class="php">$command = $console-&gt;getCommand('flower/sakura'); // SakuraCommand
+
+// OR
+
+$command = $command-&gt;getChild('foo/bar/baz');
+</code></pre>
+
+<h2>The Prompter</h2>
+
+<p>Prompter is a set of dialog tools help us asking questions from user.</p>
+
+<pre><code class="php">$prompter = new \Windwalker\Console\Prompter\TextPrompter;
+
+$name = $prompter-&gt;ask('Tell me your name:', 'default');
+</code></pre>
+
+<p>OR set question in constructor.</p>
+
+<pre><code class="php">$prompter = new TextPrompter('Tell me your name: ', $this-&gt;io);
+
+// If argument not exists, auto ask user.
+$name = $this-&gt;getArgument(0, $prompter);
+</code></pre>
+
+<h3>Validate Input Value</h3>
+
+<pre><code class="php">$prompter = new \Windwalker\Console\Prompter\ValidatePrompter;
+
+$prompter-&gt;setAttempt(3);
+
+$prompter-&gt;ask('Please enter username: ');
+</code></pre>
+
+<p>If we didn't type anything, ValidatePrompter will try ask us three times (We set this number by <code>setAttempt()</code>).</p>
+
+<pre><code>Please enter username:
+  Not a valid value.
+
+Please enter username:
+  Not a valid value.
+
+Please enter username:
+  Not a valid value.
+</code></pre>
+
+<p>We can set closure to validate our rule:</p>
+
+<pre><code class="php">$prompter-&gt;setAttempt(3)
+    -&gt;setNoValidMessage('No valid number.')
+    -&gt;setHandler(
+    function($value)
+    {
+        return $value == 9;
+    }
+);
+
+$prompter-&gt;ask('Please enter right number: ');
+</code></pre>
+
+<p>Result</p>
+
+<pre><code>Please enter right number: 1
+No valid number.
+
+Please enter right number: 2
+No valid number.
+
+Please enter right number: 3
+No valid number.
+</code></pre>
+
+<p>If validate fail, we can choose shut down our process:</p>
+
+<pre><code class="php">// ...
+
+$prompter-&gt;failToClose(true, 'Number validate fail and close');
+
+$prompter-&gt;ask('Please enter right number: ');
+</code></pre>
+
+<p>Result</p>
+
+<pre><code>Please enter right number:
+No valid number.
+
+Please enter right number:
+No valid number.
+
+Please enter right number:
+No valid number.
+
+Number validate fail and close
+</code></pre>
+
+<h3>Select List</h3>
+
+<pre><code class="php">$options = array(
+    's' =&gt; 'sakura',
+    'r' =&gt; 'Rose',
+    'o' =&gt; 'Olive'
+);
+
+$prompter = new \Windwalker\Console\Prompter\SelectPrompter('Which do you want: ', $options);
+
+$result = $prompter-&gt;ask();
+
+$command-&gt;out('You choose: ' . $result);
+</code></pre>
+
+<p>Output</p>
+
+<pre><code>  [s] - sakura
+  [r] - Rose
+  [o] - Olive
+
+Which do you want: r
+You choose: r
+</code></pre>
+
+<h3>Boolean Prompter</h3>
+
+<p>BooleanPrompter convert input string to boolean type, the (y, yes, 1) weill be <code>true</code>, (n, no, 0, null) will be <code>false</code>.</p>
+
+<pre><code class="php">$prompter = new \Windwalker\Console\Prompter\BooleanPrompter;
+
+$result = $prompter-&gt;ask('Do you wan to do this [Y/n]: ');
+
+var_dump($result);
+</code></pre>
+
+<p>Result</p>
+
+<pre><code>Do you wan to do this [Y/n]: y
+bool(true)
+</code></pre>
+
+<h3>Available Prompters</h3>
+
+<ul>
+<li>TextPrompter</li>
+<li>SelectPrompter</li>
+<li>CallbackPrompter</li>
+<li>ValidatePrompter</li>
+<li>NotNullPrompter</li>
+<li>PasswordPrompter</li>
+</ul>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/console/custom-commands.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

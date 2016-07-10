@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>DataMapper | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="DataMapper | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+                <div id="version-switcher" class="uk-button-dropdown uk-float-right" data-uk-dropdown="">
+        <a class="uk-button uk-button-primary" href="../../../documentation/3.x/start/getting-started.html">
+            3.x <i class="uk-icon-caret-down"></i>
+        </a>
+
+        <div class="uk-dropdown">
+            <ul class="uk-nav uk-nav-dropdown">
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/db/datamapper.html">3.x</a>
+                </li>
+
+                <li class="">
+                    <a href="../../../documentation/2.1/db/datamapper.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>DataMapper</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Core</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h2>Create a DataMapper</h2>
+
+<pre><code class="php">use Windwalker\DataMapper\DataMapper;
+
+$fooMapper = new DataMapper('#__foo');
+
+$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));
+</code></pre>
+
+<h3>Extends It</h3>
+
+<p>You can also create a class to operate specific table:</p>
+
+<pre><code class="php">class FooMapper extends DataMapper
+{
+    protected $table = '#__foo';
+}
+
+$data = (new FooMapper)-&gt;findAll();
+</code></pre>
+
+<p>Or using static proxy:</p>
+
+<pre><code class="php">abstract class FooMapper
+{
+    protected static $instance;
+
+    public static function getInstance()
+    {
+        if (!static::$instance)
+        {
+            static::$instance = new DataMapper('#__foo');
+        }
+
+        return static::$instance;
+    }
+
+    public static function __callStatic($name, $args)
+    {
+        return call_user_func_array(array(static::getInstance(), $name), $args);
+    }
+}
+
+$data = FooMapper::findOne(array('id' =&gt; 5, 'alias' =&gt; 'bar'));
+</code></pre>
+
+<h2>Find Records</h2>
+
+<p>Find method will fetch rows from table, and return <code>DataSet</code> class.</p>
+
+<h3>find()</h3>
+
+<p>Get id = 1 record</p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));
+</code></pre>
+
+<p>Fetch published = 1, and sort by <code>date</code></p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1), 'date');
+</code></pre>
+
+<p>Fetch published = 1, language = en-US, sort by <code>date</code> DESC and start with <code>30</code>, limit <code>10</code>.</p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1, 'language' =&gt; 'en-US'), 'date DESC', 30, 10);
+</code></pre>
+
+<p>Using array, will be <code>IN</code> condition:</p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; array(1,2,3))); // WHERE id IN (1,2,3)
+</code></pre>
+
+<h3>findOne()</h3>
+
+<p>Just return one row.</p>
+
+<pre><code class="php">$foo = $dooMapper-&gt;findOne(array('published' =&gt; 1), 'date');
+</code></pre>
+
+<h3>findAll()</h3>
+
+<p>Equal to <code>find(array(), $order, $start, $limit)</code>.</p>
+
+<h2>Create Records</h2>
+
+<p>Using DataSet to wrap every data, then send this object to create() method, these data will insert to table.</p>
+
+<h3>create()</h3>
+
+<pre><code class="php">use Windwalker\Data\Data;
+use Windwalker\Data\DataSet;
+
+$data1 = new Data;
+$data1-&gt;title = 'Foo';
+$data1-&gt;auhor = 'Magneto';
+
+$data2 = new Data(
+    array(
+        'title' =&gt; 'Bar',
+        'author' =&gt; 'Wolverine'
+    )
+);
+
+$dataset = new DataSet(array($data1, $data2));
+
+$return = $fooMapper-&gt;create($dataset);
+</code></pre>
+
+<p>The return value will be whole dataset and add inserted ids.</p>
+
+<pre><code>Windwalker\Data\DataSet Object
+(
+    [storage:ArrayObject:private] =&gt; Array
+        (
+            [0] =&gt; Windwalker\Data\Data Object
+                (
+                    [title] =&gt; Foo
+                    [auhor] =&gt; Magneto
+                    [id] =&gt; 39
+                )
+
+            [1] =&gt; Windwalker\Data\Data Object
+                (
+                    [title] =&gt; Bar
+                    [auhor] =&gt; Wolverine
+                    [id] =&gt; 40
+                )
+        )
+)
+</code></pre>
+
+<h3>createOne()</h3>
+
+<p>Only insert one row, do not need DataSet.</p>
+
+<pre><code class="php">$data = new Data;
+$data-&gt;title = 'Foo';
+$data-&gt;auhor = 'Magneto';
+
+$fooMapper-&gt;createOne($data);
+</code></pre>
+
+<h2>Update Records</h2>
+
+<p>Update methods help us update rows in table.</p>
+
+<h3>update()</h3>
+
+<pre><code class="php">use Windwalker\Data\Data;
+use Windwalker\Data\DataSet;
+
+$data1 = new Data;
+$data1-&gt;id = 1;
+$data1-&gt;title = 'Foo';
+
+$data2 = new Data(
+    array(
+        'id' =&gt; 2,
+        'title' =&gt; 'Bar'
+    )
+);
+
+$dataset = new DataSet(array($data1, $data2));
+
+$fooMapper-&gt;update($dataset);
+</code></pre>
+
+<h3>updateOne()</h3>
+
+<p>Just update one row.</p>
+
+<pre><code class="php">$data = new Data;
+$data-&gt;id = 1;
+$data-&gt;title = 'Foo';
+
+$fooMapper-&gt;updateOne($data);
+</code></pre>
+
+<h3>updateAll()</h3>
+
+<p>UpdateAll is different from update method, we just send one data object, but using conditions as where
+to update every row match these conditions. We don't need primary key for updateAll().</p>
+
+<pre><code class="php">$data = new Data;
+$data-&gt;published = 0;
+
+$fooMapper-&gt;updateAll($data, array('author' =&gt; 'Mystique'));
+</code></pre>
+
+<h2>Delete</h2>
+
+<p>Delete rows by conditions.</p>
+
+<h3>delete()</h3>
+
+<pre><code class="php">$boolean = $fooMapper-&gt;delete(array('author' =&gt; 'Jean Grey'));
+</code></pre>
+
+<h2>Join Tables</h2>
+
+<p>Using <code>RelationDataMapper</code> to join tables.</p>
+
+<pre><code class="php">$fooMapper = RelationDataMapper::getInstance('flower', '#__flower')
+    -&gt;addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
+    -&gt;addTable('category', '#__categories', array('category.lft &gt;= flower.lft', 'category.rgt &lt;= flower.rgt'), 'INNER');
+
+// Don't forget add alias on where conditions.
+$dataset = $fooMapper-&gt;find(array('flower.id' =&gt; 5));
+</code></pre>
+
+<p>The Join query will be:</p>
+
+<pre><code class="sql">SELECT `flower`.`id`,
+    `flower`.`catid`,
+    `flower`.`title`,
+    `flower`.`user_id`,
+    `flower`.`meaning`,
+    `flower`.`ordering`,
+    `flower`.`state`,
+    `flower`.`params`,
+    `author`.`id` AS `author_id`,
+    `author`.`name` AS `author_name`,
+    `author`.`pass` AS `author_pass`,
+    `category`.`id` AS `category_id`,
+    `category`.`title` AS `category_title`,
+    `category`.`ordering` AS `category_ordering`,
+    `category`.`params` AS `category_params`
+FROM #__foo AS foo
+    LEFT JOIN #__users AS author ON foo.user_id = author.id
+    INNER JOIN #__categories AS category ON category.lft &gt;= foo.lft AND category.rgt &lt;= foo.rgt
+</code></pre>
+
+<h3>Using OR Condition</h3>
+
+<pre><code class="php">$fooMapper-&gt;addTable(
+    'category',
+    '#__categories',
+    'category.lft &gt;= foo.lft OR category.rgt &lt;= foo.rgt',
+    'LEFT'
+);
+</code></pre>
+
+<h2>Static Access</h2>
+
+<p>Windwalker core 2.1 provides a <code>AbstractDataMapperProxy</code> to help us easily use DataMapper.</p>
+
+<pre><code class="php">use Windwalker\Core\DataMapper\AbstractDataMapperProxy;
+
+class ArticleMapper extends AbstractDataMapperProxy
+{
+    protected static $table = 'articles';
+}
+</code></pre>
+
+<p>Now you can call all methods statically:</p>
+
+<pre><code class="php">$articles = ArticleMapper::find(['state' =&gt; 1]);
+</code></pre>
+
+<h2>Hooks</h2>
+
+<p>In <code>DataMapper</code> or <code>AbstractDataMapperProxy</code>, both supports hooks methods.</p>
+
+<pre><code class="php">class ArticleMapper extends AbstractDataMapperProxy
+{
+    // ...
+
+    public function onAfterDelete(Event $event)
+    {
+        // Delete all tags relative to this article
+    }
+}
+</code></pre>
+
+<p>OR add listener.</p>
+
+<pre><code class="php">$mapper = new ArticleMapper;
+
+$mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
+</code></pre>
+
+<p>All events:</p>
+
+<ul>
+<li>onBeforeFind</li>
+<li>onAfterFind</li>
+<li>onBeforeFindOne</li>
+<li>onAfterFindOne</li>
+<li>onBeforeFindAll</li>
+<li>onAfterFindAll</li>
+<li>onBeforeFindColumn</li>
+<li>onAfterFindColumn</li>
+<li>onBeforeCreate</li>
+<li>onAfterCreate</li>
+<li>onBeforeCreateOne</li>
+<li>onAfterCreateOne</li>
+<li>onBeforeUpdate</li>
+<li>onAfterUpdate</li>
+<li>onBeforeUpdateOne</li>
+<li>onAfterUpdateOne</li>
+<li>onBeforeUpdateAll</li>
+<li>onAfterUpdateAll</li>
+<li>onBeforeSave</li>
+<li>onAfterSave</li>
+<li>onBeforeSaveOne</li>
+<li>onAfterSaveOne</li>
+<li>onBeforeFlush</li>
+<li>onAfterFlush</li>
+<li>onBeforeDelete</li>
+<li>onAfterDelete</li>
+</ul>
+
+<p>See <a href="../more/events.html">Event</a></p>
+
+<h2>Compare objects</h2>
+
+<p>Using Compare objects help us set some where conditions which hard to use array to defind.</p>
+
+<pre><code class="php">$fooSet = $fooMapper-&gt;find(
+    array(
+        new GteCompare('id', 5),
+        new NeqCompare('name', 'bar')
+        new LtCompare('published', 1),
+        new NinCompare('catid', array(1,2,3,4,5))
+    )
+);
+</code></pre>
+
+<p>This will generate where conditions like below:</p>
+
+<pre><code class="sql">WHERE `id` &gt;= '5'
+    AND `name` != 'bar'
+    AND `published` &lt; '1'
+    AND `catid` NOT IN (1,2,3,4,5)
+</code></pre>
+
+<h3>Available compares:</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Description</th>
+  <th>Operator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>EqCompare</td>
+  <td>Equal</td>
+  <td><code>=</code></td>
+</tr>
+<tr>
+  <td>NeqCompare</td>
+  <td>Not Equal</td>
+  <td><code>!=</code></td>
+</tr>
+<tr>
+  <td>GtCompare</td>
+  <td>Greater than</td>
+  <td><code>&gt;</code></td>
+</tr>
+<tr>
+  <td>GteCompare</td>
+  <td>Greater than or Equal</td>
+  <td><code>&gt;=</code></td>
+</tr>
+<tr>
+  <td>LtCompare</td>
+  <td>Less than</td>
+  <td><code>&lt;</code></td>
+</tr>
+<tr>
+  <td>LteCompare</td>
+  <td>Less than or Equal</td>
+  <td><code>&lt;=</code></td>
+</tr>
+<tr>
+  <td>InCompare</td>
+  <td>In</td>
+  <td><code>IN</code></td>
+</tr>
+<tr>
+  <td>NinCompare</td>
+  <td>Not In</td>
+  <td><code>IN</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3>Custom Compare</h3>
+
+<pre><code class="php">echo (string) new Compare('title', '%flower%', 'LIKE');
+</code></pre>
+
+<p>Will be</p>
+
+<pre><code class="sql">`title` LIKE `%flower%`
+</code></pre>
+
+<p>See: <a href="https://github.com/ventoviro/windwalker-compare">Windwalker Compare</a></p>
+
+<h2>Using Data and DataSet</h2>
+
+<p>See: <a href="../more/data-object.html">Data Object</a></p>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/db/datamapper.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

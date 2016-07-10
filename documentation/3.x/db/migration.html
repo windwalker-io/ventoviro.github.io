@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+
+        <title>Migration and Seeding | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Migration and Seeding | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
+        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+                <div id="version-switcher" class="uk-button-dropdown uk-float-right" data-uk-dropdown="">
+        <a class="uk-button uk-button-primary" href="../../../documentation/3.x/start/getting-started.html">
+            3.x <i class="uk-icon-caret-down"></i>
+        </a>
+
+        <div class="uk-dropdown">
+            <ul class="uk-nav uk-nav-dropdown">
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/db/migration.html">3.x</a>
+                </li>
+
+                <li class="">
+                    <a href="../../../documentation/2.1/db/migration.html">2.1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../../documentation/3.x/start/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Migration and Seeding</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+                
+        <li class="uk-nav-header">Start</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/start/getting-started.html">Getting Started</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Core</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/core/service-provider.html">Service Provider</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">MVC</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Database</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../../documentation/3.x/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Console</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">More</li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/registry.html">Registry Object</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/datetime.html">DateTime</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/error-handling.html">Error Handling</a>
+            </li>
+                    <li class="">
+                <a href="../../../documentation/3.x/more/more-packages.html">More Packages</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h2>Migration</h2>
+
+<p>Migration is a database version control system, it help our team to manage database schema and stay up to date on newest schema state.
+Every member are allow to create a new schema version, and migration system will help us sync local schema to newest version.</p>
+
+<h3>The Migration Flow</h3>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5591937/ae3fba0e-91db-11e4-88f7-d280f5b0577f.jpg" alt="migration" /></p>
+
+<p>Maybe you are <em>Develop B</em>, and your version is <code>20150112_AddSakuraTable.</code></p>
+
+<p>If migration system found your version is not up to date, you may run <code>migration migrate</code>, then migration system will update schema 
+to the newest version: <code>20150421_AddTableIndex</code></p>
+
+<blockquote>
+  <p>Migrations are typically paired with the <a href="table-schema.html">Schema Builder</a> to easily manage the database schema.</p>
+</blockquote>
+
+<h3>Create A New Version</h3>
+
+<p>To create a migration version, you may use <code>migration create</code> command in console:</p>
+
+<pre><code class="bash">php bin/console migration create InitFlowerTable
+</code></pre>
+
+<p>You'll see this info:</p>
+
+<pre><code class="html">Migration version: 20150101091434_InitFlowerTable.php created.
+File path: /your/project/path/migrations/20150101091434_InitFlowerTable.php
+</code></pre>
+
+<h5>Create to Custom Position</h5>
+
+<p>You may also create migration to other position by <code>--dir</code> or <code>--package</code></p>
+
+<pre><code class="bash">## Create to custom directory
+php bin/console migration create InitFlowerTable --dir=resources/migrations
+
+## Create to a package's Migration folder
+php bin/console migration create InitFlowerTable --package=flower
+</code></pre>
+
+<h3>Writing Migration</h3>
+
+<p>This is a new migration file. The <code>up()</code> method will run if your version is lower than latest version. The <code>down()</code> method
+will run if you migrate to older version.</p>
+
+<pre><code class="php">&lt;?php
+// src/resources/migrations/20150101091434_InitFlowerTable.php
+
+use Windwalker\Core\Migration\AbstractMigration;
+
+/**
+ * Migration class, version: 20150101091434
+ */
+class InitFlowerTable extends AbstractMigration
+{
+    /**
+     * Migrate Up.
+     */
+    public function up()
+    {
+
+    }
+
+    /**
+     * Migrate Down.
+     */
+    public function down()
+    {
+
+    }
+}
+</code></pre>
+
+<p>Here is an example to create a table:</p>
+
+<pre><code class="php">use Windwalker\Core\Migration\AbstractMigration;
+use Windwalker\Core\Migration\Schema;
+use Windwalker\Database\Schema\Column;
+use Windwalker\Database\Schema\DataType;
+use Windwalker\Database\Schema\Key;
+
+class InitFlowerTable extends AbstractMigration
+{
+    /**
+     * Migrate Up.
+     */
+    public function up()
+    {
+        $this-&gt;createTable('flowers', function(Schema $schema)
+        {
+            $sc-&gt;addColumn('id',          new Column\Primary)-&gt;comment('Primary Key');
+            $sc-&gt;addColumn('category_id', new Column\Integer)-&gt;comment('Category ID');
+            $sc-&gt;addColumn('title',       new Column\Varchar)-&gt;allowNull(false)-&gt;comment('Title');
+            $sc-&gt;addColumn('alias',       new Column\Varchar)-&gt;comment('Alias');
+            $sc-&gt;addColumn('image',       new Column\Varchar)-&gt;comment('Main Image');
+            $sc-&gt;addColumn('introtext',   new Column\Longtext)-&gt;comment('Intro Text');
+            $sc-&gt;addColumn('fulltext',    new Column\Longtext)-&gt;comment('Full Text');
+            $sc-&gt;addColumn('state',       new Column\Tinyint)-&gt;signed(true)-&gt;comment('0: unpublished, 1:published');
+            $sc-&gt;addColumn('ordering',    new Column\Integer)-&gt;comment('Ordering');
+            $sc-&gt;addColumn('created',     new Column\Datetime)-&gt;comment('Created Date');
+            $sc-&gt;addColumn('created_by',  new Column\Integer)-&gt;comment('Author');
+            $sc-&gt;addColumn('modified',    new Column\Datetime)-&gt;comment('Modified Date');
+            $sc-&gt;addColumn('modified_by', new Column\Integer)-&gt;comment('Modified User');
+            $sc-&gt;addColumn('language',    new Column\Char)-&gt;length(7)-&gt;comment('Language');
+            $sc-&gt;addColumn('params',      new Column\Text)-&gt;comment('Params');
+
+            $sc-&gt;addIndex(Key::TYPE_INDEX, 'idx_articles_category_id', 'category_id');
+            $sc-&gt;addIndex(Key::TYPE_INDEX, 'idx_articles_alias', 'alias');
+            $sc-&gt;addIndex(Key::TYPE_INDEX, 'idx_articles_language', 'language');
+            $sc-&gt;addIndex(Key::TYPE_INDEX, 'idx_articles_created_by', 'created_by');
+        });
+    }
+
+    /**
+     * Migrate Down.
+     */
+    public function down()
+    {
+        $this-&gt;drop('flowers');
+    }
+}
+</code></pre>
+
+<p>See other schema operations: <a href="table-schema.html">Table and Schema</a></p>
+
+<h3>Check Status</h3>
+
+<p>Use this command to show migration status.</p>
+
+<pre><code class="bash">php bin/console migration status
+</code></pre>
+
+<pre><code class="bash"> Status  Version         Migration Name
+-----------------------------------------
+  down   20141105131929  AcmeInit
+  down   20150101091434  InitFlowerTable
+</code></pre>
+
+<h3>Start Migrating</h3>
+
+<p>Use <code>migrate</code> command to start migrating:</p>
+
+<pre><code class="bash">php bin/console migration migrate
+</code></pre>
+
+<p>Terminal will show migrating process.</p>
+
+<pre><code class="html">Migration UP the version: 20141105131929_AcmeInit
+------------------------------------------------------------
+Success
+
+
+Migration UP the version: 20150101091434_InitFlowerTable
+------------------------------------------------------------
+Success
+</code></pre>
+
+<h5>Run Package Migration</h5>
+
+<pre><code class="bash">php bin/console migration migrate --package=flower
+</code></pre>
+
+<h5>Migrate to Specific Version</h5>
+
+<pre><code class="bash">php bin/console migration migrate 20141105131929
+</code></pre>
+
+<p>If you use a lower version, this action will be downgrade.</p>
+
+<h2>Seeding</h2>
+
+<p>Windwalker also provides a simple way to help you create fixtures for easy testing. The default seeder class will store in 
+<code>/resources/seeders</code> , the package seeder will store in <code>/src/YourPackage/Seeder</code>.</p>
+
+<h3>Default Seeder</h3>
+
+<p>Every time after you installed Windwalker, there will be a <code>DatabaseSeeder.php</code> in <code>/resources/seeders</code>:</p>
+
+<pre><code class="php">&lt;?php
+// resources/seeders/DatabaseSeeder.php
+
+use Windwalker\Core\Seeder\AbstractSeeder;
+
+class DatabaseSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+    }
+
+    public function doClean()
+    {
+    }
+}
+</code></pre>
+
+<p>If you didn't add <code>--class</code> option, this file will be seeder default entry, we can follow these steps to create our seeders:</p>
+
+<p>Add new Seeder file (Use IDE or code editor)</p>
+
+<pre><code class="php">// resources/seeders/FlowerSeeder.php
+
+/**
+ * This class dose not has Namespace
+ */
+class FlowerSeeder extends \Windwalker\Core\Seeder\AbstractSeeder
+{
+    public function doExecute()
+    {
+        $data = array();
+
+        // Create your fake data...
+
+        foreach ($data as $item)
+        {
+            $this-&gt;db-&gt;getWriter()-&gt;insertOne('flowers', $item);
+
+            // Or use DataMapper
+
+            FlowerMapper::createOne($item);
+        }
+    }
+}
+</code></pre>
+
+<p>Then call this seeder in default DatabaseSeeder:</p>
+
+<pre><code class="php">class DatabaseSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+        // Execute sub seeder 
+        $this-&gt;execute(new FlowerSeeder);
+
+        $this-&gt;command-&gt;out('Seeder executed.')-&gt;out();
+    }
+
+    public function doClean()
+    {
+        // Truncate table
+        $this-&gt;truncate('flowers');
+
+        $this-&gt;command-&gt;out('Database clean.')-&gt;out();
+    }
+}
+</code></pre>
+
+<p>Now, use <code>seed import</code> command:</p>
+
+<pre><code class="bash">php bin/console seed import
+</code></pre>
+
+<p>You will see this output, it means seeder execute success:</p>
+
+<pre><code class="html">Import seeder DatabaseSeeder
+Import seeder FlowerSeeder
+Seeder executed.
+</code></pre>
+
+<h3>Package Seeder</h3>
+
+<p>Package Seeder is allow to use namespace as class name. You can just add <code>--class</code> option after command to direct a 
+particular seeder class, or add <code>--package</code> to use package default DatabaseSeeder.</p>
+
+<pre><code class="php">// src/FlowerPackage/Seeder/FlowerSeeder.php
+
+namespace Flower\Seeder;
+
+use Windwalker\Core\Seeder\AbstractSeeder;
+
+class FlowerSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+    }
+}
+</code></pre>
+
+<p>Run this command to execute package seeder:</p>
+
+<pre><code class="bash">## Choose class
+php bin/console seed import --class=Flower\Seeder\MySeeder
+
+## Use default DatabaseSeeder
+php bin/console seed import --package=flower
+</code></pre>
+
+<h2>Fake Data Generator</h2>
+
+<p>Windwalker includes <a href="https://github.com/fzaninotto/Faker">PHP Faker</a> to help you generate random fake data.</p>
+
+<pre><code class="php">class ArticleSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+        // Get Faker
+        $faker = \Faker\Factory::create();
+
+        // Get Users in database
+        $users = (new DataMapper('users'))-&gt;findAll();
+
+        // Article DataMapper
+        $articleMapper = new DataMapper('articles');
+
+        // Create articles for every user in database
+        foreach ($users as $user)
+        {
+            // Every use 10 articles
+            foreach (range(1, 10) as $i)
+            {
+                // Use Faker to generate fake data
+                $article = array(
+                    'title'     =&gt; $faker-&gt;sentence(),
+                    'author'    =&gt; $user-&gt;name,
+                    'author_id' =&gt; $user-&gt;id,
+                    'text'      =&gt; $faker-&gt;paragraphs(3),
+                    'created'   =&gt; $faker-&gt;date()
+                );
+
+                $articleMapper-&gt;createOne($article);
+            }
+        }
+    }
+}
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/db/migration.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>
