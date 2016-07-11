@@ -188,17 +188,21 @@ $this->setRedirect($route);
 View has also includes package router, just build route like this:
 
 ``` html
-<a href="<?php echo $router->route('sakura'); ?>">Link</a>
+<a href="<?php echo $router->route('sakura', ['id' => 25]); ?>">Link</a>
 ```
 
-In Blade
+In Blade or Edge
 
 ``` php
-<a href="{{ $router->route('sakura') }}">Link</a>
+<a href="{{ $router->route('sakura', ['id' => 25]) }}">Link</a>
+
+OR
+
+@route('sakura', ['id' => 25]))
 ```
 
 Twig
 
 ``` php
-<a href="{{ router.route('sakura') }}">Link</a>
+<a href="{{ router.route('sakura', ['id' => 25]) }}">Link</a>
 ```

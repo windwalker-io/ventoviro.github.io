@@ -17,7 +17,7 @@ echo Asset::root(); // http://domain.com/path/to/windwlaker/asset
 
 You can simply use `$asset->path` in view template:
 
-``` html
+``` php
 <script src="<?php echo $asset->path; ?>/js/bootstrap.js"></script>
 ```
 
@@ -47,7 +47,7 @@ $asset->addJS('js/bootstrap.js');
 
 Windwalker will auto includes these files in `<head>`:
 
-``` html
+``` php
 <link rel="stylesheet" href="/windwalker/www/asset/css/bootstrap.css?ee8f77834fabe4188265a599a77f2c21" />
 
 <script src="/windwalker/www/asset/js/bootstrap.js?ee8f77834fabe4188265a599a77f2c21"></script>
@@ -55,7 +55,7 @@ Windwalker will auto includes these files in `<head>`:
 
 If you are not use default template, you must confirm your template has rendered styles and scripts:
 
-``` html
+``` php
 <?php echo $asset->renderStyles(true); ?>
 
 <?php echo $asset->renderScripts(true); ?>
@@ -112,7 +112,7 @@ the old assets files and will break your front-end application.
 
 Sometimes your Widget need push a JS template to the bottom of `<body>`, we can wrap this template by `AssetTemplate`:
 
-``` html
+``` php
 <script>
     alert(jQuery('#hello').html());
 </script>
@@ -126,7 +126,7 @@ Sometimes your Widget need push a JS template to the bottom of `<body>`, we can 
 
 Make sure your template has render asset template as bottom of body:
 
-``` html
+``` php
 ...
 
 <?php echo $asset->getTemplate()->renderTemplates(); ?>
@@ -135,7 +135,7 @@ Make sure your template has render asset template as bottom of body:
 
 Simple tag in Edge and Blade:
 
-``` blade
+``` php
 @assetTemplate('asset.name')
 <script id="hello" type="text/template">
     <h1>Hello {{ $content }}</h1>

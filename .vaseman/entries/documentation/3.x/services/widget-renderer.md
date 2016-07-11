@@ -14,7 +14,7 @@ Widget object is a convenience tool to help us render HTML blocks, you can consi
 
 First, add a template file in `/templates/sidebar/news.php`, this is a news widget.
 
-``` html
+``` php
 <ul class="nav news">
 	<?php foreach ($data->articles as $article): ?>
 	<li>
@@ -203,7 +203,7 @@ In php template
 
 In Blade or Edge
 
-``` html
+``` php
 {!! $widget->render('sidebar,.news', $data, 'edge') !!}
 
 OR
@@ -214,5 +214,5 @@ OR
 Twig
 
 ``` twig
-{{ widget.render('sidebar,.news', $data, 'edge') | raw }}
+{{ widget.render('sidebar .news', $data, 'edge') | raw }}
 ```

@@ -9,7 +9,8 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+        {#<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>#}
+        <link rel="stylesheet" href="{{ uri.media }}css/prism.css" />
 
         <!-- Custom styles for this template -->
         <link href="{{ uri.media }}css/main.css" rel="stylesheet">
@@ -33,14 +34,17 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="{{ uri.media }}js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-        <script src="{{ uri.media }}js/highlight/highlight.yaml.js"></script>
-        <script src="{{ uri.media }}js/highlight/highlight.blade.js"></script>
+        {#<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>#}
+        {#<script src="{{ uri.media }}js/highlight/highlight.yaml.js"></script>#}
+        {#<script src="{{ uri.media }}js/highlight/highlight.blade.js"></script>#}
+        <script src="{{ uri.media }}js/prism.js"></script>
         <script>
             $(document).ready(function() {
 
                 $('.article-content pre code').each(function(i, block) {
-                    hljs.highlightBlock(block);
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
                 });
             });
         </script>

@@ -199,7 +199,7 @@ class MyClass
     }
 }
 
-$myObject = $container->buildObject('MyClass');
+$myObject = $container->createObject('MyClass');
 
 $myObject->input; // Input
 $myObject->config; // Registry
@@ -238,7 +238,7 @@ $container->share('Windwalker\\Model\\AbstractModel', function()
     return new MyModel;
 });
 
-$myObject = $container->buildObject('MyClass');
+$myObject = $container->createObject('MyClass');
 
 $myObject->model; // MyModel
 ```

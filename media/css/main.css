@@ -362,11 +362,10 @@ dl dd {
 .article-content td {
   padding: 4px 8px;
 }
-.article-content pre code.hljs {
-  margin: -10px;
-  padding: 20px;
-  font-size: 15px;
+.article-content pre code {
+  font-size: 14px;
   font-family: "monako", consolas, "Courier New", monospace;
+  line-height: 1.6;
 }
 .article-content blockquote {
   margin: 2em 0;

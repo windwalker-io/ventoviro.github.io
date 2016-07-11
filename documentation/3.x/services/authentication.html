@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+                <link rel="stylesheet" href="../../../media/css/prism.css" />
 
         <!-- Custom styles for this template -->
         <link href="../../../media/css/main.css" rel="stylesheet">
@@ -41,14 +41,14 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
-        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+                                <script src="../../../media/js/prism.js"></script>
         <script>
             $(document).ready(function() {
 
                 $('.article-content pre code').each(function(i, block) {
-                    hljs.highlightBlock(block);
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
                 });
             });
         </script>
@@ -300,56 +300,148 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <blockquote>
-  <p>NOTE: This page is out-of-dated, will be rewrite in the future.</p>
-</blockquote>
+                    <h2>Introduction</h2>
 
-<h2>Introduction</h2>
+<p>Windwalker user system is extendable, before we start use user auth, we must do some prepare to initial user system.</p>
 
-<p>Building user system in Windwalker is very easy, Windwalker includes a simple Authentication package to handle user auth.</p>
+<h2>Prepare User System</h2>
 
-<h2>Default User Package</h2>
+<h2>Create UserHandler</h2>
 
-<p>In Windwalker Starter, there is an User package in <code>src/Windwalker/User</code> and has been registered to system. 
-You can directly modify it to what you needed.</p>
+<p><code>UserHandlerInterface</code> help us handler user CRUD and login/logout actions, create a Model implements <code>UserHandlerInterface</code>
+in your package.</p>
 
-<p>Before using it, you may run this command to import default user package schema:</p>
+<pre><code class="php">namespace Flower\Model;
 
-<pre><code class="bash">php bin/console migration migrate -p=wwuser
+use Windwalker\Core\Model\DatabaseModelRepository;
+use Windwalker\Core\User\UserData;
+use Windwalker\Core\User\UserDataInterface;
+use Windwalker\Core\User\UserHandlerInterface;
+use Windwalker\Ioc;
+
+class UserModel extends DatabaseModelRepository implements UserHandlerInterface
+{
+    protected $table = 'users';
+
+    public function load($conditions)
+    {
+        $data = $this-&gt;getDataMapper()-&gt;findOne($conditions);
+
+        return new UserData($data-&gt;dump());
+    }
+
+    public function save(UserDataInterface $user)
+    {
+        $result = $this-&gt;getDataMapper()-&gt;saveOne($user-&gt;dump());
+
+        $user-&gt;id = $result['id'];
+
+        return $user;
+    }
+
+    public function delete($conditions)
+    {
+        return $this-&gt;getDataMapper()-&gt;delete($conditions);
+    }
+
+    public function login(UserDataInterface $user)
+    {
+        unset($user-&gt;password);
+
+        Ioc::getSession()-&gt;set('user', $user-&gt;dump());
+
+        return true;
+    }
+
+    public function logout(UserDataInterface $user = null)
+    {
+        Ioc::getSession()-&gt;remove('user');
+
+        return true;
+    }
+}
+</code></pre>
+
+<h3>Migration and Seeding</h3>
+
+<p>Use this simple schema to create user table, see <a href="../db/migration.html">Migration</a>:</p>
+
+<pre><code class="php">$this-&gt;createTable('users', function (Schema $sc)
+{
+    $sc-&gt;primary('id')-&gt;comment('Primary Key');
+    $sc-&gt;varchar('name')-&gt;comment('Full Name');
+    $sc-&gt;varchar('username')-&gt;comment('Login name');
+    $sc-&gt;varchar('email')-&gt;comment('Email');
+    $sc-&gt;varchar('password')-&gt;comment('Password');
+
+    $sc-&gt;addIndex('id');
+    $sc-&gt;addIndex('username');
+    $sc-&gt;addIndex('email');
+});
+</code></pre>
+
+<p>And you can add seeder to generate fake user data:</p>
+
+<pre><code class="php">$faker = \Faker\Factory::create();
+
+// Please do not use `pass123456` in production site
+$pass = (new Password)-&gt;create('pass123456');
+
+$model = UserModel::getInstance();
+
+foreach (range(1, 50) as $i)
+{
+    $data = [
+        'name' =&gt; $faker-&gt;name,
+        'username' =&gt; $faker-&gt;userName,
+        'email' =&gt; $faker-&gt;email,
+        'password' =&gt; $pass
+    ];
+
+    $model-&gt;save(new UserData($data));
+
+    $this-&gt;outCounting();
+}
+</code></pre>
+
+<p>Add this handler to <code>etc/app/web.php</code>:</p>
+
+<pre><code class="php">// ...
+
+
+    'user' =&gt; [
+        'handler' =&gt; \Flower\Model\UserModel::class,
+        'methods' =&gt; [
+        ],
+        'policies' =&gt; [
+
+        ]
+    ]
+</code></pre>
+
+<h2>Load and Save Users</h2>
+
+<p>Now we can do CRUD for user table:</p>
+
+<pre><code class="php">use Windwalker\Core\User\User;
+
+$user = User::get(1); // get User ID=1
+$user = User::get(['username' =&gt; 'christina']); // get Username=christina
+
+$user-&gt;name = 'Christina';
+
+User::delete(1); // Delete User ID=1
 </code></pre>
 
 <h3>Get User</h3>
 
-<pre><code class="php">use Windwalker\Core\Authentication\User;
-
-// Get current logged-in user
-$user = User::get();
+<pre><code class="php">use Windwalker\Core\User\User;
 
 // Get a user by id
 $user = User::get(12);
 
 // Get user by conditions
 $user = User::get(array('username' =&gt; 'christina'));
-</code></pre>
-
-<h3>Login User</h3>
-
-<pre><code class="php">// Prepare user data
-$credential = new Credential;
-$credential-&gt;username = 'richael2123';
-$credential-&gt;password = '12345678';
-
-$bool = User::login($credential);
-</code></pre>
-
-<p>Remember me:</p>
-
-<pre><code class="php">$bool = User::login($credential, true);
-</code></pre>
-
-<h3>Logout User</h3>
-
-<pre><code class="php">$bool = User::logout();
 </code></pre>
 
 <h3>Save User</h3>
@@ -360,9 +452,7 @@ $user-&gt;username = 'riaok3784';
 $user-&gt;password = 'abc1234';
 
 // Hash password
-$password = new Password;
-
-$user-&gt;password = $password-&gt;create($user-&gt;password);
+$user-&gt;password = (new Password)-&gt;create($user-&gt;password);
 
 User::save($user);
 </code></pre>
@@ -376,92 +466,33 @@ User::delete(12);
 User::delete(array('username' =&gt; 'richael3784'));
 </code></pre>
 
-<h2>Create Your Own User Handler</h2>
-
-<p>Windwalker Built-in Authentication system can register a custom user handler, this user handler should implement the <code>UserHandlerInterface</code>:</p>
-
-<pre><code class="php">use Windwalker\Core\Authentication\UserDataInterface;
-use Windwalker\Core\Authentication\UserHandlerInterface;
-
-class MyUserHandler implements UserHandlerInterface
-{
-    /**
-     * load
-     *
-     * @param array $conditions
-     *
-     * @return  mixed|false
-     */
-    public function load($conditions) {}
-
-    /**
-     * save
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  UserDataInterface
-     */
-    public function save(UserDataInterface $user) {}
-
-    /**
-     * delete
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  boolean
-     */
-    public function delete(UserDataInterface $user) {}
-
-    /**
-     * login
-     *
-     * @param UserDataInterface $user
-     *
-     * @return  boolean
-     */
-    public function login(UserDataInterface $user) {}
-
-    /**
-     * logout
-     *
-     * @param UserDataInterface $user
-     *
-     * @return bool
-     */
-    public function logout(UserDataInterface $user) {}
-}
-</code></pre>
-
-<p>See: <a href="http://goo.gl/P0b2qk">Default UserHandler</a> to learn how to write your use handler.</p>
-
-<p>Then you may register it before application execute:</p>
-
-<pre><code class="php">use Windwalker\Core\Authentication\User;
-
-User::setHandler(new MyUserHandler);
-</code></pre>
-
 <h2>Create Authentication Method</h2>
 
-<p>Windwalker Authentication allow developers attach multiple methods to match user(See <a href="https://github.com/ventoviro/windwalker-authentication">Document</a>).</p>
+<p>Currently our <code>UserHandler</code> class can only load/save user from database, but we need it to support login/logout from databse or other sources.</p>
+
+<p>Windwalker Authentication allow developers attach multiple methods to match user(See <a href="https://github.com/ventoviro/windwalker-authentication">Authentication Package</a>).</p>
 
 <p>This image described how authentication methods working.</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5595002/07d3235a-92a2-11e4-8f1f-5622e2af7254.jpg" alt="p-2015-01-02-5" /></p>
 
-<h3>Example Method to Find User From Database</h3>
+<h3>DatabaseMethod</h3>
 
-<pre><code class="php">use Windwalker\Authentication\Authentication;
+<p>We create a method class to find user from database.</p>
+
+<pre><code class="php">namespace Flower\User;
+
+use Flower\Model\UserModel;
+use Windwalker\Authentication\Authentication;
 use Windwalker\Authentication\Credential;
 use Windwalker\Authentication\Method\AbstractMethod;
 use Windwalker\Crypt\Password;
-use Windwalker\DataMapper\DataMapper;
 
 class DatabaseMethod extends AbstractMethod
 {
     public function authenticate(Credential $credential)
     {
-        // Not allow empty password
+        // Do not allow empty username or password
         if (!$credential-&gt;username || !$credential-&gt;password)
         {
             $this-&gt;status = Authentication::EMPTY_CREDENTIAL;
@@ -469,12 +500,18 @@ class DatabaseMethod extends AbstractMethod
             return false;
         }
 
-        $datamapper = new DataMapper('users');
+        // Do not allow email as username
+        if (strpos($credential-&gt;username, '@') !== false)
+        {
+            $this-&gt;status = Authentication::INVALID_USERNAME;
 
-        // Use user data to find user
-        $user = $datamapper-&gt;findOne(array('username' =&gt; $credential-&gt;username));
+            return false;
+        }
 
-        // User not found
+        // Get User from database
+        // You can also use User::get(['username' =&gt; $credential-&gt;username])
+        $user = UserModel::getInstance()-&gt;load(['username' =&gt; $credential-&gt;username]);
+
         if ($user-&gt;isNull())
         {
             $this-&gt;status = Authentication::USER_NOT_FOUND;
@@ -482,19 +519,18 @@ class DatabaseMethod extends AbstractMethod
             return false;
         }
 
-        // User found, start to verify password
-        $password = new Password;
-
-        if (!$password-&gt;verify($credential-&gt;password, $user-&gt;password))
+        // User found, then we check password
+        if (!(new Password)-&gt;verify($credential-&gt;password, $user-&gt;password))
         {
-            $this-&gt;status = Authentication::INVALID_CREDENTIAL;
+            $this-&gt;status = Authentication::INVALID_PASSWORD;
 
             return false;
         }
 
-        // Password verify success, return user data.
+        // Confirm user exists, bind user data into Credential since it is referenced
         $credential-&gt;bind($user);
 
+        // Return TRUE and success status
         $this-&gt;status = Authentication::SUCCESS;
 
         return true;
@@ -502,15 +538,215 @@ class DatabaseMethod extends AbstractMethod
 }
 </code></pre>
 
-<p>Then we must register this method before Application executed:</p>
+<p>And register to <code>etc/app/web.php</code>:</p>
 
-<pre><code class="php">$auth = \Windwalker\Ioc::getAuthentication();
-$auth-&gt;addMethod('database', new DatabaseMethod);
+<pre><code class="php"><br />// ...
 
-// OR
+    'user' =&gt; [
+        'handler' =&gt; ...,
+        'methods' =&gt; [
+            \Flower\User\DatabaseMethod::class
+        ],
+        'policies' =&gt; [
 
-User::addMethod('database', new DatabaseMethod);
+        ]
+    ]
 </code></pre>
+
+<p>OK now we can login User by credential.</p>
+
+<h2>Login and Logout</h2>
+
+<h3>Login User</h3>
+
+<pre><code class="php">// Prepare user data
+$credential = new Credential;
+$credential-&gt;username = 'richael2123';
+$credential-&gt;password = '12345678';
+
+try
+{
+    $bool = User::login($credential);
+}
+catch (AuthenticateFailException $e)
+{
+    $messages = $e-&gt;getMessages();
+}
+</code></pre>
+
+<p>Remember me:</p>
+
+<pre><code class="php">$bool = User::login($credential, true);
+</code></pre>
+
+<p>Our UserHandler set user login data to session <code>user</code> key, see <code>$_SESSION['user']</code>:</p>
+
+<pre><code class="php">show($_SESSION);
+
+Array
+(
+    [_default] =&gt; Array
+        (
+            ...
+            [user] =&gt; Array
+                (
+                    [username] =&gt; richael2123
+                    [id] =&gt; 2
+                    [name] =&gt; Richael
+                    [email] =&gt; richael@block.net
+                    [_authenticated_method] =&gt; 0
+                )
+        )
+    [_flash] =&gt; Array
+        (
+        )
+)
+</code></pre>
+
+<h3>Logout User</h3>
+
+<pre><code class="php">$bool = User::logout();
+</code></pre>
+
+<h3>Force Login User</h3>
+
+<p>Use <code>makeUserLoggedIn()</code> to force login a user data to session without authentication.</p>
+
+<pre><code class="php">$user = [
+    'username' =&gt; 'richael2123',
+    'name' =&gt; 'Richael'
+];
+
+User::makeUserLoggedIn($user);
+</code></pre>
+
+<h3>Get Current User</h3>
+
+<pre><code class="php">$user = User::get();
+
+// Check user is logged-in
+$user-&gt;isMember();
+
+// Check user is not logged-in
+$user-&gt;isGuest();
+</code></pre>
+
+<h2>Authenticate From Remote</h2>
+
+<p>This is an example to auth user from remote server.</p>
+
+<pre><code class="php">use Windwalker\Http\HttpClient;
+
+// ...
+
+class RemoteMethod extends AbstractMethod
+{
+    public function authenticate(Credential $credential)
+    {
+        // Use HttpClient to get remote json data
+        $response = (new HttpClient)-&gt;get('http://myapiserver.com/user/auth', [
+            'username' =&gt; $credential-&gt;username,
+            'password' =&gt; $credential-&gt;password
+        ]);
+
+        if ($response-&gt;getStatusCode() != 200)
+        {
+            $this-&gt;status = Authentication::USER_NOT_FOUND;
+
+            return false;
+        }
+
+        $user = json_decode($response-&gt;getBody()-&gt;__toString());
+
+        // Confirm user exists, bind user data into Credential since it is referenced
+        $credential-&gt;bind($user);
+
+        // Return TRUE and success status
+        $this-&gt;status = Authentication::SUCCESS;
+
+        return true;
+    }
+}
+</code></pre>
+
+<p>Then add this class to <code>etc/app/web.php</code> so Windwalker will check two methods to find user.</p>
+
+<pre><code class="php">// ...
+
+    'user' =&gt; [
+        'handler' =&gt; ...
+        'methods' =&gt; [
+            \Flower\User\DatabaseMethod::class,
+            \Flower\User\RemoteMethod::class
+        ],
+        'policies' =&gt; [
+
+        ]
+    ]
+</code></pre>
+
+<h3>Dependency Injection</h3>
+
+<p>If your method class dependent on other classes, just add it on constructor, The Ioc container will auto inject it:</p>
+
+<pre><code class="php">use Windwalker\Core\Application\WebApplication;
+
+class DatabaseMethod extends AbstractMethod
+{
+    protected $app;
+
+    public function __contruct(WebApplication $app)
+    {
+        $this-&gt;app = $app;
+    }
+
+    // ...
+</code></pre>
+
+<h2>Check User Is Allowed To Login</h2>
+
+<p>You can check a user has access to login or not, use listener to listen <code>onUserAuthorisation</code> event:</p>
+
+<pre><code class="php">namespace Flower\Listener;
+
+use Windwalker\Core\User\Exception\AuthenticateFailException;
+use Windwalker\Core\User\UserDataInterface;
+use Windwalker\Event\Event;
+
+class UserAuthListener
+{
+    public function onUserAuthorisation(Event $event)
+    {
+        /** @var UserDataInterface $user */
+        $user = $event['user'];
+
+        if (!$user-&gt;activated)
+        {
+            // Return false to result
+            $event['result'] = false;
+
+            // OR throw exception
+            throw new AuthenticateFailException('User not activated');
+        }
+
+        if ($user-&gt;is_blocked)
+        {
+            throw new AuthenticateFailException('User is disbaled');
+        }
+    }
+}
+</code></pre>
+
+<p>Then register it to <code>etc/app/web.php</code>:</p>
+
+<pre><code class="php">// ...
+
+    'listeners' =&gt; [
+        400 =&gt; \Flower\Listener\UserAuthListener::class
+    ],
+</code></pre>
+
+<p>Now Windwalker will auto block users with no access to login.</p>
 
                         <hr />
 

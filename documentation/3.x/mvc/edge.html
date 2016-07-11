@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+                <link rel="stylesheet" href="../../../media/css/prism.css" />
 
         <!-- Custom styles for this template -->
         <link href="../../../media/css/main.css" rel="stylesheet">
@@ -41,14 +41,14 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
-        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+                                <script src="../../../media/js/prism.js"></script>
         <script>
             $(document).ready(function() {
 
                 $('.article-content pre code').each(function(i, block) {
-                    hljs.highlightBlock(block);
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
                 });
             });
         </script>
@@ -324,7 +324,7 @@ class SakuraHtmlView extends HtmlView
 
 <p>Then we create a template file in <code>src/Flower/Templates/sakura/default.edge.php</code> or (<code>default.blade.php</code>):</p>
 
-<pre><code class="blade">&lt;h1&gt;{{ $title }}&lt;/h1&gt;
+<pre><code class="php">&lt;h1&gt;{{ $title }}&lt;/h1&gt;
 </code></pre>
 
 <p>Result:</p>
@@ -340,12 +340,12 @@ class SakuraHtmlView extends HtmlView
 
 <p>Display a variable by <code>{{ ... }}</code></p>
 
-<pre><code class="blade">Hello {{ $title }}
+<pre><code class="php">Hello {{ $title }}
 </code></pre>
 
 <p>Unescaped echoing.</p>
 
-<pre><code class="blade">My name is {!! $form-&gt;input('name') !!}
+<pre><code class="php">My name is {!! $form-&gt;input('name') !!}
 </code></pre>
 
 <h3>Control Structures</h3>
@@ -354,7 +354,7 @@ class SakuraHtmlView extends HtmlView
 
 <p>Use <code>@if ... @else</code> directive.</p>
 
-<pre><code class="blade">@if (count($flower) == 1)
+<pre><code class="php">@if (count($flower) == 1)
     I have one flower!
 @elseif (count($flower) &gt; 1)
     I have many flkowers!
@@ -374,7 +374,7 @@ class SakuraHtmlView extends HtmlView
 
 <p>Edge provides simple directives similar to PHP loop structure.</p>
 
-<pre><code class="blade">@for ($i = 0; $i &lt; 10; $i++)
+<pre><code class="php">@for ($i = 0; $i &lt; 10; $i++)
     The current value is {{ $i }}
 @endfor
 
@@ -395,7 +395,7 @@ class SakuraHtmlView extends HtmlView
 
 <p>You might need to break or skip a loop.</p>
 
-<pre><code class="blade">@foreach ($users as $user)
+<pre><code class="php">@foreach ($users as $user)
 
     @if (!$user-&gt;id)
         @continue
@@ -412,7 +412,7 @@ class SakuraHtmlView extends HtmlView
 
 <p>Or add conditions to these two directives.</p>
 
-<pre><code class="blade">@continue(!$user-&gt;id)
+<pre><code class="php">@continue(!$user-&gt;id)
 
 @break($user-&gt;id &gt;= 10)
 </code></pre>
@@ -436,7 +436,7 @@ class SakuraHtmlView extends HtmlView
 
 <p>Now we can add an child template to extends root template.</p>
 
-<pre><code class="blade">@extends('layouts.root')
+<pre><code class="php">@extends('layouts.root')
 
 @section('page_title', 'My Page Title')
 
@@ -508,7 +508,7 @@ class SakuraHtmlView extends HtmlView
 
 <p>Use our new directive:</p>
 
-<pre><code class="blade">&lt;h1&gt;@upport('hello')&lt;/h2&gt;
+<pre><code class="php">&lt;h1&gt;@upport('hello')&lt;/h2&gt;
 
 &lt;!-- Result: &lt;h1&gt;HELLO&lt;/h1&gt; --&gt;
 </code></pre>

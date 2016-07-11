@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+                <link rel="stylesheet" href="../../../media/css/prism.css" />
 
         <!-- Custom styles for this template -->
         <link href="../../../media/css/main.css" rel="stylesheet">
@@ -41,14 +41,14 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
-        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+                                <script src="../../../media/js/prism.js"></script>
         <script>
             $(document).ready(function() {
 
                 $('.article-content pre code').each(function(i, block) {
-                    hljs.highlightBlock(block);
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
                 });
             });
         </script>
@@ -312,7 +312,7 @@ echo Asset::root(); // http://domain.com/path/to/windwlaker/asset
 
 <p>You can simply use <code>$asset-&gt;path</code> in view template:</p>
 
-<pre><code class="html">&lt;script src="&lt;?php echo $asset-&gt;path; ?&gt;/js/bootstrap.js"&gt;&lt;/script&gt;
+<pre><code class="php">&lt;script src="&lt;?php echo $asset-&gt;path; ?&gt;/js/bootstrap.js"&gt;&lt;/script&gt;
 </code></pre>
 
 <h3>Set Full Asset Uri</h3>
@@ -339,14 +339,14 @@ $asset-&gt;addJS('js/bootstrap.js');
 
 <p>Windwalker will auto includes these files in <code>&lt;head&gt;</code>:</p>
 
-<pre><code class="html">&lt;link rel="stylesheet" href="/windwalker/www/asset/css/bootstrap.css?ee8f77834fabe4188265a599a77f2c21" /&gt;
+<pre><code class="php">&lt;link rel="stylesheet" href="/windwalker/www/asset/css/bootstrap.css?ee8f77834fabe4188265a599a77f2c21" /&gt;
 
 &lt;script src="/windwalker/www/asset/js/bootstrap.js?ee8f77834fabe4188265a599a77f2c21"&gt;&lt;/script&gt;
 </code></pre>
 
 <p>If you are not use default template, you must confirm your template has rendered styles and scripts:</p>
 
-<pre><code class="html">&lt;?php echo $asset-&gt;renderStyles(true); ?&gt;
+<pre><code class="php">&lt;?php echo $asset-&gt;renderStyles(true); ?&gt;
 
 &lt;?php echo $asset-&gt;renderScripts(true); ?&gt;
 </code></pre>
@@ -401,7 +401,7 @@ Create SUM: d9edf273fc270b99e1c5a0f5d9a96b3d at {ROOT}/cache/asset/MD5SUM
 
 <p>Sometimes your Widget need push a JS template to the bottom of <code>&lt;body&gt;</code>, we can wrap this template by <code>AssetTemplate</code>:</p>
 
-<pre><code class="html">&lt;script&gt;
+<pre><code class="php">&lt;script&gt;
     alert(jQuery('#hello').html());
 &lt;/script&gt;
 
@@ -414,7 +414,7 @@ Create SUM: d9edf273fc270b99e1c5a0f5d9a96b3d at {ROOT}/cache/asset/MD5SUM
 
 <p>Make sure your template has render asset template as bottom of body:</p>
 
-<pre><code class="html">...
+<pre><code class="php">...
 
 &lt;?php echo $asset-&gt;getTemplate()-&gt;renderTemplates(); ?&gt;
 &lt;/body&gt;
@@ -422,7 +422,7 @@ Create SUM: d9edf273fc270b99e1c5a0f5d9a96b3d at {ROOT}/cache/asset/MD5SUM
 
 <p>Simple tag in Edge and Blade:</p>
 
-<pre><code class="blade">@assetTemplate('asset.name')
+<pre><code class="php">@assetTemplate('asset.name')
 &lt;script id="hello" type="text/template"&gt;
     &lt;h1&gt;Hello {{ $content }}&lt;/h1&gt;
 &lt;/script&gt;

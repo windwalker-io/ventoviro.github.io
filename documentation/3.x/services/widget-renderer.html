@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+                <link rel="stylesheet" href="../../../media/css/prism.css" />
 
         <!-- Custom styles for this template -->
         <link href="../../../media/css/main.css" rel="stylesheet">
@@ -41,14 +41,14 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
-        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+                                <script src="../../../media/js/prism.js"></script>
         <script>
             $(document).ready(function() {
 
                 $('.article-content pre code').each(function(i, block) {
-                    hljs.highlightBlock(block);
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
                 });
             });
         </script>
@@ -310,7 +310,7 @@
 
 <p>First, add a template file in <code>/templates/sidebar/news.php</code>, this is a news widget.</p>
 
-<pre><code class="html">&lt;ul class="nav news"&gt;
+<pre><code class="php">&lt;ul class="nav news"&gt;
     &lt;?php foreach ($data-&gt;articles as $article): ?&gt;
     &lt;li&gt;
         &lt;a href="&lt;?php echo $article-&gt;link; ?&gt;"&gt;
@@ -488,7 +488,7 @@ class NewsWidget extends Widget
 
 <p>In Blade or Edge</p>
 
-<pre><code class="html">{!! $widget-&gt;render('sidebar,.news', $data, 'edge') !!}
+<pre><code class="php">{!! $widget-&gt;render('sidebar,.news', $data, 'edge') !!}
 
 OR
 
@@ -497,7 +497,7 @@ OR
 
 <p>Twig</p>
 
-<pre><code class="twig">{{ widget.render('sidebar,.news', $data, 'edge') | raw }}
+<pre><code class="twig">{{ widget.render('sidebar .news', $data, 'edge') | raw }}
 </code></pre>
 
                         <hr />

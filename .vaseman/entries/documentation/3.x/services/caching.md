@@ -20,14 +20,16 @@ The `enabled` property controls global cache start or not, can be close if you w
  you use, can be `file`, `runtime`, `memcached` or [more](https://github.com/ventoviro/windwalker-cache#available-storage). 
  About storage and handler, please see [Windwalker Cache](https://github.com/ventoviro/windwalker-cache).
  
-## Use Cache
+## Use Global Cache
+
+Windwalker contains a global main cache object that you can configure it in `config.yml`.
 
 ``` php
 $cache = Ioc::getCache();
 
 // OR
 
-$cache = $container->get('system.cache');
+$cache = $container->get('cache');
 
 // Store cache item
 $cache->set('key', 'value');
@@ -39,53 +41,33 @@ $value = $cache->get('key');
 $cache->exists('key');
 ```
 
-## Get Cache By CacheFactory
+## Custom Cache Object
 
-Get cache factory:
+We can still create our own custom cache objects:
 
 ``` php
-$cacheFactory = $container->get('cache.factory');
+$cacheManager = $container->get('cache.manager');
 
-// OR
+$cache = $cacheManager->getCache('mycache_name', 'file'); // Every name will be singleton object.
+
+// OR use Facade
 
 use Windwalker\Core\Cache\CacheFactory;
 
-$cacheFactory = CacheFactory::getInstance();
+CacheFactory::getCache('mycache_name', 'file');
 ```
 
-Create cache:
+If you set `cache.enabled` to `false` or in DEBUG mode, all cache created from `getCache()` will be `NullStorage`, it won't cache any data.
+
+You can set ignore global to make cache manager ignore config settings.
 
 ``` php
-$cache = $cacheFactory->create('mycache_name', 'file'); // Every name will be singleton object.
+CacheFactory::ignoreGlobal(true);
 ```
 
-If you set `cache.enabled` to `false`, all cache created from `create()` will be `NullStorage`, it won't cache any data.
+## Disable Cache or Debug
 
-## Auto Fetch Data By Closure
-
-Using call method to auto detect is cache exists or not. 
-
-``` php
-$data = $cache->call('flower', function()
-{
-    return array('sakura');
-});
-```
-
-It is same as this code:
-
-``` php
-if (!$cache->exists('flower'))
-{
-    $cache->set('flower', array('sakura'));
-}
-
-$data = $cache->get('flower');
-```
-
-## Debug Mode or Cache Disabled
-
-When debug property in global config se to `1` or cache disabled, the cache storage will auto set to `NullStorage`, cache can still be used
+When debug property in global config se to `true` or `cache.disabled` set to `true`, the cache storage will auto set to `NullStorage`, cache can still be used
  but no work.
  
 ``` php
@@ -107,13 +89,11 @@ else
 return $data;
 ```
 
-## Using Custom Cache Object
-
-In the above we use global cache, but we can still create our custom cache to store values, it will not affected by global config.
+## CacheFactory
 
 ### Use `CacheFactory::getCache()`
 
-CacheFactory is a cache creator, it will store each cache object as singleton by different name. 
+CacheFactory is a cache creator, it will store each cache object as singleton by different name and options.
 
 ``` php
 use Windwalker\Core\Cache\CacheFactory;
@@ -122,7 +102,7 @@ $myFileCache = CacheFactory::getCache('cache_name', 'file');
 $myArrayCache = CacheFactory::getCache('cache_name', 'array');
 ```
 
-Te default cache is runtime cache, it means our data only keep in once runtime but will not save as files.
+The default cache is array cache, it means our data only keep in array but will not save as files.
 
 ### Custom Cache Options
 
@@ -135,40 +115,166 @@ $options = array(
 $cache = CacheFactory::getCache('cache_name', 'file', 'php', $options);
 ```
 
-## Full Page Cache
+## Storage
 
-Sometimes we want to store whole html as static page cache. `StringSerializer`  help us save raw string:
- 
+### ArrayStorage and RuntimeArrayStorage
+
+This is default storage, which will store data in itself and will not depends on any outside storage engine.
+
+The `RuntimeArrayStorage` use static property to storage data, which means all data will live in current runtime
+no matter how many times you create it.
+
 ``` php
-use Windwalker\Cache\Cache;
-use Windwalker\Cache\Storage\RawFileStorage;
+$cache = CacheFactory::getCache('my_cache', 'array');
+$cache = CacheFactory::getCache('my_cache', 'runtime_array');
+```
 
-$cache = CacheFactory::getCache('cache_name', 'file', 'string');
+### FileStorage
+
+Create a cache with `FileStorage` and set a path to store files.
+
+``` php
+$cache = CacheFactory::getCache('my_cache', 'file');
+
+$cache->set('flower', array('sakura'));
+```
+
+The file will store at `{ROOT}/cache/my_cache/~5a46b8253d07320a14cace9b4dcbf80f93dcef04.data`, and the data will be serialized string.
+
+```
+a:1:{i:0;s:6:"sakura";}
+```
+
+#### File Group
+
+Group is a subfolder of your storage path.
+
+``` php
+$cache = CacheFactory::getCache('mygroup', 'file');
+
+$cache->set('mygroup', array('sakura'));
+```
+
+The file wil store at `{ROOT}/cache/mygroup/~5a46b8253d07320a14cace9b4dcbf80f93dcef04.data` that for organize your cache folder.
+
+#### PHP File Format and Deny Access
+
+If your cache folder are exposure on web environment, we have to make our cache files unable to access. The argument 3
+ of `FileStorage` is use to deny access.
+
+``` php
+$cache = CacheFactory::getCache('mygroup', 'file', 'php', ['deny_access' => true]);
+
+$cache->set('flower', array('sakura'));
+```
+
+The stored file will be a PHP file with code to deny access:
+
+`/your/cache/path/mygroup/~5a46b8253d07320a14cace9b4dcbf80f93dcef04.php`
+
+``` php
+<?php die("Access Deny"); ?>a:1:{i:0;s:6:"sakura";}
+```
+
+### Available Storages
+
+- ArrayStorage (`array`)
+- RuntimeArrayStorage (`runtime_array`)
+- FileStorage (`file`)
+- MemcachedStorage (`memcached`)
+- RedisStorage (`redis`)
+- WincacheStorage (`wincache`)
+- XcacheStorage (`xcache`)
+- NullStorage (`null`)
+
+## Serializer
+
+The default `PhpSerializer` (`php`) will make our data be php serialized string, if you want to use other format,
+just change serializer at second argument of Cache object.
+
+``` php
+$cache = CacheFactory::getCache('my_cache', 'file', 'json');
+
+$cache->set('flower', array('flower' => 'sakura'));
+```
+
+The stored cache file is:
+
+```
+{"flower":"sakura"}
+```
+
+### Full Page Cache
+
+Sometimes we may need to store whole html as static page cache. `StringSerializer` (`string`) or `RawSerializer` (`raw`) helps us save raw data as string:
+
+``` php
+$cache = CacheFactory::getCache('my_cache', 'file', 'string');
 
 $url = 'http://mysite.com/foo/bar/baz';
 
 if ($cache->exists($url))
 {
     echo $cache->get($url);
-    
+
     exit();
 }
 
-$view = new View;
-
-$html = $view->render();
+$html = $view->render('html.layout');
 
 $cache->set($url, $html);
 
 echo $html;
 ```
 
-### Supported Serializers
+### PhpFileSerializer
+
+This serializer can save array data as a php file, will be useful when we need to cache config data.
+
+``` php
+$cache = CacheFactory::getCache('my_cache', 'file', 'php_file');
+
+$config = array('foo' => 'bar');
+
+$cache->set('config.name', $config);
+
+$cache->get('config.name'); // Array( [foo] => bar )
+```
+
+The cache file will be:
+
+``` php
+<?php
+
+return array (
+  'foo' => 'bar',
+);
+```
+
+### Available Serializers
 
 - PhpSerializer (`php`)
 - PhpFileSerializer (`php_file`)
 - JsonSerializer (`json`)
 - StringSerializer (`string`)
 - RawSerializer (`raw`)
+
+## PSR6 Cache Interface
+
+Windwalker Cache Storage are all follows [PSR6](http://www.php-fig.org/psr/psr-6/), so you can use other libraries'
+CacheItemPool object as storage, you can also directly use Storage object.
+
+``` php
+use Windwalker\Cache\Item\CacheItem;
+use Windwalker\Cache\Storage\FileStorage;
+
+$cachePool = new FileStorage(__DIR__ . '/cache');
+
+$cachePool->save(new CacheItem('foo', 'Bar', 150));
+
+// OR save differed
+$cachePool->saveDeferred(new CacheItem('baz', 'Yoo', 150));
+$cachePool->commit();
+```
   
-See [Windwalker Cache](https://github.com/ventoviro/windwalker-cache)
+See [Windwalker Cache Package](https://github.com/ventoviro/windwalker-cache)

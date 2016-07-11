@@ -287,10 +287,18 @@ php bin/console seed import
 You will see this output, it means seeder execute success:
 
 ``` html
-Import seeder MainSeeder
 Import seeder FlowerSeeder
+  (20) -
+  Import completed...
+
 Import seeder SakuraSeeder
+  (50) -
+  Import completed...
+
 Import seeder RoseSeeder
+  (50) -
+  Import completed...
+
 Seeder executed.
 ```
 

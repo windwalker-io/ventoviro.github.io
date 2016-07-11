@@ -179,7 +179,7 @@ Now you can use this method in everywhere.
 \Windwalker\Ioc::getMyObject();
 ```
 
-## Build Object
+## Create Object
 
 Container can build an object and automatically inject all the necessary dependencies.
 
@@ -191,18 +191,21 @@ class MyClass
 {
     public $input;
     public $config;
+    public $flower;
 
-    public function __construct(Input $input, Registry $config)
+    public function __construct(Input $input, Registry $config, FlowerInterface $flower)
     {
-        $this->input = $input;
-        $this->config = $config;
+        // ...
     }
 }
 
-$myObject = $container->buildObject('MyClass');
+$container->share(FlowerInterface::class, new Flower);
+
+$myObject = $container->createObject('MyClass');
 
 $myObject->input; // Input
 $myObject->config; // Registry
+$myObject->flower; // Flower
 ```
 
 ### Binding Classes
@@ -238,7 +241,7 @@ $container->share('Windwalker\\Model\\AbstractModel', function()
     return new MyModel;
 });
 
-$myObject = $container->buildObject('MyClass');
+$myObject = $container->createObject('MyClass');
 
 $myObject->model; // MyModel
 ```
@@ -365,11 +368,11 @@ class MyRouter extends AbstractProxyFacade
 Now just call the Router methods statically from `MyRouter`.
 
 ``` php
-MyRouter::build('route');
+MyRouter::route('route');
 
 // Same as...
 
-$container->get('my.router')->build('route');
+$container->get('my.router')->route('route');
 ```
 
 To make IDE support auto-complete, we can add PhpDoc to class.

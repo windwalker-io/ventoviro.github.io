@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+                <link rel="stylesheet" href="../../../media/css/prism.css" />
 
         <!-- Custom styles for this template -->
         <link href="../../../media/css/main.css" rel="stylesheet">
@@ -41,14 +41,14 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
-        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+                                <script src="../../../media/js/prism.js"></script>
         <script>
             $(document).ready(function() {
 
                 $('.article-content pre code').each(function(i, block) {
-                    hljs.highlightBlock(block);
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
                 });
             });
         </script>
@@ -300,9 +300,119 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <blockquote>
-  <p>Still working</p>
-</blockquote>
+                    <p>Authorisation service is s simple ACL manager to help us manage user access.</p>
+
+<h2>Add A Policy To Check Access</h2>
+
+<pre><code class="php">use Windwalker\Core\User\User;
+use Windwalker\Core\User\UserDataInterface;
+
+User::addPolicy('can.edit.article', function (UserDataInterface $user, Data $article)
+{
+    return $user-&gt;isAdmin() || $user-&gt;id == $article-&gt;author_id;
+});
+
+// Check access
+$user = User::get();
+$article = $model-&gt;getAtricle();
+
+User::authorise('can.edit.article', $user, $article); // boolean
+</code></pre>
+
+<h2>Use Class Policy</h2>
+
+<pre><code class="php">use Windwalker\Core\Application\WebApplication;
+
+class CanEditArticlePolicy implements \Windwalker\Authorisation\PolicyInterface
+{
+    public function authorise($user, $article = null)
+    {
+        return User::authorise('super.user', $user) || $user-&gt;id == $article-&gt;author_id;
+    }
+}
+
+// Add to UserManager
+User::addPolicy('can.edit.article', new CanEditArticlePolicy);
+</code></pre>
+
+<p>Or register in config:</p>
+
+<pre><code class="php">// etc/app/web.php
+
+// ...
+
+    'user' =&gt; [
+        // ...
+        'policies' =&gt; [
+            'can.edit.article' =&gt; \Flower\Policy\CanEditArticlePolicy::class
+        ]
+    ]
+</code></pre>
+
+<p>If your policy dependent on other classes, just add it on constructor, The Ioc container will auto inject it:</p>
+
+<pre><code class="php">use Windwalker\Core\Application\WebApplication;
+
+class CanEditArticlePolicy implements \Windwalker\Authorisation\PolicyInterface
+{
+    protected $app;
+
+    public function __contruct(WebApplication $app)
+    {
+        $this-&gt;app = $app;
+    }
+
+    // ...
+</code></pre>
+
+<h2>Use PolicyProvider to Register Multiple Policies</h2>
+
+<pre><code class="php">use Windwalker\Authorisation\AuthorisationInterface;
+use Windwalker\Authorisation\PolicyProviderInterface;
+
+class ArticlePolicyProvider implements PolicyProviderInterface
+{
+    public function register(AuthorisationInterface $auth)
+    {
+        $auth-&gt;addPolicy('can.create.article', function () { ... });
+        $auth-&gt;addPolicy('can.edit.article', function () { ... });
+        $auth-&gt;addPolicy('can.edit.own.article', function () { ... });
+        $auth-&gt;addPolicy('can.delete.article', function () { ... });
+    }
+}
+
+// Register policies
+User::registerPolicyProvider(new ArticlePolicyProvider);
+</code></pre>
+
+<p>Also, you can register provider in <code>etc/app/web.php</code>:</p>
+
+<pre><code class="php">// ...
+
+    'user' =&gt; [
+        // ...
+        'policies' =&gt; [
+            'article' =&gt; \Flower\Policy\ArticlePolicyProvider::class
+        ]
+    ]
+</code></pre>
+
+<p>If your provider dependent on other classes, just add it on constructor, The Ioc container will auto inject it:</p>
+
+<pre><code class="php">use Windwalker\Core\Application\WebApplication;
+use Windwalker\Authorisation\PolicyProviderInterface;
+
+class ArticlePolicyProvider implements PolicyProviderInterface
+{
+    protected $app;
+
+    public function __contruct(WebApplication $app)
+    {
+        $this-&gt;app = $app;
+    }
+
+    // ...
+</code></pre>
 
                         <hr />
 

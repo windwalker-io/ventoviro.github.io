@@ -30,7 +30,7 @@ class SakuraHtmlView extends HtmlView
 
 Then we create a template file in `src/Flower/Templates/sakura/default.edge.php` or (`default.blade.php`):
 
-``` blade
+``` php
 <h1>{{ $title }}</h1>
 ```
 
@@ -48,13 +48,13 @@ Most of Edge syntax are same as Blade.
 
 Display a variable by `{{ ... }}`
 
-``` blade
+``` php
 Hello {{ $title }}
 ```
 
 Unescaped echoing.
 
-``` blade
+``` php
 My name is {!! $form->input('name') !!}
 ```
 
@@ -64,7 +64,7 @@ My name is {!! $form->input('name') !!}
 
 Use `@if ... @else` directive.
 
-``` blade
+``` php
 @if (count($flower) == 1)
     I have one flower!
 @elseif (count($flower) > 1)
@@ -86,7 +86,7 @@ Unless directive
 
 Edge provides simple directives similar to PHP loop structure.
 
-``` blade
+``` php
 @for ($i = 0; $i < 10; $i++)
     The current value is {{ $i }}
 @endfor
@@ -108,7 +108,7 @@ Edge provides simple directives similar to PHP loop structure.
 
 You might need to break or skip a loop.
 
-``` blade
+``` php
 @foreach ($users as $user)
 
     @if (!$user->id)
@@ -126,7 +126,7 @@ You might need to break or skip a loop.
 
 Or add conditions to these two directives.
 
-``` blade
+``` php
 @continue(!$user->id)
 
 @break($user->id >= 10)
@@ -152,7 +152,7 @@ We can define some sections in a root template.
 
 Now we can add an child template to extends root template.
 
-``` blade
+``` php
 @extends('layouts.root')
 
 @section('page_title', 'My Page Title')
@@ -227,7 +227,7 @@ class MyExtension implements \Windwalker\Edge\Extension\EdgeExtensionInterface
 
 Use our new directive:
 
-``` blade
+``` php
 <h1>@upport('hello')</h2>
 
 <!-- Result: <h1>HELLO</h1> -->

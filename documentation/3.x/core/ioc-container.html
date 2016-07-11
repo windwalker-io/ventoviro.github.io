@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>
+                <link rel="stylesheet" href="../../../media/css/prism.css" />
 
         <!-- Custom styles for this template -->
         <link href="../../../media/css/main.css" rel="stylesheet">
@@ -41,14 +41,14 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../../../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-        <script src="../../../media/js/highlight/highlight.yaml.js"></script>
-        <script src="../../../media/js/highlight/highlight.blade.js"></script>
+                                <script src="../../../media/js/prism.js"></script>
         <script>
             $(document).ready(function() {
 
                 $('.article-content pre code').each(function(i, block) {
-                    hljs.highlightBlock(block);
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
                 });
             });
         </script>
@@ -464,7 +464,7 @@ abstract class Ioc extends \Windwalker\Core\Ioc
 <pre><code class="php">\Windwalker\Ioc::getMyObject();
 </code></pre>
 
-<h2>Build Object</h2>
+<h2>Create Object</h2>
 
 <p>Container can build an object and automatically inject all the necessary dependencies.</p>
 
@@ -475,18 +475,21 @@ class MyClass
 {
     public $input;
     public $config;
+    public $flower;
 
-    public function __construct(Input $input, Registry $config)
+    public function __construct(Input $input, Registry $config, FlowerInterface $flower)
     {
-        $this-&gt;input = $input;
-        $this-&gt;config = $config;
+        // ...
     }
 }
 
-$myObject = $container-&gt;buildObject('MyClass');
+$container-&gt;share(FlowerInterface::class, new Flower);
+
+$myObject = $container-&gt;createObject('MyClass');
 
 $myObject-&gt;input; // Input
 $myObject-&gt;config; // Registry
+$myObject-&gt;flower; // Flower
 </code></pre>
 
 <h3>Binding Classes</h3>
@@ -521,7 +524,7 @@ $container-&gt;share('Windwalker\\Model\\AbstractModel', function()
     return new MyModel;
 });
 
-$myObject = $container-&gt;buildObject('MyClass');
+$myObject = $container-&gt;createObject('MyClass');
 
 $myObject-&gt;model; // MyModel
 </code></pre>
@@ -641,11 +644,11 @@ class MyRouter extends AbstractProxyFacade
 
 <p>Now just call the Router methods statically from <code>MyRouter</code>.</p>
 
-<pre><code class="php">MyRouter::build('route');
+<pre><code class="php">MyRouter::route('route');
 
 // Same as...
 
-$container-&gt;get('my.router')-&gt;build('route');
+$container-&gt;get('my.router')-&gt;route('route');
 </code></pre>
 
 <p>To make IDE support auto-complete, we can add PhpDoc to class.</p>
