@@ -334,7 +334,7 @@ route    ---&gt; flower/sakura
 <p>These uri data can help us add base path to our uri, so the link will not break if
 we use relative url.</p>
 
-<p>This is a uri we add host and base path.</p>
+<p>Add host and base path.</p>
 
 <pre><code class="php">echo $link = $uri-&gt;root . '/romeo/and/juliet';
 
@@ -350,8 +350,7 @@ echo $link = $uri-&gt;root() . '/romeo/and/juliet';
 
 <p>Or only add base path by <code>path</code> variable.</p>
 
-<pre><code class="php">// We can also use array access
-echo $uri-&gt;path . '/flower/sakura';
+<pre><code class="php">echo $uri-&gt;path . '/flower/sakura';
 
 // OR
 
@@ -369,17 +368,23 @@ echo $uri-&gt;path() . '/flower/sakura';
 $uri-&gt;path('flower/sakura');
 </code></pre>
 
-<h3>Use URI in View</h3>
+<h3>Use UriData in View</h3>
 
 <p>View has already included uri object as a global variable.</p>
 
-<pre><code class="html">&lt;link href="&lt;?php echo $uri-&gt;path; ?&gt;css/bootstrap.min.css"&gt;
+<pre><code class="html">&lt;link href="&lt;?php echo $uri-&gt;path; ?&gt;/asset/css/bootstrap.min.css"&gt;
+
+OR
+
+&lt;link href="&lt;?php echo $uri-&gt;path('asset/css/bootstrap.min.css'); ?&gt;"&gt;
 </code></pre>
 
 <p>The output will be:</p>
 
 <pre><code class="html">&lt;link href="/sites/windwalker/media/css/bootstrap.min.css"&gt;
 </code></pre>
+
+<p>Start with <code>/</code> means this url will based on domain host.</p>
 
 <h2>Build Route</h2>
 

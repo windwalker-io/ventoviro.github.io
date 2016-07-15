@@ -10,7 +10,6 @@ Sometimes you may put your application at sub folder of a domain, Windwalker pro
 
 If our application located at `http://domain.com/sites/windwalker/` and we open `/flower/sakura?foo=bar` page, we may use this code to get uri data:
 
-
 ``` php
 $uri = \Windwalker\Ioc::getUriData();
 
@@ -37,7 +36,7 @@ route    ---> flower/sakura
 These uri data can help us add base path to our uri, so the link will not break if
 we use relative url.
 
-This is a uri we add host and base path.
+Add host and base path.
 
 ``` php
 echo $link = $uri->root . '/romeo/and/juliet';
@@ -56,7 +55,6 @@ http://domain.com/sites/windwalker/romeo/and/juliet
 Or only add base path by `path` variable.
 
 ``` php
-// We can also use array access
 echo $uri->path . '/flower/sakura';
 
 // OR
@@ -77,12 +75,16 @@ $uri->root('flower/sakura');
 $uri->path('flower/sakura');
 ```
 
-### Use URI in View
+### Use UriData in View
 
 View has already included uri object as a global variable.
 
 ``` html
-<link href="<?php echo $uri->path; ?>css/bootstrap.min.css">
+<link href="<?php echo $uri->path; ?>/asset/css/bootstrap.min.css">
+
+OR
+
+<link href="<?php echo $uri->path('asset/css/bootstrap.min.css'); ?>">
 ```
 
 The output will be:
@@ -90,6 +92,8 @@ The output will be:
 ``` html
 <link href="/sites/windwalker/media/css/bootstrap.min.css">
 ```
+
+Start with `/` means this url will based on domain host.
 
 ## Build Route
 
