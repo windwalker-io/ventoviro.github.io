@@ -14,9 +14,9 @@ and write all our logic in `register()` and `boot()` method then set our objects
  
 ### Basic Provider Example
 
-Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.
-
 ##### Original Way
+
+Take a look of this example code, in a original way, if we have a MongoDB driver want to bootstrap, we'll write an bootstrap file.
 
 ``` php
 // ./import.mongodb.php
@@ -97,27 +97,45 @@ All Service Providers are registered in config, add your own or 3rd providers in
 ## Boot Service
 
 If the service need to be boot when system initializing, we can add a `boot()` method to provider class.
-This is an error handler provider example, we must register error handler instantly after providers registered.
+This is an error handler provider example, we must register error handler instantly after this provider registered.
 
 ``` php
 class ErrorHandlingProvider implements ServiceProviderInterface
 {
 	public function boot(Container $container)
 	{
-		$handler = $container->get('error.handler');
+		$handler = $container->get(ErrorManager::class);
 
-		// Register instantly after providers registered.
+		// Register error handler instantly.
 		$handler->register();
 	}
 
 	public function register(Container $container)
 	{
-		$closure = function (Container $container)
-		{
-			return $container->createSharedObject(ErrorManager::class);
-		};
-
-		$container->share('error.handler', $closure);
+		$closure = $container->prepareSharedObject(ErrorManager::class);
 	}
 }
 ```
+
+### Boot Deferred
+
+If you wish this provider boot after all providers registered, you can use `bootDeferred()`.
+
+``` php
+class ErrorHandlingProvider implements ServiceProviderInterface
+{
+	public function bootDeferred(Container $container)
+	{
+		$handler = $container->get(ErrorManager::class);
+		
+		// Get other service.
+		$handler->addHandler($container->get('other.service'))
+
+		// Register error handler after providers registered.
+		$handler->register();
+	}
+	
+	// ...
+```
+
+## Configure 

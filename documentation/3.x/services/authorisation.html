@@ -414,6 +414,17 @@ class ArticlePolicyProvider implements PolicyProviderInterface
     // ...
 </code></pre>
 
+<h2>Authorise in Blade &amp; Edge Template</h2>
+
+<p>Use <code>@auth</code> or <code>@can</code> directive:</p>
+
+<pre><code class="php">@can('article.edit', $user)
+    &lt;a href="#"&gt;Edit&lt;/a&gt;
+@else
+    ---
+@endcan
+</code></pre>
+
                         <hr />
 
     <p class="uk-text-center">
