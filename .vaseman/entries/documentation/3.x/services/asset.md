@@ -21,6 +21,12 @@ You can simply use `$asset->path` in view template:
 <script src="<?php echo $asset->path; ?>/js/bootstrap.js"></script>
 ```
 
+Or use method call:
+
+``` php
+<script src="<?php echo $asset->path('js/bootstrap.js'); ?>"></script>
+```
+
 ### Set Full Asset Uri
 
 Add `asset.uri` to config if you store assets in cloud storage:
@@ -212,8 +218,8 @@ Now use this code to include Bootstrap Calendar every where:
 
 ## Sync Package Assets
 
-Put your package asset files to `{package}/Resources/asset`, then you can run this command to sync asset files to 
-web public root. 
+Put your package asset files to `{package}/Resources/asset`, then you can run this command to sync asset files to
+web public root.
 
 ``` bash
 $ php windwalker asset sync

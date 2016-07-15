@@ -331,9 +331,16 @@ host     ---&gt; http://domain.com
 route    ---&gt; flower/sakura
 </code></pre>
 
-<p>These uri data can help our page links be strong whenever we put this application. Fo example, this code will build a full path of link:</p>
+<p>These uri data can help us add base path to our uri, so the link will not break if
+we use relative url.</p>
 
-<pre><code class="php">echo $link = $uri-&gt;root . 'romeo/and/juliet';
+<p>This is a uri we add host and base path.</p>
+
+<pre><code class="php">echo $link = $uri-&gt;root . '/romeo/and/juliet';
+
+// OR
+
+echo $link = $uri-&gt;root() . '/romeo/and/juliet';
 </code></pre>
 
 <p>The output will be:</p>
@@ -341,17 +348,25 @@ route    ---&gt; flower/sakura
 <pre><code>http://domain.com/sites/windwalker/romeo/and/juliet
 </code></pre>
 
-<h3>Use <code>path</code></h3>
-
-<p>Use this code:</p>
+<p>Or only add base path by <code>path</code> variable.</p>
 
 <pre><code class="php">// We can also use array access
 echo $uri-&gt;path . '/flower/sakura';
+
+// OR
+
+echo $uri-&gt;path() . '/flower/sakura';
 </code></pre>
 
 <p>We'll get a uri start from root, so the relative path will not break.</p>
 
 <pre><code class="html">/sites/windwalker/flower/sakura
+</code></pre>
+
+<h3>Use Method Call</h3>
+
+<pre><code class="php">$uri-&gt;root('flower/sakura');
+$uri-&gt;path('flower/sakura');
 </code></pre>
 
 <h3>Use URI in View</h3>

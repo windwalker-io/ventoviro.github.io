@@ -319,6 +319,11 @@ echo Asset::root(); // http://domain.com/path/to/windwlaker/asset
 <pre><code class="php">&lt;script src="&lt;?php echo $asset-&gt;path; ?&gt;/js/bootstrap.js"&gt;&lt;/script&gt;
 </code></pre>
 
+<p>Or use method call:</p>
+
+<pre><code class="php">&lt;script src="&lt;?php echo $asset-&gt;path('js/bootstrap.js'); ?&gt;"&gt;&lt;/script&gt;
+</code></pre>
+
 <h3>Set Full Asset Uri</h3>
 
 <p>Add <code>asset.uri</code> to config if you store assets in cloud storage:</p>
@@ -500,7 +505,7 @@ JS;
 
 <h2>Sync Package Assets</h2>
 
-<p>Put your package asset files to <code>{package}/Resources/asset</code>, then you can run this command to sync asset files to 
+<p>Put your package asset files to <code>{package}/Resources/asset</code>, then you can run this command to sync asset files to
 web public root.</p>
 
 <pre><code class="bash">$ php windwalker asset sync
