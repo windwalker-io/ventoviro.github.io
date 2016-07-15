@@ -11,7 +11,7 @@ Windwalker Console is a powerful CLI tool set to help us do many things. It is b
 To use Windwalker console, type this command in terminal:
 
 ``` bash
-php bin/console
+php windwlaker
 ```
 
 You will see this help information:
@@ -48,5 +48,3 @@ Welcome to Windwalker Console.
 Currently there are only 3 commands available, we'll add more useful tools in the future.
 
 See: [Migration and Seeding](../db/migration.html)
-
-

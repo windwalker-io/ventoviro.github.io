@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Caching
+redirect:
+    3.x: services/caching
 
 ---
 
@@ -18,9 +20,9 @@ cache:
 ```
 
 The `enabled` property controls global cache start or not, can be close if you want to test your application. `storage` controls which cache storage method
- you use, can be `file`, `runtime`, `memcached` or [more](https://github.com/ventoviro/windwalker-cache#available-storage). 
+ you use, can be `file`, `runtime`, `memcached` or [more](https://github.com/ventoviro/windwalker-cache#available-storage).
  About storage and handler, please see [Windwalker Cache](https://github.com/ventoviro/windwalker-cache).
- 
+
 ## Use Cache
 
 ``` php
@@ -64,7 +66,7 @@ If you set `cache.enabled` to `false`, all cache created from `create()` will be
 
 ## Auto Fetch Data By Closure
 
-Using call method to auto detect is cache exists or not. 
+Using call method to auto detect is cache exists or not.
 
 ``` php
 $data = $cache->call('flower', function()
@@ -88,7 +90,7 @@ $data = $cache->get('flower');
 
 When debug property in global config se to `1` or cache disabled, the cache storage will auto set to `NullStorage`, cache can still be used
  but no work.
- 
+
 ``` php
 // If cache disabled
 $cache = \Windwalker\Ioc::getCache();
@@ -114,7 +116,7 @@ In the above we use global cache, but we can still create our custom cache to st
 
 ### Use `CacheFactory::getCache()`
 
-CacheFactory is a cache creator, it will store each cache object as singleton by different name. 
+CacheFactory is a cache creator, it will store each cache object as singleton by different name.
 
 ``` php
 use Windwalker\Core\Cache\CacheFactory;
@@ -139,7 +141,7 @@ $cache = CacheFactory::getCache('cache_name', 'file', 'serialize', $options);
 ## Full Page Cache
 
 Sometimes we want to store whole html as static page cache. `StringHandler`  help us save raw string:
- 
+
 ``` php
 use Windwalker\Cache\Cache;
 use Windwalker\Cache\Storage\RawFileStorage;
@@ -151,7 +153,7 @@ $url = 'http://mysite.com/foo/bar/baz';
 if ($cache->exists($url))
 {
     echo $cache->get($url);
-    
+
     exit();
 }
 
@@ -169,5 +171,5 @@ echo $html;
 - SerializeHandler
 - JsonHandler
 - StringHandler
-  
+
 [More about Windwalker Cache](https://github.com/ventoviro/windwalker-cache)

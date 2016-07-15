@@ -1,13 +1,15 @@
 ---
 layout: documentation.twig
 title: Languages
+redirect:
+    3.x: services/languages
 
 ---
 
 ## Introduction
 
 Windwalker use Language package to handle i18n localise. There is a `language` configuration in `/etc/config.yml`:
- 
+
 ``` yaml
 language:
     debug: 0
@@ -263,7 +265,7 @@ Translator::getUsed();
 ## Debugging
 
 ### Debug Mode
- 
+
 ``` php
 Translator::setDebug(true);
 ```

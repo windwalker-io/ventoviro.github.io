@@ -210,4 +210,21 @@ Now use this code to include Bootstrap Calendar every where:
 \Flower\Script\FlowerScript::sakura('.mySakura', array('foo' => 'baz'));
 ```
 
+## Sync Package Assets
 
+Put your package asset files to `{package}/Resources/asset`, then you can run this command to sync asset files to 
+web public root. 
+
+``` bash
+$ php windwalker asset sync
+```
+
+Windwalker will make a symbol link to your package asset folder, if you are using Windows, you must do this with Administrator access.
+You can also add `--hard` to hard copy all asset files to public folder.
+
+Change public asset folder by modifying `etc/config.yml`:
+
+``` yaml
+asset:
+    folder: asset
+```

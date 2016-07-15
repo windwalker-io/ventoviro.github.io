@@ -81,7 +81,7 @@
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/routing.html">2.1</a>
+                    <a href="../../../documentation/2.1/start/routing-controller.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -238,6 +238,9 @@
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
@@ -296,7 +299,8 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
@@ -483,7 +487,7 @@ So if this route matched, you can get <code>foo</code> value in controller:</p>
 
 <h3>Extra Params</h3>
 
-<p>The <code>variables</code> will auto set to input request so it is danger to store some sensitive settings in <code>variables</code>, we can set 
+<p>The <code>variables</code> will auto set to input request so it is danger to store some sensitive settings in <code>variables</code>, we can set
 <code>extra</code> params instead.</p>
 
 <pre><code class="yaml">    pattern: /flower/(id)/(alias)

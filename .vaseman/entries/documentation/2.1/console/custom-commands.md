@@ -95,7 +95,7 @@ public function registerCommands()
 }
 ```
 
-Then type `php bin/console -h` will see our new command:
+Then type `php windwlaker -h` will see our new command:
 
 ``` bash
 Commands:
@@ -174,11 +174,11 @@ public function doExecute()
 If we type:
 
 ``` bash
-$ php bin/console flower Asika --yell
+$ php windwlaker flower Asika --yell
 
 ## OR
 
-$ php bin/console flower Asika -y
+$ php windwlaker flower Asika -y
 ```
 
 The `getOption()` method will auto detect option aliases, then we can get:
@@ -255,7 +255,7 @@ public function initialise()
 OK, let's typing:
 
 ``` bash
-php bin/console flower sakura
+php windwlaker flower sakura
 ```
 
 We will get:

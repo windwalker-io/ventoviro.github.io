@@ -1,9 +1,12 @@
 ---
 layout: documentation.twig
 title: Debugging and Logging
+redirect:
+    2.1: more/debugging
+
 ---
 
-## DEV Mode
+## DEBUG Mode
 
 Windawlker contains a development mode, you can enable it by setting config `system.debug` to `1`, or use `dev.php` to access your site.
 

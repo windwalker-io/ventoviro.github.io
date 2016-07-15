@@ -1,11 +1,13 @@
 ---
 layout: documentation.twig
 title: IoC Container
+redirect:
+    2.1: start/ioc-container
 
 ---
 
 ## What is Ioc Container
- 
+
 Windwalker DI is a [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) tools,
 provide us an [IOC](http://en.wikipedia.org/wiki/Inversion_of_control) container to manage objects and data.
 We also support service provider to help developers build their service in a universal interface.
@@ -49,7 +51,7 @@ Every package will use a child container, if the key in child container not foun
 
 ``` php
 // Get FlowerPackage container
-$container = Ioc::factory('flower'); 
+$container = Ioc::factory('flower');
 
 // Set something
 $container->set('sakura', 'Sakura');
@@ -164,9 +166,37 @@ $myObject->input; // Input
 $myObject->config; // Structure
 ```
 
+## Creating Objects
+
+### New Instance
+
+Container can help us create an object and auto inject required arguments to constructor.
+
+``` php
+use Windwalker\IO\Input;
+use Windwalker\Structure\Structure;
+
+class MyClass
+{
+    public $input;
+    public $config;
+
+    public function __construct(Input $input, Structure $config)
+    {
+        $this->input = $input;
+        $this->config = $config;
+    }
+}
+
+$myObject = $container->newInstance('MyClass');
+
+$myObject->input; // Input
+$myObject->config; // Structure
+```
+
 ### Create Object
 
-Create object will new an instance instantly and set this class into container, we can get new instance everytime 
+Create object will new an instance instantly and set this class into container, we can get new instance everytime
 when we get it by class name.
 
 ``` php
@@ -179,17 +209,17 @@ $anotherMyObject = $container->get('MyObject');
 Use `createSharedObject()` to set object as singleton.
 
 ``` php
-// Now this object is singleton 
+// Now this object is singleton
 $myObject = $container->createSharedObject('MyClass');
 ```
 
 ### Create with Custom Arguments
 
 If we have some constructor arguments without class hint, container will send the default value to constructor.
-We can override this un-hinted arguments: 
+We can override this un-hinted arguments:
 
 This is a constructor without default value and class hinted.
- 
+
 ``` php
 class AnotherClass
 {
@@ -233,17 +263,29 @@ $container->prepareObject('MyClass');
 $myObject = $container->get('MyClass');
 ```
 
-We can also prepare a shared object:
- 
+Add second argument if you want to configure something after object created:
+
 ``` php
+$container->prepareObject('MyClass', function (MyClass $myClass, Container $container)
+{
+    $myClass->debug = true;
+
+    return $myClass;
+});
+```
+
+We can also prepare a shared object:
+
+``` php
+
 // This objct will be singleton
-$container->prepareSharedObject('MyClass');
+$container->prepareSharedObject('MyClass'[, extending]);
 ```
 
 ### Prepare Creating Arguments
 
 We can prepare some named arguments which will be injected to constructor when object creating.
- 
+
 ``` php
 // Set class meta
 $container->whenCreating('MyModel')
@@ -252,7 +294,7 @@ $container->whenCreating('MyModel')
 
 // ...
 
-$object = $container->newInstance('MyModelInterface');
+$object = $container->newInstance('MyModel');
 ```
 
 Or just created it instantly:
@@ -269,7 +311,7 @@ $container->whenCreating('MyClass')
 Sometimes we hope to inject particular object we want, we can bind a class as key to let Container know what you want to
 instead the dependency object.
 
-Here is a class which dependent to an interface, we can bind a sub class to container then container will use `MyModel` 
+Here is a class which dependent to an interface, we can bind a sub class to container then container will use `MyModel`
 to be instance of `ModelInterface` and inject it to `MyClass`.
 
 ``` php
@@ -313,7 +355,7 @@ $container->createObject('MyClass');
 ```
 
 Use `bindShared()` to bind a class as singleton:
- 
+
 ``` php
 $container->bindShared('Windwalker\Model\ModelInterface', 'MyModel');
 ```
@@ -329,7 +371,7 @@ $container->bind('Windwalker\Model\ModelInterface', function (Contaienr $contain
 
 ## Extending
 
-Container allows you to extend an object, the new instance or closure will wrap the original one and you can do more 
+Container allows you to extend an object, the new instance or closure will wrap the original one and you can do more
 extending configuration, this is a sample:
 
 ``` php
@@ -428,6 +470,47 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 }
 
 $container->registerServiceProvider(new DatabaseServiceProvider);
+```
+
+## Ioc Class
+
+`\Windwalker\Ioc` provides a easy way to get system objects, the benefit to use these methods is that IDE can identify
+what object we get, and provides auto-complete:
+
+``` php
+$db    = \Windwalker\Ioc::getDatabase();
+$input = \Windwalker\Ioc::getInput();
+$app   = \Windwalker\Ioc::getApplication();
+```
+
+![160331-0001](https://cloud.githubusercontent.com/assets/1639206/14169419/38066a96-f75a-11e5-91da-a3c433bc4771.jpg)
+
+If you want to add your own object in `Ioc`, edit the `/src/Windwalker/Ioc.php` file:
+
+``` php
+<?php
+// /src/Windwalker/Ioc.php`
+
+namespace Windwalker;
+
+abstract class Ioc extends \Windwalker\Core\Ioc
+{
+    /**
+     * Add this docblock that your IDE can identify what you get.
+     *
+     * @return  MyObject
+     */
+	public static function getMyObject()
+	{
+		return static::get('my.object');
+	}
+}
+```
+
+Now you can use this method in everywhere.
+
+``` php
+\Windwalker\Ioc::getMyObject();
 ```
 
 ## Facade

@@ -45,6 +45,7 @@ documentation:
             services/languages: Languages
             services/session: Session
             services/widget-renderer: Widget and Renderer
+            services/mailer: Mailer
             services/debugging: Debugging and Logging
             services/error-handling: Error Handling
         Console:

@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Authentication
+redirect:
+    2.1: more/authentication
 
 ---
 

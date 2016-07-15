@@ -35,7 +35,7 @@ class CommandC extend AbstractCommand
     {
         $arg1 = $this->getArgument(0); // foo
         $arg2 = $this->getArgument(0); // bar
-        
+
         $opt = $this->io->get('d') // e
         $opt = $this->io->get('flower') // sakura
     }
@@ -58,7 +58,7 @@ class FlowerCommand extends Command
 
     public function initialise()
     {
-        // We can also set help message in initialise method 
+        // We can also set help message in initialise method
         $this->description('This is first level flower command.')
             ->usage('flower <command> [--option]')
             ->help('flower help information');
@@ -95,7 +95,7 @@ public function registerCommands()
 }
 ```
 
-Then type `php bin/console -h` will see our new command:
+Then type `php windwlaker -h` will see our new command:
 
 ``` bash
 Commands:
@@ -139,7 +139,7 @@ public function initialise()
         ->alias('Y') // Add a new alias
         ->defaultValue(0)
         ->description('Yell will make output upper case.');
-        
+
     // Global options will pass to every child.
     $this->addGlobalOption('s')
         ->defaultValue(0)
@@ -174,11 +174,11 @@ public function doExecute()
 If we type:
 
 ``` bash
-$ php bin/console flower Asika --yell
+$ php windwlaker flower Asika --yell
 
 ## OR
 
-$ php bin/console flower Asika -y
+$ php windwlaker flower Asika -y
 ```
 
 The `getOption()` method will auto detect option aliases, then we can get:
@@ -187,13 +187,13 @@ The `getOption()` method will auto detect option aliases, then we can get:
 HELLO: ASIKA
 ```
 
-> Note: We have to use `$this->addOption()` to define options first, then the `$this->getOption('x')` will be able to 
-get the input option which we want. If we didn't do this, we have to use `$this->io->get('x')` 
+> Note: We have to use `$this->addOption()` to define options first, then the `$this->getOption('x')` will be able to
+get the input option which we want. If we didn't do this, we have to use `$this->io->get('x')`
 to get option value, but this way do not support option aliases.
 
 ## Add Second Level Commands and more...
 
-FlowerCommand is the first level command in our command tree, if we want to add several commands under FlowerCommand, 
+FlowerCommand is the first level command in our command tree, if we want to add several commands under FlowerCommand,
 we can use `addCommand()` method. Now we add two `sakura` and `rose` command under `FlowerCommand`.
 
 ### Create Command Classes
@@ -223,9 +223,9 @@ class SakuraCommand extends Command
     public function doExecute()
     {
         $this->out('This is Sakura Command executing.');
-        
+
         $arg1 = $this->getArgument(0);
-        
+
         if ($arg1)
         {
             $this->out('Argument1: ' . $arg1);
@@ -255,7 +255,7 @@ public function initialise()
 OK, let's typing:
 
 ``` bash
-php bin/console flower sakura
+php windwlaker flower sakura
 ```
 
 We will get:
@@ -358,7 +358,7 @@ No valid number.
 ```
 
 If validate fail, we can choose shut down our process:
- 
+
 ``` php
 // ...
 

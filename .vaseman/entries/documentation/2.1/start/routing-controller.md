@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Routing And Controller
+redirect:
+    3.x: core/routing-controller
 
 ---
 
@@ -89,7 +91,7 @@ flower:
         get: IndexController
 ```
 
-The GET method will match `Flower\Controller\Sakura\IndexController` because we set a map to find new name. We can set more 
+The GET method will match `Flower\Controller\Sakura\IndexController` because we set a map to find new name. We can set more
 methods to mapping methods with controllers.
 
 ``` yaml
@@ -112,11 +114,11 @@ Or use wildcards to map all methods to one controller:
 
 ### Override Methods
 
-If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in yaml query, this param will override 
+If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in yaml query, this param will override
 real HTTP method. For example: `&_method=DELETE` will raise `DeleteController`.
- 
+
 If you think the HTTP standard methods are not enough to use for you, you can add your custom methods.
- 
+
 ``` yaml
     action:
         export: ExportController
@@ -132,7 +134,7 @@ Then use `&_method=EXPORT` and the `ExportController` will be executed.
         foo: bar
 ```
 
-The attributes in `variables` will auto set to input request if this route be matched and there is no same param name in HTTP query. 
+The attributes in `variables` will auto set to input request if this route be matched and there is no same param name in HTTP query.
 So if this route matched, you can get `foo` value in controller:
 
 ``` php
@@ -143,7 +145,7 @@ But if you type `/flower/25/alias?foo=yoo`, then you will get `yoo`.
 
 ### Extra Params
 
-The `variables` will auto set to input request so it is danger to store some sensitive settings in `variables`, we can set 
+The `variables` will auto set to input request so it is danger to store some sensitive settings in `variables`, we can set
 `extra` params instead.
 
 ``` yaml

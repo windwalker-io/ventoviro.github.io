@@ -81,7 +81,7 @@
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/package-system.html">2.1</a>
+                    <a href="../../../documentation/2.1/start/package-system.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -238,6 +238,9 @@
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
@@ -296,7 +299,8 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
@@ -375,7 +379,7 @@ roses:
     controller: Roses
 </code></pre>
 
-<p>Different from the global routing, you don't need to write all controller namespace, just write controller short name, 
+<p>Different from the global routing, you don't need to write all controller namespace, just write controller short name,
 the package will auto find this controller. For example: <code>controller: Sakura</code> will find <code>Flower\Controller\Sakura\{action}</code> to execute.</p>
 
 <p>We have to register this routes to root routing file. Open <code>/etc/routing.yml</code> And add this route profile.</p>
@@ -454,6 +458,15 @@ PackageHelper::addPackage('alias', $package); // Add new package
 
 $app-&gt;getPackage([$alias|null]); // NULL will get current package
 </code></pre>
+
+<h2>Install Package</h2>
+
+<p>After registering package to Windwalker, we can run</p>
+
+<pre><code class="php">$ php windwlaker package install &lt;package_alias&gt;
+</code></pre>
+
+<p>to install package config, routing and assets.</p>
 
                         <hr />
 

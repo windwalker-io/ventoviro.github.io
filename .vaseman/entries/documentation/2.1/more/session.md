@@ -1,13 +1,15 @@
 ---
 layout: documentation.twig
 title: Session
+redirect:
+    3.x: services/session
 
 ---
 
 ## Configuration
 
 Session configuration is in `/etc/config.yml`.
- 
+
 ``` yaml
 session:
     handler: native
@@ -103,7 +105,7 @@ $allMessages = $session->getFlashes();
 
 // Peek messages but don't clear
 $session->getFlashBag()->all();
-``` 
+```
 
 ## Handlers
 

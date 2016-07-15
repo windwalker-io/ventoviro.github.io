@@ -238,6 +238,9 @@
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
@@ -296,7 +299,8 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
@@ -306,42 +310,118 @@
 
 <p>To use Windwalker console, type this command in terminal:</p>
 
-<pre><code class="bash">php bin/console
+<pre><code class="bash">php windwlaker
 </code></pre>
 
 <p>You will see this help information:</p>
 
-<pre><code class="bash">Windwalker Console - version: 2.0
+<pre><code class="bash">Windwalker Console - version: 3.0
 ------------------------------------------------------------
 
-[console Help]
+[windwalker Help]
 
 The default application command
 
 Usage:
-  console &lt;command&gt; [option]
+  windwalker &lt;command&gt; [option]
 
 
 Options:
 
-  -h | --help       Display this help message.
-  -q | --quiet      Do not output any message.
-  -v | --verbose    Increase the verbosity of messages.
-  --ansi            Set 'off' to suppress ANSI colors on unsupported terminals.
+  -h | --help              Display this help message.
+  -q | --quiet             Do not output any message.
+  -v | --verbose           Increase the verbosity of messages.
+  --ansi                   Set 'off' to suppress ANSI colors on unsupported terminals.
+  -n | --no-interactive    Ignore interactions and assume to default value.
 
 Commands:
 
+  system       System operation.
+  run          Run custom scripts.
+  asset        Asset management
   migration    Database migration system.
   seed         The data seeder help you create fake data.
-  build        Some useful tools for building system.
+  package      Package operations.
 
 Welcome to Windwalker Console.
 
 </code></pre>
 
-<p>Currently there are only 3 commands available, we'll add more useful tools in the future.</p>
-
 <p>See: <a href="../db/migration.html">Migration and Seeding</a></p>
+
+<h2>No Interactive</h2>
+
+<p>Add <code>-n</code> or <code>--no-interactive</code> that all commands wll ignore questions and use default vlaue.</p>
+
+<h2>Run Custom Scripts</h2>
+
+<p>Add a marco to console so we can batch run a set of commands.</p>
+
+<p>Write your scripts in <code>etc/config.yml</code></p>
+
+<pre><code class="yaml"># ...
+
+console:
+    script:
+        prepare:
+            - echo dev &gt; .mode
+            - php windwalker asset sync admin
+            - php windwalker asset sync front
+            - php windwalker asset sync flower
+            - php windwalker migration reset
+        deploy:
+            - git pull
+            - composer install
+            - php windwalker run prepare
+            - php windwalker migration migrate
+            - php windwalker asset makesum
+            - echo prod &gt; .mode
+
+</code></pre>
+
+<p>Then you can run your custom script by:</p>
+
+<pre><code class="bash">$ php windwalker run prepare
+$ php windwalker run deploy
+</code></pre>
+
+<h3>Auto Answer</h3>
+
+<p>If you wish your script can auto answer questions, you can use this format:</p>
+
+<pre><code class="yaml">console:
+    script:
+        prepare:
+            - echo dev &gt; .mode
+            - cmd: php windwalker migration drop-all
+              in: "y\nn\ny"
+            - php windwalker migration reset
+</code></pre>
+
+<p>Separate every answers by <code>\n</code> (Must use double quote), so console will help you fill the input.</p>
+
+<blockquote>
+  <p>You must install <code>symfony/process</code>: <code>~3.0</code> to support auto-answers.</p>
+</blockquote>
+
+<h3>List Scripts</h3>
+
+<p>Use <code>$ php windwalker run --list</code> to list all scripts</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16866618/840e9452-4a9f-11e6-865d-47aea77968c8.jpg" alt="p-2016-06-24-001" /></p>
+
+<h2>Register Custom Command</h2>
+
+<p>You can add your custom command by editing <code>etc/app/console.php</code>:</p>
+
+<pre><code class="php">// ...
+
+'console' =&gt; [
+    'commands' =&gt; [
+        'flower' =&gt; FlowerCommand::class
+    ]
+]
+</code></pre>
 
                         <hr />
 

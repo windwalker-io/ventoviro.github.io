@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Request and Input
+redirect:
+    2.1: start/request-input 
 
 ---
 

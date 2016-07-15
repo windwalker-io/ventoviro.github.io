@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Widget and Renderer
+redirect:
+    2.1: more/widget-renderer
 
 ---
 
@@ -48,7 +50,7 @@ class SakurasHtmlView extends HtmlView
 	{
 		$data->items      = $this->model->getItems();
 		$data->categories = $this->model['Categories']->getItems();
-		
+
 		$data->news       = (new Widget('sidebar.news'))->render(array('articles' => $data->items));
 		$data->pagination = (new Widget('_global.pagination.pagination'))->render(array('pages' => $this->model->getPagination()));
 		$data->categories = (new Widget('sidebar.categories'))->render(array('categories' => $data->categories));
@@ -60,7 +62,7 @@ class SakurasHtmlView extends HtmlView
 ## Templating
 
 By default, widget will find templates from these paths:
- 
+
 ``` html
 - {ROOT}/src/{package}/Templates/{Locale}
 - {ROOT}/src/{package}/Templates
@@ -76,7 +78,7 @@ use Windwalker\Utilities\Queue\PriorityQueue;
 $widget->addPath('/my/widget/path', PriorityQueue::HIGH);
 ```
 
-Widget also use [Windwalker Renderer](https://github.com/ventoviro/windwalker-renderer) to render page, 
+Widget also use [Windwalker Renderer](https://github.com/ventoviro/windwalker-renderer) to render page,
 you need to add priority to set the ordering of this path.
 
 ### Set Package

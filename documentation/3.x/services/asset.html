@@ -238,6 +238,9 @@
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
@@ -296,7 +299,8 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
@@ -492,6 +496,23 @@ JS;
 <p>Now use this code to include Bootstrap Calendar every where:</p>
 
 <pre><code class="php">\Flower\Script\FlowerScript::sakura('.mySakura', array('foo' =&gt; 'baz'));
+</code></pre>
+
+<h2>Sync Package Assets</h2>
+
+<p>Put your package asset files to <code>{package}/Resources/asset</code>, then you can run this command to sync asset files to 
+web public root.</p>
+
+<pre><code class="bash">$ php windwalker asset sync
+</code></pre>
+
+<p>Windwalker will make a symbol link to your package asset folder, if you are using Windows, you must do this with Administrator access.
+You can also add <code>--hard</code> to hard copy all asset files to public folder.</p>
+
+<p>Change public asset folder by modifying <code>etc/config.yml</code>:</p>
+
+<pre><code class="yaml">asset:
+    folder: asset
 </code></pre>
 
                         <hr />

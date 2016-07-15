@@ -1,6 +1,9 @@
 ---
 layout: documentation.twig
 title: Debugging
+redirect:
+    3.x: services/debugging
+
 ---
 
 ## DEV Mode

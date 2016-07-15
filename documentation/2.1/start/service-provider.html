@@ -77,7 +77,7 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="">
-                    <a href="../../../documentation/3.x/start/service-provider.html">3.x</a>
+                    <a href="../../../documentation/3.x/core/service-provider.html">3.x</a>
                 </li>
 
                 <li class="uk-active">
@@ -257,16 +257,17 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
                     <h2>Introduction of Service Provider</h2>
 
-<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
+<p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library,
 custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
 
-<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code> 
+<p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code>
 and write all our logic in <code>register()</code> method and set our service objects into container.</p>
 
 <h3>Basic Provider Example</h3>
@@ -327,7 +328,7 @@ $mongo = Ioc::get('mongo.db');
 
 <h2>Registering Providers</h2>
 
-<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>, 
+<p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>,
 you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
 
 <pre><code class="php">public function loadProviders()

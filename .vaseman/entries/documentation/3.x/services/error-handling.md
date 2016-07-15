@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Error Handling
+redirect:
+    2.1: more/error-handling
 
 ---
 

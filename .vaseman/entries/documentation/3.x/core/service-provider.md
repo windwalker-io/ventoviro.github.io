@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Service Provider
+redirect:
+    2.1: start/service-provider 
 
 ---
 
@@ -11,7 +13,7 @@ custom listeners or 3rd tools. Some libraries need a bootstrapping process, we s
 
 Service Provider works with IoC Container, we must implement the `\Windwalker\DI\ServiceProviderInterface`
 and write all our logic in `register()` and `boot()` method then set our objects into container.
- 
+
 ### Basic Provider Example
 
 ##### Original Way
@@ -127,15 +129,36 @@ class ErrorHandlingProvider implements ServiceProviderInterface
 	public function bootDeferred(Container $container)
 	{
 		$handler = $container->get(ErrorManager::class);
-		
+
 		// Get other service.
 		$handler->addHandler($container->get('other.service'))
 
 		// Register error handler after providers registered.
 		$handler->register();
 	}
-	
+
 	// ...
 ```
 
-## Configure 
+## Get Services From Application
+
+Application object can easily get some main services by magic properties:
+
+``` php
+$app = Ioc::getApplication();
+
+$this->app->container->get('...'); // Global container
+$this->app->uri->path;
+$this->app->dispatcher->addListener(...);
+$this->app->router->route(...);
+$this->app->language->translate(...);
+$this->app->renderer->addGlobal(...);
+$this->app->cacheManager->getCache();
+$this->app->cache->set(...);
+$this->app->session->get('user');
+$this->app->browser->isMobile();
+$this->app->platform->isLinux();
+$this->app->database->getQuery(true);
+$this->app->logger->debug('category', '...');
+$this->app->mailer->createMessage('Subject');
+```

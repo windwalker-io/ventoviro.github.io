@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Authentication
+redirect:
+    3.x: services/authentication
 
 ---
 
@@ -10,13 +12,13 @@ Building user system in Windwalker is very easy, Windwalker includes a simple Au
 
 ## Default User Package
 
-In Windwalker Starter, there is an User package in `src/Windwalker/User` and has been registered to system. 
+In Windwalker Starter, there is an User package in `src/Windwalker/User` and has been registered to system.
 You can directly modify it to what you needed.
 
 Before using it, you may run this command to import default user package schema:
 
 ``` bash
-php bin/console migration migrate -p=wwuser
+php windwlaker migration migrate -p=wwuser
 ```
 
 ### Get User

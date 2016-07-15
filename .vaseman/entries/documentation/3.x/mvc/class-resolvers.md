@@ -15,9 +15,9 @@ sakura:
     controller: Sakura
 ```
 
-The Flower package will get `Flower\Controller\Sakura\{action}` as main controller. But if this class not exists, 
+The Flower package will get `Flower\Controller\Sakura\{action}` as main controller. But if this class not exists,
 we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.
- 
+
 Add this line in package `boot()` or any position before package execute.
 
 ``` php
@@ -27,7 +27,7 @@ public function boot()
 
     // Register Animal package namespace to find classes
     $mvcResolver = $this->getMvcResolver();
-    
+
     $mvcResolver->addNamespace('Animal', Priority::NORMAL);
 }
 ```
@@ -47,10 +47,10 @@ When controller `$this->getView('Sakura')` or `$this->getModel('Sakura')`, and t
 will find from Animal package as default object.
 
 We can also set default path separately.
- 
+
 ``` php
 $mvcResolver = $this->getMvcResolver();
-		
+
 $mvcResolver->getControllerResolver()->addNamespace('Animal\Controller');
 $mvcResolver->getViewResolver()->addNamespace('Animal\View');
 $mvcResolver->getModelResolver()->addNamespace('Animal\Model');

@@ -9,7 +9,7 @@
     <li class="uk-nav-header">{{ title }}</li>
         {% for id, item in section %}
             <li class="{{ helper.doc.getPath(path) == id ? 'uk-active' : '' }}">
-                <a href="{{ uri.base }}{{ menu }}/{{ version }}/{{ id }}.html">{{ item }}</a>
+                <a href="{{ uri.base }}{{ menu }}/{{ version ? version ~ '/' : '' }}{{ id }}.html">{{ item }}</a>
             </li>
         {% endfor %}
 

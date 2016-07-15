@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Widget and Renderer
+redirect:
+    3.x: services/widget-renderer
 
 ---
 
@@ -51,7 +53,7 @@ class SakurasHtmlView extends HtmlView
 	{
 		$data->items      = $this->model->getItems();
 		$data->categories = $this->model['Categories']->getItems();
-		
+
 		$data->news       = (new Widget('sidebar.news'))->render(array('articles' => $data->items));
 		$data->pagination = (new Widget('_global.pagination.pagination'))->render(array('pages' => $this->model->getPagination()));
 		$data->categories = (new Widget('sidebar.categories'))->render(array('categories' => $data->categories));
@@ -63,7 +65,7 @@ class SakurasHtmlView extends HtmlView
 ## Templating
 
 By default, widget will find templates from these paths:
- 
+
 ``` html
 [0] => /templates
 [1] => /vendor/windwalker/core/src/Core/Resources/Templates
@@ -77,7 +79,7 @@ use Windwalker\Utilities\Queue\Priority;
 $widget->addPath('/my/widget/path', Priority::HIGH);
 ```
 
-Widget also use [Windwalker Renderer](https://github.com/ventoviro/windwalker-renderer) to render page, 
+Widget also use [Windwalker Renderer](https://github.com/ventoviro/windwalker-renderer) to render page,
 you need to add priority to set the ordering of this path.
 
 ### Add Path to Global
@@ -92,13 +94,13 @@ Add your path to global RendererHelper that Widget will always contain this path
 
 Windwalker has some built-in widgets, it contains: `messages`, `pagination`, `error pages`.
 
-There is an example to override messages template, the global message template is located at 
+There is an example to override messages template, the global message template is located at
 
 ``` html
 /vendor/windwalker/core/src/Core/Resources/Templates/windwalker/message/default.php
 ```
 
-So we can add a custom template at: 
+So we can add a custom template at:
 ``` html
 /templates/windwalker/message/default.php
 ```

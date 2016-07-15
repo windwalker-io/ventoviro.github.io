@@ -11,42 +11,118 @@ Windwalker Console is a powerful CLI tool set to help us do many things. It is b
 To use Windwalker console, type this command in terminal:
 
 ``` bash
-php bin/console
+php windwlaker
 ```
 
 You will see this help information:
 
 ``` bash
-Windwalker Console - version: 2.0
+Windwalker Console - version: 3.0
 ------------------------------------------------------------
 
-[console Help]
+[windwalker Help]
 
 The default application command
 
 Usage:
-  console <command> [option]
+  windwalker <command> [option]
 
 
 Options:
 
-  -h | --help       Display this help message.
-  -q | --quiet      Do not output any message.
-  -v | --verbose    Increase the verbosity of messages.
-  --ansi            Set 'off' to suppress ANSI colors on unsupported terminals.
+  -h | --help              Display this help message.
+  -q | --quiet             Do not output any message.
+  -v | --verbose           Increase the verbosity of messages.
+  --ansi                   Set 'off' to suppress ANSI colors on unsupported terminals.
+  -n | --no-interactive    Ignore interactions and assume to default value.
 
 Commands:
 
+  system       System operation.
+  run          Run custom scripts.
+  asset        Asset management
   migration    Database migration system.
   seed         The data seeder help you create fake data.
-  build        Some useful tools for building system.
+  package      Package operations.
 
 Welcome to Windwalker Console.
 
 ```
 
-Currently there are only 3 commands available, we'll add more useful tools in the future.
-
 See: [Migration and Seeding](../db/migration.html)
 
+## No Interactive
 
+Add `-n` or `--no-interactive` that all commands wll ignore questions and use default vlaue.
+
+## Run Custom Scripts
+
+Add a marco to console so we can batch run a set of commands.
+
+Write your scripts in `etc/config.yml`
+
+``` yaml
+# ...
+
+console:
+    script:
+        prepare:
+            - echo dev > .mode
+            - php windwalker asset sync admin
+            - php windwalker asset sync front
+            - php windwalker asset sync flower
+            - php windwalker migration reset
+        deploy:
+            - git pull
+            - composer install
+            - php windwalker run prepare
+            - php windwalker migration migrate
+            - php windwalker asset makesum
+            - echo prod > .mode
+
+```
+
+Then you can run your custom script by:
+
+``` bash
+$ php windwalker run prepare
+$ php windwalker run deploy
+```
+
+### Auto Answer
+
+If you wish your script can auto answer questions, you can use this format:
+
+``` yaml
+console:
+    script:
+        prepare:
+            - echo dev > .mode
+            - cmd: php windwalker migration drop-all
+              in: "y\nn\ny"
+            - php windwalker migration reset
+```
+
+Separate every answers by `\n` (Must use double quote), so console will help you fill the input.
+
+> You must install `symfony/process`: `~3.0` to support auto-answers.
+
+### List Scripts
+
+Use `$ php windwalker run --list` to list all scripts
+
+![p-2016-06-24-001](https://cloud.githubusercontent.com/assets/1639206/16866618/840e9452-4a9f-11e6-865d-47aea77968c8.jpg)
+
+## Register Custom Command
+
+You can add your custom command by editing `etc/app/console.php`:
+
+``` php
+// ...
+
+'console' => [
+    'commands' => [
+        'flower' => FlowerCommand::class
+    ]
+]
+```

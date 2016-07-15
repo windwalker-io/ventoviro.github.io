@@ -1,11 +1,13 @@
 ---
 layout: documentation.twig
 title: IoC Container
+redirect:
+    3.x: core/ioc-continer
 
 ---
 
 ## What is Ioc Container
- 
+
 Windwalker DI is a [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) tools,
 provide us an [IOC](http://en.wikipedia.org/wiki/Inversion_of_control) container to manage objects and data.
 We also support service provider to help developers build their service in a universal interface.
@@ -49,7 +51,7 @@ Every package will use a child container, if the key in child container not foun
 
 ``` php
 // Get FlowerPackage container
-$container = Ioc::factory('flower'); 
+$container = Ioc::factory('flower');
 
 // Set something
 $container->set('sakura', 'Sakura');

@@ -238,6 +238,9 @@
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
@@ -296,7 +299,8 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
@@ -310,7 +314,7 @@ has a <code>flower</code> package and a route with <code>Sakura</code> controlle
     controller: Sakura
 </code></pre>
 
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists, 
+<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists,
 we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
 
 <p>Add this line in package <code>boot()</code> or any position before package execute.</p>

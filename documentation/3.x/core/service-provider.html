@@ -81,7 +81,7 @@
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/core/service-provider.html">2.1</a>
+                    <a href="../../../documentation/2.1/start/service-provider.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -238,6 +238,9 @@
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
@@ -296,7 +299,8 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
@@ -310,9 +314,9 @@ and write all our logic in <code>register()</code> and <code>boot()</code> metho
 
 <h3>Basic Provider Example</h3>
 
-<p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
-
 <h5>Original Way</h5>
+
+<p>Take a look of this example code, in a original way, if we have a MongoDB driver want to bootstrap, we'll write an bootstrap file.</p>
 
 <pre><code class="php">// ./import.mongodb.php
 
@@ -387,28 +391,65 @@ $mongo = Ioc::get('mongo.db');
 <h2>Boot Service</h2>
 
 <p>If the service need to be boot when system initializing, we can add a <code>boot()</code> method to provider class.
-This is an error handler provider example, we must register error handler instantly after providers registered.</p>
+This is an error handler provider example, we must register error handler instantly after this provider registered.</p>
 
 <pre><code class="php">class ErrorHandlingProvider implements ServiceProviderInterface
 {
     public function boot(Container $container)
     {
-        $handler = $container-&gt;get('error.handler');
+        $handler = $container-&gt;get(ErrorManager::class);
 
-        // Register instantly after providers registered.
+        // Register error handler instantly.
         $handler-&gt;register();
     }
 
     public function register(Container $container)
     {
-        $closure = function (Container $container)
-        {
-            return $container-&gt;createSharedObject(ErrorManager::class);
-        };
-
-        $container-&gt;share('error.handler', $closure);
+        $closure = $container-&gt;prepareSharedObject(ErrorManager::class);
     }
 }
+</code></pre>
+
+<h3>Boot Deferred</h3>
+
+<p>If you wish this provider boot after all providers registered, you can use <code>bootDeferred()</code>.</p>
+
+<pre><code class="php">class ErrorHandlingProvider implements ServiceProviderInterface
+{
+    public function bootDeferred(Container $container)
+    {
+        $handler = $container-&gt;get(ErrorManager::class);
+
+        // Get other service.
+        $handler-&gt;addHandler($container-&gt;get('other.service'))
+
+        // Register error handler after providers registered.
+        $handler-&gt;register();
+    }
+
+    // ...
+</code></pre>
+
+<h2>Get Services From Application</h2>
+
+<p>Application object can easily get some main services by magic properties:</p>
+
+<pre><code class="php">$app = Ioc::getApplication();
+
+$this-&gt;app-&gt;container-&gt;get('...'); // Global container
+$this-&gt;app-&gt;uri-&gt;path;
+$this-&gt;app-&gt;dispatcher-&gt;addListener(...);
+$this-&gt;app-&gt;router-&gt;route(...);
+$this-&gt;app-&gt;language-&gt;translate(...);
+$this-&gt;app-&gt;renderer-&gt;addGlobal(...);
+$this-&gt;app-&gt;cacheManager-&gt;getCache();
+$this-&gt;app-&gt;cache-&gt;set(...);
+$this-&gt;app-&gt;session-&gt;get('user');
+$this-&gt;app-&gt;browser-&gt;isMobile();
+$this-&gt;app-&gt;platform-&gt;isLinux();
+$this-&gt;app-&gt;database-&gt;getQuery(true);
+$this-&gt;app-&gt;logger-&gt;debug('category', '...');
+$this-&gt;app-&gt;mailer-&gt;createMessage('Subject');
 </code></pre>
 
                         <hr />

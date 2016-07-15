@@ -1,17 +1,19 @@
 ---
 layout: documentation.twig
 title: Service Provider
+redirect:
+    3.x: core/service-provider
 
 ---
 
 ## Introduction of Service Provider
 
-Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library, 
+Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library,
 custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.
 
-Service Provider will working with IoC Container, we'll implement the `\Windwalker\DI\ServiceProviderInterface` 
+Service Provider will working with IoC Container, we'll implement the `\Windwalker\DI\ServiceProviderInterface`
 and write all our logic in `register()` method and set our service objects into container.
- 
+
 ### Basic Provider Example
 
 Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.
@@ -75,7 +77,7 @@ About how to use IoC (DI) Container, see: [IoC Container](ioc-container.html)
 
 ## Registering Providers
 
-All Service Providers are registered in `Application::loadProviders()`. For example, open `/src/Windwalker/Web/Application.php`, 
+All Service Providers are registered in `Application::loadProviders()`. For example, open `/src/Windwalker/Web/Application.php`,
 you will see `loadProviders()`, there is an array `$providers` here, help ue override default providers, now we add our Service Provider here:
 
 ``` php
@@ -107,4 +109,3 @@ There are 3 positions in default Windwalker Application we can add providers:
 
 If you want to use service for Web application, add provider in `Web\Application`, else you can add provider in `Console\Application`
 for console use, or add it in `Windwalker.php` for both.
-

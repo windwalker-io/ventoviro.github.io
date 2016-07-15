@@ -1,6 +1,9 @@
 ---
 layout: documentation.twig
 title: DateTime
+redirect:
+    2.1: more/datetime
+
 ---
 
 ## About Windwalker DateTime
@@ -20,7 +23,7 @@ $dt = new DateTime('now', 'Asia/Taipei');
 ```
 
 Auto set default timezone so you won't get PHP default timezone notice.
- 
+
 ``` php
 $dt = new DateTime('now', null);
 ```
@@ -38,7 +41,7 @@ $dt = new DateTime('now', DateTime::TZ_LOCALE);
 ## Convert Timezone
 
 Windwalker DateTime supports easy methods to convert timezone.
-  
+
 ``` php
 $date = '2015-03-31 12:00:00';
 
@@ -88,7 +91,7 @@ $date->format(DateTime::FORMAT_YMD_HIS);
 
 ## Get Local Time
 
-Add `true` to get local time, otherwise you will get UTC time. 
+Add `true` to get local time, otherwise you will get UTC time.
 
 ``` php
 $datetime = new DateTime('now', 'Asia/Taipei');

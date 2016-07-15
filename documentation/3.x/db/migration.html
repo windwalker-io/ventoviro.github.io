@@ -238,6 +238,9 @@
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
                     <li class="">
+                <a href="../../../documentation/3.x/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
                 <a href="../../../documentation/3.x/services/debugging.html">Debugging and Logging</a>
             </li>
                     <li class="">
@@ -296,7 +299,8 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
@@ -322,7 +326,7 @@ to the newest version: <code>20150421_AddTableIndex</code></p>
 
 <p>To create a migration version, you may use <code>migration create</code> command in console:</p>
 
-<pre><code class="bash">php bin/console migration create InitFlowerTable
+<pre><code class="bash">php windwlaker migration create InitFlowerTable
 </code></pre>
 
 <p>You'll see this info:</p>
@@ -336,10 +340,10 @@ File path: /your/project/path/migrations/20150101091434_InitFlowerTable.php
 <p>You may also create migration to other position by <code>--dir</code> or <code>--package</code></p>
 
 <pre><code class="bash">## Create to custom directory
-php bin/console migration create InitFlowerTable --dir=resources/migrations
+php windwlaker migration create InitFlowerTable --dir=resources/migrations
 
 ## Create to a package's Migration folder
-php bin/console migration create InitFlowerTable --package=flower
+php windwlaker migration create InitFlowerTable --package=flower
 </code></pre>
 
 <h3>Writing Migration</h3>
@@ -430,7 +434,7 @@ class InitFlowerTable extends AbstractMigration
 
 <p>Use this command to show migration status.</p>
 
-<pre><code class="bash">php bin/console migration status
+<pre><code class="bash">php windwlaker migration status
 </code></pre>
 
 <pre><code class="bash"> Status  Version         Migration Name
@@ -443,7 +447,7 @@ class InitFlowerTable extends AbstractMigration
 
 <p>Use <code>migrate</code> command to start migrating:</p>
 
-<pre><code class="bash">php bin/console migration migrate
+<pre><code class="bash">php windwlaker migration migrate
 </code></pre>
 
 <p>Terminal will show migrating process.</p>
@@ -458,20 +462,23 @@ Migration UP the version: 20150101091434_InitFlowerTable
 Success
 </code></pre>
 
-<blockquote>
-  <p>NOTE: Migration will be blocked if your system in <code>prod</code> mode, modify or create <code>.mode</code> file in system root to <code>dev</code> that can
-  allow migration works. Don't forget change back to <code>prod</code> after you updated your system.
-  You can also use command to change mode <code>$ php windwalker system mode [dev|prod]</code></p>
-</blockquote>
+<h3>Blocked By DEV Model</h3>
+
+<p>Migration will be blocked if your system in <code>prod</code> mode, modify or create <code>.mode</code> file in system root to <code>dev</code> that can
+allow migration works. Don't forget change back to <code>prod</code> after you updated your system.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16868203/ea518644-4aa8-11e6-8d41-769d81ebe69b.jpg" alt="p-2016-07-15-002" /></p>
+
+<p>You can also use command to change mode <code>$ php windwalker system mode [dev|prod]</code></p>
 
 <h3>Run Package Migration</h3>
 
-<pre><code class="bash">php bin/console migration migrate --package=flower
+<pre><code class="bash">php windwlaker migration migrate --package=flower
 </code></pre>
 
 <h3>Migrate to Specific Version</h3>
 
-<pre><code class="bash">php bin/console migration migrate 20141105131929
+<pre><code class="bash">php windwlaker migration migrate 20141105131929
 </code></pre>
 
 <p>If you use a lower version, this action will be downgrade.</p>
@@ -566,7 +573,7 @@ class FlowerSeeder extends \Windwalker\Core\Seeder\AbstractSeeder
 
 <p>Now, use <code>seed import</code> command:</p>
 
-<pre><code class="bash">php bin/console seed import
+<pre><code class="bash">php windwlaker seed import
 </code></pre>
 
 <p>You will see this output, it means seeder execute success:</p>
@@ -605,10 +612,10 @@ class FlowerSeeder extends AbstractSeeder
 <p>Run this command to execute package seeder:</p>
 
 <pre><code class="bash">## Choose class if your seeder has namespace
-php bin/console seed import --class=Flower\Seeder\MySeeder
+php windwlaker seed import --class=Flower\Seeder\MySeeder
 
 ## Use package default MainSeeder
-php bin/console seed import -p=flower
+php windwlaker seed import -p=flower
 </code></pre>
 
 <h2>Fake Data Generator</h2>

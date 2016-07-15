@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Config & Setting
+redirect:
+    2.1: start/config
 
 ---
 
@@ -11,7 +13,7 @@ in runtime, so settings in `secret.yml` will override the same key in `config.ym
 
 ### config.yml
 
-The `config.yml` stores some global system settings includes the language locale, session time, cache storage, timezone etc. 
+The `config.yml` stores some global system settings includes the language locale, session time, cache storage, timezone etc.
 Which is your application need and will be track by VCS, .
 
 ### secret.yml
@@ -241,4 +243,3 @@ console:
     # Then just run `$ php windwalker run foo`
     script: ~
 ```
-

@@ -77,7 +77,7 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="">
-                    <a href="../../../documentation/3.x/more/events.html">3.x</a>
+                    <a href="../../../documentation/3.x/services/events.html">3.x</a>
                 </li>
 
                 <li class="uk-active">
@@ -257,13 +257,14 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
                     <h2>Event Listener (Observer) Pattern</h2>
 
-<p>The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents, 
+<p>The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents,
 called observers, and notifies them automatically of any state changes, usually by calling one of their methods.</p>
 
 <p>See: <a href="http://en.wikipedia.org/wiki/Observer_pattern">Observer pattern on Wikipedia</a></p>
@@ -302,7 +303,7 @@ class ContentListener
 {
     public function onBeforeContentSave(EventInterface $event)
     {
-        $event-&gt;getArgument('content')-&gt;title = $event-&gt;getArgument('title'); 
+        $event-&gt;getArgument('content')-&gt;title = $event-&gt;getArgument('title');
     }
 
      public function onAfterContentSave(EventInterface $event)
@@ -383,7 +384,7 @@ $dispatcher-&gt;addListener(new ContentListener, ContentListener::getPriorities(
     function (EventInterface $event)
     {
         // Do something
-    }, 
+    },
     array('onContentSave' =&gt; ListenerPriority::NORMAL)
 );
 </code></pre>

@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Config & Setting
+redirect:
+    3.x: core/config
 
 ---
 
@@ -11,7 +13,7 @@ in runtime, so settings in secret.yml can override the same key in config.yml.
 
 ### config.yml
 
-The `config.yml` stores some global system settings includes the language locale, session time, cache storage, timezone etc. 
+The `config.yml` stores some global system settings includes the language locale, session time, cache storage, timezone etc.
 Which is your application need and will be track by VCS, .
 
 ### secret.yml
@@ -123,14 +125,14 @@ Open `src/Windwalker/Web/Application.php` and modify `loadConfiguration()`, you 
 protected function loadConfiguration(Registry $config)
 {
     Windwalker::loadConfiguration($config);
-    
+
     $config->loadFile(WINDWALKER_ETC . '/my-config.yml', 'yaml');
-    
+
     // Or load other formats
     $config->loadFile(WINDWALKER_ETC . '/my-config.ini', 'ini');
-    
+
     $config->loadFile(WINDWALKER_ETC . '/my-config.xml', 'xml');
-    
+
     $config->loadFile(WINDWALKER_ETC . '/my-config.php', 'php'); // Must return array
 }
 ```
@@ -201,5 +203,3 @@ language:
 | | `default` | The default locale. |
 | | `format` | The language translate file format. See [Windwalker Language](https://github.com/ventoviro/windwalker/tree/master/src/Language) |
 | | `path` | The language file path. |
-
-

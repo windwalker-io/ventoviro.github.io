@@ -1,5 +1,8 @@
+---
 layout: documentation.twig
 title: Package System
+redirect:
+    3.x: core/package-system
 
 ---
 
@@ -12,11 +15,11 @@ Package is the main component of Windwalker's structure. Here is a image that de
 From above image, we will know there can be multiple packages and its' own MVC system in Windwalker. That makes our application
  more flexible. For example, we can create a `FrontendPackage` and an `AdminPackage` as front-end and back-end respectively.
  And an `ApiPackage` to provide RESTful API for mobile APP.
- 
+
 Every package is pretty much a simple application having MVC, routing, configuration and database schema:
 
 ![mockup_3](https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png)
-  
+
 ### Use Package as Extension
 
 Package can be used as extensions for developer. You can create a package and submit it to [Packagist](https://packagist.org/).
@@ -54,20 +57,20 @@ class Application extends WebApplication
     public function loadPackages()
     {
         $packages = Windwalker::loadPackages();
-    
+
         /*
          * Get Packages for This Application
          * -----------------------------------------
          * If you want a package only use in this application or want to override a global package,
          * set it here. Example: $packages[] = new Flower\FlowerPackage;
          */
-    
+
         // Add package here, the array key is package name, you can customize it.
         $packages['flower'] = new FlowerPackage;
-    
+
         return $packages;
     }
-    
+
     // ...
 }
 ```
@@ -91,18 +94,18 @@ Create `/src/Flower/routing.yml`, then add some routes:
 sakura:
     pattern: /sakura(/id)
     controller: Sakura
-    
+
 sakuras:
     pattern: /sakuras
     controller: Sakuras
-    
+
 roses:
     pattern: /roses
     controller: Roses
 ```
 
-Different from the global routing, you don't need to write all controller namespace, just write controller short name, 
-the package will auto find this controller. For example: `controller: Sakura` will find `Flower\Controller\Sakura\{action}` to execute. 
+Different from the global routing, you don't need to write all controller namespace, just write controller short name,
+the package will auto find this controller. For example: `controller: Sakura` will find `Flower\Controller\Sakura\{action}` to execute.
 
 We have to register this routes to root routing file. Open `/etc/routing.yml` And add this route profile.
 

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-        <title>Http and Stream | Windwalker - A Modern PHP Framework</title>
+        <title>Mailer | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Http and Stream | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Mailer | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -77,11 +77,11 @@
         <div class="uk-dropdown">
             <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-active">
-                    <a href="../../../documentation/3.x/more/http-stream.html">3.x</a>
+                    <a href="../../../documentation/3.x/services/mailer.html">3.x</a>
                 </li>
 
                 <li class="">
-                    <a href="../../../documentation/2.1/more/http-stream.html">2.1</a>
+                    <a href="../../../documentation/2.1/services/mailer.html">2.1</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Http and Stream</h1>
+        <h1>Mailer</h1>
     </div>
         </div>
     </section>
@@ -237,7 +237,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../../documentation/3.x/services/mailer.html">Mailer</a>
             </li>
                     <li class="">
@@ -261,7 +261,7 @@
                     <li class="">
                 <a href="../../../documentation/3.x/more/data-object.html">Data Object</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../../documentation/3.x/more/http-stream.html">Http and Stream</a>
             </li>
                     <li class="">
@@ -304,295 +304,122 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>Make A Request</h2>
+                    <h2>Use Mailer</h2>
 
-<p>HttpClient is a simple class to make restful request.</p>
+<p>Windwalker provides an interface to integrate different mail packages, currently we support <a href="http://swiftmailer.org/">Swift Mailer</a>
+as default, you must install <code>"swiftmailer/swiftmailer": "~5.0"</code> first.</p>
 
-<pre><code class="php">use Windwalker\Http\HttpClient;
+<p>Then add your mail server information to <code>etc/secret.yml</code>:</p>
 
-$http = new HttpClient;
+<pre><code class="yaml"># ...
 
-$response = $http-&gt;get('http://example.com/?foo=bar');
+mail:
+    from:
+        name: Sender Name
+        email: sender@mail.com
+    transport: smtp
+    security: tls
+    host: your.smtp.net
+    port: 2525
+    username: *****
+    password: *****
 
-// This is PSR7 ResponseInterface
-(string) $response-&gt;getBody();
+    # Local Domain
+    local: your.domain.com
+
+    # Sendmail command if use this
+    command: /usr/sbin/sendmail
 </code></pre>
 
-<h3>Other Methods</h3>
+<p>Currently available transports:</p>
 
-<pre><code class="php">$http = new HttpClient;
+<ul>
+<li>smtp (SMTP server)</li>
+<li>mail (PHP default <code>mail()</code> function)</li>
+<li>sendmail (Use system sendmail)</li>
+</ul>
 
-// The post data can be query string or array
-$response = $http-&gt;post('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
-$response = $http-&gt;put('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
-$response = $http-&gt;patch('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
-$response = $http-&gt;delete('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
+<h2>Create Message</h2>
 
-$response = $http-&gt;head('http://example.com/?foo=bar');
-$response = $http-&gt;trace('http://example.com/?foo=bar');
-$response = $http-&gt;options('http://example.com/?foo=bar');
+<pre><code class="php">use Windwalker\Core\Mailer\Mailer;
 
-// With headers
-$response = $http-&gt;get('http://example.com/', null, array('X-Foo' =&gt; 'Bar'));
+/** @var  $message \Windwalker\Core\Mailer\MailMessage */
+$message = Mailer::createMessage('Subject');
 
-// Use request()
-$response = $http-&gt;request('POST', 'http://example.com/?foo=bar', 'this=is&amp;post=data');
+$message-&gt;to('foo@foo.com')
+    -&gt;from('my@mail.com') // If you don't set from, Mailer will use the `from` info in config.yml
+    -&gt;cc(...)
+    -&gt;bcc(...)
+    -&gt;html(true) // Default is true
+    -&gt;body('Mail body');
+
+// Send it
+Mailer::send($message);
 </code></pre>
 
-<h3>Use Psr RequestInterface to Make Request</h3>
+<h3>Add Mail By Array</h3>
 
-<p>Psr7 Request is a immutable object, you have to get the return object every operation.</p>
+<p>You can use array as a set of mail to <code>to()</code>, <code>from()</code>, <code>cc()</code> and <code>bcc()</code>.</p>
 
-<pre><code class="php">use Windwalker\Http\Request;
-
-$request = new Request;
-
-// Note: You have to get the return value.
-// Every change will return new object.
-$request = $request-&gt;withRequestTarget('http://example.com/flower/sakura')
-    -&gt;withMethod('POST')
-    -&gt;withAddedHeader('Authorization', 'Bearer ' . $token)
-    -&gt;withAddedHeader('Content-Type', 'application/text');
-
-// OR
-$request = new Request(
-    'http://example.com/flower/sakura',
-    'POST',
-    'php://memory',
-    array(
-        'Authorization' =&gt; 'Bearer ' . $token,
-        'Content-Type'  =&gt; 'application/json',
-    )
-);
-
-// This is a POST request so we write post data to body
-$request-&gt;getBody()-&gt;write('this=is&amp;post=data');
-
-$http = new HttpClient;
-
-// Send request
-$response = $http-&gt;send($request);
-</code></pre>
-
-<p>Use Uri and Json output.</p>
-
-<pre><code class="php">use Windwalker\Http\Request;
-use Windwalker\Uri\PsrUri;
-
-$request = (new Request)
-    -&gt;withUri(new PsrUri('http://example.com'))
-    -&gt;withMethod('POST')
-    -&gt;withAddedHeader('Authorization', 'Bearer ' . $token)
-    -&gt;withAddedHeader('Content-Type', 'application/json') // Use JSON
-
-    // Note: Request will ignore path and query in Uri
-    // So we have to set RequestTarget here
-    -&gt;withRequestTarget('/path/of/uri?flower=sakura');
-
-// If you want to set a non-origin-form request target, set the
-// request-target explicitly:
-$request = $request-&gt;withRequestTarget((string) $uri);       // absolute-form
-$request = $request-&gt;withRequestTarget($uri-&gt;getAuthority(); // authority-form
-$request = $request-&gt;withRequestTarget('*');                 // asterisk-form
-
-// This is JSON request so we encode data here
-$request-&gt;getBody()-&gt;write(json_encode($data));
-$response = $http-&gt;send($request);
-
-$response-&gt;getStatusCode(); // 200 is OK
-</code></pre>
-
-<h3>Custom Transports and Options</h3>
-
-<p>Now support Curl and Steam 2 transports.</p>
-
-<pre><code class="php">use Windwalker\Http\Transport\CurlTransport;
-
-$options = array(
-    'certpath' =&gt; '/custom/cert.pem'
-);
-
-$transport = new CurlTransport($options);
-
-// Set transport when client new
-$http = new HttpClient(array(), $transport);
-</code></pre>
-
-<p>Set custom CURL options:</p>
-
-<pre><code class="php">$options = array(
-    'options' =&gt; array(
-        CURLOPT_SSL_VERIFYHOST =&gt; false,
-        CURLOPT_SSL_VERIFYPEER =&gt; true
-    )
-);
-
-$httpOptions = array(
-    'headers' =&gt; array(
-        'X-Foo' =&gt; 'Bar'
-    )
-);
-
-$http = new HttpClient($httpOptions, new CurlTransport($options));
-</code></pre>
-
-<h3>Download Remote File</h3>
-
-<pre><code class="php">$http = new HttpClient;
-
-$dest = '/path/to/local/file.zip';
-
-$response = $http-&gt;download('http://example.com/file.zip', $dest);
-
-if ($response-&gt;getStatusCode() != 200)
-{
-    // Error
-}
-</code></pre>
-
-<h3>Response Interface</h3>
-
-<p>Response object holds a Stream object to store returned string.</p>
-
-<pre><code class="php">// The return value is: 'FOO BAR'
-$body = $response-&gt;getBody();
-
-// Simply to string
-(string) $body; // FOO BAR
-
-$body-&gt;seek(2);
-$body-&gt;getContents(); // O BAR
-
-$body-&gt;rewind();
-$body-&gt;read(5); // FOO B
-
-$body-&gt;getSize(); // 7
-</code></pre>
-
-<h2>Uri</h2>
-
-<p><code>Uri</code> is a simple Uri object to modify URL but not Psr UriInterface.</p>
-
-<p>The methods provided in the <code>Uri</code> class allow you to manipulate all aspects of a uri. For example, suppose you wanted to set a new uri, add in a port, and then also post a username and password to authenticate a .htaccess security file. You could use the following syntax:</p>
-
-<pre><code class="php">// new uri object
-$uri = new Windwalker\Uri\Uri;
-
-$uri-&gt;setHost('http://localhost');
-$uri-&gt;setPort('8888');
-$uri-&gt;setUser('myUser');
-$uri-&gt;setPass('myPass');
-
-echo $uri-&gt;__toString();
-</code></pre>
-
-<p>This will output:</p>
-
-<pre><code>myUser:myPass@http://localhost:8888
-</code></pre>
-
-<p>If you wanted to add a specific filepath after the host you could use the <code>setPath()</code> method:</p>
-
-<pre><code class="php">// set path
-$uri-&gt;setPath('path/to/file.php');
-</code></pre>
-
-<p>Which will output</p>
-
-<pre><code>myUser:myPass@http://localhost:8888path/to/file.php
-</code></pre>
-
-<p>Adding a URL query:</p>
-
-<pre><code class="php">// url query
-$uri-&gt;setQuery('foo=bar');
-</code></pre>
-
-<p>Output:</p>
-
-<pre><code>myUser:myPass@http://localhost:8888path/to/file.php?foo=bar
-</code></pre>
-
-<h3>PsrUri</h3>
-
-<p><code>PsrUri</code> is a Uri object implemented the Psr UriInterface.</p>
-
-<p>This object is also immutable, so we must get return value as new object every change.</p>
-
-<pre><code class="php">$uri = (new PsrUri('http://example.com'))
-    -&gt;withScheme('https')
-    -&gt;withUserInfo('user', 'pass')
-    -&gt;withPath('/path/to/target')
-    -&gt;withQuery('flower=sakura')
-    -&gt;withFragment('#hash');
-
-(string) $uri; // https://user:pass@example.com/path/to/target?flower=sakura#fragment
-</code></pre>
-
-<h2>Stream</h2>
-
-<p>Stream is a powerful stream wrapper.</p>
-
-<p>Read write data to memory:</p>
-
-<pre><code class="php">$stream = new Stream('php://memory', 'wb+');
-
-$stream-&gt;write('Foo Bar');
-
-$stream-&gt;rewind(); // Back to begin
-
-// Now we take something we wrote into memory
-
-$stream-&gt;__toString(); // get: Foo Bar
+<pre><code class="php">$message-&gt;to(['foo@mail.com', 'bar@mail.com']);
 
 // OR
 
-$stream-&gt;rewind();
-$stream-&gt;getContents(); // get: Foo Bar
+$message-&gt;to([
+    'foo@mail.com' =&gt; 'Name Foo',
+    'bar@mail.com' =&gt; 'Name Bar',
+]);
 </code></pre>
 
-<p>Read data from <code>php://input</code></p>
+<h3>Render Body From View</h3>
 
-<pre><code class="php">$stream = new PhpInputSteam;
+<p>Use view to render mail in controller:</p>
 
-$data = $stream-&gt;__toString(); // foo=bar
+<pre><code class="php">$view = $this-&gt;getView('Mail');
 
-$query = \Windwalker\Uri\UriHelper::parseQuery($data); // array('foo' =&gt; 'bar')
+$view['user'] = User::get();
+$view['link'] = $link;
+$view['content'] = $content;
+
+$message-&gt;body($view-&gt;setLayout('mail.notify')-&gt;render());
 </code></pre>
 
-<p>Read file:</p>
+<p>Or use message built-in render method:</p>
 
-<pre><code class="php">$stream = new Stream('/path/to/file.txt', 'r+');
+<pre><code class="php">// ...
 
-$stream-&gt;__toString(); // Read
+$message-&gt;renderBody('mail.notify', $data, 'edge');
 
-$steam-&gt;seek($stream-&gt;getSize());
-$steam-&gt;write('new string'); // Write
+Mailer::send($message);
 </code></pre>
 
-<p>Quick copy stream.</p>
+<h3>Attachment</h3>
 
-<pre><code class="php">// Remote source
-$src = new Stream('http://example/test.txt');
+<p>Use file path.</p>
 
-// Local store
-$dest = new Stream('/path/to/local/test.txt');
+<pre><code class="php">$message-&gt;attach('/path/to/file.pdf');
+$message-&gt;attach('/path/to/file2.pdf', , 'downloaded2.pdf', 'application/pdf');
 
-// Do copy
-\Windwalker\Http\Helper\StreamHelper::copy($src, $dest);
-
-// Get Data
-$dest-&gt;rewind();
-$data = $dest-&gt;getContents();
+Mailer::send($message);
 </code></pre>
 
-<p>See: <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md#13-streams">Psr7 StreamInterface</a>
-/ <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md#34-psrhttpmessagestreaminterface">API</a></p>
+<p>Use <code>MailAttachment</code> class:</p>
+
+<pre><code class="php">use Windwalker\Core\Mailer\MailAttachment;
+
+$message-&gt;attach(new MailAttachment('/path/to/fil.pdf'));
+
+// Or set custom body
+$attachment = new MailAttachment;
+$attachment-&gt;setBody('&lt;html&gt;TEST&lt;/html&gt;');
+
+$message-&gt;attach($attachment, 'test.html');
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/http-stream.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/services/mailer.md">improve</a> this document.
     </p>
                 </article>
             </div>

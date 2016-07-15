@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Request and Input
+redirect:
+    3.x: core/request-input
 
 ---
 
@@ -40,7 +42,7 @@ $input = $container->get('system.input');
 Mostly, we need to get data from http request which `$_GET`, `$_POST` or `$_REQUEST` provides.
 
 But it is very unsafe if we only use super global variables, the Input object can help us get values from these variables and sanitize string.
-  
+
 ``` php
 $input->get('flower'); // Same as $_REQUEST['flower']
 
@@ -76,7 +78,7 @@ More filter usage please see: [Windwalker Filter](https://github.com/ventoviro/w
 
 ### Get Array
 
-Input provides option to get data as array. 
+Input provides option to get data as array.
 
 ``` php
 // mysite.com/?flower[1]=sakura&flower[2]=olive;
@@ -167,7 +169,7 @@ $method = $input->getMethod();
 
 ## Files Input
 
-The format that PHP returns file data in for arrays can at times be awkward, especially when dealing with arrays of files. 
+The format that PHP returns file data in for arrays can at times be awkward, especially when dealing with arrays of files.
 Files Input provides a convenient interface for making life a little easier, grouping the data by file.
 
 Suppose you have a form like:
@@ -278,5 +280,5 @@ Array
 ```
 
 Windwalker Input object is profoundly influenced by [Joomla Input](https://github.com/joomla-framework/input)
- 
+
 More about Input, see [Windwalker IO Package](https://github.com/ventoviro/windwalker-io)

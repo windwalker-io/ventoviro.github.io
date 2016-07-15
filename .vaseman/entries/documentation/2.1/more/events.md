@@ -1,13 +1,15 @@
 ---
 layout: documentation.twig
 title: Events
+redirect:
+    3.x: services/events
 
 ---
 
 ## Event Listener (Observer) Pattern
 
-The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents, 
-called observers, and notifies them automatically of any state changes, usually by calling one of their methods. 
+The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents,
+called observers, and notifies them automatically of any state changes, usually by calling one of their methods.
 
 See: [Observer pattern on Wikipedia](http://en.wikipedia.org/wiki/Observer_pattern)
 
@@ -47,9 +49,9 @@ class ContentListener
 {
     public function onBeforeContentSave(EventInterface $event)
     {
-        $event->getArgument('content')->title = $event->getArgument('title'); 
+        $event->getArgument('content')->title = $event->getArgument('title');
     }
-    
+
      public function onAfterContentSave(EventInterface $event)
     {
         // Do something
@@ -134,7 +136,7 @@ $dispatcher->addListener(
     function (EventInterface $event)
     {
         // Do something
-    }, 
+    },
     array('onContentSave' => ListenerPriority::NORMAL)
 );
 ```
@@ -217,7 +219,7 @@ use Windwalker\Event\DispatcherAwareTrait;
 class Application implements DispatcherAwareInterface
 {
     use DispatcherAwareTrait;
-    
+
     // ...
 }
 ```

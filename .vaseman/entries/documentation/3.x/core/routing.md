@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Routing
+redirect:
+    2.1: start/routing-controller
 
 ---
 
@@ -136,9 +138,9 @@ Or use wildcard to map all methods to one controller:
 
 If you want to send `PUT` and `DELETE` method from web form, you may add `_method` params in URL query, this param will override
 real HTTP method. For example, send `&_method=DELETE` will ask Windwalker to use `DeleteController`.
- 
+
 If you feel the HTTP standard methods are not enough to use for you, you can add your custom methods.
- 
+
 ``` yaml
     action:
         export: ExportController
@@ -165,7 +167,7 @@ But if you type `/flower/25/alias?foo=yoo`, then you will get `yoo`, the variabl
 
 ### Extra Params
 
-The `variables` will auto set to input request so it is danger to store some sensitive settings in `variables`, we can set 
+The `variables` will auto set to input request so it is danger to store some sensitive settings in `variables`, we can set
 `extra` params instead.
 
 ``` yaml

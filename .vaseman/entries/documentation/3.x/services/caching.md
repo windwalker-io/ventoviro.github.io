@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Caching
+redirect:
+    2.1: more/caching
 
 ---
 
@@ -17,9 +19,9 @@ cache:
 ```
 
 The `enabled` property controls global cache start or not, can be close if you want to test your application. `storage` controls which cache storage method
- you use, can be `file`, `runtime`, `memcached` or [more](https://github.com/ventoviro/windwalker-cache#available-storage). 
+ you use, can be `file`, `runtime`, `memcached` or [more](https://github.com/ventoviro/windwalker-cache#available-storage).
  About storage and handler, please see [Windwalker Cache](https://github.com/ventoviro/windwalker-cache).
- 
+
 ## Use Global Cache
 
 Windwalker contains a global main cache object that you can configure it in `config.yml`.
@@ -69,7 +71,7 @@ CacheFactory::ignoreGlobal(true);
 
 When debug property in global config se to `true` or `cache.disabled` set to `true`, the cache storage will auto set to `NullStorage`, cache can still be used
  but no work.
- 
+
 ``` php
 // If cache disabled
 $cache = \Windwalker\Ioc::getCache();
@@ -276,5 +278,5 @@ $cachePool->save(new CacheItem('foo', 'Bar', 150));
 $cachePool->saveDeferred(new CacheItem('baz', 'Yoo', 150));
 $cachePool->commit();
 ```
-  
+
 See [Windwalker Cache Package](https://github.com/ventoviro/windwalker-cache)

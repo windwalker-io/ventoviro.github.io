@@ -25,7 +25,7 @@ to the newest version: `20150421_AddTableIndex`
 To create a migration version, you may use `migration create` command in console:
 
 ``` bash
-php bin/console migration create InitFlowerTable
+php windwlaker migration create InitFlowerTable
 ```
 
 You'll see this info:
@@ -41,10 +41,10 @@ You may also create migration to other position by `--dir` or `--package`
 
 ``` bash
 ## Create to custom directory
-php bin/console migration create InitFlowerTable --dir=resources/migrations
+php windwlaker migration create InitFlowerTable --dir=resources/migrations
 
 ## Create to a package's Migration folder
-php bin/console migration create InitFlowerTable --package=flower
+php windwlaker migration create InitFlowerTable --package=flower
 ```
 
 ### Writing Migration
@@ -138,7 +138,7 @@ See other schema operations: [Table and Schema](table-schema.html)
 Use this command to show migration status.
 
 ``` bash
-php bin/console migration status
+php windwlaker migration status
 ```
 
 ``` bash
@@ -153,7 +153,7 @@ php bin/console migration status
 Use `migrate` command to start migrating:
 
 ``` bash
-php bin/console migration migrate
+php windwlaker migration migrate
 ```
 
 Terminal will show migrating process.
@@ -169,20 +169,25 @@ Migration UP the version: 20150101091434_InitFlowerTable
 Success
 ```
 
-> NOTE: Migration will be blocked if your system in `prod` mode, modify or create `.mode` file in system root to `dev` that can
+### Blocked By DEV Model
+
+Migration will be blocked if your system in `prod` mode, modify or create `.mode` file in system root to `dev` that can
 allow migration works. Don't forget change back to `prod` after you updated your system.
-> You can also use command to change mode `$ php windwalker system mode [dev|prod]`
+
+![p-2016-07-15-002](https://cloud.githubusercontent.com/assets/1639206/16868203/ea518644-4aa8-11e6-8d41-769d81ebe69b.jpg)
+
+You can also use command to change mode `$ php windwalker system mode [dev|prod]`
 
 ### Run Package Migration
 
 ``` bash
-php bin/console migration migrate --package=flower
+php windwlaker migration migrate --package=flower
 ```
 
 ### Migrate to Specific Version
  
 ``` bash
-php bin/console migration migrate 20141105131929
+php windwlaker migration migrate 20141105131929
 ```
 
 If you use a lower version, this action will be downgrade.
@@ -281,7 +286,7 @@ class MainSeeder extends AbstractSeeder
 Now, use `seed import` command:
 
 ``` bash
-php bin/console seed import
+php windwlaker seed import
 ```
 
 You will see this output, it means seeder execute success:
@@ -323,10 +328,10 @@ Run this command to execute package seeder:
 
 ``` bash
 ## Choose class if your seeder has namespace
-php bin/console seed import --class=Flower\Seeder\MySeeder
+php windwlaker seed import --class=Flower\Seeder\MySeeder
  
 ## Use package default MainSeeder
-php bin/console seed import -p=flower
+php windwlaker seed import -p=flower
 ```
 
 ## Fake Data Generator

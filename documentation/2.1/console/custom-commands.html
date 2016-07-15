@@ -257,7 +257,8 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>    </div>
+   </ul>
+    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
@@ -347,7 +348,7 @@ public function registerCommands()
 }
 </code></pre>
 
-<p>Then type <code>php bin/console -h</code> will see our new command:</p>
+<p>Then type <code>php windwlaker -h</code> will see our new command:</p>
 
 <pre><code class="bash">Commands:
 
@@ -422,11 +423,11 @@ public function doExecute()
 
 <p>If we type:</p>
 
-<pre><code class="bash">$ php bin/console flower Asika --yell
+<pre><code class="bash">$ php windwlaker flower Asika --yell
 
 ## OR
 
-$ php bin/console flower Asika -y
+$ php windwlaker flower Asika -y
 </code></pre>
 
 <p>The <code>getOption()</code> method will auto detect option aliases, then we can get:</p>
@@ -501,7 +502,7 @@ public function initialise()
 
 <p>OK, let's typing:</p>
 
-<pre><code class="bash">php bin/console flower sakura
+<pre><code class="bash">php windwlaker flower sakura
 </code></pre>
 
 <p>We will get:</p>

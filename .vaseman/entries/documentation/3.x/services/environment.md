@@ -1,6 +1,8 @@
 ---
 layout: documentation.twig
 title: Environment
+redirect:
+    2.1: more/environment
 
 ---
 

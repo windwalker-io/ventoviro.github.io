@@ -1,5 +1,7 @@
 layout: documentation.twig
 title: Packages
+redirect:
+    2.1: start/package-system 
 
 ---
 
@@ -13,11 +15,11 @@ Here is a image to describe the package system:
 From above image, we will notice that there can be multiple packages and its' own MVC groups in Windwalker. That makes our application
  more flexible. For example, we can create a `FrontendPackage` for front-end an `AdminPackage` as for back-end use.
  And an `ApiPackage` to provide RESTful API for mobile APP if we need.
- 
+
 Every package is pretty much a simple application having MVC, routing, configuration and database schema:
 
 ![mockup_3](https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png)
-  
+
 ### Use Package as Extension
 
 Package can be used as extensions for developer. You can create a package and submit it to [Packagist](https://packagist.org/).
@@ -71,18 +73,18 @@ Create `/src/Flower/routing.yml`, then add some routes:
 sakura:
     pattern: /sakura(/id)
     controller: Sakura
-    
+
 sakuras:
     pattern: /sakuras
     controller: Sakuras
-    
+
 roses:
     pattern: /roses
     controller: Roses
 ```
 
-Different from the global routing, you don't need to write all controller namespace, just write controller short name, 
-the package will auto find this controller. For example: `controller: Sakura` will find `Flower\Controller\Sakura\{action}` to execute. 
+Different from the global routing, you don't need to write all controller namespace, just write controller short name,
+the package will auto find this controller. For example: `controller: Sakura` will find `Flower\Controller\Sakura\{action}` to execute.
 
 We have to register this routes to root routing file. Open `/etc/routing.yml` And add this route profile.
 
@@ -166,3 +168,13 @@ $app = Ioc::getApplication();
 
 $app->getPackage([$alias|null]); // NULL will get current package
 ```
+
+## Install Package
+
+After registering package to Windwalker, we can run
+
+``` php
+$ php windwlaker package install <package_alias>
+```
+
+to install package config, routing and assets.
