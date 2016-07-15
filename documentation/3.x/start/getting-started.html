@@ -376,7 +376,7 @@ protected function doExecute()
 
 <p>By extends parent layout, we can wrap our template by a parent template.</p>
 
-<pre><code class="html">&lt;?php
+<pre><code class="php">&lt;?php
 // src/Flower/Templates/sakura/default.php
 /**
  * @var  $this  \Windwalker\Core\Renderer\PhpRenderer
@@ -405,7 +405,7 @@ protected function doExecute()
 
 <p>We support different template layout for one controller, the default is <code>default</code> layout, now try to add a <code>photo</code> layout.</p>
 
-<pre><code class="html">&lt;?php
+<pre><code class="php">&lt;?php
 // src/Flower/Templates/sakura/photo.php
 ?&gt;
 &lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
@@ -435,7 +435,7 @@ add some new features.</p>
 
 <p>We create a template named <code>default.edge.php</code> or <code>default.blade.php</code>.</p>
 
-<pre><code class="html">{{-- src/Flower/Templates/sakura/default.edge.php --}}
+<pre><code class="php">{{-- src/Flower/Templates/sakura/default.edge.php --}}
 
 @extends('_global.html')
 
@@ -560,7 +560,7 @@ class SakuraModel extends ModelRepository
 
 <p>Use this Model in controller.</p>
 
-<pre><code class="blade">// ...
+<pre><code class="php">// ...
 
 /** @var SakuraModel $model */
 $model   = $this-&gt;getModel();
@@ -571,7 +571,7 @@ return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $conte
 
 <p>Modify the template to loop <code>content</code> variable.</p>
 
-<pre><code class="html">@extends('_global.html')
+<pre><code class="php">@extends('_global.html')
 
 @section('content')
 &lt;div class="container"&gt;

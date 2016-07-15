@@ -79,7 +79,7 @@ We'll get `<h1>Hello Sakura</h1>` in browser.
 
 By extends parent layout, we can wrap our template by a parent template.
 
-``` html
+``` php
 <?php
 // src/Flower/Templates/sakura/default.php
 /**
@@ -107,7 +107,7 @@ The result
 
 We support different template layout for one controller, the default is `default` layout, now try to add a `photo` layout.
 
-``` html
+``` php
 <?php
 // src/Flower/Templates/sakura/photo.php
 ?>
@@ -139,7 +139,7 @@ add some new features.
 
 We create a template named `default.edge.php` or `default.blade.php`.
 
-``` html
+``` php
 {{-- src/Flower/Templates/sakura/default.edge.php --}}
 
 @extends('_global.html')
@@ -270,7 +270,7 @@ class SakuraModel extends ModelRepository
 
 Use this Model in controller.
 
-``` blade
+``` php
 // ...
 
 /** @var SakuraModel $model */
@@ -282,7 +282,7 @@ return $this->renderView('Sakura', 'default', 'edge', ['content' => $content]);
 
 Modify the template to loop `content` variable.
 
-``` html
+``` php
 @extends('_global.html')
 
 @section('content')
