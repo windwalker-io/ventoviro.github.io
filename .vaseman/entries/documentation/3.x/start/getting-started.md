@@ -38,8 +38,7 @@ class GetController extends AbstractController
 
 Now, open `http://path/to/windwalker/www/flower/sakura` in browser, you will see `Hello World`.
 
-Windwalker Controller follows single responsibility principle, every controller has only one action (`execute()`).
-You can add more logic to a controller but won't be confused by too many different actions in one class.
+Windwalker Controller follows single responsibility principle, you can add more logic to a controller but won't be confused by too many different actions in one class.
 
 ## Render View Template
 
@@ -216,7 +215,7 @@ Next, register it to `etc/app/web.php`, the `flower` key name is alias of your p
 
 ### Register Routing
 
-And then, add a nre routing profile to `etc/routing.yml`.
+And then, add a new routing profile to `etc/routing.yml`.
 
 ``` yaml
 # ...
@@ -226,7 +225,7 @@ flower:
     package: flower
 ```
 
-> You can also do this by using `$ php windwalker package install flower` in CLI.
+> You can also do this by using `$ php windwalker package install flower` in CLI after package registered.
 
 The last step, create package routing at `src/Flower/routing.yml`.
 
@@ -239,7 +238,7 @@ sakura:
 ```
 
 OK, the Sakura page will return. To register a package and routing is a bit of bother, but it will be very
-flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and mny developers.
+flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and many developers.
 
 ## Model Repository
 
