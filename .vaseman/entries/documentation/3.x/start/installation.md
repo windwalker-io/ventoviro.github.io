@@ -10,13 +10,11 @@ redirect:
 
 ### Starter Application
 
-Install via [Composer](https://getcomposer.org/)
+Install via [Composer](https://getcomposer.org/) (Windwalker 3.0 currently in beta so you must add `-s beta`)
 
 ``` bash
-$ composer create-project windwalker/starter project_dir ~3.0 [--dev]
+$ composer create-project windwalker/starter project_dir ~3.0 -s beta
 ```
-
-> For development purpose, you can add `--dev` to this command.
 
 After project file downloaded, the installation script will ask you some information to initial system environment.
 
