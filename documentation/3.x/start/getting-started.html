@@ -337,8 +337,7 @@ class GetController extends AbstractController
 
 <p>Now, open <code>http://path/to/windwalker/www/flower/sakura</code> in browser, you will see <code>Hello World</code>.</p>
 
-<p>Windwalker Controller follows single responsibility principle, every controller has only one action (<code>execute()</code>).
-You can add more logic to a controller but won't be confused by too many different actions in one class.</p>
+<p>Windwalker Controller follows single responsibility principle, you can add more logic to a controller but won't be confused by too many different actions in one class.</p>
 
 <h2>Render View Template</h2>
 
@@ -507,7 +506,7 @@ class FlowerPackage extends AbstractPackage
 
 <h3>Register Routing</h3>
 
-<p>And then, add a nre routing profile to <code>etc/routing.yml</code>.</p>
+<p>And then, add a new routing profile to <code>etc/routing.yml</code>.</p>
 
 <pre><code class="yaml"># ...
 
@@ -517,7 +516,7 @@ flower:
 </code></pre>
 
 <blockquote>
-  <p>You can also do this by using <code>$ php windwalker package install flower</code> in CLI.</p>
+  <p>You can also do this by using <code>$ php windwalker package install flower</code> in CLI after package registered.</p>
 </blockquote>
 
 <p>The last step, create package routing at <code>src/Flower/routing.yml</code>.</p>
@@ -530,7 +529,7 @@ sakura:
 </code></pre>
 
 <p>OK, the Sakura page will return. To register a package and routing is a bit of bother, but it will be very
-flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and mny developers.</p>
+flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and many developers.</p>
 
 <h2>Model Repository</h2>
 
