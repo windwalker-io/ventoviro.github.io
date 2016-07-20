@@ -8,6 +8,10 @@ redirect:
 
 ## Installation
 
+### System Requirement
+
+Windwalker 3.x require PHP 5.6 or later.
+
 ### Starter Application
 
 Install via [Composer](https://getcomposer.org/)
