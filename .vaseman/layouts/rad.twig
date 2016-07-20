@@ -1,0 +1,37 @@
+{% extends 'default-page.twig' %}
+
+{% block script %}
+    <script src="{{ uri.media }}js/doc.js"></script>
+{% endblock %}
+
+{% block stylesheet %}
+    {{ parent()  }}
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+{% endblock %}
+
+{% block submenu %}
+    <div class="uk-width-medium-1-4 uk-container-center">
+        {% include 'sub-menu.twig' with {'menu': 'rad'} %}
+    </div>
+{% endblock %}
+
+{% block article_footer %}
+    <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/{{ path|join('/') }}">improve</a> this document.
+    </p>
+{% endblock %}

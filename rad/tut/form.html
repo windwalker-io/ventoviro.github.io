@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>Form &amp; Edit | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="../../media/css/prism.css" />
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Form &amp; Edit | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+                                <script src="../../media/js/prism.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="../../documentation/3.x/start/installation.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../rad/start/introduction.html">
+                        <span class="menu-item-title">RAD</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Form &amp; Edit</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+    
+        <li class="uk-nav-header">Phoenix RAD</li>
+                    <li class="">
+                <a href="../../rad/start/introduction.html">Introduction</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/core.html">Core Concept</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/generator.html">Generator</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Tutorial</li>
+                    <li class="">
+                <a href="../../rad/tut/guide.html">Admin UI Guide</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/start.html">Start A Blog</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/grid.html">Prepare Grid View</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../rad/tut/form.html">Form &amp; Edit</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/filter.html">Filter &amp; Search</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/batch.html">Batch</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>
+    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h2>Category Edit Page</h2>
+
+<p>Click Any category item, you will see edit page with a form and inputs.</p>
+
+<p>We must modify this form to fit <code>categories</code> table.</p>
+
+<p>Please open <code>src/Blog/Admin/Form/Category/EditDefinition.php</code> and change code to below.</p>
+
+<pre><code class="php">// src/Blog/Admin/Form/Category/EditDefinition.php
+
+namespace Blog\Admin\Form\Category;
+
+use Phoenix\Form\PhoenixFieldTrait;
+use Windwalker\Core\Form\AbstractFieldDefinition;
+use Windwalker\Core\Language\Translator;
+use Windwalker\Form\Form;
+
+class EditDefinition extends AbstractFieldDefinition
+{
+    use PhoenixFieldTrait;
+
+    public function doDefine(Form $form)
+    {
+        // Basic fieldset
+        $this-&gt;fieldset('basic', function(Form $form)
+        {
+            // ID
+            $this-&gt;hidden('id');
+
+            // Title
+            $this-&gt;text('title')
+                -&gt;label(Translator::translate('admin.category.field.title'))
+                -&gt;required(true);
+
+            // Alias
+            $this-&gt;text('alias')
+                -&gt;label(Translator::translate('admin.category.field.alias'));
+        });
+
+        // Delete the Text Group...
+
+        // Created fieldset
+        $this-&gt;fieldset('created', function(Form $form)
+        {
+            // No change...
+        });
+    }
+}
+</code></pre>
+
+<h2>Article Edit Form</h2>
+
+<p>Then modify the article form.</p>
+
+<p>Note we use <code>CategoryListField</code> for <code>category_id</code>.</p>
+
+<pre><code class="php">// src/Blog/Admin/Form/Article/EditDefinition.php
+
+namespace Blog\Admin\Form\Article;
+
+use Blog\Admin\Field\Category\CategoryListField;
+use Phoenix\Form\PhoenixFieldTrait;
+use Windwalker\Core\Form\AbstractFieldDefinition;
+use Windwalker\Core\Language\Translator;
+use Windwalker\Form\Form;
+use Windwalker\Html\Option;
+
+class EditDefinition extends AbstractFieldDefinition
+{
+    use PhoenixFieldTrait;
+
+    public function doDefine(Form $form)
+    {
+        // Basic fieldset
+        $this-&gt;fieldset('basic', function(Form $form)
+        {
+            // ID
+            $this-&gt;hidden('id');
+
+            // Title
+            $this-&gt;text('title')
+                -&gt;label(Translator::translate('admin.article.field.title'))
+                -&gt;required(true);
+
+            // Alias
+            $this-&gt;text('alias')
+                -&gt;label(Translator::translate('admin.article.field.alias'));
+
+            // Category
+            $this-&gt;add('category_id', new CategoryListField)
+                -&gt;label('Category')
+                -&gt;addOption(new Option('Uncategorised', ''));
+        });
+
+        // Text Fieldset
+        $this-&gt;fieldset('text', function(Form $form)
+        {
+            // No change...
+        });
+
+        // Created fieldset
+        $this-&gt;fieldset('created', function(Form $form)
+        {
+            // No change...
+        });
+    }
+}
+</code></pre>
+
+<p>Then we can choose category in article edit page.</p>
+
+<p><img src="http://i.imgur.com/eCT61tS.jpg" alt="Imgur" /></p>
+
+<h2>Comment Form</h2>
+
+<p>Same as article and category, but we use <code>ArticleModalField</code> to select article.</p>
+
+<pre><code class="php">// src/Blog/Admin/Form/Comment/EditDefinition.php
+
+namespace Blog\Admin\Form\Comment;
+
+use Blog\Admin\Field\Article\ArticleModalField;
+use Phoenix\Form\PhoenixFieldTrait;
+use Windwalker\Core\Form\AbstractFieldDefinition;
+use Windwalker\Core\Language\Translator;
+use Windwalker\Form\Form;
+
+class EditDefinition extends AbstractFieldDefinition
+{
+    use PhoenixFieldTrait;
+
+    public function doDefine(Form $form)
+    {
+        // Basic fieldset
+        $this-&gt;fieldset('basic',function(Form $form)
+        {
+            // ID
+            $this-&gt;hidden('id');
+
+            // Name
+            $this-&gt;text('name')
+                -&gt;label('Name')
+                -&gt;required(true);
+
+            $this-&gt;email('email')
+                -&gt;label('Email')
+                -&gt;required(true);
+
+            // Article
+            $this-&gt;add('article_id', new ArticleModalField)
+                -&gt;label('Article');
+        });
+
+        // Text Fieldset
+        $this-&gt;fieldset('text',function(Form $form)
+        {
+            // Introtext
+            $this-&gt;textarea('text')
+                -&gt;label('Text')
+                -&gt;set('rows', 10);
+        });
+
+        // Created fieldset
+        $this-&gt;fieldset('created',function(Form $form)
+        {
+            // State
+            $this-&gt;radio('state')
+                -&gt;label(Translator::translate('admin.comment.field.state'))
+                -&gt;set('class', 'btn-group')
+                -&gt;set('default', 1)
+                -&gt;option(Translator::translate('phoenix.grid.state.published'), '1')
+                -&gt;option(Translator::translate('phoenix.grid.state.unpublished'), '0');
+
+            // Created
+            $this-&gt;calendar('created')
+                -&gt;label(Translator::translate('admin.comment.field.created'));
+        });
+    }
+}
+</code></pre>
+
+<p>You will see a Model select field, if you click the <code>Select an Item</code> button, will open a modal for select article.</p>
+
+<p><img src="http://i.imgur.com/AvKB3xf.jpg" alt="Imgur" /></p>
+
+<p><img src="http://i.imgur.com/yOsuRgx.jpg" alt="Imgur" /></p>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/tut/form.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>Filter &amp; Search | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="../../media/css/prism.css" />
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Filter &amp; Search | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+                                <script src="../../media/js/prism.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="../../documentation/3.x/start/installation.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../rad/start/introduction.html">
+                        <span class="menu-item-title">RAD</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Filter &amp; Search</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+    
+        <li class="uk-nav-header">Phoenix RAD</li>
+                    <li class="">
+                <a href="../../rad/start/introduction.html">Introduction</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/core.html">Core Concept</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/generator.html">Generator</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Tutorial</li>
+                    <li class="">
+                <a href="../../rad/tut/guide.html">Admin UI Guide</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/start.html">Start A Blog</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/grid.html">Prepare Grid View</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/form.html">Form &amp; Edit</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../rad/tut/filter.html">Filter &amp; Search</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/batch.html">Batch</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>
+    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h2>Add Category Title Search</h2>
+
+<p>In every grid page, there is a search field to search database fields, currently we can only search <code>title</code> and <code>alias</code>.
+Let's add foreign fields search to articles page.</p>
+
+<p>Open <code>Form/articles/GridDefinition.php</code> and add two new options in search group. It means we told model to search <code>category.title</code> and
+<code>category.alias</code> two more fields.</p>
+
+<pre><code class="php">// src/Blog/Admin/Articles/GridDefinition.php
+
+// ...
+
+class GridDefinition extends AbstractFieldDefinition
+{
+    public function doDefine(Form $form)
+    {
+        $this-&gt;group('search', function (Form $form)
+        {
+            // Search Field
+            $form-&gt;list('field')
+                -&gt;label(Translator::translate('phoenix.grid.search.field.label'))
+                -&gt;set('display', false)
+                -&gt;defaultValue('*')
+                -&gt;option(Translator::translate('phoenix.core.all'), '*')
+                -&gt;option(Translator::translate('admin.article.field.title'), 'article.title')
+                -&gt;option(Translator::translate('admin.article.field.alias'), 'article.alias');
+
+                // Add these two lines
+                -&gt;option('Category Title', 'category.title')
+                -&gt;option('Category Alias', 'category.alias');
+
+            // ...
+        });
+
+        // ...
+</code></pre>
+
+<p>Back to articles page and search some keyword.</p>
+
+<p><img src="http://i.imgur.com/jzxOAiz.jpg" alt="Imgur" /></p>
+
+<p>You can see the category field is able to search. Let's add simple highlight in <code>ArticlesHtmlView</code>.</p>
+
+<pre><code class="php">// src/Blog/Admin/View/Articles/ArticlesHtmlView.php
+
+// ...
+
+class ArticlesHtmlView extends GridView
+{
+    // ...
+
+    protected function prepareScripts()
+    {
+        // ...
+
+        // Add Highlight script
+        JQueryScript::highlight('.grid-table', trim($this-&gt;data-&gt;state['input.search.content']));
+    }
+</code></pre>
+
+<p>This is highlight result.</p>
+
+<p><img src="http://i.imgur.com/dyKjxkr.jpg" alt="Imgur" /></p>
+
+<h2>Add More Filters</h2>
+
+<p>Currently, articles page has only one filter: <code>state</code>, we can add a category filter and a date filter to help us manage articles.</p>
+
+<h3>Add Category Filter</h3>
+
+<pre><code class="php">// src/Blog/Admin/Articles/GridDefinition.php
+
+// ...
+
+class GridDefinition extends AbstractFieldDefinition
+{
+        // ...
+
+        $this-&gt;group('filter', function(Form $form)
+        {
+            // ...
+
+            // Category
+            $form-&gt;add('category.id', new CategoryListField)
+                -&gt;label('Category')
+                -&gt;option('', '')
+                -&gt;option('-- Select Category --', '')
+                -&gt;set('onchange', 'this.form.submit()');
+
+        // ...
+</code></pre>
+
+<p>This is the result that we can filter by category ID.</p>
+
+<p><img src="http://i.imgur.com/R0v5R20.jpg" alt="Imgur" /></p>
+
+<h3>Add Date Filter</h3>
+
+<p>We add <code>Start Date</code> and <code>End Date</code> to filter a time period.</p>
+
+<pre><code class="php">// src/Blog/Admin/Articles/GridDefinition.php
+
+// ...
+
+class GridDefinition extends AbstractFieldDefinition
+{
+       use PhoenixFieldTrait;
+
+        // ...
+
+        $this-&gt;group('filter', function(Form $form)
+        {
+            // ...
+
+            // Category
+            $form-&gt;add('category.id', new CategoryListField)
+                -&gt;label('Category')
+                -&gt;option('', '')
+                -&gt;option('-- Select Category --', '')
+                -&gt;set('onchange', 'this.form.submit()');
+
+            // Start Date
+            $form-&gt;calendar('start_date')
+                -&gt;label('Start Date')
+                -&gt;set('format', 'YYYY-MM-DD')
+                -&gt;set('placeholder', 'Start Date');
+
+            // End Date
+            $form-&gt;calendar('end_date')
+                -&gt;label('End Date')
+                -&gt;set('format', 'YYYY-MM-DD')
+                -&gt;set('placeholder', 'End Date');
+
+        // ...
+</code></pre>
+
+<p>The start and end date use <code>&gt;=</code> and <code>&lt;=</code> to filter items, not <code>=</code>, so we must configure it in <code>ArticlesModel</code>.</p>
+
+<pre><code class="php"><br />class ArticlesModel extends ListModel
+{
+    // ...
+
+    // This is an important security setting.
+    // Add these two fields that will able to pass the fields checking.
+    // Otherwise anyone can try your database.
+    protected $allowFields = array(
+        'start_date', 'end_date'
+    );
+
+    // ...
+
+    protected function configureFilters(FilterHelperInterface $filterHelper)
+    {
+        // Override start_date action
+        $filterHelper-&gt;setHandler('start_date', function(Query $query, $field, $value)
+        {
+            if ((string) $value !== '')
+            {
+                $query-&gt;where('article.created &gt;= ' . $query-&gt;quote($value));
+            }
+        });
+
+        // Override end_date action
+        $filterHelper-&gt;setHandler('end_date', function(Query $query, $field, $value)
+        {
+            if ((string) $value !== '')
+            {
+                $query-&gt;where('article.created &lt;= ' . $query-&gt;quote($value));
+            }
+        });
+    }
+</code></pre>
+
+<p>OK, you can try to filter the date.</p>
+
+<p><img src="http://i.imgur.com/jLsnier.jpg" alt="Imgur" /></p>
+
+<p>Go to debugger, you will see the SQL is:</p>
+
+<pre><code class="sql">SELECT
+-- ...
+
+WHERE article.created &gt;= '1970-09-10' AND article.created &lt;= '1973-09-09'
+
+-- ...
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/tut/filter.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

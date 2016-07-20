@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>Start A Blog | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="../../media/css/prism.css" />
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Start A Blog | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+                                <script src="../../media/js/prism.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="../../documentation/3.x/start/installation.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../rad/start/introduction.html">
+                        <span class="menu-item-title">RAD</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Start A Blog</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+    
+        <li class="uk-nav-header">Phoenix RAD</li>
+                    <li class="">
+                <a href="../../rad/start/introduction.html">Introduction</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/core.html">Core Concept</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/generator.html">Generator</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Tutorial</li>
+                    <li class="">
+                <a href="../../rad/tut/guide.html">Admin UI Guide</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../rad/tut/start.html">Start A Blog</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/grid.html">Prepare Grid View</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/form.html">Form &amp; Edit</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/filter.html">Filter &amp; Search</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/batch.html">Batch</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>
+    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h2>Introduction</h2>
+
+<p>In this chapter, we'll step by step to create a simple blog system, that helps you understand how to use phoenix.</p>
+
+<h2>Create Admin Package</h2>
+
+<p>First, we have to create a basic blog admin package. please type this command:</p>
+
+<pre><code class="bash">php windwalker muse init Blog/Admin category.categories
+php windwalker muse add-subsystem Blog/Admin article.articles
+php windwalker muse add-subsystem Blog/Admin comment.comments
+</code></pre>
+
+<p>After package created, register package and add assets link.</p>
+
+<pre><code class="php">// etc/app/windwlaker.php
+
+// ...
+
+    'packages' =&gt; [
+        // ...
+        'phoenix' =&gt; \Phoenix\PhoenixPackage::class,
+        'admin' =&gt; \Blog\Admin\AdminPackage::class
+    ]
+
+// ...
+</code></pre>
+
+<pre><code class="bash">$ php windwalker asset sync admin
+</code></pre>
+
+<p>And add routing to <code>/etc/routing.yml</code>.</p>
+
+<pre><code class="yaml">## /etc/routing.yml
+
+## ...
+
+admin:
+    pattern: /admin
+    package: admin
+</code></pre>
+
+<h2>Migration</h2>
+
+<p>Open <code>src/Blog/Admin/*.php</code> files, change migration like below:</p>
+
+<pre><code class="php">// src/Blog/Admin/xxxxxxxxxxxxxx_CategoryInit.php
+
+// ...
+
+class CategoryInit extends AbstractMigration
+{
+    public function up()
+    {
+        $this-&gt;createTable(Table::CATEGORIES, function (Schema $schema)
+        {
+            $schema-&gt;primary('id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Primary Key');
+            $schema-&gt;varchar('title')-&gt;comment('Title');
+            $schema-&gt;varchar('alias')-&gt;comment('Alias');
+            $schema-&gt;integer('ordering');
+            $schema-&gt;tinyint('state');
+            $schema-&gt;datetime('created')-&gt;comment('Created Date');
+            $schema-&gt;integer('created_by')-&gt;comment('Author');
+            $schema-&gt;datetime('modified')-&gt;comment('Modified Date');
+            $schema-&gt;integer('modified_by')-&gt;comment('Modified User');
+            $schema-&gt;char('language')-&gt;length(7)-&gt;comment('Language');
+            $schema-&gt;text('params')-&gt;comment('Params');
+
+            $schema-&gt;addIndex('alias');
+            $schema-&gt;addIndex('language');
+            $schema-&gt;addIndex('created_by');
+        });
+    }
+
+    public function down()
+    {
+        $this-&gt;drop(Table::CATEGORIES, true);
+    }
+}
+</code></pre>
+
+<pre><code class="php">// src/Blog/Admin/xxxxxxxxxxxxxx_ArticleInit.php
+
+class ArticleInit extends AbstractMigration
+{
+    public function up()
+    {
+        $this-&gt;createTable(Table::ARTICLES, function(Schema $schema)
+        {
+            $schema-&gt;primary('id')-&gt;comment('Primary Key');
+            $schema-&gt;varchar('title')-&gt;comment('Title');
+            $schema-&gt;varchar('alias')-&gt;comment('Alias');
+            $schema-&gt;varchar('url')-&gt;comment('URL');
+            $schema-&gt;text('introtext')-&gt;comment('Intro Text');
+            $schema-&gt;text('fulltext')-&gt;comment('Full Text');
+            $schema-&gt;varchar('image')-&gt;comment('Main Image');
+            $schema-&gt;tinyint('state')-&gt;signed(true)-&gt;comment('0: unpublished, 1:published');
+            $schema-&gt;integer('ordering')-&gt;comment('Ordering');
+            $schema-&gt;datetime('created')-&gt;comment('Created Date');
+            $schema-&gt;integer('created_by')-&gt;comment('Author');
+            $schema-&gt;datetime('modified')-&gt;comment('Modified Date');
+            $schema-&gt;integer('modified_by')-&gt;comment('Modified User');
+            $schema-&gt;char('language')-&gt;length(7)-&gt;comment('Language');
+            $schema-&gt;text('params')-&gt;comment('Params');
+
+            $schema-&gt;addIndex('alias');
+            $schema-&gt;addIndex('language');
+            $schema-&gt;addIndex('created_by');
+        });
+    }
+
+    public function down()
+    {
+        $this-&gt;drop(Table::ARTICLES);
+    }
+}
+</code></pre>
+
+<pre><code class="php">// src/Blog/Admin/xxxxxxxxxxxxxx_CommentInit.php
+
+class CommentInit extends AbstractMigration
+{
+    public function up()
+    {
+        $this-&gt;createTable(Table::COMMENTS, function(Schema $schema)
+        {
+            $schema-&gt;primary('id')-&gt;comment('Primary Key');
+            $schema-&gt;integer('article_id');
+            $schema-&gt;varchar('name')-&gt;comment('Name');
+            $schema-&gt;varchar('email')-&gt;comment('Email');
+            $schema-&gt;text('introtext')-&gt;comment('Intro Text');
+            $schema-&gt;text('fulltext')-&gt;comment('Full Text');
+            $schema-&gt;varchar('image')-&gt;comment('Main Image');
+            $schema-&gt;tinyint('state')-&gt;signed(true)-&gt;comment('0: unpublished, 1:published');
+            $schema-&gt;integer('ordering')-&gt;comment('Ordering');
+            $schema-&gt;datetime('created')-&gt;comment('Created Date');
+            $schema-&gt;integer('created_by')-&gt;comment('Author');
+            $schema-&gt;datetime('modified')-&gt;comment('Modified Date');
+            $schema-&gt;integer('modified_by')-&gt;comment('Modified User');
+            $schema-&gt;char('language')-&gt;length(7)-&gt;comment('Language');
+            $schema-&gt;text('params')-&gt;comment('Params');
+
+            $schema-&gt;addIndex('alias');
+            $schema-&gt;addIndex('language');
+            $schema-&gt;addIndex('created_by');
+        });
+    }
+
+    public function down()
+    {
+        $this-&gt;drop(Table::COMMENTS);
+    }
+}
+</code></pre>
+
+<p>Run migration:</p>
+
+<pre><code class="bash">php windwalker migration migrate -p=admin
+</code></pre>
+
+<p>Now you can open <code>http://{your_site}/admin/categories</code> to see your admin page.</p>
+
+<h2>Fake Data</h2>
+
+<p>We must add some fake data to help us developing. Use seeder to do this work, please modify <code>src/Blog/Admin/Seed/*.php</code> files.</p>
+
+<p>First check that the seeder ordering is <code>CategorySeeder</code> -> <code>ArticleSeeder</code> -> <code>CommentSeeder</code> in <code>MainSeeder</code>.</p>
+
+<pre><code class="php">// src/Blog/Admin/MainSeeder.php
+
+// ...
+
+class MainSeeder extends AbstractSeeder
+{
+    /**
+     * doExecute
+     *
+     * @return  void
+     */
+    public function doExecute()
+    {
+        $this-&gt;execute(CategorySeeder::class);
+
+        $this-&gt;execute(ArticleSeeder::class);
+
+        $this-&gt;execute(CommentSeeder::class);
+
+        // @muse-placeholder  seeder-execute  Do not remove this.
+    }
+
+    // ...
+</code></pre>
+
+<p>Then add modify all other seeder class to:</p>
+
+<pre><code class="php">// src/Blog/Admin/Seed/CategorySeeder.php
+
+// ...
+
+class CategorySeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+        $faker = Factory::create();
+
+        foreach (range(1, 7) as $i)
+        {
+            $data = new Data;
+
+            $data['title']       = $faker-&gt;word;
+            $data['alias']       = OutputFilter::stringURLSafe($data['title']);
+            $data['version']     = rand(1, 50);
+            $data['created']     = $faker-&gt;dateTime-&gt;format(DateTime::FORMAT_SQL);
+            $data['created_by']  = rand(20, 100);
+            $data['modified']    = $faker-&gt;dateTime-&gt;format(DateTime::FORMAT_SQL);
+            $data['modified_by'] = rand(20, 100);
+            $data['ordering']    = $i;
+            $data['state']       = $faker-&gt;randomElement(array(1, 1, 1, 1, 0, 0));
+            $data['language']    = 'en-GB';
+            $data['params']      = '';
+
+            CategoryMapper::createOne($data);
+
+            $this-&gt;outCounting();
+        }
+    }
+
+    public function doClean()
+    {
+        $this-&gt;truncate(Table::CATEGORIES);
+    }
+}
+</code></pre>
+
+<pre><code class="php">// src/Blog/Admin/Seed/ArticleSeeder.php
+
+// ...
+
+class ArticleSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+        $faker = Factory::create();
+
+        $categories = CategoryMapper::findAll();
+
+        foreach ($categories as $category)
+        {
+            foreach (range(1, rand(3, 5)) as $i)
+            {
+                $data = new Data;
+
+                $data['title']       = $faker-&gt;sentence(rand(3, 5));
+                $data['alias']       = OutputFilter::stringURLSafe($data['title']);
+                $data['category_id'] = $category-&gt;id;
+                $data['introtext']   = $faker-&gt;paragraph(5);
+                $data['fulltext']    = $faker-&gt;paragraph(5);
+                $data['version']     = rand(1, 50);
+                $data['created']     = $faker-&gt;dateTime-&gt;format(DateTime::FORMAT_SQL);
+                $data['created_by']  = rand(20, 100);
+                $data['modified']    = $faker-&gt;dateTime-&gt;format(DateTime::FORMAT_SQL);
+                $data['modified_by'] = rand(20, 100);
+                $data['ordering']    = $i;
+                $data['state']       = $faker-&gt;randomElement(array(1, 1, 1, 1, 0, 0));
+                $data['language']    = 'en-GB';
+                $data['params']      = '';
+
+                ArticleMapper::createOne($data);
+
+                $this-&gt;outCounting();
+            }
+        }
+    }
+
+    public function doClean()
+    {
+        $this-&gt;truncate(Table::ARTICLES);
+    }
+}
+</code></pre>
+
+<pre><code class="php">// src/Blog/Admin/Seed/CommentSeeder.php
+
+// ...
+
+class CommentSeeder extends AbstractSeeder
+{
+    public function doExecute()
+    {
+        $faker = Factory::create();
+
+        $articles = ArticleMapper::findAll();
+
+        foreach ($articles as $article)
+        {
+            foreach (range(1, rand(1, 7)) as $i)
+            {
+                $data = new Data;
+
+                $data['article_id'] = $article-&gt;id;
+                $data['name']       = $faker-&gt;name;
+                $data['email']      = $faker-&gt;email;
+                $data['text']       = $faker-&gt;paragraph(5);
+                $data['created']    = $faker-&gt;dateTime-&gt;format(DateTime::FORMAT_SQL);
+                $data['ordering']   = $i;
+                $data['state']      = $faker-&gt;randomElement(array(1, 1, 1, 1, 0, 0));
+                $data['params']     = '';
+
+                CommentMapper::createOne($data);
+
+                $this-&gt;outCounting();
+            }
+        }
+    }
+
+    public function doClean()
+    {
+        $this-&gt;db-&gt;getTable(Table::COMMENTS)-&gt;truncate();
+    }
+}
+</code></pre>
+
+<p>Run seeder import</p>
+
+<pre><code class="bash">php windwalker seed import -p=admin
+
+# OR
+
+php windwalker migration reset --seed -p=admin
+</code></pre>
+
+<p>If migration and seeder works fine, open the admin page, you will see sample data to test.</p>
+
+<p><img src="http://i.imgur.com/qhyCxmp.jpg" alt="Imgur" /></p>
+
+<p>The first <code>Categories</code> menu item is a placeholder, you can delete it in <code>src/Blog/Admin/Templates/_global/admin/submenu.blade.php</code>.</p>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/tut/start.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>Admin UI Guide | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="../../media/css/prism.css" />
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Admin UI Guide | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+                                <script src="../../media/js/prism.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="../../documentation/3.x/start/installation.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../rad/start/introduction.html">
+                        <span class="menu-item-title">RAD</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Admin UI Guide</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+    
+        <li class="uk-nav-header">Phoenix RAD</li>
+                    <li class="">
+                <a href="../../rad/start/introduction.html">Introduction</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/core.html">Core Concept</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/generator.html">Generator</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Tutorial</li>
+                    <li class="uk-active">
+                <a href="../../rad/tut/guide.html">Admin UI Guide</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/start.html">Start A Blog</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/grid.html">Prepare Grid View</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/form.html">Form &amp; Edit</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/filter.html">Filter &amp; Search</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/batch.html">Batch</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>
+    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h2>Phoenix Admin UI</h2>
+
+<p>If you init a package with <code>default</code> template, you may see this admin UI interface.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/9725055/0cc4e1fc-5613-11e5-9f0d-c373d7d68c87.png" alt="img" /></p>
+
+<blockquote>
+  <p>To remove the stars (<code>**</code>), please open <code>/etc/dev/config.yml</code> and set <code>language.debug</code> to <code>0</code>.</p>
+</blockquote>
+
+<h2>Grid Page</h2>
+
+<p>Grid table is the main part of List manager page.</p>
+
+<h3>Change State</h3>
+
+<p>You may check some rows and press buttons to operate this items.</p>
+
+<p><img src="http://i.imgur.com/1UxL0ML.jpg" alt="Imgur" /></p>
+
+<p>Or click the state button to publish / close / copy or delete an item.</p>
+
+<p><img src="http://i.imgur.com/UHp4TxQ.jpg" alt="Imgur" /></p>
+
+<h3>Ordering</h3>
+
+<p><img src="http://i.imgur.com/hWWHstH.jpg" alt="Imgur" /></p>
+
+<h3>Pagination</h3>
+
+<p><img src="http://i.imgur.com/v96Pl9B.jpg" alt="Imgur" /></p>
+
+<h3>Filter Bar</h3>
+
+<p>Filter help us search or filter items.</p>
+
+<h4>Search</h4>
+
+<p>Type something to search keyword.</p>
+
+<p><img src="http://i.imgur.com/EH4L5ot.jpg" alt="Imgur" /></p>
+
+<h4>Filters</h4>
+
+<p>Click <code>Filters</code> button will expand filter tools. select a state to filter items.</p>
+
+<p><img src="http://i.imgur.com/uw6B6SV.jpg" alt="Imgur" /></p>
+
+<p>You may click <code>X</code> button to clear both search and filters.</p>
+
+<p><img src="http://i.imgur.com/NwA569R.jpg" alt="Imgur" /></p>
+
+<h3>Batch</h3>
+
+<p>Batch is a useful function to update multiple items in one time.</p>
+
+<p><img src="http://i.imgur.com/rbiI9yI.jpg" alt="Imgur" /></p>
+
+<h2>Edit Page</h2>
+
+<p>Click an item title or the <code>Create</code> green button, you will enter the edit page.</p>
+
+<p><img src="http://i.imgur.com/bZZBHpx.jpg" alt="Imgur" /></p>
+
+<p>If you click save without filling any field, the validation will auto work to prevent form submit.</p>
+
+<p><img src="http://i.imgur.com/qOJ7iY0.jpg" alt="Imgur" /></p>
+
+<p>If you enter the title and save, it will show success message.</p>
+
+<p><img src="http://i.imgur.com/cdY5h6r.jpg" alt="Imgur" /></p>
+
+<p>Click <code>Save &amp; Close</code> or <code>Cancel</code>, will back to grid page.</p>
+
+<p><img src="http://i.imgur.com/A3zSr6T.jpg" alt="Imgur" /></p>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/tut/guide.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

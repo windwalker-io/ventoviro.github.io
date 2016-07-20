@@ -8,7 +8,7 @@
     {% for title, section in menus %}
     <li class="uk-nav-header">{{ title }}</li>
         {% for id, item in section %}
-            <li class="{{ helper.doc.getPath(path) == id ? 'uk-active' : '' }}">
+            <li class="{{ helper.doc.getPath(path, version) == id ? 'uk-active' : '' }}">
                 <a href="{{ uri.base }}{{ menu }}/{{ version ? version ~ '/' : '' }}{{ id }}.html">{{ item }}</a>
             </li>
         {% endfor %}

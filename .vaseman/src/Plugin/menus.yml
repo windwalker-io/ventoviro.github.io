@@ -112,3 +112,16 @@ documentation:
             more/debugging: Debugging
             more/error-handling: Error Handling
             more/more-packages: More Packages
+rad:
+    Phoenix RAD:
+        start/introduction: Introduction
+        start/getting-started: Getting Started
+        start/core: Core Concept
+        start/generator: Generator
+    Tutorial:
+        tut/guide: Admin UI Guide
+        tut/start: Start A Blog
+        tut/grid: Prepare Grid View
+        tut/form: Form & Edit
+        tut/filter: Filter & Search
+        tut/batch: Batch

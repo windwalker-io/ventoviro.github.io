@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>Getting Started | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="../../media/css/prism.css" />
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Getting Started | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+                                <script src="../../media/js/prism.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="../../documentation/3.x/start/installation.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../rad/start/introduction.html">
+                        <span class="menu-item-title">RAD</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Getting Started</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+    
+        <li class="uk-nav-header">Phoenix RAD</li>
+                    <li class="">
+                <a href="../../rad/start/introduction.html">Introduction</a>
+            </li>
+                    <li class="uk-active">
+                <a href="../../rad/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/core.html">Core Concept</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/generator.html">Generator</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Tutorial</li>
+                    <li class="">
+                <a href="../../rad/tut/guide.html">Admin UI Guide</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/start.html">Start A Blog</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/grid.html">Prepare Grid View</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/form.html">Form &amp; Edit</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/filter.html">Filter &amp; Search</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/batch.html">Batch</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>
+    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h2>Installation</h2>
+
+<p>Please install Windwalker Framework first. See <a href="../../documentation/3.x/start/installation.html">Windwalker Installation</a></p>
+
+<p>Then add <code>"windwalker/phoenix": "~1.1"</code> to require block and run <code>composer update</code>.</p>
+
+<h3>Register Phoenix Package</h3>
+
+<p>Add Phoenix package object to <code>etc/app/windwalker.php</code>.</p>
+
+<pre><code class="php">// ...
+
+    'packages' =&gt; [
+        // ...
+        'phoenix' =&gt; Phoenix\PhoenixPackage::class
+    ]
+
+// ...
+</code></pre>
+
+<h3>Install Phoenix Assets</h3>
+
+<p>Run this command to install phoenix assets:</p>
+
+<pre><code class="bash">php windwalker package install phoenix
+</code></pre>
+
+<p>See <a href="../../documentation/3.x/services/asset.html#sync-package-assets">Sync Package Assets</a></p>
+
+<h2>Generate A New Package</h2>
+
+<p>Please make sure you have correct database configuration, then please type:</p>
+
+<pre><code class="bash">$ php windwalker muse init Flower sakura.sakuras -sm
+</code></pre>
+
+<p>And you will see this result:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/9724699/858b4cf2-560e-11e5-9137-956532efdb2e.png" alt="img" /></p>
+
+<p>Package <code>flower</code> has been auto generated. We must register this package too, add it in <code>etc/app/windwalker.php</code>:</p>
+
+<pre><code class="php">// ...
+
+    'packages' =&gt; [
+        // ...
+        'phoenix' =&gt; Phoenix\PhoenixPackage::class,
+        'flower'  =&gt; Flower\FlowerPackage::class
+    ]
+
+// ...
+</code></pre>
+
+<p>Then create symlink to assets of this package:</p>
+
+<pre><code class="bash">php windwalker asset sync flower [--hard]
+</code></pre>
+
+<p>Direct sub routing to package routing at <code>etc/routing.yml</code>:</p>
+
+<pre><code class="yaml">## etc/routing.yml
+
+##...
+
+## Add this route
+flower:
+    pattern: /flower
+    package: flower
+</code></pre>
+
+<p>OK, now we can open <code>http://localhost/{your_project}/www/flower/sakuras</code> in browser, you will see a sample admin UI.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/9724923/231ea408-5611-11e5-8448-ff29aa059306.png" alt="img" /></p>
+
+<p>Use PHP built-in server:</p>
+
+<pre><code class="bash">cd {your_project}/www
+php -S localhost:8000
+</code></pre>
+
+<p>And open <code>http://localhost:8000/flower/sakuras</code> to test your application.</p>
+
+<h2>Debug Mode</h2>
+
+<p>Add <code>/dev.php</code> before your URL, Windwalker will start debug mode and provides a powerful debug console.</p>
+
+<blockquote>
+  <p><code>http://localhost:8000/dev.php/flower/sakuras</code></p>
+</blockquote>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/9725055/0cc4e1fc-5613-11e5-9f0d-c373d7d68c87.png" alt="img" /></p>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/start/getting-started.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

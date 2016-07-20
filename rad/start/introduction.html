@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>Phoenix RAD | Windwalker - A Modern PHP Framework</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="../../media/css/prism.css" />
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Phoenix RAD | Windwalker - A Modern PHP Framework">
+        <meta property="og:site_name" content="Windwalker Framework">
+
+            
+
+    <style>
+        #header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 500;
+            border-bottom: 1px solid #eee;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+    </style>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+                                <script src="../../media/js/prism.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.article-content pre code').each(function(i, block) {
+                    var $this = $(this);
+
+                    $this.attr('class', 'language-' + $this.attr('class'));
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="../../documentation/3.x/start/installation.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../rad/start/introduction.html">
+                        <span class="menu-item-title">RAD</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Phoenix RAD</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    
+    
+        <li class="uk-nav-header">Phoenix RAD</li>
+                    <li class="uk-active">
+                <a href="../../rad/start/introduction.html">Introduction</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/core.html">Core Concept</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/start/generator.html">Generator</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Tutorial</li>
+                    <li class="">
+                <a href="../../rad/tut/guide.html">Admin UI Guide</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/start.html">Start A Blog</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/grid.html">Prepare Grid View</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/form.html">Form &amp; Edit</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/filter.html">Filter &amp; Search</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/tut/batch.html">Batch</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>
+    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h2>What is Phoenix RAD</h2>
+
+<p>Phoenix is a RAD (Rapid Application Development) package for Windwalker, it provides a set of Model, View and Controllers
+with different functions to quickly build web admin system, and a code generator to help us create application scaffold.</p>
+
+<h2>Features List</h2>
+
+<ul>
+<li>MVC scaffolding</li>
+<li>Advanced controller, mode and view classes.</li>
+<li>Powerful admin template, scripts and tools.</li>
+<li>Grid helper to build sorting, ordering, pagination, search and filter tools.</li>
+<li>Asset Minify</li>
+<li>Data entity auto-complete</li>
+<li>Extends Form Fields</li>
+<li>Easy setup HTML <code>&lt;head&gt;</code> and metadata.</li>
+<li>Useful JS scripts integration.</li>
+<li>Uuid generator.</li>
+</ul>
+
+<h2>Screen Shot</h2>
+
+<h3>Admin Tools</h3>
+
+<p>Grid View:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977454/b325aec8-4e88-11e6-915c-42c522479b9f.jpg" alt="p-2016-07-20-004" /></p>
+
+<p>Filter and Search:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977558/585e02dc-4e89-11e6-8b8b-816bb4adde90.jpg" alt="p-2016-07-20-005" /></p>
+
+<p>Sorting and Ordering:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977589/8f1a54ce-4e89-11e6-99af-0ca3eea3ae38.jpg" alt="p-2016-07-20-006" /></p>
+
+<p>Batch Operation:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977619/cd1f9432-4e89-11e6-8fff-906e791e4208.png" alt="image" /></p>
+
+<p>Powerful Form Toolkit</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977645/f065abac-4e89-11e6-9e8f-9d152d01c0bc.png" alt="image" /></p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977839/2ac6f0b6-4e8b-11e6-8b0f-bec4f71fd295.jpg" alt="p-2016-07-20-011" /></p>
+
+<p>Easily select item from other tables (GIF):</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977777/b65f40b6-4e8a-11e6-899d-f754edb401df.gif" alt="modal-field" /></p>
+
+<p>Built-in Validation Integrating</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977817/0901dc0c-4e8b-11e6-96e2-fb949d4fcf30.jpg" alt="p-2016-07-20-010" /></p>
+
+<h3>Simple Scaffold</h3>
+
+<p>A simple frontend template to build application:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977910/99c79614-4e8b-11e6-9760-4840a37d8526.jpg" alt="p-2016-07-20-012" /></p>
+
+<h3>Empty Scaffold</h3>
+
+<p>Pure MVC frame to let you fill your code.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16978020/3a9314ec-4e8c-11e6-841c-7389ee42360f.jpg" alt="p-2016-07-20-013" /></p>
+
+<h3>Vue Script Includes</h3>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16978046/5f91a830-4e8c-11e6-9184-c39e42dc7041.jpg" alt="p-2016-07-13-001" /></p>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/start/introduction.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

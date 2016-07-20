@@ -8,10 +8,14 @@ use Windwalker\Registry\Registry;
 
 class DocHelper extends AbstractHelper
 {
-	public function getPath($paths)
+	public function getPath($paths, $version = null)
 	{
 		array_shift($paths);
-		array_shift($paths);
+
+		if ($version)
+		{
+			array_shift($paths);
+		}
 
 		$paths = implode('/', $paths);
 
