@@ -146,3 +146,17 @@ catch (Error)
 Phoenix.Grid.reorderAll();
 Phoenix.Grid.reorder();
 ```
+
+## Multi-Select
+
+Use this script you can press `shift + click` to select multiple checkboxes:
+
+``` php
+\Phoenix\Script\PhoenixScript::multiSelect();
+
+// Custom selector
+\Phoenix\Script\PhoenixScript::multiSelect('#my-form table');
+```
+
+![multi-select](https://cloud.githubusercontent.com/assets/1639206/17023918/6391d444-4f88-11e6-9822-d23b771e6d59.gif)
+

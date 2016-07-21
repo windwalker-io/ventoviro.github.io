@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Phoenix RAD | Windwalker - A Modern PHP Framework</title>
+        <title>Validation | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Phoenix RAD | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Validation | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -102,7 +102,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Phoenix RAD</h1>
+        <h1>Validation</h1>
     </div>
         </div>
     </section>
@@ -115,7 +115,7 @@
     
     
         <li class="uk-nav-header">Phoenix RAD</li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../rad/start/introduction.html">Introduction</a>
             </li>
                     <li class="">
@@ -163,7 +163,7 @@
                     <li class="">
                 <a href="../../rad/js/grid.html">Grid</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../rad/js/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -185,80 +185,141 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>What is Phoenix RAD</h2>
+                    <h2>Introduction</h2>
 
-<p>Phoenix is a RAD (Rapid Application Development) package for Windwalker, it provides a set of Model, View and Controllers
-with different functions to quickly build web admin system, and a code generator to help us create application scaffold.</p>
+<p>Phoenix provides a built-in JS validation object to help us do front-end form validation.</p>
 
-<h2>Features List</h2>
+<p>Include Phoenix Validation:</p>
+
+<pre><code class="php">\Phoenix\Script\PhoenixScript::formValidation();
+
+// Custom selector and options
+\Phoenix\Script\PhoenixScript::formValidation('#my-form', [
+    'scroll' =&gt; [
+        'enabled'  =&gt; true,
+        'offset'   =&gt; -100,
+        'duration' =&gt; 1000
+    ]
+]);
+</code></pre>
+
+<h2>Required</h2>
+
+<p>Add required to form field:</p>
+
+<pre><code class="php">// In FieldDefinition
+
+$this-&gt;text('title')
+    -&gt;label('Title')
+    -&gt;required();
+
+</code></pre>
+
+<p>OR just add it to HTML</p>
+
+<pre><code class="html">&lt;input name="title" type="text" required /&gt;
+</code></pre>
+
+<p>Then Validation will block form submit action if this input is empty, and auto scroll to this input:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/17024215/9e40782e-4f89-11e6-8c23-06d97085d8df.gif" alt="required" /></p>
+
+<blockquote>
+  <p>You can also add <code>required</code> to class attribute to enable validation.</p>
+</blockquote>
+
+<h2>Validate Values</h2>
+
+<p>We can check input values matches some formats or not, and show warning and hint.</p>
+
+<p>Add <code>validate-xxx</code> class to form field:</p>
+
+<pre><code class="php">// In FieldDefinition
+
+$this-&gt;text('url')
+    -&gt;label('URL')
+    -&gt;setClass('validate-url');
+
+</code></pre>
+
+<p>Now if input has value and it not matches the format you set, validator will show warning to this input:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/17024500/bac3484a-4f8a-11e6-9150-98a1efee5b91.jpg" alt="p-2016-07-21-006" /></p>
+
+<blockquote>
+  <p>Validator will be ignored if input has no value, only checked if user typed something in this input.</p>
+</blockquote>
+
+<p>Available Default Validators:</p>
 
 <ul>
-<li>MVC scaffolding</li>
-<li>Advanced controller, mode and view classes.</li>
-<li>Powerful admin template, scripts and tools.</li>
-<li>Grid helper to build sorting, ordering, pagination, search and filter tools.</li>
-<li>Asset Minify</li>
-<li>Data entity auto-complete</li>
-<li>Extends Form Fields</li>
-<li>Easy setup HTML <code>&lt;head&gt;</code> and metadata.</li>
-<li>Useful JS scripts integration.</li>
-<li>Uuid generator.</li>
+<li><code>validate-password</code></li>
+<li><code>validate-numeric</code></li>
+<li><code>validate-email</code></li>
+<li><code>validate-url</code></li>
+<li><code>validate-alnum</code></li>
+<li><code>validate-color</code></li>
+<li><code>validate-creditcard</code></li>
+<li><code>validate-ip</code></li>
 </ul>
 
-<h2>Screen Shot</h2>
+<h2>Add Custom Validator</h2>
 
-<h3>Admin Tools</h3>
+<p>You can add your own validators in runtime. Here we add a password check validator.</p>
 
-<p>Grid View:</p>
+<pre><code class="js">// Get Validation object
+var validation = $('#admin-form').validation();
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977454/b325aec8-4e88-11e6-915c-42c522479b9f.jpg" alt="p-2016-07-20-004" /></p>
+// Add validator
+validation.addValidator('password-check', function (value, $input) {
+    return /^\S[\S ]{2,98}\S$/.test(value) &amp;&amp; $('.input-passwird').val() == value;
+})
+</code></pre>
 
-<p>Filter and Search:</p>
+<p>This validator will check password value is valid string and matches <code>input.input-password</code> value.</p>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977558/585e02dc-4e89-11e6-8b8b-816bb4adde90.jpg" alt="p-2016-07-20-005" /></p>
+<h3>Hint Text</h3>
 
-<p>Sorting and Ordering:</p>
+<p>We can add text hint to a validator:</p>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977589/8f1a54ce-4e89-11e6-99af-0ca3eea3ae38.jpg" alt="p-2016-07-20-006" /></p>
+<pre><code class="js">// Add validator
+validation.addValidator('url', function(value, element) {
+    value = punycode.toASCII(value);
+    var regex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i;
+    return regex.test(value);
+}, {notice: 'Not a valid URL'})
+</code></pre>
 
-<p>Batch Operation:</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/17025137/329497be-4f8d-11e6-8d70-cf15f37a3642.jpg" alt="p-2016-07-21-007" /></p>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977619/cd1f9432-4e89-11e6-8fff-906e791e4208.png" alt="image" /></p>
+<p>You can also use callback to generate hint text:</p>
 
-<p>Powerful Form Toolkit</p>
+<pre><code class="js">// Add validator
+validation.addValidator('url', function(value, element) {
+    // ...
+}, {notice: function ($input, validation) {
+    return 'Input: ' + $input.attr('name') + ' is invalid.';
+}})
+</code></pre>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977645/f065abac-4e89-11e6-9e8f-9d152d01c0bc.png" alt="image" /></p>
+<h2>Call Validation By JS</h2>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977839/2ac6f0b6-4e8b-11e6-8b0f-bec4f71fd295.jpg" alt="p-2016-07-20-011" /></p>
+<p>You can manually call validation by JS code without a submit event:</p>
 
-<p>Easily select item from other tables (GIF):</p>
+<pre><code class="js">// Validate all inputs
+$('#admin-form').validation()-&gt;validateAll();
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977777/b65f40b6-4e8a-11e6-899d-f754edb401df.gif" alt="modal-field" /></p>
+// Add field to input queue to validate
+$('#admin-form').validation().addField($('.input-myfield'));
 
-<p>Built-in Validation Integrating</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977817/0901dc0c-4e8b-11e6-96e2-fb949d4fcf30.jpg" alt="p-2016-07-20-010" /></p>
-
-<h3>Simple Scaffold</h3>
-
-<p>A simple frontend template to build application:</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977910/99c79614-4e8b-11e6-9760-4840a37d8526.jpg" alt="p-2016-07-20-012" /></p>
-
-<h3>Empty Scaffold</h3>
-
-<p>Pure MVC frame to let you fill your code.</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16978020/3a9314ec-4e8c-11e6-841c-7389ee42360f.jpg" alt="p-2016-07-20-013" /></p>
-
-<h3>Vue Script Includes</h3>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16978046/5f91a830-4e8c-11e6-9184-c39e42dc7041.jpg" alt="p-2016-07-13-001" /></p>
+// Validate one input
+$('#admin-form').validation().validate($('.input-myfield'))
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/start/introduction.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/validation.md">improve</a> this document.
     </p>
                 </article>
             </div>

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Phoenix RAD | Windwalker - A Modern PHP Framework</title>
+        <title>Crypto | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Phoenix RAD | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Crypto | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -102,7 +102,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Phoenix RAD</h1>
+        <h1>Crypto</h1>
     </div>
         </div>
     </section>
@@ -115,7 +115,7 @@
     
     
         <li class="uk-nav-header">Phoenix RAD</li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../rad/start/introduction.html">Introduction</a>
             </li>
                     <li class="">
@@ -166,7 +166,7 @@
                     <li class="">
                 <a href="../../rad/js/validation.html">Validation</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../rad/js/crypto.html">Crypto</a>
             </li>
                     <li class="">
@@ -185,80 +185,58 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>What is Phoenix RAD</h2>
+                    <h2>Instruction</h2>
 
-<p>Phoenix is a RAD (Rapid Application Development) package for Windwalker, it provides a set of Model, View and Controllers
-with different functions to quickly build web admin system, and a code generator to help us create application scaffold.</p>
+<p><code>Phoenix.Crypto</code> is a Phoenix JS tool to help us do text encryption and decryption in browser side by simple XOR cipher.</p>
 
-<h2>Features List</h2>
+<p>Include Crypto:</p>
 
-<ul>
-<li>MVC scaffolding</li>
-<li>Advanced controller, mode and view classes.</li>
-<li>Powerful admin template, scripts and tools.</li>
-<li>Grid helper to build sorting, ordering, pagination, search and filter tools.</li>
-<li>Asset Minify</li>
-<li>Data entity auto-complete</li>
-<li>Extends Form Fields</li>
-<li>Easy setup HTML <code>&lt;head&gt;</code> and metadata.</li>
-<li>Useful JS scripts integration.</li>
-<li>Uuid generator.</li>
-</ul>
+<pre><code class="php">\Phoenix\Script\PhoenixScript::crypto();
+</code></pre>
 
-<h2>Screen Shot</h2>
+<h2>Encrypt/Decrypt Text</h2>
 
-<h3>Admin Tools</h3>
+<pre><code class="js">var text = 'Windwalker';
+var key = 'dfG9O34F';
+var secret = Phoenix.Crypto.encrypt(key, text);
 
-<p>Grid View:</p>
+console.log(secret);
+console.log(Phoenix.Crypto.decrypt(key, secret));
+</code></pre>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977454/b325aec8-4e88-11e6-915c-42c522479b9f.jpg" alt="p-2016-07-20-004" /></p>
+<p>Output:</p>
 
-<p>Filter and Search:</p>
+<pre><code>NTEsMTUsNDEsOTMsNTYsODIsODgsNDUsMSwyMA==
+Windwalker
+</code></pre>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977558/585e02dc-4e89-11e6-8b8b-816bb4adde90.jpg" alt="p-2016-07-20-005" /></p>
+<h2>Base64</h2>
 
-<p>Sorting and Ordering:</p>
+<p>Simple methods to wrap <code>btoa()</code> and <code>atob()</code></p>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977589/8f1a54ce-4e89-11e6-99af-0ca3eea3ae38.jpg" alt="p-2016-07-20-006" /></p>
+<pre><code class="js">var base64 = Phoenix.Crypto.base64Encode('Hello');
 
-<p>Batch Operation:</p>
+console.log(base64);
+console.log(Phoenix.Crypto.base64Decode(base64));
+</code></pre>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977619/cd1f9432-4e89-11e6-8fff-906e791e4208.png" alt="image" /></p>
+<p>Output:</p>
 
-<p>Powerful Form Toolkit</p>
+<pre><code class="js">SGVsbG8=
+Hello
+</code></pre>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977645/f065abac-4e89-11e6-9e8f-9d152d01c0bc.png" alt="image" /></p>
+<h2>MD5</h2>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977839/2ac6f0b6-4e8b-11e6-8b0f-bec4f71fd295.jpg" alt="p-2016-07-20-011" /></p>
+<p>A JS md5 implementation, will be useful if you need an identify when you generating elements in frontend.</p>
 
-<p>Easily select item from other tables (GIF):</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977777/b65f40b6-4e8a-11e6-899d-f754edb401df.gif" alt="modal-field" /></p>
-
-<p>Built-in Validation Integrating</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977817/0901dc0c-4e8b-11e6-96e2-fb949d4fcf30.jpg" alt="p-2016-07-20-010" /></p>
-
-<h3>Simple Scaffold</h3>
-
-<p>A simple frontend template to build application:</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977910/99c79614-4e8b-11e6-9760-4840a37d8526.jpg" alt="p-2016-07-20-012" /></p>
-
-<h3>Empty Scaffold</h3>
-
-<p>Pure MVC frame to let you fill your code.</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16978020/3a9314ec-4e8c-11e6-841c-7389ee42360f.jpg" alt="p-2016-07-20-013" /></p>
-
-<h3>Vue Script Includes</h3>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/16978046/5f91a830-4e8c-11e6-9184-c39e42dc7041.jpg" alt="p-2016-07-13-001" /></p>
+<pre><code class="js">Phoenix.Crypto.md5('Windwalker'); // fa0a731220e28af75afba7135723015e
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/start/introduction.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/crypto.md">improve</a> this document.
     </p>
                 </article>
             </div>

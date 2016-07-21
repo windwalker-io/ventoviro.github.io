@@ -164,6 +164,12 @@
                 <a href="../../rad/js/grid.html">Grid</a>
             </li>
                     <li class="">
+                <a href="../../rad/js/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a href="../../rad/js/crypto.html">Crypto</a>
+            </li>
+                    <li class="">
                 <a href="../../rad/js/csrf.html">CSRF for Ajax</a>
             </li>
                     <li class="">
@@ -310,6 +316,18 @@ catch (Error)
 Phoenix.Grid.reorderAll();
 Phoenix.Grid.reorder();
 </code></pre>
+
+<h2>Multi-Select</h2>
+
+<p>Use this script you can press <code>shift + click</code> to select multiple checkboxes:</p>
+
+<pre><code class="php">\Phoenix\Script\PhoenixScript::multiSelect();
+
+// Custom selector
+\Phoenix\Script\PhoenixScript::multiSelect('#my-form table');
+</code></pre>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/17023918/6391d444-4f88-11e6-9822-d23b771e6d59.gif" alt="multi-select" /></p>
 
                         <hr />
 
