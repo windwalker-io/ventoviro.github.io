@@ -69,7 +69,7 @@ Phoenix provides `backbone.js` if you want to build a SPA.
 
 ``` php
 \Phoenix\Script\CoreScript::backbone();
-``
+```
 
 See [Backbone.js](http://backbonejs.org/)
 
