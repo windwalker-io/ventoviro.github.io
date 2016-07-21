@@ -125,3 +125,11 @@ rad:
         tut/form: Form & Edit
         tut/filter: Filter & Search
         tut/batch: Batch
+    Javascript:
+        js/jquery: jQuery
+        js/libraries: Base Libraries
+        js/core: Phoenix Core
+        js/grid: Grid
+        js/csrf: CSRF for Ajax
+        js/bootstrap: Bootstrap
+        js/vue: Vue

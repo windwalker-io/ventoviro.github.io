@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Core Concept | Windwalker - A Modern PHP Framework</title>
+        <title>Grid Script | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Core Concept | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Grid Script | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -102,7 +102,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Core Concept</h1>
+        <h1>Grid Script</h1>
     </div>
         </div>
     </section>
@@ -121,7 +121,7 @@
                     <li class="">
                 <a href="../../rad/start/getting-started.html">Getting Started</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../rad/start/core.html">Core Concept</a>
             </li>
                     <li class="">
@@ -160,7 +160,7 @@
                     <li class="">
                 <a href="../../rad/js/core.html">Phoenix Core</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../rad/js/grid.html">Grid</a>
             </li>
                     <li class="">
@@ -179,181 +179,142 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Groups</h2>
+                    <h2>Introduction</h2>
 
-<p>Every database table in phoenix will be separated to two MVC groups. One is singular item and another is plural list.
-Every MVC group has it's own Model/View/Controller. For example, a table named: <code>sakuras</code>, we will use <code>Sakura</code> Controller
-to modify single item record, and a <code>Sakuras</code> Controller to handle multiple items operation like <code>filter</code>, <code>ordering</code> or <code>batch update</code>.</p>
+<p><code>PhoenixGrid</code> is a helper to operate table list includes <code>sort</code>, <code>batch</code>, <code>select</code> and <code>ordering</code>.</p>
 
-<h2>Definition</h2>
+<p>It will auto included in Phoenix admin template, or use this PHP code to init it:</p>
 
-<h3>Item</h3>
+<pre><code class="php">\Phoenix\Script\PhoenixScript::grid();
 
-<p>A Singular MVC group, used to handle CRUD of single record, with an edit or single item page.</p>
+// OR add custom selector of your &lt;form &gt;
 
-<h4>Edit Page</h4>
+\Phoenix\Script\PhoenixScript::grid('#my-form');
+</code></pre>
 
-<p><code>Edit</code> page means a page with form and inputs to send data for update an item.
-For example, a blog article page is an <code>Item page</code>, and an article edit page is an <code>Edit page</code>.</p>
+<h2>Sort</h2>
 
-<h3>List</h3>
+<p>Sort this table by a column name:</p>
 
-<p>A plural MVC group, used to handle multiple items filter, ordering, batch update and copy etc. With a grid page or item list.</p>
+<pre><code class="js">// JS
+Phoenix.Grid.sort('created', 'DESC');
+</code></pre>
 
-<h4>Grid Page</h4>
+<p>After this method called, the form will auto submit and refresh page.</p>
 
-<p><code>Grid</code> page means a table to list items and provides a set of button and tools to operate these items.
-For example, the blog articles/category page is a <code>List page</code>, and admin article manager is a <code>Grid page</code>.</p>
+<p>This method will send <code>list_ordering</code> and <code>list_direction</code> two variables to controller then you can use them to rebuild your SQL.</p>
 
-<h3>Subsystem</h3>
+<h2>Check Row</h2>
 
-<p>Combine singular and plural two MVC groups, they are both maintains same database table.</p>
+<p>Tick a checkbox of specify row.</p>
 
-<p>Below is the structure of these terms.</p>
+<pre><code class="js">// JS
 
-<p><img src="http://i.imgur.com/o8Wlh6i.jpg" alt="Imgur" /></p>
+// Start row is 0, so we tick the second row.
+Phoenix.Grid.checkRow(1);
+</code></pre>
 
-<p>And this is an image of the MVC structure</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/17011424/9e8f52f8-4f40-11e6-8fe5-7e8e95d78f06.jpg" alt="p-2016-07-21-002" /></p>
 
-<p><img src="http://i.imgur.com/iUbloBQ.jpg" alt="Imgur" /></p>
+<p>You must print a checkbox with row number in HTML:</p>
 
-<h2>CRUD</h2>
+<pre><code class="php">&lt;input type="checkbox" class="grid-checkbox" data-row-number="1" name="id[1]" value="2"&gt;
+</code></pre>
 
-<p>CRUD means <code>Create</code> / <code>Read</code> / <code>Update</code> and <code>Delete</code> to one item record.</p>
+<p>Or use <code>GridHelper</code> to generate this checkbox in template:</p>
 
-<p>Phoenix use <code>save</code> to handle <code>create</code> and <code>update</code>. Se you will see <code>CrudModel</code> has only <code>save()</code> method instead <code>create()</code> and <code>update()</code>.</p>
+<pre><code class="php">{{-- In Edge --}}
 
-<p>The save() method will determine that if data has primary key, it will use update process, if data has no primary key, then model will use create process.</p>
+@foreach ($items as $i =&gt; $item)
+    @php($grid-&gt;setItem($item, $i))
+    &lt;tr&gt;
+        {{-- CHECKBOX --}}
+        &lt;td&gt;
+            {!! $grid-&gt;checkbox() !!}
+        &lt;/td&gt;
 
-<h2>REST</h2>
+    {{-- ... --}}
 
-<p>Default RESTful methods has relations to CRUD operation:</p>
+@endforeach
+</code></pre>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>READ</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CREATE</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UPDATE</td>
-  <td>full fields</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>UPDATE</td>
-  <td>partial fields</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>Delete</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
+<h2>Update Row</h2>
 
-<h3>Method Controller Mapping</h3>
+<p>This method can update a row with specify data by sending request to <code>BatchController</code>:</p>
 
-<p>In Windwalker, we use this mapping to call controller.</p>
+<pre><code class="js">// JS
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
+Phoenix.Grid.updateRow(3, null, {task: 'publish'});
+</code></pre>
 
-<p>It's more simpler to write your logic because you can use the exists of primary key to make create or update action.</p>
+<p>This method will update row 3 <code>state =&gt; 0</code>.</p>
 
-<h3>Grid &amp; List Controller</h3>
+<blockquote>
+  <p>You must prepare checkboxes in HTML first to support this method</p>
+</blockquote>
 
-<p>In phoenix, we use this mapping to map list controller:</p>
+<h2>Send Batch Task</h2>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td>Show grid UI</td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CopyController</td>
-  <td>Batch copy items</td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UpdateController</td>
-  <td>Batch update items</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>Controller</td>
-  <td>Filter &amp; search</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td>Delete items</td>
-</tr>
-</tbody>
-</table>
+<p>Send a batch task to update rows:</p>
+
+<pre><code class="js">Phoenix.Grid.batch('unpublish');
+</code></pre>
+
+<h2>Copy Row</h2>
+
+<p>Send a request to duplicate a row:</p>
+
+<pre><code class="js">Phoenix.Grid.copyRow(3);
+</code></pre>
+
+<h2>Delete List</h2>
+
+<p>Delete checked rows.</p>
+
+<pre><code class="js">Phoenix.Grid.deleteList();
+
+// Add custom confirm message
+Phoenix.Grid.deleteList('Are you sure?');
+</code></pre>
+
+<h2>Delete Row</h2>
+
+<pre><code class="js">Phoenix.Grid.deleteRTow(3);
+</code></pre>
+
+<h2>Toggle All Checkboxes</h2>
+
+<pre><code class="js">Phoenix.Grid.toggleAll();
+</code></pre>
+
+<h2>More Methods</h2>
+
+<pre><code class="js">// Count checked checkboxes
+Phoenix.Grid.countChecked();
+
+// Get Checked boxes
+Phoenix.Grid.getChecked();
+
+// Validate there has one or more checked boxes.
+// The method will throw Error instantly if no checked
+try
+{
+    Phoenix.Grid.hasChecked().batch(...);
+}
+catch (Error)
+{
+    // ...
+}
+
+// Reorder
+Phoenix.Grid.reorderAll();
+Phoenix.Grid.reorder();
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/start/core.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/grid.md">improve</a> this document.
     </p>
                 </article>
             </div>

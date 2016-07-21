@@ -92,6 +92,18 @@ Asset::addCSS('css/bootstrap.min.css'); // bootstrap.min.css
 Asset::addCSS('css/bootstrap.css'); // bootstrap.min.css
 ```
 
+## Alias
+
+If you want to override an asset's URL, for instance, to modify a 3rd party scripts, you can use asset alias:
+
+``` php
+Asset::alias('js/my-grid.js', 'phoenix/js/grid.js');
+
+Asset::addJS('phoenix/js/grid.min.js');
+```
+
+Now Windwlaker will include `js/my-grid.js` to HTML, don't worry about `.min`, AssetManager will normalize the path.
+
 ## Asset Versions
 
 Windwalker auto add version hash string to every asset URL. In DEBUG mode, this version string will always refresh
@@ -162,39 +174,52 @@ use Windwalker\Core\Asset\AbstractScript;
 
 class FlowerScript extends AbstractScript
 {
-	public static function core()
+    public static function jquery()
+    {
+        if (!static::inited(__METHOD__))
+        {
+            static::addJS('js/jquery/jquery.min.js');
+        }
+    }
+
+	public static function flower()
 	{
 		if (!static::inited(__METHOD__))
 		{
-			// flower.js need jquery.js first
-			JQueryScript::core();
+			// flower.js needs jquery.js first
+			static::jquery();
 
-			static::addJS('flower.min.js');
-			static::addCSS('flower.min.css');
+			// If we need other scripts, call them first.
+			OtherScript::core();
+
+			static::addJS('js/flower.min.js');
+			static::addCSS('js/flower.min.css');
 		}
 	}
 
 	public static function sakura($selector = '.hasSakura', $options = array())
 	{
+	    $args = get_defined_vars();
+
 		// Include asset file first.
 		if (!static::inited(__METHOD__))
 		{
-			// We need flower.js first
-			static::core();
+			// sakura.js needs flower.js first
+			static::flower();
 
 			// If not in debug mode, Windwalker will auto get min file instead.
 			static::addJS('sakura.js');
 		}
 
-		// Call only once if arguments are same
-		if (!static::inited(__METHOD__, func_get_args()))
+		// Call only once with same arguments
+		if (!static::inited(__METHOD__, $args))
 		{
 			$defaultOptions = array(
 				'foo' => 'bar',
-				'callback' => '\\function () {}' // Start with \\ will not be quote
+				'callback' => '\\function () {}' // Start with \\ will not be quoted
 			);
 
-			// Recursive merge options to defaultOptions.
+			// Recursive merge options to defaultOptions and print a JS option string.
 			$options = $asset::getJSObject($defaultOptions, $options);
 
 			$js = <<<JS
@@ -210,7 +235,7 @@ JS;
 }
 ```
 
-Now use this code to include Bootstrap Calendar every where:
+Now use this code to include `sakura.js` every where:
 
 ``` php
 \Flower\Script\FlowerScript::sakura('.mySakura', array('foo' => 'baz'));

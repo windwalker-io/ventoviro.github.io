@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Core Concept | Windwalker - A Modern PHP Framework</title>
+        <title>Vue | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Core Concept | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Vue | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -102,7 +102,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Core Concept</h1>
+        <h1>Vue</h1>
     </div>
         </div>
     </section>
@@ -121,7 +121,7 @@
                     <li class="">
                 <a href="../../rad/start/getting-started.html">Getting Started</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../rad/start/core.html">Core Concept</a>
             </li>
                     <li class="">
@@ -169,7 +169,7 @@
                     <li class="">
                 <a href="../../rad/js/bootstrap.html">Bootstrap</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../rad/js/vue.html">Vue</a>
             </li>
         
@@ -179,181 +179,166 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Groups</h2>
+                    <h2>Include Vue</h2>
 
-<p>Every database table in phoenix will be separated to two MVC groups. One is singular item and another is plural list.
-Every MVC group has it's own Model/View/Controller. For example, a table named: <code>sakuras</code>, we will use <code>Sakura</code> Controller
-to modify single item record, and a <code>Sakuras</code> Controller to handle multiple items operation like <code>filter</code>, <code>ordering</code> or <code>batch update</code>.</p>
+<p>Phoenix includes <code>vue.js</code> and some official vue plugins to help you build a modern single page application.</p>
 
-<h2>Definition</h2>
+<pre><code class="php">\Phoenix\Script\VueScript::core();
+</code></pre>
 
-<h3>Item</h3>
+<p>Now you can easily use vue in your HTML page:</p>
 
-<p>A Singular MVC group, used to handle CRUD of single record, with an edit or single item page.</p>
+<pre><code class="html">&lt;!-- In &lt;form id="admin-form"&gt; --&gt;
 
-<h4>Edit Page</h4>
+    &lt;input name="foo" type="text" v-model="foo"&gt;
 
-<p><code>Edit</code> page means a page with form and inputs to send data for update an item.
-For example, a blog article page is an <code>Item page</code>, and an article edit page is an <code>Edit page</code>.</p>
+    &lt;script&gt;
+    new Vue({
+        el: '#admin-form',
+        data: {
+            foo: 'bar'
+        }
+    });
+    &lt;/script&gt;
+</code></pre>
 
-<h3>List</h3>
+<p>Or integrate with jQuery:</p>
 
-<p>A plural MVC group, used to handle multiple items filter, ordering, batch update and copy etc. With a grid page or item list.</p>
+<pre><code class="php">@php(Phoenix\Script\JQueryScript::core())
+@php(Phoenix\Script\VueScript::core())
 
-<h4>Grid Page</h4>
+&lt;script&gt;
+    // Run after dom ready
+    jQuery(function ($) {
+        new Vue({
+            el: '#admin-form',
+            data: {
+                foo: 'bar'
+            }
+        });
+    })
+&lt;/script&gt;
 
-<p><code>Grid</code> page means a table to list items and provides a set of button and tools to operate these items.
-For example, the blog articles/category page is a <code>List page</code>, and admin article manager is a <code>Grid page</code>.</p>
+&lt;input name="foo" type="text" v-model="foo"&gt;
+</code></pre>
 
-<h3>Subsystem</h3>
+<h2>Vue Router</h2>
 
-<p>Combine singular and plural two MVC groups, they are both maintains same database table.</p>
+<p>Use Vue router to handle page switch without refresh browser:</p>
 
-<p>Below is the structure of these terms.</p>
+<pre><code class="php">@php(\Phoenix\Script\VueScript::router())
 
-<p><img src="http://i.imgur.com/o8Wlh6i.jpg" alt="Imgur" /></p>
+&lt;div id="app"&gt;
+    &lt;h1&gt;Hello App!&lt;/h1&gt;
+    &lt;p&gt;
+        &lt;a v-link="{ path: '/foo' }"&gt;Go to Foo&lt;/a&gt;
+        &lt;a v-link="{ path: '/bar' }"&gt;Go to Bar&lt;/a&gt;
+    &lt;/p&gt;
+    &lt;router-view&gt;&lt;/router-view&gt;
+&lt;/div&gt;
 
-<p>And this is an image of the MVC structure</p>
+&lt;script&gt;
+    var Foo = Vue.extend({
+        template: '&lt;p&gt;This is foo!&lt;/p&gt;'
+    })
 
-<p><img src="http://i.imgur.com/iUbloBQ.jpg" alt="Imgur" /></p>
+    var Bar = Vue.extend({
+        template: '&lt;p&gt;This is bar!&lt;/p&gt;'
+    })
 
-<h2>CRUD</h2>
+    var App = Vue.extend({})
 
-<p>CRUD means <code>Create</code> / <code>Read</code> / <code>Update</code> and <code>Delete</code> to one item record.</p>
+    var router = new VueRouter()
 
-<p>Phoenix use <code>save</code> to handle <code>create</code> and <code>update</code>. Se you will see <code>CrudModel</code> has only <code>save()</code> method instead <code>create()</code> and <code>update()</code>.</p>
+    router.map({
+        '/foo': {
+            component: Foo
+        },
+        '/bar': {
+            component: Bar
+        }
+    })
 
-<p>The save() method will determine that if data has primary key, it will use update process, if data has no primary key, then model will use create process.</p>
+    router.start(App, '#app')
+&lt;/script&gt;
+</code></pre>
 
-<h2>REST</h2>
+<p>See <a href="http://router.vuejs.org/">Vue Router</a></p>
 
-<p>Default RESTful methods has relations to CRUD operation:</p>
+<h2>Vue Resource</h2>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>READ</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CREATE</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UPDATE</td>
-  <td>full fields</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>UPDATE</td>
-  <td>partial fields</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>Delete</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
+<p>Use vue resource to fetch server data by ajax:</p>
 
-<h3>Method Controller Mapping</h3>
+<pre><code class="php">@php(\Phoenix\Script\VueScript::resource())
 
-<p>In Windwalker, we use this mapping to call controller.</p>
+&lt;script&gt;
+// global Vue object
+Vue.http.get('/flower/sakura', [options]).then(successCallback, errorCallback);
+Vue.http.post('/flower/sakura', [body], [options]).then(successCallback, errorCallback);
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
+// in a Vue instance
+new Vue({
+    ready() {
+        // GET
+        this.$http.get('/flower/sakura').then((response) =&gt; {
+            // success callback
+        }, (response) =&gt; {
+            // error callback
+        });
+    }
+})
+&lt;/script&gt;
+</code></pre>
 
-<p>It's more simpler to write your logic because you can use the exists of primary key to make create or update action.</p>
+<p>Add custom options and global headers:</p>
 
-<h3>Grid &amp; List Controller</h3>
+<pre><code class="php">\Phoenix\Script\VueScript::resource(['root' =&gt; $uri-&gt;path], [
+    'common' =&gt; ['X-Foo' =&gt; 'Bar'],
+    'post' =&gt; ['X-Baz' =&gt; 'Yoo'],
+]);
+</code></pre>
 
-<p>In phoenix, we use this mapping to map list controller:</p>
+<p>See <a href="https://github.com/vuejs/vue-resource">Vue Resource</a></p>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td>Show grid UI</td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CopyController</td>
-  <td>Batch copy items</td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UpdateController</td>
-  <td>Batch update items</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>Controller</td>
-  <td>Filter &amp; search</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td>Delete items</td>
-</tr>
-</tbody>
-</table>
+<h2>VueStrap</h2>
+
+<p>Use VueStrap to integrate Bootstrap:</p>
+
+<pre><code class="php">\Phoenix\Script\VueScript::strap();
+</code></pre>
+
+<p>See <a href="http://yuche.github.io/vue-strap/">VueStrap</a></p>
+
+<h2>Vuex</h2>
+
+<p>Vuex is an application architecture for centralized state management in Vue.js applications.</p>
+
+<pre><code class="php">\Phoenix\Script\VueScript::vuex();
+
+// Add initial state
+
+\Phoenix\Script\VueScript::vuex([
+    'state' =&gt; ['count' =&gt; 0],
+    'mutations' =&gt; [
+        'INCREMENT' =&gt; '\\function (state) { state.count++ }'
+    ]
+]);
+</code></pre>
+
+<p>In HTML</p>
+
+<pre><code class="js">export default new Vuex.Store({
+  state,
+  mutations
+});
+</code></pre>
+
+<p>See <a href="http://vuex.vuejs.org/">Vuex</a></p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/start/core.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/vue.md">improve</a> this document.
     </p>
                 </article>
             </div>

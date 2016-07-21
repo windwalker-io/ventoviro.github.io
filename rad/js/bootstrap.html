@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Core Concept | Windwalker - A Modern PHP Framework</title>
+        <title>Bootstrap | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Core Concept | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Bootstrap | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -102,7 +102,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Core Concept</h1>
+        <h1>Bootstrap</h1>
     </div>
         </div>
     </section>
@@ -121,7 +121,7 @@
                     <li class="">
                 <a href="../../rad/start/getting-started.html">Getting Started</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../rad/start/core.html">Core Concept</a>
             </li>
                     <li class="">
@@ -166,7 +166,7 @@
                     <li class="">
                 <a href="../../rad/js/csrf.html">CSRF for Ajax</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../rad/js/bootstrap.html">Bootstrap</a>
             </li>
                     <li class="">
@@ -179,181 +179,124 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Groups</h2>
+                    <h2>Include Bootstrap</h2>
 
-<p>Every database table in phoenix will be separated to two MVC groups. One is singular item and another is plural list.
-Every MVC group has it's own Model/View/Controller. For example, a table named: <code>sakuras</code>, we will use <code>Sakura</code> Controller
-to modify single item record, and a <code>Sakuras</code> Controller to handle multiple items operation like <code>filter</code>, <code>ordering</code> or <code>batch update</code>.</p>
+<p>Include bootstrap css and js to HTML:</p>
 
-<h2>Definition</h2>
+<pre><code class="php">\Phoenix\Script\BootstrapScript::css();
+\Phoenix\Script\BootstrapScript::script();
+</code></pre>
 
-<h3>Item</h3>
+<h2>Tooltips</h2>
 
-<p>A Singular MVC group, used to handle CRUD of single record, with an edit or single item page.</p>
+<p>Init tooltips:</p>
 
-<h4>Edit Page</h4>
+<pre><code class="php">\Phoenix\Script\BootstrapScript::tooltip();
+</code></pre>
 
-<p><code>Edit</code> page means a page with form and inputs to send data for update an item.
-For example, a blog article page is an <code>Item page</code>, and an article edit page is an <code>Edit page</code>.</p>
+<p>Then use <code>hasTooltip</code> in element class to enable tooltip.</p>
 
-<h3>List</h3>
+<pre><code class="html">&lt;a class="hasTooltip" title"Tooltip Text"&gt;...&lt;/a&gt;
+</code></pre>
 
-<p>A plural MVC group, used to handle multiple items filter, ordering, batch update and copy etc. With a grid page or item list.</p>
+<p>Custom tooltip class:</p>
 
-<h4>Grid Page</h4>
+<pre><code class="php">\Phoenix\Script\BootstrapScript::tooltip('.my-tooltips');
+</code></pre>
 
-<p><code>Grid</code> page means a table to list items and provides a set of button and tools to operate these items.
-For example, the blog articles/category page is a <code>List page</code>, and admin article manager is a <code>Grid page</code>.</p>
+<h2>Checkbox</h2>
 
-<h3>Subsystem</h3>
+<p>Use Awesome Bootstrap Checkboxes:</p>
 
-<p>Combine singular and plural two MVC groups, they are both maintains same database table.</p>
+<pre><code class="php">\Phoenix\Script\BootstrapScript::checkbox();
 
-<p>Below is the structure of these terms.</p>
+// Or use font-awesome icons
 
-<p><img src="http://i.imgur.com/o8Wlh6i.jpg" alt="Imgur" /></p>
+\Phoenix\Script\BootstrapScript::checkbox(BootstrapScript::FONTAWESOME);
+</code></pre>
 
-<p>And this is an image of the MVC structure</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/17014764/e761e8ca-4f58-11e6-8897-e5e7862baa0a.jpg" alt="p-2016-07-21-005" /></p>
 
-<p><img src="http://i.imgur.com/iUbloBQ.jpg" alt="Imgur" /></p>
+<p>See <a href="http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/">Awesome Bootstrap Checkbox</a></p>
 
-<h2>CRUD</h2>
+<h2>Iframe Modal</h2>
 
-<p>CRUD means <code>Create</code> / <code>Read</code> / <code>Update</code> and <code>Delete</code> to one item record.</p>
+<p>Add iframe modal to links:</p>
 
-<p>Phoenix use <code>save</code> to handle <code>create</code> and <code>update</code>. Se you will see <code>CrudModel</code> has only <code>save()</code> method instead <code>create()</code> and <code>update()</code>.</p>
+<pre><code class="php">\Phoenix\Script\BootstrapScript::modal();
+</code></pre>
 
-<p>The save() method will determine that if data has primary key, it will use update process, if data has no primary key, then model will use create process.</p>
+<p>Now add <code>hasModal</code> to <code>&lt;a&gt;</code> as class:</p>
 
-<h2>REST</h2>
+<pre><code class="html">&lt;a class="hasModal" href="http://windwalker.io"&gt;Open Link in Modal&lt;/a&gt;
+</code></pre>
 
-<p>Default RESTful methods has relations to CRUD operation:</p>
+<p>Then this link will open a modal with target page in iframe after clicked.</p>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>READ</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CREATE</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UPDATE</td>
-  <td>full fields</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>UPDATE</td>
-  <td>partial fields</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>Delete</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/17014636/0e63ce94-4f58-11e6-8879-63d06c6ec168.jpg" alt="p-2016-07-21-003" /></p>
 
-<h3>Method Controller Mapping</h3>
+<h2>Calendar</h2>
 
-<p>In Windwalker, we use this mapping to call controller.</p>
+<p>Convert an input to bootstrap calendar:</p>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
+<pre><code class="php">\Phoenix\Script\BootstrapScript::calendar();
+</code></pre>
 
-<p>It's more simpler to write your logic because you can use the exists of primary key to make create or update action.</p>
+<p>HTML</p>
 
-<h3>Grid &amp; List Controller</h3>
+<pre><code class="html">&lt;input class="hasCalendar" name="date"&gt;
+</code></pre>
 
-<p>In phoenix, we use this mapping to map list controller:</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977839/2ac6f0b6-4e8b-11e6-8b0f-bec4f71fd295.jpg" alt="p-2016-07-20-011" /></p>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td>Show grid UI</td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CopyController</td>
-  <td>Batch copy items</td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UpdateController</td>
-  <td>Batch update items</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>Controller</td>
-  <td>Filter &amp; search</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td>Delete items</td>
-</tr>
-</tbody>
-</table>
+<p>You can add some options to configure your calendar:</p>
+
+<pre><code class="php">\Phoenix\Script\BootstrapScript::calendar('.selector', 'YYYY-MM-DD', [
+    'sideBySide' =&gt; true,
+    'calendarWeeks' =&gt; true
+]);
+</code></pre>
+
+<p>See <a href="https://eonasdan.github.io/bootstrap-datetimepicker/">Bootstrap Datepicker</a></p>
+
+<h2>Tab State</h2>
+
+<p>Use <code>tab-state.js</code> to remember last used tab panel when you back to same page:</p>
+
+<pre><code class="php">\Phoenix\Script\BootstrapScript::tabState();
+
+\Phoenix\Script\BootstrapScript::tabState('#selector');
+</code></pre>
+
+<h2>Button Radio</h2>
+
+<p>Convert HTML radio to Bootstrap radio:</p>
+
+<pre><code class="php">\Phoenix\Script\BootstrapScript::buttonRadio();
+</code></pre>
+
+<p>Add <code>btn-group</code> to radio field to enable this feature:</p>
+
+<pre><code class="php">class EditDefinition extends AbstractFieldDefinition
+{
+    public function doDefine()
+    {
+        $this-&gt;radio('state')
+            -&gt;setClass('btn-group')
+            -&gt;option('Published', 1)
+            -&gt;option('Unpublished', 0);
+
+        // ...
+    }
+}
+</code></pre>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/17014674/468fbcf6-4f58-11e6-8285-b300914b7460.jpg" alt="p-2016-07-21-004" /></p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/start/core.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/bootstrap.md">improve</a> this document.
     </p>
                 </article>
             </div>

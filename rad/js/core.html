@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Core Concept | Windwalker - A Modern PHP Framework</title>
+        <title>Phoenix Core Script | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Core Concept | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="Phoenix Core Script | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -102,7 +102,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Core Concept</h1>
+        <h1>Phoenix Core Script</h1>
     </div>
         </div>
     </section>
@@ -121,7 +121,7 @@
                     <li class="">
                 <a href="../../rad/start/getting-started.html">Getting Started</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../rad/start/core.html">Core Concept</a>
             </li>
                     <li class="">
@@ -157,7 +157,7 @@
                     <li class="">
                 <a href="../../rad/js/libraries.html">Base Libraries</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../rad/js/core.html">Phoenix Core</a>
             </li>
                     <li class="">
@@ -179,181 +179,175 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Groups</h2>
+                    <h2>Introduction</h2>
 
-<p>Every database table in phoenix will be separated to two MVC groups. One is singular item and another is plural list.
-Every MVC group has it's own Model/View/Controller. For example, a table named: <code>sakuras</code>, we will use <code>Sakura</code> Controller
-to modify single item record, and a <code>Sakuras</code> Controller to handle multiple items operation like <code>filter</code>, <code>ordering</code> or <code>batch update</code>.</p>
+<p>Phoenix provides a set of useful scripts to help us operate form and input, these scripts based on jQuery so every developers
+can easily learn how to use and integrate it with their own scripts.</p>
 
-<h2>Definition</h2>
+<h2>Phoenix Core</h2>
 
-<h3>Item</h3>
+<p>Phoenix core script is a HTML form operation helper, it will auto included if you generate a phoenix admin template,
+but you can also include it manually in everywhere with first argument as css selector.</p>
 
-<p>A Singular MVC group, used to handle CRUD of single record, with an edit or single item page.</p>
+<pre><code class="php">// In View class
+\Phoenix\Script\PhoenixScript::core();
 
-<h4>Edit Page</h4>
+// Custom selector
+\Phoenix\Script\PhoenixScript::core('#my-form');
 
-<p><code>Edit</code> page means a page with form and inputs to send data for update an item.
-For example, a blog article page is an <code>Item page</code>, and an article edit page is an <code>Edit page</code>.</p>
+// Custom selector and use other variable name.
+\Phoenix\Script\PhoenixScript::core('#my-form', 'MyPhoenix');
 
-<h3>List</h3>
+// In Template
+&lt;?php \Phoenix\Script\PhoenixScript::core(); ?&gt;
 
-<p>A plural MVC group, used to handle multiple items filter, ordering, batch update and copy etc. With a grid page or item list.</p>
+OR
 
-<h4>Grid Page</h4>
+@php(\Phoenix\Script\PhoenixScript::core())
+</code></pre>
 
-<p><code>Grid</code> page means a table to list items and provides a set of button and tools to operate these items.
-For example, the blog articles/category page is a <code>List page</code>, and admin article manager is a <code>Grid page</code>.</p>
+<p>The <code>jquery.js</code> and <code>phoenix.js</code> will be auto included to HTML head.</p>
 
-<h3>Subsystem</h3>
+<p>And you must have a <code>&lt;form id="#admin-form"&gt; ...</code> element in your HTML so Phoenix can operate this form.</p>
 
-<p>Combine singular and plural two MVC groups, they are both maintains same database table.</p>
+<h2>Submit and RESTful CRUD</h2>
 
-<p>Below is the structure of these terms.</p>
+<p>You can simply use this JS code to submit form:</p>
 
-<p><img src="http://i.imgur.com/o8Wlh6i.jpg" alt="Imgur" /></p>
+<pre><code class="js">// Submit with default action defined on &lt;form action="..."&gt;
+Phoenix.submit();
 
-<p>And this is an image of the MVC structure</p>
+// Submit with custom URI and query
+Phoenix.submit('/flower/sakuras', {page: 3});
 
-<p><img src="http://i.imgur.com/iUbloBQ.jpg" alt="Imgur" /></p>
+// Send POST
+Phoenix.submit('/flower/sakura', data, 'POST');
 
-<h2>CRUD</h2>
+// Send custom RESTful method, will add `_method` to your params
+Phoenix.submit('/flower/sakura', data, 'POST', 'PUT');
+</code></pre>
 
-<p>CRUD means <code>Create</code> / <code>Read</code> / <code>Update</code> and <code>Delete</code> to one item record.</p>
+<p>Use simple methods:</p>
 
-<p>Phoenix use <code>save</code> to handle <code>create</code> and <code>update</code>. Se you will see <code>CrudModel</code> has only <code>save()</code> method instead <code>create()</code> and <code>update()</code>.</p>
+<pre><code class="js">// GET
+Phoenix.get('/flower/sakura/25', query);
 
-<p>The save() method will determine that if data has primary key, it will use update process, if data has no primary key, then model will use create process.</p>
+// POST
+Phoenix.post('/flower/sakura/25', query);
 
-<h2>REST</h2>
+// POST with custom method
+Phoenix.post('/flower/sakura/25', query, 'PUT');
 
-<p>Default RESTful methods has relations to CRUD operation:</p>
+// PUT
+Phoenix.put('/flower/sakura/25', query);
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>READ</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CREATE</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UPDATE</td>
-  <td>full fields</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>UPDATE</td>
-  <td>partial fields</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>Delete</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
+// PATCH
+Phoenix.patch('/flower/sakura/25', query);
 
-<h3>Method Controller Mapping</h3>
+// DELETE
+Phoenix.sendDelete('/flower/sakura/25', query);
+</code></pre>
 
-<p>In Windwalker, we use this mapping to call controller.</p>
+<p>On click event in HTML element:</p>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
+<pre><code class="html">&lt;button type="button" onclick="Phoenix.post()"&gt;&lt;/button&gt;
+</code></pre>
 
-<p>It's more simpler to write your logic because you can use the exists of primary key to make create or update action.</p>
+<h2>Routes</h2>
 
-<h3>Grid &amp; List Controller</h3>
+<p>Use <code>Router</code> to print route to HTML.</p>
 
-<p>In phoenix, we use this mapping to map list controller:</p>
+<pre><code class="php">&lt;button type="button" onclick="Phoenix.post('{{ $router-&gt;route('sakura', ['id' =&gt; 25]) }}')"&gt;&lt;/button&gt;
+</code></pre>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td>Show grid UI</td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CopyController</td>
-  <td>Batch copy items</td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UpdateController</td>
-  <td>Batch update items</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>Controller</td>
-  <td>Filter &amp; search</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td>Delete items</td>
-</tr>
-</tbody>
-</table>
+<p>The output</p>
+
+<pre><code class="html">&lt;button type="button" onclick="Phoenix.post('/flower/sakura/25')"&gt;&lt;/button&gt;
+</code></pre>
+
+<h3>Use Phoenix JS Router:</h3>
+
+<p>Add route settings in PHP</p>
+
+<pre><code class="php">\Phoenix\Script\PhoenixScript::addRoute('sakura_save', $router-&gt;route('sakura', ['id' =&gt; 25]));
+</code></pre>
+
+<p>And get this route by <code>Phoenix.Router</code>:</p>
+
+<pre><code class="html">&lt;button type="button" onclick="Phoenix.post(Phoenix.Router.route('sakura_save'))"&gt;&lt;/button&gt;
+</code></pre>
+
+<p>Get route in anywhere, for example, use it in ajax call:</p>
+
+<pre><code class="js">$.ajax({
+    url: Phoenix.Router.route('sakura_save'),
+    data: data,
+
+    // ...
+}).done(...)
+</code></pre>
+
+<h2>Translate</h2>
+
+<p>If you has a language key:</p>
+
+<pre><code class="ini">flower.message.sakura="Sakura"
+</code></pre>
+
+<p>Add language key to JS by php:</p>
+
+<pre><code class="php">\Phoenix\Script\PhoenixScript::translate('flower.message.sakura');
+</code></pre>
+
+<p>Now you can get this language string in JS:</p>
+
+<pre><code class="js">Phoenix.Translator.translate('flower.message.sakura'); // Sakura
+
+// You can also use sprintf() and plural()
+Phoenix.Translator.sprintf('flower.message.sakura', 'arg1', 'arg2');
+Phoenix.Translator.plural('flower.message.sakura', 3);
+</code></pre>
+
+<p>See <a href="../../documentation/3.x/services/languages.html">Translator</a></p>
+
+<h2>Messages</h2>
+
+<p>Use JS code <code>addMessage()</code> to render message to template:</p>
+
+<pre><code class="js">Phoenix.addMessage('Hello World');
+</code></pre>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/17009420/f958386c-4f2c-11e6-85d4-ae41c3bf73c9.jpg" alt="p-2016-07-21-001" /></p>
+
+<p>Use other styles</p>
+
+<pre><code class="js">Phoenix.addMessage('Hello World', 'info');
+Phoenix.addMessage('Hello World', 'success');
+Phoenix.addMessage('Hello World', 'warning');
+Phoenix.addMessage('Hello World', 'danger');
+</code></pre>
+
+<p>Multiple messages:</p>
+
+<pre><code class="js">Phoenix.addMessage(['Foo', 'Bar'], 'info');
+</code></pre>
+
+<p>Remove messages:</p>
+
+<pre><code class="js">Phoenix.removeMessages();
+</code></pre>
+
+<h3>Keep Alive</h3>
+
+<p>If you are writing a form with long textarea, you will hope the session do not expired, use <code>keepAlive()</code> in php.</p>
+
+<pre><code class="php">PhoenixScript::keepAlive();
+</code></pre>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/start/core.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/core.md">improve</a> this document.
     </p>
                 </article>
             </div>

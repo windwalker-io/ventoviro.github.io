@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Core Concept | Windwalker - A Modern PHP Framework</title>
+        <title>jQuery | Windwalker - A Modern PHP Framework</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Core Concept | Windwalker - A Modern PHP Framework">
+        <meta property="og:title" content="jQuery | Windwalker - A Modern PHP Framework">
         <meta property="og:site_name" content="Windwalker Framework">
 
             
@@ -102,7 +102,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Core Concept</h1>
+        <h1>jQuery</h1>
     </div>
         </div>
     </section>
@@ -121,7 +121,7 @@
                     <li class="">
                 <a href="../../rad/start/getting-started.html">Getting Started</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../rad/start/core.html">Core Concept</a>
             </li>
                     <li class="">
@@ -151,7 +151,7 @@
         
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Javascript</li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../rad/js/jquery.html">jQuery</a>
             </li>
                     <li class="">
@@ -179,181 +179,85 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h2>MVC Groups</h2>
+                    <h2>Include jQuery</h2>
 
-<p>Every database table in phoenix will be separated to two MVC groups. One is singular item and another is plural list.
-Every MVC group has it's own Model/View/Controller. For example, a table named: <code>sakuras</code>, we will use <code>Sakura</code> Controller
-to modify single item record, and a <code>Sakuras</code> Controller to handle multiple items operation like <code>filter</code>, <code>ordering</code> or <code>batch update</code>.</p>
+<p>Phoenix provides jQuery as core JS environment, you can use PHP to auto add jQuery to HTML output.</p>
 
-<h2>Definition</h2>
+<pre><code class="php">\Phoenix\Script\JQueryScript::core();
+</code></pre>
 
-<h3>Item</h3>
+<p>The jQuery will auto included in <code>&lt;hrad&gt;</code>.</p>
 
-<p>A Singular MVC group, used to handle CRUD of single record, with an edit or single item page.</p>
+<h3>No Conflict</h3>
 
-<h4>Edit Page</h4>
+<p>You can also add first argument as no-conflict mode:</p>
 
-<p><code>Edit</code> page means a page with form and inputs to send data for update an item.
-For example, a blog article page is an <code>Item page</code>, and an article edit page is an <code>Edit page</code>.</p>
+<pre><code class="php">\Phoenix\Script\JQueryScript::core(true);
+</code></pre>
 
-<h3>List</h3>
+<p>Then you must use <code>jQuery</code> instead <code>$</code> in global scope:</p>
 
-<p>A plural MVC group, used to handle multiple items filter, ordering, batch update and copy etc. With a grid page or item list.</p>
+<pre><code class="js">jQuery(document).ready(function ($) {
+    $('body').attr('class');
+})
+</code></pre>
 
-<h4>Grid Page</h4>
+<h2>jQuery UI</h2>
 
-<p><code>Grid</code> page means a table to list items and provides a set of button and tools to operate these items.
-For example, the blog articles/category page is a <code>List page</code>, and admin article manager is a <code>Grid page</code>.</p>
+<p>Add jQuery UI to HTML, the jQuery core will auto included when you call this method:</p>
 
-<h3>Subsystem</h3>
+<pre><code class="php">\Phoenix\Script\JQueryScript::ui();
+</code></pre>
 
-<p>Combine singular and plural two MVC groups, they are both maintains same database table.</p>
+<p>Add UI components, every component will only include once:</p>
 
-<p>Below is the structure of these terms.</p>
+<pre><code class="php">\Phoenix\Script\JQueryScript::ui(['droppable', 'effect']);
+</code></pre>
 
-<p><img src="http://i.imgur.com/o8Wlh6i.jpg" alt="Imgur" /></p>
+<p>Available components:</p>
 
-<p>And this is an image of the MVC structure</p>
+<ul>
+<li>draggable</li>
+<li>droppable</li>
+<li>resizable</li>
+<li>selectable</li>
+<li>sortable</li>
+<li>effect</li>
+</ul>
 
-<p><img src="http://i.imgur.com/iUbloBQ.jpg" alt="Imgur" /></p>
+<h2>Color Picker</h2>
 
-<h2>CRUD</h2>
+<p>A jQuery based color picker:</p>
 
-<p>CRUD means <code>Create</code> / <code>Read</code> / <code>Update</code> and <code>Delete</code> to one item record.</p>
+<pre><code class="php">// Use default settings
+\Phoenix\Script\JQueryScript::colorPicker();
 
-<p>Phoenix use <code>save</code> to handle <code>create</code> and <code>update</code>. Se you will see <code>CrudModel</code> has only <code>save()</code> method instead <code>create()</code> and <code>update()</code>.</p>
+// Custom settings
+\Phoenix\Script\JQueryScript::colorPicker('.selector', ['control' =&gt; 'hue', 'position' =&gt; 'top']);
+</code></pre>
 
-<p>The save() method will determine that if data has primary key, it will use update process, if data has no primary key, then model will use create process.</p>
+<p>See <a href="http://labs.abeautifulsite.net/jquery-minicolors/">Minicolors</a></p>
 
-<h2>REST</h2>
+<h2>Highlight Text</h2>
 
-<p>Default RESTful methods has relations to CRUD operation:</p>
+<p>Highlight plugin is useful when you want to mark a text in search result:</p>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>READ</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CREATE</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UPDATE</td>
-  <td>full fields</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>UPDATE</td>
-  <td>partial fields</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>Delete</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
+<pre><code class="php">// Find text in whole page
+\Phoenix\Script\JQueryScript::highlight(null, 'Text');
 
-<h3>Method Controller Mapping</h3>
+// Find in an element
+\Phoenix\Script\JQueryScript::highlight('.hasHighlight', 'Text');
 
-<p>In Windwalker, we use this mapping to call controller.</p>
+// Set options
+\Phoenix\Script\JQueryScript::highlight('.hasHighlight', 'Text', ['element' =&gt; 'em', 'className' =&gt; 'my-highlight']);
+</code></pre>
 
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>SaveController</td>
-  <td></td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td></td>
-</tr>
-</tbody>
-</table>
-
-<p>It's more simpler to write your logic because you can use the exists of primary key to make create or update action.</p>
-
-<h3>Grid &amp; List Controller</h3>
-
-<p>In phoenix, we use this mapping to map list controller:</p>
-
-<table>
-<thead>
-<tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td>Show grid UI</td>
-</tr>
-<tr>
-  <td>POST</td>
-  <td>CopyController</td>
-  <td>Batch copy items</td>
-</tr>
-<tr>
-  <td>PUT</td>
-  <td>UpdateController</td>
-  <td>Batch update items</td>
-</tr>
-<tr>
-  <td>PATCH</td>
-  <td>Controller</td>
-  <td>Filter &amp; search</td>
-</tr>
-<tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td>Delete items</td>
-</tr>
-</tbody>
-</table>
+<p>See <a href="http://bartaz.github.io/sandbox.js/jquery.highlight.html">jQuery Highlight</a></p>
 
                         <hr />
 
     <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/start/core.md">improve</a> this document.
+        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/jquery.md">improve</a> this document.
     </p>
                 </article>
             </div>
