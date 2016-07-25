@@ -2,7 +2,7 @@
 layout: documentation.twig
 title: Routing And Controller
 redirect:
-    3.x: core/routing-controller
+    3.x: core/routing
 
 ---
 
