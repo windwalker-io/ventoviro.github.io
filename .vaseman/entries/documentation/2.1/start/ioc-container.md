@@ -2,7 +2,7 @@
 layout: documentation.twig
 title: IoC Container
 redirect:
-    3.x: core/ioc-continer
+    3.x: core/ioc-container
 
 ---
 
