@@ -48,7 +48,7 @@ Phoenix.Grid.checkRow(1);
 You must print a checkbox with row number in HTML:
 
 ``` php
-<input type="checkbox" class="grid-checkbox" data-row-number="1" name="id[1]" value="2">
+<input type="checkbox" class="grid-checkbox" data-row-number="1" name="id[]" value="2">
 ```
 
 Or use `GridHelper` to generate this checkbox in template:
@@ -79,7 +79,7 @@ This method can update a row with specify data by sending request to `BatchContr
 Phoenix.Grid.updateRow(3, null, {task: 'publish'});
 ```
 
-This method will update row 3 `state => 0`.
+This method will update row 3 `state => 1`.
 
 > You must prepare checkboxes in HTML first to support this method
 
@@ -113,7 +113,7 @@ Phoenix.Grid.deleteList('Are you sure?');
 ## Delete Row
 
 ``` js
-Phoenix.Grid.deleteRTow(3);
+Phoenix.Grid.deleteRow(3);
 ```
 
 ## Toggle All Checkboxes
