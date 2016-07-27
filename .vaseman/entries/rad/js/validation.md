@@ -129,7 +129,7 @@ You can manually call validation by JS code without a submit event:
 
 ``` js
 // Validate all inputs
-$('#admin-form').validation()->validateAll();
+$('#admin-form').validation().validateAll();
 
 // Add field to input queue to validate
 $('#admin-form').validation().addField($('.input-myfield'));
