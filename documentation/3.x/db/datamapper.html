@@ -331,31 +331,6 @@ $fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));
 $data = (new FooMapper)-&gt;findAll();
 </code></pre>
 
-<p>Or using static proxy:</p>
-
-<pre><code class="php">abstract class FooMapper
-{
-    protected static $instance;
-
-    public static function getInstance()
-    {
-        if (!static::$instance)
-        {
-            static::$instance = new DataMapper('#__foo');
-        }
-
-        return static::$instance;
-    }
-
-    public static function __callStatic($name, $args)
-    {
-        return call_user_func_array(array(static::getInstance(), $name), $args);
-    }
-}
-
-$data = FooMapper::findOne(array('id' =&gt; 5, 'alias' =&gt; 'bar'));
-</code></pre>
-
 <h2>Find Records</h2>
 
 <p>Find method will fetch rows from table, and return <code>DataSet</code> class.</p>
@@ -392,6 +367,44 @@ $data = FooMapper::findOne(array('id' =&gt; 5, 'alias' =&gt; 'bar'));
 <h3>findAll()</h3>
 
 <p>Equal to <code>find(array(), $order, $start, $limit)</code>.</p>
+
+<h3>Find With Custom Query</h3>
+
+<pre><code class="php">$fooMapper = new DataMapper('#__foo');
+
+$fooMapper-&gt;where('a = "b"') // Simple where
+    -&gt;where('%n = $q', 'foo', 'bar') // Where format
+    -&gt;where('flower = :sakura')-&gt;bind('sakura', 'Sakura') // Bind params
+    -&gt;orWhere(array('c = d', 'e = f')) // AND (c=d OR e=f)
+    -&gt;having('...')
+    -&gt;limit(10, 20) // Limit, offset
+    -&gt;order('created DESC') // Can be array or string
+    -&gt;select(array('id', 'title', 'alias')) // Can be array or string
+    -&gt;find();
+</code></pre>
+
+<p>The available query methods.</p>
+
+<ul>
+<li><code>join($type = 'LEFT', $alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>leftJoin($alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>rightJoin($alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>nnerJoin($alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>outerJoin($alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>call($columns)</code></li>
+<li><code>group($columns)</code></li>
+<li><code>order($columns)</code></li>
+<li><code>limit($limit = null, $offset = null)</code></li>
+<li><code>select($columns)</code></li>
+<li><code>where($conditions, ...$args)</code></li>
+<li><code>orWhere($conditions)</code></li>
+<li><code>having($conditions, ...$args)</code></li>
+<li><code>orHaving($conditions)</code></li>
+<li><code>clear($clause = null)</code></li>
+<li><code>bind($key = null, $value = null, $dataType = \PDO::PARAM_STR, $length = 0, $driverOptions = array())</code></li>
+</ul>
+
+<p>See <a href="https://github.com/ventoviro/windwalker-query#format">Query Format</a></p>
 
 <h2>Create Records</h2>
 
@@ -510,14 +523,17 @@ $fooMapper-&gt;updateAll($data, array('author' =&gt; 'Mystique'));
 
 <h2>Join Tables</h2>
 
-<p>Using <code>RelationDataMapper</code> to join tables.</p>
+<p>Use <code>newRelation()</code> to create a DataMapper and join other tables.</p>
 
-<pre><code class="php">$fooMapper = RelationDataMapper::getInstance('flower', '#__flower')
-    -&gt;addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
-    -&gt;addTable('category', '#__categories', array('category.lft &gt;= flower.lft', 'category.rgt &lt;= flower.rgt'), 'INNER');
+<pre><code class="php">use Windwalker\DataMapper\DataMapper;
 
-// Don't forget add alias on where conditions.
-$dataset = $fooMapper-&gt;find(array('flower.id' =&gt; 5));
+$items = DataMapper::newRelation('flower', '#__flower')
+    -&gt;leftJoin('author', '#__users', 'flower.user_id = author.id')
+    -&gt;innerJoin('category', '#__categories', array('category.lft &gt;= flower.lft', 'category.rgt &lt;= flower.rgt'))
+    -&gt;where('flower.id = 1')
+    -&gt;order('created DESC')
+    -&gt;group('category.id')
+    -&gt;find();
 </code></pre>
 
 <p>The Join query will be:</p>
@@ -540,6 +556,23 @@ $dataset = $fooMapper-&gt;find(array('flower.id' =&gt; 5));
 FROM #__foo AS foo
     LEFT JOIN #__users AS author ON foo.user_id = author.id
     INNER JOIN #__categories AS category ON category.lft &gt;= foo.lft AND category.rgt &lt;= foo.rgt
+WHERE
+    flower.id = 1
+ORDER BY flower.created DESC
+GROUP BY category.id
+</code></pre>
+
+<p>Where condition will auto add alias if not provided.</p>
+
+<pre><code class="php">$fooMapper-&gt;find(array(
+    'foo.id' =&gt; 3 // This is correct condition
+    'state' =&gt; 1 // This field may cause column conflict, DataMapper will auto covert it to `foo.state` =&gt; 1
+));
+</code></pre>
+
+<p>Reset all tables and query:</p>
+
+<pre><code class="php">$fooMapper-&gt;reset();
 </code></pre>
 
 <h3>Using OR Condition</h3>
@@ -552,77 +585,10 @@ FROM #__foo AS foo
 );
 </code></pre>
 
-<h2>Static Access</h2>
+<h3>Group</h3>
 
-<p>Windwalker core 2.1 provides a <code>AbstractDataMapperProxy</code> to help us easily use DataMapper.</p>
-
-<pre><code class="php">use Windwalker\Core\DataMapper\AbstractDataMapperProxy;
-
-class ArticleMapper extends AbstractDataMapperProxy
-{
-    protected static $table = 'articles';
-}
+<pre><code class="php">$fooMapper-&gt;group('category.id');
 </code></pre>
-
-<p>Now you can call all methods statically:</p>
-
-<pre><code class="php">$articles = ArticleMapper::find(['state' =&gt; 1]);
-</code></pre>
-
-<h2>Hooks</h2>
-
-<p>In <code>DataMapper</code> or <code>AbstractDataMapperProxy</code>, both supports hooks methods.</p>
-
-<pre><code class="php">class ArticleMapper extends AbstractDataMapperProxy
-{
-    // ...
-
-    public function onAfterDelete(Event $event)
-    {
-        // Delete all tags relative to this article
-    }
-}
-</code></pre>
-
-<p>OR add listener.</p>
-
-<pre><code class="php">$mapper = new ArticleMapper;
-
-$mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
-</code></pre>
-
-<p>All events:</p>
-
-<ul>
-<li>onBeforeFind</li>
-<li>onAfterFind</li>
-<li>onBeforeFindOne</li>
-<li>onAfterFindOne</li>
-<li>onBeforeFindAll</li>
-<li>onAfterFindAll</li>
-<li>onBeforeFindColumn</li>
-<li>onAfterFindColumn</li>
-<li>onBeforeCreate</li>
-<li>onAfterCreate</li>
-<li>onBeforeCreateOne</li>
-<li>onAfterCreateOne</li>
-<li>onBeforeUpdate</li>
-<li>onAfterUpdate</li>
-<li>onBeforeUpdateOne</li>
-<li>onAfterUpdateOne</li>
-<li>onBeforeUpdateAll</li>
-<li>onAfterUpdateAll</li>
-<li>onBeforeSave</li>
-<li>onAfterSave</li>
-<li>onBeforeSaveOne</li>
-<li>onAfterSaveOne</li>
-<li>onBeforeFlush</li>
-<li>onAfterFlush</li>
-<li>onBeforeDelete</li>
-<li>onAfterDelete</li>
-</ul>
-
-<p>See <a href="../more/events.html">Event</a></p>
 
 <h2>Compare objects</h2>
 
@@ -710,11 +676,102 @@ $mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
 <pre><code class="sql">`title` LIKE `%flower%`
 </code></pre>
 
-<p>See: <a href="https://github.com/ventoviro/windwalker-compare">Windwalker Compare</a></p>
+<p>See: https://github.com/ventoviro/windwalker-compare</p>
 
 <h2>Using Data and DataSet</h2>
 
-<p>See: <a href="../more/data-object.html">Data Object</a></p>
+<p>See: https://github.com/ventoviro/windwalker-data</p>
+
+<h2>Hooks</h2>
+
+<p>Add <code>"windwalker/event": "~3.0"</code> to <code>composer.json</code>.</p>
+
+<p>Then we are able to use hooks after every operations.</p>
+
+<pre><code class="php">class FooListener
+{
+    public function onAfterCreate(Event $event)
+    {
+        $result = $event['result'];
+
+        // Do something
+    }
+}
+
+$mapper = new DataMapper('table');
+
+// Add object as listener
+$mapper-&gt;getDispatcher()-&gt;addListener(new FooListener);
+
+// Use listen() to add a callback as listener
+$mapper-&gt;getDispatcher()-&gt;listen('onAfterUpdate', function () { ... });
+
+$mapper-&gt;create($dataset);
+</code></pre>
+
+<p>Extends DataMapper:</p>
+
+<pre><code class="php">class SakuraMapper extends DataMapper
+{
+    protected $table = 'saluras';
+
+    public function onAfterFind(Event $event)
+    {
+        $result = $event['result'];
+
+        // Find some relations
+    }
+}
+
+$mapper = new DataMapper('table');
+$mapper-&gt;find(array('id' =&gt; 5));
+</code></pre>
+
+<p>Available events:</p>
+
+<ul>
+<li>onBeforeFind</li>
+<li>onAfterFind</li>
+<li>onBeforeFindAll</li>
+<li>onAfterFindAll</li>
+<li>onBeforeFindOne</li>
+<li>onAfterFindOne</li>
+<li>onBeforeFindColumn</li>
+<li>onAfterFindColumn</li>
+<li>onBeforeCreate</li>
+<li>onAfterCreate</li>
+<li>onBeforeCreateOne</li>
+<li>onAfterCreateOne</li>
+<li>onBeforeUpdate</li>
+<li>onAfterUpdate</li>
+<li>onBeforeUpdateOne</li>
+<li>onAfterUpdateOne</li>
+<li>onBeforeUpdateBatch</li>
+<li>onAfterUpdateBatch</li>
+<li>onBeforeSave</li>
+<li>onAfterSave</li>
+<li>onBeforeSaveOne</li>
+<li>onAfterSaveOne</li>
+<li>onBeforeFlush</li>
+<li>onAfterFlush</li>
+<li>onBeforeDelete</li>
+<li>onAfterDelete</li>
+</ul>
+
+<h2>Static Access</h2>
+
+<pre><code class="php">use Windwalker\Core\DataMapper\CoreDataMapper;
+
+class ArticleMapper extends CoreDataMapper
+{
+    protected static $table = 'articles';
+}
+</code></pre>
+
+<p>Now you can call all methods statically:</p>
+
+<pre><code class="php">$articles = ArticleMapper::find(['state' =&gt; 1]);
+</code></pre>
 
                         <hr />
 

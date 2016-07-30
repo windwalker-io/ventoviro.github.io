@@ -102,6 +102,8 @@ The result
 
 > You can find `_global.html` in `templates/_globa/html.php`, this is the global template path.
 
+> If you get `Route: home not found` message in DEBUG mode, just open `etc/dev/config.yml` and set `routing.debug` to `false`.
+
 ### Change View Layout
 
 We support different template layout for one controller, the default is `default` layout, now try to add a `photo` layout.
