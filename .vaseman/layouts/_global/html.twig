@@ -1,158 +1,174 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="{{ uri.media }}images/favicon.ico" />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="{{ uri.media }}images/favicon.ico" />
 
-        <title>{% block title %}Windwalker - A Modern PHP Framework{% endblock %}</title>
+    <title>{% block title %}Windwalker - A Modern PHP Framework{% endblock %}</title>
 
-        <!-- Uikit core CSS -->
-        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        {#<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css"/>#}
-        <link rel="stylesheet" href="{{ uri.media }}css/prism.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="{{ uri.media }}css/bootstrap.css" />
+    <link rel="stylesheet" href="{{ uri.media }}css/bootstrap-material-design.css" />
+    <link rel="stylesheet" href="{{ uri.media }}css/ripples.css" />
+    <link rel="stylesheet" href="{{ uri.media }}css/main.css" />
+    <link rel="stylesheet" href="{{ uri.media }}css/prism.css" />
 
-        <!-- Custom styles for this template -->
-        <link href="{{ uri.media }}css/main.css" rel="stylesheet">
-
-        <meta name="description" content="{{ config.meta.desc }}">
-        <meta name="generator" content="The Time Machine">
+    <meta name="description" content="{{ config.meta.desc }}">
+    <meta name="generator" content="The Time Machine">
 
 {% if (config.og.image) %}
-        <meta property="og:image" content="{{ config.og.image }}">
+    <meta property="og:image" content="{{ config.og.image }}">
 {% endif %}
-        <meta property="og:title" content="{{ block('title') }}">
-        <meta property="og:site_name" content="Windwalker Framework">
+    <meta property="og:title" content="{{ block('title') }}">
+    <meta property="og:site_name" content="Windwalker Framework">
 {% if (config.meta.desc) %}
-        <meta property="og:description" content="{{ config.meta.desc }}">
+    <meta property="og:description" content="{{ config.meta.desc }}">
 {% endif %}
 
-        {% block stylesheet %}{% endblock %}
+    {% block stylesheet %}{% endblock %}
 
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="{{ uri.media }}js/jquery.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        {#<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>#}
-        {#<script src="{{ uri.media }}js/highlight/highlight.yaml.js"></script>#}
-        {#<script src="{{ uri.media }}js/highlight/highlight.blade.js"></script>#}
-        <script src="{{ uri.media }}js/prism.js"></script>
-        <script>
-            $(document).ready(function() {
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ uri.media }}js/jquery.js"></script>
+    <script src="{{ uri.media }}js/bootstrap.js"></script>
+    <script src="{{ uri.media }}js/material.js"></script>
+    <script src="{{ uri.media }}js/prism.js"></script>
+    <script>
+        $(document).ready(function() {
 
-                $('.article-content pre code').each(function(i, block) {
-                    var $this = $(this);
+            $('.article-content pre code').each(function(i, block) {
+                var $this = $(this);
 
-                    $this.attr('class', 'language-' + $this.attr('class'));
-                });
+                $this.attr('class', 'language-' + $this.attr('class'));
             });
-        </script>
+        });
+    </script>
 
-        {% block script %}{% endblock %}
-    </head>
-    <body class="{{ config.home ? 'home' : '' }}">
-    <nav id="header" class="uk-navbar uk-navbar-attached">
-        <div class="uk-container uk-container-center">
+    {% block script %}{% endblock %}
+</head>
+<body class="{{ config.home ? 'home' : '' }}">
 
-            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="{{ uri.base }}">
-                <img class="uk-margin uk-margin-remove" src="{{ uri.media }}images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
-            </a>
+<section id="header">
 
-            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+    <section id="nav">
 
-            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="{{ uri.base }}">
-                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="{{ uri.media }}images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
-            </a>
-
-            {% block version_switcher %}{% endblock %}
-
-            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
-                <li class="{{ path[0] == 'about' ? 'uk-active' : '' }}">
-                    <a href="{{ uri.base }}about/">
-                        <span class="menu-item-title">About</span>
-                    </a>
-                </li>
-
-                <li class="{{ path[0] == 'documentation' ? 'uk-active' : '' }}">
-                    <a href="{{ uri.base }}documentation/3.x/start/installation.html">
-                        <span class="menu-item-title">Documentation</span>
-                    </a>
-                </li>
-
-                <li class="{{ path[0] == 'rad' ? 'uk-active' : '' }}">
-                    <a href="{{ uri.base }}rad/start/introduction.html">
-                        <span class="menu-item-title">RAD</span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="https://github.com/ventoviro/windwalker" target="_blank">
-                        <span class="menu-item-title">GitHub</span>
-                    </a>
-                </li>
-            </ul>
-
+        <div class="navbar navbar-transparent">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="javascript:void(0)">Brand</a>
+                </div>
+                <div class="navbar-collapse collapse navbar-responsive-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="javascript:void(0)">Active</a></li>
+                        <li><a href="javascript:void(0)">Link</a></li>
+                        <li class="dropdown">
+                            <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
+                                <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)">Action</a></li>
+                                <li><a href="javascript:void(0)">Another action</a></li>
+                                <li><a href="javascript:void(0)">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Dropdown header</li>
+                                <li><a href="javascript:void(0)">Separated link</a></li>
+                                <li><a href="javascript:void(0)">One more separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control col-sm-8" placeholder="Search">
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="javascript:void(0)">Link</a></li>
+                        <li class="dropdown">
+                            <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
+                                <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)">Action</a></li>
+                                <li><a href="javascript:void(0)">Another action</a></li>
+                                <li><a href="javascript:void(0)">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:void(0)">Separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </nav>
 
-    <section id="banner">
-        <div class="banner-inner">
-            {% block banner %}
-            {% endblock %}
+    </section>
+
+    <section id="banner" class="container text-center">
+        <div class="row">
+            <div class="banner-content col-md-6">
+                <h1 class="banner-title">WINDWALKER</h1>
+                <h3 class="slab-font">Rapid Application Development Framework<br />for PHP</h3>
+            </div>
         </div>
     </section>
 
-    <div id="main-body">
-        {% block body %}
-        <section id="home" class="main-block">
-            <div class="uk-container uk-container-center">
-                <div class="uk-grid" data-uk-grid-match>
-                    <div class="uk-width-medium-1-1">
-                        {{ content|raw }}
-                    </div>
-                </div>
-            </div>
-        </section>
-        {% endblock body %}
+</section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+    {% block body %}
+        {{ content|raw }}
+    {% endblock %}
+</div>
+
+<section id="footer" class="black-block inner-md text-center">
+
+    <div class="container inner-top-md">
+        
+        <p>
+            <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+            </a>
+
+            <a href="http://natika.windwalker.io" class="btn" target="_blank">
+                <i class="fa fa-comments"></i>
+                Forum
+            </a>
+
+            <a href="javascript:void(0);" class="btn" target="_blank">
+                <i class="fa fa-code"></i>
+                API
+            </a>
+        </p>
+
+        <p class="outer-top-xs">
+            <a class="text-center footer-logo">
+                <img width="250" src="{{ uri.media }}images/logo/windwalker-logo.png" alt="Logo" style="">
+            </a>
+        </p>
+
+        <p class="lead outer-top-xs">
+            Copyright © {{ "now"|date('Y') }} Windwalker. All Rights Reserved.
+        </p>
     </div>
 
-    <footer id="footer">
-        <div class="uk-container uk-container-center uk-text-center">
+</section>
 
-            <div class="footer-logo">
-                <a href="#" data-uk-smooth-scroll>
-                    <img src="{{ uri.media }}images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
-                </a>
-            </div>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-            <p class="uk-text-center social-buttons">
-                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+    ga('create', 'UA-48372917-6', 'auto');
+    ga('send', 'pageview');
 
-                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker"></a>
+</script>
 
-                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
-            </p>
-
-            <p>
-                Copyright &copy; {{ "now"|date('Y') }} Windwalker. All Rights Reserved.
-            </p>
-            <p class="back">
-                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
-            </p>
-        </div>
-    </footer>
-
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-48372917-6', 'auto');
-        ga('send', 'pageview');
-
-    </script>
-
-    </body>
+</body>
 </html>
