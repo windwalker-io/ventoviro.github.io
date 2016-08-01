@@ -18,18 +18,22 @@ mail:
     from:
         name: Sender Name
         email: sender@mail.com
-    transport: smtp
-    security: tls
-    host: your.smtp.net
-    port: 2525
-    username: *****
-    password: *****
-    
-    # Local Domain
-    local: your.domain.com
+    smtp:
+        transport: smtp
+        security: tls
+        host: your.smtp.net
+        port: 2525
+        username: *****
+        password: *****
+
+        # Verify SSL
+        verify: false
+
+        # Local Domain
+        local: your.domain.com
     
     # Sendmail command if use this
-    command: /usr/sbin/sendmail
+    sendmail: /usr/sbin/sendmail
 ```
 
 Currently available transports:
