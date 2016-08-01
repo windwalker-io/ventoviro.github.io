@@ -1,4 +1,4 @@
-<ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+<ul class="nav nav-stacked side-menu side-bar">
     {% set menus = menus[menu] %}
 
     {% if version %}
@@ -6,13 +6,15 @@
     {% endif %}
 
     {% for title, section in menus %}
-    <li class="uk-nav-header">{{ title }}</li>
+    <li class="nav-header">
+        <h3 class="slab-font">{{ title }}</h3>
+    </li>
         {% for id, item in section %}
-            <li class="{{ helper.doc.getPath(path, version) == id ? 'uk-active' : '' }}">
-                <a href="{{ uri.base }}{{ menu }}/{{ version ? version ~ '/' : '' }}{{ id }}.html">{{ item }}</a>
+            <li class="{{ helper.doc.getPath(path, version) == id ? 'active' : '' }}">
+                <a class="withripple" href="{{ uri.base }}{{ menu }}/{{ version ? version ~ '/' : '' }}{{ id }}.html">{{ item }}</a>
             </li>
         {% endfor %}
 
-    <li class="uk-nav-divider"></li>
+    {#<li class="uk-nav-divider"></li>#}
    {% endfor %}
 </ul>

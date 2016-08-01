@@ -41,169 +41,230 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../media/js/jquery.js"></script>
+    <script src="../../media/js/jquery.smooth-scroll.js"></script>
     <script src="../../media/js/bootstrap.js"></script>
     <script src="../../media/js/material.js"></script>
+    <script src="../../media/js/ripples.js"></script>
     <script src="../../media/js/prism.js"></script>
     <script>
         $(document).ready(function() {
 
+            // Init Material
+            $.material.init();
+
+            // Code Block
             $('.article-content pre code').each(function(i, block) {
                 var $this = $(this);
 
                 $this.attr('class', 'language-' + $this.attr('class'));
             });
+
+            // Smooth scroll
+            setTimeout(function ()
+            {
+                $('body a').smoothScroll({
+                    afterScroll:function (event) {
+                        document.location.hash = this.hash
+                    }
+                });
+            }, 500);
+
+            // Table style
+            // Convert table style
+            var tables = $('.article-content table');
+
+            tables.addClass('table').addClass('table-striped');
+
+            // Navbar
+            var navTop;
+            var hasColor = false;
+            var nav = $('#nav .navbar');
+
+            processScrollInit();
+            processScroll();
+
+            $(window).on('resize', processScrollInit);
+            $(window).on('scroll', processScroll);
+
+            function processScrollInit()
+            {
+                if (nav.length) {
+                    navTop = nav.length && 60;
+
+                    // Only apply the scrollspy when the toolbar is not collapsed
+                    if (document.body.clientWidth > 480)
+                    {
+//                        $('.subhead-collapse').height(nav.height());
+                        nav.scrollspy({offset: {top: nav.offset().top}});
+                    }
+                }
+            }
+
+            function processScroll()
+            {
+                if (nav.length) {
+                    var scrollTop = $(window).scrollTop();
+
+                    if (scrollTop >= navTop && !hasColor) {
+                        hasColor = true;
+                        nav.addClass('navbar-primary');
+                    } else if (scrollTop <= navTop && hasColor) {
+                        hasColor = false;
+                        nav.removeClass('navbar-primary');
+                    }
+                }
+            }
         });
+
     </script>
 
         <script src="../../media/js/doc.js"></script>
 </head>
 <body class="">
 
-<section id="header">
+    <section id="header">
 
-    <section id="nav">
+                    <nav id="nav">
 
-        <div class="navbar navbar-transparent">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="javascript:void(0)">Brand</a>
-                </div>
-                <div class="navbar-collapse collapse navbar-responsive-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="javascript:void(0)">Active</a></li>
-                        <li><a href="javascript:void(0)">Link</a></li>
-                        <li class="dropdown">
-                            <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
-                                <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:void(0)">Action</a></li>
-                                <li><a href="javascript:void(0)">Another action</a></li>
-                                <li><a href="javascript:void(0)">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Dropdown header</li>
-                                <li><a href="javascript:void(0)">Separated link</a></li>
-                                <li><a href="javascript:void(0)">One more separated link</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="navbar-form navbar-left">
-                        <div class="form-group">
-                            <input type="text" class="form-control col-sm-8" placeholder="Search">
-                        </div>
-                    </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="javascript:void(0)">Link</a></li>
-                        <li class="dropdown">
-                            <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
-                                <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:void(0)">Action</a></li>
-                                <li><a href="javascript:void(0)">Another action</a></li>
-                                <li><a href="javascript:void(0)">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)">Separated link</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../">
+                    <img class="img-invert" src="../../media/images/logo/windwalker-logo.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                                                                                                                                                                                                                                                                                
+
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="../../about/">
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../documentation/3.x/start/installation.html">
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../rad/start/introduction.html">
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                                    </ul>
             </div>
         </div>
-
-    </section>
-
-    <section id="banner" class="container text-center">
-        <div class="row">
-            <div class="banner-content col-md-6">
-                <h1 class="banner-title">WINDWALKER</h1>
-                <h3 class="slab-font">Rapid Application Development Framework<br />for PHP</h3>
-            </div>
-        </div>
-    </section>
-
-</section>
-
-<div id="main-body" class="main main-raised main-raised-bottom">
-        <div class="uk-container uk-container-center">
-        <div class="uk-grid">
-                <div class="uk-width-medium-1-4 uk-container-center">
-        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
-    
-    
-        <li class="uk-nav-header">Phoenix RAD</li>
-                    <li class="">
-                <a href="../../rad/start/introduction.html">Introduction</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/start/getting-started.html">Getting Started</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/start/core.html">Core Concept</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/start/generator.html">Generator</a>
-            </li>
-        
-    <li class="uk-nav-divider"></li>
-       <li class="uk-nav-header">Tutorial</li>
-                    <li class="">
-                <a href="../../rad/tut/guide.html">Admin UI Guide</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/tut/start.html">Start A Blog</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/tut/grid.html">Prepare Grid View</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/tut/form.html">Form &amp; Edit</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/tut/filter.html">Filter &amp; Search</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/tut/batch.html">Batch</a>
-            </li>
-        
-    <li class="uk-nav-divider"></li>
-       <li class="uk-nav-header">Javascript</li>
-                    <li class="">
-                <a href="../../rad/js/jquery.html">jQuery</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/js/libraries.html">Base Libraries</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/js/core.html">Phoenix Core</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/js/grid.html">Grid</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/js/validation.html">Validation</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/js/crypto.html">Crypto</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/js/csrf.html">CSRF for Ajax</a>
-            </li>
-                    <li class="">
-                <a href="../../rad/js/bootstrap.html">Bootstrap</a>
-            </li>
-                    <li class="uk-active">
-                <a href="../../rad/js/vue.html">Vue</a>
-            </li>
-        
-    <li class="uk-nav-divider"></li>
-   </ul>
     </div>
 
-            <div class="uk-width-medium-3-4 uk-container-center">
+</nav>
+        
+        <section id="banner" class="container text-center">
+            <div class="row">
+                <div class="banner-content col-md-10">
+                    <h1 class="banner-title">Vue</h1>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+        <section id="main-body" class="container main-block">
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="nav nav-stacked side-menu side-bar">
+    
+    
+        <li class="nav-header">
+        <h3 class="slab-font">Phoenix RAD</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/start/introduction.html">Introduction</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/start/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/start/core.html">Core Concept</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/start/generator.html">Generator</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Tutorial</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/tut/guide.html">Admin UI Guide</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/tut/start.html">Start A Blog</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/tut/grid.html">Prepare Grid View</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/tut/form.html">Form &amp; Edit</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/tut/filter.html">Filter &amp; Search</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/tut/batch.html">Batch</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Javascript</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/jquery.html">jQuery</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/libraries.html">Base Libraries</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/core.html">Phoenix Core</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/grid.html">Grid</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/crypto.html">Crypto</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/csrf.html">CSRF for Ajax</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/bootstrap.html">Bootstrap</a>
+            </li>
+                    <li class="active">
+                <a class="withripple" href="../../rad/js/vue.html">Vue</a>
+            </li>
+        
+       </ul>
+    </div>
+            </div>
+
+            <div class="col-md-9">
                 <article class="article-content">
                     <h2>Include Vue</h2>
 
@@ -369,7 +430,7 @@ new Vue({
                 </article>
             </div>
         </div>
-    </div>
+    </section>
 </div>
 
 <section id="footer" class="black-block inner-md text-center">
@@ -387,7 +448,7 @@ new Vue({
                 Forum
             </a>
 
-            <a href="javascript:void(0);" class="btn" target="_blank">
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
                 <i class="fa fa-code"></i>
                 API
             </a>
@@ -395,7 +456,7 @@ new Vue({
 
         <p class="outer-top-xs">
             <a class="text-center footer-logo">
-                <img width="250" src="../../media/images/logo/windwalker-logo.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo.png" alt="Logo" style="">
             </a>
         </p>
 

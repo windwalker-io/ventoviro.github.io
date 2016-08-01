@@ -17,7 +17,7 @@ $(document).ready(function()
 	{
 		return;
 	}
-console.log(titles);
+
 	titles.each(function(i)
 	{
 		var $this = $(this);

@@ -28,79 +28,136 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="media/js/jquery.js"></script>
+    <script src="media/js/jquery.smooth-scroll.js"></script>
     <script src="media/js/bootstrap.js"></script>
     <script src="media/js/material.js"></script>
+    <script src="media/js/ripples.js"></script>
     <script src="media/js/prism.js"></script>
     <script>
         $(document).ready(function() {
 
+            // Init Material
+            $.material.init();
+
+            // Code Block
             $('.article-content pre code').each(function(i, block) {
                 var $this = $(this);
 
                 $this.attr('class', 'language-' + $this.attr('class'));
             });
+
+            // Smooth scroll
+            setTimeout(function ()
+            {
+                $('body a').smoothScroll({
+                    afterScroll:function (event) {
+                        document.location.hash = this.hash
+                    }
+                });
+            }, 500);
+
+            // Table style
+            // Convert table style
+            var tables = $('.article-content table');
+
+            tables.addClass('table').addClass('table-striped');
+
+            // Navbar
+            var navTop;
+            var hasColor = false;
+            var nav = $('#nav .navbar');
+
+            processScrollInit();
+            processScroll();
+
+            $(window).on('resize', processScrollInit);
+            $(window).on('scroll', processScroll);
+
+            function processScrollInit()
+            {
+                if (nav.length) {
+                    navTop = nav.length && 60;
+
+                    // Only apply the scrollspy when the toolbar is not collapsed
+                    if (document.body.clientWidth > 480)
+                    {
+//                        $('.subhead-collapse').height(nav.height());
+                        nav.scrollspy({offset: {top: nav.offset().top}});
+                    }
+                }
+            }
+
+            function processScroll()
+            {
+                if (nav.length) {
+                    var scrollTop = $(window).scrollTop();
+
+                    if (scrollTop >= navTop && !hasColor) {
+                        hasColor = true;
+                        nav.addClass('navbar-primary');
+                    } else if (scrollTop <= navTop && hasColor) {
+                        hasColor = false;
+                        nav.removeClass('navbar-primary');
+                    }
+                }
+            }
         });
+
     </script>
 
     </head>
 <body class="home">
 
-<section id="header">
+<section id="header" class="home-header">
 
-    <section id="nav">
+    <nav id="nav">
 
-        <div class="navbar navbar-transparent">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="javascript:void(0)">Brand</a>
-                </div>
-                <div class="navbar-collapse collapse navbar-responsive-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="javascript:void(0)">Active</a></li>
-                        <li><a href="javascript:void(0)">Link</a></li>
-                        <li class="dropdown">
-                            <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
-                                <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:void(0)">Action</a></li>
-                                <li><a href="javascript:void(0)">Another action</a></li>
-                                <li><a href="javascript:void(0)">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Dropdown header</li>
-                                <li><a href="javascript:void(0)">Separated link</a></li>
-                                <li><a href="javascript:void(0)">One more separated link</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="navbar-form navbar-left">
-                        <div class="form-group">
-                            <input type="text" class="form-control col-sm-8" placeholder="Search">
-                        </div>
-                    </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="javascript:void(0)">Link</a></li>
-                        <li class="dropdown">
-                            <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
-                                <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:void(0)">Action</a></li>
-                                <li><a href="javascript:void(0)">Another action</a></li>
-                                <li><a href="javascript:void(0)">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)">Separated link</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="./">
+                    <img class="img-invert" src="media/images/logo/windwalker-logo.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                                                                                                                                                                                                                                                                                
+
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="./about/">
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="./documentation/3.x/start/installation.html">
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="./rad/start/introduction.html">
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                                    </ul>
             </div>
         </div>
+    </div>
 
-    </section>
+</nav>
 
     <section id="banner" class="container text-center">
         <div class="row">
@@ -121,13 +178,22 @@
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae interdum arcu. Nullam blandit vitae tellus non facilisis. Suspendisse nulla magna, aliquet ac est et
                 </p>
 
+                <div class='browser-window'>
+                    <div class='top-bar'>
+                        <div class='circles'>
+                            <div class="circle circle-red"></div>
+                            <div class="circle circle-yellow"></div>
+                            <div class="circle circle-green"></div>
+                        </div>
+                    </div>
+                    <div class='content'>
 <pre><code class="php">namespace Flower\Controller\Sakura;
 
 use Windwalker\Core\Controller\AbstractController;
 
 /**
- * Single action controller to handle GET request.
- */
+* Single action controller to handle GET request.
+*/
 class GetController extends AbstractController
 {
     public function doExecute()
@@ -142,6 +208,9 @@ class GetController extends AbstractController
     }
 }
 </code></pre>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -235,7 +304,7 @@ class GetController extends AbstractController
         <h2 class="section-title">Getting Started</h2>
 
         <div class="installation-help col-md-8 box-center">
-            <div class="outer-top-xs outer-bottom-xs">
+            <div class="outer-top-xs outer-bottom-xs article-content">
                 <pre class="language-bash"><code>$ composer create-project windwalker/starter windwalker ~3.0</code></pre>
             </div>
 
@@ -324,7 +393,7 @@ class GetController extends AbstractController
                 Forum
             </a>
 
-            <a href="javascript:void(0);" class="btn" target="_blank">
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
                 <i class="fa fa-code"></i>
                 API
             </a>
@@ -332,7 +401,7 @@ class GetController extends AbstractController
 
         <p class="outer-top-xs">
             <a class="text-center footer-logo">
-                <img width="250" src="media/images/logo/windwalker-logo.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="media/images/logo/windwalker-logo.png" alt="Logo" style="">
             </a>
         </p>
 

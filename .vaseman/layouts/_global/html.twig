@@ -33,80 +33,91 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{ uri.media }}js/jquery.js"></script>
+    <script src="{{ uri.media }}js/jquery.smooth-scroll.js"></script>
     <script src="{{ uri.media }}js/bootstrap.js"></script>
     <script src="{{ uri.media }}js/material.js"></script>
+    <script src="{{ uri.media }}js/ripples.js"></script>
     <script src="{{ uri.media }}js/prism.js"></script>
     <script>
         $(document).ready(function() {
 
+            // Init Material
+            $.material.init();
+
+            // Code Block
             $('.article-content pre code').each(function(i, block) {
                 var $this = $(this);
 
                 $this.attr('class', 'language-' + $this.attr('class'));
             });
+
+            // Smooth scroll
+            setTimeout(function ()
+            {
+                $('body a').smoothScroll({
+                    afterScroll:function (event) {
+                        document.location.hash = this.hash
+                    }
+                });
+            }, 500);
+
+            // Table style
+            // Convert table style
+            var tables = $('.article-content table');
+
+            tables.addClass('table').addClass('table-striped');
+
+            // Navbar
+            var navTop;
+            var hasColor = false;
+            var nav = $('#nav .navbar');
+
+            processScrollInit();
+            processScroll();
+
+            $(window).on('resize', processScrollInit);
+            $(window).on('scroll', processScroll);
+
+            function processScrollInit()
+            {
+                if (nav.length) {
+                    navTop = nav.length && 60;
+
+                    // Only apply the scrollspy when the toolbar is not collapsed
+                    if (document.body.clientWidth > 480)
+                    {
+//                        $('.subhead-collapse').height(nav.height());
+                        nav.scrollspy({offset: {top: nav.offset().top}});
+                    }
+                }
+            }
+
+            function processScroll()
+            {
+                if (nav.length) {
+                    var scrollTop = $(window).scrollTop();
+
+                    if (scrollTop >= navTop && !hasColor) {
+                        hasColor = true;
+                        nav.addClass('navbar-primary');
+                    } else if (scrollTop <= navTop && hasColor) {
+                        hasColor = false;
+                        nav.removeClass('navbar-primary');
+                    }
+                }
+            }
         });
+
     </script>
 
     {% block script %}{% endblock %}
 </head>
 <body class="{{ config.home ? 'home' : '' }}">
 
-<section id="header">
+{% block header %}
+<section id="header" class="home-header">
 
-    <section id="nav">
-
-        <div class="navbar navbar-transparent">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="javascript:void(0)">Brand</a>
-                </div>
-                <div class="navbar-collapse collapse navbar-responsive-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="javascript:void(0)">Active</a></li>
-                        <li><a href="javascript:void(0)">Link</a></li>
-                        <li class="dropdown">
-                            <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
-                                <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:void(0)">Action</a></li>
-                                <li><a href="javascript:void(0)">Another action</a></li>
-                                <li><a href="javascript:void(0)">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Dropdown header</li>
-                                <li><a href="javascript:void(0)">Separated link</a></li>
-                                <li><a href="javascript:void(0)">One more separated link</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="navbar-form navbar-left">
-                        <div class="form-group">
-                            <input type="text" class="form-control col-sm-8" placeholder="Search">
-                        </div>
-                    </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="javascript:void(0)">Link</a></li>
-                        <li class="dropdown">
-                            <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
-                                <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:void(0)">Action</a></li>
-                                <li><a href="javascript:void(0)">Another action</a></li>
-                                <li><a href="javascript:void(0)">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)">Separated link</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </section>
+    {% include '_global/header/nav.twig' %}
 
     <section id="banner" class="container text-center">
         <div class="row">
@@ -118,6 +129,7 @@
     </section>
 
 </section>
+{% endblock %}
 
 <div id="main-body" class="main main-raised main-raised-bottom">
     {% block body %}
@@ -140,7 +152,7 @@
                 Forum
             </a>
 
-            <a href="javascript:void(0);" class="btn" target="_blank">
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
                 <i class="fa fa-code"></i>
                 API
             </a>
@@ -148,7 +160,7 @@
 
         <p class="outer-top-xs">
             <a class="text-center footer-logo">
-                <img width="250" src="{{ uri.media }}images/logo/windwalker-logo.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="{{ uri.media }}images/logo/windwalker-logo.png" alt="Logo" style="">
             </a>
         </p>
 

@@ -8,38 +8,29 @@
     {{ parent()  }}
 
     <style>
-        #header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 500;
-            border-bottom: 1px solid #eee;
-        }
 
-        body {
-            padding-top: 70px;
-        }
     </style>
 {% endblock %}
 
-{% block version_switcher %}
-    <div id="version-switcher" class="uk-button-dropdown uk-float-right" data-uk-dropdown="">
-        <a class="uk-button uk-button-primary" href="{{ uri.base }}documentation/3.x/start/getting-started.html">
-            {{ version }} <i class="uk-icon-caret-down"></i>
-        </a>
+{% block nav %}
+    {% embed '_global/header/nav.twig' %}
+        {% block version_switcher %}
+            <div class="btn-group" style="margin-left: 15px">
+                <button type="button" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ version }} <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="{{ version == '3.x' ? 'active' : '' }}">
+                        <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '3.x', config) }}">3.x</a>
+                    </li>
 
-        <div class="uk-dropdown">
-            <ul class="uk-nav uk-nav-dropdown">
-                <li class="{{ version == '3.x' ? 'uk-active' : '' }}">
-                    <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '3.x', config) }}">3.x</a>
-                </li>
-
-                <li class="{{ version == '2.1' ? 'uk-active' : '' }}">
-                    <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '2.1', config) }}">2.1</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+                    <li class="{{ version == '2.1' ? 'active' : '' }}">
+                        <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '2.1', config) }}">2.1</a>
+                    </li>
+                </ul>
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
 
 {% block submenu %}
@@ -51,7 +42,7 @@
 {% block article_footer %}
     <hr />
 
-    <p class="uk-text-center">
-        Help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/{{ path|join('/') }}">improve</a> this document.
+    <p class="text-center inner-top-sm">
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/{{ path|join('/') }}">improve</a> this document.
     </p>
 {% endblock %}

@@ -3,7 +3,7 @@ about:
         index: About
         features: Features
         packages: Packages
-        cases: Who uses Windwalker
+#        cases: Who uses Windwalker
 documentation:
     3.x:
         Start:

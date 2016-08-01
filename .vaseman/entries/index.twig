@@ -22,6 +22,15 @@ og:
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae interdum arcu. Nullam blandit vitae tellus non facilisis. Suspendisse nulla magna, aliquet ac est et
                 </p>
 
+                <div class='browser-window'>
+                    <div class='top-bar'>
+                        <div class='circles'>
+                            <div class="circle circle-red"></div>
+                            <div class="circle circle-yellow"></div>
+                            <div class="circle circle-green"></div>
+                        </div>
+                    </div>
+                    <div class='content'>
 {% markdown %}
 ``` php
 namespace Flower\Controller\Sakura;
@@ -29,8 +38,8 @@ namespace Flower\Controller\Sakura;
 use Windwalker\Core\Controller\AbstractController;
 
 /**
- * Single action controller to handle GET request.
- */
+* Single action controller to handle GET request.
+*/
 class GetController extends AbstractController
 {
     public function doExecute()
@@ -46,6 +55,9 @@ class GetController extends AbstractController
 }
 ```
 {% endmarkdown %}
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -139,7 +151,7 @@ class GetController extends AbstractController
         <h2 class="section-title">Getting Started</h2>
 
         <div class="installation-help col-md-8 box-center">
-            <div class="outer-top-xs outer-bottom-xs">
+            <div class="outer-top-xs outer-bottom-xs article-content">
                 <pre class="language-bash"><code>$ composer create-project windwalker/starter windwalker ~3.0</code></pre>
             </div>
 
