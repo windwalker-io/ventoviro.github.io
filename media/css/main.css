@@ -1047,6 +1047,9 @@ code {
 #header #nav .navbar {
   transition: all 0.3s;
 }
+#header #nav .mainmenu .material-icons {
+  font-size: 1.1em;
+}
 #header #banner {
   position: relative;
   z-index: 100;
