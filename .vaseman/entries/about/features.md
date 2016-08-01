@@ -3,35 +3,31 @@ title: Features
 
 ---
 
-This page, we list something Windwlker do better than others, or we think it is worth you try it. 
+## Easy and Understandable
 
-# Easy and Understandable
-
-Windwalker is very simple on classes interface, we called it **programming UX**, most classes in Windwalker 
+Windwalker is very simple on classes interface, we called it **DX** (Developer Experience), most classes in Windwalker
 has single entry point and easy understandable naming.
 
-# Fully Decoupled
-
-Most Windwalker packages has zero dependency, just a few big packages will dependency on 1 or 2 Windwalker package itself. 
-We hope developer has more flexible to decide what they want to include in their projects.
- 
-Many Windwlaker packages provides adapter interface to let developer create adapter to working with other library, for example,
-the [DataMapper](https://github.com/ventoviro/windwalker-datamapper) package has a `DatabaseAdapter` that you may create an adapter 
-to use other frameworks' database object, and you don't need to install Windwalker Database.
-
-# Package System (Bundle)
+## Package System
 
 Package is the main component of Windwalker's structure. Here is a image that describe the package system:
 
 ![](https://cloud.githubusercontent.com/assets/1639206/5579031/b4c50ed8-906e-11e4-8964-a1f2d949fc88.png)
 
 From this image, we will know there can be multiple packages and its' own MVC system in Windwalker. 
-That make our application more flexible. For example, we can create a FrontendPackage and an AdminPackage to maintain 
-your front-end and back-end. And an ApiPackage to provide RESTful API for mobile APP.
+That makes our application more flexible. For example, we can create a FrontendPackage and an AdminPackage to maintain
+your front-end and back-end in separated different packages. And maybe an ApiPackage to provide RESTful API for mobile APP.
 
-See: [Package Syetem](../documentation/start/package-system.html)
+See: [Package Syetem](../documentation/3.x/core/package-system.html)
 
-# Single Responsibility Principle
+## RAD Package
+
+We also provides a RAD package called [Phoenix](../rad), with this package, every web development team are able to
+establish an usable system prototype with powerful admin UI quickly and continue complete it after multiple iteration.
+
+![img](https://cloud.githubusercontent.com/assets/1639206/16977454/b325aec8-4e88-11e6-915c-42c522479b9f.jpg)
+
+## Single Responsibility Principle
 
 Most Windwalker objects follows [Single Responsibility Principle](http://en.wikipedia.org/wiki/Single_responsibility_principle),
 the benefit is that the responsibility of every object are very clear, we don't need to include a big object for using only one method.
@@ -50,25 +46,25 @@ class GetController extends Controller
 }
 ```
 
-See: [Use Controller](../documentation/mvc/use-controller.html)
+See: [Use Controller](../documentation/3.x/mvc/use-controller.html)
 
-## Hook System
+### Hook System
 
 Since many objects has single entry point, there is a hook system in Windwalker everywhere.
 You can add many logic before or after `doExecute()` if you override the parent classes.
 
 ![hook](https://cloud.githubusercontent.com/assets/1639206/5596977/5f11832c-92d5-11e4-8e43-33013d076877.jpg)
 
-# ViewModel Pattern
+## ViewModel Pattern
 
 Windwalker uses a pattern which is similar to [Supervising Controller](http://goo.gl/p6Rjwl), [MVVM](http://goo.gl/LJPG) or [MVP](http://goo.gl/y3VzE)
 , View can not communicate to Model, but Controller can binding Model to View, then View is able to get data from Model.
 
 ![mvc](https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg) ![ww-mvc](https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg)
 
-See: [ViewModel](../documentation/mvc/view-model.html)
+See: [ViewModel](../documentation/3.x/mvc/view-model.html)
 
-# Stateful Model
+## Stateful Model
 
 Windwalker Model is stateful design, use state pattern can help ue create flexible data provider. For example, we can change this state to get different data.
 
@@ -83,11 +79,11 @@ $model->set('list.direction', 'DESC');
 $users = $model->getUsers();
 ```
 
-See: [Model State](../documentation/mvc/model-database.html#model-state)
+See: [Model State](../documentation/3.x/mvc/model-database.html#model-state)
 
-# Powerful Templating
+## Multiple Template Engines
 
-## Extendible PHP Engine
+### Extendible PHP Engine
 
 Windwalker PHP Engine is able to extends parent template which similar to Blade or Twig:
 
@@ -106,15 +102,15 @@ $this->extend('_global.main');
 <?php $this->endblock(); ?>
 ```
 
-See: [PHP Engine](../documentation/mvc/view-templating.html#php-engine)
+See: [PHP Engine](../documentation/3.x/mvc/view-templating.html#php-engine)
 
-## Blade and Twig Engine
+### Blade/Edge and Twig Engine
  
-Windwalker also support powerful Blade and Twig engine.
+Windwalker also support powerful Blade and Twig engine, and our own Edge engine which is compatible with Blade.
 
-See: [Blade Engine](../documentation/mvc/view-templating.html#blade-engine) / [Twig Engine](../documentation/mvc/view-templating.html#twig-engine)
+See: [Blade Engine](../documentation/3.x/mvc/view-templating.html#blade-engine) / [Twig Engine](../documentation/3.x/mvc/view-templating.html#twig-engine)
 
-# Widget System
+## Widget System
 
 Widget object is a convenience tool to help us render HTML blocks, you can consider it as a backend web component.
 
@@ -122,15 +118,30 @@ Widget object is a convenience tool to help us render HTML blocks, you can consi
 
 We also contains powerful level-based template override rules.
 
-See: [Widget and Renderer](../documentation/more/widget-renderer.html)
+See: [Widget and Renderer](../documentation/3.x/services/widget-renderer.html)
 
-# Fast Routing
+## Asset Management
 
-## Restful
+Windwalker has an asset manager to help us include css/js files and handle the script dependencies.
+
+``` php
+// Include CSS and JS
+$asset->addJS('js/my-script.min.js');
+$asset->addCSS('css/my-style.min.css');
+
+// Use script manager to handle dependencies
+\Flower\Script\MyScript::formHandler('#admin-form');
+```
+
+See [Asset Manager](../documentation/3.x/services/asset.html)
+
+## Fast Routing
+
+### Restful
 
 Windwalker use Restful design, one route will able to handle four controller actions. This can reduce a quarter of times to match routes.
  
-## Matchers
+### Matchers
 
 Router provides some matchers to use different way to search routes:
 
@@ -142,74 +153,43 @@ A simple benchmark when we developing Router:
 
 ![Matcher Benchmark](https://cloud.githubusercontent.com/assets/1639206/5596779/7bab7460-92d1-11e4-997b-d69fc58fb520.jpg)
 
-See: [Routing](../documentation/start/routing-controller.html)
+See: [Routing](../documentation/3.x/core/routing.html)
 
-# Database
+## Database
 
-## Powerful Schema Builder
+### Powerful Schema Builder
 
 ``` php
-use Windwalker\Database\Schema\Column;
-use Windwalker\Database\Schema\Key;
-use Windwalker\Database\Schema\DataType;
+$table->create(function (Schema $schema)
+{
+    $schema->primary('id')->signed(false)->allowNull(false)->comment('Primary Key');
+    $schema->integer('category_id')->signed(false)->allowNull(false)->comment('Cat Key');
+    $schema->varchar('title')->allowNull(false)->comment('Title');
+    $schema->varchar('slug')->length(123)->allowNull(false)->comment('Slug');
+    $schema->text('content')->allowNull(false)->comment('Content');
 
-$table = $db->getTable('#__articles');
-
-$table->addColumn('id', DataType::INTEGER, Column::UNSIGNED, Column::NOT_NULL, '', 'PK', array('primary' => true))
-    ->addColumn('name', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Name', array('length' => 255))
-    ->addColumn('alias', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Alias')
-    ->addIndex(Key::TYPE_INDEX, 'idx_name', 'name', 'Test')
-    ->addIndex(Key::TYPE_UNIQUE, 'idx_alias', 'alias', 'Alias Index')
-    ->create(true);
-    
-// OR simpler
-
-$table->addColumn(new Column\Primary('id'))
-    ->addColumn(new Column\Varchar('name'))
-    ->addColumn(new Column\Char('type'))
-    ->addColumn(new Column\Timestamp('created'))
-    ->addColumn(new Column\Bit('state'))
-    ->addColumn(new Column\Integer('uid'))
-    ->addColumn(new Column\Tinyint('status'))
-    ->create();
+    $schema->addIndex('category_id');
+    $schema->addIndex(array('category_id', 'title'));
+    $schema->addUniqueKey('slug');
+}, true);
 ```
 
-See: [Table and Schema](../documentation/db/table-schema.html)
+See: [Table and Schema](../documentation/3.x/db/table-schema.html)
 
-## DataType Mapping
+### DataType Mapping
 
-Use `DataType::TYPE_NAME` to define data type of every column, Windwalker will auto map datatype for different databases.
+Windwalker will auto map datatype between different databases.
 
-For example, use `DataType::DATETIME` in Mysql, will be `datetime`, but in PostgreSql, will be `timestamp`. You won't worry about 
-the difference of data type between databases.
+For example, use `datetime` in Mysql, will be `datetime` type, but in PostgreSql, the column type will be `timestamp`. You don't worry about
+the difference of data type between databases, Windwalker will auto handle it.
 
-> NOTE: Postgresql, Oracle and MSSQL are still working in process, will be release after 2.1
+See: [Table and Schema](../documentation/3.x/db/table-schema.html)
 
-See: [Table and Schema](../documentation/db/table-schema.html)
+## Easy Error Handling
 
-## The DataMapper
+See: [Error Handling](../documentation/3.x/services/error-handling.html)
 
-DataMapper is an easy using tool help us access Database:
- 
-``` php
-use Windwalker\DataMapper\DataMapper;
-
-$mapper = new DataMapper('#_table_name');
-
-$dataset = $mapper->find(array('id' => 5));
-
-$mapper->save($data);
-
-$mapper->delete(12);
-```
-
-See: [DataMapper](../documentation/db/datamapper.html)
-
-# Easy Error Handling
-
-See: [Error Handling](../documentation/more/error-handling.html)
-
-# Spl Iterable Filesystem
+## Spl Iterable Filesystem
 
 ``` php
 $items = Filesystem::items($path);
@@ -234,7 +214,7 @@ $closure = function($current, $key, $iterator)
 $files = Filesystem::find($path, $closure, true);
 ```
 
-# Form Builder
+## Form Builder
 
 ``` php
 $form = new Form;
@@ -254,9 +234,9 @@ $form->addField(new TextareaField('description', 'Description'));
 echo $form->renderFields();
 ```
 
-See: [Form Builder](../documentation/more/form-builder.html)
+See: [Form Builder](../documentation/3.x/more/form-builder.html) and [Form Definition](../documentation/3.x/more/form-definition.html)
 
-# HTML Builder
+## HTML Builder
 
 Simple HtmlElement to build a tag.
 
@@ -296,9 +276,9 @@ $select = new SelectList(
 echo $select;
 ```
 
-See: [HTML Builder](../documentation/more/html-builder.html)
+See: [HTML Builder](../documentation/3.x/more/html-builder.html)
 
-# Easy Benchmarking
+## Easy Benchmarking
 
 Benchmark in Windwalker is very easy:
 
@@ -329,9 +309,9 @@ task2 => 207.049847 ms
 
 See: [Profiler](https://github.com/ventoviro/windwalker-profiler#windwalker-profiler)
 
-# Utilities
+## Utilities
 
-## String Handler
+### String Handler
 
 Utf8 string handler
 
@@ -351,7 +331,7 @@ $inflector = new StringInflector;
 echo $inflector->toSingular('categories'); // category
 ```
 
-## Easy Dump Data
+### Easy Dump Data
 
 ``` php
 // print_r 3 objects and limit 7 levels

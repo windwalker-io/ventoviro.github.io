@@ -4,14 +4,6 @@
     <script src="{{ uri.media }}js/doc.js"></script>
 {% endblock %}
 
-{% block stylesheet %}
-    {{ parent()  }}
-
-    <style>
-
-    </style>
-{% endblock %}
-
 {% block nav %}
     {% embed '_global/header/nav.twig' %}
         {% block version_switcher %}

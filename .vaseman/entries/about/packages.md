@@ -8,7 +8,8 @@ There are 36 packages has ready to use, please try it:
 | Package | Description |
 | --- | --- |
 | [Application](https://github.com/ventoviro/windwalker-application) | Application (Kernel) package |
-| [Authenticate](https://github.com/ventoviro/windwalker-authenticate) | Authentication package help you authenticate users. |
+| [Authentication](https://github.com/ventoviro/windwalker-authentication) | Authentication package help you authenticate users. |
+| [Authorisation](https://github.com/ventoviro/windwalker-authorisation) | ACL package help you manage user access. |
 | [Cache](https://github.com/ventoviro/windwalker-cache) | Handle data caches. |
 | [Compare](https://github.com/ventoviro/windwalker-compare) | String compare generator. eg: `foo >= bar` |
 | [Console](https://github.com/ventoviro/windwalker-console) | CLI console application and tools. |

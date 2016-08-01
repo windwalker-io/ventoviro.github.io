@@ -41,7 +41,7 @@
   color: #d50000;
 }
 .text-red {
-  color: red-500;
+  color: #f44336;
 }
 .text-pink-50 {
   color: #fce4ec;
@@ -86,7 +86,7 @@
   color: #c51162;
 }
 .text-pink {
-  color: pink-500;
+  color: #e91e63;
 }
 .text-purple-50 {
   color: #f3e5f5;
@@ -131,7 +131,7 @@
   color: #aa00ff;
 }
 .text-purple {
-  color: purple-500;
+  color: #9c27b0;
 }
 .text-deep-purple-50 {
   color: #ede7f6;
@@ -176,7 +176,7 @@
   color: #6200ea;
 }
 .text-deep-purple {
-  color: deep-purple-500;
+  color: #673ab7;
 }
 .text-indigo-50 {
   color: #e8eaf6;
@@ -221,7 +221,7 @@
   color: #304ffe;
 }
 .text-indigo {
-  color: indigo-500;
+  color: #3f51b5;
 }
 .text-blue-50 {
   color: #e3f2fd;
@@ -266,7 +266,7 @@
   color: #2962ff;
 }
 .text-blue {
-  color: blue-500;
+  color: #2196f3;
 }
 .text-light-blue-50 {
   color: #e1f5fe;
@@ -311,7 +311,7 @@
   color: #0091ea;
 }
 .text-light-blue {
-  color: light-blue-500;
+  color: #03a9f4;
 }
 .text-cyan-50 {
   color: #e0f7fa;
@@ -356,7 +356,7 @@
   color: #00b8d4;
 }
 .text-cyan {
-  color: cyan-500;
+  color: #00bcd4;
 }
 .text-teal-50 {
   color: #e0f2f1;
@@ -401,7 +401,7 @@
   color: #00bfa5;
 }
 .text-teal {
-  color: teal-500;
+  color: #009688;
 }
 .text-green-50 {
   color: #e8f5e9;
@@ -446,7 +446,7 @@
   color: #00c853;
 }
 .text-green {
-  color: green-500;
+  color: #4caf50;
 }
 .text-light-green-50 {
   color: #f1f8e9;
@@ -491,7 +491,7 @@
   color: #64dd17;
 }
 .text-light-green {
-  color: light-green-500;
+  color: #8bc34a;
 }
 .text-lime-50 {
   color: #f9fbe7;
@@ -536,7 +536,7 @@
   color: #aeea00;
 }
 .text-lime {
-  color: lime-500;
+  color: #cddc39;
 }
 .text-yellow-50 {
   color: #fffde7;
@@ -581,7 +581,7 @@
   color: #ffd600;
 }
 .text-yellow {
-  color: yellow-500;
+  color: #ffeb3b;
 }
 .text-amber-50 {
   color: #fff8e1;
@@ -626,7 +626,7 @@
   color: #ffab00;
 }
 .text-amber {
-  color: amber-500;
+  color: #ffc107;
 }
 .text-orange-50 {
   color: #fff3e0;
@@ -671,7 +671,7 @@
   color: #ff6d00;
 }
 .text-orange {
-  color: orange-500;
+  color: #ff9800;
 }
 .text-deep-orange-50 {
   color: #fbe9e7;
@@ -716,7 +716,7 @@
   color: #dd2c00;
 }
 .text-deep-orange {
-  color: deep-orange-500;
+  color: #ff5722;
 }
 .text-brown-50 {
   color: #efebe9;
@@ -749,7 +749,7 @@
   color: #3e2723;
 }
 .text-brown {
-  color: brown-500;
+  color: #795548;
 }
 .text-grey-50 {
   color: #fafafa;
@@ -782,7 +782,7 @@
   color: #212121;
 }
 .text-grey {
-  color: grey-500;
+  color: #9e9e9e;
 }
 .text-blue-grey-50 {
   color: #eceff1;
@@ -815,7 +815,7 @@
   color: #263238;
 }
 .text-blue-grey {
-  color: blue-grey-500;
+  color: #607d8b;
 }
 .text-black {
   color: #000000;

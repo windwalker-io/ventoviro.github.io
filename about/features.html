@@ -187,9 +187,6 @@
                     <li class="">
                 <a class="withripple" href="../about/packages.html">Packages</a>
             </li>
-                    <li class="">
-                <a class="withripple" href="../about/cases.html">Who uses Windwalker</a>
-            </li>
         
        </ul>
     </div>
@@ -197,35 +194,31 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <p>This page, we list something Windwlker do better than others, or we think it is worth you try it.</p>
+                    <h2>Easy and Understandable</h2>
 
-<h1>Easy and Understandable</h1>
-
-<p>Windwalker is very simple on classes interface, we called it <strong>programming UX</strong>, most classes in Windwalker 
+<p>Windwalker is very simple on classes interface, we called it <strong>DX</strong> (Developer Experience), most classes in Windwalker
 has single entry point and easy understandable naming.</p>
 
-<h1>Fully Decoupled</h1>
-
-<p>Most Windwalker packages has zero dependency, just a few big packages will dependency on 1 or 2 Windwalker package itself. 
-We hope developer has more flexible to decide what they want to include in their projects.</p>
-
-<p>Many Windwlaker packages provides adapter interface to let developer create adapter to working with other library, for example,
-the <a href="https://github.com/ventoviro/windwalker-datamapper">DataMapper</a> package has a <code>DatabaseAdapter</code> that you may create an adapter 
-to use other frameworks' database object, and you don't need to install Windwalker Database.</p>
-
-<h1>Package System (Bundle)</h1>
+<h2>Package System</h2>
 
 <p>Package is the main component of Windwalker's structure. Here is a image that describe the package system:</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5579031/b4c50ed8-906e-11e4-8964-a1f2d949fc88.png" alt="" /></p>
 
 <p>From this image, we will know there can be multiple packages and its' own MVC system in Windwalker. 
-That make our application more flexible. For example, we can create a FrontendPackage and an AdminPackage to maintain 
-your front-end and back-end. And an ApiPackage to provide RESTful API for mobile APP.</p>
+That makes our application more flexible. For example, we can create a FrontendPackage and an AdminPackage to maintain
+your front-end and back-end in separated different packages. And maybe an ApiPackage to provide RESTful API for mobile APP.</p>
 
-<p>See: <a href="../documentation/start/package-system.html">Package Syetem</a></p>
+<p>See: <a href="../documentation/3.x/core/package-system.html">Package Syetem</a></p>
 
-<h1>Single Responsibility Principle</h1>
+<h2>RAD Package</h2>
+
+<p>We also provides a RAD package called <a href="../rad">Phoenix</a>, with this package, every web development team are able to
+establish an usable system prototype with powerful admin UI quickly and continue complete it after multiple iteration.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/16977454/b325aec8-4e88-11e6-915c-42c522479b9f.jpg" alt="img" /></p>
+
+<h2>Single Responsibility Principle</h2>
 
 <p>Most Windwalker objects follows <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a>,
 the benefit is that the responsibility of every object are very clear, we don't need to include a big object for using only one method.</p>
@@ -243,25 +236,25 @@ but won't be confused by many actions in one class.</p>
 }
 </code></pre>
 
-<p>See: <a href="../documentation/mvc/use-controller.html">Use Controller</a></p>
+<p>See: <a href="../documentation/3.x/mvc/use-controller.html">Use Controller</a></p>
 
-<h2>Hook System</h2>
+<h3>Hook System</h3>
 
 <p>Since many objects has single entry point, there is a hook system in Windwalker everywhere.
 You can add many logic before or after <code>doExecute()</code> if you override the parent classes.</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5596977/5f11832c-92d5-11e4-8e43-33013d076877.jpg" alt="hook" /></p>
 
-<h1>ViewModel Pattern</h1>
+<h2>ViewModel Pattern</h2>
 
 <p>Windwalker uses a pattern which is similar to <a href="http://goo.gl/p6Rjwl">Supervising Controller</a>, <a href="http://goo.gl/LJPG">MVVM</a> or <a href="http://goo.gl/y3VzE">MVP</a>
 , View can not communicate to Model, but Controller can binding Model to View, then View is able to get data from Model.</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg" alt="mvc" /> <img src="https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg" alt="ww-mvc" /></p>
 
-<p>See: <a href="../documentation/mvc/view-model.html">ViewModel</a></p>
+<p>See: <a href="../documentation/3.x/mvc/view-model.html">ViewModel</a></p>
 
-<h1>Stateful Model</h1>
+<h2>Stateful Model</h2>
 
 <p>Windwalker Model is stateful design, use state pattern can help ue create flexible data provider. For example, we can change this state to get different data.</p>
 
@@ -275,11 +268,11 @@ $model-&gt;set('list.direction', 'DESC');
 $users = $model-&gt;getUsers();
 </code></pre>
 
-<p>See: <a href="../documentation/mvc/model-database.html#model-state">Model State</a></p>
+<p>See: <a href="../documentation/3.x/mvc/model-database.html#model-state">Model State</a></p>
 
-<h1>Powerful Templating</h1>
+<h2>Multiple Template Engines</h2>
 
-<h2>Extendible PHP Engine</h2>
+<h3>Extendible PHP Engine</h3>
 
 <p>Windwalker PHP Engine is able to extends parent template which similar to Blade or Twig:</p>
 
@@ -297,15 +290,15 @@ $this-&gt;extend('_global.main');
 &lt;?php $this-&gt;endblock(); ?&gt;
 </code></pre>
 
-<p>See: <a href="../documentation/mvc/view-templating.html#php-engine">PHP Engine</a></p>
+<p>See: <a href="../documentation/3.x/mvc/view-templating.html#php-engine">PHP Engine</a></p>
 
-<h2>Blade and Twig Engine</h2>
+<h3>Blade/Edge and Twig Engine</h3>
 
-<p>Windwalker also support powerful Blade and Twig engine.</p>
+<p>Windwalker also support powerful Blade and Twig engine, and our own Edge engine which is compatible with Blade.</p>
 
-<p>See: <a href="../documentation/mvc/view-templating.html#blade-engine">Blade Engine</a> / <a href="../documentation/mvc/view-templating.html#twig-engine">Twig Engine</a></p>
+<p>See: <a href="../documentation/3.x/mvc/view-templating.html#blade-engine">Blade Engine</a> / <a href="../documentation/3.x/mvc/view-templating.html#twig-engine">Twig Engine</a></p>
 
-<h1>Widget System</h1>
+<h2>Widget System</h2>
 
 <p>Widget object is a convenience tool to help us render HTML blocks, you can consider it as a backend web component.</p>
 
@@ -313,15 +306,29 @@ $this-&gt;extend('_global.main');
 
 <p>We also contains powerful level-based template override rules.</p>
 
-<p>See: <a href="../documentation/more/widget-renderer.html">Widget and Renderer</a></p>
+<p>See: <a href="../documentation/3.x/services/widget-renderer.html">Widget and Renderer</a></p>
 
-<h1>Fast Routing</h1>
+<h2>Asset Management</h2>
 
-<h2>Restful</h2>
+<p>Windwalker has an asset manager to help us include css/js files and handle the script dependencies.</p>
+
+<pre><code class="php">// Include CSS and JS
+$asset-&gt;addJS('js/my-script.min.js');
+$asset-&gt;addCSS('css/my-style.min.css');
+
+// Use script manager to handle dependencies
+\Flower\Script\MyScript::formHandler('#admin-form');
+</code></pre>
+
+<p>See <a href="../documentation/3.x/services/asset.html">Asset Manager</a></p>
+
+<h2>Fast Routing</h2>
+
+<h3>Restful</h3>
 
 <p>Windwalker use Restful design, one route will able to handle four controller actions. This can reduce a quarter of times to match routes.</p>
 
-<h2>Matchers</h2>
+<h3>Matchers</h3>
 
 <p>Router provides some matchers to use different way to search routes:</p>
 
@@ -335,74 +342,42 @@ $this-&gt;extend('_global.main');
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5596779/7bab7460-92d1-11e4-997b-d69fc58fb520.jpg" alt="Matcher Benchmark" /></p>
 
-<p>See: <a href="../documentation/start/routing-controller.html">Routing</a></p>
+<p>See: <a href="../documentation/3.x/core/routing.html">Routing</a></p>
 
-<h1>Database</h1>
+<h2>Database</h2>
 
-<h2>Powerful Schema Builder</h2>
+<h3>Powerful Schema Builder</h3>
 
-<pre><code class="php">use Windwalker\Database\Schema\Column;
-use Windwalker\Database\Schema\Key;
-use Windwalker\Database\Schema\DataType;
+<pre><code class="php">$table-&gt;create(function (Schema $schema)
+{
+    $schema-&gt;primary('id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Primary Key');
+    $schema-&gt;integer('category_id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Cat Key');
+    $schema-&gt;varchar('title')-&gt;allowNull(false)-&gt;comment('Title');
+    $schema-&gt;varchar('slug')-&gt;length(123)-&gt;allowNull(false)-&gt;comment('Slug');
+    $schema-&gt;text('content')-&gt;allowNull(false)-&gt;comment('Content');
 
-$table = $db-&gt;getTable('#__articles');
-
-$table-&gt;addColumn('id', DataType::INTEGER, Column::UNSIGNED, Column::NOT_NULL, '', 'PK', array('primary' =&gt; true))
-    -&gt;addColumn('name', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Name', array('length' =&gt; 255))
-    -&gt;addColumn('alias', DataType::VARCHAR, Column::SIGNED, Column::NOT_NULL, '', 'Alias')
-    -&gt;addIndex(Key::TYPE_INDEX, 'idx_name', 'name', 'Test')
-    -&gt;addIndex(Key::TYPE_UNIQUE, 'idx_alias', 'alias', 'Alias Index')
-    -&gt;create(true);
-
-// OR simpler
-
-$table-&gt;addColumn(new Column\Primary('id'))
-    -&gt;addColumn(new Column\Varchar('name'))
-    -&gt;addColumn(new Column\Char('type'))
-    -&gt;addColumn(new Column\Timestamp('created'))
-    -&gt;addColumn(new Column\Bit('state'))
-    -&gt;addColumn(new Column\Integer('uid'))
-    -&gt;addColumn(new Column\Tinyint('status'))
-    -&gt;create();
+    $schema-&gt;addIndex('category_id');
+    $schema-&gt;addIndex(array('category_id', 'title'));
+    $schema-&gt;addUniqueKey('slug');
+}, true);
 </code></pre>
 
-<p>See: <a href="../documentation/db/table-schema.html">Table and Schema</a></p>
+<p>See: <a href="../documentation/3.x/db/table-schema.html">Table and Schema</a></p>
 
-<h2>DataType Mapping</h2>
+<h3>DataType Mapping</h3>
 
-<p>Use <code>DataType::TYPE_NAME</code> to define data type of every column, Windwalker will auto map datatype for different databases.</p>
+<p>Windwalker will auto map datatype between different databases.</p>
 
-<p>For example, use <code>DataType::DATETIME</code> in Mysql, will be <code>datetime</code>, but in PostgreSql, will be <code>timestamp</code>. You won't worry about 
-the difference of data type between databases.</p>
+<p>For example, use <code>datetime</code> in Mysql, will be <code>datetime</code> type, but in PostgreSql, the column type will be <code>timestamp</code>. You don't worry about
+the difference of data type between databases, Windwalker will auto handle it.</p>
 
-<blockquote>
-  <p>NOTE: Postgresql, Oracle and MSSQL are still working in process, will be release after 2.1</p>
-</blockquote>
+<p>See: <a href="../documentation/3.x/db/table-schema.html">Table and Schema</a></p>
 
-<p>See: <a href="../documentation/db/table-schema.html">Table and Schema</a></p>
+<h2>Easy Error Handling</h2>
 
-<h2>The DataMapper</h2>
+<p>See: <a href="../documentation/3.x/services/error-handling.html">Error Handling</a></p>
 
-<p>DataMapper is an easy using tool help us access Database:</p>
-
-<pre><code class="php">use Windwalker\DataMapper\DataMapper;
-
-$mapper = new DataMapper('#_table_name');
-
-$dataset = $mapper-&gt;find(array('id' =&gt; 5));
-
-$mapper-&gt;save($data);
-
-$mapper-&gt;delete(12);
-</code></pre>
-
-<p>See: <a href="../documentation/db/datamapper.html">DataMapper</a></p>
-
-<h1>Easy Error Handling</h1>
-
-<p>See: <a href="../documentation/more/error-handling.html">Error Handling</a></p>
-
-<h1>Spl Iterable Filesystem</h1>
+<h2>Spl Iterable Filesystem</h2>
 
 <pre><code class="php">$items = Filesystem::items($path);
 
@@ -425,7 +400,7 @@ foreach ($files as $file)
 $files = Filesystem::find($path, $closure, true);
 </code></pre>
 
-<h1>Form Builder</h1>
+<h2>Form Builder</h2>
 
 <pre><code class="php">$form = new Form;
 
@@ -444,9 +419,9 @@ $form-&gt;addField(new TextareaField('description', 'Description'));
 echo $form-&gt;renderFields();
 </code></pre>
 
-<p>See: <a href="../documentation/more/form-builder.html">Form Builder</a></p>
+<p>See: <a href="../documentation/3.x/more/form-builder.html">Form Builder</a> and <a href="../documentation/3.x/more/form-definition.html">Form Definition</a></p>
 
-<h1>HTML Builder</h1>
+<h2>HTML Builder</h2>
 
 <p>Simple HtmlElement to build a tag.</p>
 
@@ -484,9 +459,9 @@ $select = new SelectList(
 echo $select;
 </code></pre>
 
-<p>See: <a href="../documentation/more/html-builder.html">HTML Builder</a></p>
+<p>See: <a href="../documentation/3.x/more/html-builder.html">HTML Builder</a></p>
 
-<h1>Easy Benchmarking</h1>
+<h2>Easy Benchmarking</h2>
 
 <p>Benchmark in Windwalker is very easy:</p>
 
@@ -516,9 +491,9 @@ task2 =&gt; 207.049847 ms
 
 <p>See: <a href="https://github.com/ventoviro/windwalker-profiler#windwalker-profiler">Profiler</a></p>
 
-<h1>Utilities</h1>
+<h2>Utilities</h2>
 
-<h2>String Handler</h2>
+<h3>String Handler</h3>
 
 <p>Utf8 string handler</p>
 
@@ -536,7 +511,7 @@ $inflector = new StringInflector;
 echo $inflector-&gt;toSingular('categories'); // category
 </code></pre>
 
-<h2>Easy Dump Data</h2>
+<h3>Easy Dump Data</h3>
 
 <pre><code class="php">// print_r 3 objects and limit 7 levels
 show($data1, $data2, $data3, 7);
@@ -570,7 +545,7 @@ show($data1, $data2, $data3, 7);
         </p>
 
         <p class="outer-top-xs">
-            <a class="text-center footer-logo">
+            <a href="#header" class="text-center footer-logo">
                 <img class="img-invert" width="250" src="../media/images/logo/windwalker-logo.png" alt="Logo" style="">
             </a>
         </p>

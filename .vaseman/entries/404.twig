@@ -1,0 +1,226 @@
+---
+og:
+    image: https://cloud.githubusercontent.com/assets/1639206/5580385/1787acf4-9085-11e4-8089-a214dd2599af.jpg
+---
+{% extends '_global/html.twig' %}
+
+{% block banner %}
+    <div class="banner-title">
+        <h1>Windwalker</h1>
+        <h2>A Modern PHP Framework</h2>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <section id="intro" class="container main-block">
+        <div class="row">
+            <div class="col-md-8 box-center article-content">
+                <p class="lead gray-font inner-bottom-xs text-center">
+                    Start your application with a simple and understandable interface.
+                </p>
+
+                <div class='browser-window'>
+                    <div class='top-bar'>
+                        <div class='circles'>
+                            <div class="circle circle-red"></div>
+                            <div class="circle circle-yellow"></div>
+                            <div class="circle circle-green"></div>
+                        </div>
+                    </div>
+                    <div class='content'>
+{% markdown %}
+``` php
+namespace Flower\Controller\Sakura;
+
+use Windwalker\Core\Controller\AbstractController;
+
+/**
+* Single action controller to handle GET request.
+*/
+class GetController extends AbstractController
+{
+    public function doExecute()
+    {
+        $page = $this->input->getInt('page', 1);
+
+        $repository = $this->getModel();
+
+        return $this->getView()
+            ->set('items', $repository->getSakuras($page, 15))
+            ->render();
+    }
+}
+```
+{% endmarkdown %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="container main-block">
+        <h2 class="section-title">Features</h2>
+
+        <!-- Feature Row -->
+        <div class="row feature-row outer-top-sm">
+            <!-- Feature -->
+            <div class="feature-item col-md-4 text-center">
+                <div class="feature-icon">
+                    <i class="material-icons text-green-600">insert_emoticon</i>
+                </div>
+                <h3 class="feature-title slab-font text-bolder">
+                    Easy But Powerful
+                </h3>
+                <p class="gray-font">
+                    Learning a new framework is hard,
+                    we provides simple and semantic interface to help developers understand this framework.
+                </p>
+            </div>
+            <!-- Feature -->
+            <div class="feature-item col-md-4 text-center">
+                <div class="feature-icon">
+                    <i class="material-icons text-indigo-400">apps</i>
+                </div>
+                <h3 class="feature-title slab-font text-bolder">
+                    Fully Decoupled
+                </h3>
+                <p class="gray-font">
+                    Windwalker is a set of PHP tools, you can easily install them by composer without too many dependencies.
+                </p>
+            </div>
+            <!-- Feature -->
+            <div class="feature-item col-md-4 text-center">
+                <div class="feature-icon">
+                    <i class="material-icons text-orange">device_hub</i>
+                </div>
+                <h3 class="feature-title slab-font text-bolder">
+                    Extendable
+                </h3>
+                <p class="gray-font">
+                    The package system helps us organize our classes and routing to build large enterprise level applications.
+                </p>
+            </div>
+        </div>
+
+        <!-- Feature Row -->
+        <div class="row feature-row outer-top-sm">
+            <!-- Feature -->
+            <div class="feature-item col-md-4 text-center">
+                <div class="feature-icon">
+                    <i class="material-icons text-red-900">settings_input_composite</i>
+                </div>
+                <h3 class="feature-title slab-font text-bolder">
+                    Standard
+                </h3>
+                <p class="gray-font">
+                    We follow PSR3, PSR6 and PSR7 standard, you can easily integrate 3rd middleware or caching library into Windwalker.
+                </p>
+            </div>
+            <!-- Feature -->
+            <div class="feature-item col-md-4 text-center">
+                <div class="feature-icon">
+                    <i class="material-icons text-purple">graphic_eq</i>
+                </div>
+                <h3 class="feature-title slab-font text-bolder">
+                    Rapid Development
+                </h3>
+                <p class="gray-font">
+                    Windwalker is a RAD framework, building a usable system prototype with powerful UI is very fast.
+                </p>
+            </div>
+            <!-- Feature -->
+            <div class="feature-item col-md-4 text-center">
+                <div class="feature-icon">
+                    <i class="material-icons text-lime">dvr</i>
+                </div>
+                <h3 class="feature-title slab-font text-bolder">
+                    IDE friendly
+                </h3>
+                <p class="gray-font">
+                    Class searching, auto-completion and many useful IDE functions are working well with IoC.
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="getting-started" class="container main-block">
+        <h2 class="section-title">Getting Started</h2>
+
+        <div class="installation-help col-md-8 box-center">
+            <div class="outer-top-xs outer-bottom-xs article-content">
+                <pre class="language-bash"><code>$ composer create-project windwalker/starter windwalker ~3.0</code></pre>
+            </div>
+
+            <p class="text-center">
+                <a href="{{ uri.base }}documentation/" class="btn btn-primary btn-raised btn-lg">Documentation</a>
+            </p>
+        </div>
+    </section>
+
+    <section id="cases" class="main-block black-block">
+        <div class="container inner-bottom-sm">
+            <h2 class="section-title">Who Uses Windwalker</h2>
+
+            {# Cases row #}
+            <div class="cases-wrap outer-top-sm">
+                <div class="row cases-row">
+                    <div class="col-md-4 cases-item">
+                        <a style="background-image: url(http://about.asika.tw/images/logos/datavideo.jpg);"
+                            href="http://datavideovirtualset.com/"
+                            class="cases-img box-rounded-xs" target="_blank">
+                        </a>
+                    </div>
+                    <div class="col-md-4 cases-item">
+                        <a style="background-image: url(http://about.asika.tw/images/logos/asukademy.jpg);"
+                            href="http://asukademy.com/"
+                            class="cases-img box-rounded-xs" target="_blank">
+                        </a>
+                    </div>
+                    <div class="col-md-4 cases-item">
+                        <a style="background-image: url(http://about.asika.tw/images/logos/windspeaker.jpg);"
+                            href="http://windspeaker.co/"
+                            class="cases-img box-rounded-xs" target="_blank">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {# Cases row #}
+            <div class="cases-wrap outer-top-sm">
+                <div class="row cases-row">
+                    <div class="col-md-4 cases-item">
+                        <a style="background-image: url(http://about.asika.tw/images/logos/lyrasoft.jpg);"
+                            href="https://lyrasoft.net/"
+                            class="cases-img box-rounded-xs" target="_blank">
+                        </a>
+                    </div>
+                    <div class="col-md-4 cases-item">
+                        <a style="background-image: url({{ uri.media }}images/cases/eng4tw.jpg);"
+                            href="http://english4tw.com/"
+                            class="cases-img box-rounded-xs" target="_blank">
+                        </a>
+                    </div>
+                    <div class="col-md-4 cases-item">
+                        <a style="background-image: url(https://cloud.githubusercontent.com/assets/1639206/5567798/9dae1f34-8f86-11e4-89a4-e348102b15e9.png);"
+                            href="http://about.asika.tw/vaseman/"
+                            class="cases-img box-rounded-xs" target="_blank">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="inspired" class="container main-block">
+        <h2 class="section-title">Inspired By</h2>
+
+        <p class="text-center inner-top-xs">
+            <a href="https://joomla.org" target="_blank">
+                <img height="75px" src="{{ uri.media }}images/logo/joomla.png" alt="Joomla">
+            </a>
+        </p>
+    </section>
+{% endblock body %}
