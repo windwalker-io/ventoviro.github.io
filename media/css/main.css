@@ -1278,7 +1278,7 @@ code {
 }
 .article-content code[class*="language-"],
 .article-content pre[class*="language-"] {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .article-content pre[class*="language-"] {
