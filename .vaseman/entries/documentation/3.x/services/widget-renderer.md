@@ -18,7 +18,7 @@ First, add a template file in `/templates/sidebar/news.php`, this is a news widg
 
 ``` php
 <ul class="nav news">
-	<?php foreach ($data->articles as $article): ?>
+	<?php foreach ($articles as $article): ?>
 	<li>
 		<a href="<?php echo $article->link; ?>">
 			<?php echo $article->title; ?>
@@ -35,13 +35,13 @@ use Windwalker\Core\Widget\Widget;
 
 $news = new Widget('sidebar.news');
 
-$news->render(array('articles' => $data));
+$news->render(array('articles' => $articles));
 
 // In PHP 5.4, you can use instantiation object access
-$news = (new Widget('sidebar.news'))->render(['articles' => $data]);
+$news = (new Widget('sidebar.news'))->render(['articles' => $articles]);
 ```
 
-It will be useful to render widget in View `prepareData()`:
+It will be useful to render widgets in View `prepareData()`, then we can print theses widgets to view template:
 
 ``` php
 class SakurasHtmlView extends HtmlView

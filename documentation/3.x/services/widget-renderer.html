@@ -392,7 +392,7 @@
 <p>First, add a template file in <code>/templates/sidebar/news.php</code>, this is a news widget.</p>
 
 <pre><code class="php">&lt;ul class="nav news"&gt;
-    &lt;?php foreach ($data-&gt;articles as $article): ?&gt;
+    &lt;?php foreach ($articles as $article): ?&gt;
     &lt;li&gt;
         &lt;a href="&lt;?php echo $article-&gt;link; ?&gt;"&gt;
             &lt;?php echo $article-&gt;title; ?&gt;
@@ -408,13 +408,13 @@
 
 $news = new Widget('sidebar.news');
 
-$news-&gt;render(array('articles' =&gt; $data));
+$news-&gt;render(array('articles' =&gt; $articles));
 
 // In PHP 5.4, you can use instantiation object access
-$news = (new Widget('sidebar.news'))-&gt;render(['articles' =&gt; $data]);
+$news = (new Widget('sidebar.news'))-&gt;render(['articles' =&gt; $articles]);
 </code></pre>
 
-<p>It will be useful to render widget in View <code>prepareData()</code>:</p>
+<p>It will be useful to render widgets in View <code>prepareData()</code>, then we can print theses widgets to view template:</p>
 
 <pre><code class="php">class SakurasHtmlView extends HtmlView
 {
