@@ -200,21 +200,21 @@ WidgetHelper instance has been inject to global renderer variables, we can use i
 In php template
 
 ``` php
-<?php echo $widget->render('sidebar,.news', $data, 'edge'); ?>
+<?php echo $widget->render('sidebar.news', $data, 'edge'); ?>
 ```
 
 In Blade or Edge
 
 ``` php
-{!! $widget->render('sidebar,.news', $data, 'edge') !!}
+{!! $widget->render('sidebar.news', $data, 'edge') !!}
 
 OR
 
-@widget('sidebar,.news', $data, 'edge')
+@widget('sidebar.news', $data, 'edge')
 ```
 
 Twig
 
 ``` twig
-{{ widget.render('sidebar .news', $data, 'edge') | raw }}
+{{ widget.render('sidebar .news', data, 'edge') | raw }}
 ```

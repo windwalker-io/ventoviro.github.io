@@ -564,21 +564,21 @@ class NewsWidget extends Widget
 
 <p>In php template</p>
 
-<pre><code class="php">&lt;?php echo $widget-&gt;render('sidebar,.news', $data, 'edge'); ?&gt;
+<pre><code class="php">&lt;?php echo $widget-&gt;render('sidebar.news', $data, 'edge'); ?&gt;
 </code></pre>
 
 <p>In Blade or Edge</p>
 
-<pre><code class="php">{!! $widget-&gt;render('sidebar,.news', $data, 'edge') !!}
+<pre><code class="php">{!! $widget-&gt;render('sidebar.news', $data, 'edge') !!}
 
 OR
 
-@widget('sidebar,.news', $data, 'edge')
+@widget('sidebar.news', $data, 'edge')
 </code></pre>
 
 <p>Twig</p>
 
-<pre><code class="twig">{{ widget.render('sidebar .news', $data, 'edge') | raw }}
+<pre><code class="twig">{{ widget.render('sidebar .news', data, 'edge') | raw }}
 </code></pre>
 
                         <hr />
