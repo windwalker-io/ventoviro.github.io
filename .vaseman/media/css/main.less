@@ -153,7 +153,7 @@ blockquote p:first-child {
         }
 
         .banner-content {
-            padding-top: 0;
+            padding-top: 15px;
             padding-bottom: 100px;
             margin: 0 auto;
             float: none;
@@ -297,6 +297,10 @@ blockquote p:first-child {
             &:hover {
                 transform: scale(1.15);
                 .transition(.15s);
+            }
+
+            @media (max-width: 768px) {
+                margin-bottom: 30px;
             }
         }
     }
