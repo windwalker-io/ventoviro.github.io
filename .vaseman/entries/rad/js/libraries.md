@@ -43,7 +43,7 @@ Phoenix override underscore template syntax to same as Blade and Edge, so we can
 underscore.template("hello: {{ name }}").compiled({name: 'World'});
 ```
 
-To ese template in Blade and Edge, you must add `@` before braces to escape the echo tag:
+To use template in Blade and Edge, you must add `@` before braces to escape the echo tag:
 
 ``` html
 <script>
