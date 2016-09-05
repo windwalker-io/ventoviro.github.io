@@ -353,5 +353,5 @@ If migration and seeder works fine, open the admin page, you will see sample dat
 
 ![Imgur](http://i.imgur.com/qhyCxmp.jpg)
 
-The first `Categories` menu item is a placeholder, you can delete it in `src/Blog/Admin/Templates/_global/admin/submenu.blade.php`.
+The first `Categories` menu item is a placeholder, you can delete it in `src/Blog/Admin/Templates/_global/admin/widget/submenu.blade.php`.
 
