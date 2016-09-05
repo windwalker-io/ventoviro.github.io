@@ -101,6 +101,7 @@ class ArticleInit extends AbstractMigration
         $this->createTable(Table::ARTICLES, function(Schema $schema)
         {
             $schema->primary('id')->comment('Primary Key');
+            $schema->integer('category_id');
             $schema->varchar('title')->comment('Title');
             $schema->varchar('alias')->comment('Alias');
             $schema->varchar('url')->comment('URL');
