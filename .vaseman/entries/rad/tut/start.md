@@ -141,6 +141,7 @@ class CommentInit extends AbstractMigration
 			$schema->primary('id')->comment('Primary Key');
 			$schema->integer('article_id');
 			$schema->varchar('name')->comment('Name');
+			$schema->varchar('alias')->comment('Alias');
 			$schema->varchar('email')->comment('Email');
 			$schema->text('introtext')->comment('Intro Text');
 			$schema->text('fulltext')->comment('Full Text');
