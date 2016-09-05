@@ -347,6 +347,7 @@ class ArticleInit extends AbstractMigration
         $this-&gt;createTable(Table::ARTICLES, function(Schema $schema)
         {
             $schema-&gt;primary('id')-&gt;comment('Primary Key');
+            $schema-&gt;integer('category_id');
             $schema-&gt;varchar('title')-&gt;comment('Title');
             $schema-&gt;varchar('alias')-&gt;comment('Alias');
             $schema-&gt;varchar('url')-&gt;comment('URL');
@@ -386,6 +387,7 @@ class CommentInit extends AbstractMigration
             $schema-&gt;primary('id')-&gt;comment('Primary Key');
             $schema-&gt;integer('article_id');
             $schema-&gt;varchar('name')-&gt;comment('Name');
+            $schema-&gt;varchar('alias')-&gt;comment('Alias');
             $schema-&gt;varchar('email')-&gt;comment('Email');
             $schema-&gt;text('introtext')-&gt;comment('Intro Text');
             $schema-&gt;text('fulltext')-&gt;comment('Full Text');
