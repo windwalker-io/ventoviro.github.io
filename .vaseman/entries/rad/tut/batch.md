@@ -7,7 +7,7 @@ title: Batch
 
 ## Add Category Batch
 
-Open `Form/Articles/BatchDefinition.php` and add new configuration.
+Open `Form/Articles/GridDefinition.php` and add new configuration.
 
 ``` php
 // src/Blog/Admin/Form/Articles/GridDefinition.php
