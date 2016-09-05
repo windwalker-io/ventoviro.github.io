@@ -13,7 +13,7 @@ Phoenix provides jQuery as core JS environment, you can use PHP to auto add jQue
 \Phoenix\Script\JQueryScript::core();
 ```
 
-The jQuery will auto included in `<hrad>`.
+The jQuery will auto included in `<head>`.
 
 ### No Conflict
 
