@@ -372,20 +372,20 @@ class GridDefinition extends AbstractFieldDefinition
             // ...
 
             // Category
-            $form-&gt;add('category.id', new CategoryListField)
+            $this-&gt;add('category.id', new CategoryListField)
                 -&gt;label('Category')
                 -&gt;option('', '')
                 -&gt;option('-- Select Category --', '')
                 -&gt;set('onchange', 'this.form.submit()');
 
             // Start Date
-            $form-&gt;calendar('start_date')
+            $this-&gt;calendar('start_date')
                 -&gt;label('Start Date')
                 -&gt;set('format', 'YYYY-MM-DD')
                 -&gt;set('placeholder', 'Start Date');
 
             // End Date
-            $form-&gt;calendar('end_date')
+            $this-&gt;calendar('end_date')
                 -&gt;label('End Date')
                 -&gt;set('format', 'YYYY-MM-DD')
                 -&gt;set('placeholder', 'End Date');
