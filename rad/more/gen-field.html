@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-    <title>Vue | Windwalker - PHP Rapid Development Framework</title>
+    <title>Field Generation | Windwalker - PHP Rapid Development Framework</title>
 
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
@@ -18,7 +18,7 @@
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Vue | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Field Generation | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     
@@ -167,7 +167,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Vue</h1>
+                    <h1 class="banner-title">Field Generation</h1>
                 </div>
             </div>
         </section>
@@ -247,14 +247,14 @@
                     <li class="">
                 <a class="withripple" href="../../rad/js/bootstrap.html">Bootstrap</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../rad/js/vue.html">Vue</a>
             </li>
         
            <li class="nav-header">
         <h3 class="slab-font">More</h3>
     </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
         
@@ -264,166 +264,198 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Include Vue</h2>
+                    <h2>Generate Field From Database</h2>
 
-<p>Phoenix includes <code>vue.js</code> and some official vue plugins to help you build a modern single page application.</p>
+<p>Phoenix provides a command to help us generate field definition code from SQL table, we can easily change our form
+field definition after migration.</p>
 
-<pre><code class="php">\Phoenix\Script\VueScript::core();
-</code></pre>
+<p>To use this function, please prepare a migration looks like below:</p>
 
-<p>Now you can easily use vue in your HTML page:</p>
+<pre><code class="php">use Windwalker\Core\Migration\AbstractMigration;
+use Windwalker\Database\Schema\Schema;
 
-<pre><code class="html">&lt;!-- In &lt;form id="admin-form"&gt; --&gt;
-
-    &lt;input name="foo" type="text" v-model="foo"&gt;
-
-    &lt;script&gt;
-    new Vue({
-        el: '#admin-form',
-        data: {
-            foo: 'bar'
-        }
-    });
-    &lt;/script&gt;
-</code></pre>
-
-<p>Or integrate with jQuery:</p>
-
-<pre><code class="php">@php(Phoenix\Script\JQueryScript::core())
-@php(Phoenix\Script\VueScript::core())
-
-&lt;script&gt;
-    // Run after dom ready
-    jQuery(function ($) {
-        new Vue({
-            el: '#admin-form',
-            data: {
-                foo: 'bar'
-            }
-        });
-    })
-&lt;/script&gt;
-
-&lt;input name="foo" type="text" v-model="foo"&gt;
-</code></pre>
-
-<h2>Vue Router</h2>
-
-<p>Use Vue router to handle page switch without refresh browser:</p>
-
-<pre><code class="php">@php(\Phoenix\Script\VueScript::router())
-
-&lt;div id="app"&gt;
-    &lt;h1&gt;Hello App!&lt;/h1&gt;
-    &lt;p&gt;
-        &lt;a v-link="{ path: '/foo' }"&gt;Go to Foo&lt;/a&gt;
-        &lt;a v-link="{ path: '/bar' }"&gt;Go to Bar&lt;/a&gt;
-    &lt;/p&gt;
-    &lt;router-view&gt;&lt;/router-view&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-    var Foo = Vue.extend({
-        template: '&lt;p&gt;This is foo!&lt;/p&gt;'
-    })
-
-    var Bar = Vue.extend({
-        template: '&lt;p&gt;This is bar!&lt;/p&gt;'
-    })
-
-    var App = Vue.extend({})
-
-    var router = new VueRouter()
-
-    router.map({
-        '/foo': {
-            component: Foo
-        },
-        '/bar': {
-            component: Bar
-        }
-    })
-
-    router.start(App, '#app')
-&lt;/script&gt;
-</code></pre>
-
-<p>See <a href="http://router.vuejs.org/">Vue Router</a></p>
-
-<h2>Vue Resource</h2>
-
-<p>Use vue resource to fetch server data by ajax:</p>
-
-<pre><code class="php">@php(\Phoenix\Script\VueScript::resource())
-
-&lt;script&gt;
-// global Vue object
-Vue.http.get('/flower/sakura', [options]).then(successCallback, errorCallback);
-Vue.http.post('/flower/sakura', [body], [options]).then(successCallback, errorCallback);
-
-// in a Vue instance
-new Vue({
-    ready() {
-        // GET
-        this.$http.get('/flower/sakura').then((response) =&gt; {
-            // success callback
-        }, (response) =&gt; {
-            // error callback
+/**
+ * Migration class of ScoreInit.
+ */
+class ScoreInit extends AbstractMigration
+{
+    /**
+     * Migrate Up.
+     */
+    public function up()
+    {
+        $this-&gt;createTable('scores', function(Schema $schema)
+        {
+            $schema-&gt;primary('id');
+            $schema-&gt;integer('student_id');
+            $schema-&gt;datetime('date');
+            $schema-&gt;varchar('title');
+            $schema-&gt;char('type')-&gt;length(5)-&gt;comment('quiz, exam');
+            $schema-&gt;decimal('grade');
+            $schema-&gt;text('comment');
         });
     }
-})
-&lt;/script&gt;
+
+    /**
+     * Migrate Down.
+     */
+    public function down()
+    {
+        $this-&gt;drop('scores');
+    }
+}
 </code></pre>
 
-<p>Add custom options and global headers:</p>
+<p>Then run this command:</p>
 
-<pre><code class="php">\Phoenix\Script\VueScript::resource(['root' =&gt; $uri-&gt;path], [
-    'common' =&gt; ['X-Foo' =&gt; 'Bar'],
-    'post' =&gt; ['X-Baz' =&gt; 'Yoo'],
-]);
+<pre><code class="bash">php windwalker phoenix form gen-field scores
 </code></pre>
 
-<p>See <a href="https://github.com/vuejs/vue-resource">Vue Resource</a></p>
+<p>Phoenix will generate field definitions to match data types of your table columns in terminal:</p>
 
-<h2>VueStrap</h2>
+<pre><code class="bash">// Id
+$this-&gt;text('id')
+        -&gt;label('Id')
+        -&gt;set('class', '')
+        -&gt;set('labelClass', '')
+        -&gt;set('readonly', true);
 
-<p>Use VueStrap to integrate Bootstrap:</p>
+// Student_id
+$this-&gt;text('student_id')
+        -&gt;label('Student_id')
+        -&gt;set('class', '')
+        -&gt;set('labelClass', '')
+        -&gt;set('default', null);
 
-<pre><code class="php">\Phoenix\Script\VueScript::strap();
+// Date
+$this-&gt;calendar('date')
+        -&gt;label('Date')
+        -&gt;set('class', '')
+        -&gt;set('labelClass', '')
+        -&gt;set('default', null);
+
+// Title
+$this-&gt;text('title')
+        -&gt;label('Title')
+        -&gt;set('class', '')
+        -&gt;set('labelClass', '')
+        -&gt;set('default', null);
+
+// Type
+$this-&gt;list('type')
+        -&gt;label('Type')
+        -&gt;option('Quiz', 'quiz')
+        -&gt;option('Exam', 'exam')
+        -&gt;set('class', '')
+        -&gt;set('labelClass', '')
+        -&gt;set('default', 1);
+
+// Subject
+$this-&gt;text('subject')
+        -&gt;label('Subject')
+        -&gt;set('class', '')
+        -&gt;set('labelClass', '')
+        -&gt;set('default', null);
+
+// Grade
+$this-&gt;text('grade')
+        -&gt;label('Grade')
+        -&gt;set('class', '')
+        -&gt;set('labelClass', '')
+        -&gt;set('default', null);
+
+// Comment
+$this-&gt;textarea('comment')
+        -&gt;label('Comment')
+        -&gt;set('class', '')
+        -&gt;set('labelClass', '')
+        -&gt;set('rows', 7)
+        -&gt;set('default', null);
+
 </code></pre>
 
-<p>See <a href="http://yuche.github.io/vue-strap/">VueStrap</a></p>
+<p>Now you can copy this code to your project.</p>
 
-<h2>Vuex</h2>
+<h2>Output to File</h2>
 
-<p>Vuex is an application architecture for centralized state management in Vue.js applications.</p>
+<p>Add <code>-o</code> to output these code to <code>/tmp</code> folder.</p>
 
-<pre><code class="php">\Phoenix\Script\VueScript::vuex();
-
-// Add initial state
-
-\Phoenix\Script\VueScript::vuex([
-    'state' =&gt; ['count' =&gt; 0],
-    'mutations' =&gt; [
-        'INCREMENT' =&gt; '\\function (state) { state.count++ }'
-    ]
-]);
+<pre><code class="bash">php windwalker phoenix form gen-field scores
 </code></pre>
 
-<p>In HTML</p>
+<h2>Add Options to <code>CHAR</code> Type</h2>
 
-<pre><code class="js">export default new Vuex.Store({
-  state,
-  mutations
-});
+<p>By default, <code>char</code> type will create a select list, we can set options in comment:</p>
+
+<pre><code class="php">$schema-&gt;char('foo')-&gt;length(3)-&gt;comment('bar, baz');
 </code></pre>
 
-<p>See <a href="http://vuex.vuejs.org/">Vuex</a></p>
+<p>And the field generated will be:</p>
+
+<pre><code class="php">$this-&gt;list('foo')
+    -&gt;label('Foo')
+    -&gt;option('Bar', 'bar')
+    -&gt;option('Baz', 'Baz')
+    -&gt;set('class', '')
+    -&gt;set('labelClass', '')
+    -&gt;set('default', 1);
+</code></pre>
+
+<h2>Supported Types</h2>
+
+<table>
+<thead>
+<tr>
+  <th>Data Type</th>
+  <th>Field Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Primary</td>
+  <td>TextField</td>
+</tr>
+<tr>
+  <td>Varchar</td>
+  <td>TextField</td>
+</tr>
+<tr>
+  <td>Varchar (named <code>password</code>)</td>
+  <td>PasswordField</td>
+</tr>
+<tr>
+  <td>Tinyint</td>
+  <td>ListField (Boolean)</td>
+</tr>
+<tr>
+  <td>Char</td>
+  <td>ListField (With options)</td>
+</tr>
+<tr>
+  <td>Text</td>
+  <td>TextareaField</td>
+</tr>
+<tr>
+  <td>Longtext</td>
+  <td>TextareaField</td>
+</tr>
+<tr>
+  <td>Mediumtext</td>
+  <td>TextareaField</td>
+</tr>
+<tr>
+  <td>Datetime</td>
+  <td>CalendarField</td>
+</tr>
+</tbody>
+</table>
+
+<p>All un-defined types will fallback to text field.</p>
 
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/vue.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/more/gen-field.md">improve</a> this document.
     </p>
                 </article>
             </div>

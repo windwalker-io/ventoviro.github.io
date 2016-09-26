@@ -135,3 +135,5 @@ rad:
         js/csrf: CSRF for Ajax
         js/bootstrap: Bootstrap
         js/vue: Vue
+    More:
+        more/gen-field: Field Generation
