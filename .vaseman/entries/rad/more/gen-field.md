@@ -94,13 +94,6 @@ $this->list('type')
         ->set('labelClass', '')
         ->set('default', 1);
 
-// Subject
-$this->text('subject')
-        ->label('Subject')
-        ->set('class', '')
-        ->set('labelClass', '')
-        ->set('default', null);
-
 // Grade
 $this->text('grade')
         ->label('Grade')
@@ -125,7 +118,9 @@ Now you can copy this code to your project.
 Add `-o` to output these code to `/tmp` folder.
 
 ``` bash
-php windwalker phoenix form gen-field scores
+php windwalker phoenix form gen-field scores -o
+
+File output to: /var/www/windwalker/tmp/form/fields/scores.php.tpl
 ```
 
 ## Add Options to `CHAR` Type

@@ -350,13 +350,6 @@ $this-&gt;list('type')
         -&gt;set('labelClass', '')
         -&gt;set('default', 1);
 
-// Subject
-$this-&gt;text('subject')
-        -&gt;label('Subject')
-        -&gt;set('class', '')
-        -&gt;set('labelClass', '')
-        -&gt;set('default', null);
-
 // Grade
 $this-&gt;text('grade')
         -&gt;label('Grade')
@@ -380,7 +373,9 @@ $this-&gt;textarea('comment')
 
 <p>Add <code>-o</code> to output these code to <code>/tmp</code> folder.</p>
 
-<pre><code class="bash">php windwalker phoenix form gen-field scores
+<pre><code class="bash">php windwalker phoenix form gen-field scores -o
+
+File output to: /var/www/windwalker/tmp/form/fields/scores.php.tpl
 </code></pre>
 
 <h2>Add Options to <code>CHAR</code> Type</h2>
