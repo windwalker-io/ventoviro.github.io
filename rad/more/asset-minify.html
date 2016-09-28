@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-    <title>Vue | Windwalker - PHP Rapid Development Framework</title>
+    <title>Asset Minify | Windwalker - PHP Rapid Development Framework</title>
 
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
@@ -18,7 +18,7 @@
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Vue | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Asset Minify | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     
@@ -167,7 +167,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Vue</h1>
+                    <h1 class="banner-title">Asset Minify</h1>
                 </div>
             </div>
         </section>
@@ -247,7 +247,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/js/bootstrap.html">Bootstrap</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../rad/js/vue.html">Vue</a>
             </li>
         
@@ -257,7 +257,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
             </li>
         
@@ -267,166 +267,50 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Include Vue</h2>
+                    <h2>Auto Minify Css &amp; JS</h2>
 
-<p>Phoenix includes <code>vue.js</code> and some official vue plugins to help you build a modern single page application.</p>
+<p>Windwalker use <code>AssetManager</code> object to control all CSS &amp; JS includes, then render all <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code>
+tags in HTML.</p>
 
-<pre><code class="php">\Phoenix\Script\VueScript::core();
+<p>We can minify all asset files and combine them to one file that can speed up page downloading.</p>
+
+<p>Use <code>CssMinifyListener</code> and <code>JsMinifyListener</code> in <code>etc/app/web.php</code></p>
+
+<pre><code class="php">// etc/app/web.php
+
+// ...
+
+    'listeners' =&gt; [
+        //...
+
+        700 =&gt; \Phoenix\Listener\CssMinifyListener::class,
+        800 =&gt; \Phoenix\Listener\JsMinifyListener::class
+    ],
+
 </code></pre>
 
-<p>Now you can easily use vue in your HTML page:</p>
+<p>Now every page will auto compress included css &amp; js files to one file.</p>
 
-<pre><code class="html">&lt;!-- In &lt;form id="admin-form"&gt; --&gt;
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en-GB"&gt;
+&lt;head&gt;
 
-    &lt;input name="foo" type="text" v-model="foo"&gt;
+    &lt;title&gt;Sakura Edit&lt;/title&gt;
 
-    &lt;script&gt;
-    new Vue({
-        el: '#admin-form',
-        data: {
-            foo: 'bar'
-        }
-    });
-    &lt;/script&gt;
+    &lt;!-- ... --&gt;
+
+    &lt;link rel="stylesheet" href="/path/site/www/asset/min/15d2969be82c4ac02c53fe8ead5600fd.css?f2d3c5f7211348644ed0a74575011f6c" /&gt;
+
+    &lt;script src="/path/site/www/asset/min/e2f3ce2ebbd95d65021ce52872f5e355.js?f2d3c5f7211348644ed0a74575011f6c"&gt;&lt;/script&gt;
+
 </code></pre>
 
-<p>Or integrate with jQuery:</p>
-
-<pre><code class="php">@php(Phoenix\Script\JQueryScript::core())
-@php(Phoenix\Script\VueScript::core())
-
-&lt;script&gt;
-    // Run after dom ready
-    jQuery(function ($) {
-        new Vue({
-            el: '#admin-form',
-            data: {
-                foo: 'bar'
-            }
-        });
-    })
-&lt;/script&gt;
-
-&lt;input name="foo" type="text" v-model="foo"&gt;
-</code></pre>
-
-<h2>Vue Router</h2>
-
-<p>Use Vue router to handle page switch without refresh browser:</p>
-
-<pre><code class="php">@php(\Phoenix\Script\VueScript::router())
-
-&lt;div id="app"&gt;
-    &lt;h1&gt;Hello App!&lt;/h1&gt;
-    &lt;p&gt;
-        &lt;a v-link="{ path: '/foo' }"&gt;Go to Foo&lt;/a&gt;
-        &lt;a v-link="{ path: '/bar' }"&gt;Go to Bar&lt;/a&gt;
-    &lt;/p&gt;
-    &lt;router-view&gt;&lt;/router-view&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-    var Foo = Vue.extend({
-        template: '&lt;p&gt;This is foo!&lt;/p&gt;'
-    })
-
-    var Bar = Vue.extend({
-        template: '&lt;p&gt;This is bar!&lt;/p&gt;'
-    })
-
-    var App = Vue.extend({})
-
-    var router = new VueRouter()
-
-    router.map({
-        '/foo': {
-            component: Foo
-        },
-        '/bar': {
-            component: Bar
-        }
-    })
-
-    router.start(App, '#app')
-&lt;/script&gt;
-</code></pre>
-
-<p>See <a href="http://router.vuejs.org/">Vue Router</a></p>
-
-<h2>Vue Resource</h2>
-
-<p>Use vue resource to fetch server data by ajax:</p>
-
-<pre><code class="php">@php(\Phoenix\Script\VueScript::resource())
-
-&lt;script&gt;
-// global Vue object
-Vue.http.get('/flower/sakura', [options]).then(successCallback, errorCallback);
-Vue.http.post('/flower/sakura', [body], [options]).then(successCallback, errorCallback);
-
-// in a Vue instance
-new Vue({
-    ready() {
-        // GET
-        this.$http.get('/flower/sakura').then((response) =&gt; {
-            // success callback
-        }, (response) =&gt; {
-            // error callback
-        });
-    }
-})
-&lt;/script&gt;
-</code></pre>
-
-<p>Add custom options and global headers:</p>
-
-<pre><code class="php">\Phoenix\Script\VueScript::resource(['root' =&gt; $uri-&gt;path], [
-    'common' =&gt; ['X-Foo' =&gt; 'Bar'],
-    'post' =&gt; ['X-Baz' =&gt; 'Yoo'],
-]);
-</code></pre>
-
-<p>See <a href="https://github.com/vuejs/vue-resource">Vue Resource</a></p>
-
-<h2>VueStrap</h2>
-
-<p>Use VueStrap to integrate Bootstrap:</p>
-
-<pre><code class="php">\Phoenix\Script\VueScript::strap();
-</code></pre>
-
-<p>See <a href="http://yuche.github.io/vue-strap/">VueStrap</a></p>
-
-<h2>Vuex</h2>
-
-<p>Vuex is an application architecture for centralized state management in Vue.js applications.</p>
-
-<pre><code class="php">\Phoenix\Script\VueScript::vuex();
-
-// Add initial state
-
-\Phoenix\Script\VueScript::vuex([
-    'state' =&gt; ['count' =&gt; 0],
-    'mutations' =&gt; [
-        'INCREMENT' =&gt; '\\function (state) { state.count++ }'
-    ]
-]);
-</code></pre>
-
-<p>In HTML</p>
-
-<pre><code class="js">export default new Vuex.Store({
-  state,
-  mutations
-});
-</code></pre>
-
-<p>See <a href="http://vuex.vuejs.org/">Vuex</a></p>
+<p>You must modify your <code>.gitignore</code> file to ignore <code>www/asset/min</code> folder, and add a cron to clear cache files.</p>
 
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/vue.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/more/asset-minify.md">improve</a> this document.
     </p>
                 </article>
             </div>
