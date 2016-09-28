@@ -137,3 +137,4 @@ rad:
         js/vue: Vue
     More:
         more/gen-field: Field Generation
+        more/asset-minify: Asset Minify

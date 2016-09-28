@@ -4,7 +4,7 @@ namespace Vaseman\Helper;
 
 use Windwalker\Core\View\Helper\AbstractHelper;
 use Windwalker\Filesystem\File;
-use Windwalker\Registry\Registry;
+use Windwalker\Structure\Structure;
 
 class DocHelper extends AbstractHelper
 {
@@ -24,7 +24,7 @@ class DocHelper extends AbstractHelper
 
 	public function getVersionPath($paths, $version, $config)
 	{
-		$config = new Registry($config);
+		$config = new Structure($config);
 		$config->setSeparator('/');
 
 		if ($config['redirect/' . $version])

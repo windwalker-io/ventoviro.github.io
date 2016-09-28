@@ -9,7 +9,7 @@
 namespace Vaseman\Plugin;
 
 use Windwalker\Event\Event;
-use Windwalker\Registry\Registry;
+use Windwalker\Structure\Structure;
 
 /**
  * The MenuPlugin class.
@@ -35,7 +35,7 @@ class MenuPlugin extends AbstractPlugin implements DataProviderInterface
 			$data->version = $data->path[1];
 		}
 		
-		$menus = new Registry;
+		$menus = new Structure;
 		$menus->loadFile(__DIR__ . '/menus.yml', 'yaml');
 
 		$event['data']->menus = $menus->toArray();
