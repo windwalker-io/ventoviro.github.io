@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-    <title>Admin UI Guide | Windwalker - PHP Rapid Development Framework</title>
+    <title>Asset Minify | Windwalker - PHP Rapid Development Framework</title>
 
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
@@ -18,10 +18,93 @@
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Admin UI Guide | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Asset Minify | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
-    </head>
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../media/js/jquery.js"></script>
+    <script src="../../media/js/jquery.smooth-scroll.js"></script>
+    <script src="../../media/js/bootstrap.js"></script>
+    <script src="../../media/js/material.js"></script>
+    <script src="../../media/js/ripples.js"></script>
+    <script src="../../media/js/prism.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            // Init Material
+            $.material.init();
+
+            // Code Block
+            $('.article-content pre code').each(function(i, block) {
+                var $this = $(this);
+
+                $this.attr('class', 'language-' + $this.attr('class'));
+            });
+
+            // Smooth scroll
+            setTimeout(function ()
+            {
+                $('body a').smoothScroll({
+                    afterScroll:function (event) {
+                        document.location.hash = this.hash
+                    }
+                });
+            }, 500);
+
+            // Table style
+            // Convert table style
+            var tables = $('.article-content table');
+
+            tables.addClass('table').addClass('table-striped');
+
+            // Navbar
+            var navTop;
+            var hasColor = false;
+            var nav = $('#nav .navbar');
+
+            processScrollInit();
+            processScroll();
+
+            $(window).on('resize', processScrollInit);
+            $(window).on('scroll', processScroll);
+
+            function processScrollInit()
+            {
+                if (nav.length) {
+                    navTop = nav.length && 60;
+
+                    // Only apply the scrollspy when the toolbar is not collapsed
+                    if (document.body.clientWidth > 480)
+                    {
+//                        $('.subhead-collapse').height(nav.height());
+                        nav.scrollspy({offset: {top: nav.offset().top}});
+                    }
+                }
+            }
+
+            function processScroll()
+            {
+                if (nav.length) {
+                    var scrollTop = $(window).scrollTop();
+
+                    if (scrollTop >= navTop && !hasColor) {
+                        hasColor = true;
+                        nav.addClass('navbar-primary');
+                    } else if (scrollTop <= navTop && hasColor) {
+                        hasColor = false;
+                        nav.removeClass('navbar-primary');
+                    }
+                }
+            }
+        });
+
+    </script>
+
+        <script src="../../media/js/doc.js"></script>
+</head>
 <body class="">
 
     <section id="header">
@@ -84,7 +167,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Admin UI Guide</h1>
+                    <h1 class="banner-title">Asset Minify</h1>
                 </div>
             </div>
         </section>
@@ -118,7 +201,7 @@
            <li class="nav-header">
         <h3 class="slab-font">Tutorial</h3>
     </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../rad/tut/guide.html">Admin UI Guide</a>
             </li>
                     <li class="">
@@ -174,7 +257,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
             </li>
         
@@ -184,86 +267,50 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Phoenix Admin UI</h2>
+                    <h2>Auto Minify Css &amp; JS</h2>
 
-<p>If you init a package with <code>default</code> template, you may see this admin UI interface.</p>
+<p>Windwalker use <code>AssetManager</code> object to control all CSS &amp; JS includes, then render all <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code>
+tags in HTML.</p>
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/9725055/0cc4e1fc-5613-11e5-9f0d-c373d7d68c87.png" alt="img" /></p>
+<p>We can minify all asset files and combine them to one file that can speed up page downloading.</p>
 
-<blockquote>
-  <p>To remove the stars (<code>**</code>), please open <code>/etc/dev/config.yml</code> and set <code>language.debug</code> to <code>0</code>.</p>
-</blockquote>
+<p>Use <code>CssMinifyListener</code> and <code>JsMinifyListener</code> in <code>etc/app/web.php</code></p>
 
-<h2>Grid Page</h2>
+<pre><code class="php">// etc/app/web.php
 
-<p>Grid table is the main part of List manager page.</p>
+// ...
 
-<h3>Change State</h3>
+    'listeners' =&gt; [
+        //...
 
-<p>You may check some rows and press buttons to operate this items.</p>
+        700 =&gt; \Phoenix\Listener\CssMinifyListener::class,
+        800 =&gt; \Phoenix\Listener\JsMinifyListener::class
+    ],
 
-<p><img src="http://i.imgur.com/1UxL0ML.jpg" alt="Imgur" /></p>
+</code></pre>
 
-<p>Or click the state button to publish / close / copy or delete an item.</p>
+<p>Now every page will auto compress included css &amp; js files to one file.</p>
 
-<p><img src="http://i.imgur.com/UHp4TxQ.jpg" alt="Imgur" /></p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en-GB"&gt;
+&lt;head&gt;
 
-<h3>Ordering</h3>
+    &lt;title&gt;Sakura Edit&lt;/title&gt;
 
-<p><img src="http://i.imgur.com/hWWHstH.jpg" alt="Imgur" /></p>
+    &lt;!-- ... --&gt;
 
-<h3>Pagination</h3>
+    &lt;link rel="stylesheet" href="/path/site/www/asset/min/15d2969be82c4ac02c53fe8ead5600fd.css?f2d3c5f7211348644ed0a74575011f6c" /&gt;
 
-<p><img src="http://i.imgur.com/v96Pl9B.jpg" alt="Imgur" /></p>
+    &lt;script src="/path/site/www/asset/min/e2f3ce2ebbd95d65021ce52872f5e355.js?f2d3c5f7211348644ed0a74575011f6c"&gt;&lt;/script&gt;
 
-<h3>Filter Bar</h3>
+</code></pre>
 
-<p>Filter help us search or filter items.</p>
-
-<h4>Search</h4>
-
-<p>Type something to search keyword.</p>
-
-<p><img src="http://i.imgur.com/EH4L5ot.jpg" alt="Imgur" /></p>
-
-<h4>Filters</h4>
-
-<p>Click <code>Filters</code> button will expand filter tools. select a state to filter items.</p>
-
-<p><img src="http://i.imgur.com/uw6B6SV.jpg" alt="Imgur" /></p>
-
-<p>You may click <code>X</code> button to clear both search and filters.</p>
-
-<p><img src="http://i.imgur.com/NwA569R.jpg" alt="Imgur" /></p>
-
-<h3>Batch</h3>
-
-<p>Batch is a useful function to update multiple items in one time.</p>
-
-<p><img src="http://i.imgur.com/rbiI9yI.jpg" alt="Imgur" /></p>
-
-<h2>Edit Page</h2>
-
-<p>Click an item title or the <code>Create</code> green button, you will enter the edit page.</p>
-
-<p><img src="http://i.imgur.com/bZZBHpx.jpg" alt="Imgur" /></p>
-
-<p>If you click save without filling any field, the validation will auto work to prevent form submit.</p>
-
-<p><img src="http://i.imgur.com/qOJ7iY0.jpg" alt="Imgur" /></p>
-
-<p>If you enter the title and save, it will show success message.</p>
-
-<p><img src="http://i.imgur.com/cdY5h6r.jpg" alt="Imgur" /></p>
-
-<p>Click <code>Save &amp; Close</code> or <code>Cancel</code>, will back to grid page.</p>
-
-<p><img src="http://i.imgur.com/A3zSr6T.jpg" alt="Imgur" /></p>
+<p>You must modify your <code>.gitignore</code> file to ignore <code>www/asset/min</code> folder, and add a cron to clear cache files.</p>
 
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/tut/guide.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/more/asset-minify.md">improve</a> this document.
     </p>
                 </article>
             </div>
@@ -304,89 +351,6 @@
     </div>
 
 </section>
-
-<!-- Bootstrap core JavaScript
-   ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
-<script>
-    $(document).ready(function() {
-
-        // Init Material
-        $.material.init();
-
-        // Code Block
-        $('.article-content pre code').each(function(i, block) {
-            var $this = $(this);
-
-            $this.attr('class', 'language-' + $this.attr('class'));
-        });
-
-        // Smooth scroll
-        setTimeout(function ()
-        {
-            $('body a').smoothScroll({
-                afterScroll:function (event) {
-                    document.location.hash = this.hash
-                }
-            });
-        }, 500);
-
-        // Table style
-        // Convert table style
-        var tables = $('.article-content table');
-
-        tables.addClass('table').addClass('table-striped');
-
-        // Navbar
-        var navTop;
-        var hasColor = false;
-        var nav = $('#nav .navbar');
-
-        processScrollInit();
-        processScroll();
-
-        $(window).on('resize', processScrollInit);
-        $(window).on('scroll', processScroll);
-
-        function processScrollInit()
-        {
-            if (nav.length) {
-                navTop = nav.length && 60;
-
-                // Only apply the scrollspy when the toolbar is not collapsed
-                if (document.body.clientWidth > 480)
-                {
-//                        $('.subhead-collapse').height(nav.height());
-                    nav.scrollspy({offset: {top: nav.offset().top}});
-                }
-            }
-        }
-
-        function processScroll()
-        {
-            if (nav.length) {
-                var scrollTop = $(window).scrollTop();
-
-                if (scrollTop >= navTop && !hasColor) {
-                    hasColor = true;
-                    nav.addClass('navbar-primary');
-                } else if (scrollTop <= navTop && hasColor) {
-                    hasColor = false;
-                    nav.removeClass('navbar-primary');
-                }
-            }
-        }
-    });
-
-</script>
-
-    <script src="../../media/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
