@@ -7,10 +7,6 @@
 
     <title>{% block title %}Windwalker - PHP Rapid Development Framework{% endblock %}</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="{{ uri.media }}css/main.css" />
-
     <meta name="description" content="{{ config.meta.desc }}">
     <meta name="generator" content="The Time Machine">
 
@@ -26,6 +22,11 @@
     {% block stylesheet %}{% endblock %}
 </head>
 <body class="{{ config.home ? 'home' : '' }}">
+
+{# Fo Google pagespeed #}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+<link rel="stylesheet" href="{{ uri.media }}css/main.css" />
 
 {% block header %}
 <section id="header" class="home-header">
