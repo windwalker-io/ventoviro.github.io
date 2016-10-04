@@ -21,90 +21,7 @@
     <meta property="og:title" content="Session | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
-    
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../../media/js/jquery.js"></script>
-    <script src="../../../media/js/jquery.smooth-scroll.js"></script>
-    <script src="../../../media/js/bootstrap.js"></script>
-    <script src="../../../media/js/material.js"></script>
-    <script src="../../../media/js/ripples.js"></script>
-    <script src="../../../media/js/prism.js"></script>
-    <script>
-        $(document).ready(function() {
-
-            // Init Material
-            $.material.init();
-
-            // Code Block
-            $('.article-content pre code').each(function(i, block) {
-                var $this = $(this);
-
-                $this.attr('class', 'language-' + $this.attr('class'));
-            });
-
-            // Smooth scroll
-            setTimeout(function ()
-            {
-                $('body a').smoothScroll({
-                    afterScroll:function (event) {
-                        document.location.hash = this.hash
-                    }
-                });
-            }, 500);
-
-            // Table style
-            // Convert table style
-            var tables = $('.article-content table');
-
-            tables.addClass('table').addClass('table-striped');
-
-            // Navbar
-            var navTop;
-            var hasColor = false;
-            var nav = $('#nav .navbar');
-
-            processScrollInit();
-            processScroll();
-
-            $(window).on('resize', processScrollInit);
-            $(window).on('scroll', processScroll);
-
-            function processScrollInit()
-            {
-                if (nav.length) {
-                    navTop = nav.length && 60;
-
-                    // Only apply the scrollspy when the toolbar is not collapsed
-                    if (document.body.clientWidth > 480)
-                    {
-//                        $('.subhead-collapse').height(nav.height());
-                        nav.scrollspy({offset: {top: nav.offset().top}});
-                    }
-                }
-            }
-
-            function processScroll()
-            {
-                if (nav.length) {
-                    var scrollTop = $(window).scrollTop();
-
-                    if (scrollTop >= navTop && !hasColor) {
-                        hasColor = true;
-                        nav.addClass('navbar-primary');
-                    } else if (scrollTop <= navTop && hasColor) {
-                        hasColor = false;
-                        nav.removeClass('navbar-primary');
-                    }
-                }
-            }
-        });
-
-    </script>
-
-        <script src="../../../media/js/doc.js"></script>
-</head>
+    </head>
 <body class="">
 
     <section id="header">
@@ -511,6 +428,89 @@ $session-&gt;getFlashBag()-&gt;all();
     </div>
 
 </section>
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../../media/js/jquery.min.js"></script>
+<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../media/js/bootstrap.min.js"></script>
+<script src="../../../media/js/material.min.js"></script>
+<script src="../../../media/js/ripples.min.js"></script>
+<script src="../../../media/js/prism.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Init Material
+        $.material.init();
+
+        // Code Block
+        $('.article-content pre code').each(function(i, block) {
+            var $this = $(this);
+
+            $this.attr('class', 'language-' + $this.attr('class'));
+        });
+
+        // Smooth scroll
+        setTimeout(function ()
+        {
+            $('body a').smoothScroll({
+                afterScroll:function (event) {
+                    document.location.hash = this.hash
+                }
+            });
+        }, 500);
+
+        // Table style
+        // Convert table style
+        var tables = $('.article-content table');
+
+        tables.addClass('table').addClass('table-striped');
+
+        // Navbar
+        var navTop;
+        var hasColor = false;
+        var nav = $('#nav .navbar');
+
+        processScrollInit();
+        processScroll();
+
+        $(window).on('resize', processScrollInit);
+        $(window).on('scroll', processScroll);
+
+        function processScrollInit()
+        {
+            if (nav.length) {
+                navTop = nav.length && 60;
+
+                // Only apply the scrollspy when the toolbar is not collapsed
+                if (document.body.clientWidth > 480)
+                {
+//                        $('.subhead-collapse').height(nav.height());
+                    nav.scrollspy({offset: {top: nav.offset().top}});
+                }
+            }
+        }
+
+        function processScroll()
+        {
+            if (nav.length) {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop >= navTop && !hasColor) {
+                    hasColor = true;
+                    nav.addClass('navbar-primary');
+                } else if (scrollTop <= navTop && hasColor) {
+                    hasColor = false;
+                    nav.removeClass('navbar-primary');
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="../../../media/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
