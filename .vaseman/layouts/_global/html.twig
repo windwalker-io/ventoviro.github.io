@@ -23,11 +23,6 @@
 </head>
 <body class="{{ config.home ? 'home' : '' }}">
 
-{# Fo Google pagespeed #}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-<link rel="stylesheet" href="{{ uri.media }}css/main.css" />
-
 {% block header %}
 <section id="header" class="home-header">
 
@@ -85,6 +80,10 @@
 
 </section>
 
+{# Fo Google pagespeed #}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+<link rel="stylesheet" href="{{ uri.media }}css/main.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
