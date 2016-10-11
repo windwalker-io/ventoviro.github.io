@@ -452,6 +452,11 @@ $server-&gt;get('REMOTE_ADDR'); // Same as $_SERVER['REMOTE_ADDR'];
 <pre><code class="php">$method = $input-&gt;getMethod();
 </code></pre>
 
+<h2>Json Input</h2>
+
+<p>If you send a request with json body or <code>content-type: application/json</code>, you can use <code>$input-&gt;json</code> to
+get <code>JsonInput</code> and parse json values.</p>
+
 <h2>Files and Uploaded</h2>
 
 <p>Windwalker Http package convert nested <code>$_FILES</code> variables to a set of <code>UploadedFileInterface</code> that we can easily move the uploaded files.</p>

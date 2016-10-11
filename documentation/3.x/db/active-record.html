@@ -453,6 +453,50 @@ $result = $user-&gt;delete(30); // boolean
 $result = $user-&gt;delete(array('username' =&gt; $username)); // boolean
 </code></pre>
 
+<h3>Mutator and Accessor</h3>
+
+<p>Mutator and accessor is a setter and getter to do some extra modification when you access value via magic methods.</p>
+
+<p>This is an example of mutator:</p>
+
+<pre><code class="php">class ArticleRecord extends Record
+{
+    protected function setCreatedDateValue($value)
+    {
+        if ($value instanceof \DateTime)
+        {
+            $value = $value-&gt;format('Y-m-d H:i:s');
+        }
+
+        $this-&gt;data['created_date'] = $value;
+    }
+}
+</code></pre>
+
+<p>Use camel-case style to define a method, then when you access the <code>created_date</code> field, this method will
+ be auto executed.</p>
+
+<pre><code class="php">$articleRecord-&gt;created_date = new \DateTime('now');
+
+echo $articleRecord-&gt;created_date; // 2016-03-02 12:30:29
+</code></pre>
+
+<p>And an example of accessor:</p>
+
+<pre><code class="php">class ArticleRecord extends Record
+{
+    protected function getCreatedDateValue($value)
+    {
+        return new \DateTime($value);
+    }
+}
+</code></pre>
+
+<p>And now you can get <code>DateTime</code> object back:</p>
+
+<pre><code class="php">echo $articleRecord-&gt;created_date-&gt;format('Y-m-d H:i:s'); // 2016-03-02 12:30:29
+</code></pre>
+
 <h2>NestedRecord</h2>
 
 <p>NestedRecord is a tool help us handle <a href="http://en.wikipedia.org/wiki/Nested_set_model">Nested Set Model</a>.</p>

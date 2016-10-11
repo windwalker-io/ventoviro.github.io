@@ -412,6 +412,107 @@ $attachment-&gt;setBody('&lt;html&gt;TEST&lt;/html&gt;');
 $message-&gt;attach($attachment, 'test.html');
 </code></pre>
 
+<h2>Pre-Defined Messages</h2>
+
+<p>You can declare some message classes to quickly re-use them.</p>
+
+<pre><code class="php">namespace Flower\Mail;
+
+// ...
+
+class CheckoutMessage extends MailMessage
+{
+    public static function create(User $user = null, Data $product = null)
+    {
+        // Prepare default data for test
+        $user = $user ? : User::get();
+        $product = $product ? : new Data;
+
+        return (new static('You checkout a product'))
+            -&gt;to($user-&gt;email, $user-&gt;name)
+            -&gt;bcc('admin@my-dsite.com')
+            -&gt;renderBody('checkout', [
+                'user' =&gt; $user,
+                'product' =&gt; $product
+            ]);
+    }
+}
+</code></pre>
+
+<p>Now just create this instance to send mail:</p>
+
+<pre><code class="php">use Flower\Mail\CheckoutMessage;
+
+Mailer::send(CheckoutMessage::create($user, $product));
+</code></pre>
+
+<h2>Style Inliner</h2>
+
+<p>Windwalker Includes a simple CSS inliner to help us compile CSS to inline styles that makes our email show normally with
+some email clients which does not support outside CSS.</p>
+
+<p>To enable CSS inliner, you must install <code>"tijsverkoyen/css-to-inline-styles": "~2.0"</code> first, and add this listener to <code>etc/app/windwalker.php</code>:</p>
+
+<pre><code class="php">// etc/app/windwalker.php or web.php
+
+    'listeners' =&gt; [
+        'inliner' =&gt; \Windwalker\Core\Mailer\Listener\MailInlinerListener::class
+    ]
+</code></pre>
+
+<p>Now write your mail template with some styles and send mail:</p>
+
+<pre><code class="php">@extends('_global.mail-wrapper')
+
+&lt;!-- Your base mail styles --&gt;
+@php( $asset-&gt;addCSS('css/mail-style.css') )
+
+&lt;style&gt;
+    /* Some inline styles */
+
+    h1, h2, h3 {
+        color: #444444;
+    }
+
+    p {
+        line-height: 1.5
+    }
+
+    .btn {
+        padding: 5px 7px;
+    }
+&lt;/style&gt;
+
+&lt;!-- Mail body --&gt;
+
+&lt;h1&gt;Hello&lt;/h1&gt;
+&lt;p&gt;
+    World
+&lt;/p&gt;
+&lt;a class="btn" href="#"&gt;Readmore&lt;/a&gt;
+</code></pre>
+
+<p>This mail template will be compiled to:</p>
+
+<pre><code class="html">&lt;div id="my-mail-wrapper" style="..."&gt;
+    &lt;h1 style="color: #444444;"&gt;Hello&lt;/h1&gt;
+    &lt;p style="line-height: 1.5;"&gt;
+        World
+    &lt;/p&gt;
+    &lt;a style="padding: 5px 7px;" class="btn" href="#"&gt;Readmore&lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+<blockquote>
+  <p>You must use <code>$asset</code> to include outside CSS and write in-page CSS in <code>&lt;style&gt;</code> tag.
+  Do not use <code>&lt;link&gt;</code> tag to include CSS.</p>
+  
+  <hr />
+  
+  <p>Due to the performance reason, please don't include whole CSS framework like bootstrap or foundation,
+  Try to write your own mail style to make sure the compiler fast enough.</p>
+</blockquote>
+
                         <hr />
 
     <p class="text-center inner-top-sm">

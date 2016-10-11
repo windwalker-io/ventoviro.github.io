@@ -49,6 +49,10 @@ Asset::addJS('js/bootstrap.js');
 // In template
 $asset->addCSS('css/bootstrap.css');
 $asset->addJS('js/bootstrap.js');
+
+// Blade & Edge
+@css('css/bootstrap.css')
+@js('js/bootstrap.js')
 ```
 
 Windwalker will auto includes these files in `<head>`:

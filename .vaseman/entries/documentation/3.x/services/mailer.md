@@ -123,3 +123,106 @@ $attachment->setBody('<html>TEST</html>');
 
 $message->attach($attachment, 'test.html');
 ```
+
+## Pre-Defined Messages
+
+You can declare some message classes to quickly re-use them.
+
+``` php
+namespace Flower\Mail;
+
+// ...
+
+class CheckoutMessage extends MailMessage
+{
+    public static function create(User $user = null, Data $product = null)
+    {
+        // Prepare default data for test
+        $user = $user ? : User::get();
+        $product = $product ? : new Data;
+
+        return (new static('You checkout a product'))
+            ->to($user->email, $user->name)
+            ->bcc('admin@my-dsite.com')
+            ->renderBody('checkout', [
+                'user' => $user,
+                'product' => $product
+            ]);
+    }
+}
+```
+
+Now just create this instance to send mail:
+
+``` php
+use Flower\Mail\CheckoutMessage;
+
+Mailer::send(CheckoutMessage::create($user, $product));
+```
+
+## Style Inliner
+
+Windwalker Includes a simple CSS inliner to help us compile CSS to inline styles that makes our email show normally with
+some email clients which does not support outside CSS.
+
+To enable CSS inliner, you must install `"tijsverkoyen/css-to-inline-styles": "~2.0"` first, and add this listener to `etc/app/windwalker.php`:
+
+``` php
+// etc/app/windwalker.php or web.php
+
+    'listeners' => [
+        'inliner' => \Windwalker\Core\Mailer\Listener\MailInlinerListener::class
+    ]
+```
+
+Now write your mail template with some styles and send mail:
+
+``` php
+@extends('_global.mail-wrapper')
+
+<!-- Your base mail styles -->
+@php( $asset->addCSS('css/mail-style.css') )
+
+<style>
+    /* Some inline styles */
+
+    h1, h2, h3 {
+        color: #444444;
+    }
+
+    p {
+        line-height: 1.5
+    }
+
+    .btn {
+        padding: 5px 7px;
+    }
+</style>
+
+<!-- Mail body -->
+
+<h1>Hello</h1>
+<p>
+    World
+</p>
+<a class="btn" href="#">Readmore</a>
+```
+
+This mail template will be compiled to:
+
+``` html
+<div id="my-mail-wrapper" style="...">
+    <h1 style="color: #444444;">Hello</h1>
+    <p style="line-height: 1.5;">
+        World
+    </p>
+    <a style="padding: 5px 7px;" class="btn" href="#">Readmore</a>
+</div>
+```
+
+> You must use `$asset` to include outside CSS and write in-page CSS in `<style>` tag.
+> Do not use `<link>` tag to include CSS.
+
+> ------
+> Due to the performance reason, please don't include whole CSS framework like bootstrap or foundation,
+> Try to write your own mail style to make sure the compiler fast enough.

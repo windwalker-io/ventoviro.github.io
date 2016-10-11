@@ -268,14 +268,35 @@ $form->addField(new TextField('name', 'Label'));
 ```
 
 ### Set Attributes
+You can set some attributes to field by `set()` or `setAttribute()`, this method will only allow standard
+ HTML attributes inject to latest rendered result.
 
 ``` php
 $form->addField(new TextField('name'))
     ->label('Label')
     ->set('id', 'my-name')
     ->set('class', 'col-md-8 form-input')
-    ->set('onclick', 'return false;');
+    ->set('onclick', 'return false;')
+    ->set('labelClass', 'form-label') // <-- This will add to <label class="...">
+    ->set('data-my-attr', 'foo'); // <-- This custom attribute will not work
 ```
+
+If you want to set custom data attributes to make your inputs work with some JS frameworks (e.g. Vue, Angular, Bootstrap),
+you can use `attr()` to directly set HTML attributes.
+
+``` php
+$form->addField(new TextField('name'))
+    ->label('Label')
+    ->set('class', 'col-md-8 form-input')
+    ->attr('v-on:click', 'foo()')
+    ->attr(':value', 'bar')
+    ->attr('data-toggle', 'tooltip');
+```
+
+These custom directives will directly add to HTML. `attr()` method is like jQuery `attr()`, if you don't pass
+second param, this method will be a getter to return attribute value.
+
+You can also set attribute to input wrapper and label, use `controlAttr()` and `labelAttr()`.
 
 ### Required, Disabled and Readonly
 
@@ -421,6 +442,16 @@ $field = new RadioList(
 | ---- | ---- | ----------- |
 | TextField     | `<input type="text">`     | The text input field. |
 | TextareaField | `<textarea></textarea>`   | Textarea field. |
+| ColorField    | `<input type="color">`    | HTML5 Color picker |
+| DateField     | `<input type="date">`     | Date selector |
+| DatetimeLocalField | `<input type="datetime-local">` | Datetime selector |
+| MonthField    | `<input type="month">`    | Month selector |
+| NumberField   | `<input type="number">`   | Number text field |
+| RangeField    | `<input type="range">`    | A range bar. |
+| TelField      | `<input type="tel">`      | Tel text field. |
+| TimeField     |`<input type="time">`      | Time field. |
+| UrlField      | `<input type="url">`      | URL text field |
+| WeekField     | `<input type="week">`     | Week selector |
 | EmailField    | `<input type="email">`    | The email text field. |
 | HiddenField   | `<input type="hidden">`   | Hidden input. |
 | PasswordField | `<input type="password">` | Password field. |

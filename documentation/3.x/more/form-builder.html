@@ -544,12 +544,33 @@ $form-&gt;group('egg/bread', ...);
 
 <h3>Set Attributes</h3>
 
+<p>You can set some attributes to field by <code>set()</code> or <code>setAttribute()</code>, this method will only allow standard
+ HTML attributes inject to latest rendered result.</p>
+
 <pre><code class="php">$form-&gt;addField(new TextField('name'))
     -&gt;label('Label')
     -&gt;set('id', 'my-name')
     -&gt;set('class', 'col-md-8 form-input')
-    -&gt;set('onclick', 'return false;');
+    -&gt;set('onclick', 'return false;')
+    -&gt;set('labelClass', 'form-label') // &lt;-- This will add to &lt;label class="..."&gt;
+    -&gt;set('data-my-attr', 'foo'); // &lt;-- This custom attribute will not work
 </code></pre>
+
+<p>If you want to set custom data attributes to make your inputs work with some JS frameworks (e.g. Vue, Angular, Bootstrap),
+you can use <code>attr()</code> to directly set HTML attributes.</p>
+
+<pre><code class="php">$form-&gt;addField(new TextField('name'))
+    -&gt;label('Label')
+    -&gt;set('class', 'col-md-8 form-input')
+    -&gt;attr('v-on:click', 'foo()')
+    -&gt;attr(':value', 'bar')
+    -&gt;attr('data-toggle', 'tooltip');
+</code></pre>
+
+<p>These custom directives will directly add to HTML. <code>attr()</code> method is like jQuery <code>attr()</code>, if you don't pass
+second param, this method will be a getter to return attribute value.</p>
+
+<p>You can also set attribute to input wrapper and label, use <code>controlAttr()</code> and <code>labelAttr()</code>.</p>
 
 <h3>Required, Disabled and Readonly</h3>
 
@@ -699,6 +720,56 @@ echo $selectField-&gt;render();
   <td>TextareaField</td>
   <td><code>&lt;textarea&gt;&lt;/textarea&gt;</code></td>
   <td>Textarea field.</td>
+</tr>
+<tr>
+  <td>ColorField</td>
+  <td><code>&lt;input type="color"&gt;</code></td>
+  <td>HTML5 Color picker</td>
+</tr>
+<tr>
+  <td>DateField</td>
+  <td><code>&lt;input type="date"&gt;</code></td>
+  <td>Date selector</td>
+</tr>
+<tr>
+  <td>DatetimeLocalField</td>
+  <td><code>&lt;input type="datetime-local"&gt;</code></td>
+  <td>Datetime selector</td>
+</tr>
+<tr>
+  <td>MonthField</td>
+  <td><code>&lt;input type="month"&gt;</code></td>
+  <td>Month selector</td>
+</tr>
+<tr>
+  <td>NumberField</td>
+  <td><code>&lt;input type="number"&gt;</code></td>
+  <td>Number text field</td>
+</tr>
+<tr>
+  <td>RangeField</td>
+  <td><code>&lt;input type="range"&gt;</code></td>
+  <td>A range bar.</td>
+</tr>
+<tr>
+  <td>TelField</td>
+  <td><code>&lt;input type="tel"&gt;</code></td>
+  <td>Tel text field.</td>
+</tr>
+<tr>
+  <td>TimeField</td>
+  <td><code>&lt;input type="time"&gt;</code></td>
+  <td>Time field.</td>
+</tr>
+<tr>
+  <td>UrlField</td>
+  <td><code>&lt;input type="url"&gt;</code></td>
+  <td>URL text field</td>
+</tr>
+<tr>
+  <td>WeekField</td>
+  <td><code>&lt;input type="week"&gt;</code></td>
+  <td>Week selector</td>
 </tr>
 <tr>
   <td>EmailField</td>

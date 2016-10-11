@@ -159,6 +159,54 @@ $result = $user->delete(30); // boolean
 $result = $user->delete(array('username' => $username)); // boolean
 ```
 
+### Mutator and Accessor
+
+Mutator and accessor is a setter and getter to do some extra modification when you access value via magic methods.
+
+This is an example of mutator:
+
+``` php
+class ArticleRecord extends Record
+{
+    protected function setCreatedDateValue($value)
+    {
+        if ($value instanceof \DateTime)
+        {
+            $value = $value->format('Y-m-d H:i:s');
+        }
+
+        $this->data['created_date'] = $value;
+    }
+}
+```
+
+Use camel-case style to define a method, then when you access the `created_date` field, this method will
+ be auto executed.
+
+``` php
+$articleRecord->created_date = new \DateTime('now');
+
+echo $articleRecord->created_date; // 2016-03-02 12:30:29
+```
+
+And an example of accessor:
+
+``` php
+class ArticleRecord extends Record
+{
+    protected function getCreatedDateValue($value)
+    {
+        return new \DateTime($value);
+    }
+}
+```
+
+And now you can get `DateTime` object back:
+
+``` php
+echo $articleRecord->created_date->format('Y-m-d H:i:s'); // 2016-03-02 12:30:29
+```
+
 ## NestedRecord
 
 NestedRecord is a tool help us handle [Nested Set Model](http://en.wikipedia.org/wiki/Nested_set_model).

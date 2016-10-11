@@ -71,6 +71,16 @@ Go to system page.
 
 ![system](https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg)
 
+## Mail Tester
+
+Go to `dev.php/_debugger/mail` and you will see a mail tester.
+
+To test a mail layout, you must [pre-define](./mailer.html) a mail message class and put mail template in global `/templates` folder.
+
+Then add `?class=Flower\Mail\CheckoutMessage` to URL and you can test your mail layout:
+
+![p-2016-10-11-001](https://cloud.githubusercontent.com/assets/1639206/19275116/33e2a6d4-9005-11e6-988f-1014566562f6.jpg)
+
 ## Logging
 
 Windwalker includes [Monolog](https://github.com/Seldaek/monolog) to help us log debugging information.

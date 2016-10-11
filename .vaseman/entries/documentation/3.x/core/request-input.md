@@ -172,6 +172,11 @@ See: [SUPER GLOBALS](http://php.net/manual/en/language.variables.superglobals.ph
 $method = $input->getMethod();
 ```
 
+## Json Input
+
+If you send a request with json body or `content-type: application/json`, you can use `$input->json` to
+get `JsonInput` and parse json values.
+
 ## Files and Uploaded
 
 Windwalker Http package convert nested `$_FILES` variables to a set of `UploadedFileInterface` that we can easily move the uploaded files.
