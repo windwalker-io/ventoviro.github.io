@@ -134,7 +134,6 @@ rad:
         js/ajax: Ajax
         js/validation: Validation
         js/crypto: Crypto
-        js/csrf: CSRF for Ajax
         js/bootstrap: Bootstrap
         js/vue: Vue
     More:

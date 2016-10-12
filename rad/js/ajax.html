@@ -158,9 +158,6 @@
                 <a class="withripple" href="../../rad/js/crypto.html">Crypto</a>
             </li>
                     <li class="">
-                <a class="withripple" href="../../rad/js/csrf.html">CSRF for Ajax</a>
-            </li>
-                    <li class="">
                 <a class="withripple" href="../../rad/js/bootstrap.html">Bootstrap</a>
             </li>
                     <li class="">
@@ -308,7 +305,35 @@ Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);
 
 <h2>Integrate with Router</h2>
 
-<p>See <a href="./core.html#routing">Phoenix.Router</a></p>
+<p>See <a href="./core.html#routes">Phoenix.Router</a></p>
+
+<h2>Add CSRF Token</h2>
+
+<p>If you want to protect your application in ajax call, you can use this method to add form token.</p>
+
+<pre><code class="php">\Phoenix\Script\CoreScript::csrfToken();
+</code></pre>
+
+<p>This method will add a meta tag to HTML <code>&lt;nead&gt;</code></p>
+
+<pre><code class="html">&lt;meta name="csrf-token" content="a7d71a2c21743d8865fdfa61b71b29e8" /&gt;
+</code></pre>
+
+<p>Now you can fetch this token by JS, for example, we can add a param to jQuery ajaxSetup:</p>
+
+<pre><code class="js">jQuery.ajaxSetup({
+    headers: {
+        'X-Csrf-Token': jQuery('meta[name="csrf-token"]').attr('content')
+    }
+});
+</code></pre>
+
+<h2>Auto add ajaxSetup</h2>
+
+<p>Use this code to auto add ajaxSetup:</p>
+
+<pre><code class="php">JQueryScript::csrfToken();
+</code></pre>
 
                         <hr />
 
