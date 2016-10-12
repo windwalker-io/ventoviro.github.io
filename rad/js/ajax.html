@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-    <title>Form &amp; Edit | Windwalker - PHP Rapid Development Framework</title>
+    <title>Ajax | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Form &amp; Edit | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Ajax | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -80,7 +80,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Form &amp; Edit</h1>
+                    <h1 class="banner-title">Ajax</h1>
                 </div>
             </div>
         </section>
@@ -123,7 +123,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/tut/grid.html">Prepare Grid View</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../rad/tut/form.html">Form &amp; Edit</a>
             </li>
                     <li class="">
@@ -148,7 +148,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/js/grid.html">Grid</a>
             </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
             </li>
                     <li class="">
@@ -183,197 +183,137 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Category Edit Page</h2>
+                    <h2>Phoenix.Ajax</h2>
 
-<p>Click Any category item, you will see edit page with a form and inputs.</p>
+<p><code>Phoenix.Ajax</code> object is a <code>jQuery</code> ajax wrapper, to include it, use:</p>
 
-<p>We must modify this form to fit <code>categories</code> table.</p>
+<pre><code class="php">PhoenixScript::ajax();
+</code></pre>
 
-<p>Please open <code>src/Blog/Admin/Form/Category/EditDefinition.php</code> and change code to below.</p>
+<p>The CSRF token will auto injected to this object, just use it as a http client.</p>
 
-<pre><code class="php">// src/Blog/Admin/Form/Category/EditDefinition.php
+<pre><code class="js">Phoenix.Ajax.get('flower/sakura/1')
+    .done(function (response, status, jqHXR) {
+        // ...
+    }).fail(function (jqHXR, status, error) {
+        // ...
+    }).always(function () {
+        // ...
+    });
+</code></pre>
 
-namespace Blog\Admin\Form\Category;
+<p>Use other methods:</p>
 
-use Phoenix\Form\PhoenixFieldTrait;
-use Windwalker\Core\Form\AbstractFieldDefinition;
-use Windwalker\Core\Language\Translator;
-use Windwalker\Form\Form;
+<pre><code class="js">Phoenix.Ajax.get('flower/sakura/1', data, headers).done(...).fail(...);
+Phoenix.Ajax.post('flower/sakura', data, headers).done(...).fail(...);
+Phoenix.Ajax.put('flower/sakura/1', data, headers).done(...).fail(...);
+Phoenix.Ajax.patch('flower/sakura/1', data, headers).done(...).fail(...);
+Phoenix.Ajax.delete('flower/sakura/1', data, headers).done(...).fail(...);
+Phoenix.Ajax.head('flower/sakura/1', data, headers).done(...).fail(...);
+Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);
+</code></pre>
 
-class EditDefinition extends AbstractFieldDefinition
+<p>Add jQuery ajax options to forth argument:</p>
+
+<pre><code class="js">Phoenix.Ajax.post('flower/sakura', data, headers, {dataType: 'xml'})
+    .done(...)
+    .fail(...);
+</code></pre>
+
+<p>Use <code>request()</code>:</p>
+
+<pre><code class="js">Phoenix.Ajax.request('POST', 'flower/sakura', data, headers, options)
+    .done(...)
+    .fail(...);
+</code></pre>
+
+<h3>Override Methods</h3>
+
+<p>To override HTTP method with <code>X-HTTP-Method-Override</code> or <code>_method</code> parameter, use <code>.customMethod()</code> chain.</p>
+
+<pre><code class="js">Phoenix.Ajax.customMethod()
+    .put('flower/sakura/1')
+    .done(...)
+    .fail(...);
+</code></pre>
+
+<h3>Set Custom Headers</h3>
+
+<pre><code class="js">Phoenix.Ajax.headers.POST['X-Foo'] = 'Bar';
+</code></pre>
+
+<p>This header will always send with every request.</p>
+
+<h2>Integrate JsonApiTrait</h2>
+
+<p>Add <code>JsonApiTrait</code> to controller:</p>
+
+<pre><code class="php">class GetController extends AbstractController
 {
-    use PhoenixFieldTrait;
+    use JsonApiTrait;
 
-    public function doDefine(Form $form)
+    // ...
+
+    public function doExecute()
     {
-        // Basic fieldset
-        $this-&gt;fieldset('basic', function(Form $form)
-        {
-            // ID
-            $this-&gt;hidden('id');
+        $this-&gt;addMessage('Hello');
 
-            // Title
-            $this-&gt;text('title')
-                -&gt;label(Translator::translate('admin.category.field.title'))
-                -&gt;required(true);
-
-            // Alias
-            $this-&gt;text('alias')
-                -&gt;label(Translator::translate('admin.category.field.alias'));
-        });
-
-        // Delete the Text Group...
-
-        // Created fieldset
-        $this-&gt;fieldset('created', function(Form $form)
-        {
-            // No change...
-        });
+        return ['foo' =&gt; 'bar'];
     }
 }
 </code></pre>
 
-<h2>Article Edit Form</h2>
+<p>Now your JSON return will format with this:</p>
 
-<p>Then modify the article form.</p>
+<pre><code class="json">{success:true,code:200,message:"Hello",data:{foo:"bar"}}
+</code></pre>
 
-<p>Note we use <code>CategoryListField</code> for <code>category_id</code>.</p>
+<p>If you throw exceptions in controller:</p>
 
-<pre><code class="php">// src/Blog/Admin/Form/Article/EditDefinition.php
-
-namespace Blog\Admin\Form\Article;
-
-use Blog\Admin\Field\Category\CategoryListField;
-use Phoenix\Form\PhoenixFieldTrait;
-use Windwalker\Core\Form\AbstractFieldDefinition;
-use Windwalker\Core\Language\Translator;
-use Windwalker\Form\Form;
-use Windwalker\Html\Option;
-
-class EditDefinition extends AbstractFieldDefinition
+<pre><code class="php">class GetController extends AbstractController
 {
-    use PhoenixFieldTrait;
+    use JsonApiTrait;
 
-    public function doDefine(Form $form)
+    // ...
+
+    public function doExecute()
     {
-        // Basic fieldset
-        $this-&gt;fieldset('basic', function(Form $form)
-        {
-            // ID
-            $this-&gt;hidden('id');
+        throw new \RuntimeException('Something error', 403);
 
-            // Title
-            $this-&gt;text('title')
-                -&gt;label(Translator::translate('admin.article.field.title'))
-                -&gt;required(true);
-
-            // Alias
-            $this-&gt;text('alias')
-                -&gt;label(Translator::translate('admin.article.field.alias'));
-
-            // Category
-            $this-&gt;add('category_id', new CategoryListField)
-                -&gt;label('Category')
-                -&gt;addOption(new Option('Uncategorised', ''));
-        });
-
-        // Text Fieldset
-        $this-&gt;fieldset('text', function(Form $form)
-        {
-            // No change...
-        });
-
-        // Created fieldset
-        $this-&gt;fieldset('created', function(Form $form)
-        {
-            // No change...
-        });
+        return ['foo' =&gt; 'bar'];
     }
 }
 </code></pre>
 
-<p>Then we can choose category in article edit page.</p>
+<p>The return JSON will be:</p>
 
-<p><img src="http://i.imgur.com/eCT61tS.jpg" alt="Imgur" /></p>
-
-<h2>Comment Form</h2>
-
-<p>Same as article and category, but we use <code>ArticleModalField</code> to select article.</p>
-
-<pre><code class="php">// src/Blog/Admin/Form/Comment/EditDefinition.php
-
-namespace Blog\Admin\Form\Comment;
-
-use Blog\Admin\Field\Article\ArticleModalField;
-use Phoenix\Form\PhoenixFieldTrait;
-use Windwalker\Core\Form\AbstractFieldDefinition;
-use Windwalker\Core\Language\Translator;
-use Windwalker\Form\Form;
-
-class EditDefinition extends AbstractFieldDefinition
-{
-    use PhoenixFieldTrait;
-
-    public function doDefine(Form $form)
-    {
-        // Basic fieldset
-        $this-&gt;fieldset('basic',function(Form $form)
-        {
-            // ID
-            $this-&gt;hidden('id');
-
-            // Name
-            $this-&gt;text('name')
-                -&gt;label('Name')
-                -&gt;required(true);
-
-            $this-&gt;email('email')
-                -&gt;label('Email')
-                -&gt;required(true);
-
-            // Article
-            $this-&gt;add('article_id', new ArticleModalField)
-                -&gt;label('Article');
-        });
-
-        // Text Fieldset
-        $this-&gt;fieldset('text',function(Form $form)
-        {
-            // Introtext
-            $this-&gt;textarea('text')
-                -&gt;label('Text')
-                -&gt;set('rows', 10);
-        });
-
-        // Created fieldset
-        $this-&gt;fieldset('created',function(Form $form)
-        {
-            // State
-            $this-&gt;radio('state')
-                -&gt;label(Translator::translate('admin.comment.field.state'))
-                -&gt;set('class', 'btn-group')
-                -&gt;set('default', 1)
-                -&gt;option(Translator::translate('phoenix.grid.state.published'), '1')
-                -&gt;option(Translator::translate('phoenix.grid.state.unpublished'), '0');
-
-            // Created
-            $this-&gt;calendar('created')
-                -&gt;label(Translator::translate('admin.comment.field.created'));
-        });
-    }
-}
+<pre><code class="json">{success:false,code:403,message:"Something error",data:{backtrace:...}}
 </code></pre>
 
-<p>You will see a Model select field, if you click the <code>Select an Item</code> button, will open a modal for select article.</p>
+<p>So you can check API status in JS:</p>
 
-<p><img src="http://i.imgur.com/AvKB3xf.jpg" alt="Imgur" /></p>
+<pre><code class="js">Phoenix.Ajax.get('flower/sakura/1')
+    .done(function (response, status, jqHXR) {
+        if (response.success) {
+            console.log(response.data);
+        } else {
+            throw new Error(response.message);
+        }
+    });
+</code></pre>
 
-<p><img src="http://i.imgur.com/yOsuRgx.jpg" alt="Imgur" /></p>
+<h2>Use Vue Resource</h2>
+
+<p>See <a href="./vue.html#vue-resource">Vue Resource</a></p>
+
+<h2>Integrate with Router</h2>
+
+<p>See <a href="./core.html#routing">Phoenix.Router</a></p>
 
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/tut/form.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/ajax.md">improve</a> this document.
     </p>
                 </article>
             </div>

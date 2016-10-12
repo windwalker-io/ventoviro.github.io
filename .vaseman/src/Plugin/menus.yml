@@ -54,6 +54,7 @@ documentation:
         More:
             more/data-object: Data Object
             more/http-stream: Http and Stream
+            more/cors: CORS Headers
             more/structure: Structure Object
             more/crypt: Crypt
             more/form-builder: Form Builder
@@ -130,6 +131,7 @@ rad:
         js/libraries: Base Libraries
         js/core: Phoenix Core
         js/grid: Grid
+        js/ajax: Ajax
         js/validation: Validation
         js/crypto: Crypto
         js/csrf: CSRF for Ajax

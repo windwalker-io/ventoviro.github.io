@@ -7,7 +7,7 @@ title: Vue
 
 ## Include Vue
 
-Phoenix includes `vue.js` and some official vue plugins to help you build a modern single page application.
+Phoenix includes `vue.js` 2.0 and some official vue plugins to help you build a modern single page application.
 
 ``` php
 \Phoenix\Script\VueScript::core();
@@ -50,6 +50,80 @@ Or integrate with jQuery:
 
 <input name="foo" type="text" v-model="foo">
 ```
+
+### Create a Vue Instance in PHP
+
+``` php
+VueScript::instance(
+    '#app',
+    ['item' => null],
+    [
+        'methods' => [
+            'addItem' => "\\function () { ... }"
+        ]
+    ]
+);
+```
+
+This will generate JS code looks like:
+
+``` html
+<script>
+    window.vueInstances.app = new Vue({el:"#app",data:{item:null},methods:{addItem:function () { ... }}});
+</script>
+```
+
+## Vue Animate
+
+Use `vue2-animate` package to add transition effects by [animate.css](https://github.com/daneden/animate.css).
+
+``` php
+// Include JS file
+VueScript::animate();
+```
+
+Now you can add transition name to your template:
+
+``` html
+<transition-group name="fadeLeft" tag="ul">
+    <li v-for="item in items" v-bind:key="item">
+        {{ item }}
+    </li>
+</transition-group>
+```
+
+See [vue2-animate](https://github.com/asika32764/vue2-animate/) and [Vue.js Transitions](http://vuejs.org/guide/transitions.html)
+
+## Integrate with Form Builder
+
+Use `attr()`, `controlAttr()` and `labelAttr()` to directly add directives to input HTML.
+
+This is an example to show how to bind `alias` input with `title` input.
+
+``` php
+// In Form Definition class
+
+VueScript::animate();
+VueScript::instance('#admin-form', ['title' => null, 'alias' => null], ['watch' => [
+    'title' => "\\function () {
+        this.alias = this.title.toLowerCase().replace(/[\\s+]/g, '-');
+    }"
+]]);
+
+// Title
+$this->text('title')
+    ->label(Translator::translate('flower.sakura.field.title'))
+    ->attr('v-model', 'title');
+
+// Alias
+$this->text('alias')
+    ->label(Translator::translate('flower.sakura.field.alias'))
+    ->controlAttr('v-if', 'title')
+    ->controlAttr('transition', 'fade')
+    ->attr(':value', 'alias');
+```
+
+![vue-form](https://cloud.githubusercontent.com/assets/1639206/19294082/4edfdd1a-905c-11e6-89de-174acd181068.gif)
 
 ## Vue Router
 

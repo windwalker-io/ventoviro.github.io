@@ -71,6 +71,49 @@ Go to system page.
 
 ![system](https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg)
 
+You can add multiple data with same key, it will be wrapped with array.
+
+``` php
+foreach ($list as $item)
+{
+    DebuggerHelper::addCustomData('test-data', $item);
+}
+```
+
+### Debug Flash Messages
+
+If you queued flash messages to session, you can see them in debug console before they showed in page:
+
+``` php
+// In controller
+
+$this->addMessage(['Hello', 'World'], 'warning');
+$this->addMessage('Foo Bar', 'danger');
+
+// Do not show them in page, we stop application.
+exit();
+```
+
+Now you can see queued messages in debug console.
+
+![p-2016-10-12-002](https://cloud.githubusercontent.com/assets/1639206/19293598/5ec61130-9058-11e6-807f-107aa3cc3acf.jpg)
+
+### Custom Debug Messages
+
+Sometimes you must log some debug information to help you developing, you can use debug messages:
+
+``` php
+// In controller
+
+DebuggerHelper::addMessage('Test message1');
+DebuggerHelper::addMessage('Test message2', 'warning');
+DebuggerHelper::addMessage('Test message3', 'danger');
+```
+
+These messages will also show in debug console:
+
+![p-2016-10-12-001](https://cloud.githubusercontent.com/assets/1639206/19293650/a9a124ec-9058-11e6-81d3-003d047147de.jpg)
+
 ## Mail Tester
 
 Go to `dev.php/_debugger/mail` and you will see a mail tester.

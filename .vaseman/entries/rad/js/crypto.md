@@ -58,3 +58,17 @@ A JS md5 implementation, will be useful if you need an identify when you generat
 ``` js
 Phoenix.Crypto.md5('Windwalker'); // fa0a731220e28af75afba7135723015e
 ```
+
+## UUID v4
+
+UUID is useful if you need to generate random ID for dynamic elements.
+
+``` js
+Phoenix.Crypto.uuid4();
+```
+
+The result:
+
+```
+46a37daa-ef63-4b0c-9b4c-ec7008b19b70
+```

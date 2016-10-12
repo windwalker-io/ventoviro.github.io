@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-    <title>Events | Windwalker - PHP Rapid Development Framework</title>
+    <title>CORS Headers | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Events | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="CORS Headers | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -75,11 +75,11 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li class="active">
-                        <a href="../../../documentation/3.x/services/events.html">3.x</a>
+                        <a href="../../../documentation/3.x/more/cors.html">3.x</a>
                     </li>
 
                     <li class="">
-                        <a href="../../../documentation/2.1/more/events.html">2.1</a>
+                        <a href="../../../documentation/2.1/more/cors.html">2.1</a>
                     </li>
                 </ul>
             </div>
@@ -94,7 +94,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Events</h1>
+                    <h1 class="banner-title">CORS Headers</h1>
                 </div>
             </div>
         </section>
@@ -215,7 +215,7 @@
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/services/environment.html">Environment</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../../documentation/3.x/services/events.html">Events</a>
             </li>
                     <li class="">
@@ -256,7 +256,7 @@
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/more/http-stream.html">Http and Stream</a>
             </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../../documentation/3.x/more/cors.html">CORS Headers</a>
             </li>
                     <li class="">
@@ -299,298 +299,79 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Event Listener (Observer) Pattern</h2>
+                    <h2>Add CORS Headers</h2>
 
-<p>The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents,
-called observers, and notifies them automatically of any state changes, usually by calling one of their methods.</p>
+<p>If you want to build a remote API server, you must handle <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">CORS</a>
+request to make sure remote browser can access your server.</p>
 
-<p>See: <a href="http://en.wikipedia.org/wiki/Observer_pattern">Observer pattern on Wikipedia</a></p>
+<p>Windwalker has a <code>CorsHandler</code> to quickly add CORS headers to <code>Response</code>. Fo example, you can do this in controller:</p>
 
-<h3>The Flow</h3>
+<pre><code class="php">// In Controller
 
-<p>First, there will be many listeners(observers), we can attach them to a dispatcher object.</p>
+use Windwalker\Core\Http\CorsHandler;
 
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5592361/7a569cdc-9206-11e4-829b-846b2c31557e.jpg" alt="p-2015-01-01-8" /></p>
-
-<p>Now, all listeners listened this dispatcher, if some event triggered, this dispatcher will notify all listeners.</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5592360/7a4ed9c0-9206-11e4-91aa-d3d50c4388c5.jpg" alt="p-2015-01-01-9" /></p>
-
-<p>So, if any listener has the method which matched the event, dispatcher will call this method.</p>
-
-<h2>Start Using Event</h2>
-
-<p>Create an event object named <code>onBeforeContentSave</code>, and set some arguments.</p>
-
-<pre><code class="php">use Windwalker\Event\Event;
-
-$event = new Event('onBeforeContentSave');
-
-$content = new stdClass;
-
-$event-&gt;setArgument('title', 'My content');
-$event-&gt;setArgument('content', $content);
+// Response object is immutable
+// Make sure you return response to replace old one
+$this-&gt;response = CorsHandler::create($this-&gt;response)
+    -&gt;allowOrigin('*')
+    -&gt;allowCredentials(true)
+    -&gt;allowMethods(['GET', 'POST'])
+    -&gt;allowHeaders(['X-Foo', 'X-bar'])
+    -&gt;getResponse();
 </code></pre>
 
-<p>Create your listener:</p>
+<p>Now Windwalker will auto genarate these headers:</p>
 
-<pre><code class="php">use Windwalker\Event\EventInterface;
+<pre><code class="http">Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers: X-Foo, X-Bar
+Access-Control-Allow-Methods: GET, POST
+Access-Control-Allow-Origin: *
+</code></pre>
 
-class ContentListener
+<h2>Dynamically Return Allow Origins</h2>
+
+<p>Use wildcard (<code>*</code>) to Allow-Origin is not recommended, you can save domains which you allowed in system and add them
+ to header dynamically.</p>
+
+<pre><code class="php">$allowOrigins = $model-&gt;getMyAllowOrigins();
+
+$origin = $this-&gt;input-&gt;server-&gt;getUrl('HTTP_ORIGIN');
+
+if (in_array($origin, $allowOrigins))
 {
-    public function onBeforeContentSave(EventInterface $event)
-    {
-        $event-&gt;getArgument('content')-&gt;title = $event-&gt;getArgument('title');
-    }
-
-     public function onAfterContentSave(EventInterface $event)
-    {
-        // Do something
-    }
+    $this-&gt;response = CorsHandler::create($this-&gt;response)
+        -&gt;allowOrigin($origin)
+        -&gt;getResponse();
 }
 </code></pre>
 
-<p>Add listener to Dispatcher:</p>
+<p>You can also add multiple origins:</p>
 
-<pre><code class="php">$dispatcher = \Windwalker\Ioc::getDispatcher();
-
-// OR
-
-$dispatcher = $container-&gt;get('dispatcher');
-
-// Attach listener
-$dispatcher-&gt;addListener(new ContentListener);
+<pre><code class="php">$this-&gt;response = CorsHandler::create($this-&gt;response)
+    -&gt;allowOrigin($origin1)
+    -&gt;allowOrigin($origin2)
+    -&gt;allowOrigin($origin3)
+    -&gt;getResponse();
 </code></pre>
 
-<p>Then we trigger the event we created:</p>
+<p>The headers will be:</p>
 
-<pre><code class="php">// Trigger the onBeforeContentSave
-$dispatcher-&gt;triggerEvent($event);
-
-// ContentListener::onBeforeContentSave will set title into $content object.
-$content-&gt;title == 'My content';
+<pre><code class="http">Access-Control-Allow-Origin: http://domain1.com
+Access-Control-Allow-Origin: http://domain2.com
+Access-Control-Allow-Origin: http://domain3.com
 </code></pre>
 
-<p>If a method name in listener equals to event name, Dispatcher will run this method and inject Event into this method.
-Then we can do many things we want.</p>
+<p>To replace all origins, set <code>true</code> to second argument.</p>
 
-<h3>Array Access</h3>
-
-<p>Event can access like array:</p>
-
-<pre><code class="php">// Set
-$event['data'] = $data;
-
-// Get
-$data = $event['data'];
+<pre><code class="php">$this-&gt;response = CorsHandler::create($this-&gt;response)
+    -&gt;allowOrigin($newOrigin, true)
+    -&gt;getResponse();
 </code></pre>
-
-<h2>Listeners</h2>
-
-<p>There can be two types of listeners, using class or closure.</p>
-
-<h3>Class Listeners</h3>
-
-<p>Using class, just new an instance</p>
-
-<pre><code class="php">$dispatcher-&gt;addListener(new ContentListener);
-</code></pre>
-
-<p>You may provides priority for every methods.</p>
-
-<pre><code class="php">use Windwalker\Event\ListenerPriority;
-
-// Add priorities
-$dispatcher-&gt;addListener(
-    new ContentListener,
-    array(
-        'onBeforeContentSave' =&gt; ListenerPriority::LOW,
-        'onAfterContentSave' =&gt; ListenerPriority::HIGH
-    )
-);
-
-// Or using an inner method to get all methods
-$dispatcher-&gt;addListener(new ContentListener, ContentListener::getPriorities());
-</code></pre>
-
-<h3>Closure Listeners</h3>
-
-<p>If using closure, you must provide the priority and an event name to listen.</p>
-
-<pre><code class="php">$dispatcher-&gt;addListener(
-    function (EventInterface $event)
-    {
-        // Do something
-    },
-    array('onContentSave' =&gt; ListenerPriority::NORMAL)
-);
-</code></pre>
-
-<p>Or use <code>listen()</code> method.</p>
-
-<pre><code class="php">$dispatcher-&gt;listen('onContentSave', function (EventInterface $event)
-{
-    // Do something
-}, ListenerPriority::NORMAL);
-</code></pre>
-
-<h2>Dispatcher</h2>
-
-<h3>Trigger An Event Object</h3>
-
-<p>This is the most normal way to trigger an event.</p>
-
-<pre><code class="php">$event = new Event('onFlowerBloom');
-
-$event-&gt;setArgument('flower', 'sakura');
-
-$dispatcher-&gt;triggerEvent($event);
-</code></pre>
-
-<p>Add arguments when triggering event, the arguments will merge with previous arguments you set.</p>
-
-<pre><code class="php">$args = array(
-    'foo' =&gt; 'bar'
-);
-
-$dispatcher-&gt;triggerEvent($event, $args);
-</code></pre>
-
-<h3>Add An Event Then Trigger It Later</h3>
-
-<p>We can add an event into Dispatcher, then use event name to raise it laster.</p>
-
-<pre><code class="php">$event = new Event('onFlowerBloom');
-
-$event-&gt;setArgument('flower', 'sakura');
-
-$dispatcher-&gt;addEvent($event);
-
-// Nothing happen
-
-$dispatcher-&gt;triggerEvent('onFlowerBloom');
-</code></pre>
-
-<h3>Trigger A New Event Instantly</h3>
-
-<p>We don't need create event first, just trigger a string as event name, Dispatcher will create an event instantly.</p>
-
-<pre><code class="php">$args = array(
-    'foo' =&gt; 'bar'
-);
-
-$dispatcher-&gt;triggerEvent('onCloudMoving', $args);
-</code></pre>
-
-<h2>Stopping Event</h2>
-
-<p>If you stop an event, the next listeners in the queue won't be called.</p>
-
-<pre><code class="php">class ContentListener
-{
-    public function onBeforeContentSave(EventInterface $event)
-    {
-        // Stopping the Event propagation.
-        $event-&gt;stop();
-    }
-}
-</code></pre>
-
-<h2>DispatcherAwareInterface and Trait</h2>
-
-<p>In PHP 5.4 or higher, you can use <code>DispatcherAwareTrait</code>.</p>
-
-<pre><code class="php">use Windwalker\Event\DispatcherAwareInterface;
-use Windwalker\Event\DispatcherAwareTrait;
-
-class Application implements DispatcherAwareInterface
-{
-    use DispatcherAwareTrait;
-
-    // ...
-}
-</code></pre>
-
-<h2>Default Events</h2>
-
-<h3>Core</h3>
-
-<ul>
-<li>onAfterInitialise</li>
-<li>onAfterBoot</li>
-<li>onBeforeExecute</li>
-<li>onBeforeRouting</li>
-<li>onRouterBeforeRouteMatch</li>
-<li>onRouterAfterRouteMatch</li>
-<li>onAfterRouteMatched</li>
-<li>onAfterRouting</li>
-<li>onPackageBeforeExecute</li>
-<li>onPackageAfterExecute</li>
-<li>onAfterExecute</li>
-<li>onBeforeRespond</li>
-<li>onAfterRespond</li>
-<li>onBeforeRedirect</li>
-</ul>
-
-<h3>Controller</h3>
-
-<ul>
-<li>onControllerBeforeExecute</li>
-<li>onControllerAfterExecute</li>
-</ul>
-
-<h3>View</h3>
-
-<ul>
-<li>onViewAfterHandleData</li>
-<li>onViewBeforeRender</li>
-<li>onViewAfterRender</li>
-</ul>
-
-<h3>Renderer</h3>
-
-<ul>
-<li>onRendererPrepareGlobals</li>
-</ul>
-
-<h3>Asset</h3>
-
-<ul>
-<li>onAssetRenderStyles</li>
-<li>onAssetRenderScripts</li>
-</ul>
-
-<h3>User</h3>
-
-<ul>
-<li>onLoadAuthenticationMethods</li>
-<li>onLoadAuthorisationPolicies</li>
-<li>onUserBeforeLogin</li>
-<li>onUserAuthorisation</li>
-<li>onUserAfterLogin</li>
-<li>onUserLoginFailure</li>
-<li>onUserBeforeLogout</li>
-<li>onUserAfterLogout</li>
-<li>onUserLogoutFailure</li>
-<li>onUserBeforeSave</li>
-<li>onUserSaveFailure</li>
-<li>onUserAfterSave</li>
-<li>onUserBeforeDelete</li>
-<li>onUserDeleteFailure</li>
-<li>onUseAfterDelete</li>
-</ul>
-
-<h3>Mailer</h3>
-
-<ul>
-<li>onMailerAfterCreateMessage</li>
-<li>onMailerBeforeSend</li>
-</ul>
 
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/services/events.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/cors.md">improve</a> this document.
     </p>
                 </article>
             </div>

@@ -257,6 +257,9 @@
                 <a class="withripple" href="../../../documentation/3.x/more/http-stream.html">Http and Stream</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../../documentation/3.x/more/cors.html">CORS Headers</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../../documentation/3.x/more/structure.html">Structure Object</a>
             </li>
                     <li class="">
@@ -357,6 +360,46 @@ class AjaxController extends Controller
 <p>Go to system page.</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg" alt="system" /></p>
+
+<p>You can add multiple data with same key, it will be wrapped with array.</p>
+
+<pre><code class="php">foreach ($list as $item)
+{
+    DebuggerHelper::addCustomData('test-data', $item);
+}
+</code></pre>
+
+<h3>Debug Flash Messages</h3>
+
+<p>If you queued flash messages to session, you can see them in debug console before they showed in page:</p>
+
+<pre><code class="php">// In controller
+
+$this-&gt;addMessage(['Hello', 'World'], 'warning');
+$this-&gt;addMessage('Foo Bar', 'danger');
+
+// Do not show them in page, we stop application.
+exit();
+</code></pre>
+
+<p>Now you can see queued messages in debug console.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/19293598/5ec61130-9058-11e6-807f-107aa3cc3acf.jpg" alt="p-2016-10-12-002" /></p>
+
+<h3>Custom Debug Messages</h3>
+
+<p>Sometimes you must log some debug information to help you developing, you can use debug messages:</p>
+
+<pre><code class="php">// In controller
+
+DebuggerHelper::addMessage('Test message1');
+DebuggerHelper::addMessage('Test message2', 'warning');
+DebuggerHelper::addMessage('Test message3', 'danger');
+</code></pre>
+
+<p>These messages will also show in debug console:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/19293650/a9a124ec-9058-11e6-81d3-003d047147de.jpg" alt="p-2016-10-12-001" /></p>
 
 <h2>Mail Tester</h2>
 

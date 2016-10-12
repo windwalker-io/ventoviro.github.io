@@ -149,6 +149,9 @@
                 <a class="withripple" href="../../rad/js/grid.html">Grid</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -182,7 +185,7 @@
                 <article class="article-content">
                     <h2>Include Vue</h2>
 
-<p>Phoenix includes <code>vue.js</code> and some official vue plugins to help you build a modern single page application.</p>
+<p>Phoenix includes <code>vue.js</code> 2.0 and some official vue plugins to help you build a modern single page application.</p>
 
 <pre><code class="php">\Phoenix\Script\VueScript::core();
 </code></pre>
@@ -222,6 +225,75 @@
 
 &lt;input name="foo" type="text" v-model="foo"&gt;
 </code></pre>
+
+<h3>Create a Vue Instance in PHP</h3>
+
+<pre><code class="php">VueScript::instance(
+    '#app',
+    ['item' =&gt; null],
+    [
+        'methods' =&gt; [
+            'addItem' =&gt; "\\function () { ... }"
+        ]
+    ]
+);
+</code></pre>
+
+<p>This will generate JS code looks like:</p>
+
+<pre><code class="html">&lt;script&gt;
+    window.vueInstances.app = new Vue({el:"#app",data:{item:null},methods:{addItem:function () { ... }}});
+&lt;/script&gt;
+</code></pre>
+
+<h2>Vue Animate</h2>
+
+<p>Use <code>vue2-animate</code> package to add transition effects by <a href="https://github.com/daneden/animate.css">animate.css</a>.</p>
+
+<pre><code class="php">// Include JS file
+VueScript::animate();
+</code></pre>
+
+<p>Now you can add transition name to your template:</p>
+
+<pre><code class="html">&lt;transition-group name="fadeLeft" tag="ul"&gt;
+    &lt;li v-for="item in items" v-bind:key="item"&gt;
+        {{ item }}
+    &lt;/li&gt;
+&lt;/transition-group&gt;
+</code></pre>
+
+<p>See <a href="https://github.com/asika32764/vue2-animate/">vue2-animate</a> and <a href="http://vuejs.org/guide/transitions.html">Vue.js Transitions</a></p>
+
+<h2>Integrate with Form Builder</h2>
+
+<p>Use <code>attr()</code>, <code>controlAttr()</code> and <code>labelAttr()</code> to directly add directives to input HTML.</p>
+
+<p>This is an example to show how to bind <code>alias</code> input with <code>title</code> input.</p>
+
+<pre><code class="php">// In Form Definition class
+
+VueScript::animate();
+VueScript::instance('#admin-form', ['title' =&gt; null, 'alias' =&gt; null], ['watch' =&gt; [
+    'title' =&gt; "\\function () {
+        this.alias = this.title.toLowerCase().replace(/[\\s+]/g, '-');
+    }"
+]]);
+
+// Title
+$this-&gt;text('title')
+    -&gt;label(Translator::translate('flower.sakura.field.title'))
+    -&gt;attr('v-model', 'title');
+
+// Alias
+$this-&gt;text('alias')
+    -&gt;label(Translator::translate('flower.sakura.field.alias'))
+    -&gt;controlAttr('v-if', 'title')
+    -&gt;controlAttr('transition', 'fade')
+    -&gt;attr(':value', 'alias');
+</code></pre>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/19294082/4edfdd1a-905c-11e6-89de-174acd181068.gif" alt="vue-form" /></p>
 
 <h2>Vue Router</h2>
 
