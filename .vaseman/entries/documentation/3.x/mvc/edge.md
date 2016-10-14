@@ -228,7 +228,7 @@ class MyExtension implements \Windwalker\Edge\Extension\EdgeExtensionInterface
 Use our new directive:
 
 ``` php
-<h1>@upport('hello')</h2>
+<h1>@upper('hello')</h2>
 
 <!-- Result: <h1>HELLO</h1> -->
 ```
