@@ -25,7 +25,7 @@ to the newest version: `20150421_AddTableIndex`
 To create a migration version, you may use `migration create` command in console:
 
 ``` bash
-php windwlaker migration create InitFlowerTable
+php windwalker migration create InitFlowerTable
 ```
 
 You'll see this info:
@@ -41,10 +41,10 @@ You may also create migration to other position by `--dir` or `--package`
 
 ``` bash
 ## Create to custom directory
-php windwlaker migration create InitFlowerTable --dir=resources/migrations
+php windwalker migration create InitFlowerTable --dir=resources/migrations
 
 ## Create to a package's Migration folder
-php windwlaker migration create InitFlowerTable --package=flower
+php windwalker migration create InitFlowerTable --package=flower
 ```
 
 ### Writing Migration
@@ -138,7 +138,7 @@ See other schema operations: [Table and Schema](table-schema.html)
 Use this command to show migration status.
 
 ``` bash
-php windwlaker migration status
+php windwalker migration status
 ```
 
 ``` bash
@@ -153,7 +153,7 @@ php windwlaker migration status
 Use `migrate` command to start migrating:
 
 ``` bash
-php windwlaker migration migrate
+php windwalker migration migrate
 ```
 
 Terminal will show migrating process.
@@ -181,13 +181,13 @@ You can also use command to change mode `$ php windwalker system mode [dev|prod]
 ### Run Package Migration
 
 ``` bash
-php windwlaker migration migrate --package=flower
+php windwalker migration migrate --package=flower
 ```
 
 ### Migrate to Specific Version
  
 ``` bash
-php windwlaker migration migrate 20141105131929
+php windwalker migration migrate 20141105131929
 ```
 
 If you use a lower version, this action will be downgrade.
@@ -286,7 +286,7 @@ class MainSeeder extends AbstractSeeder
 Now, use `seed import` command:
 
 ``` bash
-php windwlaker seed import
+php windwalker seed import
 ```
 
 You will see this output, it means seeder execute success:
@@ -328,10 +328,10 @@ Run this command to execute package seeder:
 
 ``` bash
 ## Choose class if your seeder has namespace
-php windwlaker seed import --class=Flower\Seeder\MySeeder
+php windwalker seed import --class=Flower\Seeder\MySeeder
  
 ## Use package default MainSeeder
-php windwlaker seed import -p=flower
+php windwalker seed import -p=flower
 ```
 
 ## Fake Data Generator
