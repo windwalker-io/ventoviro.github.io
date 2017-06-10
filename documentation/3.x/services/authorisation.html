@@ -422,6 +422,12 @@ class ArticlePolicyProvider implements PolicyProviderInterface
 @else
     ---
 @endcan
+
+@cannot('article.delete', $user)
+    ---
+@else
+    &lt;a href="#"&gt;Delete&lt;/a&gt;
+@endcannot
 </code></pre>
 
                         <hr />
@@ -463,7 +469,7 @@ class ArticlePolicyProvider implements PolicyProviderInterface
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

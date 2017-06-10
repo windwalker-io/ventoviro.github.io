@@ -668,14 +668,14 @@ The argument index used for unspecified tokens is incremented only when used.</p
 
 <pre><code class="php">// Bind data
 $query-&gt;where('title = :title')
-    -&gt;bind(':title', 'Hamlet');
+    -&gt;bind('title', 'Hamlet');
 
 // Now do execute of this query
 $bounded =&amp; $query-&gt;getBounded();
 
 foreach ($bounded as $key =&gt; $data)
 {
-    $pdo-&gt;bindParam($key, $data-&gt;value, $data-&gt;dataType, $data-&gt;length, $data-&gt;driverOptions);
+    $pdoStatement-&gt;bindParam($key, $data-&gt;value, $data-&gt;dataType, $data-&gt;length, $data-&gt;driverOptions);
 }
 
 // Or use Windwalker Database
@@ -775,7 +775,7 @@ echo new QueryElement('WHERE', array('a = b', 'c = d'), ' OR ');
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

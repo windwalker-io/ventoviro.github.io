@@ -392,12 +392,11 @@ OR
     controller: Flower\Controller\Page
 </code></pre>
 
-<p>Then we can build this route by <code>Router::route()</code></p>
+<p>Then we can build this route by <code>CoreRouter::route()</code></p>
 
-<pre><code class="php">use Windwalker\Core\Router;
+<pre><code class="php">use Windwalker\Core\CoreRouter;
 
-// Note: don't use \Windwalker\Router\Router
-echo Router::route('flower_page', ['id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz']);
+echo CoreRouter::route('flower_page', ['id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz']);
 </code></pre>
 
 <p>The output will be:</p>
@@ -411,9 +410,9 @@ echo Router::route('flower_page', ['id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz']);
 
 <p>If your routes is definded in a package, you must add package alias before route name, and separate by at (<code>@</code>):</p>
 
-<pre><code class="php">use Windwalker\Core\Router;
+<pre><code class="php">use Windwalker\Core\CoreRouter;
 
-Router::route('flower@sakuras', array('page' =&gt; $page));
+CoreRouter::route('flower@sakuras', array('page' =&gt; $page));
 </code></pre>
 
 <p>Or use PackageRouter, we can ignore package prefix, Package will auto add it:</p>
@@ -434,11 +433,11 @@ $package-&gt;router-&gt;route('user@login');
 <pre><code class="php">// In php engine
 // URL: /flower/sakuras?foo=bar&amp;baz=yoo
 
-&lt;?php echo $this-&gt;escape(Router::route('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo'])); ?&gt;
+&lt;?php echo $this-&gt;escape(CoreRouter::route('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo'])); ?&gt;
 
-// OR in Edge
+// OR in Edge / Blade, the {{ ... }} will help us escape URL.
 
-{{ $this-&gt;escape(Router::route('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo'])) }}
+{{ CoreRouter::route('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']) }}
 </code></pre>
 
 <p>The printed URL will be:</p>
@@ -450,9 +449,9 @@ $package-&gt;router-&gt;route('user@login');
 
 <p>Router has 3 mode, <code>RAW</code>, <code>PATH</code> or <code>FULL</code>:</p>
 
-<pre><code class="php">echo Router::route('flower@sakuras', array(), Router::TYPE_RAW);
-echo Router::route('flower@sakuras', array(), Router::TYPE_PATH);
-echo Router::route('flower@sakuras', array(), Router::TYPE_FULL);
+<pre><code class="php">echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_RAW);
+echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_PATH);
+echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_FULL);
 </code></pre>
 
 <p>Result:</p>
@@ -464,14 +463,14 @@ http://domain.com/sites/windwalker/flower/sakuras
 
 <p>The RAW route used to store in database, the PATH route used to print in HTML, the FULL route used to redirect.</p>
 
-<h3>Build Route in Controller</h3>
+<h3>Build Routes in Controller</h3>
 
 <p>If you are in controller, we can use PackageRouter to build route, this way is more safer because we can auto get current package routes.</p>
 
 <pre><code class="php">// Original way, we have to know package name
-use Windwalker\Core\Router;
+use Windwalker\Core\CoreRouter;
 
-$route = Router::route('flower@sakura');
+$route = CoreRouter::route('flower@sakura');
 
 // Simpler way to let package handle it
 $route = $this-&gt;package-&gt;router-&gt;route('sakura');
@@ -479,7 +478,7 @@ $route = $this-&gt;package-&gt;router-&gt;route('sakura');
 $this-&gt;setRedirect($route);
 </code></pre>
 
-<h3>Build Route in View Template</h3>
+<h3>Build Routes in View Template</h3>
 
 <p>View has also includes package router, just build route like this:</p>
 
@@ -495,10 +494,48 @@ OR
 @route('sakura', ['id' =&gt; 25]))
 </code></pre>
 
-<p>Twig</p>
+<blockquote>
+  <p>The benefit to use <code>@route()</code> is that this directive will mute the error message, it won't throw exception if route not found,
+   instead, it will echo a <code>javascript:alert('Route ... not found.')</code> in debug mode. And if in production environment,
+   it will only echo a <code>#</code> to make sure system won't break.</p>
+</blockquote>
+
+<p>In Twig</p>
 
 <pre><code class="php">&lt;a href="{{ router.route('sakura', ['id' =&gt; 25]) }}"&gt;Link&lt;/a&gt;
 </code></pre>
+
+<h3>Use Chaining Methods</h3>
+
+<p>After Windwalker 3.2, we provides a powerful route builder, just use chaining methods to configure your route string.</p>
+
+<p>In controller or package:</p>
+
+<pre><code class="php">$this-&gt;router-&gt;to('sakura', ['id' =&gt; 25])-&gt;path();
+</code></pre>
+
+<p>In View template:</p>
+
+<pre><code class="php">{{ $router-&gt;to('sakuras')-&gt;id(25)-&gt;page(2)-&gt;full() }}
+</code></pre>
+
+<p>Available methods:</p>
+
+<ul>
+<li><code>full()</code> --> Get full URL.</li>
+<li><code>path()</code> --> Get path from root.</li>
+<li><code>raw()</code>  --> Get relative path.</li>
+<li><code>escape([bool])</code> --> Escape for HTML printing.</li>
+<li><code>id([int])</code> --> Add id to route query.</li>
+<li><code>page([int])</code> --> Add page to route query.</li>
+<li><code>addVar($name, $value)</code> --> Add custom var to route query.</li>
+<li><code>getVar($name, $default = null)</code> --> Get a custom var</li>
+<li><code>getQueries()</code> --> Get all queries.</li>
+<li><code>setQueries($queries)</code> --> Set queries.</li>
+<li><code>getRoute()</code> --> Get route name.</li>
+<li><code>setRoute($route)</code> --> set a new route name.</li>
+<li><code>mute([bool])</code> --> Don't throw exception if route not found. (Useful in dev period) </li>
+</ul>
 
                         <hr />
 
@@ -539,7 +576,7 @@ OR
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

@@ -310,7 +310,7 @@
 
 <p>You will see this help information:</p>
 
-<pre><code class="bash">Windwalker Console - version: 3.0
+<pre><code class="bash">Windwalker Console - version: 3.x
 ------------------------------------------------------------
 
 [windwalker Help]
@@ -337,6 +337,7 @@ Commands:
   migration    Database migration system.
   seed         The data seeder help you create fake data.
   package      Package operations.
+  queue        Queue management.
 
 Welcome to Windwalker Console.
 
@@ -399,6 +400,23 @@ $ php windwalker run deploy
   <p>You must install <code>symfony/process</code>: <code>~3.0</code> to support auto-answers.</p>
 </blockquote>
 
+<h3>Stop Running</h3>
+
+<p>By default, all commands no metter success or failure will not break script running.</p>
+
+<p>If you want to stop batch running, just return code <code>64</code> in a command:</p>
+
+<pre><code class="php">if (...)
+{
+    return 64;
+}
+</code></pre>
+
+<p>Or throw an exception with code <code>64</code>:</p>
+
+<pre><code class="php">throw new \RuntimeException('...', 64);
+</code></pre>
+
 <h3>List Scripts</h3>
 
 <p>Use <code>$ php windwalker run --list</code> to list all scripts</p>
@@ -457,7 +475,7 @@ $ php windwalker run deploy
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

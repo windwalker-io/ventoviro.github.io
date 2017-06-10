@@ -666,3 +666,4 @@ class GetController extends AbstractController
 - `Windwalker\Core\Controller\Traits\JsonApiTrait`
 - `Windwalker\Core\Controller\Traits\HtmlResponseTrait`
 - `Windwalker\Core\Controller\Traits\CsrfProtectionTrait`
+- `Windwalker\Core\Controller\Traits\CorsTrait`

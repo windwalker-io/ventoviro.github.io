@@ -486,6 +486,25 @@ as package middleware.</p>
     // ...
 </code></pre>
 
+<h3>Set All Response by JSON of a Package</h3>
+
+<p>In package config:</p>
+
+<pre><code class="php">    'middlewares' =&gt; [
+        \Windwalker\Core\Application\Middleware\JsonResponseWebMiddleware::class
+    ]
+</code></pre>
+
+<p>Now all routing to this package will return JSON response no matter error or not.</p>
+
+<h2>Available Middlewares for Application and Packages</h2>
+
+<ul>
+<li><code>Windwalker\Core\Application\Middleware\JsonResponseWebMiddleware</code></li>
+<li><code>Windwalker\Core\Application\Middleware\RoutingMiddleware</code></li>
+<li><code>Windwalker\Core\Application\Middleware\SessionRaiseMiddleware</code></li>
+</ul>
+
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -525,7 +544,7 @@ as package middleware.</p>
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

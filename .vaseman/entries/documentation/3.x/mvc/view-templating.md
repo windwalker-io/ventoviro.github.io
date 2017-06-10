@@ -389,7 +389,7 @@ There is some global variables will auto set into View template, you can easily 
 
 | Name | Description |
 | ---- | ----------- |
-| `view` | A data object object to store view name, layout or format etc. |
+| `view` | The view object self. |
 | `helper` | the helper proxy object to help us quickly use other helper object. |
 | `uri` | The uri registry object, see [Uri & Route Building](./uri-route-building.html) |
 | `app` | The global application object. |
@@ -399,3 +399,91 @@ There is some global variables will auto set into View template, you can easily 
 | `translator` | The translator object. |
 | `datetime` | The Datetime object of current time. |
 | `widget` | Instance of WidgetHelper to quickly render widget. |
+| `asset` | AssetManager object. |
+
+## Use Json, Xml or Other Format View
+
+Sometimes we will hope a page can return multiple formats and control by HTTP query (`&format=xxx`).
+We can create multiple Views with different formats to return data.
+
+For example, we create a HTML class.
+
+```php
+// src/Flower/View/Sakura/SakuraHtmlView.php
+
+namespace Flower\View\Sakura;
+
+class SakurasHtmlView extends HtmlView
+{
+	/**
+	 * @param \Windwalker\Data\Data $data
+	 *
+	 * @return  void
+	 */
+	protected function prepareData($data)
+	{
+		$data->items = $this->model->getItems();
+		$data->pagination = new Pagination($this->model->get('page'));
+		$data->title = 'Sakuras List';
+		$data->metadata = 'Sakuras metadata';
+	}
+} 
+```
+
+And a Json view class.
+
+```php
+namespace Asuka\Flower\View\Sakuras;
+
+use Windwalker\Core\View\StructureView;
+
+class SakurasJsonView extends StructureView
+{
+	/**
+	 * @param \Windwalker\Structure\Structure $structure
+	 *
+	 * @return  void
+	 */
+	protected function prepareData($structure)
+	{
+		$page = $this->model->get('page');
+
+		$structure->set('items', $this->model->getItems());
+		$structure->set('next', $this->router->to('sakuras')->page($page));
+	}
+}
+```
+
+You can notice that Html view and Json view prepared different data for their usage, then we must load them in controller:
+
+```php
+class GetController extends AbstractController
+{
+    public function doExecute()
+    {
+        $format = $this->input->get('format', 'html');
+        
+        $view = $this->getView('Sakuras', $format);
+
+        switch ($format)
+        {
+            case 'html':
+                $this->response = new HtmlResponse;
+                break;
+
+            case 'json':
+                $this->response = new JsonResponse;
+                break;
+                
+            // More formats...
+        }
+
+        // Just return view object, application will auto convert it to string.
+        return $view;
+    }
+}
+```
+
+In the example, a page will use different format by URL `format=html|json` and the destination view returned different content for client.
+ 
+You can create your `ResponseFactory::create($format)` and every thing will be automatically.

@@ -332,9 +332,13 @@ $user-&gt;load(array('alias' =&gt; $alias)); // Load by field name.
 
 <p>Check row exists</p>
 
-<pre><code class="php">if (!$user-&gt;load(25))
+<pre><code class="php">try
 {
-    throw new RuntuneException('User not found');
+    $record-&gt;load(25);
+}
+catch (NoResultException $e)
+{
+    // Handle error
 }
 </code></pre>
 
@@ -383,7 +387,7 @@ $user-&gt;name; // Sakura
 
 <h3>Store</h3>
 
-<h5>Create A New Row</h5>
+<h4>Create A New Row</h4>
 
 <p>If primary not exists, Record will create a new row in table.</p>
 
@@ -400,7 +404,7 @@ $user-&gt;store();
 echo $user-&gt;id; // Auto generated id
 </code></pre>
 
-<h5>Update A Existing Row</h5>
+<h4>Update A Existing Row</h4>
 
 <p>If primary key exists, Record will update it.</p>
 
@@ -416,7 +420,7 @@ $user-&gt;bind($data);
 $user-&gt;store();
 </code></pre>
 
-<h3>Check</h3>
+<h3>Validate</h3>
 
 <p>Check method help you validate data.</p>
 
@@ -424,7 +428,7 @@ $user-&gt;store();
 {
     // ...
 
-    public function check()
+    public function validate()
     {
         if (!$this['name'])
         {
@@ -436,13 +440,11 @@ $user-&gt;store();
 }
 </code></pre>
 
-<p>Then we call <code>check()</code> before <code>store()</code>.</p>
+<p>Then we call <code>validate()</code> before <code>store()</code>.</p>
 
-<pre><code class="php">$user-&gt;bind($data);
-
-$user-&gt;check();
-
-$user-&gt;store();
+<pre><code class="php">$user-&gt;bind($data)
+    -&gt;validate()
+    -&gt;store();
 </code></pre>
 
 <h3>Delete</h3>
@@ -499,6 +501,49 @@ echo $articleRecord-&gt;created_date; // 2016-03-02 12:30:29
 
 <pre><code class="php">echo $articleRecord-&gt;created_date-&gt;format('Y-m-d H:i:s'); // 2016-03-02 12:30:29
 </code></pre>
+
+<h3>Casts</h3>
+
+<p>Add casts to auto convert value type after read from DB:</p>
+
+<pre><code class="php">&lt;?
+class SakuraRecord extends Record
+{
+    protected $casts = [
+        'id' =&gt; 'int',
+        'price' =&gt; 'string',
+        'created' =&gt; 'datetime',
+        'modified' =&gt; 'timestamp',
+        'images' =&gt; 'object', // or array will be json decoded
+        'params' =&gt; \Windwalker\Structure\Structure::class,
+        'other' =&gt; ['SomeClass', 'handle'] // Use callback
+    ];
+}
+
+$sakuraRecord-&gt;load(3);
+
+$sakuraRecord-&gt;id; // 3
+$sakuraRecord-&gt;price; // '1200.00'
+$sakuraRecord-&gt;created-&gt;format('Y/d/m'); // Auto convert to DateTime object
+$sakuraRecord-&gt;modified; // 1497067876
+$sakuraRecord-&gt;images[0]-&gt;url; // Store json in DB, can will auto decode to object.
+$sakuraRecord-&gt;params-&gt;get('foo.bar'); // Use class name to store value to object
+</code></pre>
+
+<p>Supports casts:</p>
+
+<ul>
+<li>int | integer</li>
+<li>real | float | double</li>
+<li>string</li>
+<li>bool | boolean</li>
+<li>object</li>
+<li>array | json</li>
+<li>date | datetime</li>
+<li>timestamp</li>
+<li>(Class name)</li>
+<li>(Callback array)</li>
+</ul>
 
 <h2>NestedRecord</h2>
 
@@ -601,13 +646,13 @@ $cat-&gt;createRoot();
 
 <h3>Move Node</h3>
 
-<h5>Re Ordering</h5>
+<h4>Re Ordering</h4>
 
 <pre><code class="php">$cat-&gt;move(1); // move up
 $cat-&gt;move(-1); // Move down
 </code></pre>
 
-<h5>Move To Other Node</h5>
+<h4>Move To Other Node</h4>
 
 <p>Move to node <code>3</code> as last child.</p>
 
@@ -636,20 +681,31 @@ $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
 <pre><code class="php">$records = $cat-&gt;getTree();
 </code></pre>
 
-<h2>Hooks</h2>
+<h2>Event</h2>
 
-<p><code>Record</code> object supports hooks to add logic before or after any data operation.</p>
+<p>Record has an event system that we can process logic before &amp; after every DB operation.</p>
 
-<pre><code class="php">class ArticleRecord extends Record
+<p>Add event methods in your Record class.</p>
+
+<pre><code class="php">class UserRecord extends Record
 {
-    protected $table = 'articles';
-
     public function onAfterLoad(Event $event)
     {
-        // Also load tags
-        $this-&gt;tags = TagHelper::getAllTags();
+        $this-&gt;foo = array('a', 'b', 'c');
     }
 }
+</code></pre>
+
+<p>Or add listeners to Dispatcher (You must install <code>windwalker/event</code> first).</p>
+
+<pre><code class="php">// Use listener object
+$record-&gt;getDispatcher()-&gt;addListener(new MyRecordListener);
+
+// Use callback
+$record-&gt;getDispatcher()-&gt;listen('onAfterStore', function (Event $event)
+{
+    // Process your logic
+});
 </code></pre>
 
 <p>Available events:</p>
@@ -661,6 +717,12 @@ $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
 <li>onAfterStore</li>
 <li>onBeforeDelete</li>
 <li>onAfterDelete</li>
+<li>onBeforeBind</li>
+<li>onAfterBind</li>
+<li>onBeforeCreate</li>
+<li>onAfterCreate</li>
+<li>onBeforeUpdate</li>
+<li>onAfterUpdate</li>
 </ul>
 
 <p>See <a href="../more/events.html">Events</a></p>
@@ -704,7 +766,7 @@ $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

@@ -17,7 +17,7 @@ php windwlaker
 You will see this help information:
 
 ``` bash
-Windwalker Console - version: 3.0
+Windwalker Console - version: 3.x
 ------------------------------------------------------------
 
 [windwalker Help]
@@ -44,6 +44,7 @@ Commands:
   migration    Database migration system.
   seed         The data seeder help you create fake data.
   package      Package operations.
+  queue        Queue management.
 
 Welcome to Windwalker Console.
 
@@ -106,6 +107,25 @@ console:
 Separate every answers by `\n` (Must use double quote), so console will help you fill the input.
 
 > You must install `symfony/process`: `~3.0` to support auto-answers.
+
+### Stop Running
+
+By default, all commands no metter success or failure will not break script running.
+
+If you want to stop batch running, just return code `64` in a command:
+
+```php
+if (...)
+{
+    return 64;
+}
+```
+
+Or throw an exception with code `64`:
+
+```php
+throw new \RuntimeException('...', 64);
+```
 
 ### List Scripts
 

@@ -78,3 +78,21 @@ $this->response = CorsHandler::create($this->response)
     ->allowOrigin($newOrigin, true)
     ->getResponse();
 ```
+
+## Use CoreTrait
+
+Use CorsTrait on controller to add some helper methods:
+
+```php
+class GetController extends AbstractController
+{
+    ue JsonApiTrait, CorsTrait;
+
+    public function preparExecute()
+    {
+        $this->>allowOrigin('*')
+            ->maxAge(...)
+            ->allowHeaders([...]);
+    }
+}
+```

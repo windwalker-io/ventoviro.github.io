@@ -187,6 +187,7 @@ error:
     # The error template & renderer engine
     template: windwalker.error.default
     engine: php
+    log: true
 
 session:
     # Session handler, supports `native`, `database`, `apc`, `memcached`
@@ -197,11 +198,12 @@ session:
 routing:
     # Enable routing debug, if route key not found when you generate routs,
     # will raise error and stop application.
-    debug: 1
+    # @deprecated
+    debug: true
 
     # Simple routing help us auto find controller by URL: `{package}/{controller}` without routing config,
     # Disable this function will enhance performance.
-    simple_route: 0
+    simple_route: true
 
 cache:
     # Disabled cache will make all cache as null storage and not stored to storage.
@@ -219,6 +221,26 @@ cache:
     # Cache time (minutes)
     time: 15
 
+crypt:
+    # The Crypt cipher method.
+    # Support ciphers: blowfish (bf) / aes-256 (aes) / 3des / php_aes / sodium
+    cipher: blowfish
+
+    # The hashing algorithm
+    # Support algorithms: blowfish (bf) / md5 / sha256 / sha512 / argon2 / scrypt
+    hash_algo: blowfish
+
+    # The hashing cost depends on different algorithms. Keep default if you don't know how to use it.
+    hash_cost: ~
+
+asset:
+    # The asset folder in public root, default is `asset`
+    folder: asset
+
+    # The full asset uri, default is NULL. If you set this uri, it will override `asset.folder`.
+    # This is useful if you want to put all asset files on cloud storage.
+    uri: ~
+
 language:
     # Language debug will mark untranslated string by `??` and stored orphan in Languages object.
     debug: false
@@ -233,13 +255,13 @@ language:
     format: ini
 
 console:
-    # Custom script, add some commends here to batch execute. Example:
-    # script:
+    # Custom scripts, add some commands here to batch execute. Example:
+    # scripts:
     #     foo:
     #         - git pull
     #         - composer install
     #         - php windwalker migration migrate
     #
     # Then just run `$ php windwalker run foo`
-    script: ~
+    scripts: ~
 ```

@@ -377,6 +377,9 @@ $input-&gt;getRaw('flower') // &lt;p&gt;to be, or not to be.&lt;/p&gt;
 <pre><code class="php">// mysite.com/?flower[1]=sakura&amp;flower[2]=olive;
 
 $input-&gt;getArray('flower'); // Array( [1] =&gt; sakura [2] =&gt; olive)
+
+// Get array and filter every values
+$input-&gt;getArray('flower', null, '.', 'int');
 </code></pre>
 
 <p>Use <code>compact()</code> method</p>
@@ -540,7 +543,7 @@ catch (\RuntimeException $e)
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

@@ -137,4 +137,10 @@ Use `@auth` or `@can` directive:
 @else
     ---
 @endcan
+
+@cannot('article.delete', $user)
+    ---
+@else
+    <a href="#">Delete</a>
+@endcannot
 ```

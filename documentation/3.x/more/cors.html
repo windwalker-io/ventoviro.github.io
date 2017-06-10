@@ -368,6 +368,23 @@ Access-Control-Allow-Origin: http://domain3.com
     -&gt;getResponse();
 </code></pre>
 
+<h2>Use CoreTrait</h2>
+
+<p>Use CorsTrait on controller to add some helper methods:</p>
+
+<pre><code class="php">class GetController extends AbstractController
+{
+    ue JsonApiTrait, CorsTrait;
+
+    public function preparExecute()
+    {
+        $this-&gt;&gt;allowOrigin('*')
+            -&gt;maxAge(...)
+            -&gt;allowHeaders([...]);
+    }
+}
+</code></pre>
+
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -407,7 +424,7 @@ Access-Control-Allow-Origin: http://domain3.com
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

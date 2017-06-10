@@ -107,13 +107,12 @@ flower_page:
     controller: Flower\Controller\Page
 ```
 
-Then we can build this route by `Router::route()`
+Then we can build this route by `CoreRouter::route()`
 
 ``` php
-use Windwalker\Core\Router;
+use Windwalker\Core\CoreRouter;
 
-// Note: don't use \Windwalker\Router\Router
-echo Router::route('flower_page', ['id' => 25, 'alias' => 'foo-bar-baz']);
+echo CoreRouter::route('flower_page', ['id' => 25, 'alias' => 'foo-bar-baz']);
 ```
 
 The output will be:
@@ -129,9 +128,9 @@ This is a very useful function that you can change roue name but won't worry of 
 If your routes is definded in a package, you must add package alias before route name, and separate by at (`@`):
 
 ``` php
-use Windwalker\Core\Router;
+use Windwalker\Core\CoreRouter;
 
-Router::route('flower@sakuras', array('page' => $page));
+CoreRouter::route('flower@sakuras', array('page' => $page));
 ```
 
 Or use PackageRouter, we can ignore package prefix, Package will auto add it:
@@ -154,11 +153,11 @@ If we print URL in HTML, we must encode some special chars.
 // In php engine
 // URL: /flower/sakuras?foo=bar&baz=yoo
 
-<?php echo $this->escape(Router::route('flower@sakuras', ['foo' => 'bar', 'baz' => 'yoo'])); ?>
+<?php echo $this->escape(CoreRouter::route('flower@sakuras', ['foo' => 'bar', 'baz' => 'yoo'])); ?>
 
-// OR in Edge
+// OR in Edge / Blade, the {{ ... }} will help us escape URL.
 
-{{ $this->escape(Router::route('flower@sakuras', ['foo' => 'bar', 'baz' => 'yoo'])) }}
+{{ CoreRouter::route('flower@sakuras', ['foo' => 'bar', 'baz' => 'yoo']) }}
 ```
 
 The printed URL will be:
@@ -172,9 +171,9 @@ The printed URL will be:
 Router has 3 mode, `RAW`, `PATH` or `FULL`:
 
 ``` php
-echo Router::route('flower@sakuras', array(), Router::TYPE_RAW);
-echo Router::route('flower@sakuras', array(), Router::TYPE_PATH);
-echo Router::route('flower@sakuras', array(), Router::TYPE_FULL);
+echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_RAW);
+echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_PATH);
+echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_FULL);
 ```
 
 Result:
@@ -187,15 +186,15 @@ http://domain.com/sites/windwalker/flower/sakuras
 
 The RAW route used to store in database, the PATH route used to print in HTML, the FULL route used to redirect.
 
-### Build Route in Controller
+### Build Routes in Controller
 
 If you are in controller, we can use PackageRouter to build route, this way is more safer because we can auto get current package routes.
 
 ``` php
 // Original way, we have to know package name
-use Windwalker\Core\Router;
+use Windwalker\Core\CoreRouter;
 
-$route = Router::route('flower@sakura');
+$route = CoreRouter::route('flower@sakura');
 
 // Simpler way to let package handle it
 $route = $this->package->router->route('sakura');
@@ -203,7 +202,7 @@ $route = $this->package->router->route('sakura');
 $this->setRedirect($route);
 ```
 
-### Build Route in View Template
+### Build Routes in View Template
 
 View has also includes package router, just build route like this:
 
@@ -221,8 +220,44 @@ OR
 @route('sakura', ['id' => 25]))
 ```
 
-Twig
+> The benefit to use `@route()` is that this directive will mute the error message, it won't throw exception if route not found,
+ instead, it will echo a `javascript:alert('Route ... not found.')` in debug mode. And if in production environment,
+ it will only echo a `#` to make sure system won't break.
+
+In Twig
 
 ``` php
 <a href="{{ router.route('sakura', ['id' => 25]) }}">Link</a>
 ```
+
+### Use Chaining Methods
+
+After Windwalker 3.2, we provides a powerful route builder, just use chaining methods to configure your route string.
+
+In controller or package:
+
+```php
+$this->router->to('sakura', ['id' => 25])->path();
+```
+
+In View template:
+
+```php
+{{ $router->to('sakuras')->id(25)->page(2)->full() }}
+```
+
+Available methods:
+
+- `full()` --> Get full URL.
+- `path()` --> Get path from root.
+- `raw()`  --> Get relative path.
+- `escape([bool])` --> Escape for HTML printing.
+- `id([int])` --> Add id to route query.
+- `page([int])` --> Add page to route query.
+- `addVar($name, $value)` --> Add custom var to route query.
+- `getVar($name, $default = null)` --> Get a custom var
+- `getQueries()` --> Get all queries.
+- `setQueries($queries)` --> Set queries.
+- `getRoute()` --> Get route name.
+- `setRoute($route)` --> set a new route name.
+- `mute([bool])` --> Don't throw exception if route not found. (Useful in dev period) 

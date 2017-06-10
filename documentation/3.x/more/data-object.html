@@ -371,6 +371,11 @@ echo $data['flower'];
 {
     echo $key . ' =&gt; ' . $value;
 }
+
+$data = $data-&gt;map(function ($value, $key) 
+{
+    return trim($value);
+});
 </code></pre>
 
 <h3>Null Data</h3>
@@ -461,22 +466,57 @@ $value = $dataset-&gt;foo;
 $dataset-&gt;bar = 'Fly';
 </code></pre>
 
-<h3>Map and Walk</h3>
+<h3>Iterating</h3>
 
-<pre><code class="php">$dataset-&gt;map(function($data)
+<pre><code class="php">$dataset = $dataset-&gt;map(function($data)
 {
     $data-&gt;foo = 'bar';
 
     return $data;
 });
 
-$dataset-&gt;walk(function(&amp;$data, $key, $userdata)
+$dataset = $dataset-&gt;walk(function(&amp;$data, $key, $userdata)
 {
     $data-&gt;foo = $userdata . ':' . $key;
 }, 'prefix');
+
+// Transform will not return new instance
+$dataset-&gt;transform(function($data, $key)
+{
+    $data-&gt;foo = $userdata . ':' . $key;
+});
+
+// We can map the columns
+$dataSet = $dataSet-&gt;mapColumn('id', function($value)
+{
+    return $value++;
+});
+</code></pre>
+
+<h3>First and Last</h3>
+
+<pre><code class="php">$data = $dataSet-&gt;first();
+
+// Find by condition
+$data = $dataSet-&gt;first(function ($data, $key)
+{
+    return $data-&gt;id &gt; 3;
+});
+
+$data = $dataSet-&gt;last();
+
+// Find by condition
+$data = $dataSet-&gt;last(function ($data, $key)
+{
+    return $data-&gt;id &gt; 3;
+});
 </code></pre>
 
 <h3>Other Array-like Methods</h3>
+
+<blockquote>
+  <p>Data Object also has similar methods</p>
+</blockquote>
 
 <pre><code class="php">$dataSet-&gt;sort();
 $dataSet-&gt;rsort();
@@ -489,12 +529,57 @@ $dataSet-&gt;unshift($data);
 
 $dataSet-&gt;pop();
 $dataSet-&gt;push($data);
-</code></pre>
 
-<h3>Get First &amp; Last</h3>
+$values = $dataSet-&gt;values();
+$keys = $dataSet-&gt;keys();
 
-<pre><code class="php">$first = $dataSet-&gt;first();
-$last = $dataSet-&gt;last();
+$ids = $dataSet-&gt;getColumn('id');
+$dataSet-&gt;setColumn('state', 1);
+
+$dataSet = $dataSet-&gt;spice(0, 1);
+$data = $dataSet-&gt;takeout(3); // Will remove from original dataSet
+
+$dataSet = $dataSet-&gt;chunk(3); // Similar to php array_chunk();
+
+$result = $dataSet-&gt;sum('price');
+$result = $dataSet-&gt;avg('price');
+
+$bool = $dataSet-&gt;contains('id', 3, [bool:strict]);
+$bool = $dataSet-&gt;containsAll(3, [bool:strict]); // Comparer all data's fields
+
+$dataSet = $dataSet-&gt;keyBy('id'); // Change array keys as data id field
+
+$dataSet = $dataSet-&gt;except(['id', 'price']);
+$dataSet = $dataSet-&gt;only(['id', 'price']);
+
+$dataSet-&gt;each(function ($data, $key) { ... }); // Won't change self data, will stop if reutn false
+
+$dataSet = $dataSet-&gt;find(function ($data) 
+{
+    return $data-&gt;id &gt; 3;
+});
+
+$dataSet = $dataSet-&gt;findFirst([callback]);
+
+$dataSet = $dataSet-&gt;filter([callback]);
+$dataSet = $dataSet-&gt;reject([callback]);
+
+list($set1, $set2) = $dataSet-&gt;partition(function ($data) 
+{
+    return $data-&gt;id &gt; 3;
+});
+
+// Result ill be a new instance
+$dataSet = $dataSet-&gt;apply(function ($dataSet)
+{
+    // Do something
+    return $dataSet;
+});
+
+$sum = $dataSet-&gt;pipe(function ($dataSet)
+{
+    return $dataSet-&gt;sum();
+});
 </code></pre>
 
 <h3>Dump</h3>
@@ -543,7 +628,7 @@ $dataSet-&gt;dump(true); // Recursive to array[]
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

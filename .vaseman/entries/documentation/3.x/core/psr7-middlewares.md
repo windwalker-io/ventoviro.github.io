@@ -204,3 +204,21 @@ class FlowerPackage extends AbstractPackage
 
     // ...
 ```
+
+### Set All Response by JSON of a Package
+ 
+In package config:
+
+```php
+    'middlewares' => [
+        \Windwalker\Core\Application\Middleware\JsonResponseWebMiddleware::class
+    ]
+```
+
+Now all routing to this package will return JSON response no matter error or not.
+
+## Available Middlewares for Application and Packages
+  
+- `Windwalker\Core\Application\Middleware\JsonResponseWebMiddleware`
+- `Windwalker\Core\Application\Middleware\RoutingMiddleware`
+- `Windwalker\Core\Application\Middleware\SessionRaiseMiddleware`

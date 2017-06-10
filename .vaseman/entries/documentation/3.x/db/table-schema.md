@@ -39,6 +39,7 @@ Available types in `Schema` object:
 
 - primary (An `integer` column with primary key and auto-increment)
 - integer
+- bigint
 - tinyint
 - bit
 - float

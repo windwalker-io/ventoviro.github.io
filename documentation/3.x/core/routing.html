@@ -671,11 +671,10 @@ class MyRouteHandler
 
 <h2>Build Route</h2>
 
-<p>Every route in Windwalker has a key, which allows every single route pattern can be access by <strong>route name</strong> or <strong>route resources</strong>, this will be helpful building a route quickly.</p>
+<p>Every route in Windwalker has a key, which allows every single route pattern can be access 
+by <strong>route name</strong> or <strong>route resources</strong>, this will be helpful building a route quickly.</p>
 
-<pre><code class="php">use Windwalker\Core\Router;
-
-echo Router::build('{route name}', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
+<pre><code class="php">echo \Windwalker\Core\Router\CoreRouter::route('{route name}', array('id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz'));
 </code></pre>
 
 <p>The output will be:</p>
@@ -772,7 +771,7 @@ which is not as flexible as the other two matchers.</p>
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

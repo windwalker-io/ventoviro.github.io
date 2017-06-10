@@ -401,14 +401,14 @@ We can bind params to our query string:
 ``` php
 // Bind data
 $query->where('title = :title')
-    ->bind(':title', 'Hamlet');
+    ->bind('title', 'Hamlet');
 
 // Now do execute of this query
 $bounded =& $query->getBounded();
 
 foreach ($bounded as $key => $data)
 {
-    $pdo->bindParam($key, $data->value, $data->dataType, $data->length, $data->driverOptions);
+    $pdoStatement->bindParam($key, $data->value, $data->dataType, $data->length, $data->driverOptions);
 }
 
 // Or use Windwalker Database

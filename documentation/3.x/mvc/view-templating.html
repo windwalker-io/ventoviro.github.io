@@ -668,7 +668,7 @@ $view = $this-&gt;getView('sakura', 'html');
 <tbody>
 <tr>
   <td><code>view</code></td>
-  <td>A data object object to store view name, layout or format etc.</td>
+  <td>The view object self.</td>
 </tr>
 <tr>
   <td><code>helper</code></td>
@@ -706,8 +706,96 @@ $view = $this-&gt;getView('sakura', 'html');
   <td><code>widget</code></td>
   <td>Instance of WidgetHelper to quickly render widget.</td>
 </tr>
+<tr>
+  <td><code>asset</code></td>
+  <td>AssetManager object.</td>
+</tr>
 </tbody>
 </table>
+
+<h2>Use Json, Xml or Other Format View</h2>
+
+<p>Sometimes we will hope a page can return multiple formats and control by HTTP query (<code>&amp;format=xxx</code>).
+We can create multiple Views with different formats to return data.</p>
+
+<p>For example, we create a HTML class.</p>
+
+<pre><code class="php">// src/Flower/View/Sakura/SakuraHtmlView.php
+
+namespace Flower\View\Sakura;
+
+class SakurasHtmlView extends HtmlView
+{
+    /**
+     * @param \Windwalker\Data\Data $data
+     *
+     * @return  void
+     */
+    protected function prepareData($data)
+    {
+        $data-&gt;items = $this-&gt;model-&gt;getItems();
+        $data-&gt;pagination = new Pagination($this-&gt;model-&gt;get('page'));
+        $data-&gt;title = 'Sakuras List';
+        $data-&gt;metadata = 'Sakuras metadata';
+    }
+} 
+</code></pre>
+
+<p>And a Json view class.</p>
+
+<pre><code class="php">namespace Asuka\Flower\View\Sakuras;
+
+use Windwalker\Core\View\StructureView;
+
+class SakurasJsonView extends StructureView
+{
+    /**
+     * @param \Windwalker\Structure\Structure $structure
+     *
+     * @return  void
+     */
+    protected function prepareData($structure)
+    {
+        $page = $this-&gt;model-&gt;get('page');
+
+        $structure-&gt;set('items', $this-&gt;model-&gt;getItems());
+        $structure-&gt;set('next', $this-&gt;router-&gt;to('sakuras')-&gt;page($page));
+    }
+}
+</code></pre>
+
+<p>You can notice that Html view and Json view prepared different data for their usage, then we must load them in controller:</p>
+
+<pre><code class="php">class GetController extends AbstractController
+{
+    public function doExecute()
+    {
+        $format = $this-&gt;input-&gt;get('format', 'html');
+
+        $view = $this-&gt;getView('Sakuras', $format);
+
+        switch ($format)
+        {
+            case 'html':
+                $this-&gt;response = new HtmlResponse;
+                break;
+
+            case 'json':
+                $this-&gt;response = new JsonResponse;
+                break;
+
+            // More formats...
+        }
+
+        // Just return view object, application will auto convert it to string.
+        return $view;
+    }
+}
+</code></pre>
+
+<p>In the example, a page will use different format by URL <code>format=html|json</code> and the destination view returned different content for client.</p>
+
+<p>You can create your <code>ResponseFactory::create($format)</code> and every thing will be automatically.</p>
 
                         <hr />
 
@@ -748,7 +836,7 @@ $view = $this-&gt;getView('sakura', 'html');
         </p>
 
         <p class="lead outer-top-xs">
-            Copyright © 2016 Windwalker. All Rights Reserved.
+            Copyright © 2017 Windwalker. All Rights Reserved.
         </p>
     </div>
 

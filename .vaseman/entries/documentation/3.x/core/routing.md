@@ -372,12 +372,11 @@ Array
 
 ## Build Route
 
-Every route in Windwalker has a key, which allows every single route pattern can be access by **route name** or **route resources**, this will be helpful building a route quickly.
+Every route in Windwalker has a key, which allows every single route pattern can be access 
+by **route name** or **route resources**, this will be helpful building a route quickly.
 
 ``` php
-use Windwalker\Core\Router;
-
-echo Router::build('{route name}', array('id' => 25, 'alias' => 'foo-bar-baz'));
+echo \Windwalker\Core\Router\CoreRouter::route('{route name}', array('id' => 25, 'alias' => 'foo-bar-baz'));
 ```
 
 The output will be:
