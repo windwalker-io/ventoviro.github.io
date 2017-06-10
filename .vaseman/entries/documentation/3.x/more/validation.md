@@ -29,6 +29,9 @@ $validator->validate('sakura'); // bool(false)
 - PhoneValidator
 - RegexValidator
 - UrlValidator
+- CallbackValidator 
+- CompareValidator
+- PhpTypeValidator
 
 ### Regex Validator
 
