@@ -210,7 +210,7 @@
                 <a class="withripple" href="../../../documentation/3.x/services/caching.html">Caching</a>
             </li>
                     <li class="">
-                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">Chronos (DateTime)</a>
             </li>
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/services/environment.html">Environment</a>
@@ -310,9 +310,37 @@
     time: 15
 </code></pre>
 
-<p>The <code>enabled</code> property controls global cache start or not, can be close if you want to test your application. <code>storage</code> controls which cache storage method
- you use, can be <code>file</code>, <code>runtime</code>, <code>memcached</code> or <a href="https://github.com/ventoviro/windwalker-cache#available-storage">more</a>.
- About storage and handler, please see <a href="https://github.com/ventoviro/windwalker-cache">Windwalker Cache</a>.</p>
+<p>The <code>enabled</code> property controls global cache start or not, can be close if you want to test your application.</p>
+
+<h3>Storage</h3>
+
+<p>Set <code>stoeage</code> so we can use different storage engine to save cache data, available storages:</p>
+
+<ul>
+<li><code>file</code>  --> Basic file storage</li>
+<li><code>php_file</code> --> Will use <code>include</code> to load file.</li>
+<li><code>forever_file</code> --> Never expired file.</li>
+<li><code>array</code> --> Use array to store data.</li>
+<li><code>runtime_array</code> --> Use static array to store data in one life cycle</li>
+<li><code>memcached</code></li>
+<li><code>redis</code></li>
+<li><code>null</code></li>
+</ul>
+
+<p>See <a href="https://github.com/ventoviro/windwalker-cache#storage">Cache Storage</a></p>
+
+<h3>Serializer</h3>
+
+<p>The default <code>php_serializer</code> will make our data be php serialized string, if you want to use other format, 
+just change serializer option.</p>
+
+<ul>
+<li><code>php</code> --> Use php serialize()</li>
+<li><code>php_file</code> --> Save as array and return data so we can include it.</li>
+<li><code>json</code> --> Json encode data</li>
+<li><code>string</code> --> Will force convert object to string.</li>
+<li><code>raw</code> --> Just save raw string</li>
+</ul>
 
 <h2>Use Global Cache</h2>
 
@@ -464,10 +492,10 @@ $cache-&gt;set('flower', array('sakura'));
 <li>ArrayStorage (<code>array</code>)</li>
 <li>RuntimeArrayStorage (<code>runtime_array</code>)</li>
 <li>FileStorage (<code>file</code>)</li>
+<li>PhpFileStorage (<code>php_file</code>)</li>
+<li>ForeverFileStorage (<code>forever_file</code>)</li>
 <li>MemcachedStorage (<code>memcached</code>)</li>
 <li>RedisStorage (<code>redis</code>)</li>
-<li>WincacheStorage (<code>wincache</code>)</li>
-<li>XcacheStorage (<code>xcache</code>)</li>
 <li>NullStorage (<code>null</code>)</li>
 </ul>
 

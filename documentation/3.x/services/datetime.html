@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-    <title>DateTime | Windwalker - PHP Rapid Development Framework</title>
+    <title>Chronos (DateTime) | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="DateTime | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Chronos (DateTime) | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -94,7 +94,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">DateTime</h1>
+                    <h1 class="banner-title">Chronos (DateTime)</h1>
                 </div>
             </div>
         </section>
@@ -210,7 +210,7 @@
                 <a class="withripple" href="../../../documentation/3.x/services/caching.html">Caching</a>
             </li>
                     <li class="active">
-                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">Chronos (DateTime)</a>
             </li>
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/services/environment.html">Environment</a>
@@ -299,54 +299,65 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>About Windwalker DateTime</h2>
+                    <h2>About Chronos (DateTime)</h2>
 
-<p><code>Windwalker\Core\DateTime\DateTime</code> is sub class of PHP <code>DateTime</code>. This class is based on Joomla <code>JDate</code> and add some new features.</p>
+<p><code>Windwalker\Core\DateTime\Chronos</code> is sub class of PHP <code>DateTime</code>. This class is based on Joomla <code>JDate</code> and add some new features.</p>
 
-<p>All PHP DateTime functions are able to use on Windwalker DataTime, see <a href="http://php.net/manual/en/book.datetime.php">PHP DateTime</a></p>
+<p>All PHP DateTime functions are able to use on Windwalker <code>Chronos</code>, see <a href="http://php.net/manual/en/book.datetime.php">PHP DateTime</a></p>
 
 <h2>Construct</h2>
 
-<p>Windwalker DateTime supports Timezone as string.</p>
+<p>Chronos supports Timezone as string.</p>
 
-<pre><code class="php">use Windwalker\Core\DateTime\DateTime;
+<pre><code class="php">use Windwalker\Core\DateTime\Chronos;
 
-$dt = new DateTime('now', 'Asia/Taipei');
+$dt = new Chronos('now', 'Asia/Taipei');
+
+// Simple create
+$dt = Chronos::create();
+
+// Quick get current time as format (Similar as date())
+$time = Chronos::current('Y-m-d');
 </code></pre>
 
 <p>Auto set default timezone so you won't get PHP default timezone notice.</p>
 
-<pre><code class="php">$dt = new DateTime('now', null);
+<pre><code class="php">$dt = new Chronos('now', null);
 </code></pre>
 
 <p>Auto get global timezone, if you set timezone in Windwalker config, DateTime will auto load it.</p>
 
-<pre><code class="php">$dt = new DateTime('now', true);
+<pre><code class="php">$dt = new Chronos('now', true);
 
 // OR
 
-$dt = new DateTime('now', DateTime::TZ_LOCALE);
+$dt = new Chronos('now', Chronos::TZ_LOCALE);
+</code></pre>
+
+<h2>Convert a date string to another format</h2>
+
+<pre><code class="php">Chronos::toFormat($date, 'Y/m/d');
 </code></pre>
 
 <h2>Convert Timezone</h2>
 
-<p>Windwalker DateTime supports easy methods to convert timezone.</p>
+<p>Chronos provides easy methods to convert timezone.</p>
 
 <pre><code class="php">$date = '2015-03-31 12:00:00';
 
-$date = DateTime::toServerTime($date, [format], [to tz]);
+$date = Chronos::toServerTime($date, [format], [to tz]);
 
-$date = DateTime::toLocalTime($date, [format], [to tz]);
+$date = Chronos::toLocalTime($date, [format], [to tz]);
 
 // Or convert to other timezone
 
-$date = DateTime::convert($date, [from], [to], [format]);
-$date = DateTime::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');
+$date = Chronos::convert($date, [from], [to], [format]);
+$date = Chronos::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');
 </code></pre>
 
 <h2>Simple Properties</h2>
 
-<pre><code class="php">$datetime = new DateTime;
+<pre><code class="php">$datetime = new Chronos;
 
 $datetime-&gt;daysinmonth;
 $datetime-&gt;dayofweek;
@@ -364,29 +375,37 @@ $datetime-&gt;year;
 
 <h2>Pre-define Formats</h2>
 
-<pre><code class="php">$datetime = new DateTime;
+<pre><code class="php">$datetime = new Chronos;
 
 $datetime-&gt;toSql();
 $datetime-&gt;toISO8601();
 $datetime-&gt;toRFC822();
 $datetime-&gt;toUnix();
 
-$date-&gt;format(DateTime::FORMAT_YMD);
-$date-&gt;format(DateTime::FORMAT_YMD_HI);
-$date-&gt;format(DateTime::FORMAT_YMD_HIS);
+$date-&gt;format(Chronos::FORMAT_YMD);
+$date-&gt;format(Chronos::FORMAT_YMD_HI);
+$date-&gt;format(Chronos::FORMAT_YMD_HIS);
 </code></pre>
 
 <h2>Get Local Time</h2>
 
 <p>Add <code>true</code> to get local time, otherwise you will get UTC time.</p>
 
-<pre><code class="php">$datetime = new DateTime('now', 'Asia/Taipei');
+<pre><code class="php">$datetime = new Chronos('now', 'Asia/Taipei');
 
 $datetime-&gt;format('Y/m/d H:i:s', true);
 $datetime-&gt;toSql(true);
 $datetime-&gt;toISO8601(true);
 $datetime-&gt;toRFC822(true);
-$datetime-&gt;toUnix(DateTime::TZ_LOCALE); // Same as true
+$datetime-&gt;toUnix(Chronos::TZ_LOCALE); // Same as true
+</code></pre>
+
+<h2>Get Sql Format</h2>
+
+<pre><code class="php">$otherLibrary-&gt;getDateTime()-&gt;format(Chronos::getSqlFormat());
+
+// Use different DB instance
+Chronos::getSqlFormat($db);
 </code></pre>
 
                         <hr />

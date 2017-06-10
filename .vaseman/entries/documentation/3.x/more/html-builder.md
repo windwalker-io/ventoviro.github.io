@@ -150,7 +150,7 @@ Result
 
 ## Select List
 
-``` php
+```php
 use Windwalker\Html\Select\SelectList;
 use Windwalker\Html\Option;
 
@@ -172,7 +172,7 @@ echo $select;
 
 The result:
 
-``` html
+```html
 <select class="input-select" name="form[timezone]">
 	<option class="opt" value="Asia/Tokyo">Asia - Tokyo</option>
 	<option value="Asia/Taipei">Asia - Taipei</option>
@@ -185,7 +185,7 @@ The result:
 
 Use two level array to make options grouped.
 
-``` php
+```php
 use Windwalker\Html\Select\CheckboxList;
 
 $select = new SelectList(
@@ -211,7 +211,7 @@ echo $select;
 
 The result
 
-``` html
+```html
 <select class="input-select" name="form[timezone]">
 	<optgroup label="Asia">
 		<option class="opt" value="Asia/Tokyo">Tokyo</option>
@@ -230,7 +230,7 @@ The result
 
 ### CheckboxList
 
-``` php
+```php
 $select = new CheckboxList(
     'form[timezone]',
     array(
@@ -249,7 +249,7 @@ echo $select;
 
 The result
 
-``` html
+```html
 <span class="checkbox-inputs input-select">
 	<input class="opt" value="Asia/Tokyo" type="checkbox" name="form[timezone][]" id="form-timezone-asia-tokyo" />
 	<label class="opt" id="form-timezone-asia-tokyo-label" for="form-timezone-asia-tokyo">Asia - Tokyo</label>
@@ -267,7 +267,7 @@ The result
 
 If you want to use `div` to wrap all inputs instead `span`, set tag name to object.
 
-``` php
+```php
 $select->setName('div');
 ```
 
@@ -279,7 +279,7 @@ Same as Checkboxes, but the input type will be `type="radio"`
 
 ### UL List
 
-``` php
+```php
 use Windwalker\Html\Enum\ListItem;
 use Windwalker\Html\Enum\UList;
 
@@ -297,7 +297,7 @@ echo (new UList)
 
 Output
 
-``` html
+```html
 <ul>
     <li>Foo</li>
     <li class="baz">Bar</li>
@@ -306,7 +306,7 @@ Output
 
 ### OL List
 
-``` php
+```php
 echo (new OList)
     ->item('new ListItem('Foo'))
     ->item('Bar', ['class' => 'baz']);
@@ -314,7 +314,7 @@ echo (new OList)
 
 Output
 
-``` html
+```html
 <ol>
     <li>Foo</li>
     <li class="baz">Bar</li>
@@ -323,7 +323,7 @@ Output
 
 ### Description List
 
-``` php
+```php
 use Windwalker\Html\Enum\DList;
 use Windwalker\Html\Enum\DListDescription;
 use Windwalker\Html\Enum\DListTitle;
@@ -347,7 +347,7 @@ echo (new DList)
 
 Output
 
-``` html
+```html
 <dl>
     <dt>Foo</dt>
     <dd>foo desc</dd>
@@ -359,7 +359,7 @@ Output
 
 ## Form Wrapper
 
-``` php
+```php
 use Windwalker\Html\Form\FormWrapper;
 use Windwalker\Html\Form\InputElement;
 
@@ -371,7 +371,7 @@ echo FormWrapper::create([
 
 Output:
 
-``` html
+```html
 <form action="http://foo.com">
     <input type="hidden" name="id" value="" />
     <input type="text" name="title" value="" />
@@ -380,7 +380,7 @@ Output:
 
 Use `start()` and `end()`
 
-``` php
+```php
 echo FormWrapper::start('my-form', 'post', 'http://foo.com', FormWrapper::ENCTYPE_FORM_DATA, ['id' => 'admin-form']);
     // Echo inputs
 echo FormWrapper::end();
@@ -388,7 +388,7 @@ echo FormWrapper::end();
 
 Output:
 
-``` html
+```html
 <form name="my-form" id="admin-form" method="post" action="http://foo.com" enctype="multipart/form-data">
     <!-- inputs -->
 </form>
@@ -396,7 +396,7 @@ Output:
 
 Add CSRF token automatically:
 
-``` php
+```php
 $token = MySession::getFormToken();
 
 FormWrapper::setTokenHandler(function () use ($token)
@@ -410,7 +410,7 @@ echo FormWrapper::end();
 
 Output:
 
-``` html
+```html
 <form name="my-form" id="admin-form" method="post" action="http://foo.com" enctype="multipart/form-data">
     <!-- inputs -->
     <input type="hidden" name="e6900955e2cb8d2503f663e85eb2e7e9" value="1" />
@@ -423,7 +423,7 @@ Output:
 
 Grid is a HTML table generator, see this example:
 
-``` php
+```php
 use Windwalker\Html\Grid\Grid;
 
 $grid = new Grid(['class' => 'table table-bordered']);
@@ -460,7 +460,7 @@ echo $grid;
 
 Output:
 
-``` html
+```html
 <table class="table table-bordered">
     <thead>
         <tr class="head">
@@ -530,7 +530,7 @@ Output:
 
 `KeyValueGrid` provides simple key-value table to show data similar to description list.
 
-``` php
+```php
 use Windwalker\Html\Grid\KeyValueGrid;
 
 $items = [
@@ -576,7 +576,7 @@ echo $grid;
 
 Add row title:
 
-``` php
+```php
 $items = [
     'Foo' => 'foo value',
     'Bar' => 'bar value',
@@ -649,7 +649,7 @@ echo $grid;
 
 Use `addItems()` or `configure()` to batch add items.
 
-``` php
+```php
 $grid->addItems($items);
 
 // Or run a callback for every item
@@ -666,7 +666,9 @@ $grid->configure($items, function (KeyValueGrid $grid, $key, $value)
 
 ### Audio
 
-``` php
+```php
+use Windwalker\Html\Media\Audio;
+
 echo (new Audio)
     ->controls(true)
     ->autoplay(true)
@@ -679,7 +681,7 @@ echo (new Audio)
 
 Output:
 
-``` html
+```html
 
 <audio controls autoplay loop>
     <source src="http://foo.com/bar.mp3" type="audio/mpeg" />
@@ -693,7 +695,9 @@ See [HTML5 Audio Tag](http://www.w3schools.com/html/html5_audio.asp) and [Tag So
 
 ### Video
 
-``` php
+```php
+use Windwalker\Html\Media\Video;
+
 echo (new Video)
     ->controls(true)
     ->autoplay(true)
@@ -709,8 +713,7 @@ echo (new Video)
 
 Output:
 
-``` html
-
+```html
 <video controls autoplay loop preload poster="http://foo.com/cover.jpg" src="http://foo.com/bar.mp4">
     <source src="http://foo.com/bar.mp4" type="video/mp4" />
     <source src="http://foo.com/bar.ogg" type="video/ogg" />
@@ -727,7 +730,7 @@ See [HTML5 Video Tag](http://www.w3schools.com/html/html5_video.asp) and [Tag So
 
 We can using `repair()` method to repair unpaired tags by `php tidy`, if tidy extension not exists, will using simple tag close function to fix it.
 
-``` php
+```php
 $html = '<p>foo</i>';
 
 $html = \Windwalker\Html\Helper\HtmlHelper::repair($html);
@@ -739,7 +742,7 @@ echo $html; // <p>foo</p>
 
 This method convert a nested array or object to JSON format that you can inject it to JS code.
 
-``` php
+```php
 use Windwalker\Html\Helper\HtmlHelper;
 
 $option = array(
@@ -747,13 +750,13 @@ $option = array(
     'foo' => array('bar', 'yoo')
 );
 
-echo $option = HtmlHelper::getJSOBject($option);
+echo 'var options = ' . HtmlHelper::getJSOBject($option);
 ```
 
 Result
 
-```
-{
+```js
+var options = {
     url: "http://foo.com",
     foo: ["bar", "yoo"]
 }
@@ -761,18 +764,18 @@ Result
 
 Add `\\` before a value that this method will not quote it as string.
 
-``` php
+```php
 $option = array(
     'callback' => '\\function () { }'
 );
 
-echo $option = HtmlHelper::getJSOBject($option);
+echo 'var options = ' . HtmlHelper::getJSOBject($option);
 ```
 
 Result
 
-``` javascript
-{
+```javascript
+var options = {
     callback: function () { }
 }
 ```
@@ -783,7 +786,7 @@ Result
 
 ### Get Attributes
 
-``` php
+```php
 use Windwalker\Dom\SimpleXml\XmlHelper;
 
 $xml = <<<XML
@@ -808,7 +811,7 @@ $name = XmlHelper::get($element, 'name'); // result: foo
 
 `getBool()` can help us convert some string link `true`, `1`, `yes` to boolean `TRUE` and `no`, `false`, `disabled`, `null`, `none`, `0` string to booleand `FALSE`.
 
-``` php
+```php
 $bool = XmlHelper::getBool($element, 'readonly'); // result: (boolean) TRUE
 ```
 
@@ -820,6 +823,6 @@ Just an alias of `getBool()` but FALSE will return `TRUE`.
 
 If this attribute not exists, use this value as default, or we use original value from xml.
 
-``` php
+```php
 XmlHelper::def($element, 'class', 'input');
 ```

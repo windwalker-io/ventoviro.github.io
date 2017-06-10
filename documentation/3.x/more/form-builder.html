@@ -210,7 +210,7 @@
                 <a class="withripple" href="../../../documentation/3.x/services/caching.html">Caching</a>
             </li>
                     <li class="">
-                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">Chronos (DateTime)</a>
             </li>
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/services/environment.html">Environment</a>
@@ -607,7 +607,7 @@ second param, this method will be a getter to return attribute value.</p>
 <pre><code class="php">use Windwalker\Filter\InputFilter;
 
 $form-&gt;addField(new TextField('id', 'ID'))
-    -&gt;setFilter(InputFilter::INTEGER);
+    -&gt;addFilter(InputFilter::INTEGER);
 
 // Prepare data
 $data['id'] = '123abc';
@@ -627,7 +627,7 @@ $values = $form-&gt;getValues(); // Array(id = 123)
     -&gt;required();
 
 $form-&gt;addField(new TextField('email', 'Email'))
-    -&gt;setValidator(new EmailValidator);
+    -&gt;addValidator(new EmailValidator);
 
 // Prepare data
 $data['name'] = null;
@@ -899,7 +899,7 @@ class MyFilter implements FilterInterface
 }
 
 (new TextField('foo', 'Foo'))
-    -&gt;setFilter(new MyFilter);
+    -&gt;addFilter(new MyFilter);
 </code></pre>
 
 <p>For XML</p>
@@ -929,7 +929,7 @@ class MyValidator extends AbstractValidator
 }
 
 (new TextField('foo', 'Foo'))
-    -&gt;setFilter(new MyValidator);
+    -&gt;addFilter(new MyValidator);
 </code></pre>
 
 <p>For XML</p>

@@ -39,7 +39,7 @@ documentation:
             services/authorisation: Authorisation
             services/asset: Asset Manager
             services/caching: Caching
-            services/datetime: DateTime
+            services/datetime: Chronos (DateTime)
             services/environment: Environment
             services/events: Events
             services/languages: Languages

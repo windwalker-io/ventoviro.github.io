@@ -210,7 +210,7 @@
                 <a class="withripple" href="../../../documentation/3.x/services/caching.html">Caching</a>
             </li>
                     <li class="">
-                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">Chronos (DateTime)</a>
             </li>
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/services/environment.html">Environment</a>
@@ -420,7 +420,12 @@ DebuggerHelper::addMessage('Test message3', 'danger');
 Logger::log('flower', Logger::INFO, 'log text');
 </code></pre>
 
-<p>The first argument is category &amp; log file name, this will create a file at <code>logs/flower.log</code> with one line:</p>
+<p>The first argument is channel &amp; log file name, this will create a file at <code>logs/flower-xxxx-xx-xx.log</code> with one line:</p>
+
+<blockquote>
+  <p>By default, Windwalker use monolog RotatingStreamHandler so all file will only save logs for one day.
+    And the max files number is 7, older log files will de deleted.</p>
+</blockquote>
 
 <pre><code>## logs/flower.log
 
@@ -439,14 +444,28 @@ Logger::log('flower', Logger::INFO, 'log text');
 
 <p>We can use proxy methods to log data:</p>
 
-<pre><code class="php">Logger::debug('category', 'log text');
-Logger::info('category', 'log text');
-Logger::notice('category', 'log text');
-Logger::warning('category', 'log text');
-Logger::error('category', 'log text');
-Logger::critical('category', 'log text');
-Logger::alert('category', 'log text');
-Logger::emergency('category', 'log text');
+<pre><code class="php">Logger::debug('channel', 'log text');
+Logger::info('channel', 'log text');
+Logger::notice('channel', 'log text');
+Logger::warning('channel', 'log text');
+Logger::error('channel', 'log text');
+Logger::critical('channel', 'log text');
+Logger::alert('channel', 'log text');
+Logger::emergency('channel', 'log text');
+</code></pre>
+
+<p>Log multiple channels:</p>
+
+<pre><code class="php">Logger::info(['error', 'message'], 'Something wrong');
+</code></pre>
+
+<p>Log multiple strings:</p>
+
+<pre><code class="php">Logger::info('error', [
+    'error 1',
+    'error 2',
+    'error 3'
+]);
 </code></pre>
 
 <h2>Log Levels</h2>
@@ -505,9 +524,9 @@ Logger::emergency('category', 'log text');
 </tbody>
 </table>
 
-<p>You can create a category with level code, all levels below this level will not logged.</p>
+<p>You can create a channel with level code, all levels below this level will not logged.</p>
 
-<pre><code class="php">Logger::createCategory('sakura', Logger::ERROR);
+<pre><code class="php">Logger::createChannel('sakura', Logger::ERROR);
 
 Logger::debug('sakura', 'log text'); // This won't log
 

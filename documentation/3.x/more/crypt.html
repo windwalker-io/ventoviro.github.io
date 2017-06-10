@@ -210,7 +210,7 @@
                 <a class="withripple" href="../../../documentation/3.x/services/caching.html">Caching</a>
             </li>
                     <li class="">
-                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">Chronos (DateTime)</a>
             </li>
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/services/environment.html">Environment</a>
@@ -299,98 +299,91 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Password Hashing</h2>
+                    <h2>Hashing String or Password</h2>
 
-<p><code>Password</code> object is a simple object to encrypt user's password, it is impossible to decrypt password hash, <code>Password</code> object
-uses a one-way algorithm.</p>
+<p>Use <code>Hasher</code> or it's instance to hash string:</p>
 
-<h3>Create Password</h3>
+<pre><code class="php">use Windwalker\Core\Security\Hasher;
 
-<pre><code class="php">use Windwalker\Crypt\Password;
+$hash = Hasher::create($password);
 
-$password = new Password;
+// Verify it
+$bool = Hasher::verify($password, $hash);
 
-$pass = $password-&gt;create('pass1234');
+// Get instance from container:
+$hasher = $container-&gt;get('hasher');
 
-// $2y$10$csNfML/FJlKwaHR8xREgZuhp0pqSqeg.jdACqDsKO/MCHDkTuIZEa
+$hasher-&gt;create(...);
+$hasher-&gt;verify(..., ...);
 </code></pre>
 
-<p>Using other hash algorithm</p>
+<h3>Configuration:</h3>
 
-<pre><code class="php">use Windwalker\Crypt\Password;
+<p>In <code>etc/config.yml</code>, you can change some settings:</p>
 
-$password = new Password(Password::SHA256);
+<pre><code class="yaml">crypt:
+    # The Crypt cipher method.
+    # Support ciphers: blowfish (bf) / aes-256 (aes) / 3des / php_aes / sodium
+    cipher: blowfish
 
-$pass = $password-&gt;create('pass1234');
+    # The hashing algorithm
+    # Support algorithms: blowfish (bf) / md5 / sha256 / sha512 / argon2 / scrypt
+    hash_algo: blowfish
+
+    # The hashing cost depends on different algorithms. Keep default if you don't know how to use it.
+    hash_cost: ~
 </code></pre>
 
-<p>Set cost and salt:</p>
+<p>The <code>hash_algo</code> is the hash algorithm you want to use, default is <code>blowfish</code>.</p>
 
-<pre><code class="php">use Windwalker\Crypt\Password;
+<p>The <code>argon2</code> and <code>scrypt</code> algorithm is powered by <a href="https://github.com/jedisct1/libsodium">libsodium</a>, you must install
+<code>ext-libsodium</code> or use php 7.2 later to support them.</p>
 
-// The Blowfish algorithm should set cost number between 4 to 31.
-// We are suggest not higher than 15, else it will be too slow.
-$password = new Password(Password::BLOWFISH, 15, md5('to be or not to be.'));
+<p>More usage please see <a href="https://github.com/ventoviro/windwalker-crypt#windwalker-crypt">Windwalker Crypt</a></p>
 
-$pass = $password-&gt;create('pass1234');
+<h2>Encrypt and Decrypt Sensitive Data</h2>
 
-// Note the Sha256 and Sha512 should set cost number higher than 1000
-$password = new Password(Password::BLOWFISH, 5000, md5('to be or not to be.'));
+<p>Use <code>Crypto</code> and it's instance to encrypt and decrypt string.</p>
 
-$pass = $password-&gt;create('pass1234');
+<pre><code class="php">use Windwalker\Core\Security\Crypto;
+
+$encrypted = Crypto::encrypt('hello');
+
+echo Crypto::decrypt($encrypted); // hello
+
+Crypto::verify('hello', $encrypted); //true
 </code></pre>
 
-<h3>Available algorithms</h3>
+<p>Get instance from container:</p>
 
-<ul>
-<li>Password::MD5</li>
-<li>Password::BLOWFISH</li>
-<li>Password::SHA256</li>
-<li>Password::SHA512</li>
-</ul>
+<pre><code class="php">$crypt = $container-&gt;get('crypt');
 
-<h3>Verify Password</h3>
-
-<p>We don't need to care the hash algorithm, Password object will auto detect the algorithm type:</p>
-
-<pre><code class="php">$bool = $password-&gt;verify('pass1234', $pass);
+$crypt-&gt;encrypt('hello');
 </code></pre>
 
-<h2>Symmetric-Key Algorithm Encryption</h2>
+<h3>Cipher Configuration:</h3>
 
-<p>The <code>Crypt</code> object provides different ciphers to encrypt/decrypt your data. Most of these ciphers must use
-PHP openssl functions to work. If your PHP are not available for openssl extension, you can use <code>PhpAesCipher</code>
-as default cipher, it is a native PHP implementation of AES by <a href="http://www.phpaes.com/">PHP AES</a>.</p>
+<p>See <a href="#configuration">Configuration above</a>, you can set cipher you want to encrypt data.</p>
 
-<h3>Use Cipher</h3>
+<p>The default cipher is <code>blowfish</code> but you can use other openssl cipher like <code>aes</code> or <code>3des</code>,
+if your environment has no openssl extension support, you can use <code>php_aes</code> instead them.</p>
 
-<pre><code class="php">use Windwalker\Crypt\Cipher\BlowfishCipher;
-use Windwalker\Crypt\Crypt;
+<p>The libsodium also supports here, you can install <code>paragonie/sodium_compat</code> package to encrypt by sodium cipher
+without php libsodium extension, but we still recommend you to install <code>ext-libsodium</code> or use php 7.2 later to 
+support memory wipe and with higher performance.</p>
 
-$crypt = new Crypt(new BlowfishCipher, 'My private key');
+<p>If you get sodium_memzero() only supports after php 7.2 or ext-libsodium installed. message, 
+You can disable memory wipe by <code>ignoreMemzero()</code> (But we don't recommend to do this):</p>
 
-$encrypted = $crypt-&gt;encrypt('My Text');
+<pre><code class="php">$cipher = Crypto::getCipher();
 
-$bool = $crypt-&gt;verify('My Text', $encrypted, 'My private key'); // True
+if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher)
+{
+    $cipher-&gt;ignoreMemzero(true);
+}
 </code></pre>
 
-<p>Get the plain text back:</p>
-
-<pre><code class="php">$crypt = new Crypt(new BlowfishCipher, 'My private key');
-
-$encrypted = $crypt-&gt;encrypt('My Text');
-
-$text = $crypt-&gt;decrypt($encrypted);
-</code></pre>
-
-<h3>Available Ciphers</h3>
-
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/Blowfish_(cipher)">BlowfishCipher</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">Aes56Cipher</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Triple_DES">Des3Cipher</a></li>
-<li>PhpAesCipher - Only use this when system not support openssl.</li>
-</ul>
+<p>See <a href="https://github.com/ventoviro/windwalker-crypt#symmetric-key-algorithm-encryption">Windwalke Crypt</a></p>
 
                         <hr />
 

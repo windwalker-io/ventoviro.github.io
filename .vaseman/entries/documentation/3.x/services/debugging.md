@@ -134,7 +134,10 @@ use Windwalker\Core\Logger\Logger;
 Logger::log('flower', Logger::INFO, 'log text');
 ```
 
-The first argument is category & log file name, this will create a file at `logs/flower.log` with one line:
+The first argument is channel & log file name, this will create a file at `logs/flower-xxxx-xx-xx.log` with one line:
+
+> By default, Windwalker use monolog RotatingStreamHandler so all file will only save logs for one day.
+  And the max files number is 7, older log files will de deleted.
 
 ```
 ## logs/flower.log
@@ -157,14 +160,30 @@ Logger::log('flower', Logger::INFO, 'log text', array('foo' => 'bar'));
 We can use proxy methods to log data:
 
 ``` php
-Logger::debug('category', 'log text');
-Logger::info('category', 'log text');
-Logger::notice('category', 'log text');
-Logger::warning('category', 'log text');
-Logger::error('category', 'log text');
-Logger::critical('category', 'log text');
-Logger::alert('category', 'log text');
-Logger::emergency('category', 'log text');
+Logger::debug('channel', 'log text');
+Logger::info('channel', 'log text');
+Logger::notice('channel', 'log text');
+Logger::warning('channel', 'log text');
+Logger::error('channel', 'log text');
+Logger::critical('channel', 'log text');
+Logger::alert('channel', 'log text');
+Logger::emergency('channel', 'log text');
+```
+
+Log multiple channels:
+
+```php
+Logger::info(['error', 'message'], 'Something wrong');
+```
+
+Log multiple strings:
+
+```php
+Logger::info('error', [
+    'error 1',
+    'error 2',
+    'error 3'
+]);
 ```
 
 ## Log Levels
@@ -182,10 +201,10 @@ The log levels are described by [RFC5424](http://tools.ietf.org/html/rfc5424)
 | ALERT | 550 | Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up. |
 | EMERGENCY | 600 | Emergency: system is unusable. |
 
-You can create a category with level code, all levels below this level will not logged.
+You can create a channel with level code, all levels below this level will not logged.
 
 ``` php
-Logger::createCategory('sakura', Logger::ERROR);
+Logger::createChannel('sakura', Logger::ERROR);
 
 Logger::debug('sakura', 'log text'); // This won't log
 

@@ -334,7 +334,7 @@ $form->addField(new TextField('name', 'Label'))
 use Windwalker\Filter\InputFilter;
 
 $form->addField(new TextField('id', 'ID'))
-    ->setFilter(InputFilter::INTEGER);
+    ->addFilter(InputFilter::INTEGER);
 
 // Prepare data
 $data['id'] = '123abc';
@@ -355,7 +355,7 @@ $form->addField(new TextField('name', 'Name'))
 	->required();
 
 $form->addField(new TextField('email', 'Email'))
-	->setValidator(new EmailValidator);
+	->addValidator(new EmailValidator);
 
 // Prepare data
 $data['name'] = null;
@@ -537,7 +537,7 @@ class MyFilter implements FilterInterface
 }
 
 (new TextField('foo', 'Foo'))
-    ->setFilter(new MyFilter);
+    ->addFilter(new MyFilter);
 ```
 
 For XML
@@ -570,7 +570,7 @@ class MyValidator extends AbstractValidator
 }
 
 (new TextField('foo', 'Foo'))
-    ->setFilter(new MyValidator);
+    ->addFilter(new MyValidator);
 ```
 
 For XML

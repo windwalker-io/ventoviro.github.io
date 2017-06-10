@@ -88,7 +88,7 @@ $request = (new Request)
     ->withMethod('POST')
     ->withAddedHeader('Authorization', 'Bearer ' . $token)
     ->withAddedHeader('Content-Type', 'application/json') // Use JSON
-
+    
     // Note: Request will ignore path and query in Uri
     // So we have to set RequestTarget here
     ->withRequestTarget('/path/of/uri?flower=sakura');
@@ -143,7 +143,7 @@ $http = new HttpClient($httpOptions, new CurlTransport($options));
 ```
 
 ### Download Remote File
-
+ 
 ``` php
 $http = new HttpClient;
 
@@ -175,6 +175,44 @@ $body->rewind();
 $body->read(5); // FOO B
 
 $body->getSize(); // 7
+```
+
+## Async Request
+
+Use `AsyncHttpClient` to send multiple async requests.
+
+``` php
+use Windwalker\Http\AsyncHttpClient;
+
+$http = new \Windwalker\Http\AsyncHttpClient;
+
+// Add request commands to pool.
+$http->get('http://google.com');
+$http->get('http://facebook.com');
+$http->get('http://apple.com');
+
+// Do request and get responses array
+$responses = $http->resolve();
+
+foreach ($responses as $response)
+{
+    echo $response->getBody()->__toString();
+}
+
+// Get errors, will be an array contains RuntimeExceptions
+$errors = $http->getErrors();
+```
+
+Use callback:
+
+``` php
+$http->resolve(function ($responses, $errors, $http)
+{
+	foreach ($responses as $response)
+	{
+		echo $response->getBody()->__toString();
+    }
+});
 ```
 
 ## Uri
@@ -240,7 +278,7 @@ $uri = (new PsrUri('http://example.com'))
     ->withPath('/path/to/target')
     ->withQuery('flower=sakura')
     ->withFragment('#hash');
-
+    
 (string) $uri; // https://user:pass@example.com/path/to/target?flower=sakura#fragment
 ```
 
@@ -303,6 +341,18 @@ $dest = new Stream('/path/to/local/test.txt');
 // Get Data
 $dest->rewind();
 $data = $dest->getContents();
+```
+
+## Responses
+
+Windwalker Http provides a set of formatted Responses to return data with different formats.
+
+``` php
+$response = new \Windwalker\Http\Response\HtmlResponse('<html> ... </html>');
+$response = new \Windwalker\Http\Response\JsonResponse(array('foo' => 'bar'), 200, $headers);
+$response = new \Windwalker\Http\Response\XmlResponse(new \SimpleXMLElement('<root />'), 200, $headers);
+$response = new \Windwalker\Http\Response\RedirectResponse($url, 301);
+$response = new \Windwalker\Http\Response\AttachmentResponse('file');
 ```
 
 See: [Psr7 StreamInterface](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md#13-streams)

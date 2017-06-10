@@ -210,7 +210,7 @@
                 <a class="withripple" href="../../../documentation/3.x/services/caching.html">Caching</a>
             </li>
                     <li class="">
-                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">DateTime</a>
+                <a class="withripple" href="../../../documentation/3.x/services/datetime.html">Chronos (DateTime)</a>
             </li>
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/services/environment.html">Environment</a>
@@ -464,6 +464,42 @@ $body-&gt;read(5); // FOO B
 $body-&gt;getSize(); // 7
 </code></pre>
 
+<h2>Async Request</h2>
+
+<p>Use <code>AsyncHttpClient</code> to send multiple async requests.</p>
+
+<pre><code class="php">use Windwalker\Http\AsyncHttpClient;
+
+$http = new \Windwalker\Http\AsyncHttpClient;
+
+// Add request commands to pool.
+$http-&gt;get('http://google.com');
+$http-&gt;get('http://facebook.com');
+$http-&gt;get('http://apple.com');
+
+// Do request and get responses array
+$responses = $http-&gt;resolve();
+
+foreach ($responses as $response)
+{
+    echo $response-&gt;getBody()-&gt;__toString();
+}
+
+// Get errors, will be an array contains RuntimeExceptions
+$errors = $http-&gt;getErrors();
+</code></pre>
+
+<p>Use callback:</p>
+
+<pre><code class="php">$http-&gt;resolve(function ($responses, $errors, $http)
+{
+    foreach ($responses as $response)
+    {
+        echo $response-&gt;getBody()-&gt;__toString();
+    }
+});
+</code></pre>
+
 <h2>Uri</h2>
 
 <p><code>Uri</code> is a simple Uri object to modify URL but not Psr UriInterface.</p>
@@ -579,6 +615,17 @@ $dest = new Stream('/path/to/local/test.txt');
 // Get Data
 $dest-&gt;rewind();
 $data = $dest-&gt;getContents();
+</code></pre>
+
+<h2>Responses</h2>
+
+<p>Windwalker Http provides a set of formatted Responses to return data with different formats.</p>
+
+<pre><code class="php">$response = new \Windwalker\Http\Response\HtmlResponse('&lt;html&gt; ... &lt;/html&gt;');
+$response = new \Windwalker\Http\Response\JsonResponse(array('foo' =&gt; 'bar'), 200, $headers);
+$response = new \Windwalker\Http\Response\XmlResponse(new \SimpleXMLElement('&lt;root /&gt;'), 200, $headers);
+$response = new \Windwalker\Http\Response\RedirectResponse($url, 301);
+$response = new \Windwalker\Http\Response\AttachmentResponse('file');
 </code></pre>
 
 <p>See: <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md#13-streams">Psr7 StreamInterface</a>

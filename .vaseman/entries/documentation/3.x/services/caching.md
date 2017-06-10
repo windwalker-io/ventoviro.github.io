@@ -18,9 +18,33 @@ cache:
     time: 15
 ```
 
-The `enabled` property controls global cache start or not, can be close if you want to test your application. `storage` controls which cache storage method
- you use, can be `file`, `runtime`, `memcached` or [more](https://github.com/ventoviro/windwalker-cache#available-storage).
- About storage and handler, please see [Windwalker Cache](https://github.com/ventoviro/windwalker-cache).
+The `enabled` property controls global cache start or not, can be close if you want to test your application.
+
+### Storage
+
+Set `stoeage` so we can use different storage engine to save cache data, available storages:
+ 
+- `file`  --> Basic file storage
+- `php_file` --> Will use `include` to load file.
+- `forever_file` --> Never expired file.
+- `array` --> Use array to store data.
+- `runtime_array` --> Use static array to store data in one life cycle
+- `memcached`
+- `redis`
+- `null`
+
+See [Cache Storage](https://github.com/ventoviro/windwalker-cache#storage)
+
+### Serializer
+
+The default `php_serializer` will make our data be php serialized string, if you want to use other format, 
+just change serializer option.
+
+- `php` --> Use php serialize()
+- `php_file` --> Save as array and return data so we can include it.
+- `json` --> Json encode data
+- `string` --> Will force convert object to string.
+- `raw` --> Just save raw string
 
 ## Use Global Cache
 
@@ -183,10 +207,10 @@ The stored file will be a PHP file with code to deny access:
 - ArrayStorage (`array`)
 - RuntimeArrayStorage (`runtime_array`)
 - FileStorage (`file`)
+- PhpFileStorage (`php_file`)
+- ForeverFileStorage (`forever_file`)
 - MemcachedStorage (`memcached`)
 - RedisStorage (`redis`)
-- WincacheStorage (`wincache`)
-- XcacheStorage (`xcache`)
 - NullStorage (`null`)
 
 ## Serializer

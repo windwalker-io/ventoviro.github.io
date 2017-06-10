@@ -4,97 +4,93 @@ title: Crypt
 
 ---
 
-## Password Hashing
+## Hashing String or Password
 
-`Password` object is a simple object to encrypt user's password, it is impossible to decrypt password hash, `Password` object
-uses a one-way algorithm.
+Use `Hasher` or it's instance to hash string:
+ 
+```php
+use Windwalker\Core\Security\Hasher;
 
-### Create Password
+$hash = Hasher::create($password);
 
-``` php
-use Windwalker\Crypt\Password;
+// Verify it
+$bool = Hasher::verify($password, $hash);
 
-$password = new Password;
+// Get instance from container:
+$hasher = $container->get('hasher');
 
-$pass = $password->create('pass1234');
-
-// $2y$10$csNfML/FJlKwaHR8xREgZuhp0pqSqeg.jdACqDsKO/MCHDkTuIZEa
+$hasher->create(...);
+$hasher->verify(..., ...);
 ```
 
-Using other hash algorithm
+### Configuration:
 
-``` php
-use Windwalker\Crypt\Password;
+In `etc/config.yml`, you can change some settings:
 
-$password = new Password(Password::SHA256);
+```yaml
+crypt:
+    # The Crypt cipher method.
+    # Support ciphers: blowfish (bf) / aes-256 (aes) / 3des / php_aes / sodium
+    cipher: blowfish
 
-$pass = $password->create('pass1234');
+    # The hashing algorithm
+    # Support algorithms: blowfish (bf) / md5 / sha256 / sha512 / argon2 / scrypt
+    hash_algo: blowfish
+
+    # The hashing cost depends on different algorithms. Keep default if you don't know how to use it.
+    hash_cost: ~
 ```
 
-Set cost and salt:
+The `hash_algo` is the hash algorithm you want to use, default is `blowfish`.
 
-``` php
-use Windwalker\Crypt\Password;
+The `argon2` and `scrypt` algorithm is powered by [libsodium](https://github.com/jedisct1/libsodium), you must install
+`ext-libsodium` or use php 7.2 later to support them.
 
-// The Blowfish algorithm should set cost number between 4 to 31.
-// We are suggest not higher than 15, else it will be too slow.
-$password = new Password(Password::BLOWFISH, 15, md5('to be or not to be.'));
+More usage please see [Windwalker Crypt](https://github.com/ventoviro/windwalker-crypt#windwalker-crypt)
 
-$pass = $password->create('pass1234');
+## Encrypt and Decrypt Sensitive Data
 
-// Note the Sha256 and Sha512 should set cost number higher than 1000
-$password = new Password(Password::BLOWFISH, 5000, md5('to be or not to be.'));
+Use `Crypto` and it's instance to encrypt and decrypt string.
 
-$pass = $password->create('pass1234');
+```php
+use Windwalker\Core\Security\Crypto;
+
+$encrypted = Crypto::encrypt('hello');
+
+echo Crypto::decrypt($encrypted); // hello
+
+Crypto::verify('hello', $encrypted); //true
 ```
 
-### Available algorithms
+Get instance from container:
 
-- Password::MD5
-- Password::BLOWFISH
-- Password::SHA256
-- Password::SHA512
+```php
+$crypt = $container->get('crypt');
 
-### Verify Password
-
-We don't need to care the hash algorithm, Password object will auto detect the algorithm type:
-
-``` php
-$bool = $password->verify('pass1234', $pass);
+$crypt->encrypt('hello');
 ```
 
-## Symmetric-Key Algorithm Encryption
+### Cipher Configuration:
 
-The `Crypt` object provides different ciphers to encrypt/decrypt your data. Most of these ciphers must use
-PHP openssl functions to work. If your PHP are not available for openssl extension, you can use `PhpAesCipher`
-as default cipher, it is a native PHP implementation of AES by [PHP AES](http://www.phpaes.com/).
+See [Configuration above](#configuration), you can set cipher you want to encrypt data.
 
-### Use Cipher
+The default cipher is `blowfish` but you can use other openssl cipher like `aes` or `3des`,
+if your environment has no openssl extension support, you can use `php_aes` instead them.
 
-``` php
-use Windwalker\Crypt\Cipher\BlowfishCipher;
-use Windwalker\Crypt\Crypt;
+The libsodium also supports here, you can install `paragonie/sodium_compat` package to encrypt by sodium cipher
+without php libsodium extension, but we still recommend you to install `ext-libsodium` or use php 7.2 later to 
+support memory wipe and with higher performance.
 
-$crypt = new Crypt(new BlowfishCipher, 'My private key');
+If you get sodium_memzero() only supports after php 7.2 or ext-libsodium installed. message, 
+You can disable memory wipe by `ignoreMemzero()` (But we don't recommend to do this):
 
-$encrypted = $crypt->encrypt('My Text');
+```php
+$cipher = Crypto::getCipher();
 
-$bool = $crypt->verify('My Text', $encrypted, 'My private key'); // True
+if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher)
+{
+    $cipher->ignoreMemzero(true);
+}
 ```
 
-Get the plain text back:
-
-``` php
-$crypt = new Crypt(new BlowfishCipher, 'My private key');
-
-$encrypted = $crypt->encrypt('My Text');
-
-$text = $crypt->decrypt($encrypted);
-```
-
-### Available Ciphers
-
-- [BlowfishCipher](http://en.wikipedia.org/wiki/Blowfish_(cipher))
-- [Aes56Cipher](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
-- [Des3Cipher](http://en.wikipedia.org/wiki/Triple_DES)
-- PhpAesCipher - Only use this when system not support openssl.
+See [Windwalke Crypt](https://github.com/ventoviro/windwalker-crypt#symmetric-key-algorithm-encryption)
