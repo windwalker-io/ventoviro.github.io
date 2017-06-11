@@ -28,7 +28,7 @@ Set dependency script:
 
 ```php
 PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
-    'ajax_uri' => CoreRouter::route('flower@ajax_city')
+    'ajax_url' => CoreRouter::route('flower@ajax_city')
 ]);
 ```
 
