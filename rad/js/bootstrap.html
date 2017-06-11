@@ -152,6 +152,9 @@
                 <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/fields-dependent.html">Fields Dependent</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -171,7 +174,13 @@
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/more/mailer-adapters.html">Mailer Adapters</a>
             </li>
         
        </ul>
@@ -293,6 +302,21 @@
 </code></pre>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17014674/468fbcf6-4f58-11e6-8285-b300914b7460.jpg" alt="p-2016-07-21-004" /></p>
+
+<p>You can change the color class and selector options to fit different templates:</p>
+
+<pre><code class="php">\Phoenix\Script\BootstrapScript::buttonRadio([
+    'selector' =&gt; '.btn-group .radio',
+    'buttonClass' =&gt; 'btn',
+    'activeClass' =&gt; 'actice',
+    'color' =&gt; [
+        'default' =&gt; 'btn-default',
+        'green'   =&gt; 'btn-success',
+        'red'     =&gt; 'btn-danger',
+        'blue'    =&gt; 'btn-primary',
+    ]
+]);
+</code></pre>
 
                         <hr />
 

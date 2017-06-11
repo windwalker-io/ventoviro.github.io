@@ -152,6 +152,9 @@
                 <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/fields-dependent.html">Fields Dependent</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -171,7 +174,13 @@
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/more/mailer-adapters.html">Mailer Adapters</a>
             </li>
         
        </ul>
@@ -271,7 +280,7 @@ class EditDefinition extends AbstractFieldDefinition
             // Category
             $this-&gt;add('category_id', new CategoryListField)
                 -&gt;label('Category')
-                -&gt;addOption(new Option('Uncategorised', ''));
+                -&gt;option(new Option('Uncategorised', ''));
         });
 
         // Text Fieldset
@@ -339,7 +348,7 @@ class EditDefinition extends AbstractFieldDefinition
             // Introtext
             $this-&gt;textarea('text')
                 -&gt;label('Text')
-                -&gt;set('rows', 10);
+                -&gt;rows(10);
         });
 
         // Created fieldset
@@ -348,8 +357,8 @@ class EditDefinition extends AbstractFieldDefinition
             // State
             $this-&gt;radio('state')
                 -&gt;label(Translator::translate('admin.comment.field.state'))
-                -&gt;set('class', 'btn-group')
-                -&gt;set('default', 1)
+                -&gt;class('btn-group')
+                -&gt;defaultValue(1)
                 -&gt;option(Translator::translate('phoenix.grid.state.published'), '1')
                 -&gt;option(Translator::translate('phoenix.grid.state.unpublished'), '0');
 

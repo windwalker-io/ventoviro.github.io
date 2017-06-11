@@ -98,7 +98,7 @@ class EditDefinition extends AbstractFieldDefinition
 			// Category
 			$this->add('category_id', new CategoryListField)
 				->label('Category')
-				->addOption(new Option('Uncategorised', ''));
+				->option(new Option('Uncategorised', ''));
 		});
 
 		// Text Fieldset
@@ -167,7 +167,7 @@ class EditDefinition extends AbstractFieldDefinition
 			// Introtext
 			$this->textarea('text')
 				->label('Text')
-				->set('rows', 10);
+				->rows(10);
 		});
 
 		// Created fieldset
@@ -176,8 +176,8 @@ class EditDefinition extends AbstractFieldDefinition
 			// State
 			$this->radio('state')
 				->label(Translator::translate('admin.comment.field.state'))
-				->set('class', 'btn-group')
-				->set('default', 1)
+				->class('btn-group')
+				->defaultValue(1)
 				->option(Translator::translate('phoenix.grid.state.published'), '1')
 				->option(Translator::translate('phoenix.grid.state.unpublished'), '0');
 

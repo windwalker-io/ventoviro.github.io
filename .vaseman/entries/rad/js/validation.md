@@ -85,7 +85,7 @@ Available Default Validators:
 
 You can add your own validators in runtime. Here we add a password check validator.
 
-``` js
+```js
 // Get Validation object
 var validation = $('#admin-form').validation();
 
@@ -101,7 +101,7 @@ This validator will check password value is valid string and matches `input.inpu
 
 We can add text hint to a validator:
 
-``` js
+```js
 // Add validator
 validation.addValidator('url', function(value, element) {
     value = punycode.toASCII(value);
@@ -114,7 +114,7 @@ validation.addValidator('url', function(value, element) {
 
 You can also use callback to generate hint text:
 
-``` js
+```js
 // Add validator
 validation.addValidator('url', function(value, element) {
     // ...
@@ -123,11 +123,25 @@ validation.addValidator('url', function(value, element) {
 }})
 ```
 
+### Hint Text By HTML Attributes
+
+Use `data-{type}-message` to configure your messages.
+
+```php
+$this->text('email')
+    ->addClass('validate-email')
+    ->attr('data-warinig-message', 'Please enter vaild email.');
+    ->attr('data-error-message', 'Please enter your email.');
+    ->attr('data-success-message', 'OK');
+```
+
+Only support `success`, `warning`, `error` types.
+
 ## Call Validation By JS
 
 You can manually call validation by JS code without a submit event:
 
-``` js
+```js
 // Validate all inputs
 $('#admin-form').validation().validateAll();
 

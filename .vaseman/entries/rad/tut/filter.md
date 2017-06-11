@@ -13,6 +13,9 @@ Let's add foreign fields search to articles page.
 Open `Form/articles/GridDefinition.php` and add two new options in search group. It means we told model to search `category.title` and
 `category.alias` two more fields.
 
+The `category.` is what you set in `ListModel::configureTable()`, please see [Grid section](http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields)
+to know how it works.
+
 ``` php
 // src/Blog/Admin/Articles/GridDefinition.php
 
@@ -71,6 +74,25 @@ This is highlight result.
 
 ![Imgur](http://i.imgur.com/dyKjxkr.jpg)
 
+### Disable Fuzzing Searching
+
+By default, windwalker will separate search text by space and use fuzzing search, if you want to compare whole string,
+set `fuzzy_searching` to `false` in List GetController.
+
+```php
+// src/Flower/Controller/Sakuras/GetController.php
+
+namespace Flower\Controller\Sakuras;
+
+class GetController extends ListDisplayController
+{
+    // ...
+
+	protected $fuzzingSearching = false;
+	
+	// ...
+```
+
 ## Add More Filters
 
 Currently, articles page has only one filter: `state`, we can add a category filter and a date filter to help us manage articles.
@@ -95,7 +117,7 @@ class GridDefinition extends AbstractFieldDefinition
 				->label('Category')
 				->option('', '')
 				->option('-- Select Category --', '')
-				->set('onchange', 'this.form.submit()');
+				->onchange('this.form.submit()');
 
 		// ...
 ```
@@ -103,6 +125,9 @@ class GridDefinition extends AbstractFieldDefinition
 This is the result that we can filter by category ID.
 
 ![Imgur](http://i.imgur.com/R0v5R20.jpg)
+
+The `category.` is what you set in `ListModel::configureTable()`, please see [Grid section](http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields)
+to know how it works.
 
 ### Add Date Filter
 
@@ -128,19 +153,19 @@ class GridDefinition extends AbstractFieldDefinition
                 ->label('Category')
                 ->option('', '')
                 ->option('-- Select Category --', '')
-                ->set('onchange', 'this.form.submit()');
+                ->onchange('this.form.submit()');
 
 			// Start Date
 			$this->calendar('start_date')
 				->label('Start Date')
-				->set('format', 'YYYY-MM-DD')
-				->set('placeholder', 'Start Date');
+				->format('Y-m-d')
+				->placeholder('Start Date');
 
 			// End Date
 			$this->calendar('end_date')
 				->label('End Date')
-				->set('format', 'YYYY-MM-DD')
-				->set('placeholder', 'End Date');
+				->format('Y-m-d')
+				->placeholder('End Date');
 
 		// ...
 ```
@@ -197,4 +222,24 @@ SELECT
 WHERE article.created >= '1970-09-10' AND article.created <= '1973-09-09'
 
 -- ...
+```
+
+## Disable Filter or Search
+
+In template, you will see this line includes filter & search bar:
+
+```php
+{{-- FILTER BAR --}}
+<div class="filter-bar">
+    {!! $filterBar->render(array('form' => $form, 'show' => $showFilterBar)) !!}
+</div>
+```
+
+Add options to hide filter or search:
+
+```php
+{{-- FILTER BAR --}}
+<div class="filter-bar">
+    {!! $filterBar->render(array('form' => $form, 'show' => $showFilterBar, 'search' => false, 'filter' => false)) !!}
+</div>
 ```

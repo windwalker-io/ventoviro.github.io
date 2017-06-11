@@ -15,7 +15,7 @@ PhoenixScript::ajax();
 
 The CSRF token will auto injected to this object, just use it as a http client.
 
-``` js
+```js
 Phoenix.Ajax.get('flower/sakura/1')
     .done(function (response, status, jqHXR) {
         // ...
@@ -28,7 +28,7 @@ Phoenix.Ajax.get('flower/sakura/1')
 
 Use other methods:
 
-``` js
+```js
 Phoenix.Ajax.get('flower/sakura/1', data, headers).done(...).fail(...);
 Phoenix.Ajax.post('flower/sakura', data, headers).done(...).fail(...);
 Phoenix.Ajax.put('flower/sakura/1', data, headers).done(...).fail(...);
@@ -40,7 +40,7 @@ Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);
 
 Add jQuery ajax options to forth argument:
 
-``` js
+```js
 Phoenix.Ajax.post('flower/sakura', data, headers, {dataType: 'xml'})
     .done(...)
     .fail(...);
@@ -48,7 +48,7 @@ Phoenix.Ajax.post('flower/sakura', data, headers, {dataType: 'xml'})
 
 Use `request()`:
 
-``` js
+```js
 Phoenix.Ajax.request('POST', 'flower/sakura', data, headers, options)
     .done(...)
     .fail(...);
@@ -58,7 +58,7 @@ Phoenix.Ajax.request('POST', 'flower/sakura', data, headers, options)
 
 To override HTTP method with `X-HTTP-Method-Override` or `_method` parameter, use `.customMethod()` chain.
 
-``` js
+```js
 Phoenix.Ajax.customMethod()
     .put('flower/sakura/1')
     .done(...)
@@ -67,7 +67,7 @@ Phoenix.Ajax.customMethod()
 
 ### Set Custom Headers
 
-``` js
+```js
 Phoenix.Ajax.headers.POST['X-Foo'] = 'Bar';
 ```
 
@@ -95,7 +95,7 @@ class GetController extends AbstractController
 
 Now your JSON return will format with this:
 
-``` json
+```json
 {success:true,code:200,message:"Hello",data:{foo:"bar"}}
 ```
 
@@ -119,13 +119,13 @@ class GetController extends AbstractController
 
 The return JSON will be:
 
-``` json
-{success:false,code:403,message:"Something error",data:{backtrace:...}}
+```json
+{"success":false,"code":403,"message":"Something error","data":{"backtrace":...}}
 ```
 
 So you can check API status in JS:
 
-``` js
+```js
 Phoenix.Ajax.get('flower/sakura/1')
     .done(function (response, status, jqHXR) {
         if (response.success) {
@@ -161,7 +161,7 @@ This method will add a meta tag to HTML `<nead>`
 
 Now you can fetch this token by JS, for example, we can add a param to jQuery ajaxSetup:
 
-``` js
+```js
 jQuery.ajaxSetup({
     headers: {
         'X-Csrf-Token': jQuery('meta[name="csrf-token"]').attr('content')

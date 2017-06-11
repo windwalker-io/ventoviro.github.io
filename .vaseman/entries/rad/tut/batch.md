@@ -25,7 +25,7 @@ class GridDefinition extends AbstractFieldDefinition
 			// Add Category field
 			$form->add('category_id', new CategoryListField)
 				->label('Category')
-				->option('-- Select Category --');
+				->option('-- Select Category --', '');
 
 			// Language
 			$this->list('language')
@@ -57,3 +57,34 @@ Or copy it.
 The title will auto increment.
 
 ![Imgur](http://i.imgur.com/2fzbOY8.jpg)
+
+## Empty String
+
+By default, empty string will be ignored and will not save in database. But if you really want to update an empty string into DB
+to clear a field, use `__EMPTY__` as the value.
+
+```php
+// Add Category field
+$form->add('category_id', new CategoryListField)
+    ->label('Category')
+    ->option('-- Select Category --', '')
+    ->option('-- No category --', '__EMPTY__');
+```
+
+You can chane this mark in your update controller
+
+```php
+// src/Flower/Sakuras/Controller/Batch/UpdateContrtoller.php
+
+class UpdateController extends AbstractUpdateController
+{
+    protected $emptyMark = '__MY_EMPTY_MARK__';
+}
+```
+
+If you really want to use `__EMPTY__` as a string value to store into database, prefix a back slash `\`.
+
+```php
+// ...
+    ->option('-- No category --', '\__EMPTY__');
+```

@@ -312,6 +312,7 @@
 <li><a href="https://www.iron.io/">IronMQ</a></li>
 <li><a href="https://www.rabbitmq.com/">RabbitMQ</a> (AMQP)</li>
 <li><a href="http://kr.github.io/beanstalkd/">Beanstalkd</a></li>
+<li><a href="https://github.com/chrisboulton/php-resque">PHP Resque</a> (Redis)</li>
 <li>Database</li>
 <li>Sync (No queue, execute immediately)</li>
 </ul>
@@ -353,6 +354,11 @@
         queue: default
         host: 127.0.0.1
         timeout: 60
+    resque:
+        driver: resque
+        queue: default
+        host: localhost
+        port: 6379
     failer:
         driver: database
         table: queue_failed_jobs
@@ -415,6 +421,15 @@ You can change the host by modify settings.</p>
 
 <blockquote>
   <p>Need <code>pda/pheanstalk</code> package installed.</p>
+</blockquote>
+
+<h3>PHP Resque (Redis)</h3>
+
+<p><code>resque</code> is a port of ruby resque in PHP and work with Redis. Default it will connect to <code>localhost:6379</code>, to chane this host,
+modify <code>host</code> and <code>port</code> in <code>secret.yml</code>.</p>
+
+<blockquote>
+  <p>Need <code>chrisboulton/php-resque &lt;= 1.2</code> installed. If you want to use delayed messages, you must also install <code>chrisboulton/php-resque-scheduler</code>.</p>
 </blockquote>
 
 <h2>Get Queue Object</h2>
@@ -781,7 +796,7 @@ class HelloJob implements JobInterface
 <p>Use <code>ConsoleHelper</code>, it will help us prepare some important environment of web, you must provide 3 arguments:</p>
 
 <ul>
-<li><code>env</code> --> Use <code>web</code> or <code>dev</code>, Windwalker will load config about the env.</li>
+<li><code>env</code> --> Use <code>web</code> or <code>dev</code>, Windwalker will load config about this env.</li>
 <li><code>url</code> --> Create a URL to simulate web request.</li>
 <li><code>script</code> --> The php script name start from DocumentRoot, The URL path after it will be route.</li>
 </ul>
@@ -803,7 +818,7 @@ You can also use <code>$router</code> service to <a href="../mvc/uri-route-build
 
 <h2>Failed Jobs</h2>
 
-<p>If jobs failed, you may want to log them in a please and retry later or check the error message. Windwalker provides a
+<p>If jobs failed, you may want to log them in a place and retry later or check the error message. Windwalker provides a
 database driven failed handler. Please run this command to create migration file:</p>
 
 <pre><code class="bash">php windwalker queue failed-table

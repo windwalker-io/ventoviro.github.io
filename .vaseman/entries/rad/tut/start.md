@@ -66,7 +66,7 @@ class CategoryInit extends AbstractMigration
 	{
 		$this->createTable(Table::CATEGORIES, function (Schema $schema)
 		{
-		    $schema->primary('id')->signed(false)->allowNull(false)->comment('Primary Key');
+		    $schema->primary('id')->unsigned()->notNull()->comment('Primary Key');
             $schema->varchar('title')->comment('Title');
             $schema->varchar('alias')->comment('Alias');
             $schema->integer('ordering');
@@ -229,9 +229,9 @@ class CategorySeeder extends AbstractSeeder
 			$data['title']       = $faker->word;
 			$data['alias']       = OutputFilter::stringURLSafe($data['title']);
 			$data['version']     = rand(1, 50);
-			$data['created']     = $faker->dateTime->format(DateTime::FORMAT_SQL);
+			$data['created']     = $faker->dateTime->format($this->getSqlFormat());
 			$data['created_by']  = rand(20, 100);
-			$data['modified']    = $faker->dateTime->format(DateTime::FORMAT_SQL);
+			$data['modified']    = $faker->dateTime->format($this->getSqlFormat());
 			$data['modified_by'] = rand(20, 100);
 			$data['ordering']    = $i;
 			$data['state']       = $faker->randomElement(array(1, 1, 1, 1, 0, 0));
@@ -276,9 +276,9 @@ class ArticleSeeder extends AbstractSeeder
 				$data['introtext']   = $faker->paragraph(5);
 				$data['fulltext']    = $faker->paragraph(5);
 				$data['version']     = rand(1, 50);
-				$data['created']     = $faker->dateTime->format(DateTime::FORMAT_SQL);
+				$data['created']     = $faker->dateTime->format($this->getSqlFormat());
 				$data['created_by']  = rand(20, 100);
-				$data['modified']    = $faker->dateTime->format(DateTime::FORMAT_SQL);
+				$data['modified']    = $faker->dateTime->format($this->getSqlFormat());
 				$data['modified_by'] = rand(20, 100);
 				$data['ordering']    = $i;
 				$data['state']       = $faker->randomElement(array(1, 1, 1, 1, 0, 0));
@@ -322,7 +322,7 @@ class CommentSeeder extends AbstractSeeder
 				$data['name']       = $faker->name;
 				$data['email']      = $faker->email;
 				$data['text']       = $faker->paragraph(5);
-				$data['created']    = $faker->dateTime->format(DateTime::FORMAT_SQL);
+				$data['created']    = $faker->dateTime->format($this->getSqlFormat());
 				$data['ordering']   = $i;
 				$data['state']      = $faker->randomElement(array(1, 1, 1, 1, 0, 0));
 				$data['params']     = '';

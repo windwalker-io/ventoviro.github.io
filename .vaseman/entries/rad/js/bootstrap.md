@@ -131,3 +131,19 @@ class EditDefinition extends AbstractFieldDefinition
 ```
 
 ![p-2016-07-21-004](https://cloud.githubusercontent.com/assets/1639206/17014674/468fbcf6-4f58-11e6-8285-b300914b7460.jpg)
+
+You can change the color class and selector options to fit different templates:
+
+```php
+\Phoenix\Script\BootstrapScript::buttonRadio([
+    'selector' => '.btn-group .radio',
+    'buttonClass' => 'btn',
+    'activeClass' => 'actice',
+    'color' => [
+        'default' => 'btn-default',
+        'green'   => 'btn-success',
+        'red'     => 'btn-danger',
+        'blue'    => 'btn-primary',
+    ]
+]);
+```

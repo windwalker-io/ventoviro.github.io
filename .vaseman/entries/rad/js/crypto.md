@@ -17,7 +17,7 @@ Include Crypto:
 
 ## Encrypt/Decrypt Text
 
-``` js
+```js
 var text = 'Windwalker';
 var key = 'dfG9O34F';
 var secret = Phoenix.Crypto.encrypt(key, text);
@@ -37,7 +37,7 @@ Windwalker
 
 Simple methods to wrap `btoa()` and `atob()`
 
-``` js
+```js
 var base64 = Phoenix.Crypto.base64Encode('Hello');
 
 console.log(base64);
@@ -46,7 +46,7 @@ console.log(Phoenix.Crypto.base64Decode(base64));
 
 Output:
 
-``` js
+```js
 SGVsbG8=
 Hello
 ```
@@ -55,7 +55,7 @@ Hello
 
 A JS md5 implementation, will be useful if you need an identify when you generating elements in frontend.
 
-``` js
+```js
 Phoenix.Crypto.md5('Windwalker'); // fa0a731220e28af75afba7135723015e
 ```
 
@@ -63,7 +63,7 @@ Phoenix.Crypto.md5('Windwalker'); // fa0a731220e28af75afba7135723015e
 
 UUID is useful if you need to generate random ID for dynamic elements.
 
-``` js
+```js
 Phoenix.Crypto.uuid4();
 ```
 

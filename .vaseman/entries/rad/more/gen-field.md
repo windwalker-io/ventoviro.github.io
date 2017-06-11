@@ -60,54 +60,54 @@ Phoenix will generate field definitions to match data types of your table column
 // Id
 $this->text('id')
         ->label('Id')
-        ->set('class', '')
-        ->set('labelClass', '')
+        ->class('')
+        ->labelClass('')
         ->set('readonly', true);
 
 // Student_id
 $this->text('student_id')
         ->label('Student_id')
-        ->set('class', '')
-        ->set('labelClass', '')
-        ->set('default', null);
+        ->class('')
+        ->labelClass('')
+        ->defaultValue(null);
 
 // Date
 $this->calendar('date')
         ->label('Date')
-        ->set('class', '')
-        ->set('labelClass', '')
-        ->set('default', null);
+        ->class('')
+        ->labelClass('')
+        ->defaultValue(null);
 
 // Title
 $this->text('title')
         ->label('Title')
-        ->set('class', '')
-        ->set('labelClass', '')
-        ->set('default', null);
+        ->class('')
+        ->labelClass('')
+        ->defaultValue(null);
 
 // Type
 $this->list('type')
         ->label('Type')
         ->option('Quiz', 'quiz')
         ->option('Exam', 'exam')
-        ->set('class', '')
-        ->set('labelClass', '')
-        ->set('default', 1);
+        ->class('')
+        ->labelClass('')
+        ->defaultValue(1);
 
 // Grade
 $this->text('grade')
         ->label('Grade')
-        ->set('class', '')
-        ->set('labelClass', '')
-        ->set('default', null);
+        ->class('')
+        ->labelClass('')
+        ->defaultValue(null);
 
 // Comment
 $this->textarea('comment')
         ->label('Comment')
-        ->set('class', '')
-        ->set('labelClass', '')
-        ->set('rows', 7)
-        ->set('default', null);
+        ->class('')
+        ->labelClass('')
+        ->row(7)
+        ->defaultValue(null);
 
 ```
 
@@ -138,9 +138,9 @@ $this->list('foo')
     ->label('Foo')
     ->option('Bar', 'bar')
     ->option('Baz', 'Baz')
-    ->set('class', '')
-    ->set('labelClass', '')
-    ->set('default', 1);
+    ->class('')
+    ->labelClass('')
+    ->defaultValue(1);
 ```
 
 ## Supported Types

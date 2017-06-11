@@ -235,7 +235,7 @@ Vuex is an application architecture for centralized state management in Vue.js a
 
 In HTML
 
-``` js
+```js
 export default new Vuex.Store({
   state,
   mutations

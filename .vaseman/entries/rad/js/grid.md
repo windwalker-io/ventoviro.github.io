@@ -23,7 +23,7 @@ It will auto included in Phoenix admin template, or use this PHP code to init it
 
 Sort this table by a column name:
 
-``` js
+```js
 // JS
 Phoenix.Grid.sort('created', 'DESC');
 ```
@@ -36,7 +36,7 @@ This method will send `list_ordering` and `list_direction` two variables to cont
 
 Tick a checkbox of specify row.
 
-``` js
+```js
 // JS
 
 // Start row is 0, so we tick the second row.
@@ -73,7 +73,7 @@ Or use `GridHelper` to generate this checkbox in template:
 
 This method can update a row with specify data by sending request to `BatchController`:
 
-``` js
+```js
 // JS
 
 Phoenix.Grid.updateRow(3, null, {task: 'publish'});
@@ -87,7 +87,7 @@ This method will update row 3 `state => 1`.
 
 Send a batch task to update rows:
 
-``` js
+```js
 Phoenix.Grid.batch('unpublish');
 ```
 
@@ -95,7 +95,7 @@ Phoenix.Grid.batch('unpublish');
 
 Send a request to duplicate a row:
 
-``` js
+```js
 Phoenix.Grid.copyRow(3);
 ```
 
@@ -103,7 +103,7 @@ Phoenix.Grid.copyRow(3);
 
 Delete checked rows.
 
-``` js
+```js
 Phoenix.Grid.deleteList();
 
 // Add custom confirm message
@@ -112,19 +112,19 @@ Phoenix.Grid.deleteList('Are you sure?');
 
 ## Delete Row
 
-``` js
+```js
 Phoenix.Grid.deleteRow(3);
 ```
 
 ## Toggle All Checkboxes
 
-``` js
+```js
 Phoenix.Grid.toggleAll();
 ```
 
 ## More Methods
 
-``` js
+```js
 // Count checked checkboxes
 Phoenix.Grid.countChecked();
 

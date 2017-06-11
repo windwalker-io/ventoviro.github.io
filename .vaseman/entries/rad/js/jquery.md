@@ -25,7 +25,7 @@ You can also add first argument as no-conflict mode:
 
 Then you must use `jQuery` instead `$` in global scope:
 
-``` js
+```js
 jQuery(document).ready(function ($) {
     $('body').attr('class');
 })

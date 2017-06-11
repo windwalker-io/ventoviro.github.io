@@ -152,6 +152,9 @@
                 <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/fields-dependent.html">Fields Dependent</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -171,7 +174,13 @@
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/more/mailer-adapters.html">Mailer Adapters</a>
             </li>
         
        </ul>
@@ -187,6 +196,9 @@ Let's add foreign fields search to articles page.</p>
 
 <p>Open <code>Form/articles/GridDefinition.php</code> and add two new options in search group. It means we told model to search <code>category.title</code> and
 <code>category.alias</code> two more fields.</p>
+
+<p>The <code>category.</code> is what you set in <code>ListModel::configureTable()</code>, please see <a href="http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields">Grid section</a>
+to know how it works.</p>
 
 <pre><code class="php">// src/Blog/Admin/Articles/GridDefinition.php
 
@@ -244,6 +256,24 @@ class ArticlesHtmlView extends GridView
 
 <p><img src="http://i.imgur.com/dyKjxkr.jpg" alt="Imgur" /></p>
 
+<h3>Disable Fuzzing Searching</h3>
+
+<p>By default, windwalker will separate search text by space and use fuzzing search, if you want to compare whole string,
+set <code>fuzzy_searching</code> to <code>false</code> in List GetController.</p>
+
+<pre><code class="php">// src/Flower/Controller/Sakuras/GetController.php
+
+namespace Flower\Controller\Sakuras;
+
+class GetController extends ListDisplayController
+{
+    // ...
+
+    protected $fuzzingSearching = false;
+
+    // ...
+</code></pre>
+
 <h2>Add More Filters</h2>
 
 <p>Currently, articles page has only one filter: <code>state</code>, we can add a category filter and a date filter to help us manage articles.</p>
@@ -267,7 +297,7 @@ class GridDefinition extends AbstractFieldDefinition
                 -&gt;label('Category')
                 -&gt;option('', '')
                 -&gt;option('-- Select Category --', '')
-                -&gt;set('onchange', 'this.form.submit()');
+                -&gt;onchange('this.form.submit()');
 
         // ...
 </code></pre>
@@ -275,6 +305,9 @@ class GridDefinition extends AbstractFieldDefinition
 <p>This is the result that we can filter by category ID.</p>
 
 <p><img src="http://i.imgur.com/R0v5R20.jpg" alt="Imgur" /></p>
+
+<p>The <code>category.</code> is what you set in <code>ListModel::configureTable()</code>, please see <a href="http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields">Grid section</a>
+to know how it works.</p>
 
 <h3>Add Date Filter</h3>
 
@@ -299,19 +332,19 @@ class GridDefinition extends AbstractFieldDefinition
                 -&gt;label('Category')
                 -&gt;option('', '')
                 -&gt;option('-- Select Category --', '')
-                -&gt;set('onchange', 'this.form.submit()');
+                -&gt;onchange('this.form.submit()');
 
             // Start Date
             $this-&gt;calendar('start_date')
                 -&gt;label('Start Date')
-                -&gt;set('format', 'YYYY-MM-DD')
-                -&gt;set('placeholder', 'Start Date');
+                -&gt;format('Y-m-d')
+                -&gt;placeholder('Start Date');
 
             // End Date
             $this-&gt;calendar('end_date')
                 -&gt;label('End Date')
-                -&gt;set('format', 'YYYY-MM-DD')
-                -&gt;set('placeholder', 'End Date');
+                -&gt;format('Y-m-d')
+                -&gt;placeholder('End Date');
 
         // ...
 </code></pre>
@@ -365,6 +398,24 @@ class GridDefinition extends AbstractFieldDefinition
 WHERE article.created &gt;= '1970-09-10' AND article.created &lt;= '1973-09-09'
 
 -- ...
+</code></pre>
+
+<h2>Disable Filter or Search</h2>
+
+<p>In template, you will see this line includes filter &amp; search bar:</p>
+
+<pre><code class="php">{{-- FILTER BAR --}}
+&lt;div class="filter-bar"&gt;
+    {!! $filterBar-&gt;render(array('form' =&gt; $form, 'show' =&gt; $showFilterBar)) !!}
+&lt;/div&gt;
+</code></pre>
+
+<p>Add options to hide filter or search:</p>
+
+<pre><code class="php">{{-- FILTER BAR --}}
+&lt;div class="filter-bar"&gt;
+    {!! $filterBar-&gt;render(array('form' =&gt; $form, 'show' =&gt; $showFilterBar, 'search' =&gt; false, 'filter' =&gt; false)) !!}
+&lt;/div&gt;
 </code></pre>
 
                         <hr />

@@ -152,6 +152,9 @@
                 <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/fields-dependent.html">Fields Dependent</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -171,7 +174,13 @@
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/more/mailer-adapters.html">Mailer Adapters</a>
             </li>
         
        </ul>
@@ -199,7 +208,7 @@ class GridDefinition extends AbstractFieldDefinition
             // Add Category field
             $form-&gt;add('category_id', new CategoryListField)
                 -&gt;label('Category')
-                -&gt;option('-- Select Category --');
+                -&gt;option('-- Select Category --', '');
 
             // Language
             $this-&gt;list('language')
@@ -231,6 +240,34 @@ class GridDefinition extends AbstractFieldDefinition
 <p>The title will auto increment.</p>
 
 <p><img src="http://i.imgur.com/2fzbOY8.jpg" alt="Imgur" /></p>
+
+<h2>Empty String</h2>
+
+<p>By default, empty string will be ignored and will not save in database. But if you really want to update an empty string into DB
+to clear a field, use <code>__EMPTY__</code> as the value.</p>
+
+<pre><code class="php">// Add Category field
+$form-&gt;add('category_id', new CategoryListField)
+    -&gt;label('Category')
+    -&gt;option('-- Select Category --', '')
+    -&gt;option('-- No category --', '__EMPTY__');
+</code></pre>
+
+<p>You can chane this mark in your update controller</p>
+
+<pre><code class="php">// src/Flower/Sakuras/Controller/Batch/UpdateContrtoller.php
+
+class UpdateController extends AbstractUpdateController
+{
+    protected $emptyMark = '__MY_EMPTY_MARK__';
+}
+</code></pre>
+
+<p>If you really want to use <code>__EMPTY__</code> as a string value to store into database, prefix a back slash <code>\</code>.</p>
+
+<pre><code class="php">// ...
+    -&gt;option('-- No category --', '\__EMPTY__');
+</code></pre>
 
                         <hr />
 

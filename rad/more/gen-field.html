@@ -152,6 +152,9 @@
                 <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/fields-dependent.html">Fields Dependent</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -171,7 +174,13 @@
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/more/mailer-adapters.html">Mailer Adapters</a>
             </li>
         
        </ul>
@@ -232,54 +241,54 @@ class ScoreInit extends AbstractMigration
 <pre><code class="bash">// Id
 $this-&gt;text('id')
         -&gt;label('Id')
-        -&gt;set('class', '')
-        -&gt;set('labelClass', '')
+        -&gt;class('')
+        -&gt;labelClass('')
         -&gt;set('readonly', true);
 
 // Student_id
 $this-&gt;text('student_id')
         -&gt;label('Student_id')
-        -&gt;set('class', '')
-        -&gt;set('labelClass', '')
-        -&gt;set('default', null);
+        -&gt;class('')
+        -&gt;labelClass('')
+        -&gt;defaultValue(null);
 
 // Date
 $this-&gt;calendar('date')
         -&gt;label('Date')
-        -&gt;set('class', '')
-        -&gt;set('labelClass', '')
-        -&gt;set('default', null);
+        -&gt;class('')
+        -&gt;labelClass('')
+        -&gt;defaultValue(null);
 
 // Title
 $this-&gt;text('title')
         -&gt;label('Title')
-        -&gt;set('class', '')
-        -&gt;set('labelClass', '')
-        -&gt;set('default', null);
+        -&gt;class('')
+        -&gt;labelClass('')
+        -&gt;defaultValue(null);
 
 // Type
 $this-&gt;list('type')
         -&gt;label('Type')
         -&gt;option('Quiz', 'quiz')
         -&gt;option('Exam', 'exam')
-        -&gt;set('class', '')
-        -&gt;set('labelClass', '')
-        -&gt;set('default', 1);
+        -&gt;class('')
+        -&gt;labelClass('')
+        -&gt;defaultValue(1);
 
 // Grade
 $this-&gt;text('grade')
         -&gt;label('Grade')
-        -&gt;set('class', '')
-        -&gt;set('labelClass', '')
-        -&gt;set('default', null);
+        -&gt;class('')
+        -&gt;labelClass('')
+        -&gt;defaultValue(null);
 
 // Comment
 $this-&gt;textarea('comment')
         -&gt;label('Comment')
-        -&gt;set('class', '')
-        -&gt;set('labelClass', '')
-        -&gt;set('rows', 7)
-        -&gt;set('default', null);
+        -&gt;class('')
+        -&gt;labelClass('')
+        -&gt;row(7)
+        -&gt;defaultValue(null);
 
 </code></pre>
 
@@ -307,9 +316,9 @@ File output to: /var/www/windwalker/tmp/form/fields/scores.php.tpl
     -&gt;label('Foo')
     -&gt;option('Bar', 'bar')
     -&gt;option('Baz', 'Baz')
-    -&gt;set('class', '')
-    -&gt;set('labelClass', '')
-    -&gt;set('default', 1);
+    -&gt;class('')
+    -&gt;labelClass('')
+    -&gt;defaultValue(1);
 </code></pre>
 
 <h2>Supported Types</h2>

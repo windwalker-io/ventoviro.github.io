@@ -188,3 +188,64 @@ Add `name`, `email` and `article_title`, remove some none-necessary fields.
 The result will be:
 
 ![Imgur](http://i.imgur.com/6E5l53f.jpg)
+
+### Get Joined Fields
+
+The `ListModel` helps us create table join and return object list. All joined fields will add table name alias as prefix.
+
+For example, if you write this join condition in model:
+
+```php
+$this->addTable('article', Table::ARTICLES)
+    ->addTable('category', Table::CATEGORIES, 'category.id = article.category_id')
+    ->addTable('user', Table::USERS, 'user.id = article.created_by');
+```
+
+Then you can get property in view by this way:
+
+```php
+foreach ($items as $item)
+{
+    // Get article field
+    $item->id;
+    $item->title;
+    $item->introtext;
+    
+    // GEt joined fields
+    $item->category_id;
+    $item->category_title;
+    $item->category_description;
+    
+    $item->user_id;
+    $item->user_email;
+    $item->user_name;
+}
+```
+
+Looks good? It is convenience to get every fields in your joined table and you don't need to worry about naming conflict. 
+
+## Configure List Loading
+
+A Grid list must have some important information:
+- start (page)
+- limit (number per page)
+- ordering
+- direction (ASC or DESC)
+
+We can configure it in list controller as a default value, so every one who first go to this page will have a default setting.
+
+```php
+namespace Flower\Controller\Sakuras;
+
+class GetController extends ListDisplayController
+{
+	// ...
+
+	protected $defaultOrdering = 'sakura.id';
+
+	protected $defaultDirection = 'DESC';
+
+	protected $limit = 50; // 0 to unlimited
+
+	protected $fuzzingSearching = false;
+```

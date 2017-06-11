@@ -81,16 +81,20 @@ The libsodium also supports here, you can install `paragonie/sodium_compat` pack
 without php libsodium extension, but we still recommend you to install `ext-libsodium` or use php 7.2 later to 
 support memory wipe and with higher performance.
 
-If you get sodium_memzero() only supports after php 7.2 or ext-libsodium installed. message, 
+If you get `sodium_memzero() only supports after php 7.2 or ext-libsodium installed.` message, 
 You can disable memory wipe by `ignoreMemzero()` (But we don't recommend to do this):
 
 ```php
+// Add this code in a listener or anywhere before your application 
 $cipher = Crypto::getCipher();
 
 if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher)
 {
     $cipher->ignoreMemzero(true);
 }
+
+// Now you can encrypt text by sodium
+Crypto::encrypt('Hello');
 ```
 
 See [Windwalke Crypt](https://github.com/ventoviro/windwalker-crypt#symmetric-key-algorithm-encryption)

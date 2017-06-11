@@ -133,10 +133,13 @@ rad:
         js/core: Phoenix Core
         js/grid: Grid
         js/ajax: Ajax
+        js/fields-dependent: Fields Dependent
         js/validation: Validation
         js/crypto: Crypto
         js/bootstrap: Bootstrap
         js/vue: Vue
     More:
         more/gen-field: Field Generation
+        more/record: Record Fields
         more/asset-minify: Asset Minify
+        more/mailer-adapters: Mailer Adapters

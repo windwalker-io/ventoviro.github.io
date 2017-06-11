@@ -41,7 +41,7 @@ And you must have a `<form id="#admin-form"> ...` element in your HTML so Phoeni
 
 You can simply use this JS code to submit form:
 
-``` js
+```js
 // Submit with default action defined on <form action="...">
 Phoenix.submit();
 
@@ -57,7 +57,7 @@ Phoenix.submit('/flower/sakura', data, 'POST', 'PUT');
 
 Use simple methods:
 
-``` js
+```js
 // GET
 Phoenix.get('/flower/sakura/25', query);
 
@@ -113,7 +113,7 @@ And get this route by `Phoenix.Router`:
 
 Get route in anywhere, for example, use it in ajax call:
 
-``` js
+```js
 $.ajax({
     url: Phoenix.Router.route('sakura_save'),
     data: data,
@@ -122,11 +122,43 @@ $.ajax({
 }).done(...)
 ```
 
+## Variable Storage
+
+Phoenix can store some variables from PHP and push to frontend. Use this code in PHP:
+
+```php
+PhoenixScript::store('item', $data);
+PhoenixScript::store('title', 'Hello');
+```
+
+In frontend, use this JS to get value:
+
+```php
+// Get object
+var item = Phoenix.Sotre.item;
+
+var id = item.id;
+
+// Get string
+var title = Phoenix.Sotre.title.toUpperCase();
+```
+
+It is useful if you are using Vue.js and you want to push a lot of data structure to vue instance:
+
+```js
+new Vue({
+    el: '#app',
+    data: {
+        item: Phoenix.Store.item
+    }
+});
+```
+
 ## Translate
 
 If you has a language key:
 
-``` ini
+```ini
 flower.message.sakura="Sakura"
 ```
 
@@ -138,7 +170,7 @@ Add language key to JS by php:
 
 Now you can get this language string in JS:
 
-``` js
+```js
 Phoenix.Translator.translate('flower.message.sakura'); // Sakura
 
 // You can also use sprintf() and plural()
@@ -152,7 +184,7 @@ See [Translator](../../documentation/3.x/services/languages.html)
 
 Use JS code `addMessage()` to render message to template:
 
-``` js
+```js
 Phoenix.addMessage('Hello World');
 ```
 
@@ -160,7 +192,7 @@ Phoenix.addMessage('Hello World');
 
 Use other styles
 
-``` js
+```js
 Phoenix.addMessage('Hello World', 'info');
 Phoenix.addMessage('Hello World', 'success');
 Phoenix.addMessage('Hello World', 'warning');
@@ -169,13 +201,13 @@ Phoenix.addMessage('Hello World', 'danger');
 
 Multiple messages:
 
-``` js
+```js
 Phoenix.addMessage(['Foo', 'Bar'], 'info');
 ```
 
 Remove messages:
 
-``` js
+```js
 Phoenix.removeMessages();
 ```
 

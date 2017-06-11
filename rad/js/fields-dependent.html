@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-    <title>Prepare Grid View | Windwalker - PHP Rapid Development Framework</title>
+    <title>Form Dependent | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Prepare Grid View | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Form Dependent | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -80,7 +80,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Prepare Grid View</h1>
+                    <h1 class="banner-title">Form Dependent</h1>
                 </div>
             </div>
         </section>
@@ -120,7 +120,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/tut/start.html">Start A Blog</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../rad/tut/grid.html">Prepare Grid View</a>
             </li>
                     <li class="">
@@ -151,7 +151,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
             </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../rad/js/fields-dependent.html">Fields Dependent</a>
             </li>
                     <li class="">
@@ -189,248 +189,241 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Articles List Manager</h2>
+                    <h2>List Dependent</h2>
 
-<p>We must add more information to article grid page. Open <code>Model/ArticlesModel.php</code>, add some joined table to article.</p>
+<p>Phoenix includes a simple <code>list-dependent</code> JS library to help you load <code>&lt;select&gt;</code> list from ajax value:</p>
 
-<pre><code class="php">// src/Blog/Admin/Model/ArticlesModel.php
+<p>First, prepare two select list:</p>
 
-// ...
+<pre><code class="php">// #input-item-country
+$this-&gt;list('country')
+    -&gt;label('Country')
+    -&gt;option('-- Select Country --', '')
+    -&gt;option('USA', 1)
+    -&gt;option('Russia', 2);
 
-class ArticlesModel extends ListModel
+// #input-item-city
+$this-&gt;list('city')
+    -&gt;label('City');
+</code></pre>
+
+<p>Set dependency script:</p>
+
+<pre><code class="php">PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
+    'ajax_uri' =&gt; CoreRouter::route('flower@ajax_city')
+]);
+</code></pre>
+
+<p>And you must have a route and a controller to return list data:</p>
+
+<pre><code class="yaml">ajax_city:
+    pattern: /ajax/cities
+    controller: Cities
+</code></pre>
+
+<p>Controller:</p>
+
+<pre><code class="php">namespace Asuka\Flower\Controller\Cities;
+
+use Windwalker\Core\Controller\AbstractController;
+use Windwalker\Core\Controller\Traits\JsonApiTrait;
+
+class GetController extends AbstractController
 {
-    // ...
+    use JsonApiTrait;
 
-    protected function configureTables()
+    protected function doExecute()
     {
-        $this-&gt;addTable('article', Table::ARTICLES)
-            -&gt;addTable('category', Table::CATEGORIES, 'category.id = article.category_id');
+        $value = $this-&gt;input-&gt;get('value');
+        $data = [];
+
+        $cities = CityMapper::find(['country_id' =&gt; $value]);
+
+        foreach ($cities =&gt; $city)
+        {
+            $data = [
+                'id' =&gt; $city-&gt;id,
+                'title' =&gt; $city-&gt;title
+            ];
+        }
+
+        array_unshift($data, ['title' =&gt; '-- Select City --']);
+
+        return $data;
     }
-</code></pre>
-
-<p>After table joined, let's add some data in grid template.</p>
-
-<pre><code class="php">&lt;!-- src/Blog/Admin/Templates/articles/articles.blade.php --&gt;
-
-&lt;!-- ... --&gt;
-
-&lt;div class="grid-table table-responsive"&gt;
-    &lt;table class="table table-bordered"&gt;
-        &lt;thead&gt;
-        &lt;tr&gt;
-            &lt;!-- ... --&gt;
-
-            {{-- CATEGORY --}}
-            &lt;th&gt;
-                {!! $grid-&gt;sortTitle('Category', 'article.category_id') !!}
-            &lt;/th&gt;
-
-            {{-- TITLE --}}
-            &lt;th&gt;
-                {!! $grid-&gt;sortTitle('admin.article.field.title', 'article.title') !!}
-            &lt;/th&gt;
-
-            &lt;!-- ... --&gt;
-        &lt;/tr&gt;
-        &lt;/thead&gt;
-
-        &lt;tbody&gt;
-        @foreach ($items as $i =&gt; $item)
-            &lt;!-- ... --&gt;
-
-                {{-- CATEGORY --}}
-                &lt;td&gt;
-                    {{ $item-&gt;category_title }}
-                &lt;/td&gt;
-
-                {{-- TITLE --}}
-                &lt;td&gt;
-                    &lt;a href="{{{ $router-&gt;route('article', array('id' =&gt; $item-&gt;id)) }}}"&gt;
-                        {{ $item-&gt;title }}
-                    &lt;/a&gt;
-                    &lt;br/&gt;
-                    &lt;small class="text-muted"&gt;{{ $item-&gt;alias }}&lt;/small&gt;
-                &lt;/td&gt;
-
-            &lt;!-- ... --&gt;
-</code></pre>
-
-<p>Now Category title has been added to articles view.</p>
-
-<p><img src="http://i.imgur.com/Yeezqqs.jpg" alt="Imgur" /></p>
-
-<h2>Comment Grid</h2>
-
-<p>Also, we do same thing to <code>comments</code>.</p>
-
-<pre><code class="php">// src/Blog/Admin/Model/CommentsModel.php
-
-class CommentsModel extends ListModel
-{
-    // ...
-
-    protected function configureTables()
-    {
-        $this-&gt;addTable('comment', Table::COMMENTS)
-            -&gt;addTable('article', Table::ARTICLES, 'article.id = comment.article_id');
-    }
-
-    // ...
-</code></pre>
-
-<p>Add <code>name</code>, <code>email</code> and <code>article_title</code>, remove some none-necessary fields.</p>
-
-<pre><code class="php">&lt;!-- src/Blog/Admin/Templates/comments/comments.blade.php --&gt;
-
-&lt;!-- ... --&gt;
-
-&lt;table class="table table-bordered"&gt;
-    &lt;thead&gt;
-    &lt;tr&gt;
-        {{-- CHECKBOX --}}
-        &lt;th&gt;
-            {!! $grid-&gt;checkboxesToggle(array('duration' =&gt; 150)) !!}
-        &lt;/th&gt;
-
-        {{-- STATE --}}
-        &lt;th style="min-width: 90px;"&gt;
-            {!! $grid-&gt;sortTitle('admin.comment.field.state', 'comment.state') !!}
-        &lt;/th&gt;
-
-        {{-- ARTICLE --}}
-        &lt;th&gt;
-            {!! $grid-&gt;sortTitle('Article', 'article.title') !!}
-        &lt;/th&gt;
-
-        {{-- NAME --}}
-        &lt;th&gt;
-            {!! $grid-&gt;sortTitle('Name', 'comment.name') !!}
-        &lt;/th&gt;
-
-        {{-- EMAIL --}}
-        &lt;th&gt;
-            {!! $grid-&gt;sortTitle('Email', 'comment.email') !!}
-        &lt;/th&gt;
-
-        {{-- ORDERING --}}
-        &lt;th width="5%" class="nowrap"&gt;
-            {!! $grid-&gt;sortTitle('admin.comment.field,.ordering', 'comment.ordering') !!} {!! $grid-&gt;saveorderButton() !!}
-        &lt;/th&gt;
-
-        {{-- CREATED --}}
-        &lt;th&gt;
-            {!! $grid-&gt;sortTitle('admin.comment.field.created', 'comment.created') !!}
-        &lt;/th&gt;
-
-        {{-- ID --}}
-        &lt;th&gt;
-            {!! $grid-&gt;sortTitle('admin.comment.field.id', 'comment.id') !!}
-        &lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;/thead&gt;
-
-    &lt;tbody&gt;
-    @foreach ($items as $i =&gt; $item)
-        &lt;?php
-        $grid-&gt;setItem($item, $i);
-        ?&gt;
-        &lt;tr&gt;
-            &lt;!-- ... --&gt;
-
-            {{-- ARTICLE --}}
-            &lt;td&gt;
-                {!! $grid-&gt;foreignLink($item-&gt;article_title, $router-&gt;route('article', array('id' =&gt; $item-&gt;article_id))) !!}
-            &lt;/td&gt;
-
-            {{-- NAME --}}
-            &lt;td&gt;
-                &lt;a href="{{ $router-&gt;route('comment', array('id' =&gt; $item-&gt;id)) }}"&gt;
-                    {{ $item-&gt;name }}
-                &lt;/a&gt;
-            &lt;/td&gt;
-
-            {{-- EMAIL --}}
-            &lt;td&gt;
-                &lt;a href="{{ $router-&gt;route('comment', array('id' =&gt; $item-&gt;id)) }}"&gt;
-                    {{ $item-&gt;email }}
-                &lt;/a&gt;
-            &lt;/td&gt;
-
-            {{-- ORDERING --}}
-            &lt;td&gt;
-                {!! $grid-&gt;orderButton() !!}
-            &lt;/td&gt;
-
-            &lt;!-- ... --&gt;
-    @endforeach
-</code></pre>
-
-<p>The result will be:</p>
-
-<p><img src="http://i.imgur.com/6E5l53f.jpg" alt="Imgur" /></p>
-
-<h3>Get Joined Fields</h3>
-
-<p>The <code>ListModel</code> helps us create table join and return object list. All joined fields will add table name alias as prefix.</p>
-
-<p>For example, if you write this join condition in model:</p>
-
-<pre><code class="php">$this-&gt;addTable('article', Table::ARTICLES)
-    -&gt;addTable('category', Table::CATEGORIES, 'category.id = article.category_id')
-    -&gt;addTable('user', Table::USERS, 'user.id = article.created_by');
-</code></pre>
-
-<p>Then you can get property in view by this way:</p>
-
-<pre><code class="php">foreach ($items as $item)
-{
-    // Get article field
-    $item-&gt;id;
-    $item-&gt;title;
-    $item-&gt;introtext;
-
-    // GEt joined fields
-    $item-&gt;category_id;
-    $item-&gt;category_title;
-    $item-&gt;category_description;
-
-    $item-&gt;user_id;
-    $item-&gt;user_email;
-    $item-&gt;user_name;
 }
 </code></pre>
 
-<p>Looks good? It is convenience to get every fields in your joined table and you don't need to worry about naming conflict.</p>
+<p>The result is:</p>
 
-<h2>Configure List Loading</h2>
+<p><img src="http://i.imgur.com/HlMnft4.gif" alt="Imgur" /></p>
 
-<p>A Grid list must have some important information:
-- start (page)
-- limit (number per page)
-- ordering
-- direction (ASC or DESC)</p>
+<h3>Options</h3>
 
-<p>We can configure it in list controller as a default value, so every one who first go to this page will have a default setting.</p>
-
-<pre><code class="php">namespace Flower\Controller\Sakuras;
-
-class GetController extends ListDisplayController
-{
-    // ...
-
-    protected $defaultOrdering = 'sakura.id';
-
-    protected $defaultDirection = 'DESC';
-
-    protected $limit = 50; // 0 to unlimited
-
-    protected $fuzzingSearching = false;
+<pre><code class="php">PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
+    'ajax_uri' =&gt; CoreRouter::route('flower@ajax_city'),
+    'default_value' =&gt; null, // Set default value.
+    'initial_load' =&gt; true, // Load list first after page initial?
+    'request' =&gt; [
+        'value_field' =&gt; 'value' // Change request value field
+    ],
+    'response' =&gt; [
+        'text_field' =&gt; 'title', // Which field in response should add to option text
+        'value_field' =&gt; 'id' // Which field in response should add to option value
+    ],
+    'hooks' =&gt; [
+        'before_request' =&gt; '\\function () { ... }',
+        'after_request' =&gt; '\\function () { ... }',
+    ]
+]);
 </code></pre>
+
+<h3>Hooks</h3>
+
+<p>You can add your logic before and after process:</p>
+
+<pre><code class="php">JQueryScript::ui(['effect']);
+PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
+    'ajax_url' =&gt; CoreRouter::route('flower@ajax_city'),
+    'hooks' =&gt; [
+        'before_request' =&gt; "\\function (value, ele, depEle) {
+            ele.attr('disabled', true);
+        }",
+        'after_request' =&gt; "\\function (value, ele, depEle) {
+            ele.attr('disabled', false);
+            ele.effect('highlight');
+        }"
+    ]
+]);
+</code></pre>
+
+<p><img src="http://i.imgur.com/U9PDX52.gif" alt="Imgur" /></p>
+
+<h2>Fields Show On (dependsOn)</h2>
+
+<p>Assume we have these fields, add <code>showon</code> to field config and set the target field name with value.</p>
+
+<pre><code class="php">$this-&gt;list('use_ftp')
+    -&gt;label('Use FTP')
+    -&gt;option('Yes', 1)
+    -&gt;option('No', 0);
+
+$this-&gt;text('ftp_user')
+    -&gt;label('User')
+    -&gt;set('showon', ['use_ftp' =&gt; '1']);
+
+$this-&gt;password('ftp_pass')
+    -&gt;label('Pass')
+    -&gt;set('showon', ['use_ftp' =&gt; '1']);
+</code></pre>
+
+<p>Now, user and pass field will show if <code>use_ftp</code> field is <code>1</code>, otherwise will hide.</p>
+
+<p><img src="http://i.imgur.com/rwv911F.gif" alt="Imgur" /></p>
+
+<h3>Use Multiple Conditions</h3>
+
+<p>Add multiple values will be <code>AND</code> condition:</p>
+
+<pre><code class="php">    -&gt;set('showon', ['value1' =&gt; '1', 'value2' =&gt; 'foo']);
+</code></pre>
+
+<p>If you want to use <code>OR</code> conditions, you must implement this logic in JS manually:</p>
+
+<pre><code class="js">$('#orTest .subject').dependsOn({
+    '#orTest input[name="xtraCheese"]': {
+        checked: true
+    }
+}, {
+    hide: false
+}).or({
+    '#orTest select': {
+        not: ['select']
+    }
+});
+</code></pre>
+
+<p>See <a href="http://dstreet.github.io/dependsOn/">dependsOn: Advanced Usage</a></p>
+
+<h3>Use Other Qualifiers</h3>
+
+<p>By default, Phoenix only use <code>values</code> as qualifier, <code>dependsOn.js</code> has many other qualifier, we can add it by PHP:</p>
+
+<pre><code class="php">JQueryScript::dependsOn('#emailTest .subject', [
+    '#emailTest input[type="checkbox"]' =&gt; [
+        'checked' =&gt; true
+    ],
+    '#emailTest .email' =&gt; [
+        'email' =&gt; true
+    ]
+]);
+</code></pre>
+
+<p>Available Qualifiers:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Qualifier</th>
+  <th>Description</th>
+  <th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>enabled</td>
+  <td>If true, then dependency must not have the "disabled" attribute.</td>
+  <td>Boolean</td>
+</tr>
+<tr>
+  <td>checked</td>
+  <td>If true, then dependency must not have the "checked" attribute. Used for checkboxes and radio   buttons.</td>
+  <td>Boolean</td>
+</tr>
+<tr>
+  <td>values</td>
+  <td>Dependency value must equal one of the provided values.</td>
+  <td>Array</td>
+</tr>
+<tr>
+  <td>not</td>
+  <td>Dependency value must not equal any of the provided values.</td>
+  <td>Array</td>
+</tr>
+<tr>
+  <td>match</td>
+  <td>Dependency value must match the regular expression.</td>
+  <td>RegEx</td>
+</tr>
+<tr>
+  <td>contains</td>
+  <td>One of the provided values must be contained in an array of dependency values. Used for select fields with the   "multiple" attribute.</td>
+  <td>Array</td>
+</tr>
+<tr>
+  <td>email</td>
+  <td>If true, dependency value must match an email address.</td>
+  <td>Boolean</td>
+</tr>
+<tr>
+  <td>url</td>
+  <td>If true, Dependency value must match an URL.</td>
+  <td>Boolean</td>
+</tr>
+<tr>
+  <td>Custom</td>
+  <td>Custom function which return true or false.</td>
+  <td>Function</td>
+</tr>
+</tbody>
+</table>
+
+<p>See <a href="http://dstreet.github.io/dependsOn/">jQuery dependsOn.js</a></p>
 
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/tut/grid.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/fields-dependent.md">improve</a> this document.
     </p>
                 </article>
             </div>

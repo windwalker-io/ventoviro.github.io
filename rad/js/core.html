@@ -152,6 +152,9 @@
                 <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/fields-dependent.html">Fields Dependent</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -171,7 +174,13 @@
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/more/mailer-adapters.html">Mailer Adapters</a>
             </li>
         
        </ul>
@@ -286,6 +295,35 @@ Phoenix.sendDelete('/flower/sakura/25', query);
 
     // ...
 }).done(...)
+</code></pre>
+
+<h2>Variable Storage</h2>
+
+<p>Phoenix can store some variables from PHP and push to frontend. Use this code in PHP:</p>
+
+<pre><code class="php">PhoenixScript::store('item', $data);
+PhoenixScript::store('title', 'Hello');
+</code></pre>
+
+<p>In frontend, use this JS to get value:</p>
+
+<pre><code class="php">// Get object
+var item = Phoenix.Sotre.item;
+
+var id = item.id;
+
+// Get string
+var title = Phoenix.Sotre.title.toUpperCase();
+</code></pre>
+
+<p>It is useful if you are using Vue.js and you want to push a lot of data structure to vue instance:</p>
+
+<pre><code class="js">new Vue({
+    el: '#app',
+    data: {
+        item: Phoenix.Store.item
+    }
+});
 </code></pre>
 
 <h2>Translate</h2>

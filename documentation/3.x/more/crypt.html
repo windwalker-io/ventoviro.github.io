@@ -375,15 +375,19 @@ if your environment has no openssl extension support, you can use <code>php_aes<
 without php libsodium extension, but we still recommend you to install <code>ext-libsodium</code> or use php 7.2 later to 
 support memory wipe and with higher performance.</p>
 
-<p>If you get sodium_memzero() only supports after php 7.2 or ext-libsodium installed. message, 
+<p>If you get <code>sodium_memzero() only supports after php 7.2 or ext-libsodium installed.</code> message, 
 You can disable memory wipe by <code>ignoreMemzero()</code> (But we don't recommend to do this):</p>
 
-<pre><code class="php">$cipher = Crypto::getCipher();
+<pre><code class="php">// Add this code in a listener or anywhere before your application 
+$cipher = Crypto::getCipher();
 
 if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher)
 {
     $cipher-&gt;ignoreMemzero(true);
 }
+
+// Now you can encrypt text by sodium
+Crypto::encrypt('Hello');
 </code></pre>
 
 <p>See <a href="https://github.com/ventoviro/windwalker-crypt#symmetric-key-algorithm-encryption">Windwalke Crypt</a></p>

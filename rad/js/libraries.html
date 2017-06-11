@@ -152,6 +152,9 @@
                 <a class="withripple" href="../../rad/js/ajax.html">Ajax</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/fields-dependent.html">Fields Dependent</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/validation.html">Validation</a>
             </li>
                     <li class="">
@@ -171,7 +174,13 @@
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/more/mailer-adapters.html">Mailer Adapters</a>
             </li>
         
        </ul>
@@ -187,9 +196,14 @@
 <pre><code class="php">\Phoenix\Script\CoreScript::requireJS();
 </code></pre>
 
-<p>Now yo can load your script by commonJS api:</p>
+<p>Now yo can load your script by commonJS API:</p>
 
-<pre><code class="js">var foo = require('foo.js');
+<pre><code class="js">var foo = require('./foo');
+</code></pre>
+
+<p>Or require it from PHP:</p>
+
+<pre><code class="php">\Phoenix\Script\CoreScript::requireJS('./foo');
 </code></pre>
 
 <p>See <a href="http://requirejs.org/">RequireJS</a></p>
@@ -231,6 +245,15 @@ underscore.template("hello: @{{ name }}").compiled({name: 'World'});
 
 <p>See <a href="http://gabceb.github.io/underscore.string.site/">Underscore.string.js</a></p>
 
+<h2>Sprintf</h2>
+
+<p><code>underscore.string</code> deprecated <code>sprintf()</code> method, so you can use JS <code>sprintf</code> package instead:</p>
+
+<pre><code class="php">\Phoenix\Script\CoreScript::sprintf();
+</code></pre>
+
+<p>See <a href="https://github.com/alexei/sprintf.js">sprintf.js</a></p>
+
 <h2>Backbone</h2>
 
 <p>Phoenix provides <code>backbone.js</code> if you want to build a SPA.</p>
@@ -240,6 +263,16 @@ underscore.template("hello: @{{ name }}").compiled({name: 'World'});
 
 <p>See <a href="http://backbonejs.org/">Backbone.js</a></p>
 
+<h2>Ivia</h2>
+
+<p>Ivia.js is a reactivity MVVM framework for jQuery with Vue-like interface, it can easily work with phoenix scripts and won't
+break existing DOM events.</p>
+
+<pre><code class="php">\Phoenix\Script\CoreScript::ivia();
+</code></pre>
+
+<p>See <a href="http://about.asika.tw/ivia/">Ivia.js</a></p>
+
 <h2>Simple Uri</h2>
 
 <p>Simple Uri is a JS URI object to help us easily handle uri operations in browser environment:</p>
@@ -248,6 +281,15 @@ underscore.template("hello: @{{ name }}").compiled({name: 'World'});
 </code></pre>
 
 <p>See <a href="http://about.asika.tw/simple-uri.js/">SimpleUri.js</a></p>
+
+<h2>Silicone</h2>
+
+<p>Silicone is a simple css helper to extend bootstrap and other css frameworks.</p>
+
+<pre><code class="php">\Phoenix\Script\CoreScript::silicone();
+</code></pre>
+
+<p>See <a href="https://github.com/asika32764/silicone">silicone.css</a></p>
 
 <h2>Add CSRF Token</h2>
 

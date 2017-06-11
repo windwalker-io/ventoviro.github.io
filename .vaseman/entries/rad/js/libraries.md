@@ -13,10 +13,16 @@ Include `require.js`
 \Phoenix\Script\CoreScript::requireJS();
 ```
 
-Now yo can load your script by commonJS api:
+Now yo can load your script by commonJS API:
 
-``` js
-var foo = require('foo.js');
+```js
+var foo = require('./foo');
+```
+
+Or require it from PHP:
+
+```php
+\Phoenix\Script\CoreScript::requireJS('./foo');
 ```
 
 See [RequireJS](http://requirejs.org/)
@@ -31,7 +37,7 @@ Phoenix provides `underscore.js` as a base JS library to help us do more things 
 
 Phoenix enabled no conflict mode as default, so you must use `underscore` instead `_`:
 
-``` js
+```js
 underscore.isNumber(234);
 ```
 
@@ -39,7 +45,7 @@ underscore.isNumber(234);
 
 Phoenix override underscore template syntax to same as Blade and Edge, so we can use double braces to render variables:
 
-``` js
+```js
 underscore.template("hello: {{ name }}").compiled({name: 'World'});
 ```
 
@@ -63,6 +69,16 @@ Support more string operations.
 
 See [Underscore.string.js](http://gabceb.github.io/underscore.string.site/)
 
+## Sprintf
+
+`underscore.string` deprecated `sprintf()` method, so you can use JS `sprintf` package instead:
+
+```php
+\Phoenix\Script\CoreScript::sprintf();
+```
+
+See [sprintf.js](https://github.com/alexei/sprintf.js)
+
 ## Backbone
 
 Phoenix provides `backbone.js` if you want to build a SPA.
@@ -73,6 +89,17 @@ Phoenix provides `backbone.js` if you want to build a SPA.
 
 See [Backbone.js](http://backbonejs.org/)
 
+## Ivia
+
+Ivia.js is a reactivity MVVM framework for jQuery with Vue-like interface, it can easily work with phoenix scripts and won't
+break existing DOM events.
+
+```php
+\Phoenix\Script\CoreScript::ivia();
+```
+
+See [Ivia.js](http://about.asika.tw/ivia/)
+
 ## Simple Uri
 
 Simple Uri is a JS URI object to help us easily handle uri operations in browser environment:
@@ -82,6 +109,16 @@ Simple Uri is a JS URI object to help us easily handle uri operations in browser
 ```
 
 See [SimpleUri.js](http://about.asika.tw/simple-uri.js/)
+
+## Silicone
+
+Silicone is a simple css helper to extend bootstrap and other css frameworks.
+ 
+``` php
+\Phoenix\Script\CoreScript::silicone();
+```
+
+See [silicone.css](https://github.com/asika32764/silicone)
 
 ## Add CSRF Token
 

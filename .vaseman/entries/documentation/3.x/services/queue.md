@@ -13,6 +13,7 @@ Windwalker Queue provides an universal interface to wrap different message queue
 - [IronMQ](https://www.iron.io/)
 - [RabbitMQ](https://www.rabbitmq.com/) (AMQP)
 - [Beanstalkd](http://kr.github.io/beanstalkd/)
+- [PHP Resque](https://github.com/chrisboulton/php-resque) (Redis)
 - Database
 - Sync (No queue, execute immediately)
 
@@ -52,6 +53,11 @@ queue:
         queue: default
         host: 127.0.0.1
         timeout: 60
+    resque:
+        driver: resque
+        queue: default
+        host: localhost
+        port: 6379
     failer:
         driver: database
         table: queue_failed_jobs
@@ -109,6 +115,13 @@ rabbitmq:
 You can change the host by modify settings.
 
 > Need `pda/pheanstalk` package installed.
+
+### PHP Resque (Redis)
+
+`resque` is a port of ruby resque in PHP and work with Redis. Default it will connect to `localhost:6379`, to chane this host,
+modify `host` and `port` in `secret.yml`.
+
+> Need `chrisboulton/php-resque <= 1.2` installed. If you want to use delayed messages, you must also install `chrisboulton/php-resque-scheduler`.
 
 ## Get Queue Object
 
