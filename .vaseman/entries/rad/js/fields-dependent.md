@@ -27,9 +27,11 @@ $this->list('city')
 Set dependency script:
 
 ```php
-PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
-    'ajax_url' => CoreRouter::route('flower@ajax_city')
-]);
+PhoenixScript::listDependent(
+    '#input-item-city', 
+    '#input-item-country',
+    CoreRouter::route('flower@ajax_city')
+);
 ```
 
 And you must have a route and a controller to return list data:
@@ -81,8 +83,7 @@ The result is:
 ### Options
 
 ```php
-PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
-    'ajax_uri' => CoreRouter::route('flower@ajax_city'),
+PhoenixScript::listDependent('#input-item-city', '#input-item-country', CoreRouter::route('flower@ajax_city'), [
     'default_value' => null, // Set default value.
     'initial_load' => true, // Load list first after page initial?
     'request' => [
@@ -105,18 +106,19 @@ You can add your logic before and after process:
 
 ```php
 JQueryScript::ui(['effect']);
-PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
-    'ajax_url' => CoreRouter::route('flower@ajax_city'),
-    'hooks' => [
-        'before_request' => "\\function (value, ele, depEle) {
-            ele.attr('disabled', true);
-        }",
-        'after_request' => "\\function (value, ele, depEle) {
-            ele.attr('disabled', false);
-            ele.effect('highlight');
-        }"
+PhoenixScript::listDependent('#input-item-city', '#input-item-country', CoreRouter::route('flower@ajax_city'), 
+    [
+        'hooks' => [
+            'before_request' => "\\function (value, ele, depEle) {
+                ele.attr('disabled', true);
+            }",
+            'after_request' => "\\function (value, ele, depEle) {
+                ele.attr('disabled', false);
+                ele.effect('highlight');
+            }"
+        ]
     ]
-]);
+);
 ```
 
 ![Imgur](http://i.imgur.com/U9PDX52.gif)

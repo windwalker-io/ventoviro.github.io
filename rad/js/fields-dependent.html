@@ -209,9 +209,11 @@ $this-&gt;list('city')
 
 <p>Set dependency script:</p>
 
-<pre><code class="php">PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
-    'ajax_url' =&gt; CoreRouter::route('flower@ajax_city')
-]);
+<pre><code class="php">PhoenixScript::listDependent(
+    '#input-item-city', 
+    '#input-item-country',
+    CoreRouter::route('flower@ajax_city')
+);
 </code></pre>
 
 <p>And you must have a route and a controller to return list data:</p>
@@ -260,8 +262,7 @@ class GetController extends AbstractController
 
 <h3>Options</h3>
 
-<pre><code class="php">PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
-    'ajax_uri' =&gt; CoreRouter::route('flower@ajax_city'),
+<pre><code class="php">PhoenixScript::listDependent('#input-item-city', '#input-item-country', CoreRouter::route('flower@ajax_city'), [
     'default_value' =&gt; null, // Set default value.
     'initial_load' =&gt; true, // Load list first after page initial?
     'request' =&gt; [
@@ -283,18 +284,19 @@ class GetController extends AbstractController
 <p>You can add your logic before and after process:</p>
 
 <pre><code class="php">JQueryScript::ui(['effect']);
-PhoenixScript::listDependent('#input-item-city', '#input-item-country', [
-    'ajax_url' =&gt; CoreRouter::route('flower@ajax_city'),
-    'hooks' =&gt; [
-        'before_request' =&gt; "\\function (value, ele, depEle) {
-            ele.attr('disabled', true);
-        }",
-        'after_request' =&gt; "\\function (value, ele, depEle) {
-            ele.attr('disabled', false);
-            ele.effect('highlight');
-        }"
+PhoenixScript::listDependent('#input-item-city', '#input-item-country', CoreRouter::route('flower@ajax_city'), 
+    [
+        'hooks' =&gt; [
+            'before_request' =&gt; "\\function (value, ele, depEle) {
+                ele.attr('disabled', true);
+            }",
+            'after_request' =&gt; "\\function (value, ele, depEle) {
+                ele.attr('disabled', false);
+                ele.effect('highlight');
+            }"
+        ]
     ]
-]);
+);
 </code></pre>
 
 <p><img src="http://i.imgur.com/U9PDX52.gif" alt="Imgur" /></p>
