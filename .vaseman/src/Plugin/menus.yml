@@ -66,6 +66,7 @@ documentation:
             more/string: String
             more/tests: Tests
             more/validation: Validation
+            more/utilities: Utilities
             more/more-packages: More Packages
     2.1:
         Start:

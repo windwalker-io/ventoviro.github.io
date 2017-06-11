@@ -293,6 +293,9 @@
                 <a class="withripple" href="../../../documentation/3.x/more/validation.html">Validation</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../../documentation/3.x/more/utilities.html">Utilities</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../../documentation/3.x/more/more-packages.html">More Packages</a>
             </li>
         
@@ -320,6 +323,14 @@
         - 'fe80::1'
         - '::1'
         - 123.456.654.321 ## Add your ip
+</code></pre>
+
+<h2>Dump Data</h2>
+
+<p><code>show()</code> is a useful helper function to replace PHP native <code>print_r()</code>, it will wrap all dumped string into a <code>&lt;pre&gt;&lt;/pre&gt;</code>
+element to format text, and can set max level limit in last argument, this code is an example to show 3 data and limit 7 levels:</p>
+
+<pre><code class="php">show($data1, $data2, $data3, 7);
 </code></pre>
 
 <h3>Close Debug Console</h3>

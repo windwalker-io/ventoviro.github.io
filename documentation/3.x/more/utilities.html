@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
 
-    <title>Class Resolvers | Windwalker - PHP Rapid Development Framework</title>
+    <title>Utilities | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Class Resolvers | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Utilities | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -75,11 +75,11 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li class="active">
-                        <a href="../../../documentation/3.x/mvc/class-resolvers.html">3.x</a>
+                        <a href="../../../documentation/3.x/more/utilities.html">3.x</a>
                     </li>
 
                     <li class="">
-                        <a href="../../../documentation/2.1/mvc/class-resolvers.html">2.1</a>
+                        <a href="../../../documentation/2.1/more/utilities.html">2.1</a>
                     </li>
                 </ul>
             </div>
@@ -94,7 +94,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Class Resolvers</h1>
+                    <h1 class="banner-title">Utilities</h1>
                 </div>
             </div>
         </section>
@@ -150,7 +150,7 @@
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/mvc/use-controller.html">Use Controller</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../../documentation/3.x/mvc/class-resolvers.html">Class Resolvers</a>
             </li>
                     <li class="">
@@ -292,7 +292,7 @@
                     <li class="">
                 <a class="withripple" href="../../../documentation/3.x/more/validation.html">Validation</a>
             </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../../documentation/3.x/more/utilities.html">Utilities</a>
             </li>
                     <li class="">
@@ -305,58 +305,457 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>MVC Resolvers</h2>
+                    <h2>New <code>Arr</code> Class</h2>
 
-<p>Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
-has a <code>flower</code> package and a route with <code>Sakura</code> controller matched:</p>
+<p>We are trying to use <code>\Windwalker\Utilities\Arr</code> replace old <code>ArrayHelper</code>.</p>
 
-<pre><code class="php">sakura:
-    pattern: /sakura
-    controller: Sakura
+<h3>Simple Usage</h3>
+
+<p>Get and set:</p>
+
+<pre><code class="php">$bar = Arr::get($arrayOrObject, 'foo.bar', 'default');
+
+Arr::set($arrayOrObject, 'foo.baz', 'value');
+
+Arr::has($arrayOrObject, 'foo.baz');
+Arr::remove($arrayOrObject, 'foo.baz');
 </code></pre>
 
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists,
-we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
+<h3>Method list of <code>Arr</code></h3>
 
-<p>Add this line in package <code>boot()</code> or any position before package execute.</p>
+<pre><code class="php">Arr::toArray($data, $recursive = false)
+Arr::toObject(array $array, $class = 'stdClass')
+Arr::has($array, $key, $delimiter = '.')
+Arr::def($array, $key, $value, $delimiter = '.')
+Arr::get($data, $key, $default = null, $delimiter = '.')
+Arr::set($data, $key, $value, $delimiter = '.', $storeType = 'array')
+Arr::remove($data, $key, $delimiter = '.')
+Arr::collapse($data)
+Arr::flatten($array, $delimiter = '.', $depth = 0, $prefix = null)
+Arr::only($data, array $fields)
+Arr::find(array $data, callable $callback = null, $keepKey = false, $offset = null, $limit = null)
+Arr::findFirst(array $data, callable $callback = null)
+Arr::reject(array $data, callable $callback, $keepKey = false)
+Arr::takeout(&amp;$data, $key, $default = null, $delimiter = '.')
+Arr::sort(array $data, $condition, $descending = false, $options = SORT_REGULAR)
+Arr::invert(array $array)
+Arr::pivot(array $array)
+Arr::isAssociative(array $array)
+Arr::accessible($array)
+Arr::group(array $array, $key = null, $forceArray = false)
+Arr::unique(array $array)
+Arr::mergeRecursive($array1)
+Arr::dump($data, $depth = 5)
+Arr::show($arg)
+Arr::map(array $array, callable $callback, $recursive = false)
+</code></pre>
 
-<pre><code class="php">public function boot()
-{
-    parent::boot();
+<h2>Using ArrayHelper</h2>
 
-    // Register Animal package namespace to find classes
-    $mvcResolver = $this-&gt;getMvcResolver();
+<h3>toObject</h3>
 
-    $mvcResolver-&gt;addNamespace('Animal', Priority::NORMAL);
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+
+class Book {
+    public $name;
+    public $author;
+    public $genre;
+    public $rating;
+}
+class Author {
+    public $name;
+    public $born;
+}
+$input = array(
+    "name" =&gt; "The Hitchhiker's Guide to the Galaxy",
+    "author" =&gt; array(
+        "name" =&gt; "Douglas Adams",
+        "born" =&gt; 1952,
+        "died" =&gt; 2001),
+    "genre" =&gt; "comic science fiction",
+    "rating" =&gt; 10
+);
+$book = ArrayHelper::toObject($input, 'Book');
+var_dump($book);
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code>class Book#1 (4) {
+  public $name =&gt;
+  string(36) "The Hitchhiker's Guide to the Galaxy"
+  public $author =&gt;
+  class Book#2 (6) {
+    public $name =&gt;
+    string(13) "Douglas Adams"
+    public $author =&gt;
+    NULL
+    public $genre =&gt;
+    NULL
+    public $rating =&gt;
+    NULL
+    public $born =&gt;
+    int(1952)
+    public $died =&gt;
+    int(2001)
+  }
+  public $genre =&gt;
+  string(21) "comic science fiction"
+  public $rating =&gt;
+  int(10)
 }
 </code></pre>
 
-<p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
-It is flexible to help us organize our packages.</p>
+<h3>getColumn</h3>
 
-<h2>View And Model</h2>
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
 
-<p>You can also use the same way to add default View and Model paths.</p>
-
-<pre><code class="php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);
+$rows = array(
+    array("name" =&gt; "John", "age" =&gt; 20),
+    array("name" =&gt; "Alex", "age" =&gt; 35),
+    array("name" =&gt; "Sarah", "age" =&gt; 27)
+);
+$names = ArrayHelper::getColumn($rows, 'name');
+var_dump($names);
 </code></pre>
 
-<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
-will find from Animal package as default object.</p>
+<p>Result:</p>
 
-<p>We can also set default path separately.</p>
+<pre><code>array(3) {
+  [0] =&gt;
+  string(4) "John"
+  [1] =&gt;
+  string(4) "Alex"
+  [2] =&gt;
+  string(5) "Sarah"
+}
+</code></pre>
 
-<pre><code class="php">$mvcResolver = $this-&gt;getMvcResolver();
+<h3>getValue</h3>
 
-$mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
-$mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+
+$city = array(
+    "name" =&gt; "Oslo",
+    "country" =&gt; "Norway"
+);
+
+// Prints 'Oslo'
+echo ArrayHelper::getValue($city, 'name');
+
+// Prints 'unknown mayor' (no 'mayor' key is found in the array)
+echo ArrayHelper::getValue($city, 'mayor', 'unknown mayor');
+</code></pre>
+
+<h3>invert</h3>
+
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+
+$input = array(
+    'New' =&gt; array('1000', '1500', '1750'),
+    'Used' =&gt; array('3000', '4000', '5000', '6000')
+);
+$output = ArrayHelper::invert($input);
+var_dump($output);
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code>array(7) {
+  [1000] =&gt;
+  string(3) "New"
+  [1500] =&gt;
+  string(3) "New"
+  [1750] =&gt;
+  string(3) "New"
+  [3000] =&gt;
+  string(4) "Used"
+  [4000] =&gt;
+  string(4) "Used"
+  [5000] =&gt;
+  string(4) "Used"
+  [6000] =&gt;
+  string(4) "Used"
+}
+</code></pre>
+
+<h3>isAssociative</h3>
+
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+
+$user = array("id" =&gt; 46, "name" =&gt; "John");
+echo ArrayHelper::isAssociative($user) ? 'true' : 'false'; // true
+
+$letters = array("a", "b", "c");
+echo ArrayHelper::isAssociative($letters) ? 'true' : 'false'; // false
+</code></pre>
+
+<h3>group</h3>
+
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+
+$movies = array(
+    array('year' =&gt; 1972, 'title' =&gt; 'The Godfather'),
+    array('year' =&gt; 2000, 'title' =&gt; 'Gladiator'),
+    array('year' =&gt; 2000, 'title' =&gt; 'Memento'),
+    array('year' =&gt; 1964, 'title' =&gt; 'Dr. Strangelove')
+);
+$pivoted = ArrayHelper::pivot($movies, 'year');
+var_dump($pivoted);
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code>array(3) {
+  [1972] =&gt;
+  array(2) {
+    'year' =&gt;
+    int(1972)
+    'title' =&gt;
+    string(13) "The Godfather"
+  }
+  [2000] =&gt;
+  array(2) {
+    [0] =&gt;
+    array(2) {
+      'year' =&gt;
+      int(2000)
+      'title' =&gt;
+      string(9) "Gladiator"
+    }
+    [1] =&gt;
+    array(2) {
+      'year' =&gt;
+      int(2000)
+      'title' =&gt;
+      string(7) "Memento"
+    }
+  }
+  [1964] =&gt;
+  array(2) {
+    'year' =&gt;
+    int(1964)
+    'title' =&gt;
+    string(15) "Dr. Strangelove"
+  }
+}
+</code></pre>
+
+<h3>sortObjects</h3>
+
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+
+$members = array(
+    (object) array('first_name' =&gt; 'Carl', 'last_name' =&gt; 'Hopkins'),
+    (object) array('first_name' =&gt; 'Lisa', 'last_name' =&gt; 'Smith'),
+    (object) array('first_name' =&gt; 'Julia', 'last_name' =&gt; 'Adams')
+);
+$sorted = ArrayHelper::sortObjects($members, 'last_name', 1);
+var_dump($sorted);
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code>array(3) {
+  [0] =&gt;
+  class stdClass#3 (2) {
+    public $first_name =&gt;
+    string(5) "Julia"
+    public $last_name =&gt;
+    string(5) "Adams"
+  }
+  [1] =&gt;
+  class stdClass#1 (2) {
+    public $first_name =&gt;
+    string(4) "Carl"
+    public $last_name =&gt;
+    string(7) "Hopkins"
+  }
+  [2] =&gt;
+  class stdClass#2 (2) {
+    public $first_name =&gt;
+    string(4) "Lisa"
+    public $last_name =&gt;
+    string(5) "Smith"
+  }
+}
+</code></pre>
+
+<h3>arrayUnique</h3>
+
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+
+$names = array(
+    array("first_name" =&gt; "John", "last_name" =&gt; "Adams"),
+    array("first_name" =&gt; "John", "last_name" =&gt; "Adams"),
+    array("first_name" =&gt; "John", "last_name" =&gt; "Smith"),
+    array("first_name" =&gt; "Sam", "last_name" =&gt; "Smith")
+);
+$unique = ArrayHelper::arrayUnique($names);
+var_dump($unique);
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code>array(3) {
+  [0] =&gt;
+  array(2) {
+    'first_name' =&gt;
+    string(4) "John"
+    'last_name' =&gt;
+    string(5) "Adams"
+  }
+  [2] =&gt;
+  array(2) {
+    'first_name' =&gt;
+    string(4) "John"
+    'last_name' =&gt;
+    string(5) "Smith"
+  }
+  [3] =&gt;
+  array(2) {
+    'first_name' =&gt;
+    string(3) "Sam"
+    'last_name' =&gt;
+    string(5) "Smith"
+  }
+}
+</code></pre>
+
+<h3>flatten</h3>
+
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+
+$array = array(
+    'flower' =&gt; array(
+        'sakura' =&gt; 'samurai',
+        'olive' =&gt; 'peace'
+    )
+);
+
+// Make nested data flatten and separate by dot (".")
+
+$flatted1 = ArrayHelper::flatten($array);
+
+echo $flatted1['flower.sakura']; // 'samuari'
+
+// Custom separator
+
+$flatted2 = ArrayHelper::flatten($array, '/');
+
+echo $flatted2['flower/olive']; // 'peace'
+</code></pre>
+
+<h3>merge</h3>
+
+<p>Recursive merge two array.</p>
+
+<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+
+$array2 = array(
+    'flower' =&gt; array(
+        'sakura' =&gt; 'samurai',
+        'olive' =&gt; 'peace'
+    )
+);
+
+$array2 = array(
+    'flower' =&gt; array(
+        'sakura' =&gt; 'overrided',
+    )
+);
+
+$newArray = ArrayHelper:merge($array1, $array2, true);
+
+Array
+(
+    [flower] =&gt; Array
+    (
+        [sakura] =&gt; overrided
+        [olive] =&gt; peace
+    )
+)
+</code></pre>
+
+<h3>match</h3>
+
+<p>Check an array matched our query condition.</p>
+
+<pre><code class="php">$array = array(
+    'id' =&gt; 1,
+    'title' =&gt; 'Julius Caesar',
+    'data' =&gt; (object) array('foo' =&gt; 'bar'),
+);
+
+// Check id=1
+$bool = ArrayHelper::match($data, array('id' =&gt; 1));
+
+// Check id=1 with strict compare (int)
+$bool = ArrayHelper::match($data, array('id' =&gt; 1), true);
+
+// Check id=1 AND title='Julius Caesar'
+$bool = ArrayHelper::match($data, array('id' =&gt; 1, 'title' =&gt; 'Julius Caesar'));
+
+// Check id IN (2,3,4)
+$bool = ArrayHelper::match($data, array('id' =&gt; array(2, 3, 4)));
+
+// Check id &gt;= 2
+$bool = ArrayHelper::match($data, array('id &gt;=' =&gt; 2));
+</code></pre>
+
+<h3>query</h3>
+
+<p>Find element matched array in array.</p>
+
+<pre><code class="php">$data = array(
+    array(
+        'id' =&gt; 1,
+        'title' =&gt; 'Julius Caesar',
+        'data' =&gt; (object) array('foo' =&gt; 'bar'),
+    ),
+    array(
+        'id' =&gt; 2,
+        'title' =&gt; 'Macbeth',
+        'data' =&gt; array(),
+    ),
+    array(
+        'id' =&gt; 3,
+        'title' =&gt; 'Othello',
+        'data' =&gt; 123,
+    ),
+    array(
+        'id' =&gt; 4,
+        'title' =&gt; 'Hamlet',
+        'data' =&gt; true,
+    ),
+);
+
+// Query id=2
+$newArray = ArrayHelper::query($data, array('id' =&gt; 2));
+
+// Query id=2, use strict compare to check is int, not string
+$newArray = ArrayHelper::query($data, array('id' =&gt; 2), true, [keepKey = false]);
+
+// Query id=2 AND title='Macbeth'
+$newArray = ArrayHelper::query($data, array('id' =&gt; 2, 'title' =&gt; 'Macbeth'));
+
+// Query id IN (2,3,4)
+$newArray = ArrayHelper::query($data, array('id' =&gt; array(2, 3, 4)));
+
+// Query id &gt;= 2
+$newArray = ArrayHelper::query($data, array('id &gt;=' =&gt; 2));
+
+// Use callback, similar to array_filter()
+$newArray = ArrayHelper::query($data, function ($key, $value, $strict)
+{
+    return $value['id'] == 3 || $value['title'] == 'Macbeth';
+});
 </code></pre>
 
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/mvc/class-resolvers.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.x/more/utilities.md">improve</a> this document.
     </p>
                 </article>
             </div>

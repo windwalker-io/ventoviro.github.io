@@ -27,6 +27,15 @@ dev:
         - 123.456.654.321 ## Add your ip
 ```
 
+## Dump Data
+
+`show()` is a useful helper function to replace PHP native `print_r()`, it will wrap all dumped string into a `<pre></pre>`
+element to format text, and can set max level limit in last argument, this code is an example to show 3 data and limit 7 levels:
+
+```php
+show($data1, $data2, $data3, 7);
+```
+
 ### Close Debug Console
 
 Debug console will auto push to page when system close, but sometimes we won't want it to show if in ajax or api call.
