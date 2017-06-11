@@ -42,10 +42,11 @@ documentation:
             services/datetime: Chronos (DateTime)
             services/environment: Environment
             services/events: Events
+            services/queue: Queue
             services/languages: Languages
+            services/mailer: Mailer
             services/session: Session
             services/widget-renderer: Widget and Renderer
-            services/mailer: Mailer
             services/debugging: Debugging and Logging
             services/error-handling: Error Handling
         Console:
