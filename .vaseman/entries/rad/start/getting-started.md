@@ -9,7 +9,7 @@ title: Getting Started
 
 Please install Windwalker Framework first. See [Windwalker Installation](../../documentation/3.x/start/installation.html)
 
-Then add `"windwalker/phoenix": "~1.1"` to require block and run `composer update`.
+Then add `"windwalker/phoenix": "~1.0"` to require block and run `composer update`.
 
 ### Register Phoenix Package
 
