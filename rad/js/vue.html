@@ -252,6 +252,25 @@
 &lt;/script&gt;
 </code></pre>
 
+<h3>Add PHP Variable to Vue Instance</h3>
+
+<p>See <a href="../js/core.html#variable-storage">Phoenix Core: Variable Storage</a></p>
+
+<p>You can use php code:</p>
+
+<pre><code class="php">PhoenixScript::store('item', $data);
+</code></pre>
+
+<p>To inject data to Vue:</p>
+
+<pre><code class="js">new Vue({
+    el: '#app',
+    data: {
+        item: Phoenix.Store.item
+    }
+});
+</code></pre>
+
 <h2>Vue Animate</h2>
 
 <p>Use <code>vue2-animate</code> package to add transition effects by <a href="https://github.com/daneden/animate.css">animate.css</a>.</p>

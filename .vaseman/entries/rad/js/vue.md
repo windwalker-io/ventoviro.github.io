@@ -73,6 +73,27 @@ This will generate JS code looks like:
 </script>
 ```
 
+### Add PHP Variable to Vue Instance
+
+See [Phoenix Core: Variable Storage](../js/core.html#variable-storage)
+
+You can use php code:
+
+```php
+PhoenixScript::store('item', $data);
+```
+
+To inject data to Vue:
+
+```js
+new Vue({
+    el: '#app',
+    data: {
+        item: Phoenix.Store.item
+    }
+});
+```
+
 ## Vue Animate
 
 Use `vue2-animate` package to add transition effects by [animate.css](https://github.com/daneden/animate.css).
