@@ -237,19 +237,17 @@ class GetController extends AbstractController
     protected function doExecute()
     {
         $value = $this-&gt;input-&gt;get('value');
-        $data = [];
+        $data = [
+            ['title' =&gt; '-- Select City --']
+        ];
 
-        $cities = CityMapper::find(['country_id' =&gt; $value]);
-
-        foreach ($cities =&gt; $city)
+        foreach (CityMapper::find(['country_id' =&gt; $value]) =&gt; $city)
         {
-            $data = [
+            $data[] = [
                 'id' =&gt; $city-&gt;id,
                 'title' =&gt; $city-&gt;title
             ];
         }
-
-        array_unshift($data, ['title' =&gt; '-- Select City --']);
 
         return $data;
     }
@@ -260,23 +258,71 @@ class GetController extends AbstractController
 
 <p><img src="http://i.imgur.com/HlMnft4.gif" alt="Imgur" /></p>
 
+<h3>Use Array as Source</h3>
+
+<p>You can also set an array as your source instead call ajax:</p>
+
+<pre><code class="php">&lt;?
+PhoenixScript::listDependent(
+    '#input-item-city', 
+    '#input-item-country',
+    [
+        1 =&gt; [
+            ['id' =&gt; 1, 'title' =&gt; 'New York'],
+            ['id' =&gt; 2, 'title' =&gt; 'DC'],
+        ],
+        2 =&gt; [
+            ['id' =&gt; 3, 'title' =&gt; 'Moscow'],
+            ['id' =&gt; 4, 'title' =&gt; 'Saint Petersburg'],
+        ]
+    ]
+);
+</code></pre>
+
+<p>If you want to set a default selection with empty value, use <code>__EMPTY__</code> as key name, now the option with value "" 
+will get <code>-- Select A Country First --</code> to notice users.:</p>
+
+<pre><code class="php">PhoenixScript::listDependent(
+    '#input-item-city', 
+    '#input-item-country',
+    [
+        '__EMPTY__' =&gt; [
+            ['id' =&gt; '', 'title' =&gt; '-- Select A Country First --']
+        ],
+        1 =&gt; [
+            ['id' =&gt; 1, 'title' =&gt; 'New York'],
+            ['id' =&gt; 2, 'title' =&gt; 'DC'],
+        ],
+        2 =&gt; [
+            ['id' =&gt; 3, 'title' =&gt; 'Moscow'],
+            ['id' =&gt; 4, 'title' =&gt; 'Saint Petersburg'],
+        ]
+    ]
+);
+</code></pre>
+
 <h3>Options</h3>
 
-<pre><code class="php">PhoenixScript::listDependent('#input-item-city', '#input-item-country', CoreRouter::route('flower@ajax_city'), [
-    'default_value' =&gt; null, // Set default value.
-    'initial_load' =&gt; true, // Load list first after page initial?
-    'request' =&gt; [
-        'value_field' =&gt; 'value' // Change request value field
-    ],
-    'response' =&gt; [
+<pre><code class="php">PhoenixScript::listDependent(
+    '#input-item-city', 
+    '#input-item-country', 
+    CoreRouter::route('flower@ajax_city'), 
+    [
+        'default_value' =&gt; null, // Set default value.
+        'initial_load' =&gt; true, // Load list first after page initial?
+        'ajax' =&gt; [
+            'value_field' =&gt; 'value' // Change request value field
+        ],
         'text_field' =&gt; 'title', // Which field in response should add to option text
-        'value_field' =&gt; 'id' // Which field in response should add to option value
-    ],
-    'hooks' =&gt; [
-        'before_request' =&gt; '\\function () { ... }',
-        'after_request' =&gt; '\\function () { ... }',
+        'value_field' =&gt; 'id', // Which field in response should add to option value
+        'first_option' =&gt; null, // Auto add first option to all result: [id: ..., title: ...]
+        'empty_mark' =&gt; '__EMPTY__', // If you have an option's with "" value, it will get list by key: `__EMPTY__` from your source.
+        'hooks' =&gt; [
+            'before_request' =&gt; '\\function () { ... }',
+            'after_request' =&gt; '\\function () { ... }',
+        ]
     ]
-]);
+);
 </code></pre>
 
 <h3>Hooks</h3>

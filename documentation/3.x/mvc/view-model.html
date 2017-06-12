@@ -354,8 +354,11 @@ $view = new SakurasHtmlView;
 
 $view-&gt;setModel($model);
 
-// OR
-$view-&gt;model-&gt;setModel($model);
+// Or set with prepare model state
+$view-&gt;setModel($model, function (FlowerModel $model)
+{
+    $model-&gt;set('item.id', $this-&gt;input-&gt;get('id'));
+});
 
 return $view-&gt;render();
 </code></pre>
@@ -373,6 +376,27 @@ return $view-&gt;render();
 
 <p>The <code>$view-&gt;model</code> property is <code>ViewModel</code> object, if we call any method, <code>ViewModel</code> will pass this method to default Model by magic method.
 If Model does not have this method, it will only return <code>null</code>.</p>
+
+<p>We can also get data by <code>pipe()</code> or <code>applyData()</code> with a callback and class hint:</p>
+
+<pre><code class="php">// In View
+
+protected function prepareData($data)
+{
+    // Use pipe()
+    $this-&gt;pipe(function (FlowerModel $model, $view) use ($data)
+    {
+        $data-&gt;item = $model-&gt;getItem();
+    });
+
+    // Use applyData
+    $this-&gt;applyData(function (FlowerModel $model, $data)
+    {
+        $data-&gt;item = $model-&gt;getItem();
+    });
+
+    // ...
+</code></pre>
 
 <p>You must make sure Model named with <code>XXXModel</code>, the model will guess their name. you can also set name property when declaring Model class. 
 There is some ways to define Model's name:</p>
@@ -400,14 +424,46 @@ $model = $this-&gt;getModel();
 $roseModel = $this-&gt;getModel('Rose');
 $oliveModel = $this-&gt;getModel('Olive');
 
-$view-&gt;setModel($model);
+$view-&gt;setModel($model, true); // Second argument TRUE as default
 $view-&gt;setModel($roseModel);
-$view-&gt;setModel($oliveModel);
+$view-&gt;setModel($oliveModel [, custom name]);
 
 return $view-&gt;render();
 </code></pre>
 
-<p>Use array access to get different models and call methods.</p>
+<p>Set sub models with custom name alias:</p>
+
+<pre><code class="php">$view-&gt;setModel($model, true); // Second argument TRUE as default
+$view-&gt;addModel('rose', $roseModel);
+$view-&gt;addModel('olive', $oliveModel);
+</code></pre>
+
+<p>If you want to set state when setting models, use callback:</p>
+
+<pre><code class="php">$view-&gt;addModel('rose', $this-&gt;getModel('Rose'), function (RoseModel $model)
+{
+    $model-&gt;set('list.page', 5);
+});
+</code></pre>
+
+<p>Use <code>configureModel()</code> or <code>pipe()</code> to configure models after set in View:</p>
+
+<pre><code class="php">$view-&gt;configureModel('rose', function (RoseModel $model, $view)
+{
+    $model-&gt;set('list.limit', 15);
+});
+
+// pipe() will return value:
+$list = $view-&gt;pipe('rose', function (RoseModel $model, $view)
+{
+    $model-&gt;set('list.limit', 15);
+    return $model-&gt;getList();
+});
+</code></pre>
+
+<h3>Get Sub Models in View</h3>
+
+<p>Use array access to get different models and call methods in View.</p>
 
 <pre><code class="php">// In View::prepareData()
 
@@ -419,6 +475,32 @@ $data-&gt;olives = $this-&gt;model['olive']-&gt;getOlives();
 <p>If a model not set, and the method name start with <code>get*</code> or <code>load*</code>, it will return <code>null</code>.</p>
 
 <pre><code class="php">$data-&gt;foo = $this-&gt;model['foo']-&gt;getFoo();
+</code></pre>
+
+<p>You can also use <code>$this-&gt;pipe()</code> or <code>$this-&gt;applyData()</code>, remember send string as first argument to find model by name alias.</p>
+
+<pre><code class="php">// In view
+
+protected function prepareData($data)
+{
+    $this-&gt;applyData('rose', function (RoseModel $model, Data $data)
+    {
+        $data-&gt;roses = $model-&gt;getList();
+    });
+
+    // Inject dat to cllback
+    $this-&gt;pipe('rose', function (RoseModel $model, $view) use ($data)
+    {
+        $data-&gt;roses = $model-&gt;getList();
+    });
+
+    // Or just return value
+    $data-&gt;roses = $this-&gt;pipe('rose', function (RoseModel $model, $view)
+    {
+        return $model-&gt;getList();
+    });
+
+    // ...
 </code></pre>
 
                         <hr />

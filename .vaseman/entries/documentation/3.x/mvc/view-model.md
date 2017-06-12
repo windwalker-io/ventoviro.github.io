@@ -55,8 +55,11 @@ $view = new SakurasHtmlView;
 
 $view->setModel($model);
 
-// OR
-$view->model->setModel($model);
+// Or set with prepare model state
+$view->setModel($model, function (FlowerModel $model)
+{
+    $model->set('item.id', $this->input->get('id'));
+});
 
 return $view->render();
 ```
@@ -75,6 +78,28 @@ class SakurasHtmlView extends HtmlView
 
 The `$view->model` property is `ViewModel` object, if we call any method, `ViewModel` will pass this method to default Model by magic method.
 If Model does not have this method, it will only return `null`.
+
+We can also get data by `pipe()` or `applyData()` with a callback and class hint:
+ 
+```php
+// In View
+
+protected function prepareData($data)
+{
+    // Use pipe()
+    $this->pipe(function (FlowerModel $model, $view) use ($data)
+    {
+        $data->item = $model->getItem();
+    });
+    
+    // Use applyData
+    $this->applyData(function (FlowerModel $model, $data)
+    {
+        $data->item = $model->getItem();
+    });
+    
+    // ...
+```
 
 You must make sure Model named with `XXXModel`, the model will guess their name. you can also set name property when declaring Model class. 
 There is some ways to define Model's name:
@@ -104,14 +129,49 @@ $model = $this->getModel();
 $roseModel = $this->getModel('Rose');
 $oliveModel = $this->getModel('Olive');
 
-$view->setModel($model);
+$view->setModel($model, true); // Second argument TRUE as default
 $view->setModel($roseModel);
-$view->setModel($oliveModel);
+$view->setModel($oliveModel [, custom name]);
 
 return $view->render();
 ```
 
-Use array access to get different models and call methods.
+Set sub models with custom name alias:
+
+```php
+$view->setModel($model, true); // Second argument TRUE as default
+$view->addModel('rose', $roseModel);
+$view->addModel('olive', $oliveModel);
+```
+
+If you want to set state when setting models, use callback:
+
+```php
+$view->addModel('rose', $this->getModel('Rose'), function (RoseModel $model)
+{
+    $model->set('list.page', 5);
+});
+```
+
+Use `configureModel()` or `pipe()` to configure models after set in View:
+
+```php
+$view->configureModel('rose', function (RoseModel $model, $view)
+{
+    $model->set('list.limit', 15);
+});
+
+// pipe() will return value:
+$list = $view->pipe('rose', function (RoseModel $model, $view)
+{
+    $model->set('list.limit', 15);
+    return $model->getList();
+});
+```
+
+### Get Sub Models in View
+
+Use array access to get different models and call methods in View.
 
 ``` php
 // In View::prepareData()
@@ -125,6 +185,33 @@ If a model not set, and the method name start with `get*` or `load*`, it will re
 
 ``` php
 $data->foo = $this->model['foo']->getFoo();
+```
+
+You can also use `$this->pipe()` or `$this->applyData()`, remember send string as first argument to find model by name alias.
+
+```php
+// In view
+
+protected function prepareData($data)
+{
+    $this->applyData('rose', function (RoseModel $model, Data $data)
+    {
+        $data->roses = $model->getList();
+    });
+    
+    // Inject dat to cllback
+    $this->pipe('rose', function (RoseModel $model, $view) use ($data)
+    {
+        $data->roses = $model->getList();
+    });
+    
+    // Or just return value
+    $data->roses = $this->pipe('rose', function (RoseModel $model, $view)
+    {
+        return $model->getList();
+    });
+    
+    // ...
 ```
 
 

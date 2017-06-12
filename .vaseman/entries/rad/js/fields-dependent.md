@@ -78,24 +78,74 @@ The result is:
 
 ![Imgur](http://i.imgur.com/HlMnft4.gif)
 
+### Use Array as Source
+
+You can also set an array as your source instead call ajax:
+
+```php
+<?
+PhoenixScript::listDependent(
+    '#input-item-city', 
+    '#input-item-country',
+    [
+        1 => [
+            ['id' => 1, 'title' => 'New York'],
+            ['id' => 2, 'title' => 'DC'],
+        ],
+        2 => [
+            ['id' => 3, 'title' => 'Moscow'],
+            ['id' => 4, 'title' => 'Saint Petersburg'],
+        ]
+    ]
+);
+```
+
+If you want to set a default selection with empty value, use `__EMPTY__` as key name, now the option with value "" 
+will get `-- Select A Country First --` to notice users.:
+
+```php
+PhoenixScript::listDependent(
+    '#input-item-city', 
+    '#input-item-country',
+    [
+        '__EMPTY__' => [
+            ['id' => '', 'title' => '-- Select A Country First --']
+        ],
+        1 => [
+            ['id' => 1, 'title' => 'New York'],
+            ['id' => 2, 'title' => 'DC'],
+        ],
+        2 => [
+            ['id' => 3, 'title' => 'Moscow'],
+            ['id' => 4, 'title' => 'Saint Petersburg'],
+        ]
+    ]
+);
+```
+
 ### Options
 
 ```php
-PhoenixScript::listDependent('#input-item-city', '#input-item-country', CoreRouter::route('flower@ajax_city'), [
-    'default_value' => null, // Set default value.
-    'initial_load' => true, // Load list first after page initial?
-    'request' => [
-        'value_field' => 'value' // Change request value field
-    ],
-    'response' => [
+PhoenixScript::listDependent(
+	'#input-item-city', 
+	'#input-item-country', 
+	CoreRouter::route('flower@ajax_city'), 
+	[
+        'default_value' => null, // Set default value.
+        'initial_load' => true, // Load list first after page initial?
+        'ajax' => [
+            'value_field' => 'value' // Change request value field
+        ],
         'text_field' => 'title', // Which field in response should add to option text
-        'value_field' => 'id' // Which field in response should add to option value
-    ],
-    'hooks' => [
-        'before_request' => '\\function () { ... }',
-        'after_request' => '\\function () { ... }',
+        'value_field' => 'id', // Which field in response should add to option value
+        'first_option' => null, // Auto add first option to all result: [id: ..., title: ...]
+        'empty_mark' => '__EMPTY__', // If you have an option's with "" value, it will get list by key: `__EMPTY__` from your source.
+        'hooks' => [
+            'before_request' => '\\function () { ... }',
+            'after_request' => '\\function () { ... }',
+        ]
     ]
-]);
+);
 ```
 
 ### Hooks
