@@ -57,19 +57,17 @@ class GetController extends AbstractController
 	protected function doExecute()
 	{
 		$value = $this->input->get('value');
-		$data = [];
-
-		$cities = CityMapper::find(['country_id' => $value]);
+		$data = [
+			['title' => '-- Select City --']
+		];
 		
-		foreach ($cities => $city)
+		foreach (CityMapper::find(['country_id' => $value]) => $city)
 		{
-		    $data = [
+		    $data[] = [
 		        'id' => $city->id,
 		        'title' => $city->title
 		    ];
 		}
-
-		array_unshift($data, ['title' => '-- Select City --']);
 
 		return $data;
 	}
