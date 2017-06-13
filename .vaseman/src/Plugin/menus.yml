@@ -143,4 +143,4 @@ rad:
         more/gen-field: Field Generation
         more/record: Record Fields
         more/asset-minify: Asset Minify
-        more/mailer-adapters: Mailer Adapters
+        more/mailer-adapter: Mailer Adapters
