@@ -115,7 +115,7 @@ Now you can add transition name to your template:
 
 See [vue2-animate](https://github.com/asika32764/vue2-animate/) and [Vue.js Transitions](http://vuejs.org/guide/transitions.html)
 
-## Integrate with Form Builder
+### Integrate with Form Builder
 
 Use `attr()`, `controlAttr()` and `labelAttr()` to directly add directives to input HTML.
 
