@@ -37,11 +37,11 @@ Combine singular and plural two MVC groups, they are both maintains same databas
 
 Below is the structure of these terms.
 
-![Imgur](http://i.imgur.com/o8Wlh6i.jpg)
+![Imgur](https://i.imgur.com/o8Wlh6i.jpg)
 
 And this is an image of the MVC structure
 
-![Imgur](http://i.imgur.com/iUbloBQ.jpg)
+![Imgur](https://i.imgur.com/iUbloBQ.jpg)
 
 ## CRUD
 

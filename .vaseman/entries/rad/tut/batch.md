@@ -46,17 +46,17 @@ class GridDefinition extends AbstractFieldDefinition
 
 Then we can batch move articles items to other category or language.
 
-![Imgur](http://i.imgur.com/azcMe62.jpg)
+![Imgur](https://i.imgur.com/azcMe62.jpg)
 
-![Imgur](http://i.imgur.com/mZARv5f.jpg)
+![Imgur](https://i.imgur.com/mZARv5f.jpg)
 
 Or copy it.
 
-![Imgur](http://i.imgur.com/Rfag9OT.jpg)
+![Imgur](https://i.imgur.com/Rfag9OT.jpg)
 
 The title will auto increment.
 
-![Imgur](http://i.imgur.com/2fzbOY8.jpg)
+![Imgur](https://i.imgur.com/2fzbOY8.jpg)
 
 ## Empty String
 

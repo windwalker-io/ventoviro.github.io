@@ -75,7 +75,7 @@ After table joined, let's add some data in grid template.
 
 Now Category title has been added to articles view.
 
-![Imgur](http://i.imgur.com/Yeezqqs.jpg)
+![Imgur](https://i.imgur.com/Yeezqqs.jpg)
 
 ## Comment Grid
 
@@ -187,7 +187,7 @@ Add `name`, `email` and `article_title`, remove some none-necessary fields.
 
 The result will be:
 
-![Imgur](http://i.imgur.com/6E5l53f.jpg)
+![Imgur](https://i.imgur.com/6E5l53f.jpg)
 
 ### Get Joined Fields
 

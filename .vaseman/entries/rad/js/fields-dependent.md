@@ -76,7 +76,7 @@ class GetController extends AbstractController
 
 The result is:
 
-![Imgur](http://i.imgur.com/HlMnft4.gif)
+![Imgur](https://i.imgur.com/HlMnft4.gif)
 
 ### Use Array as Source
 
@@ -169,7 +169,7 @@ PhoenixScript::listDependent('#input-item-city', '#input-item-country', CoreRout
 );
 ```
 
-![Imgur](http://i.imgur.com/U9PDX52.gif)
+![Imgur](https://i.imgur.com/U9PDX52.gif)
 
 ## Fields Show On (dependsOn)
 
@@ -192,7 +192,7 @@ $this->password('ftp_pass')
 
 Now, user and pass field will show if `use_ftp` field is `1`, otherwise will hide.
 
-![Imgur](http://i.imgur.com/rwv911F.gif)
+![Imgur](https://i.imgur.com/rwv911F.gif)
 
 ### Use Multiple Conditions
 
