@@ -21,19 +21,19 @@ Grid table is the main part of List manager page.
 
 You may check some rows and press buttons to operate this items.
 
-![Imgur](http://i.imgur.com/1UxL0ML.jpg)
+![Imgur](https://i.imgur.com/1UxL0ML.jpg)
 
 Or click the state button to publish / close / copy or delete an item.
 
-![Imgur](http://i.imgur.com/UHp4TxQ.jpg)
+![Imgur](https://i.imgur.com/UHp4TxQ.jpg)
 
 ### Ordering
 
-![Imgur](http://i.imgur.com/hWWHstH.jpg)
+![Imgur](https://i.imgur.com/hWWHstH.jpg)
 
 ### Pagination
 
-![Imgur](http://i.imgur.com/v96Pl9B.jpg)
+![Imgur](https://i.imgur.com/v96Pl9B.jpg)
 
 ### Filter Bar
 
@@ -43,38 +43,38 @@ Filter help us search or filter items.
 
 Type something to search keyword.
 
-![Imgur](http://i.imgur.com/EH4L5ot.jpg)
+![Imgur](https://i.imgur.com/EH4L5ot.jpg)
 
 #### Filters
 
 Click `Filters` button will expand filter tools. select a state to filter items.
 
-![Imgur](http://i.imgur.com/uw6B6SV.jpg)
+![Imgur](https://i.imgur.com/uw6B6SV.jpg)
 
 You may click `X` button to clear both search and filters.
 
-![Imgur](http://i.imgur.com/NwA569R.jpg)
+![Imgur](https://i.imgur.com/NwA569R.jpg)
 
 ### Batch
 
 Batch is a useful function to update multiple items in one time.
 
-![Imgur](http://i.imgur.com/rbiI9yI.jpg)
+![Imgur](https://i.imgur.com/rbiI9yI.jpg)
 
 ## Edit Page
 
 Click an item title or the `Create` green button, you will enter the edit page.
  
-![Imgur](http://i.imgur.com/bZZBHpx.jpg)
+![Imgur](https://i.imgur.com/bZZBHpx.jpg)
 
 If you click save without filling any field, the validation will auto work to prevent form submit.
 
-![Imgur](http://i.imgur.com/qOJ7iY0.jpg)
+![Imgur](https://i.imgur.com/qOJ7iY0.jpg)
 
 If you enter the title and save, it will show success message.
 
-![Imgur](http://i.imgur.com/cdY5h6r.jpg)
+![Imgur](https://i.imgur.com/cdY5h6r.jpg)
 
 Click `Save & Close` or `Cancel`, will back to grid page. 
 
-![Imgur](http://i.imgur.com/A3zSr6T.jpg)
+![Imgur](https://i.imgur.com/A3zSr6T.jpg)

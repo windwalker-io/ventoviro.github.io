@@ -118,7 +118,7 @@ class EditDefinition extends AbstractFieldDefinition
 
 Then we can choose category in article edit page.
 
-![Imgur](http://i.imgur.com/eCT61tS.jpg)
+![Imgur](https://i.imgur.com/eCT61tS.jpg)
 
 ## Comment Form
 
@@ -191,6 +191,6 @@ class EditDefinition extends AbstractFieldDefinition
 
 You will see a Model select field, if you click the `Select an Item` button, will open a modal for select article.
 
-![Imgur](http://i.imgur.com/AvKB3xf.jpg)
+![Imgur](https://i.imgur.com/AvKB3xf.jpg)
 
-![Imgur](http://i.imgur.com/yOsuRgx.jpg)
+![Imgur](https://i.imgur.com/yOsuRgx.jpg)

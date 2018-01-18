@@ -54,7 +54,7 @@ trait SakuraDataTrait
 
 So IDE are able to auto-complete your record item in template.
 
-![Imgur](http://i.imgur.com/7UKtaey.jpg)
+![Imgur](https://i.imgur.com/7UKtaey.jpg)
 
 ## Update Fields
 

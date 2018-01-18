@@ -154,7 +154,7 @@ php windwalker muse add-subsystem Flower rose.roses -sm
 
 Then you will see a new submenu item in admin UI.
 
-![Imgur](http://i.imgur.com/mWiDVFA.jpg)
+![Imgur](https://i.imgur.com/mWiDVFA.jpg)
 
 ## Add Item & List
 
@@ -185,7 +185,7 @@ If you only want a basic empty Controller/Model/View that you can fill your own 
 php windwalker muse init Vehicle car.cars -t=empty
 ```
 
-![Imgur](http://i.imgur.com/HqRE5IV.jpg)
+![Imgur](https://i.imgur.com/HqRE5IV.jpg)
 
 ## Create Your Own Template
 

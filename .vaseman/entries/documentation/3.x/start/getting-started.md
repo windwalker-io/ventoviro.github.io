@@ -113,7 +113,7 @@ We support different template layout for one controller, the default is `default
 // src/Flower/Templates/sakura/photo.php
 ?>
 <h1>Hello <?php echo $this->escape($name); ?></h1>
-<img src="http://i.imgur.com/WVpwzJ9.jpg" alt="Sakura">
+<img src="https://i.imgur.com/WVpwzJ9.jpg" alt="Sakura">
 ```
 
 Then we render `photo.php` by `$view->setLayout('photo')`.
