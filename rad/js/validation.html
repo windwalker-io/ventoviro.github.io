@@ -275,12 +275,14 @@ $this-&gt;text('url')
 var validation = $('#admin-form').validation();
 
 // Add validator
-validation.addValidator('password-check', function (value, $input) {
-    return /^\S[\S ]{2,98}\S$/.test(value) &amp;&amp; $('.input-passwird').val() == value;
+validation.addValidator('password-confirm', function (value, $input) {
+    return /^\S[\S ]{2,98}\S$/.test(value) &amp;&amp; $('.input-password').val() == value;
 })
 </code></pre>
 
-<p>This validator will check password value is valid string and matches <code>input.input-password</code> value.</p>
+<p>Then add <code>validate-password-confirm</code> class to input.</p>
+
+<p>This validator will check password value that is valid string and matches the <code>input.input-password</code> value.</p>
 
 <h3>Hint Text</h3>
 
