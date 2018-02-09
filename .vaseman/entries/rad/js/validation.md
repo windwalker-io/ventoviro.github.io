@@ -90,12 +90,14 @@ You can add your own validators in runtime. Here we add a password check validat
 var validation = $('#admin-form').validation();
 
 // Add validator
-validation.addValidator('password-check', function (value, $input) {
-    return /^\S[\S ]{2,98}\S$/.test(value) && $('.input-passwird').val() == value;
+validation.addValidator('password-confirm', function (value, $input) {
+    return /^\S[\S ]{2,98}\S$/.test(value) && $('.input-password').val() == value;
 })
 ```
 
-This validator will check password value is valid string and matches `input.input-password` value.
+Then add `validate-password-confirm` class to input.
+
+This validator will check password value that is valid string and matches the `input.input-password` value.
 
 ### Hint Text
 
