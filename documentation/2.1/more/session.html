@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Session | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,61 +250,37 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Configuration</h2>
-
 <p>Session configuration is in <code>/etc/config.yml</code>.</p>
-
-<pre><code class="yaml">session:
+<pre><code class="language-yaml">session:
     handler: native
-    expire_time: 15
-</code></pre>
-
+    expire_time: 15</code></pre>
 <p>By default, Windwalker use php native to handler session data. The expire time unit is minute.</p>
-
 <h2>Get Session Object</h2>
-
-<pre><code class="php">$session = \Windwalker\Ioc::getSession();
+<pre><code class="language-php">$session = \Windwalker\Ioc::getSession();
 
 // OR
 
-$session = $container-&gt;get('system.session');
-</code></pre>
-
+$session = $container-&gt;get('system.session');</code></pre>
 <h2>Store And Get Session Data</h2>
-
-<pre><code class="php">$session-&gt;set('flower', 'sakura');
+<pre><code class="language-php">$session-&gt;set('flower', 'sakura');
 
 $data = $session-&gt;get('flower', 'default');
 
-$session-&gt;exists('animal'); // bool
-</code></pre>
-
+$session-&gt;exists('animal'); // bool</code></pre>
 <h2>Restart Session</h2>
-
-<pre><code class="php">$session-&gt;restart();
-</code></pre>
-
+<pre><code class="language-php">$session-&gt;restart();</code></pre>
 <h2>Session Bags</h2>
-
 <p>Session bag is a data storage to store data, we can add many bags to Session object and access them.</p>
-
 <h3>Use Default Bag</h3>
-
 <p>Get Default Bag</p>
-
-<pre><code class="php">$session-&gt;getBag('default');
-</code></pre>
-
+<pre><code class="language-php">$session-&gt;getBag('default');</code></pre>
 <p>Get data from default bag.</p>
-
-<pre><code class="php">$session-&gt;get('foo');
+<pre><code class="language-php">$session-&gt;get('foo');
 
 // OR
-$session-&gt;getBag('default')-&gt;get('foo');
-</code></pre>
-
+$session-&gt;getBag('default')-&gt;get('foo');</code></pre>
 <h3>Use Custom Bags</h3>
-
-<pre><code class="php">use Windwalker\Session\Bag\SessionBag;
+<pre><code class="language-php">use Windwalker\Session\Bag\SessionBag;
 
 $session-&gt;setBag('mybag', new SessionBag);
 
@@ -315,63 +288,44 @@ $session-&gt;setBag('mybag', new SessionBag);
 $myBag = $session-&gt;getBag('mybag');
 
 $myBag-&gt;set('foo', 'bar');
-$myBag-&gt;get('foo', 'default');
-</code></pre>
-
+$myBag-&gt;get('foo', 'default');</code></pre>
 <p>We can use Namespace to get data from bags</p>
-
-<pre><code class="php">// Get form default bag
+<pre><code class="language-php">// Get form default bag
 $session-&gt;get('foo', 'default', 'mybag');
 
 // Get from mybag
 $session-&gt;get('foo', 'default', 'mybag');
 
 // Set to mybag
-$session-&gt;set('foo', 'bar', 'mybag');
-</code></pre>
-
+$session-&gt;set('foo', 'bar', 'mybag');</code></pre>
 <h2>Flash Data</h2>
-
 <p>Flash bag is a data temporary storage, if we take data out, the bag will be clear.</p>
-
-<pre><code class="php">$session-&gt;addFlash('Save success.', 'info');
+<pre><code class="language-php">$session-&gt;addFlash('Save success.', 'info');
 $session-&gt;addFlash('Login Fail.', 'error');
 
 // Take all messages and clear
 $allMessages = $session-&gt;getFlashes();
 
 // Peek messages but don't clear
-$session-&gt;getFlashBag()-&gt;all();
-</code></pre>
-
+$session-&gt;getFlashBag()-&gt;all();</code></pre>
 <h2>Handlers</h2>
-
 <p>Windwalker Session provides many handlers to storage session, edit the config file.</p>
-
-<pre><code class="yaml">session:
+<pre><code class="language-yaml">session:
     handler: memcached
-    expire_time: 15
-</code></pre>
-
+    expire_time: 15</code></pre>
 <h3>Use Database Handler</h3>
-
 <p>Before using database session, we have to add table schema information to session config.</p>
-
-<pre><code class="yaml">session:
+<pre><code class="language-yaml">session:
     handler: database
     expire_time: 15
     table: sessions
     id_col: id
     data_col: data
-    time_col: time
-</code></pre>
-
+    time_col: time</code></pre>
 <blockquote>
-  <p>NOTE: Database Handler will be implemented in next release.</p>
+<p>NOTE: Database Handler will be implemented in next release.</p>
 </blockquote>
-
 <h3>Available Handlers</h3>
-
 <ul>
 <li>apc</li>
 <li>database</li>
@@ -379,7 +333,6 @@ $session-&gt;getFlashBag()-&gt;all();
 <li>native</li>
 <li>xcache</li>
 </ul>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -414,7 +367,7 @@ $session-&gt;getFlashBag()-&gt;all();
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -428,18 +381,18 @@ $session-&gt;getFlashBag()-&gt;all();
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -512,7 +465,7 @@ $session-&gt;getFlashBag()-&gt;all();
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

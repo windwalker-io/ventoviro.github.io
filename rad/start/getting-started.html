@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Getting Started | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,48 +187,29 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Installation</h2>
-
 <p>Please install Windwalker Framework first. See <a href="../../documentation/3.x/start/installation.html">Windwalker Installation</a></p>
-
 <p>Then add <code>"windwalker/phoenix": "~1.0"</code> to require block and run <code>composer update</code>.</p>
-
 <h3>Register Phoenix Package</h3>
-
 <p>Add Phoenix package object to <code>etc/app/windwalker.php</code>.</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
     'packages' =&gt; [
         // ...
         'phoenix' =&gt; Phoenix\PhoenixPackage::class
     ]
 
-// ...
-</code></pre>
-
+// ...</code></pre>
 <h3>Install Phoenix Assets</h3>
-
 <p>Run this command to install phoenix assets:</p>
-
-<pre><code class="bash">php windwalker package install phoenix
-</code></pre>
-
+<pre><code class="language-bash">php windwalker package install phoenix</code></pre>
 <p>See <a href="../../documentation/3.x/services/asset.html#sync-package-assets">Sync Package Assets</a></p>
-
 <h2>Generate A New Package</h2>
-
 <p>Please make sure you have correct database configuration, then please type:</p>
-
-<pre><code class="bash">$ php windwalker muse init Flower sakura.sakuras -sm
-</code></pre>
-
+<pre><code class="language-bash">$ php windwalker muse init Flower sakura.sakuras -sm</code></pre>
 <p>And you will see this result:</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/9724699/858b4cf2-560e-11e5-9137-956532efdb2e.png" alt="img" /></p>
-
 <p>Package <code>flower</code> has been auto generated. We must register this package too, add it in <code>etc/app/windwalker.php</code>:</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
     'packages' =&gt; [
         // ...
@@ -239,48 +217,30 @@
         'flower'  =&gt; Flower\FlowerPackage::class
     ]
 
-// ...
-</code></pre>
-
+// ...</code></pre>
 <p>Then create symlink to assets of this package:</p>
-
-<pre><code class="bash">php windwalker asset sync flower [--hard]
-</code></pre>
-
+<pre><code class="language-bash">php windwalker asset sync flower [--hard]</code></pre>
 <p>Direct sub routing to package routing at <code>etc/routing.yml</code>:</p>
-
-<pre><code class="yaml">## etc/routing.yml
+<pre><code class="language-yaml">## etc/routing.yml
 
 ##...
 
 ## Add this route
 flower:
     pattern: /flower
-    package: flower
-</code></pre>
-
+    package: flower</code></pre>
 <p>OK, now we can open <code>http://localhost/{your_project}/www/flower/sakuras</code> in browser, you will see a sample admin UI.</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/9724923/231ea408-5611-11e5-8448-ff29aa059306.png" alt="img" /></p>
-
 <p>Use PHP built-in server:</p>
-
-<pre><code class="bash">cd {your_project}/www
-php -S localhost:8000
-</code></pre>
-
+<pre><code class="language-bash">cd {your_project}/www
+php -S localhost:8000</code></pre>
 <p>And open <code>http://localhost:8000/flower/sakuras</code> to test your application.</p>
-
 <h2>Debug Mode</h2>
-
 <p>Add <code>/dev.php</code> before your URL, Windwalker will start debug mode and provides a powerful debug console.</p>
-
 <blockquote>
-  <p><code>http://localhost:8000/dev.php/flower/sakuras</code></p>
+<p><code>http://localhost:8000/dev.php/flower/sakuras</code></p>
 </blockquote>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/9725055/0cc4e1fc-5613-11e5-9f0d-c373d7d68c87.png" alt="img" /></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -315,7 +275,7 @@ php -S localhost:8000
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -329,18 +289,18 @@ php -S localhost:8000
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -413,7 +373,7 @@ php -S localhost:8000
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

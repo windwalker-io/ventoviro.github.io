@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Request and Input | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,11 +303,9 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Get Input Object in Controller</h2>
-
 <p>Last section we have learned how to make controller work, now it's time to see how the application receives HTTP request queries and respond.
 In Windwalker you may access input queries using <code>Input</code> object. Below is how it works:</p>
-
-<pre><code class="php">// src/Flower/Controller/Sakuras/GetController.php
+<pre><code class="language-php">// src/Flower/Controller/Sakuras/GetController.php
 
 class GetController extends AbstractController
 {
@@ -321,26 +316,19 @@ class GetController extends AbstractController
 
         // Do some stuff
     }
-}
-</code></pre>
-
+}</code></pre>
 <h3>Get Input at Anywhere</h3>
-
-<pre><code class="php">// Use global Ioc class
+<pre><code class="language-php">// Use global Ioc class
 $input = Ioc::getInput();
 
 // OR use container object
 $input = $container-&gt;get('input');
 
 // In Controller
-$this-&gt;input;
-</code></pre>
-
+$this-&gt;input;</code></pre>
 <h2>Web Input</h2>
-
 <p>Input object is a container of web request data and superglobals.</p>
-
-<pre><code class="php">use Windwalker\IO\Input;
+<pre><code class="language-php">use Windwalker\IO\Input;
 
 $input = new Input;
 
@@ -351,19 +339,13 @@ $input-&gt;get('flower', 'default');
 $input-&gt;set('flower', 'sakura');
 
 // Get value from $_POST
-$input-&gt;post-&gt;get('form_data');
-</code></pre>
-
+$input-&gt;post-&gt;get('form_data');</code></pre>
 <p>The second argument is default value if request params not exists</p>
-
 <h3>Filter</h3>
-
 <p>Input object use <a href="https://github.com/ventoviro/windwalker-filter">Windwalker Filter</a> package to clean request string,
 get request data by Input object keeps us away from unsafe string injection.</p>
-
 <p>The default filter type is <code>CMD</code>. We can use other filter type:</p>
-
-<pre><code class="php">// mysite.com/?flower=&lt;p&gt;to be, or not to be.&lt;/p&gt;;
+<pre><code class="language-php">// mysite.com/?flower=&lt;p&gt;to be, or not to be.&lt;/p&gt;;
 
 $input-&gt;get('flower'); // tobeornottobe (Default cmd filter)
 
@@ -371,26 +353,18 @@ $input-&gt;get('flower', 'default_value', InputFilter::STRING); // to be, or not
 
 $input-&gt;getString('flower'); // to be, or not to be (Same as above, using magic method)
 
-$input-&gt;getRaw('flower') // &lt;p&gt;to be, or not to be.&lt;/p&gt;
-</code></pre>
-
+$input-&gt;getRaw('flower') // &lt;p&gt;to be, or not to be.&lt;/p&gt;</code></pre>
 <p>More filter usage please see: <a href="https://github.com/ventoviro/windwalker-filter">Windwalker Filter</a></p>
-
 <h3>Compact and Get Array</h3>
-
 <p>Get data as an array.</p>
-
-<pre><code class="php">// mysite.com/?flower[1]=sakura&amp;flower[2]=olive;
+<pre><code class="language-php">// mysite.com/?flower[1]=sakura&amp;flower[2]=olive;
 
 $input-&gt;getArray('flower'); // Array( [1] =&gt; sakura [2] =&gt; olive)
 
 // Get array and filter every values
-$input-&gt;getArray('flower', null, '.', 'int');
-</code></pre>
-
+$input-&gt;getArray('flower', null, '.', 'int');</code></pre>
 <p>Use <code>compact()</code> method</p>
-
-<pre><code class="php">// mysite.com/?flower=sakura&amp;foo=bar&amp;king=Richard
+<pre><code class="language-php">// mysite.com/?flower=sakura&amp;foo=bar&amp;king=Richard
 
 // Get all request
 $input-&gt;compact();
@@ -417,74 +391,49 @@ $input-&gt;compact(array(
         'quantity' =&gt; InputFilter::INTEGER,
         'state' =&gt; 'integer' // Same as above
     )
-));
-</code></pre>
-
+));</code></pre>
 <h3>Get And Set Multi-Level</h3>
-
 <p>If we want to get value of <code>foo[bar][baz]</code>, just use <code>get('foo.bar.baz')</code>:</p>
-
-<pre><code class="php">$value = $input-&gt;get('foo.bar.baz', 'default', InputFilter::STRING);
+<pre><code class="language-php">$value = $input-&gt;get('foo.bar.baz', 'default', InputFilter::STRING);
 
 $input-&gt;set('foo.bar.baz', $data);
 
 // Use custom separator
 $input-&gt;get('foo/bar/baz', 'default', 'string', '/');
-$input-&gt;set('foo/bar/baz', $data, '/');
-</code></pre>
-
+$input-&gt;set('foo/bar/baz', $data, '/');</code></pre>
 <h3>Get Value From Other Methods</h3>
-
 <p>We can get other methods as a new input object.</p>
-
-<pre><code class="php">$post = $input-&gt;post;
+<pre><code class="language-php">$post = $input-&gt;post;
 
 $value = $post-&gt;get('foo', 'bar');
 
 // Other inputs
 $get    = $input-&gt;get;
 $put    = $input-&gt;put;
-$delete = $input-&gt;delete;
-</code></pre>
-
+$delete = $input-&gt;delete;</code></pre>
 <h2>Get SUPER GLOBALS</h2>
-
-<pre><code class="php">$env     = $input-&gt;env;
+<pre><code class="language-php">$env     = $input-&gt;env;
 $session = $input-&gt;session;
 $cookie  = $input-&gt;cookie;
 $server  = $input-&gt;server;
 
-$server-&gt;get('REMOTE_ADDR'); // Same as $_SERVER['REMOTE_ADDR'];
-</code></pre>
-
+$server-&gt;get('REMOTE_ADDR'); // Same as $_SERVER['REMOTE_ADDR'];</code></pre>
 <p>See: <a href="http://php.net/manual/en/language.variables.superglobals.php">SUPER GLOBALS</a></p>
-
 <h3>Get method of current request:</h3>
-
-<pre><code class="php">$method = $input-&gt;getMethod();
-</code></pre>
-
+<pre><code class="language-php">$method = $input-&gt;getMethod();</code></pre>
 <h2>Json Input</h2>
-
 <p>If you send a request with json body or <code>content-type: application/json</code>, you can use <code>$input-&gt;json</code> to
 get <code>JsonInput</code> and parse json values.</p>
-
 <h2>Files and Uploaded</h2>
-
 <p>Windwalker Http package convert nested <code>$_FILES</code> variables to a set of <code>UploadedFileInterface</code> that we can easily move the uploaded files.</p>
-
 <p>Suppose we have this HTML form.</p>
-
-<pre><code class="html">&lt;form action="..." enctype="multipart/form-data" method="post"&gt;
+<pre><code class="language-html">&lt;form action="..." enctype="multipart/form-data" method="post"&gt;
     &lt;input type="file" name="flower[sakura]" /&gt;
     &lt;input type="file" name="flower[rose]" /&gt;
     &lt;input type="submit" value="submit" /&gt;
-&lt;/form&gt;
-</code></pre>
-
+&lt;/form&gt;</code></pre>
 <p>Then we get files in controller:</p>
-
-<pre><code class="php">// controller::doExecute()
+<pre><code class="language-php">// controller::doExecute()
 
 use Windwalker\Http\Helper\UploadedFileHelper;
 
@@ -505,11 +454,8 @@ try
 catch (\RuntimeException $e)
 {
     // Handle move error.
-}
-</code></pre>
-
+}</code></pre>
 <p>See <a href="https://github.com/ventoviro/windwalker-http">Windwalker Http</a></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -544,7 +490,7 @@ catch (\RuntimeException $e)
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -558,18 +504,18 @@ catch (\RuntimeException $e)
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -642,7 +588,7 @@ catch (\RuntimeException $e)
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

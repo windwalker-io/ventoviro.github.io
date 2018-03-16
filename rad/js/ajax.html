@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Ajax | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,71 +187,45 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Phoenix.Ajax</h2>
-
 <p><code>Phoenix.Ajax</code> object is a <code>jQuery</code> ajax wrapper, to include it, use:</p>
-
-<pre><code class="php">PhoenixScript::ajax();
-</code></pre>
-
+<pre><code class="language-php">PhoenixScript::ajax();</code></pre>
 <p>The CSRF token will auto injected to this object, just use it as a http client.</p>
-
-<pre><code class="js">Phoenix.Ajax.get('flower/sakura/1')
+<pre><code class="language-js">Phoenix.Ajax.get('flower/sakura/1')
     .done(function (response, status, jqHXR) {
         // ...
     }).fail(function (jqHXR, status, error) {
         // ...
     }).always(function () {
         // ...
-    });
-</code></pre>
-
+    });</code></pre>
 <p>Use other methods:</p>
-
-<pre><code class="js">Phoenix.Ajax.get('flower/sakura/1', data, headers).done(...).fail(...);
+<pre><code class="language-js">Phoenix.Ajax.get('flower/sakura/1', data, headers).done(...).fail(...);
 Phoenix.Ajax.post('flower/sakura', data, headers).done(...).fail(...);
 Phoenix.Ajax.put('flower/sakura/1', data, headers).done(...).fail(...);
 Phoenix.Ajax.patch('flower/sakura/1', data, headers).done(...).fail(...);
 Phoenix.Ajax.delete('flower/sakura/1', data, headers).done(...).fail(...);
 Phoenix.Ajax.head('flower/sakura/1', data, headers).done(...).fail(...);
-Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);
-</code></pre>
-
+Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);</code></pre>
 <p>Add jQuery ajax options to forth argument:</p>
-
-<pre><code class="js">Phoenix.Ajax.post('flower/sakura', data, headers, {dataType: 'xml'})
+<pre><code class="language-js">Phoenix.Ajax.post('flower/sakura', data, headers, {dataType: 'xml'})
     .done(...)
-    .fail(...);
-</code></pre>
-
+    .fail(...);</code></pre>
 <p>Use <code>request()</code>:</p>
-
-<pre><code class="js">Phoenix.Ajax.request('POST', 'flower/sakura', data, headers, options)
+<pre><code class="language-js">Phoenix.Ajax.request('POST', 'flower/sakura', data, headers, options)
     .done(...)
-    .fail(...);
-</code></pre>
-
+    .fail(...);</code></pre>
 <h3>Override Methods</h3>
-
 <p>To override HTTP method with <code>X-HTTP-Method-Override</code> or <code>_method</code> parameter, use <code>.customMethod()</code> chain.</p>
-
-<pre><code class="js">Phoenix.Ajax.customMethod()
+<pre><code class="language-js">Phoenix.Ajax.customMethod()
     .put('flower/sakura/1')
     .done(...)
-    .fail(...);
-</code></pre>
-
+    .fail(...);</code></pre>
 <h3>Set Custom Headers</h3>
-
-<pre><code class="js">Phoenix.Ajax.headers.POST['X-Foo'] = 'Bar';
-</code></pre>
-
+<pre><code class="language-js">Phoenix.Ajax.headers.POST['X-Foo'] = 'Bar';</code></pre>
 <p>This header will always send with every request.</p>
-
 <h2>Integrate JsonApiTrait</h2>
-
 <p>Add <code>JsonApiTrait</code> to controller:</p>
-
-<pre><code class="php">class GetController extends AbstractController
+<pre><code class="language-php">class GetController extends AbstractController
 {
     use JsonApiTrait;
 
@@ -266,17 +237,11 @@ Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);
 
         return ['foo' =&gt; 'bar'];
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Now your JSON return will format with this:</p>
-
-<pre><code class="json">{success:true,code:200,message:"Hello",data:{foo:"bar"}}
-</code></pre>
-
+<pre><code class="language-json">{success:true,code:200,message:"Hello",data:{foo:"bar"}}</code></pre>
 <p>If you throw exceptions in controller:</p>
-
-<pre><code class="php">class GetController extends AbstractController
+<pre><code class="language-php">class GetController extends AbstractController
 {
     use JsonApiTrait;
 
@@ -288,62 +253,36 @@ Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);
 
         return ['foo' =&gt; 'bar'];
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>The return JSON will be:</p>
-
-<pre><code class="json">{"success":false,"code":403,"message":"Something error","data":{"backtrace":...}}
-</code></pre>
-
+<pre><code class="language-json">{"success":false,"code":403,"message":"Something error","data":{"backtrace":...}}</code></pre>
 <p>So you can check API status in JS:</p>
-
-<pre><code class="js">Phoenix.Ajax.get('flower/sakura/1')
+<pre><code class="language-js">Phoenix.Ajax.get('flower/sakura/1')
     .done(function (response, status, jqHXR) {
         if (response.success) {
             console.log(response.data);
         } else {
             throw new Error(response.message);
         }
-    });
-</code></pre>
-
+    });</code></pre>
 <h2>Use Vue Resource</h2>
-
 <p>See <a href="./vue.html#vue-resource">Vue Resource</a></p>
-
 <h2>Integrate with Router</h2>
-
 <p>See <a href="./core.html#routes">Phoenix.Router</a></p>
-
 <h2>Add CSRF Token</h2>
-
 <p>If you want to protect your application in ajax call, you can use this method to add form token.</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::csrfToken();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::csrfToken();</code></pre>
 <p>This method will add a meta tag to HTML <code>&lt;nead&gt;</code></p>
-
-<pre><code class="html">&lt;meta name="csrf-token" content="a7d71a2c21743d8865fdfa61b71b29e8" /&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;meta name="csrf-token" content="a7d71a2c21743d8865fdfa61b71b29e8" /&gt;</code></pre>
 <p>Now you can fetch this token by JS, for example, we can add a param to jQuery ajaxSetup:</p>
-
-<pre><code class="js">jQuery.ajaxSetup({
+<pre><code class="language-js">jQuery.ajaxSetup({
     headers: {
         'X-Csrf-Token': jQuery('meta[name="csrf-token"]').attr('content')
     }
-});
-</code></pre>
-
+});</code></pre>
 <h2>Auto add ajaxSetup</h2>
-
 <p>Use this code to auto add ajaxSetup:</p>
-
-<pre><code class="php">JQueryScript::csrfToken();
-</code></pre>
-
+<pre><code class="language-php">JQueryScript::csrfToken();</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -378,7 +317,7 @@ Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -392,18 +331,18 @@ Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -476,7 +415,7 @@ Phoenix.Ajax.options('flower/sakura/1', data, headers).done(...).fail(...);
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

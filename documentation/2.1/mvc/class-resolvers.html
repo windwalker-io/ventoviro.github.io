@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Class Resolvers | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,21 +250,15 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>MVC Resolvers</h2>
-
 <p>Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
 has a <code>flower</code> package and a route with <code>Sakura</code> controller matched:</p>
-
-<pre><code class="php">sakura:
+<pre><code class="language-php">sakura:
     pattern: /sakura
-    controller: Sakura
-</code></pre>
-
-<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists, 
+    controller: Sakura</code></pre>
+<p>The Flower package will get <code>Flower\Controller\Sakura\{action}</code> as main controller. But if this class not exists,
 we can prepare a set of default controller in other package, and tell windwalker to get these default controller instead.</p>
-
 <p>Add this line in package <code>initialise()</code> or any position before package execute.</p>
-
-<pre><code class="php">public function initialise()
+<pre><code class="language-php">public function initialise()
 {
     parent::initialise();
 
@@ -278,31 +269,20 @@ we can prepare a set of default controller in other package, and tell windwalker
 
     // OR get from controller
     $mvcResolver = Ioc::get('mvc.resolver');
-}
-</code></pre>
-
+}</code></pre>
 <p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
 It is flexible to help us organize our packages.</p>
-
 <h2>View And Model</h2>
-
 <p>You can also use the same way to add default View and Model paths.</p>
-
-<pre><code class="php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);
-</code></pre>
-
+<pre><code class="language-php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);</code></pre>
 <p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
 will find from Animal package as default object.</p>
-
 <p>We can also set default path separately.</p>
-
-<pre><code class="php">$mvcResolver = $this-&gt;getMvcResolver();
+<pre><code class="language-php">$mvcResolver = $this-&gt;getMvcResolver();
 
 $mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
 $mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
-</code></pre>
-
+$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -337,7 +317,7 @@ $mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -351,18 +331,18 @@ $mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -435,7 +415,7 @@ $mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

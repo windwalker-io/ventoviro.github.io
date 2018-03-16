@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>DataMapper | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,29 +250,21 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Create a DataMapper</h2>
-
-<pre><code class="php">use Windwalker\DataMapper\DataMapper;
+<pre><code class="language-php">use Windwalker\DataMapper\DataMapper;
 
 $fooMapper = new DataMapper('#__foo');
 
-$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));
-</code></pre>
-
+$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));</code></pre>
 <h3>Extends It</h3>
-
 <p>You can also create a class to operate specific table:</p>
-
-<pre><code class="php">class FooMapper extends DataMapper
+<pre><code class="language-php">class FooMapper extends DataMapper
 {
     protected $table = '#__foo';
 }
 
-$data = (new FooMapper)-&gt;findAll();
-</code></pre>
-
+$data = (new FooMapper)-&gt;findAll();</code></pre>
 <p>Or using static proxy:</p>
-
-<pre><code class="php">abstract class FooMapper
+<pre><code class="language-php">abstract class FooMapper
 {
     protected static $instance;
 
@@ -295,53 +284,27 @@ $data = (new FooMapper)-&gt;findAll();
     }
 }
 
-$data = FooMapper::findOne(array('id' =&gt; 5, 'alias' =&gt; 'bar'));
-</code></pre>
-
+$data = FooMapper::findOne(array('id' =&gt; 5, 'alias' =&gt; 'bar'));</code></pre>
 <h2>Find Records</h2>
-
 <p>Find method will fetch rows from table, and return <code>DataSet</code> class.</p>
-
 <h3>find()</h3>
-
 <p>Get id = 1 record</p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));
-</code></pre>
-
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));</code></pre>
 <p>Fetch published = 1, and sort by <code>date</code></p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1), 'date');
-</code></pre>
-
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1), 'date');</code></pre>
 <p>Fetch published = 1, language = en-US, sort by <code>date</code> DESC and start with <code>30</code>, limit <code>10</code>.</p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1, 'language' =&gt; 'en-US'), 'date DESC', 30, 10);
-</code></pre>
-
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1, 'language' =&gt; 'en-US'), 'date DESC', 30, 10);</code></pre>
 <p>Using array, will be <code>IN</code> condition:</p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; array(1,2,3))); // WHERE id IN (1,2,3)
-</code></pre>
-
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; array(1,2,3))); // WHERE id IN (1,2,3)</code></pre>
 <h3>findOne()</h3>
-
 <p>Just return one row.</p>
-
-<pre><code class="php">$foo = $dooMapper-&gt;findOne(array('published' =&gt; 1), 'date');
-</code></pre>
-
+<pre><code class="language-php">$foo = $dooMapper-&gt;findOne(array('published' =&gt; 1), 'date');</code></pre>
 <h3>findAll()</h3>
-
 <p>Equal to <code>find(array(), $order, $start, $limit)</code>.</p>
-
 <h2>Create Records</h2>
-
 <p>Using DataSet to wrap every data, then send this object to create() method, these data will insert to table.</p>
-
 <h3>create()</h3>
-
-<pre><code class="php">use Windwalker\Data\Data;
+<pre><code class="language-php">use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 
 $data1 = new Data;
@@ -357,11 +320,8 @@ $data2 = new Data(
 
 $dataset = new DataSet(array($data1, $data2));
 
-$return = $fooMapper-&gt;create($dataset);
-</code></pre>
-
+$return = $fooMapper-&gt;create($dataset);</code></pre>
 <p>The return value will be whole dataset and add inserted ids.</p>
-
 <pre><code>Windwalker\Data\DataSet Object
 (
     [storage:ArrayObject:private] =&gt; Array
@@ -380,27 +340,18 @@ $return = $fooMapper-&gt;create($dataset);
                     [id] =&gt; 40
                 )
         )
-)
-</code></pre>
-
+)</code></pre>
 <h3>createOne()</h3>
-
 <p>Only insert one row, do not need DataSet.</p>
-
-<pre><code class="php">$data = new Data;
+<pre><code class="language-php">$data = new Data;
 $data-&gt;title = 'Foo';
 $data-&gt;auhor = 'Magneto';
 
-$fooMapper-&gt;createOne($data);
-</code></pre>
-
+$fooMapper-&gt;createOne($data);</code></pre>
 <h2>Update Records</h2>
-
 <p>Update methods help us update rows in table.</p>
-
 <h3>update()</h3>
-
-<pre><code class="php">use Windwalker\Data\Data;
+<pre><code class="language-php">use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 
 $data1 = new Data;
@@ -416,55 +367,35 @@ $data2 = new Data(
 
 $dataset = new DataSet(array($data1, $data2));
 
-$fooMapper-&gt;update($dataset);
-</code></pre>
-
+$fooMapper-&gt;update($dataset);</code></pre>
 <h3>updateOne()</h3>
-
 <p>Just update one row.</p>
-
-<pre><code class="php">$data = new Data;
+<pre><code class="language-php">$data = new Data;
 $data-&gt;id = 1;
 $data-&gt;title = 'Foo';
 
-$fooMapper-&gt;updateOne($data);
-</code></pre>
-
+$fooMapper-&gt;updateOne($data);</code></pre>
 <h3>updateAll()</h3>
-
 <p>UpdateAll is different from update method, we just send one data object, but using conditions as where
 to update every row match these conditions. We don't need primary key for updateAll().</p>
-
-<pre><code class="php">$data = new Data;
+<pre><code class="language-php">$data = new Data;
 $data-&gt;published = 0;
 
-$fooMapper-&gt;updateAll($data, array('author' =&gt; 'Mystique'));
-</code></pre>
-
+$fooMapper-&gt;updateAll($data, array('author' =&gt; 'Mystique'));</code></pre>
 <h2>Delete</h2>
-
 <p>Delete rows by conditions.</p>
-
 <h3>delete()</h3>
-
-<pre><code class="php">$boolean = $fooMapper-&gt;delete(array('author' =&gt; 'Jean Grey'));
-</code></pre>
-
+<pre><code class="language-php">$boolean = $fooMapper-&gt;delete(array('author' =&gt; 'Jean Grey'));</code></pre>
 <h2>Join Tables</h2>
-
 <p>Using <code>RelationDataMapper</code> to join tables.</p>
-
-<pre><code class="php">$fooMapper = RelationDataMapper::getInstance('flower', '#__flower')
+<pre><code class="language-php">$fooMapper = RelationDataMapper::getInstance('flower', '#__flower')
     -&gt;addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
     -&gt;addTable('category', '#__categories', array('category.lft &gt;= flower.lft', 'category.rgt &lt;= flower.rgt'), 'INNER');
 
 // Don't forget add alias on where conditions.
-$dataset = $fooMapper-&gt;find(array('flower.id' =&gt; 5));
-</code></pre>
-
+$dataset = $fooMapper-&gt;find(array('flower.id' =&gt; 5));</code></pre>
 <p>The Join query will be:</p>
-
-<pre><code class="sql">SELECT `flower`.`id`,
+<pre><code class="language-sql">SELECT `flower`.`id`,
     `flower`.`catid`,
     `flower`.`title`,
     `flower`.`user_id`,
@@ -481,41 +412,27 @@ $dataset = $fooMapper-&gt;find(array('flower.id' =&gt; 5));
     `category`.`params` AS `category_params`
 FROM #__foo AS foo
     LEFT JOIN #__users AS author ON foo.user_id = author.id
-    INNER JOIN #__categories AS category ON category.lft &gt;= foo.lft AND category.rgt &lt;= foo.rgt
-</code></pre>
-
+    INNER JOIN #__categories AS category ON category.lft &gt;= foo.lft AND category.rgt &lt;= foo.rgt</code></pre>
 <h3>Using OR Condition</h3>
-
-<pre><code class="php">$fooMapper-&gt;addTable(
+<pre><code class="language-php">$fooMapper-&gt;addTable(
     'category',
     '#__categories',
     'category.lft &gt;= foo.lft OR category.rgt &lt;= foo.rgt',
     'LEFT'
-);
-</code></pre>
-
+);</code></pre>
 <h2>Static Access</h2>
-
 <p>Windwalker core 2.1 provides a <code>AbstractDataMapperProxy</code> to help us easily use DataMapper.</p>
-
-<pre><code class="php">use Windwalker\Core\DataMapper\AbstractDataMapperProxy;
+<pre><code class="language-php">use Windwalker\Core\DataMapper\AbstractDataMapperProxy;
 
 class ArticleMapper extends AbstractDataMapperProxy
 {
     protected static $table = 'articles';
-}
-</code></pre>
-
+}</code></pre>
 <p>Now you can call all methods statically:</p>
-
-<pre><code class="php">$articles = ArticleMapper::find(['state' =&gt; 1]);
-</code></pre>
-
+<pre><code class="language-php">$articles = ArticleMapper::find(['state' =&gt; 1]);</code></pre>
 <h2>Hooks</h2>
-
 <p>In <code>DataMapper</code> or <code>AbstractDataMapperProxy</code>, both supports hooks methods.</p>
-
-<pre><code class="php">class ArticleMapper extends AbstractDataMapperProxy
+<pre><code class="language-php">class ArticleMapper extends AbstractDataMapperProxy
 {
     // ...
 
@@ -523,18 +440,12 @@ class ArticleMapper extends AbstractDataMapperProxy
     {
         // Delete all tags relative to this article
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>OR add listener.</p>
+<pre><code class="language-php">$mapper = new ArticleMapper;
 
-<pre><code class="php">$mapper = new ArticleMapper;
-
-$mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
-</code></pre>
-
+$mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);</code></pre>
 <p>All events:</p>
-
 <ul>
 <li>onBeforeFind</li>
 <li>onAfterFind</li>
@@ -563,101 +474,81 @@ $mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
 <li>onBeforeDelete</li>
 <li>onAfterDelete</li>
 </ul>
-
 <p>See <a href="../more/events.html">Event</a></p>
-
 <h2>Compare objects</h2>
-
 <p>Using Compare objects help us set some where conditions which hard to use array to defind.</p>
-
-<pre><code class="php">$fooSet = $fooMapper-&gt;find(
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(
     array(
         new GteCompare('id', 5),
         new NeqCompare('name', 'bar')
         new LtCompare('published', 1),
         new NinCompare('catid', array(1,2,3,4,5))
     )
-);
-</code></pre>
-
+);</code></pre>
 <p>This will generate where conditions like below:</p>
-
-<pre><code class="sql">WHERE `id` &gt;= '5'
+<pre><code class="language-sql">WHERE `id` &gt;= '5'
     AND `name` != 'bar'
     AND `published` &lt; '1'
-    AND `catid` NOT IN (1,2,3,4,5)
-</code></pre>
-
+    AND `catid` NOT IN (1,2,3,4,5)</code></pre>
 <h3>Available compares:</h3>
-
 <table>
 <thead>
 <tr>
-  <th>Name</th>
-  <th>Description</th>
-  <th>Operator</th>
+<th>Name</th>
+<th>Description</th>
+<th>Operator</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>EqCompare</td>
-  <td>Equal</td>
-  <td><code>=</code></td>
+<td>EqCompare</td>
+<td>Equal</td>
+<td><code>=</code></td>
 </tr>
 <tr>
-  <td>NeqCompare</td>
-  <td>Not Equal</td>
-  <td><code>!=</code></td>
+<td>NeqCompare</td>
+<td>Not Equal</td>
+<td><code>!=</code></td>
 </tr>
 <tr>
-  <td>GtCompare</td>
-  <td>Greater than</td>
-  <td><code>&gt;</code></td>
+<td>GtCompare</td>
+<td>Greater than</td>
+<td><code>&gt;</code></td>
 </tr>
 <tr>
-  <td>GteCompare</td>
-  <td>Greater than or Equal</td>
-  <td><code>&gt;=</code></td>
+<td>GteCompare</td>
+<td>Greater than or Equal</td>
+<td><code>&gt;=</code></td>
 </tr>
 <tr>
-  <td>LtCompare</td>
-  <td>Less than</td>
-  <td><code>&lt;</code></td>
+<td>LtCompare</td>
+<td>Less than</td>
+<td><code>&lt;</code></td>
 </tr>
 <tr>
-  <td>LteCompare</td>
-  <td>Less than or Equal</td>
-  <td><code>&lt;=</code></td>
+<td>LteCompare</td>
+<td>Less than or Equal</td>
+<td><code>&lt;=</code></td>
 </tr>
 <tr>
-  <td>InCompare</td>
-  <td>In</td>
-  <td><code>IN</code></td>
+<td>InCompare</td>
+<td>In</td>
+<td><code>IN</code></td>
 </tr>
 <tr>
-  <td>NinCompare</td>
-  <td>Not In</td>
-  <td><code>IN</code></td>
+<td>NinCompare</td>
+<td>Not In</td>
+<td><code>IN</code></td>
 </tr>
 </tbody>
 </table>
-
 <h3>Custom Compare</h3>
-
-<pre><code class="php">echo (string) new Compare('title', '%flower%', 'LIKE');
-</code></pre>
-
+<pre><code class="language-php">echo (string) new Compare('title', '%flower%', 'LIKE');</code></pre>
 <p>Will be</p>
-
-<pre><code class="sql">`title` LIKE `%flower%`
-</code></pre>
-
+<pre><code class="language-sql">`title` LIKE `%flower%`</code></pre>
 <p>See: <a href="https://github.com/ventoviro/windwalker-compare">Windwalker Compare</a></p>
-
 <h2>Using Data and DataSet</h2>
-
 <p>See: <a href="../more/data-object.html">Data Object</a></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -692,7 +583,7 @@ $mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -706,18 +597,18 @@ $mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -790,7 +681,7 @@ $mapper-&gt;getDispatcher()-&gt;addListener(new MyListener);
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

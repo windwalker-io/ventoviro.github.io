@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Record Fields | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,10 +187,8 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Record Autocomplete</h2>
-
 <p>All Phoenix generated Records will use a trait with same name, to provides fields hint.</p>
-
-<pre><code class="php">namespace Flower\Record;
+<pre><code class="language-php">namespace Flower\Record;
 
 use Asuka\Flower\Record\Traits\SakuraDataTrait;
 use Windwalker\Record\Record;
@@ -202,10 +197,8 @@ class SakuraRecord extends Record
 {
     use SakuraDataTrait;
 
-    // ...
-</code></pre>
-
-<pre><code class="php">namespace Flower\Record\Traits;
+    // ...</code></pre>
+<pre><code class="language-php">namespace Flower\Record\Traits;
 
 /**
  * The SakuraDataTrait class.
@@ -231,24 +224,16 @@ class SakuraRecord extends Record
 trait SakuraDataTrait
 {
 
-}
-</code></pre>
-
+}</code></pre>
 <p>So IDE are able to auto-complete your record item in template.</p>
-
 <p><img src="https://i.imgur.com/7UKtaey.jpg" alt="Imgur" /></p>
-
 <h2>Update Fields</h2>
-
 <p>After you update DB fields or migrations, just run this command to update trait's docblock:</p>
-
-<pre><code class="bash">$ php windwalker phoenix record sync flower sakura
+<pre><code class="language-bash">$ php windwalker phoenix record sync flower sakura
 
 File: /.../Flower/Record/Traits/SakuraDataTrait.php exists, do you want to override it? [N/y]: y
 
-Writing file: /.../Flower/Record/Traits/SakuraDataTrait.php success.
-</code></pre>
-
+Writing file: /.../Flower/Record/Traits/SakuraDataTrait.php success.</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -283,7 +268,7 @@ Writing file: /.../Flower/Record/Traits/SakuraDataTrait.php success.
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -297,18 +282,18 @@ Writing file: /.../Flower/Record/Traits/SakuraDataTrait.php success.
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -381,7 +366,7 @@ Writing file: /.../Flower/Record/Traits/SakuraDataTrait.php success.
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

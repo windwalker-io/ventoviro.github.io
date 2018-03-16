@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Table and Schema | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,17 +303,11 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Table Command</h2>
-
 <p>Get Table Command.</p>
-
-<pre><code class="php">$table = $db-&gt;getTable('#__articles');
-</code></pre>
-
+<pre><code class="language-php">$table = $db-&gt;getTable('#__articles');</code></pre>
 <h2>create()</h2>
-
 <p>Create a new table.</p>
-
-<pre><code class="php">use Windwalker\Database\Schema\Schema;
+<pre><code class="language-php">use Windwalker\Database\Schema\Schema;
 
 $table = $db-&gt;getTable('#__articles');
 
@@ -331,11 +322,8 @@ $table-&gt;create(function (Schema $schema)
     $schema-&gt;addIndex('category_id');
     $schema-&gt;addIndex(array('category_id', 'title'));
     $schema-&gt;addUniqueKey('slug');
-}, true); // True to add IF NOT EXISTS
-</code></pre>
-
+}, true); // True to add IF NOT EXISTS</code></pre>
 <p>Available types in <code>Schema</code> object:</p>
-
 <ul>
 <li>primary (An <code>integer</code> column with primary key and auto-increment)</li>
 <li>integer</li>
@@ -352,39 +340,28 @@ $table-&gt;create(function (Schema $schema)
 <li>text</li>
 <li>longtext</li>
 </ul>
-
 <h3>Using Column type objects:</h3>
-
-<pre><code class="php">use Windwalker\Database\Schema\Schema;
+<pre><code class="language-php">use Windwalker\Database\Schema\Schema;
 use Windwalker\Database\Schema\Column\Varchar;
 
     // ...
 
     $schema-&gt;add('title', new Varchar)-&gt;allowNull(false)-&gt;comment('Title');
 
-    // ...
-</code></pre>
-
+    // ...</code></pre>
 <p>You can create your own Column type if you want, just extends <code>Windwalker\Database\Schema\Column</code> object.</p>
-
 <h2>Type Mapping</h2>
-
 <p>Windwalker supports MySQL and Postgresql now, and we'll add more database driver in the future. Every SQL platform has their
- own data types, so Windwalker has a <code>DataType</code> class to help us choose correct these types to current SQL.</p>
-
+own data types, so Windwalker has a <code>DataType</code> class to help us choose correct these types to current SQL.</p>
 <p>For example, Postgresql has no <code>datatime</code> type, but MySQL does, so if we create a table with <code>datetime</code>, Windwalker will
- convert this type to <code>timestamp</code> if we use postgresql driver.</p>
-
-<pre><code class="php">    // ...
+convert this type to <code>timestamp</code> if we use postgresql driver.</p>
+<pre><code class="language-php">    // ...
 
     $schema-&gt;datetime('created'); // Will be `timestamp` if use pgsql
 
-    // ...
-</code></pre>
-
+    // ...</code></pre>
 <p>We can get type detail by <code>DataType</code> class.</p>
-
-<pre><code class="php">use Windwalker\Database\Driver\Mysql\MysqlType;
+<pre><code class="language-php">use Windwalker\Database\Driver\Mysql\MysqlType;
 use Windwalker\Database\Driver\Postgresql\PostgresqlType;
 use Windwalker\Database\Schema\DataType;
 
@@ -405,38 +382,24 @@ gettype($entity-&gt;state) == MysqlType::getPhpType(DataType::TINYINT); // Will 
 
 // Get valid default value
 MysqlType::getDefaultValue(DataType::DATETIME); // `0000-00-00 00:00:00`
-MysqlType::getDefaultValue(DataType::TINYINT); // `0`
-</code></pre>
-
+MysqlType::getDefaultValue(DataType::TINYINT); // `0`</code></pre>
 <h3>Add Indexes</h3>
-
 <p>We can add a single name or a set of columns name, the index name will auto created.</p>
-
-<pre><code class="php">$schema-&gt;addIndex('foo'); // idx_tablename_foo
-$schema-&gt;addIndex(array('foo', 'bar')); // idx_tablename_foo_bar
-</code></pre>
-
+<pre><code class="language-php">$schema-&gt;addIndex('foo'); // idx_tablename_foo
+$schema-&gt;addIndex(array('foo', 'bar')); // idx_tablename_foo_bar</code></pre>
 <p>You can also set a custom name</p>
-
-<pre><code class="php">$schema-&gt;addIndex(array('foo', 'bar'), 'idx_custom_name');
-</code></pre>
-
+<pre><code class="language-php">$schema-&gt;addIndex(array('foo', 'bar'), 'idx_custom_name');</code></pre>
 <h2>update()</h2>
-
-<pre><code class="php">// Will add category_id column and a index
+<pre><code class="language-php">// Will add category_id column and a index
 $table-&gt;create(function (Schema $schema)
 {
     $schema-&gt;integer('category_id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Cat Key');
 
     $schema-&gt;addIndex('category_id');
-});
-</code></pre>
-
+});</code></pre>
 <h2>save()</h2>
-
 <p>If table exists, using update, otherwise use insert.</p>
-
-<pre><code class="php">// Will create table if not exists, and add columns if not in table.
+<pre><code class="language-php">// Will create table if not exists, and add columns if not in table.
 $table-&gt;save(function (Schema $schema)
 {
     $schema-&gt;primary('id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Primary Key');
@@ -448,66 +411,44 @@ $table-&gt;save(function (Schema $schema)
     $schema-&gt;addIndex('category_id');
     $schema-&gt;addIndex(array('category_id', 'title'));
     $schema-&gt;addUniqueKey('slug');
-}, true); // True to add IF NOT EXISTS
-</code></pre>
-
+}, true); // True to add IF NOT EXISTS</code></pre>
 <h2>dropColumn()</h2>
-
 <p>Instantly drop column.</p>
+<pre><code class="language-php">$table = $db-&gt;getTable('#__articles');
 
-<pre><code class="php">$table = $db-&gt;getTable('#__articles');
-
-$table-&gt;dropColumn('state');
-</code></pre>
-
+$table-&gt;dropColumn('state');</code></pre>
 <h2>dropIndex()</h2>
-
 <p>Instantly drop index.</p>
-
-<pre><code class="php">use Windwalker\Database\Schema\Key;
+<pre><code class="language-php">use Windwalker\Database\Schema\Key;
 
 $table = $db-&gt;getTable('#__articles');
 
-$table-&gt;dropIndex(Key::TYPE_INDEX, 'idx_state');
-</code></pre>
-
+$table-&gt;dropIndex(Key::TYPE_INDEX, 'idx_state');</code></pre>
 <h2>changeColumn() &amp; modifyColumn()</h2>
-
-<pre><code class="php">// Modify `foo` column to new type or length
+<pre><code class="language-php">// Modify `foo` column to new type or length
 $table-&gt;modifyColumn(
     (new Varchar('foo'))-&gt;length(123)-&gt;comment('Foo')
 );
 
 // Modify column `foo` to varchar and rename it to `new_name`
-$table-&gt;changeColumn('foo', new Varchar('new_name'));
-</code></pre>
-
+$table-&gt;changeColumn('foo', new Varchar('new_name'));</code></pre>
 <h2>Rename Table</h2>
+<pre><code class="language-php">$table = $db-&gt;getTable('#__foo');
 
-<pre><code class="php">$table = $db-&gt;getTable('#__foo');
-
-$newTable = $table-&gt;rename('#__bar');
-</code></pre>
-
+$newTable = $table-&gt;rename('#__bar');</code></pre>
 <h2>Truncate Table</h2>
+<pre><code class="language-php">$table = $db-&gt;getTable('#__foo');
 
-<pre><code class="php">$table = $db-&gt;getTable('#__foo');
-
-$table-&gt;truncate();
-</code></pre>
-
+$table-&gt;truncate();</code></pre>
 <h2>Get Column</h2>
-
-<pre><code class="php">// Get full columns data
+<pre><code class="language-php">// Get full columns data
 $table-&gt;getColumnDetails();
 
 // Get single column data
 $table-&gt;getColumnDetail('name');
 
 // Get an array with columns name
-$table-&gt;getColumns();
-</code></pre>
-
+$table-&gt;getColumns();</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -542,7 +483,7 @@ $table-&gt;getColumns();
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -556,18 +497,18 @@ $table-&gt;getColumns();
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -640,7 +581,7 @@ $table-&gt;getColumns();
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

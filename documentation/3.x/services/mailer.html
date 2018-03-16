@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Mailer | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,13 +303,10 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Use Mailer</h2>
-
 <p>Windwalker provides an interface to integrate different mail packages, currently we support <a href="http://swiftmailer.org/">Swift Mailer</a>
 as default, you must install <code>"swiftmailer/swiftmailer": "~5.0"</code> first.</p>
-
 <p>Then add your mail server information to <code>etc/secret.yml</code>:</p>
-
-<pre><code class="yaml"># ...
+<pre><code class="language-yaml"># ...
 
 mail:
     from:
@@ -333,20 +327,15 @@ mail:
         local: your.domain.com
 
     # Sendmail command if use this
-    sendmail: /usr/sbin/sendmail
-</code></pre>
-
+    sendmail: /usr/sbin/sendmail</code></pre>
 <p>Currently available transports:</p>
-
 <ul>
 <li>smtp (SMTP server)</li>
 <li>mail (PHP default <code>mail()</code> function)</li>
 <li>sendmail (Use system sendmail)</li>
 </ul>
-
 <h2>Create Message</h2>
-
-<pre><code class="php">use Windwalker\Core\Mailer\Mailer;
+<pre><code class="language-php">use Windwalker\Core\Mailer\Mailer;
 
 /** @var  $message \Windwalker\Core\Mailer\MailMessage */
 $message = Mailer::createMessage('Subject');
@@ -359,58 +348,40 @@ $message-&gt;to('foo@foo.com')
     -&gt;body('Mail body');
 
 // Send it
-Mailer::send($message);
-</code></pre>
-
+Mailer::send($message);</code></pre>
 <h3>Add Mail By Array</h3>
-
 <p>You can use array as a set of mail to <code>to()</code>, <code>from()</code>, <code>cc()</code> and <code>bcc()</code>.</p>
-
-<pre><code class="php">$message-&gt;to(['foo@mail.com', 'bar@mail.com']);
+<pre><code class="language-php">$message-&gt;to(['foo@mail.com', 'bar@mail.com']);
 
 // OR
 
 $message-&gt;to([
     'foo@mail.com' =&gt; 'Name Foo',
     'bar@mail.com' =&gt; 'Name Bar',
-]);
-</code></pre>
-
+]);</code></pre>
 <h3>Render Body From View</h3>
-
 <p>Use view to render mail in controller:</p>
-
-<pre><code class="php">$view = $this-&gt;getView('Mail');
+<pre><code class="language-php">$view = $this-&gt;getView('Mail');
 
 $view['user'] = User::get();
 $view['link'] = $link;
 $view['content'] = $content;
 
-$message-&gt;body($view-&gt;setLayout('mail.notify')-&gt;render());
-</code></pre>
-
+$message-&gt;body($view-&gt;setLayout('mail.notify')-&gt;render());</code></pre>
 <p>Or use message built-in render method:</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
 $message-&gt;renderBody('mail.notify', $data, 'edge');
 
-Mailer::send($message);
-</code></pre>
-
+Mailer::send($message);</code></pre>
 <h3>Attachment</h3>
-
 <p>Use file path.</p>
-
-<pre><code class="php">$message-&gt;attach('/path/to/file.pdf');
+<pre><code class="language-php">$message-&gt;attach('/path/to/file.pdf');
 $message-&gt;attach('/path/to/file2.pdf', , 'downloaded2.pdf', 'application/pdf');
 
-Mailer::send($message);
-</code></pre>
-
+Mailer::send($message);</code></pre>
 <p>Use <code>MailAttachment</code> class:</p>
-
-<pre><code class="php">use Windwalker\Core\Mailer\MailAttachment;
+<pre><code class="language-php">use Windwalker\Core\Mailer\MailAttachment;
 
 $message-&gt;attach(new MailAttachment('/path/to/fil.pdf'));
 
@@ -418,14 +389,10 @@ $message-&gt;attach(new MailAttachment('/path/to/fil.pdf'));
 $attachment = new MailAttachment;
 $attachment-&gt;setBody('&lt;html&gt;TEST&lt;/html&gt;');
 
-$message-&gt;attach($attachment, 'test.html');
-</code></pre>
-
+$message-&gt;attach($attachment, 'test.html');</code></pre>
 <h2>Pre-Defined Messages</h2>
-
 <p>You can declare some message classes to quickly re-use them.</p>
-
-<pre><code class="php">namespace Flower\Mail;
+<pre><code class="language-php">namespace Flower\Mail;
 
 // ...
 
@@ -445,33 +412,22 @@ class CheckoutMessage extends MailMessage
                 'product' =&gt; $product
             ]);
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Now just create this instance to send mail:</p>
+<pre><code class="language-php">use Flower\Mail\CheckoutMessage;
 
-<pre><code class="php">use Flower\Mail\CheckoutMessage;
-
-Mailer::send(CheckoutMessage::create($user, $product));
-</code></pre>
-
+Mailer::send(CheckoutMessage::create($user, $product));</code></pre>
 <h2>Style Inliner</h2>
-
 <p>Windwalker Includes a simple CSS inliner to help us compile CSS to inline styles that makes our email show normally with
 some email clients which does not support outside CSS.</p>
-
 <p>To enable CSS inliner, you must install <code>"tijsverkoyen/css-to-inline-styles": "~2.0"</code> first, and add this listener to <code>etc/app/windwalker.php</code>:</p>
-
-<pre><code class="php">// etc/app/windwalker.php or web.php
+<pre><code class="language-php">// etc/app/windwalker.php or web.php
 
     'listeners' =&gt; [
         'inliner' =&gt; \Windwalker\Core\Mailer\Listener\MailInlinerListener::class
-    ]
-</code></pre>
-
+    ]</code></pre>
 <p>Now write your mail template with some styles and send mail:</p>
-
-<pre><code class="php">@extends('_global.mail-wrapper')
+<pre><code class="language-php">@extends('_global.mail-wrapper')
 
 &lt;!-- Your base mail styles --&gt;
 @php( $asset-&gt;addCSS('css/mail-style.css') )
@@ -498,30 +454,22 @@ some email clients which does not support outside CSS.</p>
 &lt;p&gt;
     World
 &lt;/p&gt;
-&lt;a class="btn" href="#"&gt;Readmore&lt;/a&gt;
-</code></pre>
-
+&lt;a class="btn" href="#"&gt;Readmore&lt;/a&gt;</code></pre>
 <p>This mail template will be compiled to:</p>
-
-<pre><code class="html">&lt;div id="my-mail-wrapper" style="..."&gt;
+<pre><code class="language-html">&lt;div id="my-mail-wrapper" style="..."&gt;
     &lt;h1 style="color: #444444;"&gt;Hello&lt;/h1&gt;
     &lt;p style="line-height: 1.5;"&gt;
         World
     &lt;/p&gt;
     &lt;a style="padding: 5px 7px;" class="btn" href="#"&gt;Readmore&lt;/a&gt;
-&lt;/div&gt;
-</code></pre>
-
+&lt;/div&gt;</code></pre>
 <blockquote>
-  <p>You must use <code>$asset</code> to include outside CSS and write in-page CSS in <code>&lt;style&gt;</code> tag.
-  Do not use <code>&lt;link&gt;</code> tag to include CSS.</p>
-  
-  <hr />
-  
-  <p>Due to the performance reason, please don't include whole CSS framework like bootstrap or foundation,
-  Try to write your own mail style to make sure the compiler fast enough.</p>
+<p>You must use <code>$asset</code> to include outside CSS and write in-page CSS in <code>&lt;style&gt;</code> tag.
+Do not use <code>&lt;link&gt;</code> tag to include CSS.</p>
+<hr />
+<p>Due to the performance reason, please don't include whole CSS framework like bootstrap or foundation,
+Try to write your own mail style to make sure the compiler fast enough.</p>
 </blockquote>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -556,7 +504,7 @@ some email clients which does not support outside CSS.</p>
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -570,18 +518,18 @@ some email clients which does not support outside CSS.</p>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -654,7 +602,7 @@ some email clients which does not support outside CSS.</p>
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

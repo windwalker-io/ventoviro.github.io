@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Use Controller | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,13 +303,10 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Controller Overview</h2>
-
-<p>Windwalker Controller is a main entry of a page, after routing, the request input and IoC container will be injected 
+<p>Windwalker Controller is a main entry of a page, after routing, the request input and IoC container will be injected
 into controller and execute it. Any code mentioned in this section will be executed in <code>doExecute()</code>, the entrance of controller.</p>
-
 <p>Simple usage of controller:</p>
-
-<pre><code class="php">use Flower\Controller\Sakura\GetController;
+<pre><code class="language-php">use Flower\Controller\Sakura\GetController;
 
 use Flower\View\Sakura\SakuraHtmlView;
 use Windwalker\Core\Controller\AbstractController;
@@ -325,23 +319,15 @@ class GetController extends AbstractController
 
         return $view-&gt;render();
     }
-}
-</code></pre>
-
+}</code></pre>
 <h3>Single Action Pattern</h3>
-
 <p>Windwalker Controller follows single responsibility principle, every controller has only one action (<code>execute()</code>).
 The benefit is that our controllers will be much more lighter if an action has complex logic.</p>
-
 <h3>Hooks</h3>
-
 <p>Controller provides <code>prepareExecute()</code> and <code>postExecute()</code> to allow you inject before &amp; after process to controller.</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5596977/5f11832c-92d5-11e4-8e43-33013d076877.jpg" alt="hooks" /></p>
-
 <p>This is an example:</p>
-
-<pre><code class="php">class SaveController extends AbstractController
+<pre><code class="language-php">class SaveController extends AbstractController
 {
     // We prepare data in pre-process
     protected function prepareExecute()
@@ -371,17 +357,12 @@ The benefit is that our controllers will be much more lighter if an action has c
 
         return new RedirectResponse($this-&gt;router-&gt;route('users'));
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Follows this way to write your logic so we can easily override the before and after process in child controller if we need
- extends this controller.</p>
-
+extends this controller.</p>
 <h2>Get HTTP Request Input</h2>
-
 <p>See: <a href="../start/request-input.html">Request and Input</a>, we can use Input object to get HTTP queries:</p>
-
-<pre><code class="php">$id = $this-&gt;input-&gt;getInput('id');
+<pre><code class="language-php">$id = $this-&gt;input-&gt;getInput('id');
 
 $layout = $this-&gt;input-&gt;getString('layout', 'default');
 
@@ -397,14 +378,10 @@ $this-&gt;input-&gt;files-&gt;get('foo');
 $this-&gt;input-&gt;header-&gt;get('foo');
 $this-&gt;input-&gt;server-&gt;get('foo');
 $this-&gt;input-&gt;env-&gt;get('foo');
-$this-&gt;input-&gt;cookie-&gt;get('foo');
-</code></pre>
-
+$this-&gt;input-&gt;cookie-&gt;get('foo');</code></pre>
 <h2>Use Model and View Object</h2>
-
 <p>If your model and view object located in your package, and follows Windwalker naming convention, you can get Model and View by getter in controller.</p>
-
-<pre><code class="php">// In doExecute()
+<pre><code class="language-php">// In doExecute()
 
 // File: src/Flower/Model/SakuraModel.php
 // Class: Flower\Model\SakuraModel
@@ -416,12 +393,9 @@ $this-&gt;getModel('Sakura');
 
 // Get other models and views
 $this-&gt;getModel('Rose'); // RoseModel
-$this-&gt;getView('Rose', 'json'); // RoseJsonView
-</code></pre>
-
+$this-&gt;getView('Rose', 'json'); // RoseJsonView</code></pre>
 <p>If you didn't tell getter the view or model name, it will use controller name as default:</p>
-
-<pre><code class="php">// In doExecute()
+<pre><code class="language-php">// In doExecute()
 
 // SakuraModel
 $this-&gt;getModel();
@@ -430,16 +404,11 @@ $this-&gt;getModel();
 $this-&gt;getView();
 
 // SakuraJsonView
-$this-&gt;getView(null, 'json');
-</code></pre>
-
+$this-&gt;getView(null, 'json');</code></pre>
 <p>See <a href="view-templating.html">View</a> and <a href="model-database.html">Model</a></p>
-
 <h2>Delegating Tasks</h2>
-
 <p>Controller <code>delegate()</code> method supports us handle multiple tasks in one controller if we need dispatch different handlers.</p>
-
-<pre><code class="php">protected function doExecute()
+<pre><code class="language-php">protected function doExecute()
 {
     return $this-&gt;delegate($this-&gt;input-&gt;get('task', 'task1'), ...$this-&gt;input-&gt;post-&gt;toArray());
 }
@@ -452,14 +421,10 @@ protected function task1($arg1, $arg2, $arg3)
 protected function task2($arg1, $arg2)
 {
     // ...
-}
-</code></pre>
-
+}</code></pre>
 <h2>Use Container, Package &amp; Application</h2>
-
 <p>Windwalker controller is a Container aware interface, we can directly use container in controller:</p>
-
-<pre><code class="php">// In doExecute()
+<pre><code class="language-php">// In doExecute()
 
 $session = $this-&gt;container-&gt;get('session');
 $cache = $this-&gt;controller-&gt;get('cache');
@@ -467,12 +432,9 @@ $cache = $this-&gt;controller-&gt;get('cache');
 $cache-&gt;call('user', function() use ($session)
 {
     return $session-&gt;get('user');
-});
-</code></pre>
-
+});</code></pre>
 <p>Controller maintains package and application object, so we can get some important global services from them.</p>
-
-<pre><code class="php">// Get services from Application
+<pre><code class="language-php">// Get services from Application
 $this-&gt;app-&gt;container-&gt;get('...'); // Global container
 $this-&gt;app-&gt;cache-&gt;getCache();
 $this-&gt;app-&gt;session-&gt;get('user');
@@ -486,20 +448,14 @@ $this-&gt;app-&gt;get('foo'); // Get global config
 // Get services from package
 $this-&gt;package-&gt;container-&gt;get('...'); // Package child container
 $this-&gt;package-&gt;router-&gt;route('user'); // Package child router
-$this-&gt;package-&gt;get('foo'); // Package config
-</code></pre>
-
+$this-&gt;package-&gt;get('foo'); // Package config</code></pre>
 <p>More services please see <a href="../core/service-provider.html">Service Provider</a></p>
-
 <h2>Success and Failure Processor</h2>
-
 <p>Controller also provides an interface to help us process success and failure of executed, for example, if we throw an Exception,
 controller will catch it and auto run <code>processFailure()</code>, so we can write our failure handler buy override this method,
 otherwise controller will call <code>processSuccess()</code> to handle success logic.</p>
-
 <p>This is an sample code to show how to implement a DB transaction in controller.</p>
-
-<pre><code class="php">class SaveController extends AbstractController
+<pre><code class="language-php">class SaveController extends AbstractController
 {
     protected function doExecute()
     {
@@ -535,35 +491,25 @@ otherwise controller will call <code>processSuccess()</code> to handle success l
 
         return false;
     }
-}
-</code></pre>
-
+}</code></pre>
 <h2>Json Response</h2>
-
 <p>Use JsonResponse to return json <code>content-type</code> in <code>doExecute()</code></p>
-
-<pre><code class="php">use Windwalker\Http\Response\JsonResponse;
+<pre><code class="language-php">use Windwalker\Http\Response\JsonResponse;
 
 // in doExecute()
 
 $this-&gt;response = new JsonResponse;
 
 // The returned data will auto convert to json
-return ['foo' =&gt; 'bar'];
-</code></pre>
-
+return ['foo' =&gt; 'bar'];</code></pre>
 <p>Use trait to auto prepare json response.</p>
-
-<pre><code class="php">use Windwalker\Core\Controller\Traits\JsonResponseTrait;
+<pre><code class="language-php">use Windwalker\Core\Controller\Traits\JsonResponseTrait;
 
 class GetController extends AbstractController
 {
-    use JsonResponseTrait;
-</code></pre>
-
+    use JsonResponseTrait;</code></pre>
 <p>Use <code>JsonApiTrait</code> to return a standard api format:</p>
-
-<pre><code class="php">use Windwalker\Core\Controller\Traits\JsonApiTrait;
+<pre><code class="language-php">use Windwalker\Core\Controller\Traits\JsonApiTrait;
 
 class GetController extends AbstractController
 {
@@ -574,26 +520,19 @@ class GetController extends AbstractController
         $this-&gt;addMessage('Hello');
 
         return return ['foo' =&gt; 'bar'];
-    }
-</code></pre>
-
+    }</code></pre>
 <p>Output data:</p>
-
-<pre><code class="php">{
+<pre><code class="language-php">{
     "success": true,
     "code": 200,
     "message": "Hello"
     "data": {
         "foo": "bar"
     }
-}
-</code></pre>
-
+}</code></pre>
 <h2>Validate Middleware</h2>
-
 <p>Add <code>ValidateErrorHandlingMiddleware</code> so controller can catch <code>ValidateFailException</code> to handle multiple invalid data messages.</p>
-
-<pre><code class="php">use Windwalker\Core\Controller\Middleware\ValidateErrorHandlingMiddleware;
+<pre><code class="language-php">use Windwalker\Core\Controller\Middleware\ValidateErrorHandlingMiddleware;
 use Windwalker\Core\Model\Exception\ValidateFailException;
 
 // ...
@@ -628,52 +567,33 @@ protected function validate($data)
             'Message3',
         ]);
     }
-}
-</code></pre>
-
+}</code></pre>
 <h2>Controller Config</h2>
-
 <p>You can set some config in <code>$this-&gt;config</code> and pass it into View and Model, then they will know everything about this controller.</p>
-
-<pre><code class="php">// In doExecute()
+<pre><code class="language-php">// In doExecute()
 
 $this-&gt;config-&gt;set('package.name', 'other_package_name');
 
 $view-&gt;setConfig($this-&gt;config);
 $model-&gt;setConfig($this-&gt;config);
 
-// Then View will find template from other package
-</code></pre>
-
+// Then View will find template from other package</code></pre>
 <p>If you use getter to get View and Model, config will auto set into them.</p>
-
 <p>Config is a Structure object, see: <a href="../more/structure.html">Windwalker Structure</a></p>
-
 <h2>CSRF Token</h2>
-
 <p>Windwalker provides a simple CSRF token generator, please add this line to your HTML form:</p>
-
-<pre><code class="html">&lt;form action="..." method="post"&gt;
+<pre><code class="language-html">&lt;form action="..." method="post"&gt;
 
     &lt;!-- ... --&gt;
 
     &lt;?php echo \Windwalker\Core\Security\CsrfProtection::input(); ?&gt;
-&lt;/form&gt;
-</code></pre>
-
+&lt;/form&gt;</code></pre>
 <p>In Edge of Blade</p>
-
-<pre><code class="php">@formToken()
-</code></pre>
-
+<pre><code class="language-php">@formToken()</code></pre>
 <p>This will generate a token input to your form. You can also add token to an URL.</p>
-
-<pre><code class="html">&lt;a href="flower/sakura?&lt;?php echo \Windwalker\Core\Security\CsrfProtection::getFormToken(); ?&gt;"&gt;&lt;/a&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;a href="flower/sakura?&lt;?php echo \Windwalker\Core\Security\CsrfProtection::getFormToken(); ?&gt;"&gt;&lt;/a&gt;</code></pre>
 <p>Then just check token in your Controller.</p>
-
-<pre><code class="php">use Windwalker\Core\Security\CsrfProtection;
+<pre><code class="language-php">use Windwalker\Core\Security\CsrfProtection;
 
 // Validate or throw exception
 CsrfProtection::validate();
@@ -688,40 +608,26 @@ CsrfProtection::validate([bool], 'Sorry your token is invalid');
 if (! CsrfProtection::checkToken())
 {
     throw new \RuntimeException('Invalid Token');
-}
-</code></pre>
-
+}</code></pre>
 <p>Use trait to auto check CSRF token:</p>
-
-<pre><code class="php">use Windwalker\Core\Controller\Traits\CsrfProtectionTrait;
+<pre><code class="language-php">use Windwalker\Core\Controller\Traits\CsrfProtectionTrait;
 
 class SaveController extends AbstractController
 {
     use CsrfProtectionTrait;
 
-    // ...
-</code></pre>
-
+    // ...</code></pre>
 <h2>Utilities Methods</h2>
-
 <h3>Redirect</h3>
-
 <p>Use <code>setRedirect($url)</code> to tell controller redirect to other url after executed.</p>
-
-<pre><code class="php">$this-&gt;setRedirect('pages.html');
+<pre><code class="language-php">$this-&gt;setRedirect('pages.html');
 
 // Then after executed, we can call `redirect()` to do redirect action.
-$this-&gt;redirect();
-</code></pre>
-
+$this-&gt;redirect();</code></pre>
 <p>Set Message when redirect:</p>
-
-<pre><code class="php">$this-&gt;setRedirect('pages.html', 'Save success', 'info');
-</code></pre>
-
+<pre><code class="language-php">$this-&gt;setRedirect('pages.html', 'Save success', 'info');</code></pre>
 <p>We can override redirect target anywhere when executing.</p>
-
-<pre><code class="php">// In doExecute()
+<pre><code class="language-php">// In doExecute()
 
 $model-&gt;save($data);
 
@@ -739,48 +645,31 @@ catch (Exception $e)
     return false;
 }
 
-return true;
-</code></pre>
-
+return true;</code></pre>
 <p>We can also redirect instantly by set URL as first argument to <code>redirect()</code></p>
-
-<pre><code class="php">$this-&gt;redirect('http://foo.com/page.html');
-</code></pre>
-
+<pre><code class="language-php">$this-&gt;redirect('http://foo.com/page.html');</code></pre>
 <h3>Add Flash Messages</h3>
-
 <p>Flash message is a disposable message in session, if we show it, these messages will be purged.</p>
-
-<pre><code class="php">$this-&gt;addMessage('Message', 'type');
+<pre><code class="language-php">$this-&gt;addMessage('Message', 'type');
 
 // Set multiple messages by array
 $this-&gt;addMessage(['Message', 'Message2'], 'type');
 
 // OR
 
-$this-&gt;setRedirect('url.html', 'Message', 'type');
-</code></pre>
-
+$this-&gt;setRedirect('url.html', 'Message', 'type');</code></pre>
 <h3>Mute</h3>
-
 <p>If we set controller to mute, this controller will not add any messages:</p>
+<pre><code class="language-php">$this-&gt;mute(true);
 
-<pre><code class="php">$this-&gt;mute(true);
-
-$this-&gt;addMessage('Message'); // This action no use
-</code></pre>
-
+$this-&gt;addMessage('Message'); // This action no use</code></pre>
 <h2>HMVC</h2>
-
-<p>The Hierarchical-Model-View-Controller (HMVC) pattern is a direct extension to the MVC pattern that manages 
-to solve many of the scalability issues already mentioned. HMVC was first described in a blog post entitled 
-<a href="http://goo.gl/jecFUK">HMVC: The layered pattern for developing strong client tiers</a> on the JavaWorld web site in July 2000.</p>
-
+<p>The Hierarchical-Model-View-Controller (HMVC) pattern is a direct extension to the MVC pattern that manages
+to solve many of the scalability issues already mentioned. HMVC was first described in a blog post entitled
+<a href="http://goo.gl/jecFUK">HMVC: The layered pattern for developing strong client tiers</a> on the JavaWorld web site in July 2000. </p>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5586880/993f66de-9115-11e4-8551-6f6c3f0f0058.png" alt="mvc-hmvc" /></p>
-
 <p>In Windwalker, using HMVC is very easy, look this example:</p>
-
-<pre><code class="php">class ParentController extends Controller
+<pre><code class="language-php">class ParentController extends Controller
 {
     protected function doExecute()
     {
@@ -792,55 +681,38 @@ to solve many of the scalability issues already mentioned. HMVC was first descri
         // Use this result to do something
         $this-&gt;getView()-&gt;set('some_widget', $hmvcResult);
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Actually, all params of constructor can be ignored because the global IoC container will handle this dependency.</p>
-
-<pre><code class="php">// Every dependency will be provided by IoC
-$child = new ChildController;
-</code></pre>
-
+<pre><code class="language-php">// Every dependency will be provided by IoC
+$child = new ChildController;</code></pre>
 <p>But you can force push some params you needed:</p>
-
-<pre><code class="php">$newInput = new Input(array('foo' =&gt; 'bar'));
+<pre><code class="language-php">$newInput = new Input(array('foo' =&gt; 'bar'));
 
 $child = new ChildController($newInput);
 
 // OR
 $subContainer = Ioc::factory('sub.container');
 
-$child = new ChildController(null, $subContainer-&gt;get('package'), $subContainer);
-</code></pre>
-
+$child = new ChildController(null, $subContainer-&gt;get('package'), $subContainer);</code></pre>
 <h3>Use hmvc() Method</h3>
-
 <p>Windwalker provides a <code>hmvc()</code> method to make this step more quickly:</p>
-
-<pre><code class="php">$result = $this-&gt;hmvc('Flower\Controller\Rose\SaveController', array('data' =&gt; $data));
+<pre><code class="language-php">$result = $this-&gt;hmvc('Flower\Controller\Rose\SaveController', array('data' =&gt; $data));
 
 // OR
 
-$result = $this-&gt;hmvc(new ChildController, $this-&gt;input);
-</code></pre>
-
+$result = $this-&gt;hmvc(new ChildController, $this-&gt;input);</code></pre>
 <h2>Middlewares</h2>
-
 <p>Windwalker Controller supports middleware pattern, you can add middlewares in <code>middleware</code> property when class declaring:</p>
-
-<pre><code class="php">class GetController extends AbstractController
+<pre><code class="language-php">class GetController extends AbstractController
 {
     protected $middlewares = [
         // The key: 800 is priority number
         800 =&gt; \Windwalker\Core\Controller\Middleware\JsonResponseMiddleware::class
     ];
 
-    // ...
-</code></pre>
-
+    // ...</code></pre>
 <p>Or add it in <code>init()</code> or <code>boot()</code> method before executed:</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
 protected function init()
 {
@@ -849,19 +721,14 @@ protected function init()
     $this-&gt;addMiddleware(ValidateErrorHandlingMiddleware::class, PriorityQueue::HIGH + 10);
 }
 
-// ...
-</code></pre>
-
+// ...</code></pre>
 <blockquote>
-  <p>Controller interface is different from application and package, it is not Psr7 invokable,
-  so we must use another interface to execute middlewares.</p>
+<p>Controller interface is different from application and package, it is not Psr7 invokable,
+so we must use another interface to execute middlewares.</p>
 </blockquote>
-
 <h3>Create Custom Middleware</h3>
-
 <p>Use callback as middleware:</p>
-
-<pre><code class="php">protected $middlewares = [
+<pre><code class="language-php">protected $middlewares = [
     500 =&gt; function ($data, $next)
     {
         // pre-process
@@ -874,12 +741,9 @@ protected function init()
 
         return $result;
     }
-];
-</code></pre>
-
+];</code></pre>
 <p>Or use class as middleware:</p>
-
-<pre><code class="php">use Windwalker\Debugger\Helper\DebuggerHelper;
+<pre><code class="language-php">use Windwalker\Debugger\Helper\DebuggerHelper;
 use Windwalker\Http\Response\JsonResponse;
 
 class MyMiddleware extends AbstractControllerMiddleware
@@ -893,41 +757,27 @@ class MyMiddleware extends AbstractControllerMiddleware
 
         return $result;
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Then register it to controller:</p>
-
-<pre><code class="php">protected $middlewares = [
+<pre><code class="language-php">protected $middlewares = [
     800 =&gt; MyMiddleware::class
-];
-</code></pre>
-
+];</code></pre>
 <h2>Traits</h2>
-
 <p>Controller is an instance of <code>BootableTrait</code>, which can auto boot used traits.</p>
-
 <p>Create a trait with a method named <code>boot{TraitName}()</code>:</p>
-
-<pre><code class="php">trait MyTestTrait
+<pre><code class="language-php">trait MyTestTrait
 {
     public function bootMyTestTrait()
     {
         $this-&gt;adMiddleware(...);
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Now use it in controller and it will be auto booted.</p>
-
-<pre><code class="php">class GetController extends AbstractController
+<pre><code class="language-php">class GetController extends AbstractController
 {
     use MyTestTrait;
-}
-</code></pre>
-
+}</code></pre>
 <h3>Built-in Traits</h3>
-
 <ul>
 <li><code>Windwalker\Core\Controller\Traits\JsonResponseTrait</code></li>
 <li><code>Windwalker\Core\Controller\Traits\JsonApiTrait</code></li>
@@ -935,7 +785,6 @@ class MyMiddleware extends AbstractControllerMiddleware
 <li><code>Windwalker\Core\Controller\Traits\CsrfProtectionTrait</code></li>
 <li><code>Windwalker\Core\Controller\Traits\CorsTrait</code></li>
 </ul>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -970,7 +819,7 @@ class MyMiddleware extends AbstractControllerMiddleware
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -984,18 +833,18 @@ class MyMiddleware extends AbstractControllerMiddleware
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -1068,7 +917,7 @@ class MyMiddleware extends AbstractControllerMiddleware
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

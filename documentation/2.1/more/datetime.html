@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>DateTime | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,39 +250,24 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>About Windwalker DateTime</h2>
-
 <p><code>Windwalker\Core\DateTime\DateTime</code> is sub class of PHP <code>DateTime</code>. This class is based on Joomla <code>JDate</code> and add some new features.</p>
-
 <p>All PHP DateTime functions are able to use on Windwalker DataTime, see <a href="http://php.net/manual/en/book.datetime.php">PHP DateTime</a></p>
-
 <h2>Construct</h2>
-
 <p>Windwalker DateTime supports Timezone as string.</p>
+<pre><code class="language-php">use Windwalker\Core\DateTime\DateTime;
 
-<pre><code class="php">use Windwalker\Core\DateTime\DateTime;
-
-$dt = new DateTime('now', 'Asia/Taipei');
-</code></pre>
-
+$dt = new DateTime('now', 'Asia/Taipei');</code></pre>
 <p>Auto set default timezone so you won't get PHP default timezone notice.</p>
-
-<pre><code class="php">$dt = new DateTime('now', null);
-</code></pre>
-
+<pre><code class="language-php">$dt = new DateTime('now', null);</code></pre>
 <p>Auto get global timezone, if you set timezone in Windwalker config, DateTime will auto load it.</p>
-
-<pre><code class="php">$dt = new DateTime('now', true);
+<pre><code class="language-php">$dt = new DateTime('now', true);
 
 // OR
 
-$dt = new DateTime('now', DateTime::TZ_LOCALE);
-</code></pre>
-
+$dt = new DateTime('now', DateTime::TZ_LOCALE);</code></pre>
 <h2>Convert Timezone</h2>
-
 <p>Windwalker DateTime supports easy methods to convert timezone.</p>
-
-<pre><code class="php">$date = '2015-03-31 12:00:00';
+<pre><code class="language-php">$date = '2015-03-31 12:00:00';
 
 $date = DateTime::toServerTime($date, [format], [to tz]);
 
@@ -294,12 +276,9 @@ $date = DateTime::toLocalTime($date, [format], [to tz]);
 // Or convert to other timezone
 
 $date = DateTime::convert($date, [from], [to], [format]);
-$date = DateTime::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');
-</code></pre>
-
+$date = DateTime::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');</code></pre>
 <h2>Simple Properties</h2>
-
-<pre><code class="php">$datetime = new DateTime;
+<pre><code class="language-php">$datetime = new DateTime;
 
 $datetime-&gt;daysinmonth;
 $datetime-&gt;dayofweek;
@@ -312,12 +291,9 @@ $datetime-&gt;second;
 $datetime-&gt;month;
 $datetime-&gt;ordinal;
 $datetime-&gt;week;
-$datetime-&gt;year;
-</code></pre>
-
+$datetime-&gt;year;</code></pre>
 <h2>Pre-define Formats</h2>
-
-<pre><code class="php">$datetime = new DateTime;
+<pre><code class="language-php">$datetime = new DateTime;
 
 $datetime-&gt;toSql();
 $datetime-&gt;toISO8601();
@@ -326,22 +302,16 @@ $datetime-&gt;toUnix();
 
 $date-&gt;format(DateTime::FORMAT_YMD);
 $date-&gt;format(DateTime::FORMAT_YMD_HI);
-$date-&gt;format(DateTime::FORMAT_YMD_HIS);
-</code></pre>
-
+$date-&gt;format(DateTime::FORMAT_YMD_HIS);</code></pre>
 <h2>Get Local Time</h2>
-
-<p>Add <code>true</code> to get local time, otherwise you will get UTC time.</p>
-
-<pre><code class="php">$datetime = new DateTime('now', 'Asia/Taipei');
+<p>Add <code>true</code> to get local time, otherwise you will get UTC time. </p>
+<pre><code class="language-php">$datetime = new DateTime('now', 'Asia/Taipei');
 
 $datetime-&gt;format('Y/m/d H:i:s', true);
 $datetime-&gt;toSql(true);
 $datetime-&gt;toISO8601(true);
 $datetime-&gt;toRFC822(true);
-$datetime-&gt;toUnix(DateTime::TZ_LOCALE); // Same as true
-</code></pre>
-
+$datetime-&gt;toUnix(DateTime::TZ_LOCALE); // Same as true</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -376,7 +346,7 @@ $datetime-&gt;toUnix(DateTime::TZ_LOCALE); // Same as true
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -390,18 +360,18 @@ $datetime-&gt;toUnix(DateTime::TZ_LOCALE); // Same as true
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -474,7 +444,7 @@ $datetime-&gt;toUnix(DateTime::TZ_LOCALE); // Same as true
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

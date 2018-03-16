@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>ActiveRecord | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,47 +250,32 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Introduction</h2>
-
 <p>Windwalker Record is a simple ActiveRecord to operate database row.</p>
-
 <h3>New a instance.</h3>
-
-<pre><code class="php">use Windwalker\Record\Record;
+<pre><code class="language-php">use Windwalker\Record\Record;
 
 // Record object for users table
-$user = new Record('users');
-</code></pre>
-
+$user = new Record('users');</code></pre>
 <p>Or create a class:</p>
-
-<pre><code class="php">use Windwalker\Record\Record;
+<pre><code class="language-php">use Windwalker\Record\Record;
 
 class UserRecord extends Record
 {
     protected $table = 'users';
 }
 
-$user = new UserRecord;
-</code></pre>
-
+$user = new UserRecord;</code></pre>
 <h3>Load A Record</h3>
+<pre><code class="language-php">$user-&gt;load(25); // Load by primary key
 
-<pre><code class="php">$user-&gt;load(25); // Load by primary key
-
-$user-&gt;load(array('alias' =&gt; $alias)); // Load by field name.
-</code></pre>
-
+$user-&gt;load(array('alias' =&gt; $alias)); // Load by field name.</code></pre>
 <p>Check row exists</p>
-
-<pre><code class="php">if (!$user-&gt;load(25))
+<pre><code class="language-php">if (!$user-&gt;load(25))
 {
     throw new RuntuneException('User not found');
-}
-</code></pre>
-
+}</code></pre>
 <h3>Bind Data</h3>
-
-<pre><code class="php">$data = array(
+<pre><code class="language-php">$data = array(
     'name'     =&gt; 'Sakura',
     'username' =&gt; 'sakura',
     'alias'    =&gt; 'sakura',
@@ -303,44 +285,33 @@ $user-&gt;load(array('alias' =&gt; $alias)); // Load by field name.
 
 $user-&gt;bind($data);
 
-$user-&gt;name; // Sakura
-</code></pre>
-
+$user-&gt;name; // Sakura</code></pre>
 <p>If we have a table with only 3 columns:</p>
-
 <table>
 <thead>
 <tr>
-  <th>Name</th>
+<th>Name</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>name</td>
+<td>name</td>
 </tr>
 <tr>
-  <td>username</td>
+<td>username</td>
 </tr>
 <tr>
-  <td>password</td>
+<td>password</td>
 </tr>
 </tbody>
 </table>
-
 <p>The fields which not in this table will be remove after binding data.</p>
-
-<pre><code class="php">$user-&gt;alias; // null
-</code></pre>
-
+<pre><code class="language-php">$user-&gt;alias; // null</code></pre>
 <p>That makes our fields in Record will always same as DB table.</p>
-
 <h3>Store</h3>
-
 <h5>Create A New Row</h5>
-
 <p>If primary not exists, Record will create a new row in table.</p>
-
-<pre><code class="php">$data = array(
+<pre><code class="language-php">$data = array(
     'name'     =&gt; 'Sakura',
     'username' =&gt; 'sakura',
     'password' =&gt; '1234'
@@ -350,14 +321,10 @@ $user-&gt;bind($data);
 
 $user-&gt;store();
 
-echo $user-&gt;id; // Auto generated id
-</code></pre>
-
+echo $user-&gt;id; // Auto generated id</code></pre>
 <h5>Update A Existing Row</h5>
-
 <p>If primary key exists, Record will update it.</p>
-
-<pre><code class="php">$data = array(
+<pre><code class="language-php">$data = array(
     'id'       =&gt; 30,
     'name'     =&gt; 'Sakura',
     'username' =&gt; 'sakura',
@@ -366,14 +333,10 @@ echo $user-&gt;id; // Auto generated id
 
 $user-&gt;bind($data);
 
-$user-&gt;store();
-</code></pre>
-
+$user-&gt;store();</code></pre>
 <h3>Check</h3>
-
 <p>Check method help you validate data.</p>
-
-<pre><code class="php">class UserRecord extends Record
+<pre><code class="language-php">class UserRecord extends Record
 {
     // ...
 
@@ -386,170 +349,121 @@ $user-&gt;store();
 
         return true;
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Then we call <code>check()</code> before <code>store()</code>.</p>
-
-<pre><code class="php">$user-&gt;bind($data);
+<pre><code class="language-php">$user-&gt;bind($data);
 
 $user-&gt;check();
 
-$user-&gt;store();
-</code></pre>
-
+$user-&gt;store();</code></pre>
 <h3>Delete</h3>
-
-<pre><code class="php">$user-&gt;load(30);
+<pre><code class="language-php">$user-&gt;load(30);
 $result = $user-&gt;delete(); // boolean
 
 // OR delete by conditions
 
 $result = $user-&gt;delete(30); // boolean
-$result = $user-&gt;delete(array('username' =&gt; $username)); // boolean
-</code></pre>
-
+$result = $user-&gt;delete(array('username' =&gt; $username)); // boolean</code></pre>
 <h2>NestedRecord</h2>
-
 <p>NestedRecord is a tool help us handle <a href="http://en.wikipedia.org/wiki/Nested_set_model">Nested Set Model</a>.</p>
-
 <h3>Create Table</h3>
-
 <p>Name: <code>categories</code></p>
-
 <table>
 <thead>
 <tr>
-  <th>Name</th>
-  <th>Type</th>
-  <th>Description</th>
-  <th>Need For NestedRecord</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Need For NestedRecord</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>id</td>
-  <td>int</td>
-  <td>Primary Key</td>
-  <td></td>
+<td>id</td>
+<td>int</td>
+<td>Primary Key</td>
+<td></td>
 </tr>
 <tr>
-  <td>parent_id</td>
-  <td>int</td>
-  <td>ID of Parent Node</td>
-  <td>V</td>
+<td>parent_id</td>
+<td>int</td>
+<td>ID of Parent Node</td>
+<td>V</td>
 </tr>
 <tr>
-  <td>title</td>
-  <td>varchar</td>
-  <td>Category title</td>
-  <td></td>
+<td>title</td>
+<td>varchar</td>
+<td>Category title</td>
+<td></td>
 </tr>
 <tr>
-  <td>path</td>
-  <td>varchar</td>
-  <td>Node path</td>
-  <td>V</td>
+<td>path</td>
+<td>varchar</td>
+<td>Node path</td>
+<td>V</td>
 </tr>
 <tr>
-  <td>lft</td>
-  <td>int</td>
-  <td>Left key</td>
-  <td>V</td>
+<td>lft</td>
+<td>int</td>
+<td>Left key</td>
+<td>V</td>
 </tr>
 <tr>
-  <td>rgt</td>
-  <td>int</td>
-  <td>Right key</td>
-  <td>V</td>
+<td>rgt</td>
+<td>int</td>
+<td>Right key</td>
+<td>V</td>
 </tr>
 <tr>
-  <td>level</td>
-  <td>int</td>
-  <td>Node level</td>
-  <td>V</td>
+<td>level</td>
+<td>int</td>
+<td>Node level</td>
+<td>V</td>
 </tr>
 </tbody>
 </table>
-
 <h3>Initialise</h3>
-
 <p>Every nested set should have a root node.</p>
+<pre><code class="language-php">$cat = new NestedRecord('categories');
 
-<pre><code class="php">$cat = new NestedRecord('categories');
-
-$cat-&gt;createRoot();
-</code></pre>
-
+$cat-&gt;createRoot();</code></pre>
 <p>NOTE: The root node id is <code>1</code>.</p>
-
 <h3>Create Node</h3>
-
 <p>Set as first child of ROOT</p>
-
-<pre><code class="php">$cat-&gt;bind($data)
+<pre><code class="language-php">$cat-&gt;bind($data)
     -&gt;setLocation(1, NestedRecord::LOCATION_FIRST_CHILD)
-    -&gt;store();
-</code></pre>
-
+    -&gt;store();</code></pre>
 <p>Now we will have a new node and it id is <code>2</code>. Create a new node as last child of <code>2</code>.</p>
-
-<pre><code class="php">$cat-&gt;bind($data)
+<pre><code class="language-php">$cat-&gt;bind($data)
     -&gt;setLocation(2, NestedRecord::LOCATION_LAST_CHILD)
-    -&gt;store();
-</code></pre>
-
+    -&gt;store();</code></pre>
 <p>Available positions:</p>
-
 <ul>
 <li>LOCATION_FIRST_CHILD</li>
 <li>LOCATION_LAST_CHILD</li>
 <li>LOCATION_BEFORE</li>
 <li>LOCATION_AFTER</li>
 </ul>
-
 <h3>Move Node</h3>
-
 <h5>Re Ordering</h5>
-
-<pre><code class="php">$cat-&gt;move(1); // move up
-$cat-&gt;move(-1); // Move down
-</code></pre>
-
+<pre><code class="language-php">$cat-&gt;move(1); // move up
+$cat-&gt;move(-1); // Move down</code></pre>
 <h5>Move To Other Node</h5>
-
 <p>Move to node <code>3</code> as last child.</p>
-
-<pre><code class="php">$cat-&gt;moveByReference(3, NestedRecord::LOCATION_LAST_CHILD);
-</code></pre>
-
+<pre><code class="language-php">$cat-&gt;moveByReference(3, NestedRecord::LOCATION_LAST_CHILD);</code></pre>
 <h3>Rebuild</h3>
-
 <p>If a tree was not correct, using rebuild to reset all <code>lft</code>, <code>rgt</code> of this branch.</p>
-
-<pre><code class="php">$cat-&gt;load(5);
-$cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
-</code></pre>
-
+<pre><code class="language-php">$cat-&gt;load(5);
+$cat-&gt;rebuild(); // Rebuild node: 5 and it's children.</code></pre>
 <h3>getPath</h3>
-
 <p>Method to get an array of nodes from a given node to its root.</p>
-
-<pre><code class="php">$path = $cat-&gt;getPath();
-</code></pre>
-
+<pre><code class="language-php">$path = $cat-&gt;getPath();</code></pre>
 <h3>getTree</h3>
-
 <p>Method to get a node and all its child nodes.</p>
-
-<pre><code class="php">$records = $cat-&gt;getTree();
-</code></pre>
-
+<pre><code class="language-php">$records = $cat-&gt;getTree();</code></pre>
 <h2>Hooks</h2>
-
 <p><code>Record</code> object supports hooks to add logic before or after any data operation.</p>
-
-<pre><code class="php">class ArticleRecord extends Record
+<pre><code class="language-php">class ArticleRecord extends Record
 {
     protected $table = 'articles';
 
@@ -558,11 +472,8 @@ $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
         // Also load tags
         $this-&gt;tags = TagHelper::getAllTags();
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Available events:</p>
-
 <ul>
 <li>onBeforeLoad</li>
 <li>onAfterLoad</li>
@@ -571,9 +482,7 @@ $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
 <li>onBeforeDelete</li>
 <li>onAfterDelete</li>
 </ul>
-
 <p>See <a href="../more/events.html">Events</a></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -608,7 +517,7 @@ $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -622,18 +531,18 @@ $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -706,7 +615,7 @@ $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

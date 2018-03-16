@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Request and Input | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,10 +250,8 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Get Input Object in Controller</h2>
-
 <p>Last section we have learned how to make controller work, now it's time to see how the application receives HTTP request queries and respond. In Windwalker you may access input queries using <code>Input</code> object. Below is how it works:</p>
-
-<pre><code class="php">// src/Flower/Controller/Sakuras/GetController.php
+<pre><code class="language-php">// src/Flower/Controller/Sakuras/GetController.php
 
 class GetController extends Controller
 {
@@ -267,42 +262,26 @@ class GetController extends Controller
 
         // Do some stuff
     }
-}
-</code></pre>
-
+}</code></pre>
 <h3>Get Input at Anywhere</h3>
-
 <p>The <code>Input</code> property only exists in class <code>Application</code> and <code>Controller</code>. Under any other situation to access <code>Input</code>, you may use Ioc (DI) Container. This is NOT recommended for it might break software robustness of your application.</p>
-
-<pre><code class="php">// Use global Ioc class
+<pre><code class="language-php">// Use global Ioc class
 $input = Ioc::getInput();
 
 // OR use container object
-$input = $container-&gt;get('system.input');
-</code></pre>
-
+$input = $container-&gt;get('system.input');</code></pre>
 <h2>How Input Work</h2>
-
 <p>Mostly, we need to get data from http request which <code>$_GET</code>, <code>$_POST</code> or <code>$_REQUEST</code> provides.</p>
-
 <p>But it is very unsafe if we only use super global variables, the Input object can help us get values from these variables and sanitize string.</p>
+<pre><code class="language-php">$input-&gt;get('flower'); // Same as $_REQUEST['flower']
 
-<pre><code class="php">$input-&gt;get('flower'); // Same as $_REQUEST['flower']
-
-$input-&gt;set('flower', 'sakura');
-</code></pre>
-
+$input-&gt;set('flower', 'sakura');</code></pre>
 <p>The second argument is default value if request params does not exist.</p>
-
-<pre><code class="php">$input-&gt;get('flower', 'default');
-</code></pre>
-
+<pre><code class="language-php">$input-&gt;get('flower', 'default');</code></pre>
 <h3>Filter</h3>
-
 <p>Input use <a href="https://github.com/ventoviro/windwalker-filter">Windwalker Filter</a> package to sanitize request string, the default filter type is <code>CMD</code>.
 We can use other filter type:</p>
-
-<pre><code class="php">// mysite.com/?flower=&lt;p&gt;to be, or not to be.&lt;/p&gt;;
+<pre><code class="language-php">// mysite.com/?flower=&lt;p&gt;to be, or not to be.&lt;/p&gt;;
 
 $input-&gt;get('flower'); // tobeornottobe (Default cmd filter)
 
@@ -312,23 +291,15 @@ $input-&gt;get('flower', 'default_value', 'string'); // Same as above
 
 $input-&gt;getString('flower'); // to be, or not to be (Same as above, using magic method)
 
-$input-&gt;getRaw('flower') // &lt;p&gt;to be, or not to be.&lt;/p&gt;
-</code></pre>
-
+$input-&gt;getRaw('flower') // &lt;p&gt;to be, or not to be.&lt;/p&gt;</code></pre>
 <p>More filter usage please see: <a href="https://github.com/ventoviro/windwalker-filter">Windwalker Filter</a></p>
-
 <h3>Get Array</h3>
-
 <p>Input provides option to get data as array.</p>
+<pre><code class="language-php">// mysite.com/?flower[1]=sakura&amp;flower[2]=olive;
 
-<pre><code class="php">// mysite.com/?flower[1]=sakura&amp;flower[2]=olive;
-
-$input-&gt;get('flower', InputFilter::ARRAY); // Array( [1] =&gt; sakura [2] =&gt; olive)
-</code></pre>
-
+$input-&gt;get('flower', InputFilter::ARRAY); // Array( [1] =&gt; sakura [2] =&gt; olive)</code></pre>
 <p>Use <code>getArray()</code> method</p>
-
-<pre><code class="php">// mysite.com/?flower=sakura&amp;foo=bar&amp;king=Richard
+<pre><code class="language-php">// mysite.com/?flower=sakura&amp;foo=bar&amp;king=Richard
 
 // Get all request
 $input-&gt;getArray();
@@ -355,69 +326,45 @@ $input-&gt;getArray(array(
         'quantity' =&gt; InputFilter::INTEGER,
         'state' =&gt; 'integer' // Same as above
     )
-));
-</code></pre>
-
+));</code></pre>
 <h3>Get And Set Multi-Level</h3>
-
 <p>If we want to get value of <code>foo[bar][baz]</code>, just use <code>setByPath()</code>:</p>
+<pre><code class="language-php">$value = $input-&gt;getByPath('foo.bar.baz', 'default', InputFilter::STRING);
 
-<pre><code class="php">$value = $input-&gt;getByPath('foo.bar.baz', 'default', InputFilter::STRING);
-
-$input-&gt;setByPath('foo.bar.baz', $data);
-</code></pre>
-
+$input-&gt;setByPath('foo.bar.baz', $data);</code></pre>
 <h3>Get Value From RESTful methods</h3>
-
 <p>We can get other methods as a new input object.</p>
-
-<pre><code class="php">$post = $input-&gt;post;
+<pre><code class="language-php">$post = $input-&gt;post;
 
 $value = $post-&gt;get('foo', 'bar');
 
 // Other inputs
 $get    = $input-&gt;get;
 $put    = $input-&gt;put;
-$delete = $input-&gt;delete;
-</code></pre>
-
+$delete = $input-&gt;delete;</code></pre>
 <h2>Get SUPER GLOBALS</h2>
-
 <p>Every Super Global will be an independent object.</p>
-
-<pre><code class="php">// These are all Input object
+<pre><code class="language-php">// These are all Input object
 $env     = $input-&gt;env;
 $session = $input-&gt;session;
 $cookie  = $input-&gt;cookie;
 $server  = $input-&gt;server;
 
 $server-&gt;get('REMOTE_ADDR'); // Same as $_SERVER['REMOTE_ADDR'];
-$env-&gt;set('FOO_BAR', 1);
-</code></pre>
-
+$env-&gt;set('FOO_BAR', 1);</code></pre>
 <p>See: <a href="http://php.net/manual/en/language.variables.superglobals.php">SUPER GLOBALS</a></p>
-
 <h3>Get method according to current request type:</h3>
-
-<pre><code class="php">$method = $input-&gt;getMethod();
-</code></pre>
-
+<pre><code class="language-php">$method = $input-&gt;getMethod();</code></pre>
 <h2>Files Input</h2>
-
 <p>The format that PHP returns file data in for arrays can at times be awkward, especially when dealing with arrays of files.
 Files Input provides a convenient interface for making life a little easier, grouping the data by file.</p>
-
 <p>Suppose you have a form like:</p>
-
-<pre><code class="html">&lt;form action="..." enctype="multipart/form-data" method="post"&gt;
+<pre><code class="language-html">&lt;form action="..." enctype="multipart/form-data" method="post"&gt;
     &lt;input type="file" name="flower[test][]" /&gt;
     &lt;input type="file" name="flower[test][]" /&gt;
     &lt;input type="submit" value="submit" /&gt;
-&lt;/form&gt;
-</code></pre>
-
+&lt;/form&gt;</code></pre>
 <p>Normally, PHP put these in array <code>$_FILES</code> looks like:</p>
-
 <pre><code>Array
 (
     [flower] =&gt; Array
@@ -474,16 +421,10 @@ Files Input provides a convenient interface for making life a little easier, gro
 
         )
 
-)
-</code></pre>
-
+)</code></pre>
 <p>FilesInput rearrange the result with cleaner form to work with:</p>
-
-<pre><code class="php">$files = $input-&gt;files-&gt;get('flower');
-</code></pre>
-
+<pre><code class="language-php">$files = $input-&gt;files-&gt;get('flower');</code></pre>
 <p><code>$files</code> then becomes:</p>
-
 <pre><code>Array
 (
     [test] =&gt; Array
@@ -507,13 +448,9 @@ Files Input provides a convenient interface for making life a little easier, gro
                 )
 
         )
-)
-</code></pre>
-
+)</code></pre>
 <p>Windwalker Input object is profoundly influenced by <a href="https://github.com/joomla-framework/input">Joomla Input</a></p>
-
 <p>More about Input, see <a href="https://github.com/ventoviro/windwalker-io">Windwalker IO Package</a></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -548,7 +485,7 @@ Files Input provides a convenient interface for making life a little easier, gro
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -562,18 +499,18 @@ Files Input provides a convenient interface for making life a little easier, gro
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -646,7 +583,7 @@ Files Input provides a convenient interface for making life a little easier, gro
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>URI and Route Building | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,12 +303,9 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Base URI</h2>
-
 <p>Sometimes you may put your application at sub folder of a domain, Windwalker provides a uri data help you get base uri.</p>
-
 <p>If our application located at <code>http://domain.com/sites/windwalker/</code> and we open <code>/flower/sakura?foo=bar</code> page, we may use this code to get uri data:</p>
-
-<pre><code class="php">$uri = \Windwalker\Ioc::getUriData();
+<pre><code class="language-php">$uri = \Windwalker\Ioc::getUriData();
 
 // Get Base path
 echo $uri-&gt;current;
@@ -319,161 +313,96 @@ echo $uri-&gt;full;
 echo $uri-&gt;path;
 echo $uri-&gt;root;
 echo $uri-&gt;host;
-echo $uri-&gt;route;
-</code></pre>
-
+echo $uri-&gt;route;</code></pre>
 <p>We will get:</p>
-
 <pre><code>current  ---&gt; http://domain.com/sites/windwalker/flower/sakura
 full     ---&gt; http://domain.com/sites/windwalker/flower/sakura?foo=bar
 path     ---&gt; /sites/windwalker
 root     ---&gt; http://domain.com/sites/windwalker
 host     ---&gt; http://domain.com
-route    ---&gt; flower/sakura
-</code></pre>
-
+route    ---&gt; flower/sakura</code></pre>
 <p>These uri data can help us add base path to our uri, so the link will not break if
 we use relative url.</p>
-
 <p>Add host and base path.</p>
-
-<pre><code class="php">echo $link = $uri-&gt;root . '/romeo/and/juliet';
+<pre><code class="language-php">echo $link = $uri-&gt;root . '/romeo/and/juliet';
 
 // OR
 
-echo $link = $uri-&gt;root() . '/romeo/and/juliet';
-</code></pre>
-
+echo $link = $uri-&gt;root() . '/romeo/and/juliet';</code></pre>
 <p>The output will be:</p>
-
-<pre><code>http://domain.com/sites/windwalker/romeo/and/juliet
-</code></pre>
-
+<pre><code>http://domain.com/sites/windwalker/romeo/and/juliet</code></pre>
 <p>Or only add base path by <code>path</code> variable.</p>
-
-<pre><code class="php">echo $uri-&gt;path . '/flower/sakura';
+<pre><code class="language-php">echo $uri-&gt;path . '/flower/sakura';
 
 // OR
 
-echo $uri-&gt;path() . '/flower/sakura';
-</code></pre>
-
+echo $uri-&gt;path() . '/flower/sakura';</code></pre>
 <p>We'll get a uri start from root, so the relative path will not break.</p>
-
-<pre><code class="html">/sites/windwalker/flower/sakura
-</code></pre>
-
+<pre><code class="language-html">/sites/windwalker/flower/sakura</code></pre>
 <h3>Use Method Call</h3>
-
-<pre><code class="php">$uri-&gt;root('flower/sakura');
-$uri-&gt;path('flower/sakura');
-</code></pre>
-
+<pre><code class="language-php">$uri-&gt;root('flower/sakura');
+$uri-&gt;path('flower/sakura');</code></pre>
 <h3>Use UriData in View</h3>
-
 <p>View has already included uri object as a global variable.</p>
-
-<pre><code class="html">&lt;link href="&lt;?php echo $uri-&gt;path; ?&gt;/asset/css/bootstrap.min.css"&gt;
+<pre><code class="language-html">&lt;link href="&lt;?php echo $uri-&gt;path; ?&gt;/asset/css/bootstrap.min.css"&gt;
 
 OR
 
-&lt;link href="&lt;?php echo $uri-&gt;path('asset/css/bootstrap.min.css'); ?&gt;"&gt;
-</code></pre>
-
+&lt;link href="&lt;?php echo $uri-&gt;path('asset/css/bootstrap.min.css'); ?&gt;"&gt;</code></pre>
 <p>The output will be:</p>
-
-<pre><code class="html">&lt;link href="/sites/windwalker/media/css/bootstrap.min.css"&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;link href="/sites/windwalker/media/css/bootstrap.min.css"&gt;</code></pre>
 <p>Start with <code>/</code> means this url will based on domain host.</p>
-
 <h2>Build Route</h2>
-
 <p>Every route in Windwalker has a key, we called it <strong>route name</strong> or <strong>route profile</strong>, this name will help us quickly build route.</p>
-
 <p>For example, this is the routing file:</p>
-
-<pre><code class="yaml">flower_page:
+<pre><code class="language-yaml">flower_page:
     pattern: /flower/page/(id)-(alias).html
-    controller: Flower\Controller\Page
-</code></pre>
-
+    controller: Flower\Controller\Page</code></pre>
 <p>Then we can build this route by <code>CoreRouter::route()</code></p>
+<pre><code class="language-php">use Windwalker\Core\CoreRouter;
 
-<pre><code class="php">use Windwalker\Core\CoreRouter;
-
-echo CoreRouter::route('flower_page', ['id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz']);
-</code></pre>
-
+echo CoreRouter::route('flower_page', ['id' =&gt; 25, 'alias' =&gt; 'foo-bar-baz']);</code></pre>
 <p>The output will be:</p>
-
-<pre><code class="html">flower/page/25-foo-bar-baz.html
-</code></pre>
-
+<pre><code class="language-html">flower/page/25-foo-bar-baz.html</code></pre>
 <p>This is a very useful function that you can change roue name but won't worry of link will be broke.</p>
-
 <h3>Build Package Route</h3>
-
 <p>If your routes is definded in a package, you must add package alias before route name, and separate by at (<code>@</code>):</p>
+<pre><code class="language-php">use Windwalker\Core\CoreRouter;
 
-<pre><code class="php">use Windwalker\Core\CoreRouter;
-
-CoreRouter::route('flower@sakuras', array('page' =&gt; $page));
-</code></pre>
-
+CoreRouter::route('flower@sakuras', array('page' =&gt; $page));</code></pre>
 <p>Or use PackageRouter, we can ignore package prefix, Package will auto add it:</p>
-
-<pre><code class="php">$package = PackageHelper::getPackage('flower');
+<pre><code class="language-php">$package = PackageHelper::getPackage('flower');
 
 // No necessary to add 'flower:'
 $package-&gt;router-&gt;route('sakuras', array('page' =&gt; $page));
 
 // If you want to build rote in other package, you can re-add package name
-$package-&gt;router-&gt;route('user@login');
-</code></pre>
-
+$package-&gt;router-&gt;route('user@login');</code></pre>
 <h3>Encode URL in Template</h3>
-
 <p>If we print URL in HTML, we must encode some special chars.</p>
-
-<pre><code class="php">// In php engine
+<pre><code class="language-php">// In php engine
 // URL: /flower/sakuras?foo=bar&amp;baz=yoo
 
 &lt;?php echo $this-&gt;escape(CoreRouter::route('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo'])); ?&gt;
 
 // OR in Edge / Blade, the {{ ... }} will help us escape URL.
 
-{{ CoreRouter::route('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']) }}
-</code></pre>
-
+{{ CoreRouter::route('flower@sakuras', ['foo' =&gt; 'bar', 'baz' =&gt; 'yoo']) }}</code></pre>
 <p>The printed URL will be:</p>
-
-<pre><code>/flower/sakuras?foo=bar&amp;amp;baz=yoo
-</code></pre>
-
+<pre><code>/flower/sakuras?foo=bar&amp;amp;baz=yoo</code></pre>
 <h3>Relative or Absolute URL</h3>
-
 <p>Router has 3 mode, <code>RAW</code>, <code>PATH</code> or <code>FULL</code>:</p>
-
-<pre><code class="php">echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_RAW);
+<pre><code class="language-php">echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_RAW);
 echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_PATH);
-echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_FULL);
-</code></pre>
-
+echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_FULL);</code></pre>
 <p>Result:</p>
-
-<pre><code class="html">flower/sakuras
+<pre><code class="language-html">flower/sakuras
 /sites/windwalker/flower/sakuras
-http://domain.com/sites/windwalker/flower/sakuras
-</code></pre>
-
+http://domain.com/sites/windwalker/flower/sakuras</code></pre>
 <p>The RAW route used to store in database, the PATH route used to print in HTML, the FULL route used to redirect.</p>
-
 <h3>Build Routes in Controller</h3>
-
 <p>If you are in controller, we can use PackageRouter to build route, this way is more safer because we can auto get current package routes.</p>
-
-<pre><code class="php">// Original way, we have to know package name
+<pre><code class="language-php">// Original way, we have to know package name
 use Windwalker\Core\CoreRouter;
 
 $route = CoreRouter::route('flower@sakura');
@@ -481,68 +410,45 @@ $route = CoreRouter::route('flower@sakura');
 // Simpler way to let package handle it
 $route = $this-&gt;package-&gt;router-&gt;route('sakura');
 
-$this-&gt;setRedirect($route);
-</code></pre>
-
+$this-&gt;setRedirect($route);</code></pre>
 <h3>Build Routes in View Template</h3>
-
 <p>View has also includes package router, just build route like this:</p>
-
-<pre><code class="html">&lt;a href="&lt;?php echo $router-&gt;route('sakura', ['id' =&gt; 25]); ?&gt;"&gt;Link&lt;/a&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;a href="&lt;?php echo $router-&gt;route('sakura', ['id' =&gt; 25]); ?&gt;"&gt;Link&lt;/a&gt;</code></pre>
 <p>In Blade or Edge</p>
-
-<pre><code class="php">&lt;a href="{{ $router-&gt;route('sakura', ['id' =&gt; 25]) }}"&gt;Link&lt;/a&gt;
+<pre><code class="language-php">&lt;a href="{{ $router-&gt;route('sakura', ['id' =&gt; 25]) }}"&gt;Link&lt;/a&gt;
 
 OR
 
-@route('sakura', ['id' =&gt; 25]))
-</code></pre>
-
+@route('sakura', ['id' =&gt; 25]))</code></pre>
 <blockquote>
-  <p>The benefit to use <code>@route()</code> is that this directive will mute the error message, it won't throw exception if route not found,
-   instead, it will echo a <code>javascript:alert('Route ... not found.')</code> in debug mode. And if in production environment,
-   it will only echo a <code>#</code> to make sure system won't break.</p>
+<p>The benefit to use <code>@route()</code> is that this directive will mute the error message, it won't throw exception if route not found,
+instead, it will echo a <code>javascript:alert('Route ... not found.')</code> in debug mode. And if in production environment,
+it will only echo a <code>#</code> to make sure system won't break.</p>
 </blockquote>
-
 <p>In Twig</p>
-
-<pre><code class="php">&lt;a href="{{ router.route('sakura', ['id' =&gt; 25]) }}"&gt;Link&lt;/a&gt;
-</code></pre>
-
+<pre><code class="language-php">&lt;a href="{{ router.route('sakura', ['id' =&gt; 25]) }}"&gt;Link&lt;/a&gt;</code></pre>
 <h3>Use Chaining Methods</h3>
-
 <p>After Windwalker 3.2, we provides a powerful route builder, just use chaining methods to configure your route string.</p>
-
 <p>In controller or package:</p>
-
-<pre><code class="php">$this-&gt;router-&gt;to('sakura', ['id' =&gt; 25])-&gt;path();
-</code></pre>
-
+<pre><code class="language-php">$this-&gt;router-&gt;to('sakura', ['id' =&gt; 25])-&gt;path();</code></pre>
 <p>In View template:</p>
-
-<pre><code class="php">{{ $router-&gt;to('sakuras')-&gt;id(25)-&gt;page(2)-&gt;full() }}
-</code></pre>
-
+<pre><code class="language-php">{{ $router-&gt;to('sakuras')-&gt;id(25)-&gt;page(2)-&gt;full() }}</code></pre>
 <p>Available methods:</p>
-
 <ul>
-<li><code>full()</code> --> Get full URL.</li>
-<li><code>path()</code> --> Get path from root.</li>
-<li><code>raw()</code>  --> Get relative path.</li>
-<li><code>escape([bool])</code> --> Escape for HTML printing.</li>
-<li><code>id([int])</code> --> Add id to route query.</li>
-<li><code>page([int])</code> --> Add page to route query.</li>
-<li><code>addVar($name, $value)</code> --> Add custom var to route query.</li>
-<li><code>getVar($name, $default = null)</code> --> Get a custom var</li>
-<li><code>getQueries()</code> --> Get all queries.</li>
-<li><code>setQueries($queries)</code> --> Set queries.</li>
-<li><code>getRoute()</code> --> Get route name.</li>
-<li><code>setRoute($route)</code> --> set a new route name.</li>
-<li><code>mute([bool])</code> --> Don't throw exception if route not found. (Useful in dev period)</li>
+<li><code>full()</code> --&gt; Get full URL.</li>
+<li><code>path()</code> --&gt; Get path from root.</li>
+<li><code>raw()</code>  --&gt; Get relative path.</li>
+<li><code>escape([bool])</code> --&gt; Escape for HTML printing.</li>
+<li><code>id([int])</code> --&gt; Add id to route query.</li>
+<li><code>page([int])</code> --&gt; Add page to route query.</li>
+<li><code>addVar($name, $value)</code> --&gt; Add custom var to route query.</li>
+<li><code>getVar($name, $default = null)</code> --&gt; Get a custom var</li>
+<li><code>getQueries()</code> --&gt; Get all queries.</li>
+<li><code>setQueries($queries)</code> --&gt; Set queries.</li>
+<li><code>getRoute()</code> --&gt; Get route name.</li>
+<li><code>setRoute($route)</code> --&gt; set a new route name.</li>
+<li><code>mute([bool])</code> --&gt; Don't throw exception if route not found. (Useful in dev period) </li>
 </ul>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -577,7 +483,7 @@ OR
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -591,18 +497,18 @@ OR
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -675,7 +581,7 @@ OR
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

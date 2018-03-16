@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Bootstrap | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,104 +187,54 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Include Bootstrap</h2>
-
 <p>Include bootstrap css and js to HTML:</p>
-
-<pre><code class="php">\Phoenix\Script\BootstrapScript::css();
-\Phoenix\Script\BootstrapScript::script();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::css();
+\Phoenix\Script\BootstrapScript::script();</code></pre>
 <h2>Tooltips</h2>
-
 <p>Init tooltips:</p>
-
-<pre><code class="php">\Phoenix\Script\BootstrapScript::tooltip();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::tooltip();</code></pre>
 <p>Then use <code>hasTooltip</code> in element class to enable tooltip.</p>
-
-<pre><code class="html">&lt;a class="hasTooltip" title"Tooltip Text"&gt;...&lt;/a&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;a class="hasTooltip" title"Tooltip Text"&gt;...&lt;/a&gt;</code></pre>
 <p>Custom tooltip class:</p>
-
-<pre><code class="php">\Phoenix\Script\BootstrapScript::tooltip('.my-tooltips');
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::tooltip('.my-tooltips');</code></pre>
 <h2>Checkbox</h2>
-
 <p>Use Awesome Bootstrap Checkboxes:</p>
-
-<pre><code class="php">\Phoenix\Script\BootstrapScript::checkbox();
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::checkbox();
 
 // Or use font-awesome icons
 
-\Phoenix\Script\BootstrapScript::checkbox(BootstrapScript::FONTAWESOME);
-</code></pre>
-
+\Phoenix\Script\BootstrapScript::checkbox(BootstrapScript::FONTAWESOME);</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17014764/e761e8ca-4f58-11e6-8897-e5e7862baa0a.jpg" alt="p-2016-07-21-005" /></p>
-
 <p>See <a href="http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/">Awesome Bootstrap Checkbox</a></p>
-
 <h2>Iframe Modal</h2>
-
 <p>Add iframe modal to links:</p>
-
-<pre><code class="php">\Phoenix\Script\BootstrapScript::modal();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::modal();</code></pre>
 <p>Now add <code>hasModal</code> to <code>&lt;a&gt;</code> as class:</p>
-
-<pre><code class="html">&lt;a class="hasModal" href="http://windwalker.io"&gt;Open Link in Modal&lt;/a&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;a class="hasModal" href="http://windwalker.io"&gt;Open Link in Modal&lt;/a&gt;</code></pre>
 <p>Then this link will open a modal with target page in iframe after clicked.</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17014636/0e63ce94-4f58-11e6-8879-63d06c6ec168.jpg" alt="p-2016-07-21-003" /></p>
-
 <h2>Calendar</h2>
-
 <p>Convert an input to bootstrap calendar:</p>
-
-<pre><code class="php">\Phoenix\Script\BootstrapScript::calendar();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::calendar();</code></pre>
 <p>HTML</p>
-
-<pre><code class="html">&lt;input class="hasCalendar" name="date"&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;input class="hasCalendar" name="date"&gt;</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/16977839/2ac6f0b6-4e8b-11e6-8b0f-bec4f71fd295.jpg" alt="p-2016-07-20-011" /></p>
-
 <p>You can add some options to configure your calendar:</p>
-
-<pre><code class="php">\Phoenix\Script\BootstrapScript::calendar('.selector', 'YYYY-MM-DD', [
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::calendar('.selector', 'YYYY-MM-DD', [
     'sideBySide' =&gt; true,
     'calendarWeeks' =&gt; true
-]);
-</code></pre>
-
+]);</code></pre>
 <p>See <a href="https://eonasdan.github.io/bootstrap-datetimepicker/">Bootstrap Datepicker</a></p>
-
 <h2>Tab State</h2>
-
 <p>Use <code>tab-state.js</code> to remember last used tab panel when you back to same page:</p>
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::tabState();
 
-<pre><code class="php">\Phoenix\Script\BootstrapScript::tabState();
-
-\Phoenix\Script\BootstrapScript::tabState('#selector');
-</code></pre>
-
+\Phoenix\Script\BootstrapScript::tabState('#selector');</code></pre>
 <h2>Button Radio</h2>
-
 <p>Convert HTML radio to Bootstrap radio:</p>
-
-<pre><code class="php">\Phoenix\Script\BootstrapScript::buttonRadio();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::buttonRadio();</code></pre>
 <p>Add <code>btn-group</code> to radio field to enable this feature:</p>
-
-<pre><code class="php">class EditDefinition extends AbstractFieldDefinition
+<pre><code class="language-php">class EditDefinition extends AbstractFieldDefinition
 {
     public function doDefine()
     {
@@ -298,14 +245,10 @@
 
         // ...
     }
-}
-</code></pre>
-
+}</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17014674/468fbcf6-4f58-11e6-8285-b300914b7460.jpg" alt="p-2016-07-21-004" /></p>
-
 <p>You can change the color class and selector options to fit different templates:</p>
-
-<pre><code class="php">\Phoenix\Script\BootstrapScript::buttonRadio([
+<pre><code class="language-php">\Phoenix\Script\BootstrapScript::buttonRadio([
     'selector' =&gt; '.btn-group .radio',
     'buttonClass' =&gt; 'btn',
     'activeClass' =&gt; 'actice',
@@ -315,9 +258,7 @@
         'red'     =&gt; 'btn-danger',
         'blue'    =&gt; 'btn-primary',
     ]
-]);
-</code></pre>
-
+]);</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -352,7 +293,7 @@
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -366,18 +307,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -450,7 +391,7 @@
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

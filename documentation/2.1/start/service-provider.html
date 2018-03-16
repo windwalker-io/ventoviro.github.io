@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Service Provider | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,36 +250,23 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Introduction of Service Provider</h2>
-
 <p>Service Provider is an useful way to encapsulate logic of creating objects and services. For example, a mailer library,
 custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
-
 <p>Service Provider will working with IoC Container, we'll implement the <code>\Windwalker\DI\ServiceProviderInterface</code>
 and write all our logic in <code>register()</code> method and set our service objects into container.</p>
-
 <h3>Basic Provider Example</h3>
-
 <p>Take a look of this example code, in a original way, if we have a MongoDB driver to bootstrap, we'll write an bootstrap file.</p>
-
 <h5>Original Way</h5>
-
-<pre><code class="php">// import.mongodb.php
+<pre><code class="language-php">// import.mongodb.php
 
 $conn = new MongoDBConnection($config['database']['mongodb']);
 
-return $conn;
-</code></pre>
-
+return $conn;</code></pre>
 <p>And include this file:</p>
-
-<pre><code class="php">$mongo = include_once 'import.mongodb.php';
-</code></pre>
-
+<pre><code class="language-php">$mongo = include_once 'import.mongodb.php';</code></pre>
 <h5>Windwalker Way</h5>
-
 <p>In Windwalker, we can create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
+<pre><code class="language-php">use Windwalker\DI\Container;
 use Windwalker\DI\ServiceProviderInterface;
 
 class MongoDBServiceProvider implements ServiceProviderInterface
@@ -297,31 +281,20 @@ class MongoDBServiceProvider implements ServiceProviderInterface
         });
     }
 }
-
 </code></pre>
-
 <p>Register this provider to container:</p>
-
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
-
+<pre><code class="language-php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);</code></pre>
 <p>Then get this object from Container, this process will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+<pre><code class="language-php">$mongo = $container-&gt;get('mongo.db');
 
 // OR
 
-$mongo = Ioc::get('mongo.db');
-</code></pre>
-
+$mongo = Ioc::get('mongo.db');</code></pre>
 <p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
-
 <h2>Registering Providers</h2>
-
 <p>All Service Providers are registered in <code>Application::loadProviders()</code>. For example, open <code>/src/Windwalker/Web/Application.php</code>,
 you will see <code>loadProviders()</code>, there is an array <code>$providers</code> here, help ue override default providers, now we add our Service Provider here:</p>
-
-<pre><code class="php">public function loadProviders()
+<pre><code class="language-php">public function loadProviders()
 {
     $providers = parent::loadProviders();
 
@@ -338,20 +311,15 @@ you will see <code>loadProviders()</code>, there is an array <code>$providers</c
     $providers['mongodb'] = new MongoDBServiceProvider;
 
     return $providers;
-}
-</code></pre>
-
+}</code></pre>
 <p>There are 3 positions in default Windwalker Application we can add providers:</p>
-
 <ul>
 <li><code>src/Windwalker/Web/Application.php</code></li>
 <li><code>src/Windwalker/Console/Application/php</code></li>
 <li><code>src/Windwalker.php</code></li>
 </ul>
-
 <p>If you want to use service for Web application, add provider in <code>Web\Application</code>, else you can add provider in <code>Console\Application</code>
 for console use, or add it in <code>Windwalker.php</code> for both.</p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -386,7 +354,7 @@ for console use, or add it in <code>Windwalker.php</code> for both.</p>
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -400,18 +368,18 @@ for console use, or add it in <code>Windwalker.php</code> for both.</p>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -484,7 +452,7 @@ for console use, or add it in <code>Windwalker.php</code> for both.</p>
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

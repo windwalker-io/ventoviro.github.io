@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Grid Script | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,50 +187,30 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Introduction</h2>
-
 <p><code>PhoenixGrid</code> is a helper to operate table list includes <code>sort</code>, <code>batch</code>, <code>select</code> and <code>ordering</code>.</p>
-
 <p>It will auto included in Phoenix admin template, or use this PHP code to init it:</p>
-
-<pre><code class="php">\Phoenix\Script\PhoenixScript::grid();
+<pre><code class="language-php">\Phoenix\Script\PhoenixScript::grid();
 
 // OR add custom selector of your &lt;form &gt;
 
-\Phoenix\Script\PhoenixScript::grid('#my-form');
-</code></pre>
-
+\Phoenix\Script\PhoenixScript::grid('#my-form');</code></pre>
 <h2>Sort</h2>
-
 <p>Sort this table by a column name:</p>
-
-<pre><code class="js">// JS
-Phoenix.Grid.sort('created', 'DESC');
-</code></pre>
-
+<pre><code class="language-js">// JS
+Phoenix.Grid.sort('created', 'DESC');</code></pre>
 <p>After this method called, the form will auto submit and refresh page.</p>
-
 <p>This method will send <code>list_ordering</code> and <code>list_direction</code> two variables to controller then you can use them to rebuild your SQL.</p>
-
 <h2>Check Row</h2>
-
 <p>Tick a checkbox of specify row.</p>
-
-<pre><code class="js">// JS
+<pre><code class="language-js">// JS
 
 // Start row is 0, so we tick the second row.
-Phoenix.Grid.checkRow(1);
-</code></pre>
-
+Phoenix.Grid.checkRow(1);</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17011424/9e8f52f8-4f40-11e6-8fe5-7e8e95d78f06.jpg" alt="p-2016-07-21-002" /></p>
-
 <p>You must print a checkbox with row number in HTML:</p>
-
-<pre><code class="php">&lt;input type="checkbox" class="grid-checkbox" data-row-number="1" name="id[]" value="2"&gt;
-</code></pre>
-
+<pre><code class="language-php">&lt;input type="checkbox" class="grid-checkbox" data-row-number="1" name="id[]" value="2"&gt;</code></pre>
 <p>Or use <code>GridHelper</code> to generate this checkbox in template:</p>
-
-<pre><code class="php">{{-- In Edge --}}
+<pre><code class="language-php">{{-- In Edge --}}
 
 @foreach ($items as $i =&gt; $item)
     @php($grid-&gt;setItem($item, $i))
@@ -245,61 +222,34 @@ Phoenix.Grid.checkRow(1);
 
     {{-- ... --}}
 
-@endforeach
-</code></pre>
-
+@endforeach</code></pre>
 <h2>Update Row</h2>
-
 <p>This method can update a row with specify data by sending request to <code>BatchController</code>:</p>
+<pre><code class="language-js">// JS
 
-<pre><code class="js">// JS
-
-Phoenix.Grid.updateRow(3, null, {task: 'publish'});
-</code></pre>
-
+Phoenix.Grid.updateRow(3, null, {task: 'publish'});</code></pre>
 <p>This method will update row 3 <code>state =&gt; 1</code>.</p>
-
 <blockquote>
-  <p>You must prepare checkboxes in HTML first to support this method</p>
+<p>You must prepare checkboxes in HTML first to support this method</p>
 </blockquote>
-
 <h2>Send Batch Task</h2>
-
 <p>Send a batch task to update rows:</p>
-
-<pre><code class="js">Phoenix.Grid.batch('unpublish');
-</code></pre>
-
+<pre><code class="language-js">Phoenix.Grid.batch('unpublish');</code></pre>
 <h2>Copy Row</h2>
-
 <p>Send a request to duplicate a row:</p>
-
-<pre><code class="js">Phoenix.Grid.copyRow(3);
-</code></pre>
-
+<pre><code class="language-js">Phoenix.Grid.copyRow(3);</code></pre>
 <h2>Delete List</h2>
-
 <p>Delete checked rows.</p>
-
-<pre><code class="js">Phoenix.Grid.deleteList();
+<pre><code class="language-js">Phoenix.Grid.deleteList();
 
 // Add custom confirm message
-Phoenix.Grid.deleteList('Are you sure?');
-</code></pre>
-
+Phoenix.Grid.deleteList('Are you sure?');</code></pre>
 <h2>Delete Row</h2>
-
-<pre><code class="js">Phoenix.Grid.deleteRow(3);
-</code></pre>
-
+<pre><code class="language-js">Phoenix.Grid.deleteRow(3);</code></pre>
 <h2>Toggle All Checkboxes</h2>
-
-<pre><code class="js">Phoenix.Grid.toggleAll();
-</code></pre>
-
+<pre><code class="language-js">Phoenix.Grid.toggleAll();</code></pre>
 <h2>More Methods</h2>
-
-<pre><code class="js">// Count checked checkboxes
+<pre><code class="language-js">// Count checked checkboxes
 Phoenix.Grid.countChecked();
 
 // Get Checked boxes
@@ -318,21 +268,14 @@ catch (Error)
 
 // Reorder
 Phoenix.Grid.reorderAll();
-Phoenix.Grid.reorder();
-</code></pre>
-
+Phoenix.Grid.reorder();</code></pre>
 <h2>Multi-Select</h2>
-
 <p>Use this script you can press <code>shift + click</code> to select multiple checkboxes:</p>
-
-<pre><code class="php">\Phoenix\Script\PhoenixScript::multiSelect();
+<pre><code class="language-php">\Phoenix\Script\PhoenixScript::multiSelect();
 
 // Custom selector
-\Phoenix\Script\PhoenixScript::multiSelect('#my-form table');
-</code></pre>
-
+\Phoenix\Script\PhoenixScript::multiSelect('#my-form table');</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17023918/6391d444-4f88-11e6-9822-d23b771e6d59.gif" alt="multi-select" /></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -367,7 +310,7 @@ Phoenix.Grid.reorder();
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -381,18 +324,18 @@ Phoenix.Grid.reorder();
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -465,7 +408,7 @@ Phoenix.Grid.reorder();
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

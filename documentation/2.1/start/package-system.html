@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Package System | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,31 +250,20 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>What is Package?</h2>
-
 <p>Package is the main component of Windwalker's structure. Here is a image that describe the package system:</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5579031/b4c50ed8-906e-11e4-8964-a1f2d949fc88.png" alt="package" /></p>
-
 <p>From above image, we will know there can be multiple packages and its' own MVC system in Windwalker. That makes our application
- more flexible. For example, we can create a <code>FrontendPackage</code> and an <code>AdminPackage</code> as front-end and back-end respectively.
- And an <code>ApiPackage</code> to provide RESTful API for mobile APP.</p>
-
+more flexible. For example, we can create a <code>FrontendPackage</code> and an <code>AdminPackage</code> as front-end and back-end respectively.
+And an <code>ApiPackage</code> to provide RESTful API for mobile APP.</p>
 <p>Every package is pretty much a simple application having MVC, routing, configuration and database schema:</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5579086/ff7483ea-906f-11e4-9663-31c9276493af.png" alt="mockup_3" /></p>
-
 <h3>Use Package as Extension</h3>
-
 <p>Package can be used as extensions for developer. You can create a package and submit it to <a href="https://packagist.org/">Packagist</a>.
 Then anyone can install it by composer.</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5579085/ff715d8c-906f-11e4-92dc-43c3839e0ef8.png" alt="mockup_2" /></p>
-
 <h2>Create Package</h2>
-
 <p>We will use <code>Flower</code> as example package. Create a php class in <code>/src/Flower/FlowerPackage.php</code>:</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // /src/Flower/FlowerPackage.php
 
 namespace Flower;
@@ -286,12 +272,9 @@ use Windwalker\Core\Package\AbstractPackage;
 
 class FlowerPackage extends AbstractPackage
 {
-}
-</code></pre>
-
+}</code></pre>
 <p>Then add this package to <code>/src/Windwalker/Web/Application.php</code>, at the <code>loadPackage()</code> method:</p>
-
-<pre><code class="php">// /src/Windwalker/Web/Application.php
+<pre><code class="language-php">// /src/Windwalker/Web/Application.php
 use Flower\FlowerPackage;
 
 class Application extends WebApplication
@@ -316,22 +299,14 @@ class Application extends WebApplication
     }
 
     // ...
-}
-</code></pre>
-
+}</code></pre>
 <p>The array key is package name alias, you can customize it. For example, If you use <code>$packages['flower']</code>, then you can
 use <code>\Windwalker\Core\Package\PackageHelper::getPackage('flower')</code> to get this package object. But if you use</p>
-
-<pre><code class="php">$packages['bar'] = new FlowerPackage;
-</code></pre>
-
+<pre><code class="language-php">$packages['bar'] = new FlowerPackage;</code></pre>
 <p>You will have to get <code>FlowerPackage</code> it by  <code>\Windwalker\Core\Package\PackageHelper::getPackage('bar')</code>.</p>
-
 <h2>Add Package Routing</h2>
-
 <p>Create <code>/src/Flower/routing.yml</code>, then add some routes:</p>
-
-<pre><code class="yaml">## /src/Flower/routing.yml
+<pre><code class="language-yaml">## /src/Flower/routing.yml
 
 sakura:
     pattern: /sakura(/id)
@@ -343,25 +318,18 @@ sakuras:
 
 roses:
     pattern: /roses
-    controller: Roses
-</code></pre>
-
+    controller: Roses</code></pre>
 <p>Different from the global routing, you don't need to write all controller namespace, just write controller short name,
 the package will auto find this controller. For example: <code>controller: Sakura</code> will find <code>Flower\Controller\Sakura\{action}</code> to execute.</p>
-
 <p>We have to register this routes to root routing file. Open <code>/etc/routing.yml</code> And add this route profile.</p>
-
-<pre><code class="yaml">## /etc/routing.yml
+<pre><code class="language-yaml">## /etc/routing.yml
 
 flower:
     pattern: /flower
-    package: flower
-</code></pre>
-
+    package: flower</code></pre>
 <p>The <code>package: flower</code> tells Windwalker to import all Flower package's routes, and all patterns will prefix with: <code>/flower/...</code>,
 the compiled routes will look like:</p>
-
-<pre><code class="yaml">flower@sakura:
+<pre><code class="language-yaml">flower@sakura:
     pattern: /flower/sakura(/id)
     controller: Sakura
 
@@ -371,13 +339,10 @@ flower@sakuras:
 
 flower@roses:
     pattern: /flower/roses
-    controller: Roses
-</code></pre>
-
+    controller: Roses</code></pre>
 <p>Use browser to open <code>/flower/sakuras</code>, Windwalker will find <code>Flower\Controller\Sakuras\GetController</code> to render page.
 We can create a controller to match this route:</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // src/Flower/Controller/Sakuras/GetController.php
 
 namespace Flower\Controller\Sakuras;
@@ -390,42 +355,29 @@ class GetController extends Controller
     {
         return 'Output of Sakuras Controller';
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>About how routing and controller work, please see <a href="routing-controller.html">Routing And Controller</a> section.</p>
-
 <h2>Add &amp; Get Packages</h2>
-
 <p>Use <code>PackageResolver</code>.</p>
-
-<pre><code class="php">$resolver = $container-&gt;get('package.resolver');
+<pre><code class="language-php">$resolver = $container-&gt;get('package.resolver');
 
 $resolver-&gt;getPackage('flower'); // Get flower package
 
 $resolver-&gt;getPackage(); // Get current package
 
-$resoler-&gt;addPackage('alias', $package); // Add new package
-</code></pre>
-
+$resoler-&gt;addPackage('alias', $package); // Add new package</code></pre>
 <p>Use <code>PackageHelper</code>, this class is a facade of <code>PackageResolver</code>.</p>
-
-<pre><code class="php">use Windwalker\Core\Package\PackageHelper;
+<pre><code class="language-php">use Windwalker\Core\Package\PackageHelper;
 
 PackageHelper::getPackage('flower'); // Get flower package
 
 PackageHelper::getPackage(); // Get current package
 
-PackageHelper::addPackage('alias', $package); // Add new package
-</code></pre>
-
+PackageHelper::addPackage('alias', $package); // Add new package</code></pre>
 <p>You can also get package from Application.</p>
+<pre><code class="language-php">$app = Ioc::getApplication();
 
-<pre><code class="php">$app = Ioc::getApplication();
-
-$app-&gt;getPackage([$alias|null]);
-</code></pre>
-
+$app-&gt;getPackage([$alias|null]);</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -460,7 +412,7 @@ $app-&gt;getPackage([$alias|null]);
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -474,18 +426,18 @@ $app-&gt;getPackage([$alias|null]);
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -558,7 +510,7 @@ $app-&gt;getPackage([$alias|null]);
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

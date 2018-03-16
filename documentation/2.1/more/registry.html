@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Registry Object | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,10 +250,8 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Getting Started</h2>
-
 <p>Windwalker Registry is a storage of nested array or object, help us manage multi-level structures data.</p>
-
-<pre><code class="php">use Windwalker\Registry\Registry;
+<pre><code class="language-php">use Windwalker\Registry\Registry;
 
 $registry = new Registry;
 
@@ -265,12 +260,9 @@ $registry-&gt;set('foo', 'bar');
 
 // Get a value from the registry;
 $value = $registry-&gt;get('foo');
-
 </code></pre>
-
 <h2>Load config by Registry</h2>
-
-<pre><code class="php">use Windwalker\Registry\Registry;
+<pre><code class="language-php">use Windwalker\Registry\Registry;
 
 $registry = new Registry;
 
@@ -283,35 +275,25 @@ $registry-&gt;loadString('&lt;root&gt;&lt;/root&gt;', 'xml');
 $registry-&gt;load($object);
 
 // Load by file
-$registry-&gt;loadFile($root . '/config/config.json', 'json');
-</code></pre>
-
+$registry-&gt;loadFile($root . '/config/config.json', 'json');</code></pre>
 <h2>Accessing a Registry by getter &amp; setter</h2>
-
 <h3>Get value</h3>
-
-<pre><code class="php">$registry-&gt;get('foo');
+<pre><code class="language-php">$registry-&gt;get('foo');
 
 // Get a non-exists value and return default
 $registry-&gt;get('foo', 'default');
 
 // OR
 
-$registry-&gt;get('foo') ?: 'default';
-</code></pre>
-
+$registry-&gt;get('foo') ?: 'default';</code></pre>
 <h3>Set value</h3>
-
-<pre><code class="php">// Set value
+<pre><code class="language-php">// Set value
 $registry-&gt;set('bar', $value);
 
 // Sets a default value if not already assigned.
-$registry-&gt;def('bar', $default);
-</code></pre>
-
+$registry-&gt;def('bar', $default);</code></pre>
 <h3>Accessing children value by path</h3>
-
-<pre><code class="php">$json = '{
+<pre><code class="language-php">$json = '{
     "parent" : {
         "child" : "Foo"
     }
@@ -321,33 +303,22 @@ $registry = new Registry($json);
 
 $registry-&gt;get('parent.child'); // return 'Foo'
 
-$registry-&gt;set('parent.child', $value);
-</code></pre>
-
+$registry-&gt;set('parent.child', $value);</code></pre>
 <h3>Append &amp; Prepend</h3>
-
 <p>Support <code>push / pop / shift / unshift</code> methods.</p>
-
-<pre><code class="php">$registry-&gt;set('foo.bar', array('fisrt', 'second'));
+<pre><code class="language-php">$registry-&gt;set('foo.bar', array('fisrt', 'second'));
 
 $registry-&gt;push('foo.bar', 'third');
 
 $registry-&gt;get('foo.bar');
-// Result: Array(first, second, third)
-</code></pre>
-
+// Result: Array(first, second, third)</code></pre>
 <h3>Use other separator</h3>
+<pre><code class="language-php">$registry-&gt;setSeparator('/');
 
-<pre><code class="php">$registry-&gt;setSeparator('/');
-
-$data = $registry-&gt;get('foo/bar');
-</code></pre>
-
+$data = $registry-&gt;get('foo/bar');</code></pre>
 <h2>Accessing a Registry as an Array</h2>
-
 <p>The <code>Registry</code> class implements <code>ArrayAccess</code> so the properties of the registry can be accessed as an array. Consider the following examples:</p>
-
-<pre><code class="php">// Set a value in the registry.
+<pre><code class="language-php">// Set a value in the registry.
 $registry['foo'] = 'bar';
 
 // Get a value from the registry;
@@ -357,14 +328,10 @@ $value = $registry['foo'];
 if (isset($registry['foo']))
 {
     echo 'Say bar.';
-}
-</code></pre>
-
+}</code></pre>
 <h2>Merge Registry</h2>
-
 <h5>Using load* methods to merge two config files.</h5>
-
-<pre><code class="php">$json1 = '{
+<pre><code class="language-php">$json1 = '{
     "field" : {
         "keyA" : "valueA",
         "keyB" : "valueB"
@@ -378,22 +345,16 @@ $json2 = '{
 }';
 
 $registry-&gt;loadString($json1);
-$registry-&gt;loadString($json2);
-</code></pre>
-
+$registry-&gt;loadString($json2);</code></pre>
 <p>Output</p>
-
 <pre><code>Array(
     field =&gt; Array(
         keyA =&gt; valueA
         keyB =&gt; a new valueB
     )
-)
-</code></pre>
-
+)</code></pre>
 <h5>Merge Another Registry</h5>
-
-<pre><code class="php">$object1 = '{
+<pre><code class="language-php">$object1 = '{
     "foo" : "foo value",
     "bar" : {
         "bar1" : "bar value 1",
@@ -411,31 +372,19 @@ $object2 = '{
 $registry1 = new Registry(json_decode($object1));
 $registry2 = new Registry(json_decode($object2));
 
-$registry1-&gt;merge($registry2);
-</code></pre>
-
+$registry1-&gt;merge($registry2);</code></pre>
 <p>If you just want to merge first level, do not hope recursive:</p>
-
-<pre><code class="php">$registry1-&gt;merge($registry2, false); // Set param 2 to false that Registry will only merge first level
-</code></pre>
-
+<pre><code class="language-php">$registry1-&gt;merge($registry2, false); // Set param 2 to false that Registry will only merge first level</code></pre>
 <p>Merge to a child node:</p>
-
-<pre><code class="php">$registry-&gt;mergeTo('foo.bar', $anotherRegistry);
-</code></pre>
-
+<pre><code class="language-php">$registry-&gt;mergeTo('foo.bar', $anotherRegistry);</code></pre>
 <h2>Dump to file.</h2>
-
-<pre><code class="php">$registry-&gt;toString();
+<pre><code class="language-php">$registry-&gt;toString();
 
 $registry-&gt;toString('xml');
 
-$registry-&gt;toString('ini');
-</code></pre>
-
+$registry-&gt;toString('ini');</code></pre>
 <h2>Dump to one dimension</h2>
-
-<pre><code class="php">$array = array(
+<pre><code class="language-php">$array = array(
     'flower' =&gt; array(
         'sunflower' =&gt; 'light',
         'sakura' =&gt; 'samurai'
@@ -448,42 +397,29 @@ $registry = new Registry($array);
 
 $flatted = $registry-&gt;flatten();
 
-print_r($flatted);
-</code></pre>
-
+print_r($flatted);</code></pre>
 <p>The result:</p>
-
 <pre><code>Array
 (
     [flower.sunflower] =&gt; light
     [flower.sakura] =&gt; samurai
-)
-</code></pre>
-
+)</code></pre>
 <h2>Using YAML</h2>
-
 <p>Add Symfony YAML component in <code>composer.json</code></p>
-
-<pre><code class="json">{
+<pre><code class="language-json">{
     "require-dev": {
         "symfony/yaml": "~2.0"
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Using <code>yaml</code> format</p>
-
-<pre><code class="php">$registry-&gt;loadFile($yamlFile, 'yaml');
+<pre><code class="language-php">$registry-&gt;loadFile($yamlFile, 'yaml');
 
 $registry-&gt;loadString('foo: bar', 'yaml');
 
 // Convert to string
-$registry-&gt;toString('yaml');
-</code></pre>
-
+$registry-&gt;toString('yaml');</code></pre>
 <h2>RegistryHelper</h2>
-
-<pre><code class="php">use Windwalker\Registry\RegistryHelper;
+<pre><code class="language-php">use Windwalker\Registry\RegistryHelper;
 
 RehistryHelper::loadFaile($file, $format); // File to array
 RehistryHelper::loadString($string, $format); // String to array
@@ -491,9 +427,7 @@ RehistryHelper::toString($array, $format); // Array to string
 
 // Use format class
 $json = RehistryHelper::getFormatClass('json'); // Get JsonFormat
-$string = $json::structToString($array);
-</code></pre>
-
+$string = $json::structToString($array);</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -528,7 +462,7 @@ $string = $json::structToString($array);
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -542,18 +476,18 @@ $string = $json::structToString($array);
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -626,7 +560,7 @@ $string = $json::structToString($array);
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

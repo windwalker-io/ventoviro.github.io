@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Service Provider | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,39 +303,25 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Introduction of Service Provider</h2>
-
 <p>Service Provider is an useful way to encapsulate logic for creating objects and services. For example, a mailer library,
 custom listeners or 3rd tools. Some libraries need a bootstrapping process, we should put this process in Service Provider.</p>
-
 <p>Service Provider works with IoC Container, we must implement the <code>\Windwalker\DI\ServiceProviderInterface</code>
 and write all our logic in <code>register()</code> and <code>boot()</code> method then set our objects into container.</p>
-
 <h3>Basic Provider Example</h3>
-
 <h5>Original Way</h5>
-
 <p>Take a look of this example code, in a original way, if we have a MongoDB driver want to bootstrap, we'll write an bootstrap file.</p>
-
-<pre><code class="php">// ./import.mongodb.php
+<pre><code class="language-php">// ./import.mongodb.php
 
 // This is a fake MongoDB connector
 $conn = new MongoDBConnection($config['database']['mongodb']);
 
-return $conn;
-</code></pre>
-
+return $conn;</code></pre>
 <p>And include this file:</p>
-
-<pre><code class="php">$mongo = include_once __DIR__ . '/import.mongodb.php';
-</code></pre>
-
+<pre><code class="language-php">$mongo = include_once __DIR__ . '/import.mongodb.php';</code></pre>
 <p>This is not the best practice to include a 3rd service in our system, so we use provider to handle it.</p>
-
 <h5>Windwalker Way</h5>
-
 <p>In Windwalker, Create a <code>MongoDBServiceProvider</code>, and set MongoDB connection to Container.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
+<pre><code class="language-php">use Windwalker\DI\Container;
 use Windwalker\DI\ServiceProviderInterface;
 
 class MongoDBServiceProvider implements ServiceProviderInterface
@@ -355,30 +338,19 @@ class MongoDBServiceProvider implements ServiceProviderInterface
         $container-&gt;share(MongoDBServiceProvider::class, $closure)-&gt;alias('mongo.db', MongoDBServiceProvider::class);
     }
 }
-
 </code></pre>
-
 <p>Register this provider in container:</p>
-
-<pre><code class="php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);
-</code></pre>
-
+<pre><code class="language-php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);</code></pre>
 <p>Then get this object from Container, the <code>MongoDBConnection</code> will be lazy loading, MongoDB will connected after your first get it:</p>
-
-<pre><code class="php">$mongo = $container-&gt;get('mongo.db');
+<pre><code class="language-php">$mongo = $container-&gt;get('mongo.db');
 
 // OR
 
-$mongo = Ioc::get('mongo.db');
-</code></pre>
-
+$mongo = Ioc::get('mongo.db');</code></pre>
 <p>About how to use IoC (DI) Container, see: <a href="ioc-container.html">IoC Container</a></p>
-
 <h2>Registering Providers</h2>
-
 <p>All Service Providers are registered in config, add your own or 3rd providers in <code>etc/app/windwalker.php</code> or <code>etc/app/web.php</code>:</p>
-
-<pre><code class="php">// etc/app/windwalker.php
+<pre><code class="language-php">// etc/app/windwalker.php
 
 // ...
 
@@ -386,15 +358,11 @@ $mongo = Ioc::get('mongo.db');
         'mongodb' =&gt; MongoDBServiceProvider::class
     ]
 
-// ...
-</code></pre>
-
+// ...</code></pre>
 <h2>Boot Service</h2>
-
 <p>If the service need to be boot when system initializing, we can add a <code>boot()</code> method to provider class.
 This is an error handler provider example, we must register error handler instantly after this provider registered.</p>
-
-<pre><code class="php">class ErrorHandlingProvider implements ServiceProviderInterface
+<pre><code class="language-php">class ErrorHandlingProvider implements ServiceProviderInterface
 {
     public function boot(Container $container)
     {
@@ -408,14 +376,10 @@ This is an error handler provider example, we must register error handler instan
     {
         $closure = $container-&gt;prepareSharedObject(ErrorManager::class);
     }
-}
-</code></pre>
-
+}</code></pre>
 <h3>Boot Deferred</h3>
-
 <p>If you wish this provider boot after all providers registered, you can use <code>bootDeferred()</code>.</p>
-
-<pre><code class="php">class ErrorHandlingProvider implements ServiceProviderInterface
+<pre><code class="language-php">class ErrorHandlingProvider implements ServiceProviderInterface
 {
     public function bootDeferred(Container $container)
     {
@@ -428,14 +392,10 @@ This is an error handler provider example, we must register error handler instan
         $handler-&gt;register();
     }
 
-    // ...
-</code></pre>
-
+    // ...</code></pre>
 <h2>Get Services From Application</h2>
-
 <p>Application object can easily get some main services by magic properties:</p>
-
-<pre><code class="php">$app = Ioc::getApplication();
+<pre><code class="language-php">$app = Ioc::getApplication();
 
 $this-&gt;app-&gt;container-&gt;get('...'); // Global container
 $this-&gt;app-&gt;uri-&gt;path;
@@ -450,9 +410,7 @@ $this-&gt;app-&gt;browser-&gt;isMobile();
 $this-&gt;app-&gt;platform-&gt;isLinux();
 $this-&gt;app-&gt;database-&gt;getQuery(true);
 $this-&gt;app-&gt;logger-&gt;debug('category', '...');
-$this-&gt;app-&gt;mailer-&gt;createMessage('Subject');
-</code></pre>
-
+$this-&gt;app-&gt;mailer-&gt;createMessage('Subject');</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -487,7 +445,7 @@ $this-&gt;app-&gt;mailer-&gt;createMessage('Subject');
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -501,18 +459,18 @@ $this-&gt;app-&gt;mailer-&gt;createMessage('Subject');
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -585,7 +543,7 @@ $this-&gt;app-&gt;mailer-&gt;createMessage('Subject');
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

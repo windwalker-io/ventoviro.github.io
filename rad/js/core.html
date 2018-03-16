@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Phoenix Core Script | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,16 +187,12 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Introduction</h2>
-
 <p>Phoenix provides a set of useful scripts to help us operate form and input, these scripts based on jQuery so every developers
 can easily learn how to use and integrate it with their own scripts.</p>
-
 <h2>Phoenix Core</h2>
-
 <p>Phoenix core script is a HTML form operation helper, it will auto included if you generate a phoenix admin template,
 but you can also include it manually in everywhere with first argument as css selector.</p>
-
-<pre><code class="php">// In View class
+<pre><code class="language-php">// In View class
 \Phoenix\Script\PhoenixScript::core();
 
 // Custom selector
@@ -213,18 +206,12 @@ but you can also include it manually in everywhere with first argument as css se
 
 OR
 
-@php(\Phoenix\Script\PhoenixScript::core())
-</code></pre>
-
+@php(\Phoenix\Script\PhoenixScript::core())</code></pre>
 <p>The <code>jquery.js</code> and <code>phoenix.js</code> will be auto included to HTML head.</p>
-
 <p>And you must have a <code>&lt;form id="#admin-form"&gt; ...</code> element in your HTML so Phoenix can operate this form.</p>
-
 <h2>Submit and RESTful CRUD</h2>
-
 <p>You can simply use this JS code to submit form:</p>
-
-<pre><code class="js">// Submit with default action defined on &lt;form action="..."&gt;
+<pre><code class="language-js">// Submit with default action defined on &lt;form action="..."&gt;
 Phoenix.submit();
 
 // Submit with custom URI and query
@@ -234,12 +221,9 @@ Phoenix.submit('/flower/sakuras', {page: 3});
 Phoenix.submit('/flower/sakura', data, 'POST');
 
 // Send custom RESTful method, will add `_method` to your params
-Phoenix.submit('/flower/sakura', data, 'POST', 'PUT');
-</code></pre>
-
+Phoenix.submit('/flower/sakura', data, 'POST', 'PUT');</code></pre>
 <p>Use simple methods:</p>
-
-<pre><code class="js">// GET
+<pre><code class="language-js">// GET
 Phoenix.get('/flower/sakura/25', query);
 
 // POST
@@ -255,134 +239,73 @@ Phoenix.put('/flower/sakura/25', query);
 Phoenix.patch('/flower/sakura/25', query);
 
 // DELETE
-Phoenix.sendDelete('/flower/sakura/25', query);
-</code></pre>
-
+Phoenix.sendDelete('/flower/sakura/25', query);</code></pre>
 <p>On click event in HTML element:</p>
-
-<pre><code class="html">&lt;button type="button" onclick="Phoenix.post()"&gt;&lt;/button&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;button type="button" onclick="Phoenix.post()"&gt;&lt;/button&gt;</code></pre>
 <h2>Routes</h2>
-
 <p>Use <code>Router</code> to print route to HTML.</p>
-
-<pre><code class="php">&lt;button type="button" onclick="Phoenix.post('{{ $router-&gt;route('sakura', ['id' =&gt; 25]) }}')"&gt;&lt;/button&gt;
-</code></pre>
-
+<pre><code class="language-php">&lt;button type="button" onclick="Phoenix.post('{{ $router-&gt;route('sakura', ['id' =&gt; 25]) }}')"&gt;&lt;/button&gt;</code></pre>
 <p>The output</p>
-
-<pre><code class="html">&lt;button type="button" onclick="Phoenix.post('/flower/sakura/25')"&gt;&lt;/button&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;button type="button" onclick="Phoenix.post('/flower/sakura/25')"&gt;&lt;/button&gt;</code></pre>
 <h3>Use Phoenix JS Router:</h3>
-
 <p>Add route settings in PHP</p>
-
-<pre><code class="php">\Phoenix\Script\PhoenixScript::addRoute('sakura_save', $router-&gt;route('sakura', ['id' =&gt; 25]));
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\PhoenixScript::addRoute('sakura_save', $router-&gt;route('sakura', ['id' =&gt; 25]));</code></pre>
 <p>And get this route by <code>Phoenix.Router</code>:</p>
-
-<pre><code class="html">&lt;button type="button" onclick="Phoenix.post(Phoenix.Router.route('sakura_save'))"&gt;&lt;/button&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;button type="button" onclick="Phoenix.post(Phoenix.Router.route('sakura_save'))"&gt;&lt;/button&gt;</code></pre>
 <p>Get route in anywhere, for example, use it in ajax call:</p>
-
-<pre><code class="js">$.ajax({
+<pre><code class="language-js">$.ajax({
     url: Phoenix.Router.route('sakura_save'),
     data: data,
 
     // ...
-}).done(...)
-</code></pre>
-
+}).done(...)</code></pre>
 <h2>Variable Storage</h2>
-
 <p>Phoenix can store some variables from PHP and push to frontend. Use this code in PHP:</p>
-
-<pre><code class="php">PhoenixScript::store('item', $data);
-PhoenixScript::store('title', 'Hello');
-</code></pre>
-
+<pre><code class="language-php">PhoenixScript::store('item', $data);
+PhoenixScript::store('title', 'Hello');</code></pre>
 <p>In frontend, use this JS to get value:</p>
-
-<pre><code class="php">// Get object
+<pre><code class="language-php">// Get object
 var item = Phoenix.Sotre.item;
 
 var id = item.id;
 
 // Get string
-var title = Phoenix.Sotre.title.toUpperCase();
-</code></pre>
-
+var title = Phoenix.Sotre.title.toUpperCase();</code></pre>
 <p>It is useful if you are using Vue.js and you want to push a lot of data structure to vue instance:</p>
-
-<pre><code class="js">new Vue({
+<pre><code class="language-js">new Vue({
     el: '#app',
     data: {
         item: Phoenix.Store.item
     }
-});
-</code></pre>
-
+});</code></pre>
 <h2>Translate</h2>
-
 <p>If you has a language key:</p>
-
-<pre><code class="ini">flower.message.sakura="Sakura"
-</code></pre>
-
+<pre><code class="language-ini">flower.message.sakura="Sakura"</code></pre>
 <p>Add language key to JS by php:</p>
-
-<pre><code class="php">\Phoenix\Script\PhoenixScript::translate('flower.message.sakura');
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\PhoenixScript::translate('flower.message.sakura');</code></pre>
 <p>Now you can get this language string in JS:</p>
-
-<pre><code class="js">Phoenix.Translator.translate('flower.message.sakura'); // Sakura
+<pre><code class="language-js">Phoenix.Translator.translate('flower.message.sakura'); // Sakura
 
 // You can also use sprintf() and plural()
 Phoenix.Translator.sprintf('flower.message.sakura', 'arg1', 'arg2');
-Phoenix.Translator.plural('flower.message.sakura', 3);
-</code></pre>
-
+Phoenix.Translator.plural('flower.message.sakura', 3);</code></pre>
 <p>See <a href="../../documentation/3.x/services/languages.html">Translator</a></p>
-
 <h2>Messages</h2>
-
 <p>Use JS code <code>addMessage()</code> to render message to template:</p>
-
-<pre><code class="js">Phoenix.addMessage('Hello World');
-</code></pre>
-
+<pre><code class="language-js">Phoenix.addMessage('Hello World');</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17009420/f958386c-4f2c-11e6-85d4-ae41c3bf73c9.jpg" alt="p-2016-07-21-001" /></p>
-
 <p>Use other styles</p>
-
-<pre><code class="js">Phoenix.addMessage('Hello World', 'info');
+<pre><code class="language-js">Phoenix.addMessage('Hello World', 'info');
 Phoenix.addMessage('Hello World', 'success');
 Phoenix.addMessage('Hello World', 'warning');
-Phoenix.addMessage('Hello World', 'danger');
-</code></pre>
-
+Phoenix.addMessage('Hello World', 'danger');</code></pre>
 <p>Multiple messages:</p>
-
-<pre><code class="js">Phoenix.addMessage(['Foo', 'Bar'], 'info');
-</code></pre>
-
+<pre><code class="language-js">Phoenix.addMessage(['Foo', 'Bar'], 'info');</code></pre>
 <p>Remove messages:</p>
-
-<pre><code class="js">Phoenix.removeMessages();
-</code></pre>
-
+<pre><code class="language-js">Phoenix.removeMessages();</code></pre>
 <h3>Keep Alive</h3>
-
 <p>If you are writing a form with long textarea, you will hope the session do not expired, use <code>keepAlive()</code> in php.</p>
-
-<pre><code class="php">PhoenixScript::keepAlive();
-</code></pre>
-
+<pre><code class="language-php">PhoenixScript::keepAlive();</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -417,7 +340,7 @@ Phoenix.addMessage('Hello World', 'danger');
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -431,18 +354,18 @@ Phoenix.addMessage('Hello World', 'danger');
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -515,7 +438,7 @@ Phoenix.addMessage('Hello World', 'danger');
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="media/images/favicon.ico" />
+    <link rel="shortcut icon" href="./asset/images/favicon.ico" />
 
     <title>Windwalker - PHP Rapid Development Framework</title>
 
@@ -17,9 +17,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="./asset/css/main.css" />
+    </head>
 <body class="home">
 
 <section id="header" class="home-header">
@@ -35,12 +34,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="./">
-                    <img class="img-invert" src="media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="./asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="./about/">
@@ -107,7 +104,7 @@
                         </div>
                     </div>
                     <div class='content'>
-<pre><code class="php">namespace Flower\Controller\Sakura;
+<pre><code class="language-php">namespace Flower\Controller\Sakura;
 
 use Windwalker\Core\Controller\AbstractController;
 
@@ -126,9 +123,7 @@ class GetController extends AbstractController
             -&gt;set('items', $repository-&gt;getSakuras($page, 15))
             -&gt;render();
     }
-}
-</code></pre>
-                    </div>
+}</code></pre>                    </div>
                 </div>
 
             </div>
@@ -242,19 +237,19 @@ class GetController extends AbstractController
                         <div class="cases-wrap outer-top-sm">
                 <div class="row cases-row">
                     <div class="col-md-4 cases-item">
-                        <a style="background-image: url(media/images/cases/datavideo.jpg);"
+                        <a style="background-image: url(./asset/images/cases/datavideo.jpg);"
                             href="http://datavideovirtualset.com/"
                             class="cases-img box-rounded-xs" target="_blank">
                         </a>
                     </div>
                     <div class="col-md-4 cases-item">
-                        <a style="background-image: url(media/images/cases/asukademy.jpg);"
+                        <a style="background-image: url(./asset/images/cases/asukademy.jpg);"
                             href="http://asukademy.com/"
                             class="cases-img box-rounded-xs" target="_blank">
                         </a>
                     </div>
                     <div class="col-md-4 cases-item">
-                        <a style="background-image: url(media/images/cases/windspeaker.jpg);"
+                        <a style="background-image: url(./asset/images/cases/windspeaker.jpg);"
                             href="http://windspeaker.co/"
                             class="cases-img box-rounded-xs" target="_blank">
                         </a>
@@ -265,13 +260,13 @@ class GetController extends AbstractController
                         <div class="cases-wrap outer-top-sm">
                 <div class="row cases-row">
                     <div class="col-md-4 cases-item">
-                        <a style="background-image: url(media/images/cases/lyrasoft.jpg);"
+                        <a style="background-image: url(./asset/images/cases/lyrasoft.jpg);"
                             href="https://lyrasoft.net/en/"
                             class="cases-img box-rounded-xs" target="_blank">
                         </a>
                     </div>
                     <div class="col-md-4 cases-item">
-                        <a style="background-image: url(media/images/cases/eng4tw.jpg);"
+                        <a style="background-image: url(./asset/images/cases/eng4tw.jpg);"
                             href="http://english4tw.com/"
                             class="cases-img box-rounded-xs" target="_blank">
                         </a>
@@ -293,7 +288,7 @@ class GetController extends AbstractController
 
         <p class="text-center inner-top-xs">
             <a href="https://joomla.org" target="_blank">
-                <img src="media/images/logo/joomla.png" alt="Joomla">
+                <img src="./asset/images/logo/joomla.png" alt="Joomla">
             </a>
         </p>
     </section>
@@ -322,7 +317,7 @@ class GetController extends AbstractController
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="./asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -336,18 +331,18 @@ class GetController extends AbstractController
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="media/css/ripples.min.css" />
-<link rel="stylesheet" href="media/css/prism.min.css" />
+<link rel="stylesheet" href="./asset/css/ripples.min.css" />
+<link rel="stylesheet" href="./asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="media/js/jquery.min.js"></script>
-<script src="media/js/jquery.smooth-scroll.min.js"></script>
-<script src="media/js/bootstrap.min.js"></script>
-<script src="media/js/material.min.js"></script>
-<script src="media/js/ripples.min.js"></script>
-<script src="media/js/prism.js"></script>
+<script src="./asset/js/jquery.min.js"></script>
+<script src="./asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="./asset/js/bootstrap.min.js"></script>
+<script src="./asset/js/material.min.js"></script>
+<script src="./asset/js/ripples.min.js"></script>
+<script src="./asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 

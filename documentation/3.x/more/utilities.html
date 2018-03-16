@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Utilities | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,24 +303,17 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>New <code>Arr</code> Class</h2>
-
 <p>We are trying to use <code>\Windwalker\Utilities\Arr</code> replace old <code>ArrayHelper</code>.</p>
-
 <h3>Simple Usage</h3>
-
 <p>Get and set:</p>
-
-<pre><code class="php">$bar = Arr::get($arrayOrObject, 'foo.bar', 'default');
+<pre><code class="language-php">$bar = Arr::get($arrayOrObject, 'foo.bar', 'default');
 
 Arr::set($arrayOrObject, 'foo.baz', 'value');
 
 Arr::has($arrayOrObject, 'foo.baz');
-Arr::remove($arrayOrObject, 'foo.baz');
-</code></pre>
-
+Arr::remove($arrayOrObject, 'foo.baz');</code></pre>
 <h3>Method list of <code>Arr</code></h3>
-
-<pre><code class="php">Arr::toArray($data, $recursive = false)
+<pre><code class="language-php">Arr::toArray($data, $recursive = false)
 Arr::toObject(array $array, $class = 'stdClass')
 Arr::has($array, $key, $delimiter = '.')
 Arr::def($array, $key, $value, $delimiter = '.')
@@ -347,14 +337,10 @@ Arr::unique(array $array)
 Arr::mergeRecursive($array1)
 Arr::dump($data, $depth = 5)
 Arr::show($arg)
-Arr::map(array $array, callable $callback, $recursive = false)
-</code></pre>
-
+Arr::map(array $array, callable $callback, $recursive = false)</code></pre>
 <h2>Using ArrayHelper</h2>
-
 <h3>toObject</h3>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 class Book {
     public $name;
@@ -376,11 +362,8 @@ $input = array(
     "rating" =&gt; 10
 );
 $book = ArrayHelper::toObject($input, 'Book');
-var_dump($book);
-</code></pre>
-
+var_dump($book);</code></pre>
 <p>Result:</p>
-
 <pre><code>class Book#1 (4) {
   public $name =&gt;
   string(36) "The Hitchhiker's Guide to the Galaxy"
@@ -403,12 +386,9 @@ var_dump($book);
   string(21) "comic science fiction"
   public $rating =&gt;
   int(10)
-}
-</code></pre>
-
+}</code></pre>
 <h3>getColumn</h3>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 $rows = array(
     array("name" =&gt; "John", "age" =&gt; 20),
@@ -416,11 +396,8 @@ $rows = array(
     array("name" =&gt; "Sarah", "age" =&gt; 27)
 );
 $names = ArrayHelper::getColumn($rows, 'name');
-var_dump($names);
-</code></pre>
-
+var_dump($names);</code></pre>
 <p>Result:</p>
-
 <pre><code>array(3) {
   [0] =&gt;
   string(4) "John"
@@ -428,12 +405,9 @@ var_dump($names);
   string(4) "Alex"
   [2] =&gt;
   string(5) "Sarah"
-}
-</code></pre>
-
+}</code></pre>
 <h3>getValue</h3>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 $city = array(
     "name" =&gt; "Oslo",
@@ -444,23 +418,17 @@ $city = array(
 echo ArrayHelper::getValue($city, 'name');
 
 // Prints 'unknown mayor' (no 'mayor' key is found in the array)
-echo ArrayHelper::getValue($city, 'mayor', 'unknown mayor');
-</code></pre>
-
+echo ArrayHelper::getValue($city, 'mayor', 'unknown mayor');</code></pre>
 <h3>invert</h3>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 $input = array(
     'New' =&gt; array('1000', '1500', '1750'),
     'Used' =&gt; array('3000', '4000', '5000', '6000')
 );
 $output = ArrayHelper::invert($input);
-var_dump($output);
-</code></pre>
-
+var_dump($output);</code></pre>
 <p>Result:</p>
-
 <pre><code>array(7) {
   [1000] =&gt;
   string(3) "New"
@@ -476,23 +444,17 @@ var_dump($output);
   string(4) "Used"
   [6000] =&gt;
   string(4) "Used"
-}
-</code></pre>
-
+}</code></pre>
 <h3>isAssociative</h3>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 $user = array("id" =&gt; 46, "name" =&gt; "John");
 echo ArrayHelper::isAssociative($user) ? 'true' : 'false'; // true
 
 $letters = array("a", "b", "c");
-echo ArrayHelper::isAssociative($letters) ? 'true' : 'false'; // false
-</code></pre>
-
+echo ArrayHelper::isAssociative($letters) ? 'true' : 'false'; // false</code></pre>
 <h3>group</h3>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 $movies = array(
     array('year' =&gt; 1972, 'title' =&gt; 'The Godfather'),
@@ -501,11 +463,8 @@ $movies = array(
     array('year' =&gt; 1964, 'title' =&gt; 'Dr. Strangelove')
 );
 $pivoted = ArrayHelper::pivot($movies, 'year');
-var_dump($pivoted);
-</code></pre>
-
+var_dump($pivoted);</code></pre>
 <p>Result:</p>
-
 <pre><code>array(3) {
   [1972] =&gt;
   array(2) {
@@ -538,12 +497,9 @@ var_dump($pivoted);
     'title' =&gt;
     string(15) "Dr. Strangelove"
   }
-}
-</code></pre>
-
+}</code></pre>
 <h3>sortObjects</h3>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 $members = array(
     (object) array('first_name' =&gt; 'Carl', 'last_name' =&gt; 'Hopkins'),
@@ -551,11 +507,8 @@ $members = array(
     (object) array('first_name' =&gt; 'Julia', 'last_name' =&gt; 'Adams')
 );
 $sorted = ArrayHelper::sortObjects($members, 'last_name', 1);
-var_dump($sorted);
-</code></pre>
-
+var_dump($sorted);</code></pre>
 <p>Result:</p>
-
 <pre><code>array(3) {
   [0] =&gt;
   class stdClass#3 (2) {
@@ -578,12 +531,9 @@ var_dump($sorted);
     public $last_name =&gt;
     string(5) "Smith"
   }
-}
-</code></pre>
-
+}</code></pre>
 <h3>arrayUnique</h3>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 $names = array(
     array("first_name" =&gt; "John", "last_name" =&gt; "Adams"),
@@ -592,11 +542,8 @@ $names = array(
     array("first_name" =&gt; "Sam", "last_name" =&gt; "Smith")
 );
 $unique = ArrayHelper::arrayUnique($names);
-var_dump($unique);
-</code></pre>
-
+var_dump($unique);</code></pre>
 <p>Result:</p>
-
 <pre><code>array(3) {
   [0] =&gt;
   array(2) {
@@ -619,12 +566,9 @@ var_dump($unique);
     'last_name' =&gt;
     string(5) "Smith"
   }
-}
-</code></pre>
-
+}</code></pre>
 <h3>flatten</h3>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 $array = array(
     'flower' =&gt; array(
@@ -643,14 +587,10 @@ echo $flatted1['flower.sakura']; // 'samuari'
 
 $flatted2 = ArrayHelper::flatten($array, '/');
 
-echo $flatted2['flower/olive']; // 'peace'
-</code></pre>
-
+echo $flatted2['flower/olive']; // 'peace'</code></pre>
 <h3>merge</h3>
-
 <p>Recursive merge two array.</p>
-
-<pre><code class="php">use Windwalker\Utilities\ArrayHelper;
+<pre><code class="language-php">use Windwalker\Utilities\ArrayHelper;
 
 $array2 = array(
     'flower' =&gt; array(
@@ -674,14 +614,10 @@ Array
         [sakura] =&gt; overrided
         [olive] =&gt; peace
     )
-)
-</code></pre>
-
+)</code></pre>
 <h3>match</h3>
-
 <p>Check an array matched our query condition.</p>
-
-<pre><code class="php">$array = array(
+<pre><code class="language-php">$array = array(
     'id' =&gt; 1,
     'title' =&gt; 'Julius Caesar',
     'data' =&gt; (object) array('foo' =&gt; 'bar'),
@@ -700,14 +636,10 @@ $bool = ArrayHelper::match($data, array('id' =&gt; 1, 'title' =&gt; 'Julius Caes
 $bool = ArrayHelper::match($data, array('id' =&gt; array(2, 3, 4)));
 
 // Check id &gt;= 2
-$bool = ArrayHelper::match($data, array('id &gt;=' =&gt; 2));
-</code></pre>
-
+$bool = ArrayHelper::match($data, array('id &gt;=' =&gt; 2));</code></pre>
 <h3>query</h3>
-
 <p>Find element matched array in array.</p>
-
-<pre><code class="php">$data = array(
+<pre><code class="language-php">$data = array(
     array(
         'id' =&gt; 1,
         'title' =&gt; 'Julius Caesar',
@@ -749,9 +681,7 @@ $newArray = ArrayHelper::query($data, array('id &gt;=' =&gt; 2));
 $newArray = ArrayHelper::query($data, function ($key, $value, $strict)
 {
     return $value['id'] == 3 || $value['title'] == 'Macbeth';
-});
-</code></pre>
-
+});</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -786,7 +716,7 @@ $newArray = ArrayHelper::query($data, function ($key, $value, $strict)
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -800,18 +730,18 @@ $newArray = ArrayHelper::query($data, function ($key, $value, $strict)
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -884,7 +814,7 @@ $newArray = ArrayHelper::query($data, function ($key, $value, $strict)
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

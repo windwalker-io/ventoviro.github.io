@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Start A Blog | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,21 +187,14 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Introduction</h2>
-
 <p>In this chapter, we'll step by step to create a simple blog system, that helps you understand how to use phoenix.</p>
-
 <h2>Create Admin Package</h2>
-
 <p>First, we have to create a basic blog admin package. please type this command:</p>
-
-<pre><code class="bash">php windwalker muse init Blog/Admin category.categories
+<pre><code class="language-bash">php windwalker muse init Blog/Admin category.categories
 php windwalker muse add-subsystem Blog/Admin article.articles
-php windwalker muse add-subsystem Blog/Admin comment.comments
-</code></pre>
-
+php windwalker muse add-subsystem Blog/Admin comment.comments</code></pre>
 <p>After package created, register package and add assets link.</p>
-
-<pre><code class="php">// etc/app/windwlaker.php
+<pre><code class="language-php">// etc/app/windwlaker.php
 
 // ...
 
@@ -214,28 +204,19 @@ php windwalker muse add-subsystem Blog/Admin comment.comments
         'admin' =&gt; \Blog\Admin\AdminPackage::class
     ]
 
-// ...
-</code></pre>
-
-<pre><code class="bash">$ php windwalker asset sync admin
-</code></pre>
-
+// ...</code></pre>
+<pre><code class="language-bash">$ php windwalker asset sync admin</code></pre>
 <p>And add routing to <code>/etc/routing.yml</code>.</p>
-
-<pre><code class="yaml">## /etc/routing.yml
+<pre><code class="language-yaml">## /etc/routing.yml
 
 ## ...
 
 admin:
     pattern: /admin
-    package: admin
-</code></pre>
-
+    package: admin</code></pre>
 <h2>Migration</h2>
-
 <p>Open <code>src/Blog/Admin/*.php</code> files, change migration like below:</p>
-
-<pre><code class="php">// src/Blog/Admin/xxxxxxxxxxxxxx_CategoryInit.php
+<pre><code class="language-php">// src/Blog/Admin/xxxxxxxxxxxxxx_CategoryInit.php
 
 // ...
 
@@ -267,10 +248,8 @@ class CategoryInit extends AbstractMigration
     {
         $this-&gt;drop(Table::CATEGORIES, true);
     }
-}
-</code></pre>
-
-<pre><code class="php">// src/Blog/Admin/xxxxxxxxxxxxxx_ArticleInit.php
+}</code></pre>
+<pre><code class="language-php">// src/Blog/Admin/xxxxxxxxxxxxxx_ArticleInit.php
 
 class ArticleInit extends AbstractMigration
 {
@@ -305,10 +284,8 @@ class ArticleInit extends AbstractMigration
     {
         $this-&gt;drop(Table::ARTICLES);
     }
-}
-</code></pre>
-
-<pre><code class="php">// src/Blog/Admin/xxxxxxxxxxxxxx_CommentInit.php
+}</code></pre>
+<pre><code class="language-php">// src/Blog/Admin/xxxxxxxxxxxxxx_CommentInit.php
 
 class CommentInit extends AbstractMigration
 {
@@ -343,23 +320,14 @@ class CommentInit extends AbstractMigration
     {
         $this-&gt;drop(Table::COMMENTS);
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Run migration:</p>
-
-<pre><code class="bash">php windwalker migration migrate -p=admin
-</code></pre>
-
+<pre><code class="language-bash">php windwalker migration migrate -p=admin</code></pre>
 <p>Now you can open <code>http://{your_site}/admin/categories</code> to see your admin page.</p>
-
 <h2>Fake Data</h2>
-
 <p>We must add some fake data to help us developing. Use seeder to do this work, please modify <code>src/Blog/Admin/Seed/*.php</code> files.</p>
-
-<p>First check that the seeder ordering is <code>CategorySeeder</code> -> <code>ArticleSeeder</code> -> <code>CommentSeeder</code> in <code>MainSeeder</code>.</p>
-
-<pre><code class="php">// src/Blog/Admin/MainSeeder.php
+<p>First check that the seeder ordering is <code>CategorySeeder</code> -&gt; <code>ArticleSeeder</code> -&gt; <code>CommentSeeder</code> in <code>MainSeeder</code>.</p>
+<pre><code class="language-php">// src/Blog/Admin/MainSeeder.php
 
 // ...
 
@@ -381,12 +349,9 @@ class MainSeeder extends AbstractSeeder
         // @muse-placeholder  seeder-execute  Do not remove this.
     }
 
-    // ...
-</code></pre>
-
+    // ...</code></pre>
 <p>Then add modify all other seeder class to:</p>
-
-<pre><code class="php">// src/Blog/Admin/Seed/CategorySeeder.php
+<pre><code class="language-php">// src/Blog/Admin/Seed/CategorySeeder.php
 
 // ...
 
@@ -422,10 +387,8 @@ class CategorySeeder extends AbstractSeeder
     {
         $this-&gt;truncate(Table::CATEGORIES);
     }
-}
-</code></pre>
-
-<pre><code class="php">// src/Blog/Admin/Seed/ArticleSeeder.php
+}</code></pre>
+<pre><code class="language-php">// src/Blog/Admin/Seed/ArticleSeeder.php
 
 // ...
 
@@ -469,10 +432,8 @@ class ArticleSeeder extends AbstractSeeder
     {
         $this-&gt;truncate(Table::ARTICLES);
     }
-}
-</code></pre>
-
-<pre><code class="php">// src/Blog/Admin/Seed/CommentSeeder.php
+}</code></pre>
+<pre><code class="language-php">// src/Blog/Admin/Seed/CommentSeeder.php
 
 // ...
 
@@ -510,24 +471,16 @@ class CommentSeeder extends AbstractSeeder
     {
         $this-&gt;db-&gt;getTable(Table::COMMENTS)-&gt;truncate();
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Run seeder import</p>
-
-<pre><code class="bash">php windwalker seed import -p=admin
+<pre><code class="language-bash">php windwalker seed import -p=admin
 
 # OR
 
-php windwalker migration reset --seed -p=admin
-</code></pre>
-
+php windwalker migration reset --seed -p=admin</code></pre>
 <p>If migration and seeder works fine, open the admin page, you will see sample data to test.</p>
-
 <p><img src="https://i.imgur.com/qhyCxmp.jpg" alt="Imgur" /></p>
-
 <p>The first <code>Categories</code> menu item is a placeholder, you can delete it in <code>src/Blog/Admin/Templates/_global/admin/widget/submenu.blade.php</code>.</p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -562,7 +515,7 @@ php windwalker migration reset --seed -p=admin
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -576,18 +529,18 @@ php windwalker migration reset --seed -p=admin
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -660,7 +613,7 @@ php windwalker migration reset --seed -p=admin
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

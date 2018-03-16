@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Vue | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,15 +187,10 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Include Vue</h2>
-
 <p>Phoenix includes <code>vue.js</code> 2.0 and some official vue plugins to help you build a modern single page application.</p>
-
-<pre><code class="php">\Phoenix\Script\VueScript::core();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\VueScript::core();</code></pre>
 <p>Now you can easily use vue in your HTML page:</p>
-
-<pre><code class="html">&lt;!-- In &lt;form id="admin-form"&gt; --&gt;
+<pre><code class="language-html">&lt;!-- In &lt;form id="admin-form"&gt; --&gt;
 
     &lt;input name="foo" type="text" v-model="foo"&gt;
 
@@ -209,12 +201,9 @@
             foo: 'bar'
         }
     });
-    &lt;/script&gt;
-</code></pre>
-
+    &lt;/script&gt;</code></pre>
 <p>Or integrate with jQuery:</p>
-
-<pre><code class="php">@php(Phoenix\Script\JQueryScript::core())
+<pre><code class="language-php">@php(Phoenix\Script\JQueryScript::core())
 @php(Phoenix\Script\VueScript::core())
 
 &lt;script&gt;
@@ -229,12 +218,9 @@
     })
 &lt;/script&gt;
 
-&lt;input name="foo" type="text" v-model="foo"&gt;
-</code></pre>
-
+&lt;input name="foo" type="text" v-model="foo"&gt;</code></pre>
 <h3>Create a Vue Instance in PHP</h3>
-
-<pre><code class="php">VueScript::instance(
+<pre><code class="language-php">VueScript::instance(
     '#app',
     ['item' =&gt; null],
     [
@@ -242,61 +228,37 @@
             'addItem' =&gt; "\\function () { ... }"
         ]
     ]
-);
-</code></pre>
-
+);</code></pre>
 <p>This will generate JS code looks like:</p>
-
-<pre><code class="html">&lt;script&gt;
+<pre><code class="language-html">&lt;script&gt;
     window.vueInstances.app = new Vue({el:"#app",data:{item:null},methods:{addItem:function () { ... }}});
-&lt;/script&gt;
-</code></pre>
-
+&lt;/script&gt;</code></pre>
 <h3>Add PHP Variable to Vue Instance</h3>
-
 <p>See <a href="../js/core.html#variable-storage">Phoenix Core: Variable Storage</a></p>
-
 <p>You can use php code:</p>
-
-<pre><code class="php">PhoenixScript::store('item', $data);
-</code></pre>
-
+<pre><code class="language-php">PhoenixScript::store('item', $data);</code></pre>
 <p>To inject data to Vue:</p>
-
-<pre><code class="js">new Vue({
+<pre><code class="language-js">new Vue({
     el: '#app',
     data: {
         item: Phoenix.Store.item
     }
-});
-</code></pre>
-
+});</code></pre>
 <h2>Vue Animate</h2>
-
 <p>Use <code>vue2-animate</code> package to add transition effects by <a href="https://github.com/daneden/animate.css">animate.css</a>.</p>
-
-<pre><code class="php">// Include JS file
-VueScript::animate();
-</code></pre>
-
+<pre><code class="language-php">// Include JS file
+VueScript::animate();</code></pre>
 <p>Now you can add transition name to your template:</p>
-
-<pre><code class="html">&lt;transition-group name="fadeLeft" tag="ul"&gt;
+<pre><code class="language-html">&lt;transition-group name="fadeLeft" tag="ul"&gt;
     &lt;li v-for="item in items" v-bind:key="item"&gt;
         {{ item }}
     &lt;/li&gt;
-&lt;/transition-group&gt;
-</code></pre>
-
+&lt;/transition-group&gt;</code></pre>
 <p>See <a href="https://github.com/asika32764/vue2-animate/">vue2-animate</a> and <a href="http://vuejs.org/guide/transitions.html">Vue.js Transitions</a></p>
-
 <h3>Integrate with Form Builder</h3>
-
 <p>Use <code>attr()</code>, <code>controlAttr()</code> and <code>labelAttr()</code> to directly add directives to input HTML.</p>
-
 <p>This is an example to show how to bind <code>alias</code> input with <code>title</code> input.</p>
-
-<pre><code class="php">// In Form Definition class
+<pre><code class="language-php">// In Form Definition class
 
 VueScript::animate();
 VueScript::instance('#admin-form', ['title' =&gt; null, 'alias' =&gt; null], ['watch' =&gt; [
@@ -315,16 +277,11 @@ $this-&gt;text('alias')
     -&gt;label(Translator::translate('flower.sakura.field.alias'))
     -&gt;controlAttr('v-if', 'title')
     -&gt;controlAttr('transition', 'fade')
-    -&gt;attr(':value', 'alias');
-</code></pre>
-
+    -&gt;attr(':value', 'alias');</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/19294082/4edfdd1a-905c-11e6-89de-174acd181068.gif" alt="vue-form" /></p>
-
 <h2>Vue Router</h2>
-
 <p>Use Vue router to handle page switch without refresh browser:</p>
-
-<pre><code class="php">@php(\Phoenix\Script\VueScript::router())
+<pre><code class="language-php">@php(\Phoenix\Script\VueScript::router())
 
 &lt;div id="app"&gt;
     &lt;h1&gt;Hello App!&lt;/h1&gt;
@@ -358,16 +315,11 @@ $this-&gt;text('alias')
     })
 
     router.start(App, '#app')
-&lt;/script&gt;
-</code></pre>
-
+&lt;/script&gt;</code></pre>
 <p>See <a href="http://router.vuejs.org/">Vue Router</a></p>
-
 <h2>Vue Resource</h2>
-
 <p>Use vue resource to fetch server data by ajax:</p>
-
-<pre><code class="php">@php(\Phoenix\Script\VueScript::resource())
+<pre><code class="language-php">@php(\Phoenix\Script\VueScript::resource())
 
 &lt;script&gt;
 // global Vue object
@@ -385,33 +337,20 @@ new Vue({
         });
     }
 })
-&lt;/script&gt;
-</code></pre>
-
+&lt;/script&gt;</code></pre>
 <p>Add custom options and global headers:</p>
-
-<pre><code class="php">\Phoenix\Script\VueScript::resource(['root' =&gt; $uri-&gt;path], [
+<pre><code class="language-php">\Phoenix\Script\VueScript::resource(['root' =&gt; $uri-&gt;path], [
     'common' =&gt; ['X-Foo' =&gt; 'Bar'],
     'post' =&gt; ['X-Baz' =&gt; 'Yoo'],
-]);
-</code></pre>
-
+]);</code></pre>
 <p>See <a href="https://github.com/vuejs/vue-resource">Vue Resource</a></p>
-
 <h2>VueStrap</h2>
-
 <p>Use VueStrap to integrate Bootstrap:</p>
-
-<pre><code class="php">\Phoenix\Script\VueScript::strap();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\VueScript::strap();</code></pre>
 <p>See <a href="http://yuche.github.io/vue-strap/">VueStrap</a></p>
-
 <h2>Vuex</h2>
-
 <p>Vuex is an application architecture for centralized state management in Vue.js applications.</p>
-
-<pre><code class="php">\Phoenix\Script\VueScript::vuex();
+<pre><code class="language-php">\Phoenix\Script\VueScript::vuex();
 
 // Add initial state
 
@@ -420,19 +359,13 @@ new Vue({
     'mutations' =&gt; [
         'INCREMENT' =&gt; '\\function (state) { state.count++ }'
     ]
-]);
-</code></pre>
-
+]);</code></pre>
 <p>In HTML</p>
-
-<pre><code class="js">export default new Vuex.Store({
+<pre><code class="language-js">export default new Vuex.Store({
   state,
   mutations
-});
-</code></pre>
-
+});</code></pre>
 <p>See <a href="http://vuex.vuejs.org/">Vuex</a></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -467,7 +400,7 @@ new Vue({
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -481,18 +414,18 @@ new Vue({
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -565,7 +498,7 @@ new Vue({
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

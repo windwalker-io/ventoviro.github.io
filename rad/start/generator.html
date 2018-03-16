@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Generator | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,12 +187,9 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>The Phoenix Generator Commands</h2>
-
 <p>Phoenix includes <a href="https://github.com/asika32764/muse">PHP Muse</a> as template generator.</p>
-
 <p>Please type <code>php windwalker muse -h</code>, and you will see this message:</p>
-
-<pre><code class="bash">Windwalker Console - version: 2.0
+<pre><code class="language-bash">Windwalker Console - version: 2.0
 ------------------------------------------------------------
 
 [muse Help]
@@ -204,7 +198,6 @@ The template generator.
 
 Usage:
   muse &lt;command&gt; [option]
-
 
 Options:
 
@@ -221,61 +214,33 @@ Commands:
   add-subsystem    Add a singular &amp; plural MVC group.
   add-item         Add a singular MVC template.
   add-list         Add a plural MVC template.
-  convert          Convert a package back to template.
-</code></pre>
-
+  convert          Convert a package back to template.</code></pre>
 <h2>Init Package</h2>
-
 <p>Use <code>init</code> command to generate package template.</p>
-
 <p>Usage</p>
-
-<pre><code class="bash">init [&lt;namespace&gt;\\]&lt;name&gt; &lt;item&gt;[.&lt;list&gt;] [-s|--seed] [-m|--migrate] [-t|--tmpl=default]
-</code></pre>
-
+<pre><code class="language-bash">init [&lt;namespace&gt;\\]&lt;name&gt; &lt;item&gt;[.&lt;list&gt;] [-s|--seed] [-m|--migrate] [-t|--tmpl=default]</code></pre>
 <blockquote>
-  <p>If you only type item name, Windwalker will guess the list name by string inflector.</p>
+<p>If you only type item name, Windwalker will guess the list name by string inflector.</p>
 </blockquote>
-
 <h3>Example</h3>
-
 <p>Init a first level package in <code>src/Flower</code> with two MVC groups: <code>Sakura</code> and <code>Sakuras</code>.</p>
-
-<pre><code class="bash">php windwalker muse init Flower sakura.sakuras
-</code></pre>
-
+<pre><code class="language-bash">php windwalker muse init Flower sakura.sakuras</code></pre>
 <p>Init a package in <code>Asuka\</code> namespace, the package will located at <code>src/Asuka/Flower</code>.</p>
-
-<pre><code class="bash">php windwalker muse init Asuka\\Flower sakura.sakuras
-</code></pre>
-
+<pre><code class="language-bash">php windwalker muse init Asuka\\Flower sakura.sakuras</code></pre>
 <blockquote>
-  <p>We support normal slash <code>Asuka/Flower</code> that will be more convenience.</p>
+<p>We support normal slash <code>Asuka/Flower</code> that will be more convenience.</p>
 </blockquote>
-
 <p>Init a package than run migration and seeder.</p>
-
-<pre><code class="bash">php windwalker muse init Asuka\\Flower sakura.sakuras -sm
-</code></pre>
-
+<pre><code class="language-bash">php windwalker muse init Asuka\\Flower sakura.sakuras -sm</code></pre>
 <p>Init a package with another template named: <code>simple</code>.</p>
-
-<pre><code class="bash">php windwalker muse init Asuka\\Flower sakura.sakuras -t=simple
-</code></pre>
-
+<pre><code class="language-bash">php windwalker muse init Asuka\\Flower sakura.sakuras -t=simple</code></pre>
 <p>If you forgot to run migration and seeder, you can use this command to run it after generated:</p>
-
-<pre><code class="bash">php windwalker migration migrate -p=flower --seed
-</code></pre>
-
+<pre><code class="language-bash">php windwalker migration migrate -p=flower --seed</code></pre>
 <h3>Register This Package</h3>
-
 <p>See <a href="http://windwalker.io/documentation/start/package-system.html">Windwalker Package Document</a>, we have to register
 this package to Windwalker main application.</p>
-
 <p>For example, if we create a package named <code>Flower</code>, we have to register <code>Flower\FlowerPackage</code> class to Windwalker.</p>
-
-<pre><code class="php">// etc/app/windwalker.php
+<pre><code class="language-php">// etc/app/windwalker.php
 
     'packages' =&gt; [
         // ...
@@ -284,103 +249,60 @@ this package to Windwalker main application.</p>
         'flower' =&gt; Flower\FlowerPackage::class
     ]
 
-// ...
-</code></pre>
-
+// ...</code></pre>
 <p>Then register Flower routing to <code>etc/routing.yml</code>, the URI begin with <code>/flower/*</code> will direct to Flower package.</p>
-
-<pre><code class="yaml">## etc/routing.yml
+<pre><code class="language-yaml">## etc/routing.yml
 
 ##...
 
 ## Add this route
 flower:
     pattern: /flower
-    package: flower
-</code></pre>
-
+    package: flower</code></pre>
 <p>Run this command to link assets files in Flower package, it will create a symlink <code>/www/asset/flower &lt;====&gt; /src/Flower/Resources/asset</code>.</p>
-
-<pre><code class="bash">php windwalker asset sync flower
-</code></pre>
-
+<pre><code class="language-bash">php windwalker asset sync flower</code></pre>
 <blockquote>
-  <p>If you are in Windows, you must open <code>cmd.exe</code> or <code>powershell.exe</code> with administrator access to run this command.
-  If your system do not support symlink, you have to use hard copy:</p>
-  
-  <p><code>php windwalker asset sync phoenix  --hard</code></p>
-  
-  <hr />
-  
-  <p>You can do these steps by simply type <code>php windwalker package install flower [--hard]</code></p>
+<p>If you are in Windows, you must open <code>cmd.exe</code> or <code>powershell.exe</code> with administrator access to run this command.
+If your system do not support symlink, you have to use hard copy:</p>
+<p><code>php windwalker asset sync phoenix  --hard</code></p>
+<hr />
+<p>You can do these steps by simply type <code>php windwalker package install flower [--hard]</code></p>
 </blockquote>
-
 <p>Make sure you have ran the migration and seeder. Open browser and go to <code>http://{your_project}/dev.php/flower/sakuras</code>.</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/9725055/0cc4e1fc-5613-11e5-9f0d-c373d7d68c87.png" alt="img" /></p>
-
 <blockquote>
-  <p>If you are bother to see the star <code>**</code> wrapped every string, set config <code>language.debug</code> to <code>false</code> or <code>0</code>.</p>
+<p>If you are bother to see the star <code>**</code> wrapped every string, set config <code>language.debug</code> to <code>false</code> or <code>0</code>.</p>
 </blockquote>
-
 <h2>Add Subsystem</h2>
-
 <p>If you want to add two MVC groups with singular and plural, use <code>add-subsystem</code> command. All parameters are same as <code>init</code>.</p>
-
 <p>Usage: <code>add-subsystem [&lt;namespace&gt;\\]&lt;name&gt; &lt;item&gt;.&lt;list&gt; [-s|--seed] [-m|--migrate] [-t|--tmpl=default]</code></p>
-
 <p>For example, add <code>rose.roses</code>.</p>
-
-<pre><code class="bash">php windwalker muse add-subsystem Flower rose.roses -sm
-</code></pre>
-
+<pre><code class="language-bash">php windwalker muse add-subsystem Flower rose.roses -sm</code></pre>
 <p>Then you will see a new submenu item in admin UI.</p>
-
 <p><img src="https://i.imgur.com/mWiDVFA.jpg" alt="Imgur" /></p>
-
 <h2>Add Item &amp; List</h2>
-
 <p>Just use <code>add-item</code> and <code>add-list</code> commands. All parameters are same as <code>init</code> and <code>add-subsystem</code>.</p>
-
 <p>Add item usage: <code>add-item [&lt;namespace&gt;\\]&lt;name&gt; &lt;item&gt;.&lt;list&gt; [-t|--tmpl=default]</code></p>
-
 <p>Add list usage: <code>add-list [&lt;namespace&gt;\\]&lt;name&gt; &lt;item&gt;.&lt;list&gt; [-t|--tmpl=default]</code></p>
-
 <blockquote>
-  <p>You still must provides both item and list name for this two commands because phoenix must locale some core classes of your MVC.</p>
+<p>You still must provides both item and list name for this two commands because phoenix must locale some core classes of your MVC.</p>
 </blockquote>
-
 <h2>Simple Template</h2>
-
-<pre><code class="bash">php windwalker muse init Flower sakura.sakuras -t=simple
-</code></pre>
-
+<pre><code class="language-bash">php windwalker muse init Flower sakura.sakuras -t=simple</code></pre>
 <p>Sometimes we don't want a complete admin template, you can just use <code>simple</code> template, this template contains basic
 Controller/Model/View and load database as a list. you can easily modify this template to a blog or any type of applications.</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/16977910/99c79614-4e8b-11e6-9760-4840a37d8526.jpg" alt="p-2016-07-20-012" /></p>
-
 <h2>Empty Template</h2>
-
 <p>If you only want a basic empty Controller/Model/View that you can fill your own logic, use <code>empty</code> template.</p>
-
-<pre><code class="bash">php windwalker muse init Vehicle car.cars -t=empty
-</code></pre>
-
+<pre><code class="language-bash">php windwalker muse init Vehicle car.cars -t=empty</code></pre>
 <p><img src="https://i.imgur.com/HqRE5IV.jpg" alt="Imgur" /></p>
-
 <h2>Create Your Own Template</h2>
-
 <p>Use <code>convert</code> command to convert a existing package to be template then your team will able to create your own templates.</p>
-
 <p>Usage: <code>convert [&lt;namespace&gt;\\]&lt;name&gt; &lt;item&gt;.&lt;list&gt; [-t|--tmpl=default]</code></p>
-
 <blockquote>
-  <h4>TODO:</h4>
-  
-  <p>Currently phoenix will convert template back to phoenix folder in <code>/vendor</code>. we will add <code>--dir</code> support in the future.</p>
+<h4>TODO:</h4>
+<p>Currently phoenix will convert template back to phoenix folder in <code>/vendor</code>. we will add <code>--dir</code> support in the future.</p>
 </blockquote>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -415,7 +337,7 @@ Controller/Model/View and load database as a list. you can easily modify this te
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -429,18 +351,18 @@ Controller/Model/View and load database as a list. you can easily modify this te
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -513,7 +435,7 @@ Controller/Model/View and load database as a list. you can easily modify this te
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

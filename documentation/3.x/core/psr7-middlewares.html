@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Psr7 and Middlewares | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -307,50 +304,31 @@
                 <article class="article-content">
                     <p>Windwlaker Application follows <a href="http://www.php-fig.org/psr/psr-7/">PSR7 Http Messages</a> standard, provides an interface
 to handle request and response.</p>
-
 <h2>Get Request and Response</h2>
-
-<pre><code class="php">$app = \Windwalker\Ioc::getApplication();
+<pre><code class="language-php">$app = \Windwalker\Ioc::getApplication();
 
 $request = $app-&gt;request;
-$response = $app-&gt;response;
-</code></pre>
-
+$response = $app-&gt;response;</code></pre>
 <p>Get Request data:</p>
-
-<pre><code class="php">$request-&gt;getHeaders();
+<pre><code class="language-php">$request-&gt;getHeaders();
 $request-&gt;getSeverParams();
-$request-&gt;getUploadedFiles();
-</code></pre>
-
+$request-&gt;getUploadedFiles();</code></pre>
 <p>Set response body:</p>
-
-<pre><code class="php">$response-&gt;getBody()-&gt;write('Hello World');
-</code></pre>
-
+<pre><code class="language-php">$response-&gt;getBody()-&gt;write('Hello World');</code></pre>
 <p>Set Response headers:</p>
-
-<pre><code class="php">// Response is immutable so we must reutrn new object.
+<pre><code class="language-php">// Response is immutable so we must reutrn new object.
 $response = $response-&gt;withHeader('X-Foo', 'Bar');
 
 // Set new object back to app
-$app-&gt;setResponse($response);
-</code></pre>
-
+$app-&gt;setResponse($response);</code></pre>
 <p>Use Json response:</p>
+<pre><code class="language-php">use Windwalker\Http\Response\JsonResponse;
 
-<pre><code class="php">use Windwalker\Http\Response\JsonResponse;
-
-$app-&gt;setResponse(new JsonResponse(['foo' =&gt; 'bar']));
-</code></pre>
-
+$app-&gt;setResponse(new JsonResponse(['foo' =&gt; 'bar']));</code></pre>
 <p>See <a href="https://github.com/ventoviro/windwalker-http">Windwalker Http Package</a></p>
-
 <h2>Middlewares</h2>
-
 <p>We can add middleware to process before and after logic when application running, create a middleware class:</p>
-
-<pre><code class="php">use Psr\Http\Message\ResponseInterface as Response;
+<pre><code class="language-php">use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Windwalker\Middleware\MiddlewareInterface;
 
@@ -375,35 +353,26 @@ class MyMiddleware extends AbstractWebMiddleware
 
         return $response;
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Register this middleware to <code>etc/app/web.php</code> (of <code>dev.php</code> if only use in debug mode).
 Use numeric key name to control the execution ordering, the biggest number will execute first,
 and the smaller number will nearer to core logic.</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
     'middlewares' =&gt; [
         //900  =&gt; \Windwalker\Core\Application\Middleware\SessionRaiseMiddleware::class,
         //800  =&gt; \Windwalker\Core\Application\Middleware\RoutingMiddleware::class,
         500 =&gt; MyMiddleware::class
-    ]
-</code></pre>
-
+    ]</code></pre>
 <p>You can also use callback as middleware:</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
     'middlewares' =&gt; [
         500 =&gt; ['MyClass', 'execute']
-    ]
-</code></pre>
-
+    ]</code></pre>
 <p>If you want to use <code>Closure</code> as middleware, do not add it to config file since it will break the cache serializer,
 add it in application <code>init()</code>.</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // src/Windwalker/Web/Application.php
 
 namespace Windwalker\Web;
@@ -423,12 +392,9 @@ class Application extends WebApplication
         {
             // ...
         });
-    }
-</code></pre>
-
+    }</code></pre>
 <p>Or write a trait to add group of middlewares:</p>
-
-<pre><code class="php">trait MyMiddlewaresTrait
+<pre><code class="language-php">trait MyMiddlewaresTrait
 {
     // Must have boot{TraitName}() method then application will suto boot it
     // since it is a BootableTrait instance
@@ -438,37 +404,26 @@ class Application extends WebApplication
         $this-&gt;addMiddleware(function () { ... }, 400);
         $this-&gt;addMiddleware([$this, 'callback'], 400);
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Then use it in Application:</p>
-
-<pre><code class="php">class Application extends WebApplication
+<pre><code class="language-php">class Application extends WebApplication
 {
     use MyMiddlewaresTrait;
 
-    // ...
-</code></pre>
-
+    // ...</code></pre>
 <h2>Middleware in Package</h2>
-
 <p>Package uses same interface as application so we can also use <code>AbstractWebMiddleware</code> or Psr7 invokable callable
 as package middleware.</p>
-
 <p>Add middleware in package config:</p>
-
-<pre><code class="php">// etc/package/flower.php
+<pre><code class="language-php">// etc/package/flower.php
 // OR
 // src/Flower/Resources/config/config.dist.php
 
     'middlewares' =&gt; [
         500 =&gt; MyMiddleware::class
-    ]
-</code></pre>
-
+    ]</code></pre>
 <p>You can also add middleware runtime in package <code>boot()</code> method:</p>
-
-<pre><code class="php">class FlowerPackage extends AbstractPackage
+<pre><code class="language-php">class FlowerPackage extends AbstractPackage
 {
     // ...
 
@@ -480,37 +435,25 @@ as package middleware.</p>
         {
             // ...
         });
-    }
-</code></pre>
-
+    }</code></pre>
 <p>Also supports trait:</p>
-
-<pre><code class="php">class FlowerPackage extends AbstractPackage
+<pre><code class="language-php">class FlowerPackage extends AbstractPackage
 {
     use MyMiddlewaresTrait;
 
-    // ...
-</code></pre>
-
+    // ...</code></pre>
 <h3>Set All Response by JSON of a Package</h3>
-
 <p>In package config:</p>
-
-<pre><code class="php">    'middlewares' =&gt; [
+<pre><code class="language-php">    'middlewares' =&gt; [
         \Windwalker\Core\Application\Middleware\JsonResponseWebMiddleware::class
-    ]
-</code></pre>
-
+    ]</code></pre>
 <p>Now all routing to this package will return JSON response no matter error or not.</p>
-
 <h2>Available Middlewares for Application and Packages</h2>
-
 <ul>
 <li><code>Windwalker\Core\Application\Middleware\JsonResponseWebMiddleware</code></li>
 <li><code>Windwalker\Core\Application\Middleware\RoutingMiddleware</code></li>
 <li><code>Windwalker\Core\Application\Middleware\SessionRaiseMiddleware</code></li>
 </ul>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -545,7 +488,7 @@ as package middleware.</p>
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -559,18 +502,18 @@ as package middleware.</p>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -643,7 +586,7 @@ as package middleware.</p>
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

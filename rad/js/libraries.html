@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Base Libraries | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,117 +187,55 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>RequireJS</h2>
-
 <p>Include <code>require.js</code></p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::requireJS();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::requireJS();</code></pre>
 <p>Now yo can load your script by commonJS API:</p>
-
-<pre><code class="js">var foo = require('./foo');
-</code></pre>
-
+<pre><code class="language-js">var foo = require('./foo');</code></pre>
 <p>Or require it from PHP:</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::requireJS('./foo');
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::requireJS('./foo');</code></pre>
 <p>See <a href="http://requirejs.org/">RequireJS</a></p>
-
 <h2>Underscore</h2>
-
 <p>Phoenix provides <code>underscore.js</code> as a base JS library to help us do more things which native JS cannot do.</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::underscore();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::underscore();</code></pre>
 <p>Phoenix enabled no conflict mode as default, so you must use <code>underscore</code> instead <code>_</code>:</p>
-
-<pre><code class="js">underscore.isNumber(234);
-</code></pre>
-
+<pre><code class="language-js">underscore.isNumber(234);</code></pre>
 <h3>Template</h3>
-
 <p>Phoenix override underscore template syntax to same as Blade and Edge, so we can use double braces to render variables:</p>
-
-<pre><code class="js">underscore.template("hello: {{ name }}").compiled({name: 'World'});
-</code></pre>
-
+<pre><code class="language-js">underscore.template("hello: {{ name }}").compiled({name: 'World'});</code></pre>
 <p>To use template in Blade and Edge, you must add <code>@</code> before braces to escape the echo tag:</p>
-
-<pre><code class="html">&lt;script&gt;
+<pre><code class="language-html">&lt;script&gt;
 underscore.template("hello: @{{ name }}").compiled({name: 'World'});
-&lt;/scrip&gt;
-</code></pre>
-
+&lt;/scrip&gt;</code></pre>
 <p>See <a href="http://underscorejs.org/">Underscore.js</a></p>
-
 <h2>Underscore String</h2>
-
 <p>Support more string operations.</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::underscoreString();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::underscoreString();</code></pre>
 <p>See <a href="http://gabceb.github.io/underscore.string.site/">Underscore.string.js</a></p>
-
 <h2>Sprintf</h2>
-
 <p><code>underscore.string</code> deprecated <code>sprintf()</code> method, so you can use JS <code>sprintf</code> package instead:</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::sprintf();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::sprintf();</code></pre>
 <p>See <a href="https://github.com/alexei/sprintf.js">sprintf.js</a></p>
-
 <h2>Backbone</h2>
-
 <p>Phoenix provides <code>backbone.js</code> if you want to build a SPA.</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::backbone();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::backbone();</code></pre>
 <p>See <a href="http://backbonejs.org/">Backbone.js</a></p>
-
 <h2>Ivia</h2>
-
 <p>Ivia.js is a reactivity MVVM framework for jQuery with Vue-like interface, it can easily work with phoenix scripts and won't
 break existing DOM events.</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::ivia();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::ivia();</code></pre>
 <p>See <a href="http://about.asika.tw/ivia/">Ivia.js</a></p>
-
 <h2>Simple Uri</h2>
-
 <p>Simple Uri is a JS URI object to help us easily handle uri operations in browser environment:</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::simpleUri();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::simpleUri();</code></pre>
 <p>See <a href="http://about.asika.tw/simple-uri.js/">SimpleUri.js</a></p>
-
 <h2>Silicone</h2>
-
 <p>Silicone is a simple css helper to extend bootstrap and other css frameworks.</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::silicone();
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::silicone();</code></pre>
 <p>See <a href="https://github.com/asika32764/silicone">silicone.css</a></p>
-
 <h2>Add CSRF Token</h2>
-
 <p>Add CSRF token to <code>&lt;head&gt;</code> as a meta tag</p>
-
-<pre><code class="php">\Phoenix\Script\CoreScript::csrfToken();
-</code></pre>
-
-<pre><code class="html">&lt;meta name="csrf-token" content="a7d71a2c21743d8865fdfa61b71b29e8" /&gt;
-</code></pre>
-
+<pre><code class="language-php">\Phoenix\Script\CoreScript::csrfToken();</code></pre>
+<pre><code class="language-html">&lt;meta name="csrf-token" content="a7d71a2c21743d8865fdfa61b71b29e8" /&gt;</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -335,7 +270,7 @@ break existing DOM events.</p>
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -349,18 +284,18 @@ break existing DOM events.</p>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -433,7 +368,7 @@ break existing DOM events.</p>
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

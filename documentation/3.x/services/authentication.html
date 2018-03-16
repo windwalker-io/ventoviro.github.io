@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Authentication | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,17 +303,12 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Introduction</h2>
-
 <p>Windwalker user system is extendable, before we start use user auth, we must do some prepare to initial user system.</p>
-
 <h2>Prepare User System</h2>
-
 <h2>Create UserHandler</h2>
-
 <p><code>UserHandlerInterface</code> help us handler user CRUD and login/logout actions, create a Model implements <code>UserHandlerInterface</code>
 in your package.</p>
-
-<pre><code class="php">namespace Flower\Model;
+<pre><code class="language-php">namespace Flower\Model;
 
 use Windwalker\Core\Model\DatabaseModelRepository;
 use Windwalker\Core\User\UserData;
@@ -364,14 +356,10 @@ class UserModel extends DatabaseModelRepository implements UserHandlerInterface
 
         return true;
     }
-}
-</code></pre>
-
+}</code></pre>
 <h3>Migration and Seeding</h3>
-
 <p>Use this simple schema to create user table, see <a href="../db/migration.html">Migration</a>:</p>
-
-<pre><code class="php">$this-&gt;createTable('users', function (Schema $sc)
+<pre><code class="language-php">$this-&gt;createTable('users', function (Schema $sc)
 {
     $sc-&gt;primary('id')-&gt;comment('Primary Key');
     $sc-&gt;varchar('name')-&gt;comment('Full Name');
@@ -382,12 +370,9 @@ class UserModel extends DatabaseModelRepository implements UserHandlerInterface
     $sc-&gt;addIndex('id');
     $sc-&gt;addIndex('username');
     $sc-&gt;addIndex('email');
-});
-</code></pre>
-
+});</code></pre>
 <p>And you can add seeder to generate fake user data:</p>
-
-<pre><code class="php">$faker = \Faker\Factory::create();
+<pre><code class="language-php">$faker = \Faker\Factory::create();
 
 // Please do not use `pass123456` in production site
 $pass = (new Password)-&gt;create('pass123456');
@@ -406,13 +391,9 @@ foreach (range(1, 50) as $i)
     $model-&gt;save(new UserData($data));
 
     $this-&gt;outCounting();
-}
-</code></pre>
-
+}</code></pre>
 <p>Add this handler to <code>etc/app/web.php</code>:</p>
-
-<pre><code class="php">// ...
-
+<pre><code class="language-php">// ...
 
     'user' =&gt; [
         'handler' =&gt; \Flower\Model\UserModel::class,
@@ -421,37 +402,27 @@ foreach (range(1, 50) as $i)
         'policies' =&gt; [
 
         ]
-    ]
-</code></pre>
-
+    ]</code></pre>
 <h2>Load and Save Users</h2>
-
 <p>Now we can do CRUD for user table:</p>
-
-<pre><code class="php">use Windwalker\Core\User\User;
+<pre><code class="language-php">use Windwalker\Core\User\User;
 
 $user = User::get(1); // get User ID=1
 $user = User::get(['username' =&gt; 'christina']); // get Username=christina
 
 $user-&gt;name = 'Christina';
 
-User::delete(1); // Delete User ID=1
-</code></pre>
-
+User::delete(1); // Delete User ID=1</code></pre>
 <h3>Get User</h3>
-
-<pre><code class="php">use Windwalker\Core\User\User;
+<pre><code class="language-php">use Windwalker\Core\User\User;
 
 // Get a user by id
 $user = User::get(12);
 
 // Get user by conditions
-$user = User::get(array('username' =&gt; 'christina'));
-</code></pre>
-
+$user = User::get(array('username' =&gt; 'christina'));</code></pre>
 <h3>Save User</h3>
-
-<pre><code class="php">use Windwalker\Crypt\Password;
+<pre><code class="language-php">use Windwalker\Crypt\Password;
 
 $user-&gt;username = 'riaok3784';
 $user-&gt;password = 'abc1234';
@@ -459,33 +430,21 @@ $user-&gt;password = 'abc1234';
 // Hash password
 $user-&gt;password = (new Password)-&gt;create($user-&gt;password);
 
-User::save($user);
-</code></pre>
-
+User::save($user);</code></pre>
 <h3>Delete User</h3>
-
-<pre><code class="php">// Delete by id
+<pre><code class="language-php">// Delete by id
 User::delete(12);
 
 // Delete by conditions
-User::delete(array('username' =&gt; 'richael3784'));
-</code></pre>
-
+User::delete(array('username' =&gt; 'richael3784'));</code></pre>
 <h2>Create Authentication Method</h2>
-
 <p>Currently our <code>UserHandler</code> class can only load/save user from database, but we need it to support login/logout from databse or other sources.</p>
-
 <p>Windwalker Authentication allow developers attach multiple methods to match user(See <a href="https://github.com/ventoviro/windwalker-authentication">Authentication Package</a>).</p>
-
 <p>This image described how authentication methods working.</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5595002/07d3235a-92a2-11e4-8f1f-5622e2af7254.jpg" alt="p-2015-01-02-5" /></p>
-
 <h3>DatabaseMethod</h3>
-
 <p>We create a method class to find user from database.</p>
-
-<pre><code class="php">namespace Flower\User;
+<pre><code class="language-php">namespace Flower\User;
 
 use Flower\Model\UserModel;
 use Windwalker\Authentication\Authentication;
@@ -540,12 +499,10 @@ class DatabaseMethod extends AbstractMethod
 
         return true;
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>And register to <code>etc/app/web.php</code>:</p>
-
-<pre><code class="php"><br />// ...
+<pre><code class="language-php">
+// ...
 
     'user' =&gt; [
         'handler' =&gt; ...,
@@ -555,16 +512,11 @@ class DatabaseMethod extends AbstractMethod
         'policies' =&gt; [
 
         ]
-    ]
-</code></pre>
-
+    ]</code></pre>
 <p>OK now we can login User by credential.</p>
-
 <h2>Login and Logout</h2>
-
 <h3>Login User</h3>
-
-<pre><code class="php">// Prepare user data
+<pre><code class="language-php">// Prepare user data
 $credential = new Credential;
 $credential-&gt;username = 'richael2123';
 $credential-&gt;password = '12345678';
@@ -576,17 +528,11 @@ try
 catch (AuthenticateFailException $e)
 {
     $messages = $e-&gt;getMessages();
-}
-</code></pre>
-
+}</code></pre>
 <p>Remember me:</p>
-
-<pre><code class="php">$bool = User::login($credential, true);
-</code></pre>
-
+<pre><code class="language-php">$bool = User::login($credential, true);</code></pre>
 <p>Our UserHandler set user login data to session <code>user</code> key, see <code>$_SESSION['user']</code>:</p>
-
-<pre><code class="php">show($_SESSION);
+<pre><code class="language-php">show($_SESSION);
 
 Array
 (
@@ -605,42 +551,28 @@ Array
     [_flash] =&gt; Array
         (
         )
-)
-</code></pre>
-
+)</code></pre>
 <h3>Logout User</h3>
-
-<pre><code class="php">$bool = User::logout();
-</code></pre>
-
+<pre><code class="language-php">$bool = User::logout();</code></pre>
 <h3>Force Login User</h3>
-
 <p>Use <code>makeUserLoggedIn()</code> to force login a user data to session without authentication.</p>
-
-<pre><code class="php">$user = [
+<pre><code class="language-php">$user = [
     'username' =&gt; 'richael2123',
     'name' =&gt; 'Richael'
 ];
 
-User::makeUserLoggedIn($user);
-</code></pre>
-
+User::makeUserLoggedIn($user);</code></pre>
 <h3>Get Current User</h3>
-
-<pre><code class="php">$user = User::get();
+<pre><code class="language-php">$user = User::get();
 
 // Check user is logged-in
 $user-&gt;isMember();
 
 // Check user is not logged-in
-$user-&gt;isGuest();
-</code></pre>
-
+$user-&gt;isGuest();</code></pre>
 <h2>Authenticate From Remote</h2>
-
 <p>This is an example to auth user from remote server.</p>
-
-<pre><code class="php">use Windwalker\Http\HttpClient;
+<pre><code class="language-php">use Windwalker\Http\HttpClient;
 
 // ...
 
@@ -671,12 +603,9 @@ class RemoteMethod extends AbstractMethod
 
         return true;
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Then add this class to <code>etc/app/web.php</code> so Windwalker will check two methods to find user.</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
     'user' =&gt; [
         'handler' =&gt; ...
@@ -687,14 +616,10 @@ class RemoteMethod extends AbstractMethod
         'policies' =&gt; [
 
         ]
-    ]
-</code></pre>
-
+    ]</code></pre>
 <h3>Dependency Injection</h3>
-
 <p>If your method class dependent on other classes, just add it on constructor, The Ioc container will auto inject it:</p>
-
-<pre><code class="php">use Windwalker\Core\Application\WebApplication;
+<pre><code class="language-php">use Windwalker\Core\Application\WebApplication;
 
 class DatabaseMethod extends AbstractMethod
 {
@@ -705,14 +630,10 @@ class DatabaseMethod extends AbstractMethod
         $this-&gt;app = $app;
     }
 
-    // ...
-</code></pre>
-
+    // ...</code></pre>
 <h2>Check User Is Allowed To Login</h2>
-
 <p>You can check a user has access to login or not, use listener to listen <code>onUserAuthorisation</code> event:</p>
-
-<pre><code class="php">namespace Flower\Listener;
+<pre><code class="language-php">namespace Flower\Listener;
 
 use Windwalker\Core\User\Exception\AuthenticateFailException;
 use Windwalker\Core\User\UserDataInterface;
@@ -739,20 +660,14 @@ class UserAuthListener
             throw new AuthenticateFailException('User is disbaled');
         }
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Then register it to <code>etc/app/web.php</code>:</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
     'listeners' =&gt; [
         400 =&gt; \Flower\Listener\UserAuthListener::class
-    ],
-</code></pre>
-
+    ],</code></pre>
 <p>Now Windwalker will auto block users with no access to login.</p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -787,7 +702,7 @@ class UserAuthListener
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -801,18 +716,18 @@ class UserAuthListener
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -885,7 +800,7 @@ class UserAuthListener
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

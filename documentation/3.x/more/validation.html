@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Validation | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,18 +303,14 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h3>Simple Validate Process</h3>
-
-<pre><code class="php">use Windwalker\Validator\Rule\EmailValidator;
+<pre><code class="language-php">use Windwalker\Validator\Rule\EmailValidator;
 
 $validator = new EmailValidator;
 
 $validator-&gt;validate('sakura@flower.com'); // bool(true)
 
-$validator-&gt;validate('sakura'); // bool(false)
-</code></pre>
-
+$validator-&gt;validate('sakura'); // bool(false)</code></pre>
 <h5>Available Validator Rules</h5>
-
 <ul>
 <li>AlnumValidator</li>
 <li>BooleanValidator</li>
@@ -330,49 +323,35 @@ $validator-&gt;validate('sakura'); // bool(false)
 <li>PhoneValidator</li>
 <li>RegexValidator</li>
 <li>UrlValidator</li>
-<li>CallbackValidator</li>
+<li>CallbackValidator </li>
 <li>CompareValidator</li>
 <li>PhpTypeValidator</li>
 </ul>
-
 <h3>Regex Validator</h3>
-
-<pre><code class="php">use Windwalker\Validator\Rule\RegexValidator;
+<pre><code class="language-php">use Windwalker\Validator\Rule\RegexValidator;
 
 $validator = new RegexValidator('^[a-zA-Z0-9]*$', 'i');
 
-$validator-&gt;validate('abc_123:978'); // bool(false)
-</code></pre>
-
+$validator-&gt;validate('abc_123:978'); // bool(false)</code></pre>
 <h3>Equals Validator</h3>
-
-<pre><code class="php">use Windwalker\Validator\Rule\EqualsValidator;
+<pre><code class="language-php">use Windwalker\Validator\Rule\EqualsValidator;
 
 $validator = new EqualsValidator('ABC');
 
-$validator-&gt;validate('ABC'); // bool(true)
-</code></pre>
-
+$validator-&gt;validate('ABC'); // bool(true)</code></pre>
 <p>Strict Mode:</p>
+<pre><code class="language-php">$validator = new EqualsValidator(123, true);
 
-<pre><code class="php">$validator = new EqualsValidator(123, true);
-
-$validator-&gt;validate('123'); // bool(false)
-</code></pre>
-
+$validator-&gt;validate('123'); // bool(false)</code></pre>
 <h3>Error Message</h3>
-
-<pre><code class="php">$validator-&gt;setMessage('This string is not valid');
+<pre><code class="language-php">$validator-&gt;setMessage('This string is not valid');
 
 if (!$validator-&gt;validate('sakura'))
 {
     throw new \Exception($validator-&gt;getError());
-}
-</code></pre>
-
+}</code></pre>
 <h3>Create Your Own Validator</h3>
-
-<pre><code class="php">use Windwalker\Validator\AbstractValidator;
+<pre><code class="language-php">use Windwalker\Validator\AbstractValidator;
 
 class MyValidator extends AbstractValidator
 {
@@ -384,20 +363,15 @@ class MyValidator extends AbstractValidator
 
 $validator = new MyValidator;
 
-$validator-&gt;validate('foo');
-</code></pre>
-
+$validator-&gt;validate('foo');</code></pre>
 <h3>Extends Regex Validator</h3>
-
-<pre><code class="php">use Windwalker\Validator\Rule\RegexValidator;
+<pre><code class="language-php">use Windwalker\Validator\Rule\RegexValidator;
 
 class MyRegexValidator extends RegexValidator
 {
     protected $modified = 'i';
     protected $regex = '[a-zA-Z]';
-}
-</code></pre>
-
+}</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -432,7 +406,7 @@ class MyRegexValidator extends RegexValidator
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -446,18 +420,18 @@ class MyRegexValidator extends RegexValidator
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -530,7 +504,7 @@ class MyRegexValidator extends RegexValidator
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

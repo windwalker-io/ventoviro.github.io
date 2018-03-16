@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Filesystem | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,23 +303,17 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>File</h2>
-
 <p>File is a abstract class provides methods to operate files.</p>
-
 <h3>Write &amp; Delete files</h3>
-
-<pre><code class="php">use Windwalker\Filesystem\File;
+<pre><code class="language-php">use Windwalker\Filesystem\File;
 
 $file = '/path/to/file.txt';
 
 File::write($file, $content);
 
-File::delete($file);
-</code></pre>
-
+File::delete($file);</code></pre>
 <h3>Move &amp; Copy</h3>
-
-<pre><code class="php">$src = '/path/to/file.txt';
+<pre><code class="language-php">$src = '/path/to/file.txt';
 $dest = '/path/of/new/file.txt';
 
 // Move
@@ -335,56 +326,33 @@ File::move($src, $dest, true);
 File::copy($src, $dest);
 
 // Force copy if file exists
-File::copy($src, $dest, true);
-</code></pre>
-
+File::copy($src, $dest, true);</code></pre>
 <h3>Upload</h3>
-
-<pre><code class="php">File::upload($src, $dest);
-</code></pre>
-
+<pre><code class="language-php">File::upload($src, $dest);</code></pre>
 <p>It is basically the wrapper for the PHP <code>move_uploaded_file()</code> function, but also does checks availability
 and permissions on both source and destination path.</p>
-
 <h3>File Name</h3>
-
 <p>Strip extension and get simple path:</p>
+<pre><code class="language-php">$file = '/path/to/flower.txt';
 
-<pre><code class="php">$file = '/path/to/flower.txt';
-
-$name = File::stripExtension($file); // /path/to/flower
-</code></pre>
-
+$name = File::stripExtension($file); // /path/to/flower</code></pre>
 <p>Get extension:</p>
+<pre><code class="language-php">$file = '/path/to/flower.txt';
 
-<pre><code class="php">$file = '/path/to/flower.txt';
-
-File::getExtension($file); // txt
-</code></pre>
-
+File::getExtension($file); // txt</code></pre>
 <p>Get only file name.</p>
+<pre><code class="language-php">$file = '/path/to/flower.txt';
 
-<pre><code class="php">$file = '/path/to/flower.txt';
-
-File::getFilename($file); // flower.txt
-</code></pre>
-
+File::getFilename($file); // flower.txt</code></pre>
 <p>Make file name safe to store.</p>
+<pre><code class="language-php">$path = /path!/to/flower sakura.
 
-<pre><code class="php">$path = /path!/to/flower sakura.
-
-File::makeSafe($path); // /path/to/flowersakura
-</code></pre>
-
+File::makeSafe($path); // /path/to/flowersakura</code></pre>
 <h2>Folder</h2>
-
 <p>Folder class help us operate folders and list files of a folder.</p>
-
 <h3>Folder Operation</h3>
-
 <p>Move &amp; Copy</p>
-
-<pre><code class="php">use Windwalker\Filesystem\Folder;
+<pre><code class="language-php">use Windwalker\Filesystem\Folder;
 
 // Move folder
 Folder::move($src, $dest);
@@ -396,93 +364,63 @@ Folder::move($src, $dest, true);
 Folder::copy($src, $dest);
 
 // Force copy if folder exists
-Folder::copy($src, $dest, true);
-</code></pre>
-
+Folder::copy($src, $dest, true);</code></pre>
 <p>Create &amp; Delete</p>
+<pre><code class="language-php">Folder::create($path);
 
-<pre><code class="php">Folder::create($path);
-
-Folder::delete($path);
-</code></pre>
-
+Folder::delete($path);</code></pre>
 <h3>List Files</h3>
-
 <h4>List Folders</h4>
-
-<pre><code class="php">// List folders of a folder
+<pre><code class="language-php">// List folders of a folder
 Folder::folders($dir);
 
 // List folders recursive
 Folder::folders($dir, true);
 
 // Path type: Get basename of every item
-Folder::folders($dir, true, Folder::PATH_BASENAME);
-</code></pre>
-
+Folder::folders($dir, true, Folder::PATH_BASENAME);</code></pre>
 <p>Available path type:</p>
-
 <ul>
 <li><code>Folder::PATH_ABSOLUTE</code> - Absolute full path.</li>
 <li><code>Folder::PATH_RELATIVE</code> - Relative path from folder you scan.</li>
 <li><code>Folder::PATH_BASENAME</code> - The folder or file name.</li>
 </ul>
-
 <h4>List Files</h4>
-
-<pre><code class="php">// List files of a folder
+<pre><code class="language-php">// List files of a folder
 Folder::files($dir);
 
 // List files recursive
 Folder::files($dir, true);
 
 // Path type: Get basename of every item
-Folder::files($dir, true, Folder::PATH_BASENAME);
-</code></pre>
-
+Folder::files($dir, true, Folder::PATH_BASENAME);</code></pre>
 <h4>List Files &amp; Folders</h4>
-
-<pre><code class="php">// List files &amp; folders of a folder
+<pre><code class="language-php">// List files &amp; folders of a folder
 Folder::items($dir);
 
 // List files &amp; folders recursive
 Folder::items($dir, true);
 
 // Path type: Get basename of every item
-Folder::items($dir, true, Folder::PATH_RELATIVE);
-</code></pre>
-
+Folder::items($dir, true, Folder::PATH_RELATIVE);</code></pre>
 <h2>Filesystem Class</h2>
-
 <p>Filesystem class is a universal finder to find and operate folders &amp; files.</p>
-
 <h3>Folder &amp; File Operation</h3>
-
 <p>Filesystem move &amp; copy method will auto detect the path is a folder or file, if is folder, it will call <code>Folder::move()</code>,
- if is file, it will call <code>File::move()</code>.</p>
-
-<pre><code class="php">// we don't need to know $src is a folder or file, Filesystem will detect it.
+if is file, it will call <code>File::move()</code>.</p>
+<pre><code class="language-php">// we don't need to know $src is a folder or file, Filesystem will detect it.
 Filesystem::move($src, $dest);
 Filesystem::copy($src, $dest);
-Filesystem::delete($src, $dest);
-</code></pre>
-
+Filesystem::delete($src, $dest);</code></pre>
 <h2>Path</h2>
-
 <p>A simple helper to handler some path string.</p>
-
 <h3>Clean Path</h3>
-
 <p>To strip additional / or \ in a path name.</p>
+<pre><code class="language-php">$path = '/var/www\flower\sakura/olive';
 
-<pre><code class="php">$path = '/var/www\flower\sakura/olive';
-
-$path = Path::clean($path); // Will be: '/var/www/flower/sakura/olive'
-</code></pre>
-
+$path = Path::clean($path); // Will be: '/var/www/flower/sakura/olive'</code></pre>
 <h3>Permissions</h3>
-
-<pre><code class="php">// Get by number
+<pre><code class="language-php">// Get by number
 Path::getPermissions($path); // 755
 
 // Get by string
@@ -492,25 +430,17 @@ Path::getPermissions($path, true); // dwrxwrx--x
 Path::setPermissions($path, '0644', '0755');
 
 // Check can change Permissions
-Path::canChmod($path); // Bool
-</code></pre>
-
+Path::canChmod($path); // Bool</code></pre>
 <h3>Finder</h3>
-
 <p>Finder is the most powerful function of Filesystem, it provides an interface to let us use our logic to filter files.</p>
-
 <h4>Simple Finder</h4>
-
-<pre><code class="php">// Argument 2 is recursive
+<pre><code class="language-php">// Argument 2 is recursive
 $folders = Filesystem::folders($path, true);
 $files   = Filesystem::files($path, true);
-$items   = Filesystem::items($path, true);
-</code></pre>
-
+$items   = Filesystem::items($path, true);</code></pre>
 <p>The simple finder are same as Folder, but it will not scan all files instantly, but returns an Iterator instead,
- we can send this iterator to <code>foreach</code> and do some filter by <code>SplFileInfo</code> object.</p>
-
-<pre><code class="php">foreach ($items as $item)
+we can send this iterator to <code>foreach</code> and do some filter by <code>SplFileInfo</code> object.</p>
+<pre><code class="language-php">foreach ($items as $item)
 {
     if ($item-&gt;isDir() || $item-&gt;isDot())
     {
@@ -518,61 +448,32 @@ $items   = Filesystem::items($path, true);
     }
 
     // Do something
-}
-</code></pre>
-
+}</code></pre>
 <p>If you really need array not an Iterator, use <code>Filesystem::iteratorToArray()</code>.</p>
-
-<pre><code class="php">$folders = Filesystem::folder($path, true);
+<pre><code class="language-php">$folders = Filesystem::folder($path, true);
 
 // To array
-$folders = Filesystem::iteratorToArray($folders);
-</code></pre>
-
+$folders = Filesystem::iteratorToArray($folders);</code></pre>
 <p>Or set argument 3 to <code>TRUE</code>.</p>
+<pre><code class="language-php">$folders = Filesystem::folder($path, true, true);
 
-<pre><code class="php">$folders = Filesystem::folder($path, true, true);
-
-is_array($folders); // TRUE
-</code></pre>
-
+is_array($folders); // TRUE</code></pre>
 <h3>Advanced Finder</h3>
-
 <p>Find by name.</p>
-
-<pre><code class="php">$files = Filesystem::find($path, 'flower.php');
-</code></pre>
-
+<pre><code class="language-php">$files = Filesystem::find($path, 'flower.php');</code></pre>
 <p>Multiple name.</p>
-
-<pre><code class="php">$files = Filesystem::find($path, array('flower.php', 'sakura.php'));
-</code></pre>
-
+<pre><code class="language-php">$files = Filesystem::find($path, array('flower.php', 'sakura.php'));</code></pre>
 <p>Find by regex</p>
-
-<pre><code class="php">$files = Filesystem::find($path, '^[a-zA-Z0-9]');
-</code></pre>
-
+<pre><code class="language-php">$files = Filesystem::find($path, '^[a-zA-Z0-9]');</code></pre>
 <p>Only find first matched.</p>
-
-<pre><code class="php">$file = Filesystem::findOne($path, array('flower.php', 'sakura.php'));
-</code></pre>
-
+<pre><code class="language-php">$file = Filesystem::findOne($path, array('flower.php', 'sakura.php'));</code></pre>
 <p>Find recursive</p>
-
-<pre><code class="php">$files = Filesystem::find($path, array('flower.php', 'sakura.php'), true);
-</code></pre>
-
+<pre><code class="language-php">$files = Filesystem::find($path, array('flower.php', 'sakura.php'), true);</code></pre>
 <p>To array</p>
-
-<pre><code class="php">$files = Filesystem::find($path, array('flower.php', 'sakura.php'), true, true);
-</code></pre>
-
+<pre><code class="language-php">$files = Filesystem::find($path, array('flower.php', 'sakura.php'), true, true);</code></pre>
 <h3>Callback Finder</h3>
-
 <p>Inject our filter logic to find files.</p>
-
-<pre><code class="php">/**
+<pre><code class="language-php">/**
  * Files callback
  *
  * @param \SplFileInfo                $current  Current item's value
@@ -586,12 +487,9 @@ $closure = function($current, $key, $iterator)
     return Path::getPermissions($current-&gt;getPath()) &gt;= 755;
 };
 
-$files = Filesystem::find($path, $closure, true);
-</code></pre>
-
+$files = Filesystem::find($path, $closure, true);</code></pre>
 <p>Or create a <code>FileComparator</code> object.</p>
-
-<pre><code class="php">use Windwalker\Filesystem\Comparator\FileComparatorInterface;
+<pre><code class="language-php">use Windwalker\Filesystem\Comparator\FileComparatorInterface;
 
 class MyComparator implements FileComparatorInterface
 {
@@ -601,14 +499,10 @@ class MyComparator implements FileComparatorInterface
    }
 }
 
-$files = Filesystem::find($path, new MyComparator, true);
-</code></pre>
-
+$files = Filesystem::find($path, new MyComparator, true);</code></pre>
 <h3>Advanced Comparator</h3>
-
 <p>We can create our own comparator like an finder object.</p>
-
-<pre><code class="php">// This is just an example
+<pre><code class="language-php">// This is just an example
 
 $comparator = new MyAdvancedComparator;
 
@@ -617,98 +511,59 @@ $comparator-&gt;setTimeGreaterThan(new DataTime)
     -&gt;setSize('&lt; 2M')
     -&gt;setPermission('&gt;= 644');
 
-$files = Filesystem::find($path, $comparator, true);
-</code></pre>
-
+$files = Filesystem::find($path, $comparator, true);</code></pre>
 <h2>PathLocator object</h2>
-
 <p>A Path locator, help us locate a system path or relative path.</p>
-
 <p>We can use this object to find files or list files, and also support using callback to filter files.</p>
-
 <h4>Create a new PathLocator</h4>
-
-<pre><code class="php">$path = new PathLocator('/var/www/flower');
-</code></pre>
-
+<pre><code class="language-php">$path = new PathLocator('/var/www/flower');</code></pre>
 <h4>Convert to string</h4>
-
-<pre><code class="php">echo $path
+<pre><code class="language-php">echo $path
 
 //or
 
-(string) $path;
-</code></pre>
-
+(string) $path;</code></pre>
 <h4>Path operation</h4>
-
 <p>Use chaining to operate path.</p>
-
 <h5>Child</h5>
-
-<pre><code class="php">$path-&gt;child('plugins')           // =&gt; /var/www/flower/plugins
-    -&gt;child('system/flower/lib'); // =&gt; /var/www/flower/plugins/system/flower/lib
-</code></pre>
-
+<pre><code class="language-php">$path-&gt;child('plugins')           // =&gt; /var/www/flower/plugins
+    -&gt;child('system/flower/lib'); // =&gt; /var/www/flower/plugins/system/flower/lib</code></pre>
 <h5>Parent</h5>
-
-<pre><code class="php">$path-&gt;parent()       // =&gt; /var/www/flower/plugins/system/flower (Up one level)
+<pre><code class="language-php">$path-&gt;parent()       // =&gt; /var/www/flower/plugins/system/flower (Up one level)
     -&gt;parent(2)       // =&gt; /var/www/flower/plugins               (Up 2 levels)
-    -&gt;parent('www');  // =&gt; /var/www                              (Find a parent and go this level)
-</code></pre>
-
+    -&gt;parent('www');  // =&gt; /var/www                              (Find a parent and go this level)</code></pre>
 <h5>Prefix</h5>
-
 <p>Add a prefix of system path, we can change it, only when converting to string, the prefix will be added to path.</p>
+<pre><code class="language-php">$path2 = new PathLocator('src/Sakura/Olive');
 
-<pre><code class="php">$path2 = new PathLocator('src/Sakura/Olive');
-
-echo $path-&gt;addPrefix($_SERVER['DOCUMENT_ROOT']); // =&gt; /var/www/src/Sakura/Olive
-</code></pre>
-
+echo $path-&gt;addPrefix($_SERVER['DOCUMENT_ROOT']); // =&gt; /var/www/src/Sakura/Olive</code></pre>
 <h4>Filesystem Operation</h4>
-
-<pre><code class="php">echo $path-&gt;isDir();  // true or false
+<pre><code class="language-php">echo $path-&gt;isDir();  // true or false
 echo $path-&gt;isFile(); // true or false
-echo $path-&gt;exists(); // true or false
-</code></pre>
-
+echo $path-&gt;exists(); // true or false</code></pre>
 <h5>Get file info</h5>
-
 <p>This function has not prepared yet.</p>
+<pre><code class="language-php">$path-&gt;getInfo();            // return SplFileInfo of current directory
 
-<pre><code class="php">$path-&gt;getInfo();            // return SplFileInfo of current directory
-
-$path-&gt;getInfo('index.php'); // return SplFileInfo of this file
-</code></pre>
-
+$path-&gt;getInfo('index.php'); // return SplFileInfo of this file</code></pre>
 <h5>Scan dir</h5>
-
 <p>Get Folders</p>
-
-<pre><code class="php">$dirs = $path-&gt;getFolders([true to recrusive]);
+<pre><code class="language-php">$dirs = $path-&gt;getFolders([true to recrusive]);
 
 foreach($dirs as $dir)
 {
     echo $dir . '&lt;br /&gt;'; // print all dir's name
-}
-</code></pre>
-
+}</code></pre>
 <p>Get Files</p>
-
-<pre><code class="php">$files = $path-&gt;getFiles([true to recrusive]);
+<pre><code class="language-php">$files = $path-&gt;getFiles([true to recrusive]);
 
 foreach($files as $file)
 {
     echo $file-&gt;getPathname() . '&lt;br /&gt;'; // print all file's name
-}
-</code></pre>
-
+}</code></pre>
 <h5>Find files</h5>
-
 <p>Find by string or regex</p>
-
-<pre><code class="php">echo $path-&gt;find('config.json');     // Find one file and return fileinfo object
+<pre><code class="language-php">echo $path-&gt;find('config.json');     // Find one file and return fileinfo object
 
 echo $path-&gt;find(array('^config'));  // Find one file by regex
 
@@ -716,12 +571,9 @@ echo $path-&gt;find(array('^config'));  // Find one file by regex
 foreach($path-&gt;findAll(array('^config_*.json', '!^..'), true) as $file)
 {
     // Find all files as array, param 2 to recursive
-}
-</code></pre>
-
+}</code></pre>
 <p>Find by callback</p>
-
-<pre><code class="php">$callback = function($current, $key, $iterator)
+<pre><code class="language-php">$callback = function($current, $key, $iterator)
 {
     return return @preg_match('^Foo', $current-&gt;getFilename())  &amp;&amp; ! $iterator-&gt;isDot();
 };
@@ -729,153 +581,93 @@ foreach($path-&gt;findAll(array('^config_*.json', '!^..'), true) as $file)
 foreach($path-&gt;findAll($callback, true) as $file)
 {
     // ...
-}
-</code></pre>
-
+}</code></pre>
 <p>Find by Comparator</p>
-
 <p>This comparator object may contain the filter logic, but not prepared yet.</p>
-
-<pre><code class="php">$comparator = new FileComparator;
+<pre><code class="language-php">$comparator = new FileComparator;
 
 foreach($path-&gt;findAll(FileComparatorInterface $comparator, true) as $file)
 {
     // ...
-}
-</code></pre>
-
+}</code></pre>
 <h4>Strict Mode</h4>
-
 <p>This function not prepared yet.</p>
-
-<pre><code class="php">$dl2 = new \DirectoryLocator($_SERVER['DOCUMENT_ROOT'] . '/src', true);
+<pre><code class="language-php">$dl2 = new \DirectoryLocator($_SERVER['DOCUMENT_ROOT'] . '/src', true);
 $dls-&gt;child('Campenont');        // throw PathNotExistsException();
-$dls-&gt;child('../www/index.php'); // throw PathNotDirException();
-</code></pre>
-
+$dls-&gt;child('../www/index.php'); // throw PathNotDirException();</code></pre>
 <p>*</p>
-
 <h2>PathCollection object</h2>
-
 <p>A collection of paths, we can put many paths to this object, and use it as array.</p>
-
 <p>And we can use this collection to iterate all sub dirs and files, also find files.</p>
-
 <p>The iterator will travel to every <code>PathLocator</code> in this collection object, and return an SplFileInfo for us.</p>
-
 <h4>Create a new PathCollection</h4>
-
 <h5>Add with no key</h5>
-
-<pre><code class="php">$paths = new PathCollection(array(
+<pre><code class="language-php">$paths = new PathCollection(array(
     new PathLocator('templates/' . $template . '/html/' . $option),
     new PathLocator('Sakuras/' . $option . '/view/tmpl/'),
     'layouts/' . $option ,     // Auto convert to PathLocator
-));
-</code></pre>
-
+));</code></pre>
 <h5>Add with key name</h5>
-
-<pre><code class="php">$paths = new PathColleciotn(array(
+<pre><code class="language-php">$paths = new PathColleciotn(array(
     'Template'  =&gt; new PathLocator('templates/' . $template . '/html/' . $option),
     'Sakura' =&gt; new PathLocator('Sakuras/' . $option . '/view/tmpl/'),
     'Layout'    =&gt; new PathLocator('layouts/' . $option)
-));
-</code></pre>
-
+));</code></pre>
 <h4>Paths operations</h4>
-
 <h5>Add path</h5>
+<pre><code class="language-php">$paths-&gt;addPath(new PathLocator('Foo'));        // No key name, will using number as key
 
-<pre><code class="php">$paths-&gt;addPath(new PathLocator('Foo'));        // No key name, will using number as key
-
-$paths-&gt;addPath(new PathLocator('Foo'), 'Foo'); // With key name
-</code></pre>
-
+$paths-&gt;addPath(new PathLocator('Foo'), 'Foo'); // With key name</code></pre>
 <h5>Add paths</h5>
-
-<pre><code class="php">$paths-&gt;addPaths(array(new PathLocator('Bar'))); // Add by array
-</code></pre>
-
+<pre><code class="language-php">$paths-&gt;addPaths(array(new PathLocator('Bar'))); // Add by array</code></pre>
 <h5>Remove path</h5>
-
-<pre><code class="php">$paths-&gt;removePath('Foo');  // Remove by key name
-$paths-&gt;removePath(0);      // Remove by number
-</code></pre>
-
+<pre><code class="language-php">$paths-&gt;removePath('Foo');  // Remove by key name
+$paths-&gt;removePath(0);      // Remove by number</code></pre>
 <h5>Set prefix to all paths</h5>
-
 <p>We can change this prefix, only when converting to string,
 the prefix will have been added to path.</p>
+<pre><code class="language-php">// Prepend all path with a prefix path.
 
-<pre><code class="php">// Prepend all path with a prefix path.
-
-$paths-&gt;setPrefix('/var/www/flower');
-</code></pre>
-
+$paths-&gt;setPrefix('/var/www/flower');</code></pre>
 <h4>Iterator</h4>
-
 <p>List all PathLocator</p>
-
-<pre><code class="php">foreach($paths as $path)
+<pre><code class="language-php">foreach($paths as $path)
 {
     echo $path // print path string
-}
-</code></pre>
-
+}</code></pre>
 <p>Return a raw array</p>
-
-<pre><code class="php">foreach($paths-&gt;toArray() as $path)
+<pre><code class="language-php">foreach($paths-&gt;toArray() as $path)
 {
     echo $path // print path string
-}
-</code></pre>
-
+}</code></pre>
 <p>List all files and folders of all paths</p>
-
-<pre><code class="php">foreach($paths-&gt;getAllChildren([true to recrusive]) as $file)
+<pre><code class="language-php">foreach($paths-&gt;getAllChildren([true to recrusive]) as $file)
 {
     echo $file // SplFileInfo
-}
-</code></pre>
-
+}</code></pre>
 <p>List all files</p>
-
-<pre><code class="php">foreach($paths-&gt;getFiles([true to recrusive]) as $file)
+<pre><code class="language-php">foreach($paths-&gt;getFiles([true to recrusive]) as $file)
 {
     echo $file-&gt;getFilename() // SplFileInfo
-}
-</code></pre>
-
+}</code></pre>
 <p>List all folders</p>
-
-<pre><code class="php">foreach($paths-&gt;getFolders([true to recrusive]) as $dir)
+<pre><code class="language-php">foreach($paths-&gt;getFolders([true to recrusive]) as $dir)
 {
     echo $file-&gt;getPathname() // SplFileInfo
-}
-</code></pre>
-
+}</code></pre>
 <h4>Find Files and Folders</h4>
-
 <p>Same as PathLocator, but return all paths' file &amp; folders.</p>
+<pre><code class="language-php">$paths-&gt;find('config.json');
 
-<pre><code class="php">$paths-&gt;find('config.json');
-
-$paths-&gt;findAll('config_*.json');
-</code></pre>
-
+$paths-&gt;findAll('config_*.json');</code></pre>
 <hr />
-
 <h3>Using it as array or string</h3>
-
-<pre><code class="php">$cache  = new PathLocator($_SERVER['DOCUMENT_ROOT'] . '/cache');
+<pre><code class="language-php">$cache  = new PathLocator($_SERVER['DOCUMENT_ROOT'] . '/cache');
 $loader = new \Twig_Loader_Filesystem($paths);
 
 $twig = new \Twig_Environment($loader, array(
     'cache' =&gt; (string) $cache,
-));
-</code></pre>
-
+));</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -910,7 +702,7 @@ $twig = new \Twig_Environment($loader, array(
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -924,18 +716,18 @@ $twig = new \Twig_Environment($loader, array(
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -1008,7 +800,7 @@ $twig = new \Twig_Environment($loader, array(
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Validation | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,12 +187,9 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Introduction</h2>
-
 <p>Phoenix provides a built-in JS validation object to help us do front-end form validation.</p>
-
 <p>Include Phoenix Validation:</p>
-
-<pre><code class="php">\Phoenix\Script\PhoenixScript::formValidation();
+<pre><code class="language-php">\Phoenix\Script\PhoenixScript::formValidation();
 
 // Custom selector and options
 \Phoenix\Script\PhoenixScript::formValidation('#my-form', [
@@ -204,58 +198,37 @@
         'offset'   =&gt; -100,
         'duration' =&gt; 1000
     ]
-]);
-</code></pre>
-
+]);</code></pre>
 <h2>Required</h2>
-
 <p>Add required to form field:</p>
-
-<pre><code class="php">// In FieldDefinition
+<pre><code class="language-php">// In FieldDefinition
 
 $this-&gt;text('title')
     -&gt;label('Title')
     -&gt;required();
-
 </code></pre>
-
 <p>OR just add it to HTML</p>
-
-<pre><code class="html">&lt;input name="title" type="text" required /&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;input name="title" type="text" required /&gt;</code></pre>
 <p>Then Validation will block form submit action if this input is empty, and auto scroll to this input:</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17024215/9e40782e-4f89-11e6-8c23-06d97085d8df.gif" alt="required" /></p>
-
 <blockquote>
-  <p>You can also add <code>required</code> to class attribute to enable validation.</p>
+<p>You can also add <code>required</code> to class attribute to enable validation.</p>
 </blockquote>
-
 <h2>Validate Values</h2>
-
 <p>We can check input values matches some formats or not, and show warning and hint.</p>
-
 <p>Add <code>validate-xxx</code> class to form field:</p>
-
-<pre><code class="php">// In FieldDefinition
+<pre><code class="language-php">// In FieldDefinition
 
 $this-&gt;text('url')
     -&gt;label('URL')
     -&gt;setClass('validate-url');
-
 </code></pre>
-
 <p>Now if input has value and it not matches the format you set, validator will show warning to this input:</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17024500/bac3484a-4f8a-11e6-9150-98a1efee5b91.jpg" alt="p-2016-07-21-006" /></p>
-
 <blockquote>
-  <p>Validator will be ignored if input has no value, only checked if user typed something in this input.</p>
+<p>Validator will be ignored if input has no value, only checked if user typed something in this input.</p>
 </blockquote>
-
 <p>Available Default Validators:</p>
-
 <ul>
 <li><code>validate-password</code></li>
 <li><code>validate-numeric</code></li>
@@ -266,75 +239,51 @@ $this-&gt;text('url')
 <li><code>validate-creditcard</code></li>
 <li><code>validate-ip</code></li>
 </ul>
-
 <h2>Add Custom Validator</h2>
-
 <p>You can add your own validators in runtime. Here we add a password check validator.</p>
-
-<pre><code class="js">// Get Validation object
+<pre><code class="language-js">// Get Validation object
 var validation = $('#admin-form').validation();
 
 // Add validator
 validation.addValidator('password-confirm', function (value, $input) {
     return /^\S[\S ]{2,98}\S$/.test(value) &amp;&amp; $('.input-password').val() == value;
-})
-</code></pre>
-
+})</code></pre>
 <p>Then add <code>validate-password-confirm</code> class to input.</p>
-
 <p>This validator will check password value that is valid string and matches the <code>input.input-password</code> value.</p>
-
 <h3>Hint Text</h3>
-
 <p>We can add text hint to a validator:</p>
-
-<pre><code class="js">// Add validator
+<pre><code class="language-js">// Add validator
 validation.addValidator('url', function(value, element) {
     value = punycode.toASCII(value);
     var regex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i;
     return regex.test(value);
-}, {notice: 'Not a valid URL'})
-</code></pre>
-
+}, {notice: 'Not a valid URL'})</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/17025137/329497be-4f8d-11e6-8d70-cf15f37a3642.jpg" alt="p-2016-07-21-007" /></p>
-
 <p>You can also use callback to generate hint text:</p>
-
-<pre><code class="js">// Add validator
+<pre><code class="language-js">// Add validator
 validation.addValidator('url', function(value, element) {
     // ...
 }, {notice: function ($input, validation) {
     return 'Input: ' + $input.attr('name') + ' is invalid.';
-}})
-</code></pre>
-
+}})</code></pre>
 <h3>Hint Text By HTML Attributes</h3>
-
 <p>Use <code>data-{type}-message</code> to configure your messages.</p>
-
-<pre><code class="php">$this-&gt;text('email')
+<pre><code class="language-php">$this-&gt;text('email')
     -&gt;addClass('validate-email')
     -&gt;attr('data-warinig-message', 'Please enter vaild email.');
     -&gt;attr('data-error-message', 'Please enter your email.');
-    -&gt;attr('data-success-message', 'OK');
-</code></pre>
-
+    -&gt;attr('data-success-message', 'OK');</code></pre>
 <p>Only support <code>success</code>, <code>warning</code>, <code>error</code> types.</p>
-
 <h2>Call Validation By JS</h2>
-
 <p>You can manually call validation by JS code without a submit event:</p>
-
-<pre><code class="js">// Validate all inputs
+<pre><code class="language-js">// Validate all inputs
 $('#admin-form').validation().validateAll();
 
 // Add field to input queue to validate
 $('#admin-form').validation().addField($('.input-myfield'));
 
 // Validate one input
-$('#admin-form').validation().validate($('.input-myfield'))
-</code></pre>
-
+$('#admin-form').validation().validate($('.input-myfield'))</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -369,7 +318,7 @@ $('#admin-form').validation().validate($('.input-myfield'))
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -383,18 +332,18 @@ $('#admin-form').validation().validate($('.input-myfield'))
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -467,7 +416,7 @@ $('#admin-form').validation().validate($('.input-myfield'))
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

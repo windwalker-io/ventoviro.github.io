@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Languages | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,112 +250,68 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Introduction</h2>
-
 <p>Windwalker use Language package to handle i18n localise. There is a <code>language</code> configuration in <code>/etc/config.yml</code>:</p>
-
-<pre><code class="yaml">language:
+<pre><code class="language-yaml">language:
     debug: 0
     locale: zh-TW
     default: en-GB
     format: ini
-    path: resources/languages
-</code></pre>
-
+    path: resources/languages</code></pre>
 <p><code>locale</code> means current language, and <code>default</code> will tell language object that if current translate not exists, fallback to which language as default.</p>
-
 <p>Format is the default file format, but we can still load other format in the runtime.</p>
-
 <h2>Using Language to Translate String</h2>
-
 <p>Windwalker language object has a Facade as proxy, just call this static class to use.</p>
-
-<pre><code class="php">use Windwalker\Core\Language\Translator;
+<pre><code class="language-php">use Windwalker\Core\Language\Translator;
 
 // Load en-GB/main.ini file first
 Translator::loadFile('main');
 
 // Translate
-echo Translator::translate('windwalker.hello.message');
-</code></pre>
-
+echo Translator::translate('windwalker.hello.message');</code></pre>
 <p>Add language:</p>
+<pre><code class="language-ini">; resources/languages/en-GB/main.ini
 
-<pre><code class="ini">; resources/languages/en-GB/main.ini
-
-windwalker.hello.message="Hello World"
-</code></pre>
-
+windwalker.hello.message="Hello World"</code></pre>
 <p>The result will be:</p>
-
-<pre><code class="html">Hello World
-</code></pre>
-
+<pre><code class="language-html">Hello World</code></pre>
 <p>There is a short alias of <code>translate()</code>:</p>
-
-<pre><code class="php">echo Translator::translate('windwalker.hello.message');
-</code></pre>
-
+<pre><code class="language-php">echo Translator::translate('windwalker.hello.message');</code></pre>
 <h2>Locale and Default Languages</h2>
-
 <p>We set locale to <code>zh-TW</code> and default to <code>en-GB</code>, then create ini language files:</p>
-
-<pre><code class="ini">; resources/languages/en-GB/flower.ini
+<pre><code class="language-ini">; resources/languages/en-GB/flower.ini
 
 windwalker.language.test.flower="Flower"
-windwalker.language.test.sakura="Sakura"
-</code></pre>
+windwalker.language.test.sakura="Sakura"</code></pre>
+<pre><code class="language-ini">; resources/languages/zh-TW/flower.ini
 
-<pre><code class="ini">; resources/languages/zh-TW/flower.ini
-
-windwalker.language.test.flower="花"
-</code></pre>
-
+windwalker.language.test.flower="花"</code></pre>
 <p>And load them.</p>
-
-<pre><code class="php">Translator::loadFile('flower');
-</code></pre>
-
+<pre><code class="language-php">Translator::loadFile('flower');</code></pre>
 <p>Translate string:</p>
-
-<pre><code class="php">// zh-TW has this language key, so it will be translated
+<pre><code class="language-php">// zh-TW has this language key, so it will be translated
 Translator::translate('windwalker.language.test.flower'); // 花
 
 // This key not exists in zh-TW, use en-GB as default
-Translator::translate('windwalker.language.test.sakura'); // Sakura
-</code></pre>
-
+Translator::translate('windwalker.language.test.sakura'); // Sakura</code></pre>
 <h3>Key Format</h3>
-
 <p>All language key will be normalised to lowercase and separated by dot (<code>.</code>).</p>
-
 <p>These cases all get same result:</p>
-
-<pre><code class="php">Translator::translate('WINDWALKER_LANGUAGE_TEST_FLOWER'); // 花
+<pre><code class="language-php">Translator::translate('WINDWALKER_LANGUAGE_TEST_FLOWER'); // 花
 Translator::translate('WINDWALKER_language_TEST FLOWER'); // 花
 Translator::translate('windwalker.language.test.flower'); // 花
 Translator::translate('Windwalker Language Test Flower'); // 花
 Translator::translate('Windwalker Language, Test Flower~~~!'); // 花
 
-// All keys will be normalise to 'windwalker.language.test.flower'
-</code></pre>
-
+// All keys will be normalise to 'windwalker.language.test.flower'</code></pre>
 <h3>Replace String</h3>
-
 <p>Use <code>sprintf()</code> method.</p>
+<pre><code class="language-ini">windwalker.language.test.beautiful.flower="The %s is beautiful~~~!!!"</code></pre>
+<pre><code class="language-php">Translator::sprintf('windwalker.language.test.beautiful.flower', 'Sunflower');
 
-<pre><code class="ini">windwalker.language.test.beautiful.flower="The %s is beautiful~~~!!!"
-</code></pre>
-
-<pre><code class="php">Translator::sprintf('windwalker.language.test.beautiful.flower', 'Sunflower');
-
-// Result: The Sunflower is beautiful~~~!!!
-</code></pre>
-
+// Result: The Sunflower is beautiful~~~!!!</code></pre>
 <h3>Plural String</h3>
-
 <p>Create a Localise class:</p>
-
-<pre><code class="php">// An example of EnGB Localise
+<pre><code class="language-php">// An example of EnGB Localise
 namespace Windwalker\Language\Localise;
 
 class EnGBLocalise implements LocaliseInterface
@@ -376,77 +329,47 @@ class EnGBLocalise implements LocaliseInterface
 
         return 'more';
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>And prepare this language keys.</p>
-
-<pre><code class="ini">windwalker.language.test.sunflower="Sunflower"
+<pre><code class="language-ini">windwalker.language.test.sunflower="Sunflower"
 windwalker.language.test.sunflower="No Sunflower"
-windwalker.language.test.sunflower="Sunflowers"
-</code></pre>
-
+windwalker.language.test.sunflower="Sunflowers"</code></pre>
 <p>Now we can translate plural string by <code>plural()</code>.</p>
-
-<pre><code class="php">Translator::plural('windwalker.language.test.sunflower', 0); // No Sunflower
+<pre><code class="language-php">Translator::plural('windwalker.language.test.sunflower', 0); // No Sunflower
 Translator::plural('windwalker.language.test.sunflower', 1); // Sunflower
-Translator::plural('windwalker.language.test.sunflower', 2); // Sunflowers
-</code></pre>
-
+Translator::plural('windwalker.language.test.sunflower', 2); // Sunflowers</code></pre>
 <h2>If Language Key Not Exists</h2>
-
 <p>Language object will return raw string which we send into it.</p>
-
-<pre><code class="php">echo Translator::translate('A Not Translated String');
+<pre><code class="language-php">echo Translator::translate('A Not Translated String');
 echo "\n";
-echo Translator::translate('A_NOT_TRANSLATED_STRING');
-</code></pre>
-
+echo Translator::translate('A_NOT_TRANSLATED_STRING');</code></pre>
 <p>Result:</p>
-
 <pre><code>A Not Translated String
-A_NOT_TRANSLATED_STRING
-</code></pre>
-
+A_NOT_TRANSLATED_STRING</code></pre>
 <h2>Using Other Formats</h2>
-
 <p>Change the <code>format</code> property from config.</p>
-
 <h3>Yaml</h3>
-
 <p>Yaml language file can write as nested structure.</p>
-
-<pre><code class="yaml">windwalker:
+<pre><code class="language-yaml">windwalker:
     language.test:
         sakura: Sakura
-        olive: Olive
-</code></pre>
-
-<pre><code class="php">Translator::translate('windwalker.language.test.sakura'); // Sakura
-Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
-</code></pre>
-
+        olive: Olive</code></pre>
+<pre><code class="language-php">Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive</code></pre>
 <h3>Json</h3>
-
-<pre><code class="json">{
+<pre><code class="language-json">{
     "windwalker" : {
         "language-test" : {
             "sakura" : "Sakura",
             "olive" : "Olive"
         }
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>The usage same as yaml.</p>
-
-<pre><code class="php">Translator::translate('windwalker.language.test.sakura'); // Sakura
-Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
-</code></pre>
-
+<pre><code class="language-php">Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive</code></pre>
 <h3>PHP</h3>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 
 return array(
     'WINDWALKER_LANGUAGE_TEST_FLOWER' =&gt; "Flower",
@@ -455,89 +378,51 @@ return array(
                 'SAKURA' =&gt; "Sakura"
             )
         )
-);
-</code></pre>
-
+);</code></pre>
 <p>The usage same as yaml.</p>
-
-<pre><code class="php">Translator::translate('windwalker.language.test.sakura'); // Sakura
-Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive
-</code></pre>
-
+<pre><code class="language-php">Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive</code></pre>
 <blockquote>
-  <p>NOTE: We'll support to load different formats in the runtime soon.</p>
+<p>NOTE: We'll support to load different formats in the runtime soon.</p>
 </blockquote>
-
 <h2>Load Package Languages</h2>
-
 <p>Package language file located at <code>YourPackage/Languages/xx-XX/language-name.ini</code>.</p>
-
 <p>So we can load package languages by second argument:</p>
-
-<pre><code class="php">// Load en-GB/sakura.ini and zh-TW/sakura.ini from Flower package
-Translator::loadFile('sakura', 'ini', 'flower');
-</code></pre>
-
+<pre><code class="language-php">// Load en-GB/sakura.ini and zh-TW/sakura.ini from Flower package
+Translator::loadFile('sakura', 'ini', 'flower');</code></pre>
 <h2>Used Keys</h2>
-
-<pre><code class="php">// Get keys which have been used.
-Translator::getUsed();
-</code></pre>
-
+<pre><code class="language-php">// Get keys which have been used.
+Translator::getUsed();</code></pre>
 <h2>Debugging</h2>
-
 <h3>Debug Mode</h3>
-
-<pre><code class="php">Translator::setDebug(true);
-</code></pre>
-
+<pre><code class="language-php">Translator::setDebug(true);</code></pre>
 <p>We can get non-translated keys in debug mode.</p>
-
-<pre><code class="php">echo Translator::translate('A Translation Exists String');
+<pre><code class="language-php">echo Translator::translate('A Translation Exists String');
 echo "\n";
-echo Translator::translate('A Not Translated String');
-</code></pre>
-
+echo Translator::translate('A Not Translated String');</code></pre>
 <p>And the output will be:</p>
-
-<pre><code class="html">**A Translation Exists String**
-??A Not Translated String??
-</code></pre>
-
+<pre><code class="language-html">**A Translation Exists String**
+??A Not Translated String??</code></pre>
 <h3>Get Orphans</h3>
-
 <p>Orphans is the language string you used but haven't translated.</p>
-
-<pre><code class="php">Translator::setDebug(true);
+<pre><code class="language-php">Translator::setDebug(true);
 
 // Run your applications
 
-$orphans = Translator::getOrphans(); // Array([0] =&gt; A Not Translated String);
-</code></pre>
-
+$orphans = Translator::getOrphans(); // Array([0] =&gt; A Not Translated String);</code></pre>
 <h3>Check Loaded Languages</h3>
+<pre><code class="language-php">$config = \Windwalker\Ioc::getConfig();
 
-<pre><code class="php">$config = \Windwalker\Ioc::getConfig();
-
-$config-&gt;get('language.loaded');
-</code></pre>
-
+$config-&gt;get('language.loaded');</code></pre>
 <h2>Translate in View Template</h2>
-
 <p>Blade</p>
-
-<pre><code class="php">@translate('windwalker.language.test.flower')
+<pre><code class="language-php">@translate('windwalker.language.test.flower')
 @sprintf('windwalker.language.test.flower', 'foo', 'bar')
-@plural('windwalker.language.test.flower', 5)
-</code></pre>
-
+@plural('windwalker.language.test.flower', 5)</code></pre>
 <p>Twig</p>
-
-<pre><code class="php">{{ 'windwalker.language.test.flower' | lang }}
+<pre><code class="language-php">{{ 'windwalker.language.test.flower' | lang }}
 {{ 'windwalker.language.test.flower' | sprintf('foo', 'bar') }}
-{{ 'windwalker.language.test.flower' | plural(5) }}
-</code></pre>
-
+{{ 'windwalker.language.test.flower' | plural(5) }}</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -572,7 +457,7 @@ $config-&gt;get('language.loaded');
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -586,18 +471,18 @@ $config-&gt;get('language.loaded');
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -670,7 +555,7 @@ $config-&gt;get('language.loaded');
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

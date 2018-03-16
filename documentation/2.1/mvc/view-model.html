@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>View Model | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,33 +250,22 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>About MVC Interactions</h2>
-
-<p>In most MVC practices, there is no direct communication between View and Model. We called it <strong>Passive View</strong>. But there are many 
-variants of MVC like: MVVM, MVP etc.</p>
-
+<p>In most MVC practices, there is no direct communication between View and Model. We called it <strong>Passive View</strong>. But there are many
+variants of MVC like: MVVM, MVP etc. </p>
 <p>Windwalker uses a pattern which is similar to <a href="http://goo.gl/p6Rjwl">Supervising Controller</a>, <a href="http://goo.gl/LJPG">MVVM</a> or <a href="http://goo.gl/y3VzE">MVP</a>
 , View can not communicate to Model, but Controller can binding Model to View, then View is able to get data from Model.</p>
-
 <p>The benefit of this pattern is that View can decide which data they are needed and call Model to get these data.
- And controller's responsibility is just decide binding which models to view. There is a <code>ViewModel</code> between View and Model 
- to handle request from View and get data from Model.</p>
-
+And controller's responsibility is just decide binding which models to view. There is a <code>ViewModel</code> between View and Model
+to handle request from View and get data from Model.</p>
 <h3>Schematic Diagram</h3>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg" alt="mvc" /> <img src="https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg" alt="ww-mvc" /></p>
-
 <h3>ViewModel</h3>
-
-<p>View is not directly communicate to Model, there is a <code>ViewModel</code> object between them. You can consider ViewModel 
-as a Model manager.</p>
-
+<p>View is not directly communicate to Model, there is a <code>ViewModel</code> object between them. You can consider ViewModel
+as a Model manager. </p>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg" alt="view-model" /></p>
-
 <h2>Use ViewModel Pattern in Windwalker</h2>
-
 <p>This is a traditional MVC usage in controller:</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // doExecute()
 
 $model = new FlowerModel;
@@ -289,12 +275,9 @@ $item = $model-&gt;getItem();
 
 $view['created'] = $item;
 
-return $view-&gt;render();
-</code></pre>
-
+return $view-&gt;render();</code></pre>
 <p>Change some code, we can push Model into View:</p>
-
-<pre><code class="php">// doExecute()
+<pre><code class="language-php">// doExecute()
 
 $model = new FlowerModel;
 $view = new SakurasHtmlView;
@@ -304,27 +287,20 @@ $view-&gt;setModel($model);
 // OR
 $view-&gt;model-&gt;setModel($model);
 
-return $view-&gt;render();
-</code></pre>
-
+return $view-&gt;render();</code></pre>
 <p>Get data in View:</p>
-
-<pre><code class="php">class SakurasHtmlView extends HtmlView
+<pre><code class="language-php">class SakurasHtmlView extends HtmlView
 {
     protected function prepareData($data)
     {
         $data-&gt;item = $this-&gt;model-&gt;getItem();
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>The <code>$view-&gt;model</code> property is <code>ViewModel</code> object, if we call any method, <code>ViewModel</code> will pass this method to default Model by magic method.
 If Model does not have this method, it will only return <code>null</code>.</p>
-
-<p>You must make sure Model named with <code>XXXModel</code>, the model will guess their name. you can also set name property when declaring Model class. 
+<p>You must make sure Model named with <code>XXXModel</code>, the model will guess their name. you can also set name property when declaring Model class.
 There is some ways to define Model's name:</p>
-
-<pre><code class="php">// Set by config
+<pre><code class="language-php">// Set by config
 $model-&gt;config-&gt;set('name', 'foo');
 
 // Use class name
@@ -334,14 +310,10 @@ class FooModel extends Model {}
 class SomeModel extends Model
 {
     protected $name = 'foo';
-}
-</code></pre>
-
+}</code></pre>
 <h3>Set Multiple Models</h3>
-
 <p>We can get many models and push them into one view.</p>
-
-<pre><code class="php">// In Controller::doExecute()
+<pre><code class="language-php">// In Controller::doExecute()
 
 $model = $this-&gt;getModel();
 $roseModel = $this-&gt;getModel('Rose');
@@ -351,23 +323,15 @@ $view-&gt;setModel($model);
 $view-&gt;setModel($roseModel);
 $view-&gt;setModel($oliveModel);
 
-return $view-&gt;render();
-</code></pre>
-
+return $view-&gt;render();</code></pre>
 <p>Use array access to get different models and call methods.</p>
-
-<pre><code class="php">// In View::prepareData()
+<pre><code class="language-php">// In View::prepareData()
 
 $data-&gt;items = $this-&gt;model-&gt;getItems();
 $data-&gt;roses = $this-&gt;model['rose']-&gt;getRoses();
-$data-&gt;olives = $this-&gt;model['olive']-&gt;getOlives();
-</code></pre>
-
+$data-&gt;olives = $this-&gt;model['olive']-&gt;getOlives();</code></pre>
 <p>If a model not set, and the method name start with <code>get*</code> or <code>load*</code>, it will return <code>null</code>.</p>
-
-<pre><code class="php">$data-&gt;foo = $this-&gt;model['foo']-&gt;getFoo();
-</code></pre>
-
+<pre><code class="language-php">$data-&gt;foo = $this-&gt;model['foo']-&gt;getFoo();</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -402,7 +366,7 @@ $data-&gt;olives = $this-&gt;model['olive']-&gt;getOlives();
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -416,18 +380,18 @@ $data-&gt;olives = $this-&gt;model['olive']-&gt;getOlives();
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -500,7 +464,7 @@ $data-&gt;olives = $this-&gt;model['olive']-&gt;getOlives();
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

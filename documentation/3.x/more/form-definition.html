@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Form Definition | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,11 +303,9 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Use <code>AbstractFieldDefinition</code></h2>
-
 <p>Windwalker provides a simple interface to define form field. Just create a class extends to <code>Windwalker\Core\Form\AbstractFieldDefinition</code>
 and add field type by <code>$this-&gt;{type}('{name}')</code>.</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 
 use Windwalker\Core\Form\AbstractFieldDefinition;
 use Windwalker\Form\Form;
@@ -333,22 +328,16 @@ class EditDefinition extends AbstractFieldDefinition
                 -&gt;required();
         });
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Then register this class to <code>Form</code>:</p>
-
-<pre><code class="php">use Windwalker\Form\Form;
+<pre><code class="language-php">use Windwalker\Form\Form;
 
 $form = new Form;
 $form-&gt;defineFormFields(new EditDefinition);
 
-echo $form-&gt;renderFields('basic');
-</code></pre>
-
+echo $form-&gt;renderFields('basic');</code></pre>
 <p>The output:</p>
-
-<pre><code class="php">&lt;div id="input-id-control" class="hidden-field "&gt;
+<pre><code class="language-php">&lt;div id="input-id-control" class="hidden-field "&gt;
     &lt;label id="input-id-label" for="input-id"&gt;&lt;/label&gt;
     &lt;input type="hidden" name="id" id="input-id" /&gt;
 &lt;/div&gt;
@@ -359,30 +348,20 @@ echo $form-&gt;renderFields('basic');
 &lt;div id="input-content-control" class="textarea-field "&gt;
     &lt;label id="input-content-label" for="input-content"&gt;&lt;span class="windwalker-input-required-hint"&gt;*&lt;/span&gt; Content&lt;/label&gt;
     &lt;textarea name="content" id="input-content" required rows="15"&gt;&lt;/textarea&gt;
-&lt;/div&gt;
-</code></pre>
-
+&lt;/div&gt;</code></pre>
 <h3>Custom Field Class</h3>
-
 <p>You can also use <code>add()</code> method to add custom field class:</p>
-
-<pre><code class="php">use Windwalker\Form\Field\AbstractField;
+<pre><code class="language-php">use Windwalker\Form\Field\AbstractField;
 
 class MyField extends AbstractField
 {
     // ...
-}
-</code></pre>
+}</code></pre>
+<pre><code class="language-php">// in AbstractFieldDefinition
 
-<pre><code class="php">// in AbstractFieldDefinition
-
-$this-&gt;add('field_name', new MyField);
-</code></pre>
-
+$this-&gt;add('field_name', new MyField);</code></pre>
 <p>There has three methods: <code>fieldset()</code>, <code>group()</code> and <code>wrap()</code> are alias to methods with same name in <code>Form</code>, See <a href="form-builder.html">Form Builder</a></p>
-
 <h3>Available Fields</h3>
-
 <ul>
 <li><code>text($name = null, $label = null)</code></li>
 <li><code>button($name = null, $label = null)</code></li>
@@ -398,15 +377,11 @@ $this-&gt;add('field_name', new MyField);
 <li><code>textarea($name = null, $label = null)</code></li>
 <li><code>timezone($name = null, $label = null)</code></li>
 </ul>
-
 <h2>Add Custom Methods by Traits</h2>
-
 <p>If you have a lot of custom fields, you can register them to <code>AbstractFieldDefinition</code>.</p>
-
 <p>First, you must put all fields in one folder with same namespace, and all field classes' name should follows <code>{Name}Field</code> rule.
 And create a <code>trait</code> with boot method.</p>
-
-<pre><code class="php">/**
+<pre><code class="language-php">/**
  * The MyFieldTrait class.
  *
  * @method  \MyPackage\Field\FooField foo($name = null, $label = null)
@@ -419,12 +394,9 @@ trait MyFieldTrait
     {
         $this-&gt;addNamespace('MyPackage\Field');
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Use this trait in your definition class, then you are able to use <code>foo()</code> to get <code>MyPackage\Field\FooField</code>:</p>
-
-<pre><code class="php">class EditDefinition extends AbstractFieldDefinition
+<pre><code class="language-php">class EditDefinition extends AbstractFieldDefinition
 {
     use MyFieldTrait;
 
@@ -435,12 +407,9 @@ trait MyFieldTrait
         $this-&gt;foo('field_name')
             -&gt;label('Foo');
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>If your field naming convention not follows default rule, you can add a method to create it.</p>
-
-<pre><code class="php">trait MyFieldTrait
+<pre><code class="language-php">trait MyFieldTrait
 {
     // ...
 
@@ -448,9 +417,7 @@ trait MyFieldTrait
     {
         return new MyFieldSakura($name, $label);
     }
-}
-</code></pre>
-
+}</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -485,7 +452,7 @@ trait MyFieldTrait
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -499,18 +466,18 @@ trait MyFieldTrait
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -583,7 +550,7 @@ trait MyFieldTrait
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

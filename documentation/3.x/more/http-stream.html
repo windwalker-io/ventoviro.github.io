@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Http and Stream | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,22 +303,17 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Make A Request</h2>
-
 <p>HttpClient is a simple class to make restful request.</p>
-
-<pre><code class="php">use Windwalker\Http\HttpClient;
+<pre><code class="language-php">use Windwalker\Http\HttpClient;
 
 $http = new HttpClient;
 
 $response = $http-&gt;get('http://example.com/?foo=bar');
 
 // This is PSR7 ResponseInterface
-(string) $response-&gt;getBody();
-</code></pre>
-
+(string) $response-&gt;getBody();</code></pre>
 <h3>Other Methods</h3>
-
-<pre><code class="php">$http = new HttpClient;
+<pre><code class="language-php">$http = new HttpClient;
 
 // The post data can be query string or array
 $response = $http-&gt;post('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
@@ -337,14 +329,10 @@ $response = $http-&gt;options('http://example.com/?foo=bar');
 $response = $http-&gt;get('http://example.com/', null, array('X-Foo' =&gt; 'Bar'));
 
 // Use request()
-$response = $http-&gt;request('POST', 'http://example.com/?foo=bar', 'this=is&amp;post=data');
-</code></pre>
-
+$response = $http-&gt;request('POST', 'http://example.com/?foo=bar', 'this=is&amp;post=data');</code></pre>
 <h3>Use Psr RequestInterface to Make Request</h3>
-
 <p>Psr7 Request is a immutable object, you have to get the return object every operation.</p>
-
-<pre><code class="php">use Windwalker\Http\Request;
+<pre><code class="language-php">use Windwalker\Http\Request;
 
 $request = new Request;
 
@@ -372,12 +360,9 @@ $request-&gt;getBody()-&gt;write('this=is&amp;post=data');
 $http = new HttpClient;
 
 // Send request
-$response = $http-&gt;send($request);
-</code></pre>
-
+$response = $http-&gt;send($request);</code></pre>
 <p>Use Uri and Json output.</p>
-
-<pre><code class="php">use Windwalker\Http\Request;
+<pre><code class="language-php">use Windwalker\Http\Request;
 use Windwalker\Uri\PsrUri;
 
 $request = (new Request)
@@ -400,14 +385,10 @@ $request = $request-&gt;withRequestTarget('*');                 // asterisk-form
 $request-&gt;getBody()-&gt;write(json_encode($data));
 $response = $http-&gt;send($request);
 
-$response-&gt;getStatusCode(); // 200 is OK
-</code></pre>
-
+$response-&gt;getStatusCode(); // 200 is OK</code></pre>
 <h3>Custom Transports and Options</h3>
-
 <p>Now support Curl and Steam 2 transports.</p>
-
-<pre><code class="php">use Windwalker\Http\Transport\CurlTransport;
+<pre><code class="language-php">use Windwalker\Http\Transport\CurlTransport;
 
 $options = array(
     'certpath' =&gt; '/custom/cert.pem'
@@ -416,12 +397,9 @@ $options = array(
 $transport = new CurlTransport($options);
 
 // Set transport when client new
-$http = new HttpClient(array(), $transport);
-</code></pre>
-
+$http = new HttpClient(array(), $transport);</code></pre>
 <p>Set custom CURL options:</p>
-
-<pre><code class="php">$options = array(
+<pre><code class="language-php">$options = array(
     'options' =&gt; array(
         CURLOPT_SSL_VERIFYHOST =&gt; false,
         CURLOPT_SSL_VERIFYPEER =&gt; true
@@ -434,12 +412,9 @@ $httpOptions = array(
     )
 );
 
-$http = new HttpClient($httpOptions, new CurlTransport($options));
-</code></pre>
-
+$http = new HttpClient($httpOptions, new CurlTransport($options));</code></pre>
 <h3>Download Remote File</h3>
-
-<pre><code class="php">$http = new HttpClient;
+<pre><code class="language-php">$http = new HttpClient;
 
 $dest = '/path/to/local/file.zip';
 
@@ -448,14 +423,10 @@ $response = $http-&gt;download('http://example.com/file.zip', $dest);
 if ($response-&gt;getStatusCode() != 200)
 {
     // Error
-}
-</code></pre>
-
+}</code></pre>
 <h3>Response Interface</h3>
-
 <p>Response object holds a Stream object to store returned string.</p>
-
-<pre><code class="php">// The return value is: 'FOO BAR'
+<pre><code class="language-php">// The return value is: 'FOO BAR'
 $body = $response-&gt;getBody();
 
 // Simply to string
@@ -467,14 +438,10 @@ $body-&gt;getContents(); // O BAR
 $body-&gt;rewind();
 $body-&gt;read(5); // FOO B
 
-$body-&gt;getSize(); // 7
-</code></pre>
-
+$body-&gt;getSize(); // 7</code></pre>
 <h2>Async Request</h2>
-
 <p>Use <code>AsyncHttpClient</code> to send multiple async requests.</p>
-
-<pre><code class="php">use Windwalker\Http\AsyncHttpClient;
+<pre><code class="language-php">use Windwalker\Http\AsyncHttpClient;
 
 $http = new \Windwalker\Http\AsyncHttpClient;
 
@@ -492,27 +459,19 @@ foreach ($responses as $response)
 }
 
 // Get errors, will be an array contains RuntimeExceptions
-$errors = $http-&gt;getErrors();
-</code></pre>
-
+$errors = $http-&gt;getErrors();</code></pre>
 <p>Use callback:</p>
-
-<pre><code class="php">$http-&gt;resolve(function ($responses, $errors, $http)
+<pre><code class="language-php">$http-&gt;resolve(function ($responses, $errors, $http)
 {
     foreach ($responses as $response)
     {
         echo $response-&gt;getBody()-&gt;__toString();
     }
-});
-</code></pre>
-
+});</code></pre>
 <h2>Uri</h2>
-
 <p><code>Uri</code> is a simple Uri object to modify URL but not Psr UriInterface.</p>
-
 <p>The methods provided in the <code>Uri</code> class allow you to manipulate all aspects of a uri. For example, suppose you wanted to set a new uri, add in a port, and then also post a username and password to authenticate a .htaccess security file. You could use the following syntax:</p>
-
-<pre><code class="php">// new uri object
+<pre><code class="language-php">// new uri object
 $uri = new Windwalker\Uri\Uri;
 
 $uri-&gt;setHost('http://localhost');
@@ -520,59 +479,34 @@ $uri-&gt;setPort('8888');
 $uri-&gt;setUser('myUser');
 $uri-&gt;setPass('myPass');
 
-echo $uri-&gt;__toString();
-</code></pre>
-
+echo $uri-&gt;__toString();</code></pre>
 <p>This will output:</p>
-
-<pre><code>myUser:myPass@http://localhost:8888
-</code></pre>
-
+<pre><code>myUser:myPass@http://localhost:8888</code></pre>
 <p>If you wanted to add a specific filepath after the host you could use the <code>setPath()</code> method:</p>
-
-<pre><code class="php">// set path
-$uri-&gt;setPath('path/to/file.php');
-</code></pre>
-
+<pre><code class="language-php">// set path
+$uri-&gt;setPath('path/to/file.php');</code></pre>
 <p>Which will output</p>
-
-<pre><code>myUser:myPass@http://localhost:8888path/to/file.php
-</code></pre>
-
+<pre><code>myUser:myPass@http://localhost:8888path/to/file.php</code></pre>
 <p>Adding a URL query:</p>
-
-<pre><code class="php">// url query
-$uri-&gt;setQuery('foo=bar');
-</code></pre>
-
+<pre><code class="language-php">// url query
+$uri-&gt;setQuery('foo=bar');</code></pre>
 <p>Output:</p>
-
-<pre><code>myUser:myPass@http://localhost:8888path/to/file.php?foo=bar
-</code></pre>
-
+<pre><code>myUser:myPass@http://localhost:8888path/to/file.php?foo=bar</code></pre>
 <h3>PsrUri</h3>
-
 <p><code>PsrUri</code> is a Uri object implemented the Psr UriInterface.</p>
-
 <p>This object is also immutable, so we must get return value as new object every change.</p>
-
-<pre><code class="php">$uri = (new PsrUri('http://example.com'))
+<pre><code class="language-php">$uri = (new PsrUri('http://example.com'))
     -&gt;withScheme('https')
     -&gt;withUserInfo('user', 'pass')
     -&gt;withPath('/path/to/target')
     -&gt;withQuery('flower=sakura')
     -&gt;withFragment('#hash');
 
-(string) $uri; // https://user:pass@example.com/path/to/target?flower=sakura#fragment
-</code></pre>
-
+(string) $uri; // https://user:pass@example.com/path/to/target?flower=sakura#fragment</code></pre>
 <h2>Stream</h2>
-
 <p>Stream is a powerful stream wrapper.</p>
-
 <p>Read write data to memory:</p>
-
-<pre><code class="php">$stream = new Stream('php://memory', 'wb+');
+<pre><code class="language-php">$stream = new Stream('php://memory', 'wb+');
 
 $stream-&gt;write('Foo Bar');
 
@@ -585,31 +519,22 @@ $stream-&gt;__toString(); // get: Foo Bar
 // OR
 
 $stream-&gt;rewind();
-$stream-&gt;getContents(); // get: Foo Bar
-</code></pre>
-
+$stream-&gt;getContents(); // get: Foo Bar</code></pre>
 <p>Read data from <code>php://input</code></p>
-
-<pre><code class="php">$stream = new PhpInputSteam;
+<pre><code class="language-php">$stream = new PhpInputSteam;
 
 $data = $stream-&gt;__toString(); // foo=bar
 
-$query = \Windwalker\Uri\UriHelper::parseQuery($data); // array('foo' =&gt; 'bar')
-</code></pre>
-
+$query = \Windwalker\Uri\UriHelper::parseQuery($data); // array('foo' =&gt; 'bar')</code></pre>
 <p>Read file:</p>
-
-<pre><code class="php">$stream = new Stream('/path/to/file.txt', 'r+');
+<pre><code class="language-php">$stream = new Stream('/path/to/file.txt', 'r+');
 
 $stream-&gt;__toString(); // Read
 
 $steam-&gt;seek($stream-&gt;getSize());
-$steam-&gt;write('new string'); // Write
-</code></pre>
-
+$steam-&gt;write('new string'); // Write</code></pre>
 <p>Quick copy stream.</p>
-
-<pre><code class="php">// Remote source
+<pre><code class="language-php">// Remote source
 $src = new Stream('http://example/test.txt');
 
 // Local store
@@ -620,23 +545,16 @@ $dest = new Stream('/path/to/local/test.txt');
 
 // Get Data
 $dest-&gt;rewind();
-$data = $dest-&gt;getContents();
-</code></pre>
-
+$data = $dest-&gt;getContents();</code></pre>
 <h2>Responses</h2>
-
 <p>Windwalker Http provides a set of formatted Responses to return data with different formats.</p>
-
-<pre><code class="php">$response = new \Windwalker\Http\Response\HtmlResponse('&lt;html&gt; ... &lt;/html&gt;');
+<pre><code class="language-php">$response = new \Windwalker\Http\Response\HtmlResponse('&lt;html&gt; ... &lt;/html&gt;');
 $response = new \Windwalker\Http\Response\JsonResponse(array('foo' =&gt; 'bar'), 200, $headers);
 $response = new \Windwalker\Http\Response\XmlResponse(new \SimpleXMLElement('&lt;root /&gt;'), 200, $headers);
 $response = new \Windwalker\Http\Response\RedirectResponse($url, 301);
-$response = new \Windwalker\Http\Response\AttachmentResponse('file');
-</code></pre>
-
+$response = new \Windwalker\Http\Response\AttachmentResponse('file');</code></pre>
 <p>See: <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md#13-streams">Psr7 StreamInterface</a>
 / <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md#34-psrhttpmessagestreaminterface">API</a></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -671,7 +589,7 @@ $response = new \Windwalker\Http\Response\AttachmentResponse('file');
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -685,18 +603,18 @@ $response = new \Windwalker\Http\Response\AttachmentResponse('file');
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -769,7 +687,7 @@ $response = new \Windwalker\Http\Response\AttachmentResponse('file');
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

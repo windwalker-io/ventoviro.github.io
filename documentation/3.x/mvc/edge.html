@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Edge Templates | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -307,79 +304,46 @@
                 <article class="article-content">
                     <p>Edge is a <a href="https://laravel.com/docs/5.1/blade">Blade</a> compatible template engine, provides same syntax to support
 Blade template files, but has more powerful extending interfaces.</p>
-
 <h2>Use Edge Engine in View</h2>
-
 <p>Get Edge View in Controller</p>
+<pre><code class="language-php">$view = $this-&gt;getView('sakura', 'html', 'edge');
 
-<pre><code class="php">$view = $this-&gt;getView('sakura', 'html', 'edge');
-
-$view-&gt;set('title', 'Hello World~~~!');
-</code></pre>
-
+$view-&gt;set('title', 'Hello World~~~!');</code></pre>
 <p>Or set renderer in view class:</p>
-
-<pre><code class="php">use Windwalker\Core\View\HtmlView;
+<pre><code class="language-php">use Windwalker\Core\View\HtmlView;
 
 class SakuraHtmlView extends HtmlView
 {
     protected $renderer = 'edge'; // Or RendererHelper::EDGE
-}
-</code></pre>
-
+}</code></pre>
 <p>Then we create a template file in <code>src/Flower/Templates/sakura/default.edge.php</code> or (<code>default.blade.php</code>):</p>
-
-<pre><code class="php">&lt;h1&gt;{{ $title }}&lt;/h1&gt;
-</code></pre>
-
+<pre><code class="language-php">&lt;h1&gt;{{ $title }}&lt;/h1&gt;</code></pre>
 <p>Result:</p>
-
-<pre><code class="html">&lt;h1&gt;Hello World~~~!&lt;/h1&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;h1&gt;Hello World~~~!&lt;/h1&gt;</code></pre>
 <h2>Edge Syntax</h2>
-
 <p>Most of Edge syntax are same as Blade.</p>
-
 <h3>Echoing Data</h3>
-
 <p>Display a variable by <code>{{ ... }}</code></p>
-
-<pre><code class="php">Hello {{ $title }}
-</code></pre>
-
+<pre><code class="language-php">Hello {{ $title }}</code></pre>
 <p>Unescaped echoing.</p>
-
-<pre><code class="php">My name is {!! $form-&gt;input('name') !!}
-</code></pre>
-
+<pre><code class="language-php">My name is {!! $form-&gt;input('name') !!}</code></pre>
 <h3>Control Structures</h3>
-
 <h4>If Statement</h4>
-
 <p>Use <code>@if ... @else</code> directive.</p>
-
-<pre><code class="php">@if (count($flower) == 1)
+<pre><code class="language-php">@if (count($flower) == 1)
     I have one flower!
 @elseif (count($flower) &gt; 1)
     I have many flkowers!
 @else
     I don't have any flower!
-@endif
-</code></pre>
-
+@endif</code></pre>
 <p>Unless directive</p>
-
-<pre><code class="html">@unless ($user-&gt;isAdmin())
+<pre><code class="language-html">@unless ($user-&gt;isAdmin())
     You are not logged in.
-@endunless
-</code></pre>
-
+@endunless</code></pre>
 <h3>Loops</h3>
-
 <p>Edge provides simple directives similar to PHP loop structure.</p>
-
-<pre><code class="php">@for ($i = 0; $i &lt; 10; $i++)
+<pre><code class="language-php">@for ($i = 0; $i &lt; 10; $i++)
     The current value is {{ $i }}
 @endfor
 
@@ -395,12 +359,9 @@ class SakuraHtmlView extends HtmlView
 
 @while (true)
     &lt;p&gt;I'm looping forever.&lt;/p&gt;
-@endwhile
-</code></pre>
-
+@endwhile</code></pre>
 <p>You might need to break or skip a loop.</p>
-
-<pre><code class="php">@foreach ($users as $user)
+<pre><code class="language-php">@foreach ($users as $user)
 
     @if (!$user-&gt;id)
         @continue
@@ -412,21 +373,14 @@ class SakuraHtmlView extends HtmlView
         @break
     @endif
 
-@endforeach
-</code></pre>
-
+@endforeach</code></pre>
 <p>Or add conditions to these two directives.</p>
+<pre><code class="language-php">@continue(!$user-&gt;id)
 
-<pre><code class="php">@continue(!$user-&gt;id)
-
-@break($user-&gt;id &gt;= 10)
-</code></pre>
-
+@break($user-&gt;id &gt;= 10)</code></pre>
 <h2>Layouts</h2>
-
 <p>We can define some sections in a root template.</p>
-
-<pre><code class="html">&lt;!-- tmpl/layouts/root.edge.php --&gt;
+<pre><code class="language-html">&lt;!-- tmpl/layouts/root.edge.php --&gt;
 &lt;html&gt;
     &lt;head&gt;
         &lt;title&gt;@yield('page_title')&lt;/title&gt;
@@ -436,39 +390,28 @@ class SakuraHtmlView extends HtmlView
             The is root body
         @show
     &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-
+&lt;/html&gt;</code></pre>
 <p>Now we can add an child template to extends root template.</p>
-
-<pre><code class="php">@extends('layouts.root')
+<pre><code class="language-php">@extends('layouts.root')
 
 @section('page_title', 'My Page Title')
 
 @section('content')
     &lt;p&gt;This is my body content.&lt;/p&gt;
-@endsection
-</code></pre>
-
+@endsection</code></pre>
 <p>The final template rendered:</p>
-
-<pre><code class="html">&lt;html&gt;
+<pre><code class="language-html">&lt;html&gt;
     &lt;head&gt;
         &lt;title&gt;My Page Title&lt;/title&gt;
     &lt;/head&gt;
     &lt;body&gt;
         &lt;p&gt;This is my body content.&lt;/p&gt;
     &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-
+&lt;/html&gt;</code></pre>
 <p>More directive and usages please see <a href="https://laravel.com/docs/5.2/blade#defining-a-layout">Blade</a></p>
-
 <h2>Extending Edge</h2>
-
 <p>We can create Extension class to add multiple directives and global variables to Edge.</p>
-
-<pre><code class="php">class MyExtension implements \Windwalker\Edge\Extension\EdgeExtensionInterface
+<pre><code class="language-php">class MyExtension implements \Windwalker\Edge\Extension\EdgeExtensionInterface
 {
     public function getName()
     {
@@ -508,18 +451,12 @@ class SakuraHtmlView extends HtmlView
 
 // Inject this extension to Edge
 
-\Windwalker\Renderer\Edge\GlobalContainer::addExtension(new MyExtension[, $name = null]);
-</code></pre>
-
+\Windwalker\Renderer\Edge\GlobalContainer::addExtension(new MyExtension[, $name = null]);</code></pre>
 <p>Use our new directive:</p>
+<pre><code class="language-php">&lt;h1&gt;@upper('hello')&lt;/h2&gt;
 
-<pre><code class="php">&lt;h1&gt;@upper('hello')&lt;/h2&gt;
-
-&lt;!-- Result: &lt;h1&gt;HELLO&lt;/h1&gt; --&gt;
-</code></pre>
-
+&lt;!-- Result: &lt;h1&gt;HELLO&lt;/h1&gt; --&gt;</code></pre>
 <p>See <a href="https://github.com/ventoviro/windwalker/tree/master/src/Edge">Edge Package</a></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -554,7 +491,7 @@ class SakuraHtmlView extends HtmlView
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -568,18 +505,18 @@ class SakuraHtmlView extends HtmlView
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -652,7 +589,7 @@ class SakuraHtmlView extends HtmlView
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

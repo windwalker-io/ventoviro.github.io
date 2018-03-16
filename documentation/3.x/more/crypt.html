@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Crypt | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,10 +303,8 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Hashing String or Password</h2>
-
 <p>Use <code>Hasher</code> or it's instance to hash string:</p>
-
-<pre><code class="php">use Windwalker\Core\Security\Hasher;
+<pre><code class="language-php">use Windwalker\Core\Security\Hasher;
 
 $hash = Hasher::create($password);
 
@@ -320,14 +315,10 @@ $bool = Hasher::verify($password, $hash);
 $hasher = $container-&gt;get('hasher');
 
 $hasher-&gt;create(...);
-$hasher-&gt;verify(..., ...);
-</code></pre>
-
+$hasher-&gt;verify(..., ...);</code></pre>
 <h3>Configuration:</h3>
-
 <p>In <code>etc/config.yml</code>, you can change some settings:</p>
-
-<pre><code class="yaml">crypt:
+<pre><code class="language-yaml">crypt:
     # The Crypt cipher method.
     # Support ciphers: blowfish (bf) / aes-256 (aes) / 3des / php_aes / sodium
     cipher: blowfish
@@ -337,51 +328,34 @@ $hasher-&gt;verify(..., ...);
     hash_algo: blowfish
 
     # The hashing cost depends on different algorithms. Keep default if you don't know how to use it.
-    hash_cost: ~
-</code></pre>
-
+    hash_cost: ~</code></pre>
 <p>The <code>hash_algo</code> is the hash algorithm you want to use, default is <code>blowfish</code>.</p>
-
 <p>The <code>argon2</code> and <code>scrypt</code> algorithm is powered by <a href="https://github.com/jedisct1/libsodium">libsodium</a>, you must install
 <code>ext-libsodium</code> or use php 7.2 later to support them.</p>
-
 <p>More usage please see <a href="https://github.com/ventoviro/windwalker-crypt#windwalker-crypt">Windwalker Crypt</a></p>
-
 <h2>Encrypt and Decrypt Sensitive Data</h2>
-
 <p>Use <code>Crypto</code> and it's instance to encrypt and decrypt string.</p>
-
-<pre><code class="php">use Windwalker\Core\Security\Crypto;
+<pre><code class="language-php">use Windwalker\Core\Security\Crypto;
 
 $encrypted = Crypto::encrypt('hello');
 
 echo Crypto::decrypt($encrypted); // hello
 
-Crypto::verify('hello', $encrypted); //true
-</code></pre>
-
+Crypto::verify('hello', $encrypted); //true</code></pre>
 <p>Get instance from container:</p>
+<pre><code class="language-php">$crypt = $container-&gt;get('crypt');
 
-<pre><code class="php">$crypt = $container-&gt;get('crypt');
-
-$crypt-&gt;encrypt('hello');
-</code></pre>
-
+$crypt-&gt;encrypt('hello');</code></pre>
 <h3>Cipher Configuration:</h3>
-
 <p>See <a href="#configuration">Configuration above</a>, you can set cipher you want to encrypt data.</p>
-
 <p>The default cipher is <code>blowfish</code> but you can use other openssl cipher like <code>aes</code> or <code>3des</code>,
 if your environment has no openssl extension support, you can use <code>php_aes</code> instead them.</p>
-
 <p>The libsodium also supports here, you can install <code>paragonie/sodium_compat</code> package to encrypt by sodium cipher
-without php libsodium extension, but we still recommend you to install <code>ext-libsodium</code> or use php 7.2 later to 
+without php libsodium extension, but we still recommend you to install <code>ext-libsodium</code> or use php 7.2 later to
 support memory wipe and with higher performance.</p>
-
-<p>If you get <code>sodium_memzero() only supports after php 7.2 or ext-libsodium installed.</code> message, 
+<p>If you get <code>sodium_memzero() only supports after php 7.2 or ext-libsodium installed.</code> message,
 You can disable memory wipe by <code>ignoreMemzero()</code> (But we don't recommend to do this):</p>
-
-<pre><code class="php">// Add this code in a listener or anywhere before your application 
+<pre><code class="language-php">// Add this code in a listener or anywhere before your application 
 $cipher = Crypto::getCipher();
 
 if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher)
@@ -390,11 +364,8 @@ if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher)
 }
 
 // Now you can encrypt text by sodium
-Crypto::encrypt('Hello');
-</code></pre>
-
+Crypto::encrypt('Hello');</code></pre>
 <p>See <a href="https://github.com/ventoviro/windwalker-crypt#symmetric-key-algorithm-encryption">Windwalke Crypt</a></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -429,7 +400,7 @@ Crypto::encrypt('Hello');
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -443,18 +414,18 @@ Crypto::encrypt('Hello');
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -527,7 +498,7 @@ Crypto::encrypt('Hello');
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

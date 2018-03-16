@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Form Builder | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,10 +303,8 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Create A Form</h2>
-
 <p>Create a new form instance and add fields into it.</p>
-
-<pre><code class="php">use Windwalker\Form\Field\TextareaField;
+<pre><code class="language-php">use Windwalker\Form\Field\TextareaField;
 use Windwalker\Form\Form;
 use Windwalker\Form\Field\TextField;
 use Windwalker\Form\Field\PasswordField;
@@ -321,12 +316,9 @@ $form-&gt;addField(new PasswordField('password', 'Password'));
 $form-&gt;addField(new TextField('email', 'Email'));
 $form-&gt;addField(new TextareaField('description', 'Description'));
 
-echo $form-&gt;renderFields();
-</code></pre>
-
+echo $form-&gt;renderFields();</code></pre>
 <p>Render all fields, and we get this HTML output.</p>
-
-<pre><code class="html">&lt;div id="username-control" class="text-field "&gt;
+<pre><code class="language-html">&lt;div id="username-control" class="text-field "&gt;
     &lt;label id="username-label" for="username"&gt;Username&lt;/label&gt;
     &lt;input type="text" name="username" id="username" /&gt;
 &lt;/div&gt;
@@ -341,26 +333,18 @@ echo $form-&gt;renderFields();
 &lt;div id="description-control" class="textarea-field "&gt;
     &lt;label id="description-label" for="description"&gt;Description&lt;/label&gt;
     &lt;textarea name="description" id="description"&gt;&lt;/textarea&gt;
-&lt;/div&gt;
-</code></pre>
-
+&lt;/div&gt;</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5066911/0566a53c-6e77-11e4-9bee-6cc2ee01de21.png" alt="img" /></p>
-
 <h3>Use <code>add()</code></h3>
-
 <p><code>add()</code> is a simple alias of <code>addField()</code> to make Field support chaining.</p>
-
-<pre><code class="php">$form-&gt;add('username', new TextField)
+<pre><code class="language-php">$form-&gt;add('username', new TextField)
     -&gt;label('Username')
     -&gt;setClass('input-large')
     -&gt;defauleValue('foo')
     -&gt;set('placeholder', 'Enter username')
-    -&gt;required();
-</code></pre>
-
+    -&gt;required();</code></pre>
 <h3>Using XML as Configuration</h3>
-
-<pre><code class="xml">&lt;form&gt;
+<pre><code class="language-xml">&lt;form&gt;
     &lt;field
         name="username"
         type="text"
@@ -372,40 +356,27 @@ echo $form-&gt;renderFields();
         type="password"
         label="Password"
         /&gt;
-&lt;/form&gt;
-</code></pre>
+&lt;/form&gt;</code></pre>
+<pre><code class="language-php">$form = new Form;
 
-<pre><code class="php">$form = new Form;
-
-$form-&gt;loadFile('form.xml');
-</code></pre>
-
+$form-&gt;loadFile('form.xml');</code></pre>
 <h2>Form Control</h2>
-
-<pre><code class="php">$control = 'user';
+<pre><code class="language-php">$control = 'user';
 
 $form = new Form($control);
 
 $form-&gt;addField(new TextField('username', 'Username'));
 
-echo $form-&gt;renderFields();
-</code></pre>
-
+echo $form-&gt;renderFields();</code></pre>
 <p>The result will make name as an array.</p>
-
-<pre><code class="html">&lt;div id="user-username-control" class="text-field "&gt;
+<pre><code class="language-html">&lt;div id="user-username-control" class="text-field "&gt;
     &lt;label id="user-username-label" for="user-username"&gt;Username&lt;/label&gt;
     &lt;input type="text" name="user[username]" id="user-username" /&gt;
-&lt;/div&gt;
-</code></pre>
-
+&lt;/div&gt;</code></pre>
 <h2>Organize Fields</h2>
-
 <h3>Fieldset</h3>
-
 <p>Fieldset is a category of fields, we can filter our fields by fieldset:</p>
-
-<pre><code class="php">$form = new Form;
+<pre><code class="language-php">$form = new Form;
 
 $form-&gt;addField(new TextField('flower', 'Flower'), 'plant');
 $form-&gt;addField(new TextField('tree', 'Tree'), 'plant');
@@ -419,12 +390,9 @@ echo $form-&gt;renderFields('plant');
 echo $form-&gt;renderFields('animal');
 
 // Will render all
-echo $form-&gt;renderFields();
-</code></pre>
-
+echo $form-&gt;renderFields();</code></pre>
 <p>Use callback to wrap fieldset.</p>
-
-<pre><code class="php">$form-&gt;fieldset('plant', function (Form $form)
+<pre><code class="language-php">$form-&gt;fieldset('plant', function (Form $form)
 {
     $form-&gt;addField(new TextField('flower', 'Flower'));
     $form-&gt;addField(new TextField('tree', 'Tree'));
@@ -434,12 +402,9 @@ $form-&gt;fieldset('animal', function (Form $form)
 {
     $form-&gt;addField(new TextField('flower', 'Flower'));
     $form-&gt;addField(new TextField('tree', 'Tree'));
-});
-</code></pre>
-
+});</code></pre>
 <p>Using XML</p>
-
-<pre><code class="xml">&lt;form&gt;
+<pre><code class="language-xml">&lt;form&gt;
     &lt;fieldset name="plant"&gt;
         &lt;field name="flower" label="Flower"/&gt;
         &lt;field name="tree" label="Tree"/&gt;
@@ -449,14 +414,10 @@ $form-&gt;fieldset('animal', function (Form $form)
         &lt;field name="dog" label="Dog"/&gt;
         &lt;field name="cat" label="Cat"/&gt;
     &lt;/fieldset&gt;
-&lt;/form&gt;
-</code></pre>
-
+&lt;/form&gt;</code></pre>
 <h3>Group</h3>
-
 <p>Group is like fieldset as a category of fields, but it will make name of fields to be array:</p>
-
-<pre><code class="php">$form = new Form;
+<pre><code class="language-php">$form = new Form;
 
 $form-&gt;addField(new TextField('flower', 'Flower'), null, 'earth');
 $form-&gt;addField(new TextField('bird', 'Bird'), null, 'sky');
@@ -465,12 +426,9 @@ $form-&gt;addField(new TextField('bird', 'Bird'), null, 'sky');
 echo $form-&gt;renderFields(null, 'plant');
 
 // The name will be name="sky[dog]"
-echo $form-&gt;renderFields(null, 'animal');
-</code></pre>
-
+echo $form-&gt;renderFields(null, 'animal');</code></pre>
 <p>Now we can use fieldset and group to organize our fields.</p>
-
-<pre><code class="php">$form = new Form;
+<pre><code class="language-php">$form = new Form;
 
 $form-&gt;addField(new TextField('flower', 'Flower'), 'plant', 'earth');
 $form-&gt;addField(new TextField('tree', 'Tree'), 'plant', 'earth');
@@ -488,21 +446,15 @@ echo $form-&gt;renderFields('animal');
 echo $form-&gt;renderFields(null, 'earth');
 
 // Will render all
-echo $form-&gt;renderFields();
-</code></pre>
-
+echo $form-&gt;renderFields();</code></pre>
 <p>Use callback to wrap group:</p>
-
-<pre><code class="php">$form-&gt;group('earth', function (Form $form)
+<pre><code class="language-php">$form-&gt;group('earth', function (Form $form)
 {
     $form-&gt;addField(new TextField('flower', 'Flower'));
     $form-&gt;addField(new TextField('tree', 'Tree'));
-});
-</code></pre>
-
+});</code></pre>
 <p>Wrap with fieldset and group:</p>
-
-<pre><code class="php">$form-&gt;wrap('plant', 'earth', function (Form $form)
+<pre><code class="language-php">$form-&gt;wrap('plant', 'earth', function (Form $form)
 {
     $form-&gt;addField(new TextField('flower', 'Flower'));
     $form-&gt;addField(new TextField('tree', 'Tree'));
@@ -511,12 +463,9 @@ echo $form-&gt;renderFields();
 $form-&gt;wrap('animal', 'sky', function (Form $form)
 {
     $form-&gt;addField(new TextField('bird', 'Bird'));
-});
-</code></pre>
-
+});</code></pre>
 <p>Using XML</p>
-
-<pre><code class="xml">&lt;form&gt;
+<pre><code class="language-xml">&lt;form&gt;
     &lt;group name="earth"&gt;
         &lt;fieldset name="plant"&gt;
             &lt;field name="flower" label="Flower"/&gt;
@@ -534,83 +483,55 @@ $form-&gt;wrap('animal', 'sky', function (Form $form)
             &lt;field name="bird" label="Bird"/&gt;
         &lt;/group&gt;
     &lt;/fieldset&gt;
-&lt;/form&gt;
-</code></pre>
-
+&lt;/form&gt;</code></pre>
 <p>Control and group supports multi-level by <code>/</code> or <code>.</code> separator:</p>
+<pre><code class="language-php">$form = new Form('foo/bar');
 
-<pre><code class="php">$form = new Form('foo/bar');
-
-$form-&gt;group('egg/bread', ...);
-</code></pre>
-
+$form-&gt;group('egg/bread', ...);</code></pre>
 <h2>Attributes of Fields</h2>
-
 <h3>Name &amp; Label</h3>
-
-<pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'));
-</code></pre>
-
+<pre><code class="language-php">$form-&gt;addField(new TextField('name', 'Label'));</code></pre>
 <h3>Set Attributes</h3>
-
 <p>You can set some attributes to field by <code>set()</code> or <code>setAttribute()</code>, this method will only allow standard
- HTML attributes inject to latest rendered result.</p>
-
-<pre><code class="php">$form-&gt;addField(new TextField('name'))
+HTML attributes inject to latest rendered result.</p>
+<pre><code class="language-php">$form-&gt;addField(new TextField('name'))
     -&gt;label('Label')
     -&gt;set('id', 'my-name')
     -&gt;set('class', 'col-md-8 form-input')
     -&gt;set('onclick', 'return false;')
     -&gt;set('labelClass', 'form-label') // &lt;-- This will add to &lt;label class="..."&gt;
-    -&gt;set('data-my-attr', 'foo'); // &lt;-- This custom attribute will not work
-</code></pre>
-
+    -&gt;set('data-my-attr', 'foo'); // &lt;-- This custom attribute will not work</code></pre>
 <p>If you want to set custom data attributes to make your inputs work with some JS frameworks (e.g. Vue, Angular, Bootstrap),
 you can use <code>attr()</code> to directly set HTML attributes.</p>
-
-<pre><code class="php">$form-&gt;addField(new TextField('name'))
+<pre><code class="language-php">$form-&gt;addField(new TextField('name'))
     -&gt;label('Label')
     -&gt;set('class', 'col-md-8 form-input')
     -&gt;attr('v-on:click', 'foo()')
     -&gt;attr(':value', 'bar')
-    -&gt;attr('data-toggle', 'tooltip');
-</code></pre>
-
+    -&gt;attr('data-toggle', 'tooltip');</code></pre>
 <p>These custom directives will directly add to HTML. <code>attr()</code> method is like jQuery <code>attr()</code>, if you don't pass
 second param, this method will be a getter to return attribute value.</p>
-
 <p>You can also set attribute to input wrapper and label, use <code>controlAttr()</code> and <code>labelAttr()</code>.</p>
-
 <h3>Required, Disabled and Readonly</h3>
-
-<pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'))
+<pre><code class="language-php">$form-&gt;addField(new TextField('name', 'Label'))
     -&gt;set('id', 'my-name')
     -&gt;required()
-    -&gt;disabled();
-</code></pre>
-
+    -&gt;disabled();</code></pre>
 <p>Set to false.</p>
-
-<pre><code class="php">$form-&gt;addField(new TextField('name', 'Label'))
+<pre><code class="language-php">$form-&gt;addField(new TextField('name', 'Label'))
     -&gt;set('id', 'my-name')
     -&gt;required(false)
-    -&gt;disabled(false);
-</code></pre>
-
+    -&gt;disabled(false);</code></pre>
 <h3>XML</h3>
-
-<pre><code class="xml">&lt;field
+<pre><code class="language-xml">&lt;field
     name="name"
     label="Label"
     id="my-name"
     required="true"
     disabled="false"
-/&gt;
-</code></pre>
-
+/&gt;</code></pre>
 <h2>Filter</h2>
-
-<pre><code class="php">use Windwalker\Filter\InputFilter;
+<pre><code class="language-php">use Windwalker\Filter\InputFilter;
 
 $form-&gt;addField(new TextField('id', 'ID'))
     -&gt;addFilter(InputFilter::INTEGER);
@@ -624,12 +545,9 @@ $form-&gt;bind($data);
 // Do filter
 $form-&gt;filter();
 
-$values = $form-&gt;getValues(); // Array(id = 123)
-</code></pre>
-
+$values = $form-&gt;getValues(); // Array(id = 123)</code></pre>
 <h2>Validate</h2>
-
-<pre><code class="php">$form-&gt;addField(new TextField('name', 'Name'))
+<pre><code class="language-php">$form-&gt;addField(new TextField('name', 'Name'))
     -&gt;required();
 
 $form-&gt;addField(new TextField('email', 'Email'))
@@ -650,14 +568,10 @@ $results = $form-&gt;getErrors();
 var_dump($r); // bool(false)
 
 $results[0]-&gt;getMessage(); // Field Email validate fail.
-$results[1]-&gt;getMessage(); // Field Name value not allow empty.
-</code></pre>
-
+$results[1]-&gt;getMessage(); // Field Name value not allow empty.</code></pre>
 <h2>Field Types</h2>
-
 <h3>Select List</h3>
-
-<pre><code class="php">use Windwalker\Form\Field\ListField;
+<pre><code class="language-php">use Windwalker\Form\Field\ListField;
 use Windwalker\Html\Option;
 
 $selectField = new ListField(
@@ -670,181 +584,162 @@ $selectField = new ListField(
     )
 );
 
-echo $selectField-&gt;render();
-</code></pre>
-
+echo $selectField-&gt;render();</code></pre>
 <p>The output is:</p>
-
-<pre><code class="html">&lt;div id="flower-control" class="list-field "&gt;
+<pre><code class="language-html">&lt;div id="flower-control" class="list-field "&gt;
     &lt;label id="flower-label" for="flower"&gt;Flower&lt;/label&gt;
     &lt;select name="flower" id="flower" class="stub-flower"&gt;
         &lt;option selected="selected"&gt;&lt;/option&gt;
         &lt;option value="1"&gt;Yes&lt;/option&gt;
         &lt;option value="0"&gt;No&lt;/option&gt;
     &lt;/select&gt;
-&lt;/div&gt;
-</code></pre>
-
+&lt;/div&gt;</code></pre>
 <p>Multiple List</p>
-
-<pre><code class="php">$selectField-&gt;set('multiple', true);
-</code></pre>
-
+<pre><code class="language-php">$selectField-&gt;set('multiple', true);</code></pre>
 <h3>RadioList</h3>
-
-<pre><code class="php">$form-&gt;addField(new RadioList('flower', 'Flower'))
+<pre><code class="language-php">$form-&gt;addField(new RadioList('flower', 'Flower'))
     -&gt;addOption(new Option('Yes', 1))
-    -&gt;addOption(new Option('No', 0));
-</code></pre>
-
+    -&gt;addOption(new Option('No', 0));</code></pre>
 <p>We can also add options in constructor:</p>
-
-<pre><code class="php">$field = new RadioList(
+<pre><code class="language-php">$field = new RadioList(
     'flower',
     'Flower',
     array(
         new Option('Yes', 1),
         new Option('No', 0),
     )
-);
-</code></pre>
-
+);</code></pre>
 <h2>Available Fields</h2>
-
 <table>
 <thead>
 <tr>
-  <th>Name</th>
-  <th>HTML</th>
-  <th>Description</th>
+<th>Name</th>
+<th>HTML</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>TextField</td>
-  <td><code>&lt;input type="text"&gt;</code></td>
-  <td>The text input field.</td>
+<td>TextField</td>
+<td><code>&lt;input type="text"&gt;</code></td>
+<td>The text input field.</td>
 </tr>
 <tr>
-  <td>TextareaField</td>
-  <td><code>&lt;textarea&gt;&lt;/textarea&gt;</code></td>
-  <td>Textarea field.</td>
+<td>TextareaField</td>
+<td><code>&lt;textarea&gt;&lt;/textarea&gt;</code></td>
+<td>Textarea field.</td>
 </tr>
 <tr>
-  <td>ColorField</td>
-  <td><code>&lt;input type="color"&gt;</code></td>
-  <td>HTML5 Color picker</td>
+<td>ColorField</td>
+<td><code>&lt;input type="color"&gt;</code></td>
+<td>HTML5 Color picker</td>
 </tr>
 <tr>
-  <td>DateField</td>
-  <td><code>&lt;input type="date"&gt;</code></td>
-  <td>Date selector</td>
+<td>DateField</td>
+<td><code>&lt;input type="date"&gt;</code></td>
+<td>Date selector</td>
 </tr>
 <tr>
-  <td>DatetimeLocalField</td>
-  <td><code>&lt;input type="datetime-local"&gt;</code></td>
-  <td>Datetime selector</td>
+<td>DatetimeLocalField</td>
+<td><code>&lt;input type="datetime-local"&gt;</code></td>
+<td>Datetime selector</td>
 </tr>
 <tr>
-  <td>MonthField</td>
-  <td><code>&lt;input type="month"&gt;</code></td>
-  <td>Month selector</td>
+<td>MonthField</td>
+<td><code>&lt;input type="month"&gt;</code></td>
+<td>Month selector</td>
 </tr>
 <tr>
-  <td>NumberField</td>
-  <td><code>&lt;input type="number"&gt;</code></td>
-  <td>Number text field</td>
+<td>NumberField</td>
+<td><code>&lt;input type="number"&gt;</code></td>
+<td>Number text field</td>
 </tr>
 <tr>
-  <td>RangeField</td>
-  <td><code>&lt;input type="range"&gt;</code></td>
-  <td>A range bar.</td>
+<td>RangeField</td>
+<td><code>&lt;input type="range"&gt;</code></td>
+<td>A range bar.</td>
 </tr>
 <tr>
-  <td>TelField</td>
-  <td><code>&lt;input type="tel"&gt;</code></td>
-  <td>Tel text field.</td>
+<td>TelField</td>
+<td><code>&lt;input type="tel"&gt;</code></td>
+<td>Tel text field.</td>
 </tr>
 <tr>
-  <td>TimeField</td>
-  <td><code>&lt;input type="time"&gt;</code></td>
-  <td>Time field.</td>
+<td>TimeField</td>
+<td><code>&lt;input type="time"&gt;</code></td>
+<td>Time field.</td>
 </tr>
 <tr>
-  <td>UrlField</td>
-  <td><code>&lt;input type="url"&gt;</code></td>
-  <td>URL text field</td>
+<td>UrlField</td>
+<td><code>&lt;input type="url"&gt;</code></td>
+<td>URL text field</td>
 </tr>
 <tr>
-  <td>WeekField</td>
-  <td><code>&lt;input type="week"&gt;</code></td>
-  <td>Week selector</td>
+<td>WeekField</td>
+<td><code>&lt;input type="week"&gt;</code></td>
+<td>Week selector</td>
 </tr>
 <tr>
-  <td>EmailField</td>
-  <td><code>&lt;input type="email"&gt;</code></td>
-  <td>The email text field.</td>
+<td>EmailField</td>
+<td><code>&lt;input type="email"&gt;</code></td>
+<td>The email text field.</td>
 </tr>
 <tr>
-  <td>HiddenField</td>
-  <td><code>&lt;input type="hidden"&gt;</code></td>
-  <td>Hidden input.</td>
+<td>HiddenField</td>
+<td><code>&lt;input type="hidden"&gt;</code></td>
+<td>Hidden input.</td>
 </tr>
 <tr>
-  <td>PasswordField</td>
-  <td><code>&lt;input type="password"&gt;</code></td>
-  <td>Password field.</td>
+<td>PasswordField</td>
+<td><code>&lt;input type="password"&gt;</code></td>
+<td>Password field.</td>
 </tr>
 <tr>
-  <td>SpacerField</td>
-  <td><code>&lt;hr&gt;</code></td>
-  <td>The spacer to separate fields and fields.</td>
+<td>SpacerField</td>
+<td><code>&lt;hr&gt;</code></td>
+<td>The spacer to separate fields and fields.</td>
 </tr>
 <tr>
-  <td>ListField</td>
-  <td><code>&lt;select&gt;</code></td>
-  <td>Select list.</td>
+<td>ListField</td>
+<td><code>&lt;select&gt;</code></td>
+<td>Select list.</td>
 </tr>
 <tr>
-  <td>CheckboxField</td>
-  <td><code>&lt;input type="checkbox"&gt;</code></td>
-  <td>Single checkbox.</td>
+<td>CheckboxField</td>
+<td><code>&lt;input type="checkbox"&gt;</code></td>
+<td>Single checkbox.</td>
 </tr>
 <tr>
-  <td>CheckboxesField</td>
-  <td><code>&lt;input type="checkbox"&gt;</code></td>
-  <td>Checkbox list.</td>
+<td>CheckboxesField</td>
+<td><code>&lt;input type="checkbox"&gt;</code></td>
+<td>Checkbox list.</td>
 </tr>
 <tr>
-  <td>RadioField</td>
-  <td><code>&lt;input type="radio"&gt;</code></td>
-  <td>Radio list.</td>
+<td>RadioField</td>
+<td><code>&lt;input type="radio"&gt;</code></td>
+<td>Radio list.</td>
 </tr>
 <tr>
-  <td>TimezoneField</td>
-  <td><code>&lt;select&gt;</code></td>
-  <td>A timezone select list.</td>
+<td>TimezoneField</td>
+<td><code>&lt;select&gt;</code></td>
+<td>A timezone select list.</td>
 </tr>
 <tr>
-  <td>ButtonField</td>
-  <td><code>&lt;button&gt;</code></td>
-  <td>Create a custom button.</td>
+<td>ButtonField</td>
+<td><code>&lt;button&gt;</code></td>
+<td>Create a custom button.</td>
 </tr>
 <tr>
-  <td>CustomHtmlField</td>
-  <td><code>...</code></td>
-  <td>Create any HTML you want with <code>set('content', ...)</code>.</td>
+<td>CustomHtmlField</td>
+<td><code>...</code></td>
+<td>Create any HTML you want with <code>set('content', ...)</code>.</td>
 </tr>
 </tbody>
 </table>
-
 <p>See every fields' <code>prepare()</code> method you will know available attributes.</p>
-
 <h2>Custom Fields</h2>
-
 <h3>Custom TextField.</h3>
-
-<pre><code class="php">namespace MyCode\Fields;
+<pre><code class="language-php">namespace MyCode\Fields;
 
 class FooField extends TextField
 {
@@ -856,23 +751,15 @@ class FooField extends TextField
 
         $attrs['bar'] = $this-&gt;getAttribute('bar');
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>For XML</p>
-
-<pre><code class="php">\Windwalker\Form\FieldHelper::addNamespace('MyCode\Filter');
-</code></pre>
-
-<pre><code class="xml">&lt;field
+<pre><code class="language-php">\Windwalker\Form\FieldHelper::addNamespace('MyCode\Filter');</code></pre>
+<pre><code class="language-xml">&lt;field
     name="foo"
     type="foo"
-/&gt;
-</code></pre>
-
+/&gt;</code></pre>
 <h3>Custom List field</h3>
-
-<pre><code class="php">namespace MyCode\Fields;
+<pre><code class="language-php">namespace MyCode\Fields;
 
 class UsersField extends ListField
 {
@@ -889,12 +776,9 @@ class UsersField extends ListField
 
         return $options;
     }
-}
-</code></pre>
-
+}</code></pre>
 <h2>Custom Filter</h2>
-
-<pre><code class="php">namespace MyCode\Filter;
+<pre><code class="language-php">namespace MyCode\Filter;
 
 class MyFilter implements FilterInterface
 {
@@ -905,24 +789,16 @@ class MyFilter implements FilterInterface
 }
 
 (new TextField('foo', 'Foo'))
-    -&gt;addFilter(new MyFilter);
-</code></pre>
-
+    -&gt;addFilter(new MyFilter);</code></pre>
 <p>For XML</p>
-
-<pre><code class="php">\Windwalker\Form\FilterHelper::addNamespace('MyCode\Filter');
-</code></pre>
-
-<pre><code class="xml">&lt;field
+<pre><code class="language-php">\Windwalker\Form\FilterHelper::addNamespace('MyCode\Filter');</code></pre>
+<pre><code class="language-xml">&lt;field
     name="foo"
     type="text"
     filter="my"
-/&gt;
-</code></pre>
-
+/&gt;</code></pre>
 <h2>Custom Validator</h2>
-
-<pre><code class="php">namespace MyCode\Validator;
+<pre><code class="language-php">namespace MyCode\Validator;
 
 use Windwalker\Validator\AbstractValidator;
 
@@ -935,26 +811,17 @@ class MyValidator extends AbstractValidator
 }
 
 (new TextField('foo', 'Foo'))
-    -&gt;addFilter(new MyValidator);
-</code></pre>
-
+    -&gt;addFilter(new MyValidator);</code></pre>
 <p>For XML</p>
-
-<pre><code class="php">\Windwalker\Form\ValidatorHelper::addNamespace('MyCode\Validator');
-</code></pre>
-
-<pre><code class="xml">&lt;field
+<pre><code class="language-php">\Windwalker\Form\ValidatorHelper::addNamespace('MyCode\Validator');</code></pre>
+<pre><code class="language-xml">&lt;field
     name="foo"
     type="text"
     filter="my"
-/&gt;
-</code></pre>
-
+/&gt;</code></pre>
 <h2>Form Renderer</h2>
-
 <p>If you wish to override core HTML output, use <code>FormRendererInterface</code> to render your fields.</p>
-
-<pre><code class="php">class MyFormRenderer implements \Windwalker\Form\Renderer\FormRendererInterface
+<pre><code class="language-php">class MyFormRenderer implements \Windwalker\Form\Renderer\FormRendererInterface
 {
     public function renderField(AbstractField $field, array $attribs = array())
     {
@@ -977,9 +844,7 @@ class MyValidator extends AbstractValidator
     }
 }
 
-$form-&gt;setRenderer(new MyFormRenderer);
-</code></pre>
-
+$form-&gt;setRenderer(new MyFormRenderer);</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -1014,7 +879,7 @@ $form-&gt;setRenderer(new MyFormRenderer);
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -1028,18 +893,18 @@ $form-&gt;setRenderer(new MyFormRenderer);
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -1112,7 +977,7 @@ $form-&gt;setRenderer(new MyFormRenderer);
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

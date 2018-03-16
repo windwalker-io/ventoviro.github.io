@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>CORS Headers | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,13 +303,10 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Add CORS Headers</h2>
-
 <p>If you want to build a remote API server, you must handle <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">CORS</a>
 request to make sure remote browser can access your server.</p>
-
 <p>Windwalker has a <code>CorsHandler</code> to quickly add CORS headers to <code>Response</code>. Fo example, you can do this in controller:</p>
-
-<pre><code class="php">// In Controller
+<pre><code class="language-php">// In Controller
 
 use Windwalker\Core\Http\CorsHandler;
 
@@ -323,23 +317,16 @@ $this-&gt;response = CorsHandler::create($this-&gt;response)
     -&gt;allowCredentials(true)
     -&gt;allowMethods(['GET', 'POST'])
     -&gt;allowHeaders(['X-Foo', 'X-bar'])
-    -&gt;getResponse();
-</code></pre>
-
+    -&gt;getResponse();</code></pre>
 <p>Now Windwalker will auto genarate these headers:</p>
-
-<pre><code class="http">Access-Control-Allow-Credentials: true
+<pre><code class="language-http">Access-Control-Allow-Credentials: true
 Access-Control-Allow-Headers: X-Foo, X-Bar
 Access-Control-Allow-Methods: GET, POST
-Access-Control-Allow-Origin: *
-</code></pre>
-
+Access-Control-Allow-Origin: *</code></pre>
 <h2>Dynamically Return Allow Origins</h2>
-
 <p>Use wildcard (<code>*</code>) to Allow-Origin is not recommended, you can save domains which you allowed in system and add them
- to header dynamically.</p>
-
-<pre><code class="php">$allowOrigins = $model-&gt;getMyAllowOrigins();
+to header dynamically.</p>
+<pre><code class="language-php">$allowOrigins = $model-&gt;getMyAllowOrigins();
 
 $origin = $this-&gt;input-&gt;server-&gt;getUrl('HTTP_ORIGIN');
 
@@ -348,37 +335,24 @@ if (in_array($origin, $allowOrigins))
     $this-&gt;response = CorsHandler::create($this-&gt;response)
         -&gt;allowOrigin($origin)
         -&gt;getResponse();
-}
-</code></pre>
-
+}</code></pre>
 <p>You can also add multiple origins:</p>
-
-<pre><code class="php">$this-&gt;response = CorsHandler::create($this-&gt;response)
+<pre><code class="language-php">$this-&gt;response = CorsHandler::create($this-&gt;response)
     -&gt;allowOrigin($origin1)
     -&gt;allowOrigin($origin2)
     -&gt;allowOrigin($origin3)
-    -&gt;getResponse();
-</code></pre>
-
+    -&gt;getResponse();</code></pre>
 <p>The headers will be:</p>
-
-<pre><code class="http">Access-Control-Allow-Origin: http://domain1.com
+<pre><code class="language-http">Access-Control-Allow-Origin: http://domain1.com
 Access-Control-Allow-Origin: http://domain2.com
-Access-Control-Allow-Origin: http://domain3.com
-</code></pre>
-
+Access-Control-Allow-Origin: http://domain3.com</code></pre>
 <p>To replace all origins, set <code>true</code> to second argument.</p>
-
-<pre><code class="php">$this-&gt;response = CorsHandler::create($this-&gt;response)
+<pre><code class="language-php">$this-&gt;response = CorsHandler::create($this-&gt;response)
     -&gt;allowOrigin($newOrigin, true)
-    -&gt;getResponse();
-</code></pre>
-
+    -&gt;getResponse();</code></pre>
 <h2>Use CoreTrait</h2>
-
 <p>Use CorsTrait on controller to add some helper methods:</p>
-
-<pre><code class="php">class GetController extends AbstractController
+<pre><code class="language-php">class GetController extends AbstractController
 {
     ue JsonApiTrait, CorsTrait;
 
@@ -388,9 +362,7 @@ Access-Control-Allow-Origin: http://domain3.com
             -&gt;maxAge(...)
             -&gt;allowHeaders([...]);
     }
-}
-</code></pre>
-
+}</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -425,7 +397,7 @@ Access-Control-Allow-Origin: http://domain3.com
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -439,18 +411,18 @@ Access-Control-Allow-Origin: http://domain3.com
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -523,7 +495,7 @@ Access-Control-Allow-Origin: http://domain3.com
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

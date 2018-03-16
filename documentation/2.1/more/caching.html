@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Caching | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,24 +250,18 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Configuration</h2>
-
 <p>Using cache will be very easy in Windwalker, the cache configuration is located at <code>/etc/config.yml</code>.</p>
-
-<pre><code class="yaml">cache:
+<pre><code class="language-yaml">cache:
     enabled: 0
     storage: file
     handler: serialize
     dir: cache
-    time: 15
-</code></pre>
-
+    time: 15</code></pre>
 <p>The <code>enabled</code> property controls global cache start or not, can be close if you want to test your application. <code>storage</code> controls which cache storage method
- you use, can be <code>file</code>, <code>runtime</code>, <code>memcached</code> or <a href="https://github.com/ventoviro/windwalker-cache#available-storage">more</a>.
- About storage and handler, please see <a href="https://github.com/ventoviro/windwalker-cache">Windwalker Cache</a>.</p>
-
+you use, can be <code>file</code>, <code>runtime</code>, <code>memcached</code> or <a href="https://github.com/ventoviro/windwalker-cache#available-storage">more</a>.
+About storage and handler, please see <a href="https://github.com/ventoviro/windwalker-cache">Windwalker Cache</a>.</p>
 <h2>Use Cache</h2>
-
-<pre><code class="php">$cache = Ioc::getCache();
+<pre><code class="language-php">$cache = Ioc::getCache();
 
 // OR
 
@@ -283,55 +274,36 @@ $cache-&gt;set('key', 'value');
 $value = $cache-&gt;get('key');
 
 // Check cache item
-$cache-&gt;exists('key');
-</code></pre>
-
+$cache-&gt;exists('key');</code></pre>
 <h2>Get Cache By CacheFactory</h2>
-
 <p>Get cache factory:</p>
-
-<pre><code class="php">$cacheFactory = $container-&gt;get('cache.factory');
+<pre><code class="language-php">$cacheFactory = $container-&gt;get('cache.factory');
 
 // OR
 
 use Windwalker\Core\Cache\CacheFactory;
 
-$cacheFactory = CacheFactory::getInstance();
-</code></pre>
-
+$cacheFactory = CacheFactory::getInstance();</code></pre>
 <p>Create cache:</p>
-
-<pre><code class="php">$cache = $cacheFactory-&gt;create('mycache_name', 'file'); // Every name will be singleton object.
-</code></pre>
-
+<pre><code class="language-php">$cache = $cacheFactory-&gt;create('mycache_name', 'file'); // Every name will be singleton object.</code></pre>
 <p>If you set <code>cache.enabled</code> to <code>false</code>, all cache created from <code>create()</code> will be <code>NullStorage</code>, it won't cache any data.</p>
-
 <h2>Auto Fetch Data By Closure</h2>
-
 <p>Using call method to auto detect is cache exists or not.</p>
-
-<pre><code class="php">$data = $cache-&gt;call('flower', function()
+<pre><code class="language-php">$data = $cache-&gt;call('flower', function()
 {
     return array('sakura');
-});
-</code></pre>
-
+});</code></pre>
 <p>It is same as this code:</p>
-
-<pre><code class="php">if (!$cache-&gt;exists('flower'))
+<pre><code class="language-php">if (!$cache-&gt;exists('flower'))
 {
     $cache-&gt;set('flower', array('sakura'));
 }
 
-$data = $cache-&gt;get('flower');
-</code></pre>
-
+$data = $cache-&gt;get('flower');</code></pre>
 <h2>Debug Mode or Cache Disabled</h2>
-
 <p>When debug property in global config se to <code>1</code> or cache disabled, the cache storage will auto set to <code>NullStorage</code>, cache can still be used
- but no work.</p>
-
-<pre><code class="php">// If cache disabled
+but no work.</p>
+<pre><code class="language-php">// If cache disabled
 $cache = \Windwalker\Ioc::getCache();
 
 // Cache object can be get and operate, but the key will always not exists.
@@ -346,40 +318,26 @@ else
     $data = $cache-&gt;get('flower');
 }
 
-return $data;
-</code></pre>
-
+return $data;</code></pre>
 <h2>Using Custom Cache Object</h2>
-
 <p>In the above we use global cache, but we can still create our custom cache to store values, it will not affected by global config.</p>
-
 <h3>Use <code>CacheFactory::getCache()</code></h3>
-
 <p>CacheFactory is a cache creator, it will store each cache object as singleton by different name.</p>
-
-<pre><code class="php">use Windwalker\Core\Cache\CacheFactory;
+<pre><code class="language-php">use Windwalker\Core\Cache\CacheFactory;
 
 $myFileCache = CacheFactory::getCache('cache_name', 'file');
-$myRuntimeCache = CacheFactory::getCache('cache_name', 'runtime');
-</code></pre>
-
+$myRuntimeCache = CacheFactory::getCache('cache_name', 'runtime');</code></pre>
 <p>Te default cache is runtime cache, it means our data only keep in once runtime but will not save as files.</p>
-
 <h3>Custom Cache Options</h3>
-
-<pre><code class="php">$options = array(
+<pre><code class="language-php">$options = array(
     'cache_dir' =&gt; WINDWALKLER_ROOT . '/cache', // Only for file storage
     'cache_time' =&gt; 999 // minutes
 );
 
-$cache = CacheFactory::getCache('cache_name', 'file', 'serialize', $options);
-</code></pre>
-
+$cache = CacheFactory::getCache('cache_name', 'file', 'serialize', $options);</code></pre>
 <h2>Full Page Cache</h2>
-
 <p>Sometimes we want to store whole html as static page cache. <code>StringHandler</code>  help us save raw string:</p>
-
-<pre><code class="php">use Windwalker\Cache\Cache;
+<pre><code class="language-php">use Windwalker\Cache\Cache;
 use Windwalker\Cache\Storage\RawFileStorage;
 
 $cache = CacheFactory::getCache('cache_name', 'file', 'string');
@@ -399,19 +357,14 @@ $html = $view-&gt;render();
 
 $cache-&gt;set($url, $html);
 
-echo $html;
-</code></pre>
-
+echo $html;</code></pre>
 <h3>Supported Handlers</h3>
-
 <ul>
 <li>SerializeHandler</li>
 <li>JsonHandler</li>
 <li>StringHandler</li>
 </ul>
-
 <p><a href="https://github.com/ventoviro/windwalker-cache">More about Windwalker Cache</a></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -446,7 +399,7 @@ echo $html;
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -460,18 +413,18 @@ echo $html;
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -544,7 +497,7 @@ echo $html;
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

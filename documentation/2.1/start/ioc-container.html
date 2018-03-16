@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>IoC Container | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -253,47 +250,29 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>What is Ioc Container</h2>
-
 <p>Windwalker DI is a <a href="http://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> tools,
 provide us an <a href="http://en.wikipedia.org/wiki/Inversion_of_control">IOC</a> container to manage objects and data.
 We also support service provider to help developers build their service in a universal interface.</p>
-
 <blockquote>
-  <p>For more information about IOC and DI, please see
-  <a href="http://martinfowler.com/articles/injection.html">Inversion of Control Containers and the Dependency Injection pattern</a> by Martin Fowler.</p>
+<p>For more information about IOC and DI, please see
+<a href="http://martinfowler.com/articles/injection.html">Inversion of Control Containers and the Dependency Injection pattern</a> by Martin Fowler.</p>
 </blockquote>
-
 <h2>Get IoC Container</h2>
-
 <p>Use internal container in controller and Application:</p>
-
-<pre><code class="php">$session = $this-&gt;container-&gt;get('system.session');
-</code></pre>
-
+<pre><code class="language-php">$session = $this-&gt;container-&gt;get('system.session');</code></pre>
 <p>Or use static method in <code>Ioc</code> class to get it:</p>
-
-<pre><code class="php">$container = \Windwalker\Ioc::factory(); // This container is singleton
-</code></pre>
-
+<pre><code class="language-php">$container = \Windwalker\Ioc::factory(); // This container is singleton</code></pre>
 <p>Now we can store objects into it.</p>
-
-<pre><code class="php">$input = new Input;
+<pre><code class="language-php">$input = new Input;
 
 $container-&gt;set('my.input', $input);
 
-$input = $container-&gt;get('my.input');
-</code></pre>
-
+$input = $container-&gt;get('my.input');</code></pre>
 <p>Or get it by <code>Ioc:get()</code> statically:</p>
-
-<pre><code class="php">\Windwalker\Ioc::get('my.input');
-</code></pre>
-
+<pre><code class="language-php">\Windwalker\Ioc::get('my.input');</code></pre>
 <h3>Get Sub Container</h3>
-
 <p>Every package will use a child container, if the key in child container not found, container will search from parent:</p>
-
-<pre><code class="php">// Get FlowerPackage container
+<pre><code class="language-php">// Get FlowerPackage container
 $container = Ioc::factory('flower');
 
 // Set something
@@ -303,35 +282,23 @@ $container-&gt;set('sakura', 'Sakura');
 $sakura = $container-&gt;get('sakura');
 
 // rose not exists, will find from parent.
-$rose = $container-&gt;get('rose');
-</code></pre>
-
+$rose = $container-&gt;get('rose');</code></pre>
 <p>Directly get object from sub container by <code>Ioc</code>:</p>
-
-<pre><code class="php">\Windwalker\Ioc::get('sakura', 'flower');
-</code></pre>
-
+<pre><code class="language-php">\Windwalker\Ioc::get('sakura', 'flower');</code></pre>
 <h2>Lazy Loading</h2>
-
 <p>Use callback function as input value if we do not want to create object instantly.</p>
-
-<pre><code class="php">// Set a closure into it
+<pre><code class="language-php">// Set a closure into it
 $container-&gt;set('input', function(Container $container)
 {
     return new Input;
 });
 
 // Will call this closure when we get it
-$input = $container-&gt;get('input');
-</code></pre>
-
+$input = $container-&gt;get('input');</code></pre>
 <p>But if we use <code>set()</code> method to set callback, this object will be re-created everytime.</p>
-
 <h2>Shared Object (Singleton)</h2>
-
 <p>Use <code>set('foo', $object, true)</code> or <code>share('foo', $object)</code> to make an object singleton, we'll always get the same instance.</p>
-
-<pre><code class="php">// Share a closure
+<pre><code class="language-php">// Share a closure
 $container-&gt;share('input', function(Container $container)
 {
     return new Input;
@@ -344,14 +311,10 @@ $input = $container-&gt;get('input');
 $newInput = $container-&gt;get('input', true);
 
 // Use readable constant
-$newInput = $container-&gt;get('input', Container::FORCE_NEW);
-</code></pre>
-
+$newInput = $container-&gt;get('input', Container::FORCE_NEW);</code></pre>
 <h2>Protect Object</h2>
-
 <p>Use <code>protect()</code> to prevent others from overriding your important object.</p>
-
-<pre><code class="php">$container-&gt;protect(
+<pre><code class="language-php">$container-&gt;protect(
     'input',
     function(Container $container)
     {
@@ -364,35 +327,23 @@ $newInput = $container-&gt;get('input', Container::FORCE_NEW);
 $input = $container-&gt;get('input');
 
 // @Throws OutOfBoundsException
-$container-&gt;set('input', $otherInput);
-</code></pre>
-
+$container-&gt;set('input', $otherInput);</code></pre>
 <h2>Alias</h2>
-
 <p>It is convenience to set an alias to key of objects which we often use.</p>
-
-<pre><code class="php">$container-&gt;share('system.application', $app)
+<pre><code class="language-php">$container-&gt;share('system.application', $app)
     -&gt;alias('app', 'system.application');
 
 // Same as system.application
-$app = $container-&gt;get('app');
-</code></pre>
-
+$app = $container-&gt;get('app');</code></pre>
 <h2>Ioc Class</h2>
-
 <p><code>\Windwalker\Ioc</code> provides a easy way to get system objects, the benefit to use these methods is that IDE can identify
 what object we get, and provides auto-complete:</p>
-
-<pre><code class="php">$db    = \Windwalker\Ioc::getDatabase();
+<pre><code class="language-php">$db    = \Windwalker\Ioc::getDatabase();
 $input = \Windwalker\Ioc::getInput();
-$app   = \Windwalker\Ioc::getApplication();
-</code></pre>
-
+$app   = \Windwalker\Ioc::getApplication();</code></pre>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/14169419/38066a96-f75a-11e5-91da-a3c433bc4771.jpg" alt="160331-0001" /></p>
-
 <p>If you want to add your own object in <code>Ioc</code>, edit the <code>/src/Windwalker/Ioc.php</code> file:</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // /src/Windwalker/Ioc.php`
 
 namespace Windwalker;
@@ -408,19 +359,12 @@ abstract class Ioc extends \Windwalker\Core\Ioc
     {
         return static::get('my.object');
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Now you can use this method in everywhere.</p>
-
-<pre><code class="php">\Windwalker\Ioc::getMyObject();
-</code></pre>
-
+<pre><code class="language-php">\Windwalker\Ioc::getMyObject();</code></pre>
 <h2>Build Object</h2>
-
 <p>Container can build an object and automatically inject all the necessary dependencies.</p>
-
-<pre><code class="php">use Windwalker\IO\Input;
+<pre><code class="language-php">use Windwalker\IO\Input;
 use Windwalker\Registry\Registry;
 
 class MyClass
@@ -438,17 +382,12 @@ class MyClass
 $myObject = $container-&gt;createObject('MyClass');
 
 $myObject-&gt;input; // Input
-$myObject-&gt;config; // Registry
-</code></pre>
-
+$myObject-&gt;config; // Registry</code></pre>
 <h3>Binding Classes</h3>
-
 <p>Sometimes we hope to inject particular object we want, we can bind a class as key to let Container know what you want to
 instead the dependency object.</p>
-
 <p>Here is a class but dependency to an abstract class, we can bind a sub class to container for use.</p>
-
-<pre><code class="php">use Windwalker\Model\AbstractModel;
+<pre><code class="language-php">use Windwalker\Model\AbstractModel;
 use Windwalker\Registry\Registry;
 
 class MyClass
@@ -475,14 +414,10 @@ $container-&gt;share('Windwalker\\Model\\AbstractModel', function()
 
 $myObject = $container-&gt;createObject('MyClass');
 
-$myObject-&gt;model; // MyModel
-</code></pre>
-
+$myObject-&gt;model; // MyModel</code></pre>
 <h2>Extending</h2>
-
 <p>Container allows you to extend an object, the new instance or closure will override the original one, this is a sample:</p>
-
-<pre><code class="php">// Create an item first
+<pre><code class="language-php">// Create an item first
 $container-&gt;share('flower', function()
 {
     return new Flower;
@@ -497,14 +432,10 @@ $container-&gt;extend('flower', function($origin, Container $container)
 
 $flower = $container-&gt;get('flower');
 
-$flower-&gt;name; // sakura
-</code></pre>
-
+$flower-&gt;name; // sakura</code></pre>
 <h2>Container Aware</h2>
-
 <p>The <code>ContainerAwareInterface</code> defines getter &amp; setter of Container as a system, constructor, we often use it on application or controller classes.</p>
-
-<pre><code class="php">use Windwalker\DI\ContainerAwareInterface;
+<pre><code class="language-php">use Windwalker\DI\ContainerAwareInterface;
 
 class MyController implements ContainerAwareInterface
 {
@@ -524,14 +455,10 @@ class MyController implements ContainerAwareInterface
     {
         $container = $this-&gt;getContainer();
     }
-}
-</code></pre>
-
+}</code></pre>
 <h3>Using Trait</h3>
-
 <p>In PHP 5.4, you can use <code>ContainerAwareTrait</code> to create an aware object.</p>
-
-<pre><code class="php">class MyController implements ContainerAwareInterface
+<pre><code class="language-php">class MyController implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
@@ -539,15 +466,11 @@ class MyController implements ContainerAwareInterface
     {
         $container = $this-&gt;getContainer();
     }
-}
-</code></pre>
-
+}</code></pre>
 <h2>Service Providers</h2>
-
 <p>Service providers is an useful way to encapsulate logic of creating objects and services.
 Just implements the <code>Windwalker\DI\ServiceProviderInterface</code>.</p>
-
-<pre><code class="php">use Windwalker\DI\Container;
+<pre><code class="language-php">use Windwalker\DI\Container;
 use Windwalker\DI\ServiceProviderInterface;
 
 class DatabaseServiceProvider implements ServiceProviderInterface
@@ -571,38 +494,26 @@ class DatabaseServiceProvider implements ServiceProviderInterface
     }
 }
 
-$container-&gt;registerServiceProvider(new DatabaseServiceProvider);
-</code></pre>
-
+$container-&gt;registerServiceProvider(new DatabaseServiceProvider);</code></pre>
 <h2>Facade</h2>
-
 <p>Windwalker has a Facade class to help us use proxy pattern to call object methods statically</p>
-
-<pre><code class="php">// Create a object into conteiner
-$container-&gt;share('my.router', new Router);
-</code></pre>
-
-<pre><code class="php">use Windwalker\Core\Facade\AbstractProxyFacade;
+<pre><code class="language-php">// Create a object into conteiner
+$container-&gt;share('my.router', new Router);</code></pre>
+<pre><code class="language-php">use Windwalker\Core\Facade\AbstractProxyFacade;
 
 class MyRouter extends AbstractProxyFacade
 {
     // Same as the container key, then we can auto match the object in container.
     protected static $_key = 'my.router';
-}
-</code></pre>
-
+}</code></pre>
 <p>Now just call the Router methods statically from <code>MyRouter</code>.</p>
-
-<pre><code class="php">MyRouter::build('route');
+<pre><code class="language-php">MyRouter::build('route');
 
 // Same as...
 
-$container-&gt;get('my.router')-&gt;build('route');
-</code></pre>
-
+$container-&gt;get('my.router')-&gt;build('route');</code></pre>
 <p>To make IDE support auto-complete, we can add PhpDoc to class.</p>
-
-<pre><code class="php">/**
+<pre><code class="language-php">/**
  * The Router class.
  *
  * @method  static  string  build($route, $queries = array(), $type = RestfulRouter::TYPE_RAW, $xhtml = false)
@@ -614,9 +525,7 @@ $container-&gt;get('my.router')-&gt;build('route');
 class MyRouter extends AbstractProxyFacade
 {
     protected static $_key = 'my.router';
-}
-</code></pre>
-
+}</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -651,7 +560,7 @@ class MyRouter extends AbstractProxyFacade
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -665,18 +574,18 @@ class MyRouter extends AbstractProxyFacade
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -749,7 +658,7 @@ class MyRouter extends AbstractProxyFacade
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Read and Write Database | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,160 +303,101 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Reader Command</h2>
-
 <p>Reader is a command object that help us read records from database, this is a simple example to use Reader.</p>
-
-<pre><code class="php">$reader = $db-&gt;getReader();
+<pre><code class="language-php">$reader = $db-&gt;getReader();
 
 $items = $reader-&gt;setQuery($sql)-&gt;loadObjectList();
 
 // OR
 
-$items = $db-&gt;getReader($sql)-&gt;loadObjectList();
-</code></pre>
-
+$items = $db-&gt;getReader($sql)-&gt;loadObjectList();</code></pre>
 <h3>Query Statement</h3>
-
 <p>Every reader is a different query statement.</p>
-
-<pre><code class="php">$stat1 = $db-&gt;getReader($sql1);
+<pre><code class="language-php">$stat1 = $db-&gt;getReader($sql1);
 $stat2 = $db-&gt;getReader($sql2);
 
 // Thses 2 object will be diferent connection cursors so they can load items parallelly.
 foreach ($stat1 as $item1)
 {
     $stat2-&gt;loadObjectList();
-}
-</code></pre>
-
+}</code></pre>
 <h3>loadObjectList()</h3>
-
 <p>Return an array, every element is a record and wrap with an object. This method is same as <code>$db-&gt;loadAll()</code>:</p>
-
-<pre><code class="php">$sql = 'SELECT * FROM foo_table WHERE state = 1';
+<pre><code class="language-php">$sql = 'SELECT * FROM foo_table WHERE state = 1';
 
 $reader = $db-&gt;getReader($sql);
 
-$items = $reader-&gt;loadObjectList();
-</code></pre>
-
+$items = $reader-&gt;loadObjectList();</code></pre>
 <p>The return value is an array contains all records we found, every record will be an <code>stdClass</code> object.</p>
-
 <p>We can set object class to store records:</p>
-
-<pre><code class="php">$items = $reader-&gt;loadObjectList(null, 'Windwalker\\Data\\Data');
+<pre><code class="language-php">$items = $reader-&gt;loadObjectList(null, 'Windwalker\\Data\\Data');
 
 // bool(true)
-var_dump($items[0] instanceof \Windwalker\Data\Data);
-</code></pre>
-
+var_dump($items[0] instanceof \Windwalker\Data\Data);</code></pre>
 <p>Use column values as array index. For example, we can use id as array indexes:</p>
-
-<pre><code class="php">$items = $reader-&gt;loadObjectList('id');
+<pre><code class="language-php">$items = $reader-&gt;loadObjectList('id');
 
 // True
-($items[11]-&gt;id == 11);
-</code></pre>
-
+($items[11]-&gt;id == 11);</code></pre>
 <h3>loadObject()</h3>
-
 <p>Return only one record and wrap with an object.  This method is same as <code>$db-&gt;loadOne()</code>:</p>
-
-<pre><code class="php">$sql = 'SELECT * FROM foo_table WHERE id = 1';
+<pre><code class="language-php">$sql = 'SELECT * FROM foo_table WHERE id = 1';
 
 $reader = $db-&gt;getReader($sql);
 
-$item = $reader-&gt;loadObject();
-</code></pre>
-
+$item = $reader-&gt;loadObject();</code></pre>
 <p>The <code>$item</code> will be a <code>stdClass</code>  object or <code>false</code> (If no any records found). we can set object class:</p>
-
-<pre><code class="php">$item = $reader-&gt;loadObject('MyObject');
-</code></pre>
-
+<pre><code class="language-php">$item = $reader-&gt;loadObject('MyObject');</code></pre>
 <p>Then the object will be an instance of <code>MyObject</code>.</p>
-
 <h3>loadArrayList()</h3>
-
 <p>Same as <code>$db-&gt;loadAll('array')</code>, returns an array and every element is an array indexed by column number as
 returned in your result set, starting at column 0, we can set a column as index:</p>
-
-<pre><code class="php">$reader = $db-&gt;getReader($sql);
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
 
 $items = $reader-&gt;loadArrayList();
-$items = $reader-&gt;loadArrayList('id'); // Use id as index
-</code></pre>
-
+$items = $reader-&gt;loadArrayList('id'); // Use id as index</code></pre>
 <h3>loadArray()</h3>
-
 <p>Returns an array indexed by column number as returned in your result set, starting at column 0:</p>
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
 
-<pre><code class="php">$reader = $db-&gt;getReader($sql);
-
-$item = $reader-&gt;loadArray();
-</code></pre>
-
+$item = $reader-&gt;loadArray();</code></pre>
 <h3>loadAssocList()</h3>
-
 <p>Returns an array and every element is an associative array indexed by column name.</p>
-
-<pre><code class="php">$reader = $db-&gt;getReader($sql);
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
 
 $items = $reader-&gt;loadAssocList();
-$items = $reader-&gt;loadAssocList('id'); // Use id as index
-</code></pre>
-
+$items = $reader-&gt;loadAssocList('id'); // Use id as index</code></pre>
 <h3>loadAssoc()</h3>
-
 <p>Returns an associative array indexed by column name.</p>
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
 
-<pre><code class="php">$reader = $db-&gt;getReader($sql);
-
-$item = $reader-&gt;loadAssoc();
-</code></pre>
-
+$item = $reader-&gt;loadAssoc();</code></pre>
 <h3>loadColumn()</h3>
-
 <p>Fetch values of a column field, please select only one column in this query:</p>
-
-<pre><code class="php">$titles = $db-&gt;getReader('SELECT title FROM article_table')-&gt;loadColumn();
-</code></pre>
-
+<pre><code class="language-php">$titles = $db-&gt;getReader('SELECT title FROM article_table')-&gt;loadColumn();</code></pre>
 <h3>loadResult()</h3>
-
 <p>Fetch only one cell as a value:</p>
-
-<pre><code class="php">// Get article id = 3 title
+<pre><code class="language-php">// Get article id = 3 title
 $title = $db-&gt;getReader('SELECT title FROM article_table WHERE id = 3')-&gt;loadResult();
 
 // Get total hits
 $sum = $db-&gt;getReader('SELECT SUM(hits) FROM article_table')-&gt;loadResult();
 
 // Get a value
-$id = $db-&gt;getReader('SELECT LAST_INSERT_ID()')-&gt;loadResult();
-</code></pre>
-
+$id = $db-&gt;getReader('SELECT LAST_INSERT_ID()')-&gt;loadResult();</code></pre>
 <h3>Run as Iterator</h3>
-
-<pre><code class="php">$reader = $db-&gt;getReader($sql);
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
 
 foreach ($reader as $item)
 {
     $item-&gt;title;
-}
-</code></pre>
-
+}</code></pre>
 <h3>About PDO Fetch</h3>
-
 <p>See: <a href="http://php.net/manual/en/pdostatement.fetch.php">PHP.net / PDOStatement::fetch</a></p>
-
 <h3>Quick Fetch From Driver</h3>
-
 <h4>DatabaseDriver::loadAll()</h4>
-
 <p>Using a query we set into DB object to fetch records.</p>
-
-<pre><code class="php">$sql = 'SELECT * FROM foo_table WHERE state = 1';
+<pre><code class="language-php">$sql = 'SELECT * FROM foo_table WHERE state = 1';
 
 $db-&gt;setQuery($sql);
 
@@ -475,16 +413,11 @@ $items = $db-&gt;loadAll(null, 'MyObject');
 $items = $db-&gt;loadAll(null, 'array');
 
 // Same as $reader-&gt;loadAssocList()
-$items = $db-&gt;loadAll(null, 'assoc');
-</code></pre>
-
+$items = $db-&gt;loadAll(null, 'assoc');</code></pre>
 <p>The return value is an array contains all records we found.</p>
-
 <h4>DatabaseDriver::loadOne()</h4>
-
 <p>We can only get first record and ignore others:</p>
-
-<pre><code class="php">$db-&gt;setQuery($sql);
+<pre><code class="language-php">$db-&gt;setQuery($sql);
 
 $item = $db-&gt;loadOne();
 
@@ -495,43 +428,25 @@ $item = $db-&gt;loadOne('MyObject');
 $item = $db-&gt;loadOne('array');
 
 // Same as $reader-&gt;loadAssoc()
-$item = $db-&gt;loadOne('assoc');
-</code></pre>
-
+$item = $db-&gt;loadOne('assoc');</code></pre>
 <p>The <code>$item</code> will be a record or <code>false</code> (If no any records found).</p>
-
 <h4>DatabaseDriver::loadColumn()</h4>
-
 <p>Same as <code>$db-&gt;getReader($sql)-&gt;loadColumn()</code>.</p>
-
 <h4>DatabaseDriver::loadResult()</h4>
-
 <p>Same as <code>$db-&gt;getReader($sql)-&gt;loadResult()</code>.</p>
-
 <h3>count()</h3>
-
 <p>Count the total found rows of last query.</p>
-
 <h3>countAffected()</h3>
-
 <p>Count the affected rows of last query.</p>
-
 <h3>insertId()</h3>
-
 <p>Get the last inserted id.</p>
-
 <hr />
-
 <h2>Writer Command</h2>
-
 <p>Writer object provide us an interface to write data into database.</p>
-
 <h3>insertOne()</h3>
-
 <p>Using an object or array to store data into a table, argument 3 is the name of primary key that will be added
 to data object if insert success:</p>
-
-<pre><code class="php">$data = array(
+<pre><code class="language-php">$data = array(
     'title' =&gt; 'Sakura',
     'created' =&gt; '2014-03-02'
 );
@@ -551,14 +466,10 @@ $data-&gt;created = '2014-03-02';
 $db-&gt;getWriter()-&gt;insertOne('#__articles', $data, 'id');
 
 // $data-&gt;id will be the last inserted id
-echo $data-&gt;id;
-</code></pre>
-
+echo $data-&gt;id;</code></pre>
 <h3>insertMultiple()</h3>
-
 <p>Insert many records:</p>
-
-<pre><code class="php">$dataSet = array(
+<pre><code class="language-php">$dataSet = array(
     array(
         'title' =&gt; 'Sakura',
         'created' =&gt; '2014-03-02'
@@ -572,52 +483,36 @@ echo $data-&gt;id;
 $db-&gt;getWriter()-&gt;insertMultiple('#__articles', $dataSet, 'id');
 
 // $dataSet[0]['id'] will be the last inserted id
-echo $dataSet[0]['id'];
-</code></pre>
-
+echo $dataSet[0]['id'];</code></pre>
 <h3>updateOne()</h3>
-
 <p>Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:</p>
-
-<pre><code class="php">$data = new stdClass;
+<pre><code class="language-php">$data = new stdClass;
 
 $data-&gt;id = 1;
 $data-&gt;title = 'Sakura2';
 
 $db-&gt;getWriter()-&gt;updateOne('#__articles', $data, 'id');
 
-// Same as `UPDATE #__articles SET title = "Sakura2" WHERE id = 1;`
-</code></pre>
-
+// Same as `UPDATE #__articles SET title = "Sakura2" WHERE id = 1;`</code></pre>
 <p>Also we can use array instead of object as data.</p>
-
 <h3>updateMultiple()</h3>
-
 <p>Same as <code>update()</code> but update every record in an array.</p>
-
-<pre><code class="php">$dataSet = array(
+<pre><code class="language-php">$dataSet = array(
     $data1,
     $data2
 );
 
-$db-&gt;getWriter()-&gt;updateMultiple('#__articles', $dataSet, 'id');
-</code></pre>
-
+$db-&gt;getWriter()-&gt;updateMultiple('#__articles', $dataSet, 'id');</code></pre>
 <h3>updateBatch()</h3>
-
 <p>Using where conditions to update some values to every records which matched this condition.</p>
-
-<pre><code class="php">$data = new stdClass;
+<pre><code class="language-php">$data = new stdClass;
 
 $data-&gt;state = 0;
 
 // Update all author=13 records to state 0, same as `UPDATE #__articles SET state = 0 WHERE author = 15;`
-$db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, array('author' =&gt; 15));
-</code></pre>
-
+$db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, array('author' =&gt; 15));</code></pre>
 <p>Using other conditions:</p>
-
-<pre><code class="php">$conditions = array(
+<pre><code class="language-php">$conditions = array(
     'author' =&gt; 15,
     'updated &lt; "2014-03-02"',
     'catid' =&gt; array(1, 2, 3)
@@ -625,38 +520,22 @@ $db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, array('author' =&gt; 1
 
 $db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, $conditions);
 
-// Same as `UPDATE #__articles SET state = 0 WHERE author = 15 AND updated &lt; "2014-03-02" AND catid IN(1, 2, 3);`
-</code></pre>
-
+// Same as `UPDATE #__articles SET state = 0 WHERE author = 15 AND updated &lt; "2014-03-02" AND catid IN(1, 2, 3);`</code></pre>
 <p>See <a href="conditions.md">Conditions</a></p>
-
 <h3>Save &amp; SaveMultiple</h3>
-
 <p><code>save()</code> and <code>saveMultiple()</code> will auto check the primary exists or not. If primary key exists, it will use <code>update</code>,
 if not exists, it will use <code>insert</code> to store data.</p>
-
 <h3>Delete</h3>
-
 <p>Use conditions to delete data.</p>
-
-<pre><code class="php">$db-&gt;getWriter()-&gt;delete('table', array('id' =&gt; 5));
-</code></pre>
-
+<pre><code class="language-php">$db-&gt;getWriter()-&gt;delete('table', array('id' =&gt; 5));</code></pre>
 <p>See <a href="conditions.md">Conditions</a></p>
-
 <h3>insertId()</h3>
-
 <p>Get the last inserted id.</p>
-
 <h3>countAffected()</h3>
-
 <p>Count the affected rows of last query.</p>
-
 <h2>Transaction Command</h2>
-
 <h3>Start Transaction</h3>
-
-<pre><code class="php">$tran = $this-&gt;db-&gt;getTransaction()-&gt;start();
+<pre><code class="language-php">$tran = $this-&gt;db-&gt;getTransaction()-&gt;start();
 
 try
 {
@@ -671,59 +550,35 @@ catch (\Exception)
     $tran-&gt;rollback();
 }
 
-$tran-&gt;commit();
-</code></pre>
-
+$tran-&gt;commit();</code></pre>
 <h2>Database Command</h2>
-
 <p>How to get Database Command:</p>
-
-<pre><code class="php">$database = $db-&gt;getDatabase('flower');
-</code></pre>
-
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');</code></pre>
 <h3>create()</h3>
-
 <p>Create a new database.</p>
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');
 
-<pre><code class="php">$database = $db-&gt;getDatabase('flower');
-
-$database-&gt;create();
-</code></pre>
-
+$database-&gt;create();</code></pre>
 <h3>drop()</h3>
-
 <p>Drop a database.</p>
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');
 
-<pre><code class="php">$database = $db-&gt;getDatabase('flower');
-
-$database-&gt;drop();
-</code></pre>
-
+$database-&gt;drop();</code></pre>
 <h3>rename()</h3>
-
 <p>Rename a database.</p>
-
-<pre><code class="php">$database = $db-&gt;getDatabase('flower');
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');
 
 // The return value is a new command object
 $newDatabaseCommand = $database-&gt;rename('flower2');
 
-$newDatabaseCommand-&gt;getName(); // flower2
-</code></pre>
-
+$newDatabaseCommand-&gt;getName(); // flower2</code></pre>
 <h3>getTables()</h3>
-
 <p>Get table name list.</p>
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');
 
-<pre><code class="php">$database = $db-&gt;getDatabase('flower');
-
-$tables = $database-&gt;getTables();
-</code></pre>
-
+$tables = $database-&gt;getTables();</code></pre>
 <h3>getTableDetail() &amp; getTableDetails()</h3>
-
 <p>Get tables information detail.</p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -758,7 +613,7 @@ $tables = $database-&gt;getTables();
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -772,18 +627,18 @@ $tables = $database-&gt;getTables();
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -856,7 +711,7 @@ $tables = $database-&gt;getTables();
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

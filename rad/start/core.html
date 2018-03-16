@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
     <title>Core Concept | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../">
-                    <img class="img-invert" src="../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../about/">
@@ -190,176 +187,145 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>MVC Groups</h2>
-
 <p>Every database table in phoenix will be separated to two MVC groups. One is singular item and another is plural list.
 Every MVC group has it's own Model/View/Controller. For example, a table named: <code>sakuras</code>, we will use <code>Sakura</code> Controller
 to modify single item record, and a <code>Sakuras</code> Controller to handle multiple items operation like <code>filter</code>, <code>ordering</code> or <code>batch update</code>.</p>
-
 <h2>Definition</h2>
-
 <h3>Item</h3>
-
-<p>A Singular MVC group, used to handle CRUD of single record, with an edit or single item page.</p>
-
+<p>A Singular MVC group, used to handle CRUD of single record, with an edit or single item page. </p>
 <h4>Edit Page</h4>
-
 <p><code>Edit</code> page means a page with form and inputs to send data for update an item.
 For example, a blog article page is an <code>Item page</code>, and an article edit page is an <code>Edit page</code>.</p>
-
 <h3>List</h3>
-
 <p>A plural MVC group, used to handle multiple items filter, ordering, batch update and copy etc. With a grid page or item list.</p>
-
 <h4>Grid Page</h4>
-
 <p><code>Grid</code> page means a table to list items and provides a set of button and tools to operate these items.
 For example, the blog articles/category page is a <code>List page</code>, and admin article manager is a <code>Grid page</code>.</p>
-
 <h3>Subsystem</h3>
-
 <p>Combine singular and plural two MVC groups, they are both maintains same database table.</p>
-
 <p>Below is the structure of these terms.</p>
-
 <p><img src="https://i.imgur.com/o8Wlh6i.jpg" alt="Imgur" /></p>
-
 <p>And this is an image of the MVC structure</p>
-
 <p><img src="https://i.imgur.com/iUbloBQ.jpg" alt="Imgur" /></p>
-
 <h2>CRUD</h2>
-
 <p>CRUD means <code>Create</code> / <code>Read</code> / <code>Update</code> and <code>Delete</code> to one item record.</p>
-
 <p>Phoenix use <code>save</code> to handle <code>create</code> and <code>update</code>. Se you will see <code>CrudModel</code> has only <code>save()</code> method instead <code>create()</code> and <code>update()</code>.</p>
-
 <p>The save() method will determine that if data has primary key, it will use update process, if data has no primary key, then model will use create process.</p>
-
 <h2>REST</h2>
-
 <p>Default RESTful methods has relations to CRUD operation:</p>
-
 <table>
 <thead>
 <tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
+<th>Method</th>
+<th>Controller</th>
+<th>Note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>GET</td>
-  <td>READ</td>
-  <td></td>
+<td>GET</td>
+<td>READ</td>
+<td></td>
 </tr>
 <tr>
-  <td>POST</td>
-  <td>CREATE</td>
-  <td></td>
+<td>POST</td>
+<td>CREATE</td>
+<td></td>
 </tr>
 <tr>
-  <td>PUT</td>
-  <td>UPDATE</td>
-  <td>full fields</td>
+<td>PUT</td>
+<td>UPDATE</td>
+<td>full fields</td>
 </tr>
 <tr>
-  <td>PATCH</td>
-  <td>UPDATE</td>
-  <td>partial fields</td>
+<td>PATCH</td>
+<td>UPDATE</td>
+<td>partial fields</td>
 </tr>
 <tr>
-  <td>DELTE</td>
-  <td>Delete</td>
-  <td></td>
+<td>DELTE</td>
+<td>Delete</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-
 <h3>Method Controller Mapping</h3>
-
 <p>In Windwalker, we use this mapping to call controller.</p>
-
 <table>
 <thead>
 <tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
+<th>Method</th>
+<th>Controller</th>
+<th>Note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td></td>
+<td>GET</td>
+<td>GetController</td>
+<td></td>
 </tr>
 <tr>
-  <td>POST</td>
-  <td>SaveController</td>
-  <td></td>
+<td>POST</td>
+<td>SaveController</td>
+<td></td>
 </tr>
 <tr>
-  <td>PUT</td>
-  <td>SaveController</td>
-  <td></td>
+<td>PUT</td>
+<td>SaveController</td>
+<td></td>
 </tr>
 <tr>
-  <td>PATCH</td>
-  <td>SaveController</td>
-  <td></td>
+<td>PATCH</td>
+<td>SaveController</td>
+<td></td>
 </tr>
 <tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td></td>
+<td>DELTE</td>
+<td>DeleteController</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-
 <p>It's more simpler to write your logic because you can use the exists of primary key to make create or update action.</p>
-
 <h3>Grid &amp; List Controller</h3>
-
 <p>In phoenix, we use this mapping to map list controller:</p>
-
 <table>
 <thead>
 <tr>
-  <th>Method</th>
-  <th>Controller</th>
-  <th>Note</th>
+<th>Method</th>
+<th>Controller</th>
+<th>Note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>GET</td>
-  <td>GetController</td>
-  <td>Show grid UI</td>
+<td>GET</td>
+<td>GetController</td>
+<td>Show grid UI</td>
 </tr>
 <tr>
-  <td>POST</td>
-  <td>CopyController</td>
-  <td>Batch copy items</td>
+<td>POST</td>
+<td>CopyController</td>
+<td>Batch copy items</td>
 </tr>
 <tr>
-  <td>PUT</td>
-  <td>UpdateController</td>
-  <td>Batch update items</td>
+<td>PUT</td>
+<td>UpdateController</td>
+<td>Batch update items</td>
 </tr>
 <tr>
-  <td>PATCH</td>
-  <td>Controller</td>
-  <td>Filter &amp; search</td>
+<td>PATCH</td>
+<td>Controller</td>
+<td>Filter &amp; search</td>
 </tr>
 <tr>
-  <td>DELTE</td>
-  <td>DeleteController</td>
-  <td>Delete items</td>
+<td>DELTE</td>
+<td>DeleteController</td>
+<td>Delete items</td>
 </tr>
 </tbody>
 </table>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -394,7 +360,7 @@ For example, the blog articles/category page is a <code>List page</code>, and ad
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -408,18 +374,18 @@ For example, the blog articles/category page is a <code>List page</code>, and ad
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../media/js/jquery.min.js"></script>
-<script src="../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../media/js/bootstrap.min.js"></script>
-<script src="../../media/js/material.min.js"></script>
-<script src="../../media/js/ripples.min.js"></script>
-<script src="../../media/js/prism.js"></script>
+<script src="../../asset/js/jquery.min.js"></script>
+<script src="../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../asset/js/material.min.js"></script>
+<script src="../../asset/js/ripples.min.js"></script>
+<script src="../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -492,7 +458,7 @@ For example, the blog articles/category page is a <code>List page</code>, and ad
 
 </script>
 
-    <script src="../../media/js/doc.js"></script>
+    <script src="../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

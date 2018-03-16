@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Asset Manager | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,38 +303,22 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Get Assets Path</h2>
-
 <p>Windwalker stores asset files in <code>/www/asset</code>, we can get the path or full URL of this folder:</p>
-
-<pre><code class="php">use Windwalker\Core\Asset\Asset;
+<pre><code class="language-php">use Windwalker\Core\Asset\Asset;
 
 echo Asset::path(); // /path/to/windwalker/asset
-echo Asset::root(); // http://domain.com/path/to/windwlaker/asset
-</code></pre>
-
+echo Asset::root(); // http://domain.com/path/to/windwlaker/asset</code></pre>
 <p>You can simply use <code>$asset-&gt;path</code> in view template:</p>
-
-<pre><code class="php">&lt;script src="&lt;?php echo $asset-&gt;path; ?&gt;/js/bootstrap.js"&gt;&lt;/script&gt;
-</code></pre>
-
+<pre><code class="language-php">&lt;script src="&lt;?php echo $asset-&gt;path; ?&gt;/js/bootstrap.js"&gt;&lt;/script&gt;</code></pre>
 <p>Or use method call:</p>
-
-<pre><code class="php">&lt;script src="&lt;?php echo $asset-&gt;path('js/bootstrap.js'); ?&gt;"&gt;&lt;/script&gt;
-</code></pre>
-
+<pre><code class="language-php">&lt;script src="&lt;?php echo $asset-&gt;path('js/bootstrap.js'); ?&gt;"&gt;&lt;/script&gt;</code></pre>
 <h3>Set Full Asset Uri</h3>
-
 <p>Add <code>asset.uri</code> to config if you store assets in cloud storage:</p>
-
-<pre><code class="yaml">asset:
-    uri: https://foo.s3.amazonaws.com/assets
-</code></pre>
-
+<pre><code class="language-yaml">asset:
+    uri: https://foo.s3.amazonaws.com/assets</code></pre>
 <p>Now <code>$asset-&gt;path</code> and <code>$asset-&gt;root</code> will be <code>https://foo.s3.amazonaws.com/assets</code>.</p>
-
 <h2>Use Asset to Include CSS &amp; JS</h2>
-
-<pre><code class="php">use Windwalker\Core\Asset\Asset;
+<pre><code class="language-php">use Windwalker\Core\Asset\Asset;
 
 Asset::addCSS('css/bootstrap.css');
 Asset::addJS('js/bootstrap.js');
@@ -348,31 +329,20 @@ $asset-&gt;addJS('js/bootstrap.js');
 
 // Blade &amp; Edge
 @css('css/bootstrap.css')
-@js('js/bootstrap.js')
-</code></pre>
-
+@js('js/bootstrap.js')</code></pre>
 <p>Windwalker will auto includes these files in <code>&lt;head&gt;</code>:</p>
+<pre><code class="language-php">&lt;link rel="stylesheet" href="/windwalker/www/asset/css/bootstrap.css?ee8f77834fabe4188265a599a77f2c21" /&gt;
 
-<pre><code class="php">&lt;link rel="stylesheet" href="/windwalker/www/asset/css/bootstrap.css?ee8f77834fabe4188265a599a77f2c21" /&gt;
-
-&lt;script src="/windwalker/www/asset/js/bootstrap.js?ee8f77834fabe4188265a599a77f2c21"&gt;&lt;/script&gt;
-</code></pre>
-
+&lt;script src="/windwalker/www/asset/js/bootstrap.js?ee8f77834fabe4188265a599a77f2c21"&gt;&lt;/script&gt;</code></pre>
 <p>If you are not use default template, you must confirm your template has rendered styles and scripts:</p>
+<pre><code class="language-php">&lt;?php echo $asset-&gt;renderStyles(true); ?&gt;
 
-<pre><code class="php">&lt;?php echo $asset-&gt;renderStyles(true); ?&gt;
-
-&lt;?php echo $asset-&gt;renderScripts(true); ?&gt;
-</code></pre>
-
+&lt;?php echo $asset-&gt;renderScripts(true); ?&gt;</code></pre>
 <h3>Include Compressed Files</h3>
-
 <p>You can add <code>.min</code> to file name, Windwalker will auto check compressed file exists or not, and will fallback to normal file if
 there has no min file.</p>
-
 <p>And in DEBUG mode, Windwalker will force include uncompressed file if exists, otherwise fallback to min file.</p>
-
-<pre><code class="php">// If `bootstrap.css` exists but `bootstrap.min.css` not
+<pre><code class="language-php">// If `bootstrap.css` exists but `bootstrap.min.css` not
 Asset::addCSS('css/bootstrap.min.css'); // bootstrap.css
 Asset::addCSS('css/bootstrap.css'); // bootstrap.css
 
@@ -386,47 +356,29 @@ Asset::addCSS('css/bootstrap.css'); // bootstrap.css
 
 // If both exists and not in DEBUG mode
 Asset::addCSS('css/bootstrap.min.css'); // bootstrap.min.css
-Asset::addCSS('css/bootstrap.css'); // bootstrap.min.css
-</code></pre>
-
+Asset::addCSS('css/bootstrap.css'); // bootstrap.min.css</code></pre>
 <h2>Alias</h2>
-
 <p>If you want to override an asset's URL, for instance, to modify a 3rd party scripts, you can use asset alias:</p>
+<pre><code class="language-php">Asset::alias('js/my-grid.js', 'phoenix/js/grid.js');
 
-<pre><code class="php">Asset::alias('js/my-grid.js', 'phoenix/js/grid.js');
-
-Asset::addJS('phoenix/js/grid.min.js');
-</code></pre>
-
+Asset::addJS('phoenix/js/grid.min.js');</code></pre>
 <p>Now Windwlaker will include <code>js/my-grid.js</code> to HTML, don't worry about <code>.min</code>, AssetManager will normalize the path.</p>
-
 <h2>Asset Versions</h2>
-
 <p>Windwalker auto add version hash string to every asset URL. In DEBUG mode, this version string will always refresh
 after page reload. And in normal mode, AssetManager will hash version by the modified time of every asset files to make sure
 version not changed, but can be refresh if any file has been modified.</p>
-
 <p>You can add your own version to specific asset file:</p>
-
-<pre><code class="php">Asset::addCSS('css/bootstrap.css', md5('1.0.5'));
-</code></pre>
-
+<pre><code class="language-php">Asset::addCSS('css/bootstrap.css', md5('1.0.5'));</code></pre>
 <p>Or add an md5 sum in cache folder, so all assets will use this cached version that make better performance.</p>
-
-<pre><code class="bash">$ php windwlaker asset makesum
-Create SUM: d9edf273fc270b99e1c5a0f5d9a96b3d at {ROOT}/cache/asset/MD5SUM
-</code></pre>
-
+<pre><code class="language-bash">$ php windwlaker asset makesum
+Create SUM: d9edf273fc270b99e1c5a0f5d9a96b3d at {ROOT}/cache/asset/MD5SUM</code></pre>
 <blockquote>
-  <p>You must run this command after every new version of you system deployed, otherwise the end users' browser may cache
-  the old assets files and will break your front-end application.</p>
+<p>You must run this command after every new version of you system deployed, otherwise the end users' browser may cache
+the old assets files and will break your front-end application.</p>
 </blockquote>
-
 <h2>Asset Template</h2>
-
 <p>Sometimes your Widget need push a JS template to the bottom of <code>&lt;body&gt;</code>, we can wrap this template by <code>AssetTemplate</code>:</p>
-
-<pre><code class="php">&lt;script&gt;
+<pre><code class="language-php">&lt;script&gt;
     alert(jQuery('#hello').html());
 &lt;/script&gt;
 
@@ -434,33 +386,22 @@ Create SUM: d9edf273fc270b99e1c5a0f5d9a96b3d at {ROOT}/cache/asset/MD5SUM
 &lt;script id="hello" type="text/template"&gt;
     &lt;h1&gt;Hello &lt;?php echo $content; ?&gt;&lt;/h1&gt;
 &lt;/script&gt;
-&lt;?php $asset-&gt;getTemplate()-&gt;endTemplate(); ?&gt;
-</code></pre>
-
+&lt;?php $asset-&gt;getTemplate()-&gt;endTemplate(); ?&gt;</code></pre>
 <p>Make sure your template has render asset template as bottom of body:</p>
-
-<pre><code class="php">...
+<pre><code class="language-php">...
 
 &lt;?php echo $asset-&gt;getTemplate()-&gt;renderTemplates(); ?&gt;
-&lt;/body&gt;
-</code></pre>
-
+&lt;/body&gt;</code></pre>
 <p>Simple tag in Edge and Blade:</p>
-
-<pre><code class="php">@assetTemplate('asset.name')
+<pre><code class="language-php">@assetTemplate('asset.name')
 &lt;script id="hello" type="text/template"&gt;
     &lt;h1&gt;Hello {{ $content }}&lt;/h1&gt;
 &lt;/script&gt;
-@endTemplate()
-</code></pre>
-
+@endTemplate()</code></pre>
 <h2>Asset Dependency</h2>
-
 <p><code>Windwalker\Core\Asset\AbstractScript</code> is a dependency manager, we can create methods as dependency handler and call it anywhere.</p>
-
 <p>This is an example to load a <code>sakura.js</code> and init it for different HTML selectors, and it is dependent on <code>flower.js</code>.</p>
-
-<pre><code class="php">namespace Flower\Script;
+<pre><code class="language-php">namespace Flower\Script;
 
 use Windwalker\Core\Asset\AbstractScript;
 
@@ -524,31 +465,18 @@ JS;
             static::internalJS($js);
         }
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Now use this code to include <code>sakura.js</code> every where:</p>
-
-<pre><code class="php">\Flower\Script\FlowerScript::sakura('.mySakura', array('foo' =&gt; 'baz'));
-</code></pre>
-
+<pre><code class="language-php">\Flower\Script\FlowerScript::sakura('.mySakura', array('foo' =&gt; 'baz'));</code></pre>
 <h2>Sync Package Assets</h2>
-
 <p>Put your package asset files to <code>{package}/Resources/asset</code>, then you can run this command to sync asset files to
 web public root.</p>
-
-<pre><code class="bash">$ php windwalker asset sync
-</code></pre>
-
+<pre><code class="language-bash">$ php windwalker asset sync</code></pre>
 <p>Windwalker will make a symbol link to your package asset folder, if you are using Windows, you must do this with Administrator access.
 You can also add <code>--hard</code> to hard copy all asset files to public folder.</p>
-
 <p>Change public asset folder by modifying <code>etc/config.yml</code>:</p>
-
-<pre><code class="yaml">asset:
-    folder: asset
-</code></pre>
-
+<pre><code class="language-yaml">asset:
+    folder: asset</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -583,7 +511,7 @@ You can also add <code>--hard</code> to hard copy all asset files to public fold
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -597,18 +525,18 @@ You can also add <code>--hard</code> to hard copy all asset files to public fold
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -681,7 +609,7 @@ You can also add <code>--hard</code> to hard copy all asset files to public fold
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

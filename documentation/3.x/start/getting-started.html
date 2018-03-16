@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../../../media/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
     <title>Getting Started | Windwalker - PHP Rapid Development Framework</title>
 
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="../../../media/css/main.css" />
-    
-                                                                            </head>
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+    </head>
 <body class="">
 
     <section id="header">
@@ -33,12 +32,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="../../../">
-                    <img class="img-invert" src="../../../media/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-                                                                                                                                                                                                                                                                                
-
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="">
                         <a href="../../../about/">
@@ -306,17 +303,12 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <p>This chapter, we'll start a simple page with MVC to show how to develop simple web application in Windwalker.</p>
-
 <p>We assume you install Windwalker in <code>http://localhost/windwalker</code>, so you must use <code>http://localhost/windwalker/www</code> to open Windwalker home page.</p>
-
 <h2>Create First Controller</h2>
-
 <p>Let's create a php class in <code>src/Flower/Controller/Sakura/GetContrtoller.php</code>.</p>
-
 <p>The <code>Flower</code> is package name, and <code>Sakura</code> is controller name, <code>GetController</code> means it is a default <code>GET</code> action, this equals to
 <code>indexAction</code> in other frameworks, while Windwalker uses single action controller, so every controller class only handles one action.</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // src/Flower/Controller/Sakura/GetController.php
 
 namespace Flower\Controller\Sakura;
@@ -333,26 +325,17 @@ class GetController extends AbstractController
         return 'Hello World';
     }
 }
-
 </code></pre>
-
 <p>Now, open <code>http://path/to/windwalker/www/flower/sakura</code> in browser, you will see <code>Hello World</code>.</p>
-
 <p>Windwalker Controller follows single responsibility principle, you can add more logic to a controller but won't be confused by too many different actions in one class.</p>
-
 <h2>Render View Template</h2>
-
 <p>We wish we can render a HTML template to browser, so please add a template file to <code>src/Flower/Templates/sakura/default.php</code></p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // src/Flower/Templates/sakura/default.php
 ?&gt;
-&lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
-</code></pre>
-
+&lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;</code></pre>
 <p>And modify <code>GetController::doExecute()</code>, we get a View object, push a variable into it, then all <code>render()</code> method to return template.</p>
-
-<pre><code class="php">// src/Flower/Controller/Sakura/GetController.php
+<pre><code class="language-php">// src/Flower/Controller/Sakura/GetController.php
 
 // ...
 
@@ -367,16 +350,11 @@ protected function doExecute()
     // Another quick way
     return $this-&gt;renderView('Sakura', 'default', 'php', ['name' =&gt; 'Sakura']);
 }
-
 </code></pre>
-
 <p>We'll get <code>&lt;h1&gt;Hello Sakura&lt;/h1&gt;</code> in browser.</p>
-
 <h3>Add HTML Frame</h3>
-
 <p>By extends parent layout, we can wrap our template by a parent template.</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // src/Flower/Templates/sakura/default.php
 /**
  * @var  $this  \Windwalker\Core\Renderer\PhpRenderer
@@ -390,33 +368,22 @@ protected function doExecute()
     &lt;div class="container"&gt;
         &lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
     &lt;/div&gt;
-&lt;?php $this-&gt;endblock(); ?&gt;
-</code></pre>
-
+&lt;?php $this-&gt;endblock(); ?&gt;</code></pre>
 <p>The result</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/16676719/cddea284-44ff-11e6-8af7-c759e6826d5d.jpg" alt="p-2016-07-08-001" /></p>
-
 <blockquote>
-  <p>You can find <code>_global.html</code> in <code>templates/_globa/html.php</code>, this is the global template path.</p>
-  
-  <p>If you get <code>Route: home not found</code> message in DEBUG mode, just open <code>etc/dev/config.yml</code> and set <code>routing.debug</code> to <code>false</code>.</p>
+<p>You can find <code>_global.html</code> in <code>templates/_globa/html.php</code>, this is the global template path.</p>
+<p>If you get <code>Route: home not found</code> message in DEBUG mode, just open <code>etc/dev/config.yml</code> and set <code>routing.debug</code> to <code>false</code>.</p>
 </blockquote>
-
 <h3>Change View Layout</h3>
-
 <p>We support different template layout for one controller, the default is <code>default</code> layout, now try to add a <code>photo</code> layout.</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // src/Flower/Templates/sakura/photo.php
 ?&gt;
 &lt;h1&gt;Hello &lt;?php echo $this-&gt;escape($name); ?&gt;&lt;/h1&gt;
-&lt;img src="https://i.imgur.com/WVpwzJ9.jpg" alt="Sakura"&gt;
-</code></pre>
-
+&lt;img src="https://i.imgur.com/WVpwzJ9.jpg" alt="Sakura"&gt;</code></pre>
 <p>Then we render <code>photo.php</code> by <code>$view-&gt;setLayout('photo')</code>.</p>
-
-<pre><code class="php">// src/Flower/Controller/Sakura/GetController.php
+<pre><code class="language-php">// src/Flower/Controller/Sakura/GetController.php
 
 // ...
 
@@ -427,17 +394,12 @@ protected function doExecute()
     $view['name'] = 'Sakura';
 
     return $view-&gt;setLayout('photo')-&gt;render();
-}
-</code></pre>
-
+}</code></pre>
 <h3>Use Edge Template Engine</h3>
-
 <p>Edge is Windwalker built-in template engine to support Windwalker build flexible layout. It is a clone of Laravel Blade engine now but
 add some new features.</p>
-
 <p>We create a template named <code>default.edge.php</code> or <code>default.blade.php</code>.</p>
-
-<pre><code class="php">{{-- src/Flower/Templates/sakura/default.edge.php --}}
+<pre><code class="language-php">{{-- src/Flower/Templates/sakura/default.edge.php --}}
 
 @extends('_global.html')
 
@@ -445,45 +407,29 @@ add some new features.</p>
 &lt;div class="container"&gt;
     &lt;h1&gt;Hello {{ $name }} in edge engine&lt;/h1&gt;
 &lt;/div&gt;
-@stop
-</code></pre>
-
+@stop</code></pre>
 <p>Render this template in Controller</p>
-
-<pre><code class="php">protected function doExecute()
+<pre><code class="language-php">protected function doExecute()
 {
     return $this-&gt;renderView('Sakura', 'default', 'edge', ['name' =&gt; 'Sakura']);
-}
-</code></pre>
-
+}</code></pre>
 <p>Will output</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/16676825/8c4911e0-4501-11e6-9495-3c0461e66732.jpg" alt="p-2016-07-08-002" /></p>
-
 <h2>Complete Ths Package</h2>
-
-<p>Our namespace start with <code>Flower\</code>, in Windwalker, we call this "Flower package", currently we haven't create package
- class, but controller and routing are works because Windwalker has a default simple routing help us mapping controller
- with URL, so <code>/flower/sakura</code> will auto direct to <code>Flower\Controller\Sakura\GetController</code>.</p>
-
+<p>Our namespace start with <code>Flower\</code>, in Windwalker, we call this &quot;Flower package&quot;, currently we haven't create package
+class, but controller and routing are works because Windwalker has a default simple routing help us mapping controller
+with URL, so <code>/flower/sakura</code> will auto direct to <code>Flower\Controller\Sakura\GetController</code>.</p>
 <p>Simple routing is very slow so we can disable it in <code>etc/config.yml</code></p>
-
-<pre><code class="yaml"># etc/config.yml
+<pre><code class="language-yaml"># etc/config.yml
 
 routing:
-    simple_route: false
-</code></pre>
-
+    simple_route: false</code></pre>
 <p>After set <code>simple_route</code> to <code>false</code>, you will see your application return
 <code>RouteNotFoundException (404) Unable to handle request for route "flower/sakura"</code></p>
-
 <p>Now we must prepare a standard package environment so we can use more advanced functions in the future.</p>
-
 <h3>Add Package Class</h3>
-
 <p>Create a <code>FlowerPackage</code> first.</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // Flower/FlowerPackage.php
 
 namespace Flower;
@@ -493,54 +439,37 @@ use Windwalker\Core\Package\AbstractPackage;
 class FlowerPackage extends AbstractPackage
 {
 
-}
-</code></pre>
-
+}</code></pre>
 <p>Next, register it to <code>etc/app/web.php</code>, the <code>flower</code> key name is alias of your package, you can customize it if package name conflict.</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
     'packages' =&gt; [
         'flower' =&gt; \Flower\FlowerPackage::class
     ],
 
-// ...
-</code></pre>
-
+// ...</code></pre>
 <h3>Register Routing</h3>
-
 <p>And then, add a new routing profile to <code>etc/routing.yml</code>.</p>
-
-<pre><code class="yaml"># ...
+<pre><code class="language-yaml"># ...
 
 flower:
     pattern: /flower
-    package: flower
-</code></pre>
-
+    package: flower</code></pre>
 <blockquote>
-  <p>You can also do this by using <code>$ php windwalker package install flower</code> in CLI after package registered.</p>
+<p>You can also do this by using <code>$ php windwalker package install flower</code> in CLI after package registered.</p>
 </blockquote>
-
 <p>The last step, create package routing at <code>src/Flower/routing.yml</code>.</p>
-
-<pre><code class="yaml"># src/Flower/routing.yml
+<pre><code class="language-yaml"># src/Flower/routing.yml
 
 sakura:
     pattern: /sakura
-    controller: Sakura
-</code></pre>
-
+    controller: Sakura</code></pre>
 <p>OK, the Sakura page will return. To register a package and routing is a bit of bother, but it will be very
 flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and many developers.</p>
-
 <h2>Model Repository</h2>
-
 <p>Windwalker provides a simple <code>ModelRepository</code> class to help you organize your data source.</p>
-
 <p>Add SakuraModel class.</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 // src/Flower/Model/SakuraModel.php
 
 namespace Flower\Model;
@@ -557,23 +486,17 @@ class SakuraModel extends ModelRepository
             ['title' =&gt; 'yoo'],
         ];
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Use this Model in controller.</p>
-
-<pre><code class="php">// ...
+<pre><code class="language-php">// ...
 
 /** @var SakuraModel $model */
 $model   = $this-&gt;getModel();
 $content = $model-&gt;getContent();
 
-return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $content]);
-</code></pre>
-
+return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $content]);</code></pre>
 <p>Modify the template to loop <code>content</code> variable.</p>
-
-<pre><code class="php">@extends('_global.html')
+<pre><code class="language-php">@extends('_global.html')
 
 @section('content')
 &lt;div class="container"&gt;
@@ -584,13 +507,9 @@ return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $conte
         @endforeach
     &lt;/ul&gt;
 &lt;/div&gt;
-@stop
-</code></pre>
-
+@stop</code></pre>
 <p>The result:</p>
-
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/16677127/bb37159e-4504-11e6-8096-9ca92d211738.jpg" alt="p-2016-07-08-003" /></p>
-
                         <hr />
 
     <p class="text-center inner-top-sm">
@@ -625,7 +544,7 @@ return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $conte
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="../../../media/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -639,18 +558,18 @@ return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $conte
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../../media/css/ripples.min.css" />
-<link rel="stylesheet" href="../../../media/css/prism.min.css" />
+<link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+<link rel="stylesheet" href="../../../asset/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../../media/js/jquery.min.js"></script>
-<script src="../../../media/js/jquery.smooth-scroll.min.js"></script>
-<script src="../../../media/js/bootstrap.min.js"></script>
-<script src="../../../media/js/material.min.js"></script>
-<script src="../../../media/js/ripples.min.js"></script>
-<script src="../../../media/js/prism.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -723,7 +642,7 @@ return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $conte
 
 </script>
 
-    <script src="../../../media/js/doc.js"></script>
+    <script src="../../../asset/js/doc.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
