@@ -8,8 +8,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ uri.base }}">
-                    <img class="img-invert" src="{{ uri.media }}images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                <a class="navbar-brand" href="{{ uri.base }}/">
+                    <img class="img-invert" src="{{ uri.asset }}/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
                 </a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
@@ -34,21 +34,21 @@
 
                 <ul class="mainmenu nav navbar-nav navbar-right">
                     <li class="{{ path[0] == 'about' ? 'active' : '' }}">
-                        <a href="{{ uri.base }}about/">
+                        <a href="{{ uri.base }}/about/">
                             <i class="material-icons">change_history</i>
                             <span class="menu-item-title">About</span>
                         </a>
                     </li>
 
                     <li class="{{ path[0] == 'documentation' ? 'active' : '' }}">
-                        <a href="{{ uri.base }}documentation/3.x/start/installation.html">
+                        <a href="{{ uri.base }}/documentation/3.x/start/installation.html">
                             <i class="material-icons">description</i>
                             <span class="menu-item-title">Documentation</span>
                         </a>
                     </li>
 
                     <li class="{{ path[0] == 'rad' ? 'active' : '' }}">
-                        <a href="{{ uri.base }}rad/start/introduction.html">
+                        <a href="{{ uri.base }}/rad/start/introduction.html">
                             <i class="material-icons">graphic_eq</i>
                             <span class="menu-item-title">RAD</span>
                         </a>

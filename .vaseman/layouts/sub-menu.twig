@@ -11,7 +11,7 @@
     </li>
         {% for id, item in section %}
             <li class="{{ helper.doc.getPath(path, version) == id ? 'active' : '' }}">
-                <a class="withripple" href="{{ uri.base }}{{ menu }}/{{ version ? version ~ '/' : '' }}{{ id }}.html">{{ item }}</a>
+                <a class="withripple" href="{{ uri.base }}/{{ menu }}/{{ version ? version ~ '/' : '' }}{{ id }}.html">{{ item }}</a>
             </li>
         {% endfor %}
 

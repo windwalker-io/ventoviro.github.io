@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{{ uri.media }}images/favicon.ico" />
+    <link rel="shortcut icon" href="{{ uri.asset }}/images/favicon.ico" />
 
     <title>{% block title %}Windwalker - PHP Rapid Development Framework{% endblock %}</title>
 
@@ -21,20 +21,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
-    <link rel="stylesheet" href="{{ uri.media }}css/main.css" />
+    <link rel="stylesheet" href="{{ uri.asset }}/css/main.css" />
     {% block stylesheet %}{% endblock %}
-
-    {#<script src="https://cdn.jsdelivr.net/loadcss/0.1.7/loadCSS.min.js"></script>#}
-    {#<script>#}
-        {#loadCSS('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');#}
-        {#loadCSS('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css');#}
-        {#loadCSS('{{ uri.media }}css/main.css');#}
-        {#loadCSS('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300');#}
-        {#loadCSS('//fonts.googleapis.com/icon?family=Material+Icons');#}
-        {#loadCSS('//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');#}
-        {#loadCSS('{{ uri.media }}css/ripples.min.css');#}
-        {#loadCSS('{{ uri.media }}css/prism.min.css');#}
-    {#</script>#}
 </head>
 <body class="{{ config.home ? 'home' : '' }}">
 
@@ -84,7 +72,7 @@
 
         <p class="outer-top-xs">
             <a href="#header" class="text-center footer-logo">
-                <img class="img-invert" width="250" src="{{ uri.media }}images/logo/windwalker-logo-250.png" alt="Logo" style="">
+                <img class="img-invert" width="250" src="{{ uri.asset }}/images/logo/windwalker-logo-250.png" alt="Logo" style="">
             </a>
         </p>
 
@@ -98,18 +86,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="{{ uri.media }}css/ripples.min.css" />
-<link rel="stylesheet" href="{{ uri.media }}css/prism.min.css" />
+<link rel="stylesheet" href="{{ uri.asset }}/css/ripples.min.css" />
+<link rel="stylesheet" href="{{ uri.asset }}/css/prism.min.css" />
 
 <!-- Bootstrap core JavaScript
    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{ uri.media }}js/jquery.min.js"></script>
-<script src="{{ uri.media }}js/jquery.smooth-scroll.min.js"></script>
-<script src="{{ uri.media }}js/bootstrap.min.js"></script>
-<script src="{{ uri.media }}js/material.min.js"></script>
-<script src="{{ uri.media }}js/ripples.min.js"></script>
-<script src="{{ uri.media }}js/prism.js"></script>
+<script src="{{ uri.asset }}/js/jquery.min.js"></script>
+<script src="{{ uri.asset }}/js/jquery.smooth-scroll.min.js"></script>
+<script src="{{ uri.asset }}/js/bootstrap.min.js"></script>
+<script src="{{ uri.asset }}/js/material.min.js"></script>
+<script src="{{ uri.asset }}/js/ripples.min.js"></script>
+<script src="{{ uri.asset }}/js/prism.js"></script>
 <script>
     $(document).ready(function() {
 

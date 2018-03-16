@@ -1,7 +1,7 @@
 {% extends 'default-page.twig' %}
 
 {% block script %}
-    <script src="{{ uri.media }}js/doc.js"></script>
+    <script src="{{ uri.asset }}/js/doc.js"></script>
 {% endblock %}
 
 {% block nav %}
@@ -13,11 +13,11 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li class="{{ version == '3.x' ? 'active' : '' }}">
-                        <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '3.x', config) }}">3.x</a>
+                        <a href="{{ uri.base }}/{{ helper.doc.getVersionPath(path, '3.x', config) }}">3.x</a>
                     </li>
 
                     <li class="{{ version == '2.1' ? 'active' : '' }}">
-                        <a href="{{ uri.base }}{{ helper.doc.getVersionPath(path, '2.1', config) }}">2.1</a>
+                        <a href="{{ uri.base }}/{{ helper.doc.getVersionPath(path, '2.1', config) }}">2.1</a>
                     </li>
                 </ul>
             </div>
