@@ -27,8 +27,10 @@
     <link rel="stylesheet" href="{{ uri.asset }}/css/ripples.min.css" />
     <link rel="stylesheet" href="{{ uri.asset }}/css/prism.min.css" />
     <link rel="stylesheet" href="{{ uri.asset }}/css/main.css" />
-    <link rel="prerender" href="{{ uri.base }}/documentation/3.x/start/installation.html" />
-    <link rel="prerender" href="{{ uri.base }}/rad/start/introduction.html" />
+    {% if config.home %}
+        <link rel="prerender" href="{{ uri.base }}/documentation/3.x/start/installation.html" />
+        <link rel="prerender" href="{{ uri.base }}/rad/start/introduction.html" />
+    {% endif %}
     {% block stylesheet %}{% endblock %}
 </head>
 <body class="{{ config.home ? 'home' : '' }}">
