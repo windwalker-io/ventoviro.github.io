@@ -10,7 +10,7 @@ redirect:
 
 ### System Requirement
 
-Windwalker 3.x require PHP 5.6 or later.
+Windwalker 3.x requires PHP 5.6 or later.
 
 ### Starter Application
 

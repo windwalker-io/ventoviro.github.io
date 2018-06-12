@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
+
+    <title>Filesystem | Windwalker - PHP Rapid Development Framework</title>
+
+    <meta name="description" content="">
+    <meta name="generator" content="The Time Machine">
+
+    <meta property="og:title" content="Filesystem | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:site_name" content="Windwalker Framework">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/prism.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+        </head>
+<body class="">
+
+    <section id="header">
+
+            <nav id="nav">
+
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="../../../about/">
+                            <i class="material-icons">change_history</i>
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.x/start/installation.html">
+                            <i class="material-icons">description</i>
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../rad/start/introduction.html">
+                            <i class="material-icons">graphic_eq</i>
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <i class="fa fa-fw fa-github"></i>
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                    <li>
+                                    <div class="btn-group" style="margin-left: 15px">
+                <button type="button" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    3.0-3.3 <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a href="../../../documentation/3.x/more/filesystem.html">3.x</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.0-3.3/more/filesystem.html">3.0-3.3</a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../documentation/2.1/more/filesystem.html">2.1</a>
+                    </li>
+                </ul>
+            </div>
+                            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+        <section id="banner" class="container text-center">
+            <div class="row">
+                <div class="banner-content col-md-10">
+                    <h1 class="banner-title">Filesystem</h1>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+        <section id="main-body" class="container main-block">
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="nav nav-stacked side-menu side-bar">
+    
+                
+        <li class="nav-header">
+        <h3 class="slab-font">Start</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/getting-started.html">Getting Started</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Core</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/psr7-middlewares.html">Psr7 and Middlewares</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/service-provider.html">Service Provider</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">MVC</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Database</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Services</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/datetime.html">Chronos (DateTime)</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/queue.html">Queue</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/error-handling.html">Error Handling</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Console</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">More</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/http-stream.html">Http and Stream</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/cors.html">CORS Headers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/structure.html">Structure Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/crypt.html">Crypt</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="active">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/filesystem.html">Filesystem</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/string.html">String</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/utilities.html">Utilities</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/more-packages.html">More Packages</a>
+            </li>
+        
+       </ul>
+    </div>
+            </div>
+
+            <div class="col-md-9">
+                <article class="article-content">
+                    <h2>File</h2>
+<p>File is a abstract class provides methods to operate files.</p>
+<h3>Write &amp; Delete files</h3>
+<pre><code class="language-php">use Windwalker\Filesystem\File;
+
+$file = '/path/to/file.txt';
+
+File::write($file, $content);
+
+File::delete($file);</code></pre>
+<h3>Move &amp; Copy</h3>
+<pre><code class="language-php">$src = '/path/to/file.txt';
+$dest = '/path/of/new/file.txt';
+
+// Move
+File::move($src, $dest);
+
+// Force move if file exsits
+File::move($src, $dest, true);
+
+// Copy
+File::copy($src, $dest);
+
+// Force copy if file exists
+File::copy($src, $dest, true);</code></pre>
+<h3>Upload</h3>
+<pre><code class="language-php">File::upload($src, $dest);</code></pre>
+<p>It is basically the wrapper for the PHP <code>move_uploaded_file()</code> function, but also does checks availability
+and permissions on both source and destination path.</p>
+<h3>File Name</h3>
+<p>Strip extension and get simple path:</p>
+<pre><code class="language-php">$file = '/path/to/flower.txt';
+
+$name = File::stripExtension($file); // /path/to/flower</code></pre>
+<p>Get extension:</p>
+<pre><code class="language-php">$file = '/path/to/flower.txt';
+
+File::getExtension($file); // txt</code></pre>
+<p>Get only file name.</p>
+<pre><code class="language-php">$file = '/path/to/flower.txt';
+
+File::getFilename($file); // flower.txt</code></pre>
+<p>Make file name safe to store.</p>
+<pre><code class="language-php">$path = /path!/to/flower sakura.
+
+File::makeSafe($path); // /path/to/flowersakura</code></pre>
+<h2>Folder</h2>
+<p>Folder class help us operate folders and list files of a folder.</p>
+<h3>Folder Operation</h3>
+<p>Move &amp; Copy</p>
+<pre><code class="language-php">use Windwalker\Filesystem\Folder;
+
+// Move folder
+Folder::move($src, $dest);
+
+// Force move if folder exists
+Folder::move($src, $dest, true);
+
+// Copy folder, will also copy all children
+Folder::copy($src, $dest);
+
+// Force copy if folder exists
+Folder::copy($src, $dest, true);</code></pre>
+<p>Create &amp; Delete</p>
+<pre><code class="language-php">Folder::create($path);
+
+Folder::delete($path);</code></pre>
+<h3>List Files</h3>
+<h4>List Folders</h4>
+<pre><code class="language-php">// List folders of a folder
+Folder::folders($dir);
+
+// List folders recursive
+Folder::folders($dir, true);
+
+// Path type: Get basename of every item
+Folder::folders($dir, true, Folder::PATH_BASENAME);</code></pre>
+<p>Available path type:</p>
+<ul>
+<li><code>Folder::PATH_ABSOLUTE</code> - Absolute full path.</li>
+<li><code>Folder::PATH_RELATIVE</code> - Relative path from folder you scan.</li>
+<li><code>Folder::PATH_BASENAME</code> - The folder or file name.</li>
+</ul>
+<h4>List Files</h4>
+<pre><code class="language-php">// List files of a folder
+Folder::files($dir);
+
+// List files recursive
+Folder::files($dir, true);
+
+// Path type: Get basename of every item
+Folder::files($dir, true, Folder::PATH_BASENAME);</code></pre>
+<h4>List Files &amp; Folders</h4>
+<pre><code class="language-php">// List files &amp; folders of a folder
+Folder::items($dir);
+
+// List files &amp; folders recursive
+Folder::items($dir, true);
+
+// Path type: Get basename of every item
+Folder::items($dir, true, Folder::PATH_RELATIVE);</code></pre>
+<h2>Filesystem Class</h2>
+<p>Filesystem class is a universal finder to find and operate folders &amp; files.</p>
+<h3>Folder &amp; File Operation</h3>
+<p>Filesystem move &amp; copy method will auto detect the path is a folder or file, if is folder, it will call <code>Folder::move()</code>,
+if is file, it will call <code>File::move()</code>.</p>
+<pre><code class="language-php">// we don't need to know $src is a folder or file, Filesystem will detect it.
+Filesystem::move($src, $dest);
+Filesystem::copy($src, $dest);
+Filesystem::delete($src, $dest);</code></pre>
+<h2>Path</h2>
+<p>A simple helper to handler some path string.</p>
+<h3>Clean Path</h3>
+<p>To strip additional / or \ in a path name.</p>
+<pre><code class="language-php">$path = '/var/www\flower\sakura/olive';
+
+$path = Path::clean($path); // Will be: '/var/www/flower/sakura/olive'</code></pre>
+<h3>Permissions</h3>
+<pre><code class="language-php">// Get by number
+Path::getPermissions($path); // 755
+
+// Get by string
+Path::getPermissions($path, true); // dwrxwrx--x
+
+// Set permissions, if is file, set to 644, if is folder set to 755
+Path::setPermissions($path, '0644', '0755');
+
+// Check can change Permissions
+Path::canChmod($path); // Bool</code></pre>
+<h3>Finder</h3>
+<p>Finder is the most powerful function of Filesystem, it provides an interface to let us use our logic to filter files.</p>
+<h4>Simple Finder</h4>
+<pre><code class="language-php">// Argument 2 is recursive
+$folders = Filesystem::folders($path, true);
+$files   = Filesystem::files($path, true);
+$items   = Filesystem::items($path, true);</code></pre>
+<p>The simple finder are same as Folder, but it will not scan all files instantly, but returns an Iterator instead,
+we can send this iterator to <code>foreach</code> and do some filter by <code>SplFileInfo</code> object.</p>
+<pre><code class="language-php">foreach ($items as $item)
+{
+    if ($item-&gt;isDir() || $item-&gt;isDot())
+    {
+        continue;
+    }
+
+    // Do something
+}</code></pre>
+<p>If you really need array not an Iterator, use <code>Filesystem::iteratorToArray()</code>.</p>
+<pre><code class="language-php">$folders = Filesystem::folder($path, true);
+
+// To array
+$folders = Filesystem::iteratorToArray($folders);</code></pre>
+<p>Or set argument 3 to <code>TRUE</code>.</p>
+<pre><code class="language-php">$folders = Filesystem::folder($path, true, true);
+
+is_array($folders); // TRUE</code></pre>
+<h3>Advanced Finder</h3>
+<p>Find by name.</p>
+<pre><code class="language-php">$files = Filesystem::find($path, 'flower.php');</code></pre>
+<p>Multiple name.</p>
+<pre><code class="language-php">$files = Filesystem::find($path, array('flower.php', 'sakura.php'));</code></pre>
+<p>Find by regex</p>
+<pre><code class="language-php">$files = Filesystem::find($path, '^[a-zA-Z0-9]');</code></pre>
+<p>Only find first matched.</p>
+<pre><code class="language-php">$file = Filesystem::findOne($path, array('flower.php', 'sakura.php'));</code></pre>
+<p>Find recursive</p>
+<pre><code class="language-php">$files = Filesystem::find($path, array('flower.php', 'sakura.php'), true);</code></pre>
+<p>To array</p>
+<pre><code class="language-php">$files = Filesystem::find($path, array('flower.php', 'sakura.php'), true, true);</code></pre>
+<h3>Callback Finder</h3>
+<p>Inject our filter logic to find files.</p>
+<pre><code class="language-php">/**
+ * Files callback
+ *
+ * @param \SplFileInfo                $current  Current item's value
+ * @param string                      $key      Current item's key
+ * @param \RecursiveDirectoryIterator $iterator Iterator being filtered
+ *
+ * @return boolean   TRUE to accept the current item, FALSE otherwise
+ */
+$closure = function($current, $key, $iterator)
+{
+    return Path::getPermissions($current-&gt;getPath()) &gt;= 755;
+};
+
+$files = Filesystem::find($path, $closure, true);</code></pre>
+<p>Or create a <code>FileComparator</code> object.</p>
+<pre><code class="language-php">use Windwalker\Filesystem\Comparator\FileComparatorInterface;
+
+class MyComparator implements FileComparatorInterface
+{
+   public function compare($current, $key, $iterator)
+   {
+       return Path::getPermissions($current-&gt;getPath()) &gt;= 755;
+   }
+}
+
+$files = Filesystem::find($path, new MyComparator, true);</code></pre>
+<h3>Advanced Comparator</h3>
+<p>We can create our own comparator like an finder object.</p>
+<pre><code class="language-php">// This is just an example
+
+$comparator = new MyAdvancedComparator;
+
+$comparator-&gt;setTimeGreaterThan(new DataTime)
+    -&gt;setExtension('ini|php')
+    -&gt;setSize('&lt; 2M')
+    -&gt;setPermission('&gt;= 644');
+
+$files = Filesystem::find($path, $comparator, true);</code></pre>
+<h2>PathLocator object</h2>
+<p>A Path locator, help us locate a system path or relative path.</p>
+<p>We can use this object to find files or list files, and also support using callback to filter files.</p>
+<h4>Create a new PathLocator</h4>
+<pre><code class="language-php">$path = new PathLocator('/var/www/flower');</code></pre>
+<h4>Convert to string</h4>
+<pre><code class="language-php">echo $path
+
+//or
+
+(string) $path;</code></pre>
+<h4>Path operation</h4>
+<p>Use chaining to operate path.</p>
+<h5>Child</h5>
+<pre><code class="language-php">$path-&gt;child('plugins')           // =&gt; /var/www/flower/plugins
+    -&gt;child('system/flower/lib'); // =&gt; /var/www/flower/plugins/system/flower/lib</code></pre>
+<h5>Parent</h5>
+<pre><code class="language-php">$path-&gt;parent()       // =&gt; /var/www/flower/plugins/system/flower (Up one level)
+    -&gt;parent(2)       // =&gt; /var/www/flower/plugins               (Up 2 levels)
+    -&gt;parent('www');  // =&gt; /var/www                              (Find a parent and go this level)</code></pre>
+<h5>Prefix</h5>
+<p>Add a prefix of system path, we can change it, only when converting to string, the prefix will be added to path.</p>
+<pre><code class="language-php">$path2 = new PathLocator('src/Sakura/Olive');
+
+echo $path-&gt;addPrefix($_SERVER['DOCUMENT_ROOT']); // =&gt; /var/www/src/Sakura/Olive</code></pre>
+<h4>Filesystem Operation</h4>
+<pre><code class="language-php">echo $path-&gt;isDir();  // true or false
+echo $path-&gt;isFile(); // true or false
+echo $path-&gt;exists(); // true or false</code></pre>
+<h5>Get file info</h5>
+<p>This function has not prepared yet.</p>
+<pre><code class="language-php">$path-&gt;getInfo();            // return SplFileInfo of current directory
+
+$path-&gt;getInfo('index.php'); // return SplFileInfo of this file</code></pre>
+<h5>Scan dir</h5>
+<p>Get Folders</p>
+<pre><code class="language-php">$dirs = $path-&gt;getFolders([true to recrusive]);
+
+foreach($dirs as $dir)
+{
+    echo $dir . '&lt;br /&gt;'; // print all dir's name
+}</code></pre>
+<p>Get Files</p>
+<pre><code class="language-php">$files = $path-&gt;getFiles([true to recrusive]);
+
+foreach($files as $file)
+{
+    echo $file-&gt;getPathname() . '&lt;br /&gt;'; // print all file's name
+}</code></pre>
+<h5>Find files</h5>
+<p>Find by string or regex</p>
+<pre><code class="language-php">echo $path-&gt;find('config.json');     // Find one file and return fileinfo object
+
+echo $path-&gt;find(array('^config'));  // Find one file by regex
+
+// Second argument set to TRUE for recursive
+foreach($path-&gt;findAll(array('^config_*.json', '!^..'), true) as $file)
+{
+    // Find all files as array, param 2 to recursive
+}</code></pre>
+<p>Find by callback</p>
+<pre><code class="language-php">$callback = function($current, $key, $iterator)
+{
+    return return @preg_match('^Foo', $current-&gt;getFilename())  &amp;&amp; ! $iterator-&gt;isDot();
+};
+
+foreach($path-&gt;findAll($callback, true) as $file)
+{
+    // ...
+}</code></pre>
+<p>Find by Comparator</p>
+<p>This comparator object may contain the filter logic, but not prepared yet.</p>
+<pre><code class="language-php">$comparator = new FileComparator;
+
+foreach($path-&gt;findAll(FileComparatorInterface $comparator, true) as $file)
+{
+    // ...
+}</code></pre>
+<h4>Strict Mode</h4>
+<p>This function not prepared yet.</p>
+<pre><code class="language-php">$dl2 = new \DirectoryLocator($_SERVER['DOCUMENT_ROOT'] . '/src', true);
+$dls-&gt;child('Campenont');        // throw PathNotExistsException();
+$dls-&gt;child('../www/index.php'); // throw PathNotDirException();</code></pre>
+<p>*</p>
+<h2>PathCollection object</h2>
+<p>A collection of paths, we can put many paths to this object, and use it as array.</p>
+<p>And we can use this collection to iterate all sub dirs and files, also find files.</p>
+<p>The iterator will travel to every <code>PathLocator</code> in this collection object, and return an SplFileInfo for us.</p>
+<h4>Create a new PathCollection</h4>
+<h5>Add with no key</h5>
+<pre><code class="language-php">$paths = new PathCollection(array(
+    new PathLocator('templates/' . $template . '/html/' . $option),
+    new PathLocator('Sakuras/' . $option . '/view/tmpl/'),
+    'layouts/' . $option ,     // Auto convert to PathLocator
+));</code></pre>
+<h5>Add with key name</h5>
+<pre><code class="language-php">$paths = new PathColleciotn(array(
+    'Template'  =&gt; new PathLocator('templates/' . $template . '/html/' . $option),
+    'Sakura' =&gt; new PathLocator('Sakuras/' . $option . '/view/tmpl/'),
+    'Layout'    =&gt; new PathLocator('layouts/' . $option)
+));</code></pre>
+<h4>Paths operations</h4>
+<h5>Add path</h5>
+<pre><code class="language-php">$paths-&gt;addPath(new PathLocator('Foo'));        // No key name, will using number as key
+
+$paths-&gt;addPath(new PathLocator('Foo'), 'Foo'); // With key name</code></pre>
+<h5>Add paths</h5>
+<pre><code class="language-php">$paths-&gt;addPaths(array(new PathLocator('Bar'))); // Add by array</code></pre>
+<h5>Remove path</h5>
+<pre><code class="language-php">$paths-&gt;removePath('Foo');  // Remove by key name
+$paths-&gt;removePath(0);      // Remove by number</code></pre>
+<h5>Set prefix to all paths</h5>
+<p>We can change this prefix, only when converting to string,
+the prefix will have been added to path.</p>
+<pre><code class="language-php">// Prepend all path with a prefix path.
+
+$paths-&gt;setPrefix('/var/www/flower');</code></pre>
+<h4>Iterator</h4>
+<p>List all PathLocator</p>
+<pre><code class="language-php">foreach($paths as $path)
+{
+    echo $path // print path string
+}</code></pre>
+<p>Return a raw array</p>
+<pre><code class="language-php">foreach($paths-&gt;toArray() as $path)
+{
+    echo $path // print path string
+}</code></pre>
+<p>List all files and folders of all paths</p>
+<pre><code class="language-php">foreach($paths-&gt;getAllChildren([true to recrusive]) as $file)
+{
+    echo $file // SplFileInfo
+}</code></pre>
+<p>List all files</p>
+<pre><code class="language-php">foreach($paths-&gt;getFiles([true to recrusive]) as $file)
+{
+    echo $file-&gt;getFilename() // SplFileInfo
+}</code></pre>
+<p>List all folders</p>
+<pre><code class="language-php">foreach($paths-&gt;getFolders([true to recrusive]) as $dir)
+{
+    echo $file-&gt;getPathname() // SplFileInfo
+}</code></pre>
+<h4>Find Files and Folders</h4>
+<p>Same as PathLocator, but return all paths' file &amp; folders.</p>
+<pre><code class="language-php">$paths-&gt;find('config.json');
+
+$paths-&gt;findAll('config_*.json');</code></pre>
+<hr />
+<h3>Using it as array or string</h3>
+<pre><code class="language-php">$cache  = new PathLocator($_SERVER['DOCUMENT_ROOT'] . '/cache');
+$loader = new \Twig_Loader_Filesystem($paths);
+
+$twig = new \Twig_Environment($loader, array(
+    'cache' =&gt; (string) $cache,
+));</code></pre>
+                        <hr />
+
+    <p class="text-center inner-top-sm">
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.0-3.3/more/filesystem.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="footer" class="black-block inner-md text-center">
+
+    <div class="container inner-top-md inner-bottom-sm">
+        
+        <p>
+            <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+            </a>
+
+            <a href="http://natika.windwalker.io" class="btn" target="_blank">
+                <i class="fa fa-comments"></i>
+                Forum
+            </a>
+
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
+                <i class="fa fa-code"></i>
+                API
+            </a>
+        </p>
+
+        <p class="outer-top-xs">
+            <a href="#header" class="text-center footer-logo">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+            </a>
+        </p>
+
+        <p class="lead outer-top-xs">
+            Copyright © 2018 Windwalker. All Rights Reserved - <a target="_blank" href="https://the-allstars.com">Web Design</a>
+        </p>
+    </div>
+
+</section>
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Init Material
+        $.material.init();
+
+        // Code Block
+        $('.article-content pre code').each(function(i, block) {
+            var $this = $(this);
+
+            $this.attr('class', 'language-' + $this.attr('class'));
+        });
+
+        // Smooth scroll
+        setTimeout(function ()
+        {
+            $('body a').smoothScroll({
+                afterScroll:function (event) {
+                    document.location.hash = this.hash
+                }
+            });
+        }, 500);
+
+        // Table style
+        // Convert table style
+        var tables = $('.article-content table');
+
+        tables.addClass('table').addClass('table-striped');
+
+        // Navbar
+        var navTop;
+        var hasColor = false;
+        var nav = $('#nav .navbar');
+
+        processScrollInit();
+        processScroll();
+
+        $(window).on('resize', processScrollInit);
+        $(window).on('scroll', processScroll);
+
+        function processScrollInit()
+        {
+            if (nav.length) {
+                navTop = nav.length && 60;
+
+                // Only apply the scrollspy when the toolbar is not collapsed
+                if (document.body.clientWidth > 480)
+                {
+//                        $('.subhead-collapse').height(nav.height());
+                    nav.scrollspy({offset: {top: nav.offset().top}});
+                }
+            }
+        }
+
+        function processScroll()
+        {
+            if (nav.length) {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop >= navTop && !hasColor) {
+                    hasColor = true;
+                    nav.addClass('navbar-primary');
+                } else if (scrollTop <= navTop && hasColor) {
+                    hasColor = false;
+                    nav.removeClass('navbar-primary');
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="../../../asset/js/doc.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48372917-6', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

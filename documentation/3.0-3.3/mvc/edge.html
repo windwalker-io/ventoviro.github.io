@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
+
+    <title>Edge Templates | Windwalker - PHP Rapid Development Framework</title>
+
+    <meta name="description" content="">
+    <meta name="generator" content="The Time Machine">
+
+    <meta property="og:title" content="Edge Templates | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:site_name" content="Windwalker Framework">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/prism.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+        </head>
+<body class="">
+
+    <section id="header">
+
+            <nav id="nav">
+
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="../../../about/">
+                            <i class="material-icons">change_history</i>
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.x/start/installation.html">
+                            <i class="material-icons">description</i>
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../rad/start/introduction.html">
+                            <i class="material-icons">graphic_eq</i>
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <i class="fa fa-fw fa-github"></i>
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                    <li>
+                                    <div class="btn-group" style="margin-left: 15px">
+                <button type="button" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    3.0-3.3 <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a href="../../../documentation/3.x/mvc/edge.html">3.x</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.0-3.3/mvc/edge.html">3.0-3.3</a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../documentation/2.1/mvc/edge.html">2.1</a>
+                    </li>
+                </ul>
+            </div>
+                            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+        <section id="banner" class="container text-center">
+            <div class="row">
+                <div class="banner-content col-md-10">
+                    <h1 class="banner-title">Edge Templates</h1>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+        <section id="main-body" class="container main-block">
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="nav nav-stacked side-menu side-bar">
+    
+                
+        <li class="nav-header">
+        <h3 class="slab-font">Start</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/getting-started.html">Getting Started</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Core</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/psr7-middlewares.html">Psr7 and Middlewares</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/service-provider.html">Service Provider</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">MVC</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="active">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Database</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Services</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/datetime.html">Chronos (DateTime)</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/queue.html">Queue</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/error-handling.html">Error Handling</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Console</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">More</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/http-stream.html">Http and Stream</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/cors.html">CORS Headers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/structure.html">Structure Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/crypt.html">Crypt</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/filesystem.html">Filesystem</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/string.html">String</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/utilities.html">Utilities</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/more-packages.html">More Packages</a>
+            </li>
+        
+       </ul>
+    </div>
+            </div>
+
+            <div class="col-md-9">
+                <article class="article-content">
+                    <p>Edge is a <a href="https://laravel.com/docs/5.1/blade">Blade</a> compatible template engine, provides same syntax to support
+Blade template files, but has more powerful extending interfaces.</p>
+<h2>Use Edge Engine in View</h2>
+<p>Get Edge View in Controller</p>
+<pre><code class="language-php">$view = $this-&gt;getView('sakura', 'html', 'edge');
+
+$view-&gt;set('title', 'Hello World~~~!');</code></pre>
+<p>Or set renderer in view class:</p>
+<pre><code class="language-php">use Windwalker\Core\View\HtmlView;
+
+class SakuraHtmlView extends HtmlView
+{
+    protected $renderer = 'edge'; // Or RendererHelper::EDGE
+}</code></pre>
+<p>Then we create a template file in <code>src/Flower/Templates/sakura/default.edge.php</code> or (<code>default.blade.php</code>):</p>
+<pre><code class="language-php">&lt;h1&gt;{{ $title }}&lt;/h1&gt;</code></pre>
+<p>Result:</p>
+<pre><code class="language-html">&lt;h1&gt;Hello World~~~!&lt;/h1&gt;</code></pre>
+<h2>Edge Syntax</h2>
+<p>Most of Edge syntax are same as Blade.</p>
+<h3>Echoing Data</h3>
+<p>Display a variable by <code>{{ ... }}</code></p>
+<pre><code class="language-php">Hello {{ $title }}</code></pre>
+<p>Unescaped echoing.</p>
+<pre><code class="language-php">My name is {!! $form-&gt;input('name') !!}</code></pre>
+<h3>Control Structures</h3>
+<h4>If Statement</h4>
+<p>Use <code>@if ... @else</code> directive.</p>
+<pre><code class="language-php">@if (count($flower) == 1)
+    I have one flower!
+@elseif (count($flower) &gt; 1)
+    I have many flkowers!
+@else
+    I don't have any flower!
+@endif</code></pre>
+<p>Unless directive</p>
+<pre><code class="language-html">@unless ($user-&gt;isAdmin())
+    You are not logged in.
+@endunless</code></pre>
+<h3>Loops</h3>
+<p>Edge provides simple directives similar to PHP loop structure.</p>
+<pre><code class="language-php">@for ($i = 0; $i &lt; 10; $i++)
+    The current value is {{ $i }}
+@endfor
+
+@foreach ($users as $user)
+    &lt;p&gt;This user is: {{ $user-&gt;name }}&lt;/p&gt;
+@endforeach
+
+@forelse ($articles as $article)
+    &lt;li&gt;{{ $article-&gt;title }}&lt;/li&gt;
+@empty
+    &lt;p&gt;No article here&lt;/p&gt;
+@endforelse
+
+@while (true)
+    &lt;p&gt;I'm looping forever.&lt;/p&gt;
+@endwhile</code></pre>
+<p>You might need to break or skip a loop.</p>
+<pre><code class="language-php">@foreach ($users as $user)
+
+    @if (!$user-&gt;id)
+        @continue
+    @endif
+
+    &lt;p&gt;This user is: {{ $user-&gt;name }}&lt;/p&gt;
+
+    @if ($user-&gt;id &gt;= 10)
+        @break
+    @endif
+
+@endforeach</code></pre>
+<p>Or add conditions to these two directives.</p>
+<pre><code class="language-php">@continue(!$user-&gt;id)
+
+@break($user-&gt;id &gt;= 10)</code></pre>
+<h2>Layouts</h2>
+<p>We can define some sections in a root template.</p>
+<pre><code class="language-html">&lt;!-- tmpl/layouts/root.edge.php --&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;@yield('page_title')&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        @section('body')
+            The is root body
+        @show
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>Now we can add an child template to extends root template.</p>
+<pre><code class="language-php">@extends('layouts.root')
+
+@section('page_title', 'My Page Title')
+
+@section('content')
+    &lt;p&gt;This is my body content.&lt;/p&gt;
+@endsection</code></pre>
+<p>The final template rendered:</p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My Page Title&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;This is my body content.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>More directive and usages please see <a href="https://laravel.com/docs/5.2/blade#defining-a-layout">Blade</a></p>
+<h2>Extending Edge</h2>
+<p>We can create Extension class to add multiple directives and global variables to Edge.</p>
+<pre><code class="language-php">class MyExtension implements \Windwalker\Edge\Extension\EdgeExtensionInterface
+{
+    public function getName()
+    {
+        return 'my_extension';
+    }
+
+    public function getDirectives()
+    {
+        return array(
+            'upper' =&gt; array($this, 'upper'),
+            'lower' =&gt; array($this, 'lower'),
+        );
+    }
+
+    public function getGlobals()
+    {
+        return array(
+            'flower' =&gt; 'sakura'
+        );
+    }
+
+    public function getParsers()
+    {
+        return array();
+    }
+
+    public function upper($expression)
+    {
+        return "&lt;?php echo strtoupper$expression; ?&gt;";
+    }
+
+    public function lower($expression)
+    {
+        return "&lt;?php echo strtolower$expression; ?&gt;";
+    }
+}
+
+// Inject this extension to Edge
+
+\Windwalker\Renderer\Edge\GlobalContainer::addExtension(new MyExtension[, $name = null]);</code></pre>
+<p>Use our new directive:</p>
+<pre><code class="language-php">&lt;h1&gt;@upper('hello')&lt;/h2&gt;
+
+&lt;!-- Result: &lt;h1&gt;HELLO&lt;/h1&gt; --&gt;</code></pre>
+<p>See <a href="https://github.com/ventoviro/windwalker/tree/master/src/Edge">Edge Package</a></p>
+                        <hr />
+
+    <p class="text-center inner-top-sm">
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.0-3.3/mvc/edge.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="footer" class="black-block inner-md text-center">
+
+    <div class="container inner-top-md inner-bottom-sm">
+        
+        <p>
+            <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+            </a>
+
+            <a href="http://natika.windwalker.io" class="btn" target="_blank">
+                <i class="fa fa-comments"></i>
+                Forum
+            </a>
+
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
+                <i class="fa fa-code"></i>
+                API
+            </a>
+        </p>
+
+        <p class="outer-top-xs">
+            <a href="#header" class="text-center footer-logo">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+            </a>
+        </p>
+
+        <p class="lead outer-top-xs">
+            Copyright © 2018 Windwalker. All Rights Reserved - <a target="_blank" href="https://the-allstars.com">Web Design</a>
+        </p>
+    </div>
+
+</section>
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Init Material
+        $.material.init();
+
+        // Code Block
+        $('.article-content pre code').each(function(i, block) {
+            var $this = $(this);
+
+            $this.attr('class', 'language-' + $this.attr('class'));
+        });
+
+        // Smooth scroll
+        setTimeout(function ()
+        {
+            $('body a').smoothScroll({
+                afterScroll:function (event) {
+                    document.location.hash = this.hash
+                }
+            });
+        }, 500);
+
+        // Table style
+        // Convert table style
+        var tables = $('.article-content table');
+
+        tables.addClass('table').addClass('table-striped');
+
+        // Navbar
+        var navTop;
+        var hasColor = false;
+        var nav = $('#nav .navbar');
+
+        processScrollInit();
+        processScroll();
+
+        $(window).on('resize', processScrollInit);
+        $(window).on('scroll', processScroll);
+
+        function processScrollInit()
+        {
+            if (nav.length) {
+                navTop = nav.length && 60;
+
+                // Only apply the scrollspy when the toolbar is not collapsed
+                if (document.body.clientWidth > 480)
+                {
+//                        $('.subhead-collapse').height(nav.height());
+                    nav.scrollspy({offset: {top: nav.offset().top}});
+                }
+            }
+        }
+
+        function processScroll()
+        {
+            if (nav.length) {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop >= navTop && !hasColor) {
+                    hasColor = true;
+                    nav.addClass('navbar-primary');
+                } else if (scrollTop <= navTop && hasColor) {
+                    hasColor = false;
+                    nav.removeClass('navbar-primary');
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="../../../asset/js/doc.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48372917-6', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

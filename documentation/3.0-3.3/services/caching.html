@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
+
+    <title>Caching | Windwalker - PHP Rapid Development Framework</title>
+
+    <meta name="description" content="">
+    <meta name="generator" content="The Time Machine">
+
+    <meta property="og:title" content="Caching | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:site_name" content="Windwalker Framework">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/prism.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+        </head>
+<body class="">
+
+    <section id="header">
+
+            <nav id="nav">
+
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="../../../about/">
+                            <i class="material-icons">change_history</i>
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.x/start/installation.html">
+                            <i class="material-icons">description</i>
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../rad/start/introduction.html">
+                            <i class="material-icons">graphic_eq</i>
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <i class="fa fa-fw fa-github"></i>
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                    <li>
+                                    <div class="btn-group" style="margin-left: 15px">
+                <button type="button" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    3.0-3.3 <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a href="../../../documentation/3.x/services/caching.html">3.x</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.0-3.3/services/caching.html">3.0-3.3</a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../documentation/2.1/more/caching.html">2.1</a>
+                    </li>
+                </ul>
+            </div>
+                            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+        <section id="banner" class="container text-center">
+            <div class="row">
+                <div class="banner-content col-md-10">
+                    <h1 class="banner-title">Caching</h1>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+        <section id="main-body" class="container main-block">
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="nav nav-stacked side-menu side-bar">
+    
+                
+        <li class="nav-header">
+        <h3 class="slab-font">Start</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/getting-started.html">Getting Started</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Core</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/psr7-middlewares.html">Psr7 and Middlewares</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/service-provider.html">Service Provider</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">MVC</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Database</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Services</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="active">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/datetime.html">Chronos (DateTime)</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/queue.html">Queue</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/error-handling.html">Error Handling</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Console</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">More</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/http-stream.html">Http and Stream</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/cors.html">CORS Headers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/structure.html">Structure Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/crypt.html">Crypt</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/filesystem.html">Filesystem</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/string.html">String</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/utilities.html">Utilities</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/more-packages.html">More Packages</a>
+            </li>
+        
+       </ul>
+    </div>
+            </div>
+
+            <div class="col-md-9">
+                <article class="article-content">
+                    <h2>Configuration</h2>
+<p>Using cache will be very easy in Windwalker, the cache configuration is located at <code>/etc/config.yml</code>.</p>
+<pre><code class="language-yaml">cache:
+    enabled: 0
+    storage: file
+    serializer: php
+    time: 15</code></pre>
+<p>The <code>enabled</code> property controls global cache start or not, can be close if you want to test your application.</p>
+<h3>Storage</h3>
+<p>Set <code>stoeage</code> so we can use different storage engine to save cache data, available storages:</p>
+<ul>
+<li><code>file</code>  --&gt; Basic file storage</li>
+<li><code>php_file</code> --&gt; Will use <code>include</code> to load file.</li>
+<li><code>forever_file</code> --&gt; Never expired file.</li>
+<li><code>array</code> --&gt; Use array to store data.</li>
+<li><code>runtime_array</code> --&gt; Use static array to store data in one life cycle</li>
+<li><code>memcached</code></li>
+<li><code>redis</code></li>
+<li><code>null</code></li>
+</ul>
+<p>See <a href="https://github.com/ventoviro/windwalker-cache#storage">Cache Storage</a></p>
+<h3>Serializer</h3>
+<p>The default <code>php_serializer</code> will make our data be php serialized string, if you want to use other format,
+just change serializer option.</p>
+<ul>
+<li><code>php</code> --&gt; Use php serialize()</li>
+<li><code>php_file</code> --&gt; Save as array and return data so we can include it.</li>
+<li><code>json</code> --&gt; Json encode data</li>
+<li><code>string</code> --&gt; Will force convert object to string.</li>
+<li><code>raw</code> --&gt; Just save raw string</li>
+</ul>
+<h2>Use Global Cache</h2>
+<p>Windwalker contains a global main cache object that you can configure it in <code>config.yml</code>.</p>
+<pre><code class="language-php">$cache = Ioc::getCache();
+
+// OR
+
+$cache = $container-&gt;get('cache');
+
+// Store cache item
+$cache-&gt;set('key', 'value');
+
+// Get cache
+$value = $cache-&gt;get('key');
+
+// Check cache item
+$cache-&gt;exists('key');</code></pre>
+<h2>Custom Cache Object</h2>
+<p>We can still create our own custom cache objects:</p>
+<pre><code class="language-php">$cacheManager = $container-&gt;get('cache.manager');
+
+$cache = $cacheManager-&gt;getCache('mycache_name', 'file'); // Every name will be singleton object.
+
+// OR use Facade
+
+use Windwalker\Core\Cache\CacheFactory;
+
+CacheFactory::getCache('mycache_name', 'file');</code></pre>
+<p>If you set <code>cache.enabled</code> to <code>false</code> or in DEBUG mode, all cache created from <code>getCache()</code> will be <code>NullStorage</code>, it won't cache any data.</p>
+<p>You can set ignore global to make cache manager ignore config settings.</p>
+<pre><code class="language-php">CacheFactory::ignoreGlobal(true);</code></pre>
+<h2>Disable Cache or Debug</h2>
+<p>When debug property in global config se to <code>true</code> or <code>cache.disabled</code> set to <code>true</code>, the cache storage will auto set to <code>NullStorage</code>, cache can still be used
+but no work.</p>
+<pre><code class="language-php">// If cache disabled
+$cache = \Windwalker\Ioc::getCache();
+
+// Cache object can be get and operate, but the key will always not exists.
+if (!$cache-&gt;exists('flower'))
+{
+    $data = $flowerMapper-&gt;loadAll();
+
+    $cache-&gt;set('flower', $data);
+}
+else
+{
+    $data = $cache-&gt;get('flower');
+}
+
+return $data;</code></pre>
+<h2>CacheFactory</h2>
+<h3>Use <code>CacheFactory::getCache()</code></h3>
+<p>CacheFactory is a cache creator, it will store each cache object as singleton by different name and options.</p>
+<pre><code class="language-php">use Windwalker\Core\Cache\CacheFactory;
+
+$myFileCache = CacheFactory::getCache('cache_name', 'file');
+$myArrayCache = CacheFactory::getCache('cache_name', 'array');</code></pre>
+<p>The default cache is array cache, it means our data only keep in array but will not save as files.</p>
+<h3>Custom Cache Options</h3>
+<pre><code class="language-php">$options = array(
+    'cache_dir' =&gt; WINDWALKLER_CACHE, // Only for file storage
+    'cache_time' =&gt; 999 // minutes
+);
+
+$cache = CacheFactory::getCache('cache_name', 'file', 'php', $options);</code></pre>
+<h2>Storage</h2>
+<h3>ArrayStorage and RuntimeArrayStorage</h3>
+<p>This is default storage, which will store data in itself and will not depends on any outside storage engine.</p>
+<p>The <code>RuntimeArrayStorage</code> use static property to storage data, which means all data will live in current runtime
+no matter how many times you create it.</p>
+<pre><code class="language-php">$cache = CacheFactory::getCache('my_cache', 'array');
+$cache = CacheFactory::getCache('my_cache', 'runtime_array');</code></pre>
+<h3>FileStorage</h3>
+<p>Create a cache with <code>FileStorage</code> and set a path to store files.</p>
+<pre><code class="language-php">$cache = CacheFactory::getCache('my_cache', 'file');
+
+$cache-&gt;set('flower', array('sakura'));</code></pre>
+<p>The file will store at <code>{ROOT}/cache/my_cache/~5a46b8253d07320a14cace9b4dcbf80f93dcef04.data</code>, and the data will be serialized string.</p>
+<pre><code>a:1:{i:0;s:6:"sakura";}</code></pre>
+<h4>File Group</h4>
+<p>Group is a subfolder of your storage path.</p>
+<pre><code class="language-php">$cache = CacheFactory::getCache('mygroup', 'file');
+
+$cache-&gt;set('mygroup', array('sakura'));</code></pre>
+<p>The file wil store at <code>{ROOT}/cache/mygroup/~5a46b8253d07320a14cace9b4dcbf80f93dcef04.data</code> that for organize your cache folder.</p>
+<h4>PHP File Format and Deny Access</h4>
+<p>If your cache folder are exposure on web environment, we have to make our cache files unable to access. The argument 3
+of <code>FileStorage</code> is use to deny access.</p>
+<pre><code class="language-php">$cache = CacheFactory::getCache('mygroup', 'file', 'php', ['deny_access' =&gt; true]);
+
+$cache-&gt;set('flower', array('sakura'));</code></pre>
+<p>The stored file will be a PHP file with code to deny access:</p>
+<p><code>/your/cache/path/mygroup/~5a46b8253d07320a14cace9b4dcbf80f93dcef04.php</code></p>
+<pre><code class="language-php">&lt;?php die("Access Deny"); ?&gt;a:1:{i:0;s:6:"sakura";}</code></pre>
+<h3>Available Storages</h3>
+<ul>
+<li>ArrayStorage (<code>array</code>)</li>
+<li>RuntimeArrayStorage (<code>runtime_array</code>)</li>
+<li>FileStorage (<code>file</code>)</li>
+<li>PhpFileStorage (<code>php_file</code>)</li>
+<li>ForeverFileStorage (<code>forever_file</code>)</li>
+<li>MemcachedStorage (<code>memcached</code>)</li>
+<li>RedisStorage (<code>redis</code>)</li>
+<li>NullStorage (<code>null</code>)</li>
+</ul>
+<h2>Serializer</h2>
+<p>The default <code>PhpSerializer</code> (<code>php</code>) will make our data be php serialized string, if you want to use other format,
+just change serializer at second argument of Cache object.</p>
+<pre><code class="language-php">$cache = CacheFactory::getCache('my_cache', 'file', 'json');
+
+$cache-&gt;set('flower', array('flower' =&gt; 'sakura'));</code></pre>
+<p>The stored cache file is:</p>
+<pre><code>{"flower":"sakura"}</code></pre>
+<h3>Full Page Cache</h3>
+<p>Sometimes we may need to store whole html as static page cache. <code>StringSerializer</code> (<code>string</code>) or <code>RawSerializer</code> (<code>raw</code>) helps us save raw data as string:</p>
+<pre><code class="language-php">$cache = CacheFactory::getCache('my_cache', 'file', 'string');
+
+$url = 'http://mysite.com/foo/bar/baz';
+
+if ($cache-&gt;exists($url))
+{
+    echo $cache-&gt;get($url);
+
+    exit();
+}
+
+$html = $view-&gt;render('html.layout');
+
+$cache-&gt;set($url, $html);
+
+echo $html;</code></pre>
+<h3>PhpFileSerializer</h3>
+<p>This serializer can save array data as a php file, will be useful when we need to cache config data.</p>
+<pre><code class="language-php">$cache = CacheFactory::getCache('my_cache', 'file', 'php_file');
+
+$config = array('foo' =&gt; 'bar');
+
+$cache-&gt;set('config.name', $config);
+
+$cache-&gt;get('config.name'); // Array( [foo] =&gt; bar )</code></pre>
+<p>The cache file will be:</p>
+<pre><code class="language-php">&lt;?php
+
+return array (
+  'foo' =&gt; 'bar',
+);</code></pre>
+<h3>Available Serializers</h3>
+<ul>
+<li>PhpSerializer (<code>php</code>)</li>
+<li>PhpFileSerializer (<code>php_file</code>)</li>
+<li>JsonSerializer (<code>json</code>)</li>
+<li>StringSerializer (<code>string</code>)</li>
+<li>RawSerializer (<code>raw</code>)</li>
+</ul>
+<h2>PSR6 Cache Interface</h2>
+<p>Windwalker Cache Storage are all follows <a href="http://www.php-fig.org/psr/psr-6/">PSR6</a>, so you can use other libraries'
+CacheItemPool object as storage, you can also directly use Storage object.</p>
+<pre><code class="language-php">use Windwalker\Cache\Item\CacheItem;
+use Windwalker\Cache\Storage\FileStorage;
+
+$cachePool = new FileStorage(__DIR__ . '/cache');
+
+$cachePool-&gt;save(new CacheItem('foo', 'Bar', 150));
+
+// OR save differed
+$cachePool-&gt;saveDeferred(new CacheItem('baz', 'Yoo', 150));
+$cachePool-&gt;commit();</code></pre>
+<p>See <a href="https://github.com/ventoviro/windwalker-cache">Windwalker Cache Package</a></p>
+                        <hr />
+
+    <p class="text-center inner-top-sm">
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.0-3.3/services/caching.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="footer" class="black-block inner-md text-center">
+
+    <div class="container inner-top-md inner-bottom-sm">
+        
+        <p>
+            <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+            </a>
+
+            <a href="http://natika.windwalker.io" class="btn" target="_blank">
+                <i class="fa fa-comments"></i>
+                Forum
+            </a>
+
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
+                <i class="fa fa-code"></i>
+                API
+            </a>
+        </p>
+
+        <p class="outer-top-xs">
+            <a href="#header" class="text-center footer-logo">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+            </a>
+        </p>
+
+        <p class="lead outer-top-xs">
+            Copyright © 2018 Windwalker. All Rights Reserved - <a target="_blank" href="https://the-allstars.com">Web Design</a>
+        </p>
+    </div>
+
+</section>
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Init Material
+        $.material.init();
+
+        // Code Block
+        $('.article-content pre code').each(function(i, block) {
+            var $this = $(this);
+
+            $this.attr('class', 'language-' + $this.attr('class'));
+        });
+
+        // Smooth scroll
+        setTimeout(function ()
+        {
+            $('body a').smoothScroll({
+                afterScroll:function (event) {
+                    document.location.hash = this.hash
+                }
+            });
+        }, 500);
+
+        // Table style
+        // Convert table style
+        var tables = $('.article-content table');
+
+        tables.addClass('table').addClass('table-striped');
+
+        // Navbar
+        var navTop;
+        var hasColor = false;
+        var nav = $('#nav .navbar');
+
+        processScrollInit();
+        processScroll();
+
+        $(window).on('resize', processScrollInit);
+        $(window).on('scroll', processScroll);
+
+        function processScrollInit()
+        {
+            if (nav.length) {
+                navTop = nav.length && 60;
+
+                // Only apply the scrollspy when the toolbar is not collapsed
+                if (document.body.clientWidth > 480)
+                {
+//                        $('.subhead-collapse').height(nav.height());
+                    nav.scrollspy({offset: {top: nav.offset().top}});
+                }
+            }
+        }
+
+        function processScroll()
+        {
+            if (nav.length) {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop >= navTop && !hasColor) {
+                    hasColor = true;
+                    nav.addClass('navbar-primary');
+                } else if (scrollTop <= navTop && hasColor) {
+                    hasColor = false;
+                    nav.removeClass('navbar-primary');
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="../../../asset/js/doc.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48372917-6', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

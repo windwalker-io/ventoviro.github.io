@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
+
+    <title>Mailer | Windwalker - PHP Rapid Development Framework</title>
+
+    <meta name="description" content="">
+    <meta name="generator" content="The Time Machine">
+
+    <meta property="og:title" content="Mailer | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:site_name" content="Windwalker Framework">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/prism.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+        </head>
+<body class="">
+
+    <section id="header">
+
+            <nav id="nav">
+
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="../../../about/">
+                            <i class="material-icons">change_history</i>
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.x/start/installation.html">
+                            <i class="material-icons">description</i>
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../rad/start/introduction.html">
+                            <i class="material-icons">graphic_eq</i>
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <i class="fa fa-fw fa-github"></i>
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                    <li>
+                                    <div class="btn-group" style="margin-left: 15px">
+                <button type="button" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    3.0-3.3 <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a href="../../../documentation/3.x/services/mailer.html">3.x</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.0-3.3/services/mailer.html">3.0-3.3</a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../documentation/2.1/services/mailer.html">2.1</a>
+                    </li>
+                </ul>
+            </div>
+                            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+        <section id="banner" class="container text-center">
+            <div class="row">
+                <div class="banner-content col-md-10">
+                    <h1 class="banner-title">Mailer</h1>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+        <section id="main-body" class="container main-block">
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="nav nav-stacked side-menu side-bar">
+    
+                
+        <li class="nav-header">
+        <h3 class="slab-font">Start</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/getting-started.html">Getting Started</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Core</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/psr7-middlewares.html">Psr7 and Middlewares</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/service-provider.html">Service Provider</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">MVC</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Database</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Services</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/datetime.html">Chronos (DateTime)</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/queue.html">Queue</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/languages.html">Languages</a>
+            </li>
+                    <li class="active">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/error-handling.html">Error Handling</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Console</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">More</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/http-stream.html">Http and Stream</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/cors.html">CORS Headers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/structure.html">Structure Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/crypt.html">Crypt</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/filesystem.html">Filesystem</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/string.html">String</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/utilities.html">Utilities</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/more-packages.html">More Packages</a>
+            </li>
+        
+       </ul>
+    </div>
+            </div>
+
+            <div class="col-md-9">
+                <article class="article-content">
+                    <h2>Use Mailer</h2>
+<p>Windwalker provides an interface to integrate different mail packages, currently we support <a href="http://swiftmailer.org/">Swift Mailer</a>
+as default, you must install <code>"swiftmailer/swiftmailer": "~5.0"</code> first.</p>
+<p>Then add your mail server information to <code>etc/secret.yml</code>:</p>
+<pre><code class="language-yaml"># ...
+
+mail:
+    from:
+        name: Sender Name
+        email: sender@mail.com
+    smtp:
+        transport: smtp
+        security: tls
+        host: your.smtp.net
+        port: 2525
+        username: *****
+        password: *****
+
+        # Verify SSL
+        verify: false
+
+        # Local Domain
+        local: your.domain.com
+
+    # Sendmail command if use this
+    sendmail: /usr/sbin/sendmail</code></pre>
+<p>Currently available transports:</p>
+<ul>
+<li>smtp (SMTP server)</li>
+<li>mail (PHP default <code>mail()</code> function)</li>
+<li>sendmail (Use system sendmail)</li>
+</ul>
+<h2>Create Message</h2>
+<pre><code class="language-php">use Windwalker\Core\Mailer\Mailer;
+
+/** @var  $message \Windwalker\Core\Mailer\MailMessage */
+$message = Mailer::createMessage('Subject');
+
+$message-&gt;to('foo@foo.com')
+    -&gt;from('my@mail.com') // If you don't set from, Mailer will use the `from` info in config.yml
+    -&gt;cc(...)
+    -&gt;bcc(...)
+    -&gt;html(true) // Default is true
+    -&gt;body('Mail body');
+
+// Send it
+Mailer::send($message);</code></pre>
+<h3>Add Mail By Array</h3>
+<p>You can use array as a set of mail to <code>to()</code>, <code>from()</code>, <code>cc()</code> and <code>bcc()</code>.</p>
+<pre><code class="language-php">$message-&gt;to(['foo@mail.com', 'bar@mail.com']);
+
+// OR
+
+$message-&gt;to([
+    'foo@mail.com' =&gt; 'Name Foo',
+    'bar@mail.com' =&gt; 'Name Bar',
+]);</code></pre>
+<h3>Render Body From View</h3>
+<p>Use view to render mail in controller:</p>
+<pre><code class="language-php">$view = $this-&gt;getView('Mail');
+
+$view['user'] = User::get();
+$view['link'] = $link;
+$view['content'] = $content;
+
+$message-&gt;body($view-&gt;setLayout('mail.notify')-&gt;render());</code></pre>
+<p>Or use message built-in render method:</p>
+<pre><code class="language-php">// ...
+
+$message-&gt;renderBody('mail.notify', $data, 'edge');
+
+Mailer::send($message);</code></pre>
+<h3>Attachment</h3>
+<p>Use file path.</p>
+<pre><code class="language-php">$message-&gt;attach('/path/to/file.pdf');
+$message-&gt;attach('/path/to/file2.pdf', , 'downloaded2.pdf', 'application/pdf');
+
+Mailer::send($message);</code></pre>
+<p>Use <code>MailAttachment</code> class:</p>
+<pre><code class="language-php">use Windwalker\Core\Mailer\MailAttachment;
+
+$message-&gt;attach(new MailAttachment('/path/to/fil.pdf'));
+
+// Or set custom body
+$attachment = new MailAttachment;
+$attachment-&gt;setBody('&lt;html&gt;TEST&lt;/html&gt;');
+
+$message-&gt;attach($attachment, 'test.html');</code></pre>
+<h2>Pre-Defined Messages</h2>
+<p>You can declare some message classes to quickly re-use them.</p>
+<pre><code class="language-php">namespace Flower\Mail;
+
+// ...
+
+class CheckoutMessage extends MailMessage
+{
+    public static function create(User $user = null, Data $product = null)
+    {
+        // Prepare default data for test
+        $user = $user ? : User::get();
+        $product = $product ? : new Data;
+
+        return (new static('You checkout a product'))
+            -&gt;to($user-&gt;email, $user-&gt;name)
+            -&gt;bcc('admin@my-dsite.com')
+            -&gt;renderBody('checkout', [
+                'user' =&gt; $user,
+                'product' =&gt; $product
+            ]);
+    }
+}</code></pre>
+<p>Now just create this instance to send mail:</p>
+<pre><code class="language-php">use Flower\Mail\CheckoutMessage;
+
+Mailer::send(CheckoutMessage::create($user, $product));</code></pre>
+<h2>Style Inliner</h2>
+<p>Windwalker Includes a simple CSS inliner to help us compile CSS to inline styles that makes our email show normally with
+some email clients which does not support outside CSS.</p>
+<p>To enable CSS inliner, you must install <code>"tijsverkoyen/css-to-inline-styles": "~2.0"</code> first, and add this listener to <code>etc/app/windwalker.php</code>:</p>
+<pre><code class="language-php">// etc/app/windwalker.php or web.php
+
+    'listeners' =&gt; [
+        'inliner' =&gt; \Windwalker\Core\Mailer\Listener\MailInlinerListener::class
+    ]</code></pre>
+<p>Now write your mail template with some styles and send mail:</p>
+<pre><code class="language-php">@extends('_global.mail-wrapper')
+
+&lt;!-- Your base mail styles --&gt;
+@php( $asset-&gt;addCSS('css/mail-style.css') )
+
+&lt;style&gt;
+    /* Some inline styles */
+
+    h1, h2, h3 {
+        color: #444444;
+    }
+
+    p {
+        line-height: 1.5
+    }
+
+    .btn {
+        padding: 5px 7px;
+    }
+&lt;/style&gt;
+
+&lt;!-- Mail body --&gt;
+
+&lt;h1&gt;Hello&lt;/h1&gt;
+&lt;p&gt;
+    World
+&lt;/p&gt;
+&lt;a class="btn" href="#"&gt;Readmore&lt;/a&gt;</code></pre>
+<p>This mail template will be compiled to:</p>
+<pre><code class="language-html">&lt;div id="my-mail-wrapper" style="..."&gt;
+    &lt;h1 style="color: #444444;"&gt;Hello&lt;/h1&gt;
+    &lt;p style="line-height: 1.5;"&gt;
+        World
+    &lt;/p&gt;
+    &lt;a style="padding: 5px 7px;" class="btn" href="#"&gt;Readmore&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+<blockquote>
+<p>You must use <code>$asset</code> to include outside CSS and write in-page CSS in <code>&lt;style&gt;</code> tag.
+Do not use <code>&lt;link&gt;</code> tag to include CSS.</p>
+<hr />
+<p>Due to the performance reason, please don't include whole CSS framework like bootstrap or foundation,
+Try to write your own mail style to make sure the compiler fast enough.</p>
+</blockquote>
+                        <hr />
+
+    <p class="text-center inner-top-sm">
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.0-3.3/services/mailer.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="footer" class="black-block inner-md text-center">
+
+    <div class="container inner-top-md inner-bottom-sm">
+        
+        <p>
+            <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+            </a>
+
+            <a href="http://natika.windwalker.io" class="btn" target="_blank">
+                <i class="fa fa-comments"></i>
+                Forum
+            </a>
+
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
+                <i class="fa fa-code"></i>
+                API
+            </a>
+        </p>
+
+        <p class="outer-top-xs">
+            <a href="#header" class="text-center footer-logo">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+            </a>
+        </p>
+
+        <p class="lead outer-top-xs">
+            Copyright © 2018 Windwalker. All Rights Reserved - <a target="_blank" href="https://the-allstars.com">Web Design</a>
+        </p>
+    </div>
+
+</section>
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Init Material
+        $.material.init();
+
+        // Code Block
+        $('.article-content pre code').each(function(i, block) {
+            var $this = $(this);
+
+            $this.attr('class', 'language-' + $this.attr('class'));
+        });
+
+        // Smooth scroll
+        setTimeout(function ()
+        {
+            $('body a').smoothScroll({
+                afterScroll:function (event) {
+                    document.location.hash = this.hash
+                }
+            });
+        }, 500);
+
+        // Table style
+        // Convert table style
+        var tables = $('.article-content table');
+
+        tables.addClass('table').addClass('table-striped');
+
+        // Navbar
+        var navTop;
+        var hasColor = false;
+        var nav = $('#nav .navbar');
+
+        processScrollInit();
+        processScroll();
+
+        $(window).on('resize', processScrollInit);
+        $(window).on('scroll', processScroll);
+
+        function processScrollInit()
+        {
+            if (nav.length) {
+                navTop = nav.length && 60;
+
+                // Only apply the scrollspy when the toolbar is not collapsed
+                if (document.body.clientWidth > 480)
+                {
+//                        $('.subhead-collapse').height(nav.height());
+                    nav.scrollspy({offset: {top: nav.offset().top}});
+                }
+            }
+        }
+
+        function processScroll()
+        {
+            if (nav.length) {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop >= navTop && !hasColor) {
+                    hasColor = true;
+                    nav.addClass('navbar-primary');
+                } else if (scrollTop <= navTop && hasColor) {
+                    hasColor = false;
+                    nav.removeClass('navbar-primary');
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="../../../asset/js/doc.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48372917-6', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

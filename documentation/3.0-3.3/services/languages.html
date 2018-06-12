@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
+
+    <title>Languages | Windwalker - PHP Rapid Development Framework</title>
+
+    <meta name="description" content="">
+    <meta name="generator" content="The Time Machine">
+
+    <meta property="og:title" content="Languages | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:site_name" content="Windwalker Framework">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/prism.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+        </head>
+<body class="">
+
+    <section id="header">
+
+            <nav id="nav">
+
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="../../../about/">
+                            <i class="material-icons">change_history</i>
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.x/start/installation.html">
+                            <i class="material-icons">description</i>
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../rad/start/introduction.html">
+                            <i class="material-icons">graphic_eq</i>
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <i class="fa fa-fw fa-github"></i>
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                    <li>
+                                    <div class="btn-group" style="margin-left: 15px">
+                <button type="button" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    3.0-3.3 <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a href="../../../documentation/3.x/services/languages.html">3.x</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.0-3.3/services/languages.html">3.0-3.3</a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../documentation/2.1/more/languages.html">2.1</a>
+                    </li>
+                </ul>
+            </div>
+                            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+        <section id="banner" class="container text-center">
+            <div class="row">
+                <div class="banner-content col-md-10">
+                    <h1 class="banner-title">Languages</h1>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+        <section id="main-body" class="container main-block">
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="nav nav-stacked side-menu side-bar">
+    
+                
+        <li class="nav-header">
+        <h3 class="slab-font">Start</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/getting-started.html">Getting Started</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Core</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/psr7-middlewares.html">Psr7 and Middlewares</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/service-provider.html">Service Provider</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">MVC</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Database</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Services</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/datetime.html">Chronos (DateTime)</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/queue.html">Queue</a>
+            </li>
+                    <li class="active">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/error-handling.html">Error Handling</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Console</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">More</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/http-stream.html">Http and Stream</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/cors.html">CORS Headers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/structure.html">Structure Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/crypt.html">Crypt</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/filesystem.html">Filesystem</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/string.html">String</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/utilities.html">Utilities</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/more-packages.html">More Packages</a>
+            </li>
+        
+       </ul>
+    </div>
+            </div>
+
+            <div class="col-md-9">
+                <article class="article-content">
+                    <h2>Introduction</h2>
+<p>Windwalker use Language package to handle i18n localise. There is a <code>language</code> configuration in <code>/etc/config.yml</code>:</p>
+<pre><code class="language-yaml">language:
+    debug: 0
+    locale: zh-TW
+    default: en-GB
+    format: ini
+    path: resources/languages</code></pre>
+<p><code>locale</code> means current language, and <code>default</code> will tell language object that if current translate not exists, fallback to which language as default.</p>
+<p>Format is the default file format, but we can still load other format in the runtime.</p>
+<h2>Using Language to Translate String</h2>
+<p>Windwalker language object has a Facade as proxy, just call this static class to use.</p>
+<pre><code class="language-php">use Windwalker\Core\Language\Translator;
+
+// Load en-GB/main.ini file first
+Translator::loadFile('main');
+
+// Translate
+echo Translator::translate('windwalker.hello.message');</code></pre>
+<p>Add language:</p>
+<pre><code class="language-ini">; resources/languages/en-GB/main.ini
+
+windwalker.hello.message="Hello World"</code></pre>
+<p>The result will be:</p>
+<pre><code class="language-html">Hello World</code></pre>
+<p>There is a short alias of <code>translate()</code>:</p>
+<pre><code class="language-php">echo Translator::translate('windwalker.hello.message');</code></pre>
+<h2>Locale and Default Languages</h2>
+<p>We set locale to <code>zh-TW</code> and default to <code>en-GB</code>, then create ini language files:</p>
+<pre><code class="language-ini">; resources/languages/en-GB/flower.ini
+
+windwalker.language.test.flower="Flower"
+windwalker.language.test.sakura="Sakura"</code></pre>
+<pre><code class="language-ini">; resources/languages/zh-TW/flower.ini
+
+windwalker.language.test.flower="花"</code></pre>
+<p>And load them.</p>
+<pre><code class="language-php">Translator::loadFile('flower');</code></pre>
+<p>Translate string:</p>
+<pre><code class="language-php">// zh-TW has this language key, so it will be translated
+Translator::translate('windwalker.language.test.flower'); // 花
+
+// This key not exists in zh-TW, use en-GB as default
+Translator::translate('windwalker.language.test.sakura'); // Sakura</code></pre>
+<h3>Key Format</h3>
+<p>All language key will be normalised to lowercase and separated by dot (<code>.</code>).</p>
+<p>These cases all get same result:</p>
+<pre><code class="language-php">Translator::translate('WINDWALKER_LANGUAGE_TEST_FLOWER'); // 花
+Translator::translate('WINDWALKER_language_TEST FLOWER'); // 花
+Translator::translate('windwalker.language.test.flower'); // 花
+Translator::translate('Windwalker Language Test Flower'); // 花
+Translator::translate('Windwalker Language, Test Flower~~~!'); // 花
+
+// All keys will be normalise to 'windwalker.language.test.flower'</code></pre>
+<h3>Replace String</h3>
+<p>Use <code>sprintf()</code> method.</p>
+<pre><code class="language-ini">windwalker.language.test.beautiful.flower="The %s is beautiful~~~!!!"</code></pre>
+<pre><code class="language-php">Translator::sprintf('windwalker.language.test.beautiful.flower', 'Sunflower');
+
+// Result: The Sunflower is beautiful~~~!!!</code></pre>
+<h3>Plural String</h3>
+<p>Create a Localise class:</p>
+<pre><code class="language-php">// An example of EnGB Localise
+namespace Windwalker\Language\Localise;
+
+class EnGBLocalise implements LocaliseInterface
+{
+    public function getPluralSuffix($count = 1)
+    {
+        if ($count == 0)
+        {
+            return '0';
+        }
+        elseif ($count == 1)
+        {
+            return '';
+        }
+
+        return 'more';
+    }
+}</code></pre>
+<p>And prepare this language keys.</p>
+<pre><code class="language-ini">windwalker.language.test.sunflower="Sunflower"
+windwalker.language.test.sunflower="No Sunflower"
+windwalker.language.test.sunflower="Sunflowers"</code></pre>
+<p>Now we can translate plural string by <code>plural()</code>.</p>
+<pre><code class="language-php">Translator::plural('windwalker.language.test.sunflower', 0); // No Sunflower
+Translator::plural('windwalker.language.test.sunflower', 1); // Sunflower
+Translator::plural('windwalker.language.test.sunflower', 2); // Sunflowers</code></pre>
+<h2>If Language Key Not Exists</h2>
+<p>Language object will return raw string which we send into it.</p>
+<pre><code class="language-php">echo Translator::translate('A Not Translated String');
+echo "\n";
+echo Translator::translate('A_NOT_TRANSLATED_STRING');</code></pre>
+<p>Result:</p>
+<pre><code>A Not Translated String
+A_NOT_TRANSLATED_STRING</code></pre>
+<h2>Using Other Formats</h2>
+<p>Change the <code>format</code> property from config.</p>
+<h3>Yaml</h3>
+<p>Yaml language file can write as nested structure.</p>
+<pre><code class="language-yaml">windwalker:
+    language.test:
+        sakura: Sakura
+        olive: Olive</code></pre>
+<pre><code class="language-php">Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive</code></pre>
+<h3>Json</h3>
+<pre><code class="language-json">{
+    "windwalker" : {
+        "language-test" : {
+            "sakura" : "Sakura",
+            "olive" : "Olive"
+        }
+    }
+}</code></pre>
+<p>The usage same as yaml.</p>
+<pre><code class="language-php">Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive</code></pre>
+<h3>PHP</h3>
+<pre><code class="language-php">&lt;?php
+
+return array(
+    'WINDWALKER_LANGUAGE_TEST_FLOWER' =&gt; "Flower",
+    'WINDWALKER_LANGUAGE' =&gt; array(
+            'TEST' =&gt; array(
+                'SAKURA' =&gt; "Sakura"
+            )
+        )
+);</code></pre>
+<p>The usage same as yaml.</p>
+<pre><code class="language-php">Translator::translate('windwalker.language.test.sakura'); // Sakura
+Translator::translate('WINDWALKER_LANGUAGE_TEST_OLIVE'); // Olive</code></pre>
+<blockquote>
+<p>NOTE: We'll support to load different formats in the runtime soon.</p>
+</blockquote>
+<h2>Load Package Languages</h2>
+<p>Package language file located at <code>YourPackage/Languages/xx-XX/language-name.ini</code>.</p>
+<p>So we can load package languages by second argument:</p>
+<pre><code class="language-php">// Load en-GB/sakura.ini and zh-TW/sakura.ini from Flower package
+Translator::loadFile('sakura', 'ini', 'flower');</code></pre>
+<h2>Used Keys</h2>
+<pre><code class="language-php">// Get keys which have been used.
+Translator::getUsed();</code></pre>
+<h2>Debugging</h2>
+<h3>Debug Mode</h3>
+<pre><code class="language-php">Translator::setDebug(true);</code></pre>
+<p>We can get non-translated keys in debug mode.</p>
+<pre><code class="language-php">echo Translator::translate('A Translation Exists String');
+echo "\n";
+echo Translator::translate('A Not Translated String');</code></pre>
+<p>And the output will be:</p>
+<pre><code class="language-html">**A Translation Exists String**
+??A Not Translated String??</code></pre>
+<h3>Get Orphans</h3>
+<p>Orphans is the language string you used but haven't translated.</p>
+<pre><code class="language-php">Translator::setDebug(true);
+
+// Run your applications
+
+$orphans = Translator::getOrphans(); // Array([0] =&gt; A Not Translated String);</code></pre>
+<h3>Check Loaded Languages</h3>
+<pre><code class="language-php">$config = \Windwalker\Ioc::getConfig();
+
+$config-&gt;get('language.loaded');</code></pre>
+<h2>Translate in View Template</h2>
+<p>Blade &amp; Edge</p>
+<pre><code class="language-php">@translate('windwalker.language.test.flower')
+@sprintf('windwalker.language.test.flower', 'foo', 'bar')
+@plural('windwalker.language.test.flower', 5)
+
+// only in Edge
+@lang('windwalker.language.test.flower')</code></pre>
+<p>Twig</p>
+<pre><code class="language-php">{{ 'windwalker.language.test.flower' | lang }}
+{{ 'windwalker.language.test.flower' | sprintf('foo', 'bar') }}
+{{ 'windwalker.language.test.flower' | plural(5) }}</code></pre>
+                        <hr />
+
+    <p class="text-center inner-top-sm">
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.0-3.3/services/languages.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="footer" class="black-block inner-md text-center">
+
+    <div class="container inner-top-md inner-bottom-sm">
+        
+        <p>
+            <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+            </a>
+
+            <a href="http://natika.windwalker.io" class="btn" target="_blank">
+                <i class="fa fa-comments"></i>
+                Forum
+            </a>
+
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
+                <i class="fa fa-code"></i>
+                API
+            </a>
+        </p>
+
+        <p class="outer-top-xs">
+            <a href="#header" class="text-center footer-logo">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+            </a>
+        </p>
+
+        <p class="lead outer-top-xs">
+            Copyright © 2018 Windwalker. All Rights Reserved - <a target="_blank" href="https://the-allstars.com">Web Design</a>
+        </p>
+    </div>
+
+</section>
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Init Material
+        $.material.init();
+
+        // Code Block
+        $('.article-content pre code').each(function(i, block) {
+            var $this = $(this);
+
+            $this.attr('class', 'language-' + $this.attr('class'));
+        });
+
+        // Smooth scroll
+        setTimeout(function ()
+        {
+            $('body a').smoothScroll({
+                afterScroll:function (event) {
+                    document.location.hash = this.hash
+                }
+            });
+        }, 500);
+
+        // Table style
+        // Convert table style
+        var tables = $('.article-content table');
+
+        tables.addClass('table').addClass('table-striped');
+
+        // Navbar
+        var navTop;
+        var hasColor = false;
+        var nav = $('#nav .navbar');
+
+        processScrollInit();
+        processScroll();
+
+        $(window).on('resize', processScrollInit);
+        $(window).on('scroll', processScroll);
+
+        function processScrollInit()
+        {
+            if (nav.length) {
+                navTop = nav.length && 60;
+
+                // Only apply the scrollspy when the toolbar is not collapsed
+                if (document.body.clientWidth > 480)
+                {
+//                        $('.subhead-collapse').height(nav.height());
+                    nav.scrollspy({offset: {top: nav.offset().top}});
+                }
+            }
+        }
+
+        function processScroll()
+        {
+            if (nav.length) {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop >= navTop && !hasColor) {
+                    hasColor = true;
+                    nav.addClass('navbar-primary');
+                } else if (scrollTop <= navTop && hasColor) {
+                    hasColor = false;
+                    nav.removeClass('navbar-primary');
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="../../../asset/js/doc.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48372917-6', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

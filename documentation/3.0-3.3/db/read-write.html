@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
+
+    <title>Read and Write Database | Windwalker - PHP Rapid Development Framework</title>
+
+    <meta name="description" content="">
+    <meta name="generator" content="The Time Machine">
+
+    <meta property="og:title" content="Read and Write Database | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:site_name" content="Windwalker Framework">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/prism.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+        </head>
+<body class="">
+
+    <section id="header">
+
+            <nav id="nav">
+
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="../../../about/">
+                            <i class="material-icons">change_history</i>
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.x/start/installation.html">
+                            <i class="material-icons">description</i>
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../rad/start/introduction.html">
+                            <i class="material-icons">graphic_eq</i>
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <i class="fa fa-fw fa-github"></i>
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                    <li>
+                                    <div class="btn-group" style="margin-left: 15px">
+                <button type="button" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    3.0-3.3 <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a href="../../../documentation/3.x/db/read-write.html">3.x</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.0-3.3/db/read-write.html">3.0-3.3</a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../documentation/2.1/db/read-write.html">2.1</a>
+                    </li>
+                </ul>
+            </div>
+                            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+        <section id="banner" class="container text-center">
+            <div class="row">
+                <div class="banner-content col-md-10">
+                    <h1 class="banner-title">Read and Write Database</h1>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+        <section id="main-body" class="container main-block">
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="nav nav-stacked side-menu side-bar">
+    
+                
+        <li class="nav-header">
+        <h3 class="slab-font">Start</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/getting-started.html">Getting Started</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Core</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/psr7-middlewares.html">Psr7 and Middlewares</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/service-provider.html">Service Provider</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">MVC</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Database</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="active">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Services</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/datetime.html">Chronos (DateTime)</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/queue.html">Queue</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/error-handling.html">Error Handling</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Console</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">More</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/http-stream.html">Http and Stream</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/cors.html">CORS Headers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/structure.html">Structure Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/crypt.html">Crypt</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/filesystem.html">Filesystem</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/string.html">String</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/utilities.html">Utilities</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/more-packages.html">More Packages</a>
+            </li>
+        
+       </ul>
+    </div>
+            </div>
+
+            <div class="col-md-9">
+                <article class="article-content">
+                    <h2>Reader Command</h2>
+<p>Reader is a command object that help us read records from database, this is a simple example to use Reader.</p>
+<pre><code class="language-php">$reader = $db-&gt;getReader();
+
+$items = $reader-&gt;setQuery($sql)-&gt;loadObjectList();
+
+// OR
+
+$items = $db-&gt;getReader($sql)-&gt;loadObjectList();</code></pre>
+<h3>Query Statement</h3>
+<p>Every reader is a different query statement.</p>
+<pre><code class="language-php">$stat1 = $db-&gt;getReader($sql1);
+$stat2 = $db-&gt;getReader($sql2);
+
+// Thses 2 object will be diferent connection cursors so they can load items parallelly.
+foreach ($stat1 as $item1)
+{
+    $stat2-&gt;loadObjectList();
+}</code></pre>
+<h3>loadObjectList()</h3>
+<p>Return an array, every element is a record and wrap with an object. This method is same as <code>$db-&gt;loadAll()</code>:</p>
+<pre><code class="language-php">$sql = 'SELECT * FROM foo_table WHERE state = 1';
+
+$reader = $db-&gt;getReader($sql);
+
+$items = $reader-&gt;loadObjectList();</code></pre>
+<p>The return value is an array contains all records we found, every record will be an <code>stdClass</code> object.</p>
+<p>We can set object class to store records:</p>
+<pre><code class="language-php">$items = $reader-&gt;loadObjectList(null, 'Windwalker\\Data\\Data');
+
+// bool(true)
+var_dump($items[0] instanceof \Windwalker\Data\Data);</code></pre>
+<p>Use column values as array index. For example, we can use id as array indexes:</p>
+<pre><code class="language-php">$items = $reader-&gt;loadObjectList('id');
+
+// True
+($items[11]-&gt;id == 11);</code></pre>
+<h3>loadObject()</h3>
+<p>Return only one record and wrap with an object.  This method is same as <code>$db-&gt;loadOne()</code>:</p>
+<pre><code class="language-php">$sql = 'SELECT * FROM foo_table WHERE id = 1';
+
+$reader = $db-&gt;getReader($sql);
+
+$item = $reader-&gt;loadObject();</code></pre>
+<p>The <code>$item</code> will be a <code>stdClass</code>  object or <code>false</code> (If no any records found). we can set object class:</p>
+<pre><code class="language-php">$item = $reader-&gt;loadObject('MyObject');</code></pre>
+<p>Then the object will be an instance of <code>MyObject</code>.</p>
+<h3>loadArrayList()</h3>
+<p>Same as <code>$db-&gt;loadAll('array')</code>, returns an array and every element is an array indexed by column number as
+returned in your result set, starting at column 0, we can set a column as index:</p>
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
+
+$items = $reader-&gt;loadArrayList();
+$items = $reader-&gt;loadArrayList('id'); // Use id as index</code></pre>
+<h3>loadArray()</h3>
+<p>Returns an array indexed by column number as returned in your result set, starting at column 0:</p>
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
+
+$item = $reader-&gt;loadArray();</code></pre>
+<h3>loadAssocList()</h3>
+<p>Returns an array and every element is an associative array indexed by column name.</p>
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
+
+$items = $reader-&gt;loadAssocList();
+$items = $reader-&gt;loadAssocList('id'); // Use id as index</code></pre>
+<h3>loadAssoc()</h3>
+<p>Returns an associative array indexed by column name.</p>
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
+
+$item = $reader-&gt;loadAssoc();</code></pre>
+<h3>loadColumn()</h3>
+<p>Fetch values of a column field, please select only one column in this query:</p>
+<pre><code class="language-php">$titles = $db-&gt;getReader('SELECT title FROM article_table')-&gt;loadColumn();</code></pre>
+<h3>loadResult()</h3>
+<p>Fetch only one cell as a value:</p>
+<pre><code class="language-php">// Get article id = 3 title
+$title = $db-&gt;getReader('SELECT title FROM article_table WHERE id = 3')-&gt;loadResult();
+
+// Get total hits
+$sum = $db-&gt;getReader('SELECT SUM(hits) FROM article_table')-&gt;loadResult();
+
+// Get a value
+$id = $db-&gt;getReader('SELECT LAST_INSERT_ID()')-&gt;loadResult();</code></pre>
+<h3>Run as Iterator</h3>
+<pre><code class="language-php">$reader = $db-&gt;getReader($sql);
+
+foreach ($reader as $item)
+{
+    $item-&gt;title;
+}</code></pre>
+<h3>About PDO Fetch</h3>
+<p>See: <a href="http://php.net/manual/en/pdostatement.fetch.php">PHP.net / PDOStatement::fetch</a></p>
+<h3>Quick Fetch From Driver</h3>
+<h4>DatabaseDriver::loadAll()</h4>
+<p>Using a query we set into DB object to fetch records.</p>
+<pre><code class="language-php">$sql = 'SELECT * FROM foo_table WHERE state = 1';
+
+$db-&gt;setQuery($sql);
+
+$items = $db-&gt;loadAll();
+
+// Same as $reader-&gt;loadObjectList('id')
+$items = $db-&gt;loadAll('id');
+
+// Same as $reader-&gt;loadObjectList(null, 'MyObject')
+$items = $db-&gt;loadAll(null, 'MyObject');
+
+// Same as $reader-&gt;loadArrayList()
+$items = $db-&gt;loadAll(null, 'array');
+
+// Same as $reader-&gt;loadAssocList()
+$items = $db-&gt;loadAll(null, 'assoc');</code></pre>
+<p>The return value is an array contains all records we found.</p>
+<h4>DatabaseDriver::loadOne()</h4>
+<p>We can only get first record and ignore others:</p>
+<pre><code class="language-php">$db-&gt;setQuery($sql);
+
+$item = $db-&gt;loadOne();
+
+// Same as $reader-&gt;loadObject(null, 'MyObject')
+$item = $db-&gt;loadOne('MyObject');
+
+// Same as $reader-&gt;loadArray()
+$item = $db-&gt;loadOne('array');
+
+// Same as $reader-&gt;loadAssoc()
+$item = $db-&gt;loadOne('assoc');</code></pre>
+<p>The <code>$item</code> will be a record or <code>false</code> (If no any records found).</p>
+<h4>DatabaseDriver::loadColumn()</h4>
+<p>Same as <code>$db-&gt;getReader($sql)-&gt;loadColumn()</code>.</p>
+<h4>DatabaseDriver::loadResult()</h4>
+<p>Same as <code>$db-&gt;getReader($sql)-&gt;loadResult()</code>.</p>
+<h3>count()</h3>
+<p>Count the total found rows of last query.</p>
+<h3>countAffected()</h3>
+<p>Count the affected rows of last query.</p>
+<h3>insertId()</h3>
+<p>Get the last inserted id.</p>
+<hr />
+<h2>Writer Command</h2>
+<p>Writer object provide us an interface to write data into database.</p>
+<h3>insertOne()</h3>
+<p>Using an object or array to store data into a table, argument 3 is the name of primary key that will be added
+to data object if insert success:</p>
+<pre><code class="language-php">$data = array(
+    'title' =&gt; 'Sakura',
+    'created' =&gt; '2014-03-02'
+);
+
+$db-&gt;getWriter()-&gt;insertOne('#__articles', $data, 'id');
+
+// $data['id'] will be the last inserted id
+echo $data['id'];
+
+// OR using object
+
+$data = new stdClass;
+
+$data-&gt;title = 'Sakura';
+$data-&gt;created = '2014-03-02';
+
+$db-&gt;getWriter()-&gt;insertOne('#__articles', $data, 'id');
+
+// $data-&gt;id will be the last inserted id
+echo $data-&gt;id;</code></pre>
+<h3>insertMultiple()</h3>
+<p>Insert many records:</p>
+<pre><code class="language-php">$dataSet = array(
+    array(
+        'title' =&gt; 'Sakura',
+        'created' =&gt; '2014-03-02'
+    ),
+    array(
+        'title' =&gt; 'Sunflower',
+        'created' =&gt; '2014-05-02'
+    );
+);
+
+$db-&gt;getWriter()-&gt;insertMultiple('#__articles', $dataSet, 'id');
+
+// $dataSet[0]['id'] will be the last inserted id
+echo $dataSet[0]['id'];</code></pre>
+<h3>updateOne()</h3>
+<p>Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:</p>
+<pre><code class="language-php">$data = new stdClass;
+
+$data-&gt;id = 1;
+$data-&gt;title = 'Sakura2';
+
+$db-&gt;getWriter()-&gt;updateOne('#__articles', $data, 'id');
+
+// Same as `UPDATE #__articles SET title = "Sakura2" WHERE id = 1;`</code></pre>
+<p>Also we can use array instead of object as data.</p>
+<h3>updateMultiple()</h3>
+<p>Same as <code>update()</code> but update every record in an array.</p>
+<pre><code class="language-php">$dataSet = array(
+    $data1,
+    $data2
+);
+
+$db-&gt;getWriter()-&gt;updateMultiple('#__articles', $dataSet, 'id');</code></pre>
+<h3>updateBatch()</h3>
+<p>Using where conditions to update some values to every records which matched this condition.</p>
+<pre><code class="language-php">$data = new stdClass;
+
+$data-&gt;state = 0;
+
+// Update all author=13 records to state 0, same as `UPDATE #__articles SET state = 0 WHERE author = 15;`
+$db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, array('author' =&gt; 15));</code></pre>
+<p>Using other conditions:</p>
+<pre><code class="language-php">$conditions = array(
+    'author' =&gt; 15,
+    'updated &lt; "2014-03-02"',
+    'catid' =&gt; array(1, 2, 3)
+);
+
+$db-&gt;getWriter()-&gt;updateBatch('#__articles', $data, $conditions);
+
+// Same as `UPDATE #__articles SET state = 0 WHERE author = 15 AND updated &lt; "2014-03-02" AND catid IN(1, 2, 3);`</code></pre>
+<p>See <a href="conditions.md">Conditions</a></p>
+<h3>Save &amp; SaveMultiple</h3>
+<p><code>save()</code> and <code>saveMultiple()</code> will auto check the primary exists or not. If primary key exists, it will use <code>update</code>,
+if not exists, it will use <code>insert</code> to store data.</p>
+<h3>Delete</h3>
+<p>Use conditions to delete data.</p>
+<pre><code class="language-php">$db-&gt;getWriter()-&gt;delete('table', array('id' =&gt; 5));</code></pre>
+<p>See <a href="conditions.md">Conditions</a></p>
+<h3>insertId()</h3>
+<p>Get the last inserted id.</p>
+<h3>countAffected()</h3>
+<p>Count the affected rows of last query.</p>
+<h2>Transaction Command</h2>
+<h3>Start Transaction</h3>
+<pre><code class="language-php">$tran = $this-&gt;db-&gt;getTransaction()-&gt;start();
+
+try
+{
+    $this-&gt;db-&gt;setQuery($sql1)-&gt;execute();
+
+    $this-&gt;db-&gt;setQuery($sql2)-&gt;execute();
+
+    $this-&gt;db-&gt;setQuery($sql3)-&gt;execute();
+}
+catch (\Exception)
+{
+    $tran-&gt;rollback();
+}
+
+$tran-&gt;commit();</code></pre>
+<h2>Database Command</h2>
+<p>How to get Database Command:</p>
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');</code></pre>
+<h3>create()</h3>
+<p>Create a new database.</p>
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');
+
+$database-&gt;create();</code></pre>
+<h3>drop()</h3>
+<p>Drop a database.</p>
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');
+
+$database-&gt;drop();</code></pre>
+<h3>rename()</h3>
+<p>Rename a database.</p>
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');
+
+// The return value is a new command object
+$newDatabaseCommand = $database-&gt;rename('flower2');
+
+$newDatabaseCommand-&gt;getName(); // flower2</code></pre>
+<h3>getTables()</h3>
+<p>Get table name list.</p>
+<pre><code class="language-php">$database = $db-&gt;getDatabase('flower');
+
+$tables = $database-&gt;getTables();</code></pre>
+<h3>getTableDetail() &amp; getTableDetails()</h3>
+<p>Get tables information detail.</p>
+                        <hr />
+
+    <p class="text-center inner-top-sm">
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.0-3.3/db/read-write.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="footer" class="black-block inner-md text-center">
+
+    <div class="container inner-top-md inner-bottom-sm">
+        
+        <p>
+            <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+            </a>
+
+            <a href="http://natika.windwalker.io" class="btn" target="_blank">
+                <i class="fa fa-comments"></i>
+                Forum
+            </a>
+
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
+                <i class="fa fa-code"></i>
+                API
+            </a>
+        </p>
+
+        <p class="outer-top-xs">
+            <a href="#header" class="text-center footer-logo">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+            </a>
+        </p>
+
+        <p class="lead outer-top-xs">
+            Copyright © 2018 Windwalker. All Rights Reserved - <a target="_blank" href="https://the-allstars.com">Web Design</a>
+        </p>
+    </div>
+
+</section>
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Init Material
+        $.material.init();
+
+        // Code Block
+        $('.article-content pre code').each(function(i, block) {
+            var $this = $(this);
+
+            $this.attr('class', 'language-' + $this.attr('class'));
+        });
+
+        // Smooth scroll
+        setTimeout(function ()
+        {
+            $('body a').smoothScroll({
+                afterScroll:function (event) {
+                    document.location.hash = this.hash
+                }
+            });
+        }, 500);
+
+        // Table style
+        // Convert table style
+        var tables = $('.article-content table');
+
+        tables.addClass('table').addClass('table-striped');
+
+        // Navbar
+        var navTop;
+        var hasColor = false;
+        var nav = $('#nav .navbar');
+
+        processScrollInit();
+        processScroll();
+
+        $(window).on('resize', processScrollInit);
+        $(window).on('scroll', processScroll);
+
+        function processScrollInit()
+        {
+            if (nav.length) {
+                navTop = nav.length && 60;
+
+                // Only apply the scrollspy when the toolbar is not collapsed
+                if (document.body.clientWidth > 480)
+                {
+//                        $('.subhead-collapse').height(nav.height());
+                    nav.scrollspy({offset: {top: nav.offset().top}});
+                }
+            }
+        }
+
+        function processScroll()
+        {
+            if (nav.length) {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop >= navTop && !hasColor) {
+                    hasColor = true;
+                    nav.addClass('navbar-primary');
+                } else if (scrollTop <= navTop && hasColor) {
+                    hasColor = false;
+                    nav.removeClass('navbar-primary');
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="../../../asset/js/doc.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48372917-6', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

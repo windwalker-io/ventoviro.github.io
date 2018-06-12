@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
+
+    <title>Form Builder | Windwalker - PHP Rapid Development Framework</title>
+
+    <meta name="description" content="">
+    <meta name="generator" content="The Time Machine">
+
+    <meta property="og:title" content="Form Builder | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:site_name" content="Windwalker Framework">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/prism.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+        </head>
+<body class="">
+
+    <section id="header">
+
+            <nav id="nav">
+
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="../../../about/">
+                            <i class="material-icons">change_history</i>
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.x/start/installation.html">
+                            <i class="material-icons">description</i>
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../rad/start/introduction.html">
+                            <i class="material-icons">graphic_eq</i>
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <i class="fa fa-fw fa-github"></i>
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                    <li>
+                                    <div class="btn-group" style="margin-left: 15px">
+                <button type="button" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    3.0-3.3 <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a href="../../../documentation/3.x/more/form-builder.html">3.x</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.0-3.3/more/form-builder.html">3.0-3.3</a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../documentation/2.1/more/form-builder.html">2.1</a>
+                    </li>
+                </ul>
+            </div>
+                            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+        <section id="banner" class="container text-center">
+            <div class="row">
+                <div class="banner-content col-md-10">
+                    <h1 class="banner-title">Form Builder</h1>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+        <section id="main-body" class="container main-block">
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="nav nav-stacked side-menu side-bar">
+    
+                
+        <li class="nav-header">
+        <h3 class="slab-font">Start</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/getting-started.html">Getting Started</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Core</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/psr7-middlewares.html">Psr7 and Middlewares</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/service-provider.html">Service Provider</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">MVC</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Database</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Services</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/datetime.html">Chronos (DateTime)</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/queue.html">Queue</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/error-handling.html">Error Handling</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Console</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">More</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/http-stream.html">Http and Stream</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/cors.html">CORS Headers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/structure.html">Structure Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/crypt.html">Crypt</a>
+            </li>
+                    <li class="active">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/filesystem.html">Filesystem</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/string.html">String</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/utilities.html">Utilities</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/more-packages.html">More Packages</a>
+            </li>
+        
+       </ul>
+    </div>
+            </div>
+
+            <div class="col-md-9">
+                <article class="article-content">
+                    <h2>Create A Form</h2>
+<p>Create a new form instance and add fields into it.</p>
+<pre><code class="language-php">use Windwalker\Form\Field\TextareaField;
+use Windwalker\Form\Form;
+use Windwalker\Form\Field\TextField;
+use Windwalker\Form\Field\PasswordField;
+
+$form = new Form;
+
+$form-&gt;addField(new TextField('username', 'Username'));
+$form-&gt;addField(new PasswordField('password', 'Password'));
+$form-&gt;addField(new TextField('email', 'Email'));
+$form-&gt;addField(new TextareaField('description', 'Description'));
+
+echo $form-&gt;renderFields();</code></pre>
+<p>Render all fields, and we get this HTML output.</p>
+<pre><code class="language-html">&lt;div id="username-control" class="text-field "&gt;
+    &lt;label id="username-label" for="username"&gt;Username&lt;/label&gt;
+    &lt;input type="text" name="username" id="username" /&gt;
+&lt;/div&gt;
+&lt;div id="password-control" class="password-field "&gt;
+    &lt;label id="password-label" for="password"&gt;Password&lt;/label&gt;
+    &lt;input type="password" name="password" id="password" /&gt;
+&lt;/div&gt;
+&lt;div id="email-control" class="text-field "&gt;
+    &lt;label id="email-label" for="email"&gt;Email&lt;/label&gt;
+    &lt;input type="text" name="email" id="email" /&gt;
+&lt;/div&gt;
+&lt;div id="description-control" class="textarea-field "&gt;
+    &lt;label id="description-label" for="description"&gt;Description&lt;/label&gt;
+    &lt;textarea name="description" id="description"&gt;&lt;/textarea&gt;
+&lt;/div&gt;</code></pre>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5066911/0566a53c-6e77-11e4-9bee-6cc2ee01de21.png" alt="img" /></p>
+<h3>Use <code>add()</code></h3>
+<p><code>add()</code> is a simple alias of <code>addField()</code> to make Field support chaining.</p>
+<pre><code class="language-php">$form-&gt;add('username', new TextField)
+    -&gt;label('Username')
+    -&gt;setClass('input-large')
+    -&gt;defauleValue('foo')
+    -&gt;set('placeholder', 'Enter username')
+    -&gt;required();</code></pre>
+<h3>Using XML as Configuration</h3>
+<pre><code class="language-xml">&lt;form&gt;
+    &lt;field
+        name="username"
+        type="text"
+        label="Username"
+        /&gt;
+
+    &lt;field
+        name="password"
+        type="password"
+        label="Password"
+        /&gt;
+&lt;/form&gt;</code></pre>
+<pre><code class="language-php">$form = new Form;
+
+$form-&gt;loadFile('form.xml');</code></pre>
+<h2>Form Control</h2>
+<pre><code class="language-php">$control = 'user';
+
+$form = new Form($control);
+
+$form-&gt;addField(new TextField('username', 'Username'));
+
+echo $form-&gt;renderFields();</code></pre>
+<p>The result will make name as an array.</p>
+<pre><code class="language-html">&lt;div id="user-username-control" class="text-field "&gt;
+    &lt;label id="user-username-label" for="user-username"&gt;Username&lt;/label&gt;
+    &lt;input type="text" name="user[username]" id="user-username" /&gt;
+&lt;/div&gt;</code></pre>
+<h2>Organize Fields</h2>
+<h3>Fieldset</h3>
+<p>Fieldset is a category of fields, we can filter our fields by fieldset:</p>
+<pre><code class="language-php">$form = new Form;
+
+$form-&gt;addField(new TextField('flower', 'Flower'), 'plant');
+$form-&gt;addField(new TextField('tree', 'Tree'), 'plant');
+$form-&gt;addField(new TextField('dog', 'Dog'), 'animal');
+$form-&gt;addField(new TextField('cat', 'Cat'), 'animal');
+
+// Only render Flower &amp; Tree
+echo $form-&gt;renderFields('plant');
+
+// Only render Dog &amp; Cat
+echo $form-&gt;renderFields('animal');
+
+// Will render all
+echo $form-&gt;renderFields();</code></pre>
+<p>Use callback to wrap fieldset.</p>
+<pre><code class="language-php">$form-&gt;fieldset('plant', function (Form $form)
+{
+    $form-&gt;addField(new TextField('flower', 'Flower'));
+    $form-&gt;addField(new TextField('tree', 'Tree'));
+});
+
+$form-&gt;fieldset('animal', function (Form $form)
+{
+    $form-&gt;addField(new TextField('flower', 'Flower'));
+    $form-&gt;addField(new TextField('tree', 'Tree'));
+});</code></pre>
+<p>Using XML</p>
+<pre><code class="language-xml">&lt;form&gt;
+    &lt;fieldset name="plant"&gt;
+        &lt;field name="flower" label="Flower"/&gt;
+        &lt;field name="tree" label="Tree"/&gt;
+    &lt;/fieldset&gt;
+
+    &lt;fieldset name="animal"&gt;
+        &lt;field name="dog" label="Dog"/&gt;
+        &lt;field name="cat" label="Cat"/&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;</code></pre>
+<h3>Group</h3>
+<p>Group is like fieldset as a category of fields, but it will make name of fields to be array:</p>
+<pre><code class="language-php">$form = new Form;
+
+$form-&gt;addField(new TextField('flower', 'Flower'), null, 'earth');
+$form-&gt;addField(new TextField('bird', 'Bird'), null, 'sky');
+
+// The name will be name="earth[flower]"
+echo $form-&gt;renderFields(null, 'plant');
+
+// The name will be name="sky[dog]"
+echo $form-&gt;renderFields(null, 'animal');</code></pre>
+<p>Now we can use fieldset and group to organize our fields.</p>
+<pre><code class="language-php">$form = new Form;
+
+$form-&gt;addField(new TextField('flower', 'Flower'), 'plant', 'earth');
+$form-&gt;addField(new TextField('tree', 'Tree'), 'plant', 'earth');
+$form-&gt;addField(new TextField('dog', 'Dog'), 'animal', 'home');
+$form-&gt;addField(new TextField('cat', 'Cat'), 'animal', 'home');
+$form-&gt;addField(new TextField('bird', 'Bird'), 'animal', 'sky');
+
+// Only render Bird
+echo $form-&gt;renderFields('animal', 'sky');
+
+// Only render Dog &amp; Cat &amp; Bird
+echo $form-&gt;renderFields('animal');
+
+// Only render Flower &amp; Tree
+echo $form-&gt;renderFields(null, 'earth');
+
+// Will render all
+echo $form-&gt;renderFields();</code></pre>
+<p>Use callback to wrap group:</p>
+<pre><code class="language-php">$form-&gt;group('earth', function (Form $form)
+{
+    $form-&gt;addField(new TextField('flower', 'Flower'));
+    $form-&gt;addField(new TextField('tree', 'Tree'));
+});</code></pre>
+<p>Wrap with fieldset and group:</p>
+<pre><code class="language-php">$form-&gt;wrap('plant', 'earth', function (Form $form)
+{
+    $form-&gt;addField(new TextField('flower', 'Flower'));
+    $form-&gt;addField(new TextField('tree', 'Tree'));
+});
+
+$form-&gt;wrap('animal', 'sky', function (Form $form)
+{
+    $form-&gt;addField(new TextField('bird', 'Bird'));
+});</code></pre>
+<p>Using XML</p>
+<pre><code class="language-xml">&lt;form&gt;
+    &lt;group name="earth"&gt;
+        &lt;fieldset name="plant"&gt;
+            &lt;field name="flower" label="Flower"/&gt;
+            &lt;field name="tree" label="Tree"/&gt;
+        &lt;/fieldset&gt;
+    &lt;/group&gt;
+
+    &lt;fieldset name="animal"&gt;
+        &lt;group name="home"&gt;
+            &lt;field name="dog" label="Dog"/&gt;
+            &lt;field name="cat" label="Cat"/&gt;
+        &lt;/group&gt;
+
+        &lt;group name="home"&gt;
+            &lt;field name="bird" label="Bird"/&gt;
+        &lt;/group&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;</code></pre>
+<p>Control and group supports multi-level by <code>/</code> or <code>.</code> separator:</p>
+<pre><code class="language-php">$form = new Form('foo/bar');
+
+$form-&gt;group('egg/bread', ...);</code></pre>
+<h2>Attributes of Fields</h2>
+<h3>Name &amp; Label</h3>
+<pre><code class="language-php">$form-&gt;addField(new TextField('name', 'Label'));</code></pre>
+<h3>Set Attributes</h3>
+<p>You can set some attributes to field by <code>set()</code> or <code>setAttribute()</code>, this method will only allow standard
+HTML attributes inject to latest rendered result.</p>
+<pre><code class="language-php">$form-&gt;addField(new TextField('name'))
+    -&gt;label('Label')
+    -&gt;set('id', 'my-name')
+    -&gt;set('class', 'col-md-8 form-input')
+    -&gt;set('onclick', 'return false;')
+    -&gt;set('labelClass', 'form-label') // &lt;-- This will add to &lt;label class="..."&gt;
+    -&gt;set('data-my-attr', 'foo'); // &lt;-- This custom attribute will not work</code></pre>
+<p>If you want to set custom data attributes to make your inputs work with some JS frameworks (e.g. Vue, Angular, Bootstrap),
+you can use <code>attr()</code> to directly set HTML attributes.</p>
+<pre><code class="language-php">$form-&gt;addField(new TextField('name'))
+    -&gt;label('Label')
+    -&gt;set('class', 'col-md-8 form-input')
+    -&gt;attr('v-on:click', 'foo()')
+    -&gt;attr(':value', 'bar')
+    -&gt;attr('data-toggle', 'tooltip');</code></pre>
+<p>These custom directives will directly add to HTML. <code>attr()</code> method is like jQuery <code>attr()</code>, if you don't pass
+second param, this method will be a getter to return attribute value.</p>
+<p>You can also set attribute to input wrapper and label, use <code>controlAttr()</code> and <code>labelAttr()</code>.</p>
+<h3>Required, Disabled and Readonly</h3>
+<pre><code class="language-php">$form-&gt;addField(new TextField('name', 'Label'))
+    -&gt;set('id', 'my-name')
+    -&gt;required()
+    -&gt;disabled();</code></pre>
+<p>Set to false.</p>
+<pre><code class="language-php">$form-&gt;addField(new TextField('name', 'Label'))
+    -&gt;set('id', 'my-name')
+    -&gt;required(false)
+    -&gt;disabled(false);</code></pre>
+<h3>XML</h3>
+<pre><code class="language-xml">&lt;field
+    name="name"
+    label="Label"
+    id="my-name"
+    required="true"
+    disabled="false"
+/&gt;</code></pre>
+<h2>Filter</h2>
+<pre><code class="language-php">use Windwalker\Filter\InputFilter;
+
+$form-&gt;addField(new TextField('id', 'ID'))
+    -&gt;addFilter(InputFilter::INTEGER);
+
+// Prepare data
+$data['id'] = '123abc';
+
+// Bind data into form
+$form-&gt;bind($data);
+
+// Do filter
+$form-&gt;filter();
+
+$values = $form-&gt;getValues(); // Array(id = 123)</code></pre>
+<h2>Validate</h2>
+<pre><code class="language-php">$form-&gt;addField(new TextField('name', 'Name'))
+    -&gt;required();
+
+$form-&gt;addField(new TextField('email', 'Email'))
+    -&gt;addValidator(new EmailValidator);
+
+// Prepare data
+$data['name'] = null;
+$data['email'] = 'foo';
+
+// Bind data into form
+$form-&gt;bind($data);
+
+// Do validate
+$r = $form-&gt;validate();
+
+$results = $form-&gt;getErrors();
+
+var_dump($r); // bool(false)
+
+$results[0]-&gt;getMessage(); // Field Email validate fail.
+$results[1]-&gt;getMessage(); // Field Name value not allow empty.</code></pre>
+<h2>Field Types</h2>
+<h3>Select List</h3>
+<pre><code class="language-php">use Windwalker\Form\Field\ListField;
+use Windwalker\Html\Option;
+
+$selectField = new ListField(
+    'flower',
+    'Flower',
+    array(
+        new Option('', ''),
+        new Option('Yes', 1),
+        new Option('No', 0),
+    )
+);
+
+echo $selectField-&gt;render();</code></pre>
+<p>The output is:</p>
+<pre><code class="language-html">&lt;div id="flower-control" class="list-field "&gt;
+    &lt;label id="flower-label" for="flower"&gt;Flower&lt;/label&gt;
+    &lt;select name="flower" id="flower" class="stub-flower"&gt;
+        &lt;option selected="selected"&gt;&lt;/option&gt;
+        &lt;option value="1"&gt;Yes&lt;/option&gt;
+        &lt;option value="0"&gt;No&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+<p>Multiple List</p>
+<pre><code class="language-php">$selectField-&gt;set('multiple', true);</code></pre>
+<h3>RadioList</h3>
+<pre><code class="language-php">$form-&gt;addField(new RadioList('flower', 'Flower'))
+    -&gt;addOption(new Option('Yes', 1))
+    -&gt;addOption(new Option('No', 0));</code></pre>
+<p>We can also add options in constructor:</p>
+<pre><code class="language-php">$field = new RadioList(
+    'flower',
+    'Flower',
+    array(
+        new Option('Yes', 1),
+        new Option('No', 0),
+    )
+);</code></pre>
+<h2>Available Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>HTML</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TextField</td>
+<td><code>&lt;input type="text"&gt;</code></td>
+<td>The text input field.</td>
+</tr>
+<tr>
+<td>TextareaField</td>
+<td><code>&lt;textarea&gt;&lt;/textarea&gt;</code></td>
+<td>Textarea field.</td>
+</tr>
+<tr>
+<td>ColorField</td>
+<td><code>&lt;input type="color"&gt;</code></td>
+<td>HTML5 Color picker</td>
+</tr>
+<tr>
+<td>DateField</td>
+<td><code>&lt;input type="date"&gt;</code></td>
+<td>Date selector</td>
+</tr>
+<tr>
+<td>DatetimeLocalField</td>
+<td><code>&lt;input type="datetime-local"&gt;</code></td>
+<td>Datetime selector</td>
+</tr>
+<tr>
+<td>MonthField</td>
+<td><code>&lt;input type="month"&gt;</code></td>
+<td>Month selector</td>
+</tr>
+<tr>
+<td>NumberField</td>
+<td><code>&lt;input type="number"&gt;</code></td>
+<td>Number text field</td>
+</tr>
+<tr>
+<td>RangeField</td>
+<td><code>&lt;input type="range"&gt;</code></td>
+<td>A range bar.</td>
+</tr>
+<tr>
+<td>TelField</td>
+<td><code>&lt;input type="tel"&gt;</code></td>
+<td>Tel text field.</td>
+</tr>
+<tr>
+<td>TimeField</td>
+<td><code>&lt;input type="time"&gt;</code></td>
+<td>Time field.</td>
+</tr>
+<tr>
+<td>UrlField</td>
+<td><code>&lt;input type="url"&gt;</code></td>
+<td>URL text field</td>
+</tr>
+<tr>
+<td>WeekField</td>
+<td><code>&lt;input type="week"&gt;</code></td>
+<td>Week selector</td>
+</tr>
+<tr>
+<td>EmailField</td>
+<td><code>&lt;input type="email"&gt;</code></td>
+<td>The email text field.</td>
+</tr>
+<tr>
+<td>HiddenField</td>
+<td><code>&lt;input type="hidden"&gt;</code></td>
+<td>Hidden input.</td>
+</tr>
+<tr>
+<td>PasswordField</td>
+<td><code>&lt;input type="password"&gt;</code></td>
+<td>Password field.</td>
+</tr>
+<tr>
+<td>SpacerField</td>
+<td><code>&lt;hr&gt;</code></td>
+<td>The spacer to separate fields and fields.</td>
+</tr>
+<tr>
+<td>ListField</td>
+<td><code>&lt;select&gt;</code></td>
+<td>Select list.</td>
+</tr>
+<tr>
+<td>CheckboxField</td>
+<td><code>&lt;input type="checkbox"&gt;</code></td>
+<td>Single checkbox.</td>
+</tr>
+<tr>
+<td>CheckboxesField</td>
+<td><code>&lt;input type="checkbox"&gt;</code></td>
+<td>Checkbox list.</td>
+</tr>
+<tr>
+<td>RadioField</td>
+<td><code>&lt;input type="radio"&gt;</code></td>
+<td>Radio list.</td>
+</tr>
+<tr>
+<td>TimezoneField</td>
+<td><code>&lt;select&gt;</code></td>
+<td>A timezone select list.</td>
+</tr>
+<tr>
+<td>ButtonField</td>
+<td><code>&lt;button&gt;</code></td>
+<td>Create a custom button.</td>
+</tr>
+<tr>
+<td>CustomHtmlField</td>
+<td><code>...</code></td>
+<td>Create any HTML you want with <code>set('content', ...)</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>See every fields' <code>prepare()</code> method you will know available attributes.</p>
+<h2>Custom Fields</h2>
+<h3>Custom TextField.</h3>
+<pre><code class="language-php">namespace MyCode\Fields;
+
+class FooField extends TextField
+{
+    protected $type = 'foo';
+
+    public function prepare(&amp;$attrs)
+    {
+        parent::prepare($attrs);
+
+        $attrs['bar'] = $this-&gt;getAttribute('bar');
+    }
+}</code></pre>
+<p>For XML</p>
+<pre><code class="language-php">\Windwalker\Form\FieldHelper::addNamespace('MyCode\Filter');</code></pre>
+<pre><code class="language-xml">&lt;field
+    name="foo"
+    type="foo"
+/&gt;</code></pre>
+<h3>Custom List field</h3>
+<pre><code class="language-php">namespace MyCode\Fields;
+
+class UsersField extends ListField
+{
+    protected function prepareOptions()
+    {
+        $users = Database::getList('SELECT * FROM users');
+
+        $options = array();
+
+        foreach ($users as $user)
+        {
+            $options[] = new Option($user-&gt;name, $user-&gt;id);
+        }
+
+        return $options;
+    }
+}</code></pre>
+<h2>Custom Filter</h2>
+<pre><code class="language-php">namespace MyCode\Filter;
+
+class MyFilter implements FilterInterface
+{
+    public function clean($text)
+    {
+        return my_filter_function($text);
+    }
+}
+
+(new TextField('foo', 'Foo'))
+    -&gt;addFilter(new MyFilter);</code></pre>
+<p>For XML</p>
+<pre><code class="language-php">\Windwalker\Form\FilterHelper::addNamespace('MyCode\Filter');</code></pre>
+<pre><code class="language-xml">&lt;field
+    name="foo"
+    type="text"
+    filter="my"
+/&gt;</code></pre>
+<h2>Custom Validator</h2>
+<pre><code class="language-php">namespace MyCode\Validator;
+
+use Windwalker\Validator\AbstractValidator;
+
+class MyValidator extends AbstractValidator
+{
+    protected function test($value)
+    {
+        return (bool) $value;
+    }
+}
+
+(new TextField('foo', 'Foo'))
+    -&gt;addFilter(new MyValidator);</code></pre>
+<p>For XML</p>
+<pre><code class="language-php">\Windwalker\Form\ValidatorHelper::addNamespace('MyCode\Validator');</code></pre>
+<pre><code class="language-xml">&lt;field
+    name="foo"
+    type="text"
+    filter="my"
+/&gt;</code></pre>
+<h2>Form Renderer</h2>
+<p>If you wish to override core HTML output, use <code>FormRendererInterface</code> to render your fields.</p>
+<pre><code class="language-php">class MyFormRenderer implements \Windwalker\Form\Renderer\FormRendererInterface
+{
+    public function renderField(AbstractField $field, array $attribs = array())
+    {
+        $attribs['class'] .= ' my-custom-style';
+
+        return new \Windwalker\Dom\HtmlElement('div', array(
+            $field-&gt;renderLabel(), // Will load $this-&gt;renderLabel()
+            $field-&gt;renderInput(), // Will load $this-&gt;renderInput()
+        ), $attribs);
+    }
+
+    public function renderLabel(AbstractField $field, array $attribs = array())
+    {
+        return ...; // Render different field types
+    }
+
+    public function renderInput(AbstractField $field, array $attribs = array())
+    {
+        return ...; // Render different field types
+    }
+}
+
+$form-&gt;setRenderer(new MyFormRenderer);</code></pre>
+                        <hr />
+
+    <p class="text-center inner-top-sm">
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.0-3.3/more/form-builder.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="footer" class="black-block inner-md text-center">
+
+    <div class="container inner-top-md inner-bottom-sm">
+        
+        <p>
+            <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+            </a>
+
+            <a href="http://natika.windwalker.io" class="btn" target="_blank">
+                <i class="fa fa-comments"></i>
+                Forum
+            </a>
+
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
+                <i class="fa fa-code"></i>
+                API
+            </a>
+        </p>
+
+        <p class="outer-top-xs">
+            <a href="#header" class="text-center footer-logo">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+            </a>
+        </p>
+
+        <p class="lead outer-top-xs">
+            Copyright © 2018 Windwalker. All Rights Reserved - <a target="_blank" href="https://the-allstars.com">Web Design</a>
+        </p>
+    </div>
+
+</section>
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Init Material
+        $.material.init();
+
+        // Code Block
+        $('.article-content pre code').each(function(i, block) {
+            var $this = $(this);
+
+            $this.attr('class', 'language-' + $this.attr('class'));
+        });
+
+        // Smooth scroll
+        setTimeout(function ()
+        {
+            $('body a').smoothScroll({
+                afterScroll:function (event) {
+                    document.location.hash = this.hash
+                }
+            });
+        }, 500);
+
+        // Table style
+        // Convert table style
+        var tables = $('.article-content table');
+
+        tables.addClass('table').addClass('table-striped');
+
+        // Navbar
+        var navTop;
+        var hasColor = false;
+        var nav = $('#nav .navbar');
+
+        processScrollInit();
+        processScroll();
+
+        $(window).on('resize', processScrollInit);
+        $(window).on('scroll', processScroll);
+
+        function processScrollInit()
+        {
+            if (nav.length) {
+                navTop = nav.length && 60;
+
+                // Only apply the scrollspy when the toolbar is not collapsed
+                if (document.body.clientWidth > 480)
+                {
+//                        $('.subhead-collapse').height(nav.height());
+                    nav.scrollspy({offset: {top: nav.offset().top}});
+                }
+            }
+        }
+
+        function processScroll()
+        {
+            if (nav.length) {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop >= navTop && !hasColor) {
+                    hasColor = true;
+                    nav.addClass('navbar-primary');
+                } else if (scrollTop <= navTop && hasColor) {
+                    hasColor = false;
+                    nav.removeClass('navbar-primary');
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="../../../asset/js/doc.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48372917-6', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

@@ -16,6 +16,10 @@
                         <a href="{{ uri.base }}/{{ helper.doc.getVersionPath(path, '3.x', config) }}">3.x</a>
                     </li>
 
+                    <li class="{{ version == '3.0-3.3' ? 'active' : '' }}">
+                        <a href="{{ uri.base }}/{{ helper.doc.getVersionPath(path, '3.0-3.3', config) }}">3.0-3.3</a>
+                    </li>
+
                     <li class="{{ version == '2.1' ? 'active' : '' }}">
                         <a href="{{ uri.base }}/{{ helper.doc.getVersionPath(path, '2.1', config) }}">2.1</a>
                     </li>

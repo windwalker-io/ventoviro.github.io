@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
+
+    <title>DataMapper | Windwalker - PHP Rapid Development Framework</title>
+
+    <meta name="description" content="">
+    <meta name="generator" content="The Time Machine">
+
+    <meta property="og:title" content="DataMapper | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:site_name" content="Windwalker Framework">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300|Roboto+Condensed:400,700|Roboto+Slab:400,700,300" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/ripples.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/prism.min.css" />
+    <link rel="stylesheet" href="../../../asset/css/main.css" />
+        </head>
+<body class="">
+
+    <section id="header">
+
+            <nav id="nav">
+
+    <div class="navbar navbar-transparent">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../">
+                    <img class="img-invert" src="../../../asset/images/logo/windwalker-logo-150.png" alt="Logo" style="max-height: 100%">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="mainmenu nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="../../../about/">
+                            <i class="material-icons">change_history</i>
+                            <span class="menu-item-title">About</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.x/start/installation.html">
+                            <i class="material-icons">description</i>
+                            <span class="menu-item-title">Documentation</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../rad/start/introduction.html">
+                            <i class="material-icons">graphic_eq</i>
+                            <span class="menu-item-title">RAD</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="https://github.com/ventoviro/windwalker" target="_blank">
+                            <i class="fa fa-fw fa-github"></i>
+                            <span class="menu-item-title">GitHub</span>
+                        </a>
+                    </li>
+
+                    <li>
+                                    <div class="btn-group" style="margin-left: 15px">
+                <button type="button" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    3.0-3.3 <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a href="../../../documentation/3.x/db/datamapper.html">3.x</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="../../../documentation/3.0-3.3/db/datamapper.html">3.0-3.3</a>
+                    </li>
+
+                    <li class="">
+                        <a href="../../../documentation/2.1/db/datamapper.html">2.1</a>
+                    </li>
+                </ul>
+            </div>
+                            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+        <section id="banner" class="container text-center">
+            <div class="row">
+                <div class="banner-content col-md-10">
+                    <h1 class="banner-title">DataMapper</h1>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+<div id="main-body" class="main main-raised main-raised-bottom">
+        <section id="main-body" class="container main-block">
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="nav nav-stacked side-menu side-bar">
+    
+                
+        <li class="nav-header">
+        <h3 class="slab-font">Start</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/installation.html">Installation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/start/getting-started.html">Getting Started</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Core</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/routing.html">Routing</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/package-system.html">Packages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/config.html">Config &amp; Setting</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/request-input.html">Request and Input</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/psr7-middlewares.html">Psr7 and Middlewares</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/ioc-container.html">IoC Container</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/core/service-provider.html">Service Provider</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">MVC</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/use-controller.html">Use Controller</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/class-resolvers.html">Class Resolvers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-templating.html">View and Templating</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/edge.html">Edge Templates</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/model-database.html">Model and Database</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/view-model.html">ViewModel</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/mvc/uri-route-building.html">URI and Route Building</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Database</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/read-write.html">Read and Write</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/table-schema.html">Table and Schema</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/query-builder.html">Query Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/active-record.html">ActiveRecord</a>
+            </li>
+                    <li class="active">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/db/migration.html">Migration And Seeding</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Services</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authentication.html">Authentication</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/authorisation.html">Authorisation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/asset.html">Asset Manager</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/caching.html">Caching</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/datetime.html">Chronos (DateTime)</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/environment.html">Environment</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/events.html">Events</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/queue.html">Queue</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/languages.html">Languages</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/mailer.html">Mailer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/session.html">Session</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/widget-renderer.html">Widget and Renderer</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/debugging.html">Debugging and Logging</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/services/error-handling.html">Error Handling</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">Console</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/console-basic.html">Basic Usage</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/console/custom-commands.html">Custom Commands</a>
+            </li>
+        
+           <li class="nav-header">
+        <h3 class="slab-font">More</h3>
+    </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/data-object.html">Data Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/http-stream.html">Http and Stream</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/cors.html">CORS Headers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/structure.html">Structure Object</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/crypt.html">Crypt</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-builder.html">Form Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/form-definition.html">Form Definition</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/filesystem.html">Filesystem</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/html-builder.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/pagination.html">Pagination</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/string.html">String</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/tests.html">Tests</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/validation.html">Validation</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/utilities.html">Utilities</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../../documentation/3.0-3.3/more/more-packages.html">More Packages</a>
+            </li>
+        
+       </ul>
+    </div>
+            </div>
+
+            <div class="col-md-9">
+                <article class="article-content">
+                    <h2>Create a DataMapper</h2>
+<pre><code class="language-php">use Windwalker\DataMapper\DataMapper;
+
+$fooMapper = new DataMapper('#__foo');
+
+$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));</code></pre>
+<h3>Extends It</h3>
+<p>You can also create a class to operate specific table:</p>
+<pre><code class="language-php">class FooMapper extends DataMapper
+{
+    protected $table = '#__foo';
+}
+
+$data = (new FooMapper)-&gt;findAll();</code></pre>
+<h2>Find Records</h2>
+<p>Find method will fetch rows from table, and return <code>DataSet</code> class.</p>
+<h3>find()</h3>
+<p>Get id = 1 record</p>
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));</code></pre>
+<p>Fetch published = 1, and sort by <code>date</code></p>
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1), 'date');</code></pre>
+<p>Fetch published = 1, language = en-US, sort by <code>date</code> DESC and start with <code>30</code>, limit <code>10</code>.</p>
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(array('published' =&gt; 1, 'language' =&gt; 'en-US'), 'date DESC', 30, 10);</code></pre>
+<p>Using array, will be <code>IN</code> condition:</p>
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(array('id' =&gt; array(1,2,3))); // WHERE id IN (1,2,3)</code></pre>
+<h3>findOne()</h3>
+<p>Just return one row.</p>
+<pre><code class="language-php">$foo = $dooMapper-&gt;findOne(array('published' =&gt; 1), 'date');</code></pre>
+<h3>findAll()</h3>
+<p>Equal to <code>find(array(), $order, $start, $limit)</code>.</p>
+<h3>Find With Custom Query</h3>
+<pre><code class="language-php">$fooMapper = new DataMapper('#__foo');
+
+$fooMapper-&gt;where('a = "b"') // Simple where
+    -&gt;where('%n = $q', 'foo', 'bar') // Where format
+    -&gt;where('flower = :sakura')-&gt;bind('sakura', 'Sakura') // Bind params
+    -&gt;orWhere(array('c = d', 'e = f')) // AND (c=d OR e=f)
+    -&gt;having('...')
+    -&gt;limit(10, 20) // Limit, offset
+    -&gt;order('created DESC') // Can be array or string
+    -&gt;select(array('id', 'title', 'alias')) // Can be array or string
+    -&gt;find();</code></pre>
+<p>The available query methods.</p>
+<ul>
+<li><code>join($type = 'LEFT', $alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>leftJoin($alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>rightJoin($alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>nnerJoin($alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>outerJoin($alias, $table, $condition = null, $prefix = null)</code></li>
+<li><code>call($columns)</code></li>
+<li><code>group($columns)</code></li>
+<li><code>order($columns)</code></li>
+<li><code>limit($limit = null, $offset = null)</code></li>
+<li><code>select($columns)</code></li>
+<li><code>where($conditions, ...$args)</code></li>
+<li><code>orWhere($conditions)</code></li>
+<li><code>having($conditions, ...$args)</code></li>
+<li><code>orHaving($conditions)</code></li>
+<li><code>clear($clause = null)</code></li>
+<li><code>bind($key = null, $value = null, $dataType = \PDO::PARAM_STR, $length = 0, $driverOptions = array())</code></li>
+</ul>
+<p>See <a href="https://github.com/ventoviro/windwalker-query#format">Query Format</a></p>
+<h2>Create Records</h2>
+<p>Using DataSet to wrap every data, then send this object to create() method, these data will insert to table.</p>
+<h3>create()</h3>
+<pre><code class="language-php">use Windwalker\Data\Data;
+use Windwalker\Data\DataSet;
+
+$data1 = new Data;
+$data1-&gt;title = 'Foo';
+$data1-&gt;auhor = 'Magneto';
+
+$data2 = new Data(
+    array(
+        'title' =&gt; 'Bar',
+        'author' =&gt; 'Wolverine'
+    )
+);
+
+$dataset = new DataSet(array($data1, $data2));
+
+$return = $fooMapper-&gt;create($dataset);</code></pre>
+<p>The return value will be whole dataset and add inserted ids.</p>
+<pre><code>Windwalker\Data\DataSet Object
+(
+    [storage:ArrayObject:private] =&gt; Array
+        (
+            [0] =&gt; Windwalker\Data\Data Object
+                (
+                    [title] =&gt; Foo
+                    [auhor] =&gt; Magneto
+                    [id] =&gt; 39
+                )
+
+            [1] =&gt; Windwalker\Data\Data Object
+                (
+                    [title] =&gt; Bar
+                    [auhor] =&gt; Wolverine
+                    [id] =&gt; 40
+                )
+        )
+)</code></pre>
+<h3>createOne()</h3>
+<p>Only insert one row, do not need DataSet.</p>
+<pre><code class="language-php">$data = new Data;
+$data-&gt;title = 'Foo';
+$data-&gt;auhor = 'Magneto';
+
+$fooMapper-&gt;createOne($data);</code></pre>
+<h2>Update Records</h2>
+<p>Update methods help us update rows in table.</p>
+<h3>update()</h3>
+<pre><code class="language-php">use Windwalker\Data\Data;
+use Windwalker\Data\DataSet;
+
+$data1 = new Data;
+$data1-&gt;id = 1;
+$data1-&gt;title = 'Foo';
+
+$data2 = new Data(
+    array(
+        'id' =&gt; 2,
+        'title' =&gt; 'Bar'
+    )
+);
+
+$dataset = new DataSet(array($data1, $data2));
+
+$fooMapper-&gt;update($dataset);</code></pre>
+<h3>updateOne()</h3>
+<p>Just update one row.</p>
+<pre><code class="language-php">$data = new Data;
+$data-&gt;id = 1;
+$data-&gt;title = 'Foo';
+
+$fooMapper-&gt;updateOne($data);</code></pre>
+<h3>updateAll()</h3>
+<p>UpdateAll is different from update method, we just send one data object, but using conditions as where
+to update every row match these conditions. We don't need primary key for updateAll().</p>
+<pre><code class="language-php">$data = new Data;
+$data-&gt;published = 0;
+
+$fooMapper-&gt;updateAll($data, array('author' =&gt; 'Mystique'));</code></pre>
+<h2>Delete</h2>
+<p>Delete rows by conditions.</p>
+<h3>delete()</h3>
+<pre><code class="language-php">$boolean = $fooMapper-&gt;delete(array('author' =&gt; 'Jean Grey'));</code></pre>
+<h2>Join Tables</h2>
+<p>Use <code>newRelation()</code> to create a DataMapper and join other tables.</p>
+<pre><code class="language-php">use Windwalker\DataMapper\DataMapper;
+
+$items = DataMapper::newRelation('flower', '#__flower')
+    -&gt;leftJoin('author', '#__users', 'flower.user_id = author.id')
+    -&gt;innerJoin('category', '#__categories', array('category.lft &gt;= flower.lft', 'category.rgt &lt;= flower.rgt'))
+    -&gt;where('flower.id = 1')
+    -&gt;order('created DESC')
+    -&gt;group('category.id')
+    -&gt;find();</code></pre>
+<p>The Join query will be:</p>
+<pre><code class="language-sql">SELECT `flower`.`id`,
+    `flower`.`catid`,
+    `flower`.`title`,
+    `flower`.`user_id`,
+    `flower`.`meaning`,
+    `flower`.`ordering`,
+    `flower`.`state`,
+    `flower`.`params`,
+    `author`.`id` AS `author_id`,
+    `author`.`name` AS `author_name`,
+    `author`.`pass` AS `author_pass`,
+    `category`.`id` AS `category_id`,
+    `category`.`title` AS `category_title`,
+    `category`.`ordering` AS `category_ordering`,
+    `category`.`params` AS `category_params`
+FROM #__foo AS foo
+    LEFT JOIN #__users AS author ON foo.user_id = author.id
+    INNER JOIN #__categories AS category ON category.lft &gt;= foo.lft AND category.rgt &lt;= foo.rgt
+WHERE
+    flower.id = 1
+ORDER BY flower.created DESC
+GROUP BY category.id</code></pre>
+<p>Where condition will auto add alias if not provided.</p>
+<pre><code class="language-php">$fooMapper-&gt;find(array(
+    'foo.id' =&gt; 3 // This is correct condition
+    'state' =&gt; 1 // This field may cause column conflict, DataMapper will auto covert it to `foo.state` =&gt; 1
+));</code></pre>
+<p>Reset all tables and query:</p>
+<pre><code class="language-php">$fooMapper-&gt;reset();</code></pre>
+<h3>Using OR Condition</h3>
+<pre><code class="language-php">$fooMapper-&gt;addTable(
+    'category',
+    '#__categories',
+    'category.lft &gt;= foo.lft OR category.rgt &lt;= foo.rgt',
+    'LEFT'
+);</code></pre>
+<h3>Group</h3>
+<pre><code class="language-php">$fooMapper-&gt;group('category.id');</code></pre>
+<h2>Compare objects</h2>
+<p>Using Compare objects help us set some where conditions which hard to use array to defind.</p>
+<pre><code class="language-php">$fooSet = $fooMapper-&gt;find(
+    array(
+        new GteCompare('id', 5),
+        new NeqCompare('name', 'bar')
+        new LtCompare('published', 1),
+        new NinCompare('catid', array(1,2,3,4,5))
+    )
+);</code></pre>
+<p>This will generate where conditions like below:</p>
+<pre><code class="language-sql">WHERE `id` &gt;= '5'
+    AND `name` != 'bar'
+    AND `published` &lt; '1'
+    AND `catid` NOT IN (1,2,3,4,5)</code></pre>
+<h3>Available compares:</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Operator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EqCompare</td>
+<td>Equal</td>
+<td><code>=</code></td>
+</tr>
+<tr>
+<td>NeqCompare</td>
+<td>Not Equal</td>
+<td><code>!=</code></td>
+</tr>
+<tr>
+<td>GtCompare</td>
+<td>Greater than</td>
+<td><code>&gt;</code></td>
+</tr>
+<tr>
+<td>GteCompare</td>
+<td>Greater than or Equal</td>
+<td><code>&gt;=</code></td>
+</tr>
+<tr>
+<td>LtCompare</td>
+<td>Less than</td>
+<td><code>&lt;</code></td>
+</tr>
+<tr>
+<td>LteCompare</td>
+<td>Less than or Equal</td>
+<td><code>&lt;=</code></td>
+</tr>
+<tr>
+<td>InCompare</td>
+<td>In</td>
+<td><code>IN</code></td>
+</tr>
+<tr>
+<td>NinCompare</td>
+<td>Not In</td>
+<td><code>IN</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Custom Compare</h3>
+<pre><code class="language-php">echo (string) new Compare('title', '%flower%', 'LIKE');</code></pre>
+<p>Will be</p>
+<pre><code class="language-sql">`title` LIKE `%flower%`</code></pre>
+<p>See: <a href="https://github.com/ventoviro/windwalker-compare">https://github.com/ventoviro/windwalker-compare</a></p>
+<h2>Using Data and DataSet</h2>
+<p>See: <a href="https://github.com/ventoviro/windwalker-data">https://github.com/ventoviro/windwalker-data</a></p>
+<h2>Hooks</h2>
+<p>Add <code>"windwalker/event": "~3.0"</code> to <code>composer.json</code>.</p>
+<p>Then we are able to use hooks after every operations.</p>
+<pre><code class="language-php">class FooListener
+{
+    public function onAfterCreate(Event $event)
+    {
+        $result = $event['result'];
+
+        // Do something
+    }
+}
+
+$mapper = new DataMapper('table');
+
+// Add object as listener
+$mapper-&gt;getDispatcher()-&gt;addListener(new FooListener);
+
+// Use listen() to add a callback as listener
+$mapper-&gt;getDispatcher()-&gt;listen('onAfterUpdate', function () { ... });
+
+$mapper-&gt;create($dataset);</code></pre>
+<p>Extends DataMapper:</p>
+<pre><code class="language-php">class SakuraMapper extends DataMapper
+{
+    protected $table = 'saluras';
+
+    public function onAfterFind(Event $event)
+    {
+        $result = $event['result'];
+
+        // Find some relations
+    }
+}
+
+$mapper = new DataMapper('table');
+$mapper-&gt;find(array('id' =&gt; 5));</code></pre>
+<p>Available events:</p>
+<ul>
+<li>onBeforeFind</li>
+<li>onAfterFind</li>
+<li>onBeforeFindAll</li>
+<li>onAfterFindAll</li>
+<li>onBeforeFindOne</li>
+<li>onAfterFindOne</li>
+<li>onBeforeFindColumn</li>
+<li>onAfterFindColumn</li>
+<li>onBeforeCreate</li>
+<li>onAfterCreate</li>
+<li>onBeforeCreateOne</li>
+<li>onAfterCreateOne</li>
+<li>onBeforeUpdate</li>
+<li>onAfterUpdate</li>
+<li>onBeforeUpdateOne</li>
+<li>onAfterUpdateOne</li>
+<li>onBeforeUpdateBatch</li>
+<li>onAfterUpdateBatch</li>
+<li>onBeforeSave</li>
+<li>onAfterSave</li>
+<li>onBeforeSaveOne</li>
+<li>onAfterSaveOne</li>
+<li>onBeforeFlush</li>
+<li>onAfterFlush</li>
+<li>onBeforeDelete</li>
+<li>onAfterDelete</li>
+</ul>
+<h2>Static Access</h2>
+<pre><code class="language-php">use Windwalker\Core\DataMapper\CoreDataMapper;
+
+class ArticleMapper extends CoreDataMapper
+{
+    protected static $table = 'articles';
+}</code></pre>
+<p>Now you can call all methods statically:</p>
+<pre><code class="language-php">$articles = ArticleMapper::find(['state' =&gt; 1]);</code></pre>
+                        <hr />
+
+    <p class="text-center inner-top-sm">
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/documentation/3.0-3.3/db/datamapper.md">improve</a> this document.
+    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="footer" class="black-block inner-md text-center">
+
+    <div class="container inner-top-md inner-bottom-sm">
+        
+        <p>
+            <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+            </a>
+
+            <a href="http://natika.windwalker.io" class="btn" target="_blank">
+                <i class="fa fa-comments"></i>
+                Forum
+            </a>
+
+            <a href="http://windwalker.io/api-site/" class="btn" target="_blank">
+                <i class="fa fa-code"></i>
+                API
+            </a>
+        </p>
+
+        <p class="outer-top-xs">
+            <a href="#header" class="text-center footer-logo">
+                <img class="img-invert" width="250" src="../../../asset/images/logo/windwalker-logo-250.png" alt="Logo" style="">
+            </a>
+        </p>
+
+        <p class="lead outer-top-xs">
+            Copyright © 2018 Windwalker. All Rights Reserved - <a target="_blank" href="https://the-allstars.com">Web Design</a>
+        </p>
+    </div>
+
+</section>
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.smooth-scroll.min.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/material.min.js"></script>
+<script src="../../../asset/js/ripples.min.js"></script>
+<script src="../../../asset/js/prism.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Init Material
+        $.material.init();
+
+        // Code Block
+        $('.article-content pre code').each(function(i, block) {
+            var $this = $(this);
+
+            $this.attr('class', 'language-' + $this.attr('class'));
+        });
+
+        // Smooth scroll
+        setTimeout(function ()
+        {
+            $('body a').smoothScroll({
+                afterScroll:function (event) {
+                    document.location.hash = this.hash
+                }
+            });
+        }, 500);
+
+        // Table style
+        // Convert table style
+        var tables = $('.article-content table');
+
+        tables.addClass('table').addClass('table-striped');
+
+        // Navbar
+        var navTop;
+        var hasColor = false;
+        var nav = $('#nav .navbar');
+
+        processScrollInit();
+        processScroll();
+
+        $(window).on('resize', processScrollInit);
+        $(window).on('scroll', processScroll);
+
+        function processScrollInit()
+        {
+            if (nav.length) {
+                navTop = nav.length && 60;
+
+                // Only apply the scrollspy when the toolbar is not collapsed
+                if (document.body.clientWidth > 480)
+                {
+//                        $('.subhead-collapse').height(nav.height());
+                    nav.scrollspy({offset: {top: nav.offset().top}});
+                }
+            }
+        }
+
+        function processScroll()
+        {
+            if (nav.length) {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop >= navTop && !hasColor) {
+                    hasColor = true;
+                    nav.addClass('navbar-primary');
+                } else if (scrollTop <= navTop && hasColor) {
+                    hasColor = false;
+                    nav.removeClass('navbar-primary');
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="../../../asset/js/doc.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48372917-6', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
