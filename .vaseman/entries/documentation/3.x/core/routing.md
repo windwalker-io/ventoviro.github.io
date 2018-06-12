@@ -22,7 +22,7 @@ If you send a `POST` request, the `SaveController` will be called instead. So we
 
 Simple routing has low performance so we can disable it in `etc/config.yml`
 
-``` yaml
+```yaml
 # etc/config.yml
 
 routing:
@@ -35,7 +35,7 @@ After disabled simple routing, we must register route profile to every page.
 
 Open `/etc/routing.yml` and add a new route profile.
 
-``` yaml
+```yaml
 sakura:
     pattern: /flower/sakura
     controller: Foo\Controller\Myflower
@@ -47,7 +47,7 @@ If you open `/flower/sakura`, Windwalker will auto find `Foo\Controller\Myflower
 
 If you are writing routing profiles in package, the controller name can be simpler.
 
-``` yaml
+```yaml
 # In Flower package
 # `src/Flower/routing.yml`
 
@@ -58,7 +58,7 @@ sakura:
 
 Then you can register flower package routing to the main `etc/routing.yml`.
 
-``` yaml
+```yaml
 # etc/routing.yml
 
 # ...
@@ -94,7 +94,7 @@ See [Package -> Routing Section](package-system.html#add-package-routing)
 
 Add the action attribute:
 
-``` yaml
+```yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -105,7 +105,7 @@ flower:
 Then the GET method will match `Flower\Controller\Sakura\IndexController` because we set a map to find new name. We can set more
 methods to map methods with controllers.
 
-``` yaml
+```yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -118,7 +118,7 @@ flower:
 
 Use `|` as OR condition:
 
-``` yaml
+```yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -129,7 +129,7 @@ flower:
 
 Or use wildcard to map all methods to one controller:
 
-``` yaml
+```yaml
     action:
         '*': SakuraController
 ```
@@ -141,7 +141,7 @@ real HTTP method. For example, send `&_method=DELETE` will ask Windwalker to use
 
 If you feel the HTTP standard methods are not enough to use for you, you can add your custom methods.
 
-``` yaml
+```yaml
     action:
         export: ExportController
 ```
@@ -150,7 +150,7 @@ Then use `&_method=EXPORT` and the `ExportController` will be executed.
 
 ### Custom Input Variables
 
-``` yaml
+```yaml
     pattern: /flower/(id)/(alias)
     variables:
         foo: bar
@@ -159,7 +159,7 @@ Then use `&_method=EXPORT` and the `ExportController` will be executed.
 The attributes in `variables` will auto set to request as default value if this route be matched and there is no same param name in HTTP query.
 So if this route matched, you can get `foo` value in controller:
 
-``` php
+```php
 $this->input->get('foo'); // bar
 ```
 
@@ -170,7 +170,7 @@ But if you type `/flower/25/alias?foo=yoo`, then you will get `yoo`, the variabl
 The `variables` will auto set to input request so it is danger to store some sensitive settings in `variables`, we can set
 `extra` params instead.
 
-``` yaml
+```yaml
     pattern: /flower/(id)/(alias)
     extra:
         layout: grid
@@ -180,7 +180,7 @@ The `variables` will auto set to input request so it is danger to store some sen
 
 Then you can get this extra params from [global config](./config.html).
 
-``` php
+```php
 // In enywhere
 $config = Ioc::getConfig();
 
@@ -194,7 +194,7 @@ $this->app->get('route.extra.user.access'); // admin
 
 You can add `match` and `build` hooks to every route.
 
-``` yaml
+```yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -205,7 +205,7 @@ flower:
 
 The hook example:
 
-``` php
+```php
 use Windwalker\Core\Router\RestfulRouter;
 use Windwalker\Router\Route;
 
@@ -253,7 +253,7 @@ class MyRouteHandler
 
 The yaml request will be ingnored according if it did not satisfy the given conditions. For example this config will only allow GET and POST, while PUT and DELETE will be ignored.
 
-``` yaml
+```yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -264,7 +264,7 @@ flower:
 
 ### Allow scheme
 
-``` yaml
+```yaml
 flower:
     pattern: /flower/sakura
     controller: Flower\Controller\Sakura
@@ -283,13 +283,13 @@ flower:
 
 Use parenthesis `()` to wrap param name.
 
-``` yaml
+```yaml
     pattern: /flower/(id)/(alias)
 ```
 
 For uri look like : `/flower/25/article-alias-name`, above pattern will be matched and there will be two input params.
 
-``` html
+```html
 [id] => 25
 [alias] => article-alias-name
 ```
@@ -298,7 +298,7 @@ For uri look like : `/flower/25/article-alias-name`, above pattern will be match
 
 Use Regular Expression to validate type of input. For example `\d+` indicates that only `Integer` will be accepted as `id` input.
 
-``` yaml
+```yaml
     pattern: /flower/(id)/(alias)
     requirements:
         id: \d+
@@ -310,7 +310,7 @@ Use Regular Expression to validate type of input. For example `\d+` indicates th
 
 Use `(/{anyparam})` to wrap an Optional Param.
 
-``` yaml
+```yaml
     pattern: flower(/id)
 ```
 
@@ -323,7 +323,7 @@ Below 2 uris will be matched simultaneously.
 
 ##### Multiple Optional Params
 
-``` yaml
+```yaml
     pattern: flower(/year,month,day)
 ```
 
@@ -351,7 +351,7 @@ Array
 
 Use Wildcards to match all the successive params in uri.
 
-``` yaml
+```yaml
     pattern: /king/(*tags)
 ```
 
@@ -375,13 +375,13 @@ Array
 Every route in Windwalker has a key, which allows every single route pattern can be access 
 by **route name** or **route resources**, this will be helpful building a route quickly.
 
-``` php
+```php
 echo \Windwalker\Core\Router\CoreRouter::route('{route name}', array('id' => 25, 'alias' => 'foo-bar-baz'));
 ```
 
 The output will be:
 
-``` html
+```html
 {route name}/25/foo-bar-baz
 ```
 
@@ -395,7 +395,7 @@ Windwalker Router provides some matchers to use different way to match routes.
 
 You can set matcher name in `/etc/config.yml`:
 
-``` yaml
+```yaml
 routing:
     matcher: default
 ```
@@ -424,7 +424,7 @@ which is not as flexible as the other two matchers.
 
 only match when the uri segments all exists. If you want to use optional segments, you must add two or more patterns.
 
-```  html
+``` html
 /flower
 /flower/:id
 /flower/:id/:alias
@@ -434,6 +434,6 @@ only match when the uri segments all exists. If you want to use optional segment
 
 This pattern will convert all segments after `/flower` to an array which named `tags`:
 
-``` html
+```html
 /flower/*tags
 ```

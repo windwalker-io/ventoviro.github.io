@@ -9,7 +9,7 @@ title: Class Resolvers
 Windwalker uses resolver to find MVC classes. By default, package will find MVC in it's folder. For example, if there
 has a `flower` package and a route with `Sakura` controller matched:
 
-``` php
+```php
 sakura:
     pattern: /sakura
     controller: Sakura
@@ -20,7 +20,7 @@ we can prepare a set of default controller in other package, and tell windwalker
 
 Add this line in package `boot()` or any position before package execute.
 
-``` php
+```php
 public function boot()
 {
     parent::boot();
@@ -39,7 +39,7 @@ It is flexible to help us organize our packages.
 
 You can also use the same way to add default View and Model paths.
 
-``` php
+```php
 $this->getMvcResolver()->addNamespace('Animal', Priority::NORMAL);
 ```
 
@@ -48,7 +48,7 @@ will find from Animal package as default object.
 
 We can also set default path separately.
 
-``` php
+```php
 $mvcResolver = $this->getMvcResolver();
 
 $mvcResolver->getControllerResolver()->addNamespace('Animal\Controller');

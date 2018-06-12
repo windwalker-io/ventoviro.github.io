@@ -11,7 +11,7 @@ into controller and execute it. Any code mentioned in this section will be execu
 
 Simple usage of controller:
 
-``` php
+```php
 use Flower\Controller\Sakura\GetController;
 
 use Flower\View\Sakura\SakuraHtmlView;
@@ -41,7 +41,7 @@ Controller provides `prepareExecute()` and `postExecute()` to allow you inject b
 
 This is an example:
 
-``` php
+```php
 class SaveController extends AbstractController
 {
     // We prepare data in pre-process
@@ -82,7 +82,7 @@ Follows this way to write your logic so we can easily override the before and af
 
 See: [Request and Input](../start/request-input.html), we can use Input object to get HTTP queries:
 
-``` php
+```php
 $id = $this->input->getInput('id');
 
 $layout = $this->input->getString('layout', 'default');
@@ -106,7 +106,7 @@ $this->input->cookie->get('foo');
 
 If your repository and view object located in your package, and follows Windwalker naming convention, you can get Repository and View by getter in controller.
 
-``` php
+```php
 // In doExecute()
 
 // File: src/Flower/Repository/SakuraRepository.php
@@ -124,7 +124,7 @@ $this->getView('Rose', 'json'); // RoseJsonView
 
 If you didn't tell getter the view or repository name, it will use controller name as default:
 
-``` php
+```php
 // In doExecute()
 
 // SakuraRepository
@@ -143,7 +143,7 @@ See [View](view-templating.html) and [Repository](repository-database.html)
 
 Controller `delegate()` method supports us handle multiple tasks in one controller if we need dispatch different handlers.
 
-``` php
+```php
 protected function doExecute()
 {
     return $this->delegate($this->input->get('task', 'task1'), ...$this->input->post->toArray());
@@ -164,7 +164,7 @@ protected function task2($arg1, $arg2)
 
 Windwalker controller is a Container aware interface, we can directly use container in controller:
 
-``` php
+```php
 // In doExecute()
 
 $session = $this->container->get('session');
@@ -178,7 +178,7 @@ $cache->call('user', function() use ($session)
 
 Controller maintains package and application object, so we can get some important global services from them.
 
-``` php
+```php
 // Get services from Application
 $this->app->container->get('...'); // Global container
 $this->app->cache->getCache();
@@ -206,7 +206,7 @@ otherwise controller will call `processSuccess()` to handle success logic.
 
 This is an sample code to show how to implement a DB transaction in controller.
 
-``` php
+```php
 class SaveController extends AbstractController
 {
 	protected function doExecute()
@@ -250,7 +250,7 @@ class SaveController extends AbstractController
 
 Use JsonResponse to return json `content-type` in `doExecute()`
 
-``` php
+```php
 use Windwalker\Http\Response\JsonResponse;
 
 // in doExecute()
@@ -263,7 +263,7 @@ return ['foo' => 'bar'];
 
 Use trait to auto prepare json response.
 
-``` php
+```php
 use Windwalker\Core\Controller\Traits\JsonResponseTrait;
 
 class GetController extends AbstractController
@@ -273,7 +273,7 @@ class GetController extends AbstractController
 
 Use `JsonApiTrait` to return a standard api format:
 
-``` php
+```php
 use Windwalker\Core\Controller\Traits\JsonApiTrait;
 
 class GetController extends AbstractController
@@ -290,7 +290,7 @@ class GetController extends AbstractController
 
 Output data:
 
-``` php
+```php
 {
     "success": true,
     "code": 200,
@@ -305,7 +305,7 @@ Output data:
 
 Add `ValidateErrorHandlingMiddleware` so controller can catch `ValidateFailException` to handle multiple invalid data messages.
 
-``` php
+```php
 use Windwalker\Core\Controller\Middleware\ValidateErrorHandlingMiddleware;
 use Windwalker\Core\Repository\Exception\ValidateFailException;
 
@@ -348,7 +348,7 @@ protected function validate($data)
 
 You can set some config in `$this->config` and pass it into View and Repository, then they will know everything about this controller.
 
-``` php
+```php
 // In doExecute()
 
 $this->config->set('package.name', 'other_package_name');
@@ -367,7 +367,7 @@ Config is a Structure object, see: [Windwalker Structure](../more/structure.html
 
 Windwalker provides a simple CSRF token generator, please add this line to your HTML form:
 
-``` html
+```html
 <form action="..." method="post">
     
     <!-- ... -->
@@ -378,19 +378,19 @@ Windwalker provides a simple CSRF token generator, please add this line to your 
 
 In Edge of Blade
 
-``` php
+```php
 @formToken()
 ```
 
 This will generate a token input to your form. You can also add token to an URL.
 
-``` html
+```html
 <a href="flower/sakura?<?php echo \Windwalker\Core\Security\CsrfProtection::getFormToken(); ?>"></a>
 ```
 
 Then just check token in your Controller.
  
-``` php
+```php
 use Windwalker\Core\Security\CsrfProtection;
 
 // Validate or throw exception
@@ -411,7 +411,7 @@ if (! CsrfProtection::checkToken())
 
 Use trait to auto check CSRF token:
 
-``` php
+```php
 use Windwalker\Core\Controller\Traits\CsrfProtectionTrait;
 
 class SaveController extends AbstractController
@@ -427,7 +427,7 @@ class SaveController extends AbstractController
 
 Use `setRedirect($url)` to tell controller redirect to other url after executed.
 
-``` php
+```php
 $this->setRedirect('pages.html');
 
 // Then after executed, we can call `redirect()` to do redirect action.
@@ -436,13 +436,13 @@ $this->redirect();
 
 Set Message when redirect:
 
-``` php
+```php
 $this->setRedirect('pages.html', 'Save success', 'info');
 ```
 
 We can override redirect target anywhere when executing.
 
-``` php
+```php
 // In doExecute()
 
 $repository->save($data);
@@ -466,7 +466,7 @@ return true;
 
 We can also redirect instantly by set URL as first argument to `redirect()`
 
-``` php
+```php
 $this->redirect('http://foo.com/page.html');
 ```
 
@@ -474,7 +474,7 @@ $this->redirect('http://foo.com/page.html');
 
 Flash message is a disposable message in session, if we show it, these messages will be purged.
 
-``` php
+```php
 $this->addMessage('Message', 'type');
 
 // Set multiple messages by array
@@ -489,7 +489,7 @@ $this->setRedirect('url.html', 'Message', 'type');
 
 If we set controller to mute, this controller will not add any messages:
 
-``` php
+```php
 $this->mute(true);
 
 $this->addMessage('Message'); // This action no use
@@ -505,7 +505,7 @@ to solve many of the scalability issues already mentioned. HMVC was first descri
 
 In Windwalker, using HMVC is very easy, look this example:
 
-``` php
+```php
 class ParentController extends Controller
 {
 	protected function doExecute()
@@ -523,14 +523,14 @@ class ParentController extends Controller
 
 Actually, all params of constructor can be ignored because the global IoC container will handle this dependency.
  
-``` php
+```php
 // Every dependency will be provided by IoC
 $child = new ChildController;
 ```
 
 But you can force push some params you needed:
 
-``` php
+```php
 $newInput = new Input(array('foo' => 'bar'));
 
 $child = new ChildController($newInput);
@@ -545,7 +545,7 @@ $child = new ChildController(null, $subContainer->get('package'), $subContainer)
 
 Windwalker provides a `hmvc()` method to make this step more quickly:
 
-``` php
+```php
 $result = $this->hmvc('Flower\Controller\Rose\SaveController', array('data' => $data));
 
 // OR
@@ -557,7 +557,7 @@ $result = $this->hmvc(new ChildController, $this->input);
 
 Windwalker Controller supports middleware pattern, you can add middlewares in `middleware` property when class declaring:
 
-``` php
+```php
 class GetController extends AbstractController
 {
 	protected $middlewares = [
@@ -570,7 +570,7 @@ class GetController extends AbstractController
 
 Or add it in `init()` or `boot()` method before executed:
 
-``` php
+```php
 // ...
 
 protected function init()
@@ -590,7 +590,7 @@ protected function init()
 
 Use callback as middleware:
 
-``` php
+```php
 protected $middlewares = [
     500 => function ($data, $next)
     {
@@ -609,7 +609,7 @@ protected $middlewares = [
 
 Or use class as middleware:
 
-``` php
+```php
 use Windwalker\Debugger\Helper\DebuggerHelper;
 use Windwalker\Http\Response\JsonResponse;
 
@@ -629,7 +629,7 @@ class MyMiddleware extends AbstractControllerMiddleware
 
 Then register it to controller:
 
-``` php
+```php
 protected $middlewares = [
     800 => MyMiddleware::class
 ];
@@ -641,7 +641,7 @@ Controller is an instance of `BootableTrait`, which can auto boot used traits.
 
 Create a trait with a method named `boot{TraitName}()`:
 
-``` php
+```php
 trait MyTestTrait
 {
     public function bootMyTestTrait()
@@ -653,7 +653,7 @@ trait MyTestTrait
 
 Now use it in controller and it will be auto booted.
 
-``` php
+```php
 class GetController extends AbstractController
 {
     use MyTestTrait;

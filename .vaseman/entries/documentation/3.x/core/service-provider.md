@@ -20,7 +20,7 @@ and write all our logic in `register()` and `boot()` method then set our objects
 
 Take a look of this example code, in a original way, if we have a MongoDB driver want to bootstrap, we'll write an bootstrap file.
 
-``` php
+```php
 // ./import.mongodb.php
 
 // This is a fake MongoDB connector
@@ -31,7 +31,7 @@ return $conn;
 
 And include this file:
 
-``` php
+```php
 $mongo = include_once __DIR__ . '/import.mongodb.php';
 ```
 
@@ -41,7 +41,7 @@ This is not the best practice to include a 3rd service in our system, so we use 
 
 In Windwalker, Create a `MongoDBServiceProvider`, and set MongoDB connection to Container.
 
-``` php
+```php
 use Windwalker\DI\Container;
 use Windwalker\DI\ServiceProviderInterface;
 
@@ -64,13 +64,13 @@ class MongoDBServiceProvider implements ServiceProviderInterface
 
 Register this provider in container:
 
-``` php
+```php
 $container->registerServiceProvider(new MongoDBServiceProvider);
 ```
 
 Then get this object from Container, the `MongoDBConnection` will be lazy loading, MongoDB will connected after your first get it:
 
-``` php
+```php
 $mongo = $container->get('mongo.db');
 
 // OR
@@ -84,7 +84,7 @@ About how to use IoC (DI) Container, see: [IoC Container](ioc-container.html)
 
 All Service Providers are registered in config, add your own or 3rd providers in `etc/app/windwalker.php` or `etc/app/web.php`:
 
-``` php
+```php
 // etc/app/windwalker.php
 
 // ...
@@ -101,7 +101,7 @@ All Service Providers are registered in config, add your own or 3rd providers in
 If the service need to be boot when system initializing, we can add a `boot()` method to provider class.
 This is an error handler provider example, we must register error handler instantly after this provider registered.
 
-``` php
+```php
 class ErrorHandlingProvider implements ServiceProviderInterface
 {
 	public function boot(Container $container)
@@ -123,7 +123,7 @@ class ErrorHandlingProvider implements ServiceProviderInterface
 
 If you wish this provider boot after all providers registered, you can use `bootDeferred()`.
 
-``` php
+```php
 class ErrorHandlingProvider implements ServiceProviderInterface
 {
 	public function bootDeferred(Container $container)
@@ -144,7 +144,7 @@ class ErrorHandlingProvider implements ServiceProviderInterface
 
 Application object can easily get some main services by magic properties:
 
-``` php
+```php
 $app = Ioc::getApplication();
 
 $this->app->container->get('...'); // Global container

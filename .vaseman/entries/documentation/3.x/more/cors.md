@@ -11,7 +11,7 @@ request to make sure remote browser can access your server.
 
 Windwalker has a `CorsHandler` to quickly add CORS headers to `Response`. Fo example, you can do this in controller:
 
-``` php
+```php
 // In Controller
 
 use Windwalker\Core\Http\CorsHandler;
@@ -28,7 +28,7 @@ $this->response = CorsHandler::create($this->response)
 
 Now Windwalker will auto genarate these headers:
 
-``` http
+```http
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Headers: X-Foo, X-Bar
 Access-Control-Allow-Methods: GET, POST
@@ -40,7 +40,7 @@ Access-Control-Allow-Origin: *
 Use wildcard (`*`) to Allow-Origin is not recommended, you can save domains which you allowed in system and add them
  to header dynamically.
 
-``` php
+```php
 $allowOrigins = $model->getMyAllowOrigins();
 
 $origin = $this->input->server->getUrl('HTTP_ORIGIN');
@@ -55,7 +55,7 @@ if (in_array($origin, $allowOrigins))
 
 You can also add multiple origins:
 
-``` php
+```php
 $this->response = CorsHandler::create($this->response)
     ->allowOrigin($origin1)
     ->allowOrigin($origin2)
@@ -65,7 +65,7 @@ $this->response = CorsHandler::create($this->response)
 
 The headers will be:
 
-``` http
+```http
 Access-Control-Allow-Origin: http://domain1.com
 Access-Control-Allow-Origin: http://domain2.com
 Access-Control-Allow-Origin: http://domain3.com
@@ -73,7 +73,7 @@ Access-Control-Allow-Origin: http://domain3.com
 
 To replace all origins, set `true` to second argument.
 
-``` php
+```php
 $this->response = CorsHandler::create($this->response)
     ->allowOrigin($newOrigin, true)
     ->getResponse();

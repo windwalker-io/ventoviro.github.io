@@ -8,7 +8,7 @@ title: Data Object
 
 The constructor of `Data` can insert an array or object, it will convert to Data properties.
 
-``` php
+```php
 use Windwalker\Data\Data;
 
 $array = array(
@@ -23,7 +23,7 @@ echo $data->flower; // sakura
 
 ### Binding object into it
 
-``` php
+```php
 $obj = new \stdClass;
 $obj->goo = 'yoo';
 
@@ -36,7 +36,7 @@ echo $data->goo; // yoo
 
 Data object has magic method to be getter and setter of any property, we don't need to worry about the property exists or not. Non-exists property will return `null`.
 
-``` php
+```php
 echo $data->foo; // exists
 
 echo $data->yoo; // Not exists, but no warning, it will return null.
@@ -44,7 +44,7 @@ echo $data->yoo; // Not exists, but no warning, it will return null.
 
 We can also using getter and setter:
 
-``` php
+```php
 $data->set('flower', 'rose');
 
 echo $data->get('flower');
@@ -54,7 +54,7 @@ echo $data->get('flower');
 
 If some property not exists, we can get a default value.
 
-``` php
+```php
 echo $data->get('flower', 'Default value');
 
 // OR
@@ -66,7 +66,7 @@ echo $data->flower ? : 'Default Value';
 
 Using array access to get property:
 
-``` php
+```php
 // Set
 $data['flower'] = 'Sunflower';
 
@@ -78,7 +78,7 @@ echo $data['flower'];
 
 `Data` object can directly use in foreach as iterator:
 
-``` php
+```php
 foreach ($data as $key => $value)
 {
     echo $key . ' => ' . $value;
@@ -94,7 +94,7 @@ $data = $data->map(function ($value, $key)
 
 In PHP, an empty object means not empty, so this code will return FALSE:
 
-``` php
+```php
 $data = new Data; // Data object with no properties
 
 // IS NULL?
@@ -103,7 +103,7 @@ var_dump(empty($data)); // bool(false)
 
 So we use `isNull()` method to detect whether object is empty or not, this is similar to [Null Object pattern](http://en.wikipedia.org/wiki/Null_Object_pattern):
 
-``` php
+```php
 $data = new Data;
 
 // IS NULL?
@@ -112,14 +112,14 @@ var_dump($data->isNull()); // bool(true)
 
 Another simple way is convert it to array, this also work:
 
-``` php
+```php
 // IS NULL?
 var_dump(empty((array) $data)); // bool(true)
 ```
 
 ### Map and Walk
 
-``` php
+```php
 $data->map(function($value)
 {
     return strtoupper($value);
@@ -135,7 +135,7 @@ $data->walk(function(&$value, $key, $userdata)
 
 `DataSet` is a data collection bag for `Data` object. We can insert array with data in constructor.
 
-``` php
+```php
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 
@@ -151,13 +151,13 @@ $dataSet = new DataSet(
 
 Operate `DataSet` as an array, it use magic method to get and set data.
 
-``` php
+```php
 echo $dataSet[0]->title; // Dog
 ```
 
 Push a new element:
 
-``` php
+```php
 $dataSet[] = new Data(array('id' => 6, 'title' => 'Lion'));
 ```
 
@@ -165,7 +165,7 @@ $dataSet[] = new Data(array('id' => 6, 'title' => 'Lion'));
 
 We can also using iterator to loop all elements:
 
-``` php
+```php
 foreach ($dataSet as $data)
 {
     echo $data->title;
@@ -176,14 +176,14 @@ foreach ($dataSet as $data)
 
 Get values of `foo` field from all data objects.
 
-``` php
+```php
 // will be an array of every Data's foo property
 $value = $dataset->foo;
 ```
 
 Set value to `bar` field of all object.
 
-``` php
+```php
 // will set 'Fly' to every Data's bar property
 $dataset->bar = 'Fly';
 ```
@@ -307,7 +307,7 @@ $sum = $dataSet->pipe(function ($dataSet)
 
 ### Dump
 
-``` php
+```php
 $dataSet->dump(); // Data[]
 
 $dataSet->dump(true); // Recursive to array[]

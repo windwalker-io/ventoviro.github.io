@@ -15,7 +15,7 @@ Let's create a php class in `src/Flower/Controller/Sakura/GetContrtoller.php`.
 The `Flower` is package name, and `Sakura` is controller name, `GetController` means it is a default `GET` action, this equals to
 `indexAction` in other frameworks, while Windwalker uses single action controller, so every controller class only handles one action.
 
-``` php
+```php
 <?php
 // src/Flower/Controller/Sakura/GetController.php
 
@@ -44,7 +44,7 @@ Windwalker Controller follows single responsibility principle, you can add more 
 
 We wish we can render a HTML template to browser, so please add a template file to `src/Flower/Templates/sakura/default.php`
 
-``` php
+```php
 <?php
 // src/Flower/Templates/sakura/default.php
 ?>
@@ -53,7 +53,7 @@ We wish we can render a HTML template to browser, so please add a template file 
 
 And modify `GetController::doExecute()`, we get a View object, push a variable into it, then all `render()` method to return template.
 
-``` php
+```php
 // src/Flower/Controller/Sakura/GetController.php
 
 // ...
@@ -78,7 +78,7 @@ We'll get `<h1>Hello Sakura</h1>` in browser.
 
 By extends parent layout, we can wrap our template by a parent template.
 
-``` php
+```php
 <?php
 // src/Flower/Templates/sakura/default.php
 /**
@@ -108,7 +108,7 @@ The result
 
 We support different template layout for one controller, the default is `default` layout, now try to add a `photo` layout.
 
-``` php
+```php
 <?php
 // src/Flower/Templates/sakura/photo.php
 ?>
@@ -118,7 +118,7 @@ We support different template layout for one controller, the default is `default
 
 Then we render `photo.php` by `$view->setLayout('photo')`.
 
-``` php
+```php
 // src/Flower/Controller/Sakura/GetController.php
 
 // ...
@@ -140,7 +140,7 @@ add some new features.
 
 We create a template named `default.edge.php` or `default.blade.php`.
 
-``` php
+```php
 {{-- src/Flower/Templates/sakura/default.edge.php --}}
 
 @extends('_global.html')
@@ -154,7 +154,7 @@ We create a template named `default.edge.php` or `default.blade.php`.
 
 Render this template in Controller
 
-``` php
+```php
 protected function doExecute()
 {
     return $this->renderView('Sakura', 'default', 'edge', ['name' => 'Sakura']);
@@ -173,7 +173,7 @@ Our namespace start with `Flower\`, in Windwalker, we call this "Flower package"
 
 Simple routing is very slow so we can disable it in `etc/config.yml`
 
-``` yaml
+```yaml
 # etc/config.yml
 
 routing:
@@ -189,7 +189,7 @@ Now we must prepare a standard package environment so we can use more advanced f
 
 Create a `FlowerPackage` first.
 
-``` php
+```php
 <?php
 // Flower/FlowerPackage.php
 
@@ -205,7 +205,7 @@ class FlowerPackage extends AbstractPackage
 
 Next, register it to `etc/app/web.php`, the `flower` key name is alias of your package, you can customize it if package name conflict.
 
-``` php
+```php
 // ...
 
     'packages' => [
@@ -219,7 +219,7 @@ Next, register it to `etc/app/web.php`, the `flower` key name is alias of your p
 
 And then, add a new routing profile to `etc/routing.yml`.
 
-``` yaml
+```yaml
 # ...
 
 flower:
@@ -231,7 +231,7 @@ flower:
 
 The last step, create package routing at `src/Flower/routing.yml`.
 
-``` yaml
+```yaml
 # src/Flower/routing.yml
 
 sakura:
@@ -248,7 +248,7 @@ Windwalker provides a simple `ModelRepository` class to help you organize your d
 
 Add SakuraModel class.
 
-``` php
+```php
 <?php
 // src/Flower/Model/SakuraModel.php
 
@@ -271,7 +271,7 @@ class SakuraModel extends ModelRepository
 
 Use this Model in controller.
 
-``` php
+```php
 // ...
 
 /** @var SakuraModel $model */
@@ -283,7 +283,7 @@ return $this->renderView('Sakura', 'default', 'edge', ['content' => $content]);
 
 Modify the template to loop `content` variable.
 
-``` php
+```php
 @extends('_global.html')
 
 @section('content')

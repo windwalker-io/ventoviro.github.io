@@ -31,7 +31,7 @@ as a Model manager.
 
 This is a traditional MVC usage in controller:
 
-``` php
+```php
 <?php
 // doExecute()
 
@@ -47,7 +47,7 @@ return $view->render();
 
 Change some code, we can push Model into View:
 
-``` php
+```php
 // doExecute()
 
 $model = new FlowerModel;
@@ -66,7 +66,7 @@ return $view->render();
 
 Get data in View:
 
-``` php
+```php
 class SakurasHtmlView extends HtmlView
 {
 	protected function prepareData($data)
@@ -104,7 +104,7 @@ protected function prepareData($data)
 You must make sure Model named with `XXXModel`, the model will guess their name. you can also set name property when declaring Model class. 
 There is some ways to define Model's name:
 
-``` php
+```php
 // Set by config
 $model->config->set('name', 'foo');
 
@@ -122,7 +122,7 @@ class SomeModel extends Model
 
 We can get many models and push them into one view.
 
-``` php
+```php
 // In Controller::doExecute()
 
 $model = $this->getModel();
@@ -173,7 +173,7 @@ $list = $view->pipe('rose', function (RoseModel $model, $view)
 
 Use array access to get different models and call methods in View.
 
-``` php
+```php
 // In View::prepareData()
 
 $data->items = $this->model->getItems();
@@ -183,7 +183,7 @@ $data->olives = $this->model['olive']->getOlives();
 
 If a model not set, and the method name start with `get*` or `load*`, it will return `null`.
 
-``` php
+```php
 $data->foo = $this->model['foo']->getFoo();
 ```
 

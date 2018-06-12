@@ -10,7 +10,7 @@ File is a abstract class provides methods to operate files.
 
 ### Write & Delete files
 
-``` php
+```php
 use Windwalker\Filesystem\File;
 
 $file = '/path/to/file.txt';
@@ -22,7 +22,7 @@ File::delete($file);
 
 ### Move & Copy
 
-``` php
+```php
 $src = '/path/to/file.txt';
 $dest = '/path/of/new/file.txt';
 
@@ -41,7 +41,7 @@ File::copy($src, $dest, true);
 
 ### Upload
 
-``` php
+```php
 File::upload($src, $dest);
 ```
 
@@ -52,7 +52,7 @@ and permissions on both source and destination path.
 
 Strip extension and get simple path:
 
-``` php
+```php
 $file = '/path/to/flower.txt';
 
 $name = File::stripExtension($file); // /path/to/flower
@@ -60,7 +60,7 @@ $name = File::stripExtension($file); // /path/to/flower
 
 Get extension:
 
-``` php
+```php
 $file = '/path/to/flower.txt';
 
 File::getExtension($file); // txt
@@ -68,7 +68,7 @@ File::getExtension($file); // txt
 
 Get only file name.
 
-``` php
+```php
 $file = '/path/to/flower.txt';
 
 File::getFilename($file); // flower.txt
@@ -76,7 +76,7 @@ File::getFilename($file); // flower.txt
 
 Make file name safe to store.
 
-``` php
+```php
 $path = /path!/to/flower sakura.
 
 File::makeSafe($path); // /path/to/flowersakura
@@ -90,7 +90,7 @@ Folder class help us operate folders and list files of a folder.
 
 Move & Copy
 
-``` php
+```php
 use Windwalker\Filesystem\Folder;
 
 // Move folder
@@ -108,7 +108,7 @@ Folder::copy($src, $dest, true);
 
 Create & Delete
 
-``` php
+```php
 Folder::create($path);
 
 Folder::delete($path);
@@ -118,7 +118,7 @@ Folder::delete($path);
 
 #### List Folders
 
-``` php
+```php
 // List folders of a folder
 Folder::folders($dir);
 
@@ -137,7 +137,7 @@ Available path type:
 
 #### List Files
 
-``` php
+```php
 // List files of a folder
 Folder::files($dir);
 
@@ -150,7 +150,7 @@ Folder::files($dir, true, Folder::PATH_BASENAME);
 
 #### List Files & Folders
 
-``` php
+```php
 // List files & folders of a folder
 Folder::items($dir);
 
@@ -170,7 +170,7 @@ Filesystem class is a universal finder to find and operate folders & files.
 Filesystem move & copy method will auto detect the path is a folder or file, if is folder, it will call `Folder::move()`,
  if is file, it will call `File::move()`.
 
-``` php
+```php
 // we don't need to know $src is a folder or file, Filesystem will detect it.
 Filesystem::move($src, $dest);
 Filesystem::copy($src, $dest);
@@ -185,7 +185,7 @@ A simple helper to handler some path string.
 
 To strip additional / or \ in a path name.
 
-``` php
+```php
 $path = '/var/www\flower\sakura/olive';
 
 $path = Path::clean($path); // Will be: '/var/www/flower/sakura/olive'
@@ -193,7 +193,7 @@ $path = Path::clean($path); // Will be: '/var/www/flower/sakura/olive'
 
 ### Permissions
 
-``` php
+```php
 // Get by number
 Path::getPermissions($path); // 755
 
@@ -215,7 +215,7 @@ Finder is the most powerful function of Filesystem, it provides an interface to 
 
 ####  Simple Finder
 
-``` php
+```php
 // Argument 2 is recursive
 $folders = Filesystem::folders($path, true);
 $files   = Filesystem::files($path, true);
@@ -225,7 +225,7 @@ $items   = Filesystem::items($path, true);
 The simple finder are same as Folder, but it will not scan all files instantly, but returns an Iterator instead,
  we can send this iterator to `foreach` and do some filter by `SplFileInfo` object.
 
-``` php
+```php
 foreach ($items as $item)
 {
     if ($item->isDir() || $item->isDot())
@@ -239,7 +239,7 @@ foreach ($items as $item)
 
 If you really need array not an Iterator, use `Filesystem::iteratorToArray()`.
 
-``` php
+```php
 $folders = Filesystem::folder($path, true);
 
 // To array
@@ -248,7 +248,7 @@ $folders = Filesystem::iteratorToArray($folders);
 
 Or set argument 3 to `TRUE`.
 
-``` php
+```php
 $folders = Filesystem::folder($path, true, true);
 
 is_array($folders); // TRUE
@@ -258,37 +258,37 @@ is_array($folders); // TRUE
 
 Find by name.
 
-``` php
+```php
 $files = Filesystem::find($path, 'flower.php');
 ```
 
 Multiple name.
 
-``` php
+```php
 $files = Filesystem::find($path, array('flower.php', 'sakura.php'));
 ```
 
 Find by regex
 
-``` php
+```php
 $files = Filesystem::find($path, '^[a-zA-Z0-9]');
 ```
 
 Only find first matched.
 
-``` php
+```php
 $file = Filesystem::findOne($path, array('flower.php', 'sakura.php'));
 ```
 
 Find recursive
 
-``` php
+```php
 $files = Filesystem::find($path, array('flower.php', 'sakura.php'), true);
 ```
 
 To array
 
-``` php
+```php
 $files = Filesystem::find($path, array('flower.php', 'sakura.php'), true, true);
 ```
 
@@ -296,7 +296,7 @@ $files = Filesystem::find($path, array('flower.php', 'sakura.php'), true, true);
 
 Inject our filter logic to find files.
 
-``` php
+```php
 /**
  * Files callback
  *
@@ -316,7 +316,7 @@ $files = Filesystem::find($path, $closure, true);
 
 Or create a `FileComparator` object.
 
-``` php
+```php
 use Windwalker\Filesystem\Comparator\FileComparatorInterface;
 
 class MyComparator implements FileComparatorInterface
@@ -334,7 +334,7 @@ $files = Filesystem::find($path, new MyComparator, true);
 
 We can create our own comparator like an finder object.
 
-``` php
+```php
 // This is just an example
 
 $comparator = new MyAdvancedComparator;
@@ -355,13 +355,13 @@ We can use this object to find files or list files, and also support using callb
 
 #### Create a new PathLocator
 
-``` php
+```php
 $path = new PathLocator('/var/www/flower');
 ```
 
 #### Convert to string
 
-``` php
+```php
 echo $path
 
 //or
@@ -375,14 +375,14 @@ Use chaining to operate path.
 
 ##### Child
 
-``` php
+```php
 $path->child('plugins')           // => /var/www/flower/plugins
     ->child('system/flower/lib'); // => /var/www/flower/plugins/system/flower/lib
 ```
 
 ##### Parent
 
-``` php
+```php
 $path->parent()       // => /var/www/flower/plugins/system/flower (Up one level)
     ->parent(2)       // => /var/www/flower/plugins               (Up 2 levels)
     ->parent('www');  // => /var/www                              (Find a parent and go this level)
@@ -392,7 +392,7 @@ $path->parent()       // => /var/www/flower/plugins/system/flower (Up one level)
 
 Add a prefix of system path, we can change it, only when converting to string, the prefix will be added to path.
 
-``` php
+```php
 $path2 = new PathLocator('src/Sakura/Olive');
 
 echo $path->addPrefix($_SERVER['DOCUMENT_ROOT']); // => /var/www/src/Sakura/Olive
@@ -400,7 +400,7 @@ echo $path->addPrefix($_SERVER['DOCUMENT_ROOT']); // => /var/www/src/Sakura/Oliv
 
 #### Filesystem Operation
 
-``` php
+```php
 echo $path->isDir();  // true or false
 echo $path->isFile(); // true or false
 echo $path->exists(); // true or false
@@ -410,7 +410,7 @@ echo $path->exists(); // true or false
 
 This function has not prepared yet.
 
-``` php
+```php
 $path->getInfo();            // return SplFileInfo of current directory
 
 $path->getInfo('index.php'); // return SplFileInfo of this file
@@ -420,7 +420,7 @@ $path->getInfo('index.php'); // return SplFileInfo of this file
 
 Get Folders
 
-``` php
+```php
 $dirs = $path->getFolders([true to recrusive]);
 
 foreach($dirs as $dir)
@@ -431,7 +431,7 @@ foreach($dirs as $dir)
 
 Get Files
 
-``` php
+```php
 $files = $path->getFiles([true to recrusive]);
 
 foreach($files as $file)
@@ -444,7 +444,7 @@ foreach($files as $file)
 
 Find by string or regex
 
-``` php
+```php
 echo $path->find('config.json');     // Find one file and return fileinfo object
 
 echo $path->find(array('^config'));  // Find one file by regex
@@ -458,7 +458,7 @@ foreach($path->findAll(array('^config_*.json', '!^..'), true) as $file)
 
 Find by callback
 
-``` php
+```php
 $callback = function($current, $key, $iterator)
 {
     return return @preg_match('^Foo', $current->getFilename())  && ! $iterator->isDot();
@@ -474,7 +474,7 @@ Find by Comparator
 
 This comparator object may contain the filter logic, but not prepared yet.
 
-``` php
+```php
 $comparator = new FileComparator;
 
 foreach($path->findAll(FileComparatorInterface $comparator, true) as $file)
@@ -487,7 +487,7 @@ foreach($path->findAll(FileComparatorInterface $comparator, true) as $file)
 
 This function not prepared yet.
 
-``` php
+```php
 $dl2 = new \DirectoryLocator($_SERVER['DOCUMENT_ROOT'] . '/src', true);
 $dls->child('Campenont');        // throw PathNotExistsException();
 $dls->child('../www/index.php'); // throw PathNotDirException();
@@ -507,7 +507,7 @@ The iterator will travel to every `PathLocator` in this collection object, and r
 
 ##### Add with no key
 
-``` php
+```php
 $paths = new PathCollection(array(
     new PathLocator('templates/' . $template . '/html/' . $option),
     new PathLocator('Sakuras/' . $option . '/view/tmpl/'),
@@ -517,7 +517,7 @@ $paths = new PathCollection(array(
 
 ##### Add with key name
 
-``` php
+```php
 $paths = new PathColleciotn(array(
     'Template'  => new PathLocator('templates/' . $template . '/html/' . $option),
     'Sakura' => new PathLocator('Sakuras/' . $option . '/view/tmpl/'),
@@ -529,7 +529,7 @@ $paths = new PathColleciotn(array(
 
 ##### Add path
 
-``` php
+```php
 $paths->addPath(new PathLocator('Foo'));        // No key name, will using number as key
 
 $paths->addPath(new PathLocator('Foo'), 'Foo'); // With key name
@@ -537,13 +537,13 @@ $paths->addPath(new PathLocator('Foo'), 'Foo'); // With key name
 
 ##### Add paths
 
-``` php
+```php
 $paths->addPaths(array(new PathLocator('Bar'))); // Add by array
 ```
 
 ##### Remove path
 
-``` php
+```php
 $paths->removePath('Foo');  // Remove by key name
 $paths->removePath(0);      // Remove by number
 ```
@@ -553,7 +553,7 @@ $paths->removePath(0);      // Remove by number
 We can change this prefix, only when converting to string,
 the prefix will have been added to path.
 
-``` php
+```php
 // Prepend all path with a prefix path.
 
 $paths->setPrefix('/var/www/flower');
@@ -563,7 +563,7 @@ $paths->setPrefix('/var/www/flower');
 
 List all PathLocator
 
-``` php
+```php
 foreach($paths as $path)
 {
     echo $path // print path string
@@ -572,7 +572,7 @@ foreach($paths as $path)
 
 Return a raw array
 
-``` php
+```php
 foreach($paths->toArray() as $path)
 {
     echo $path // print path string
@@ -581,7 +581,7 @@ foreach($paths->toArray() as $path)
 
 List all files and folders of all paths
 
-``` php
+```php
 foreach($paths->getAllChildren([true to recrusive]) as $file)
 {
     echo $file // SplFileInfo
@@ -590,7 +590,7 @@ foreach($paths->getAllChildren([true to recrusive]) as $file)
 
 List all files
 
-``` php
+```php
 foreach($paths->getFiles([true to recrusive]) as $file)
 {
     echo $file->getFilename() // SplFileInfo
@@ -599,7 +599,7 @@ foreach($paths->getFiles([true to recrusive]) as $file)
 
 List all folders
 
-``` php
+```php
 foreach($paths->getFolders([true to recrusive]) as $dir)
 {
     echo $file->getPathname() // SplFileInfo
@@ -610,7 +610,7 @@ foreach($paths->getFolders([true to recrusive]) as $dir)
 
 Same as PathLocator, but return all paths' file & folders.
 
-``` php
+```php
 $paths->find('config.json');
 
 $paths->findAll('config_*.json');
@@ -620,7 +620,7 @@ $paths->findAll('config_*.json');
 
 ### Using it as array or string
 
-``` php
+```php
 $cache  = new PathLocator($_SERVER['DOCUMENT_ROOT'] . '/cache');
 $loader = new \Twig_Loader_Filesystem($paths);
 

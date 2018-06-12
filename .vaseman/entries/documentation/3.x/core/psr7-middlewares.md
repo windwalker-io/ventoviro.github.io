@@ -9,7 +9,7 @@ to handle request and response.
 
 ## Get Request and Response
 
-``` php
+```php
 $app = \Windwalker\Ioc::getApplication();
 
 $request = $app->request;
@@ -18,7 +18,7 @@ $response = $app->response;
 
 Get Request data:
 
-``` php
+```php
 $request->getHeaders();
 $request->getSeverParams();
 $request->getUploadedFiles();
@@ -26,13 +26,13 @@ $request->getUploadedFiles();
 
 Set response body:
 
-``` php
+```php
 $response->getBody()->write('Hello World');
 ```
 
 Set Response headers:
 
-``` php
+```php
 // Response is immutable so we must reutrn new object.
 $response = $response->withHeader('X-Foo', 'Bar');
 
@@ -42,7 +42,7 @@ $app->setResponse($response);
 
 Use Json response:
 
-``` php
+```php
 use Windwalker\Http\Response\JsonResponse;
 
 $app->setResponse(new JsonResponse(['foo' => 'bar']));
@@ -54,7 +54,7 @@ See [Windwalker Http Package](https://github.com/ventoviro/windwalker-http)
 
 We can add middleware to process before and after logic when application running, create a middleware class:
 
-``` php
+```php
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Windwalker\Middleware\MiddlewareInterface;
@@ -87,7 +87,7 @@ Register this middleware to `etc/app/web.php` (of `dev.php` if only use in debug
 Use numeric key name to control the execution ordering, the biggest number will execute first,
 and the smaller number will nearer to core logic.
 
-``` php
+```php
 // ...
 
     'middlewares' => [
@@ -99,7 +99,7 @@ and the smaller number will nearer to core logic.
 
 You can also use callback as middleware:
 
-``` php
+```php
 // ...
 
     'middlewares' => [
@@ -110,7 +110,7 @@ You can also use callback as middleware:
 If you want to use `Closure` as middleware, do not add it to config file since it will break the cache serializer,
 add it in application `init()`.
 
-``` php
+```php
 <?php
 // src/Windwalker/Web/Application.php
 
@@ -136,7 +136,7 @@ class Application extends WebApplication
 
 Or write a trait to add group of middlewares:
 
-``` php
+```php
 trait MyMiddlewaresTrait
 {
     // Must have boot{TraitName}() method then application will suto boot it
@@ -152,7 +152,7 @@ trait MyMiddlewaresTrait
 
 Then use it in Application:
 
-``` php
+```php
 class Application extends WebApplication
 {
 	use MyMiddlewaresTrait;
@@ -167,7 +167,7 @@ as package middleware.
 
 Add middleware in package config:
 
-``` php
+```php
 // etc/package/flower.php
 // OR
 // src/Flower/Resources/config/config.dist.php
@@ -179,7 +179,7 @@ Add middleware in package config:
 
 You can also add middleware runtime in package `boot()` method:
 
-``` php
+```php
 class FlowerPackage extends AbstractPackage
 {
 	// ...
@@ -197,7 +197,7 @@ class FlowerPackage extends AbstractPackage
 
 Also supports trait:
 
-``` php
+```php
 class FlowerPackage extends AbstractPackage
 {
     use MyMiddlewaresTrait;

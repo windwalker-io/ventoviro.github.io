@@ -10,7 +10,7 @@ Environment object help us get browser and server information.
 
 ## Get Environment Object
 
-``` php
+```php
 // Get from Application
 $env = $app->environment;
 
@@ -27,7 +27,7 @@ Environment contains two objects, `Browser` to get browser information, and `Pla
 
 Get platform object:
 
-``` php
+```php
 $platform = $env->platform;
 
 // OR
@@ -37,14 +37,14 @@ $platform = $app->platform;
 
 ### Detect Running Environment
 
-``` php
+```php
 $platform->isWeb();
 $platform->isCli();
 ```
 
 Same as:
 
-``` php
+```php
 use Windwalker\Environment\PhpHelper;
 
 PhpHelper:isWeb();
@@ -56,7 +56,7 @@ PhpHelper::isCli();
 Get server OS information. The `getOS()` return first 3 letters from `getUname()`. The Uname is same as `PHP_OS`.
 ([List of `PHP_OS`](https://gist.github.com/asika32764/90e49a82c124858c9e1a))
 
-``` php
+```php
 $platform->getOS();  // WIN, UNI, LIN, DAR ... etc.
 $platform->getUname(); // PHP_OS
 
@@ -67,7 +67,7 @@ $platform->isUnix();
 
 ### Get System Path
 
-``` php
+```php
 $platform->getWorkingDirectory();
 
 $platform->getRoot();
@@ -119,7 +119,7 @@ Set first argument to `false` will return request path without params, same as `
 
 ### Get Request Information
 
-``` php
+```php
 $platform->getHost();
 $platform->getScheme();
 $platform->getPort();
@@ -131,7 +131,7 @@ PhpHelper provides some useful methods to know about our PHP status.
 
 ### Check PHP Running Environment
 
-``` php
+```php
 PhpHelper::isWeb();
 PhpHelper::isCli();
 PhpHelper::isHHVM();
@@ -143,7 +143,7 @@ PhpHelper::isEmbed();
 
 If is PHP, return `PHP_VERSION`. If is HHVM, return `HHVM_VERSION`.
 
-``` php
+```php
 PhpHelper::getVersion()
 ```
 
@@ -153,14 +153,14 @@ PhpHelper::getVersion()
 
 `setMuted()` will set `error_reporting()` to `0`.
 
-``` php
+```php
 PhpHelper::setStrict();
 PhpHelper::setMuted();
 ```
 
 ### Check Extensions
 
-``` php
+```php
 PhpHelper::hasXdebug();
 PhpHelper::hasPcntl();
 PhpHelper::hasCurl();
@@ -171,7 +171,7 @@ PhpHelper::hasMcrypt();
 
 Get browser object:
 
-``` php
+```php
 $browser = $env->browser;
 
 // OR
@@ -181,7 +181,7 @@ $browser = $app->browser;
 
 ### Detect Browser
 
-``` php
+```php
 // Check is IE
 $browser->getBrowser() == Browser::IE;
 ```
@@ -199,7 +199,7 @@ Available Browser Detection
 
 ### Detect Browser Version
 
-``` php
+```php
 $version = $browser->getBrowserVersion();
 
 // Check version
@@ -208,7 +208,7 @@ $version >= 11;
 
 ### Detect Browser Engine
 
-``` php
+```php
 $engine = $browser->getEngine();
 
 // Check engine
@@ -227,7 +227,7 @@ Available Engines
 
 ### Detect User's OS or Device
 
-``` php
+```php
 $device = $browser->getDevice();
 
 // Check platform
@@ -249,7 +249,7 @@ Available Platforms
 
 ### Other Detection
 
-``` php
+```php
 $browser->isRobot();
 $browser->isMobile();
 $browser->getLanguages();

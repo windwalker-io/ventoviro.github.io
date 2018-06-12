@@ -10,7 +10,7 @@ Windwalker includes [PHPUnit](https://phpunit.de/) as default unit test system.
 
 To start a unit test, please rename `/phpunit.xml.dist` to `/phpunit.xml` and edit the content:
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="test/bootstrap.php" colors="false"
 	convertErrorsToExceptions="true"
@@ -38,7 +38,7 @@ To start a unit test, please rename `/phpunit.xml.dist` to `/phpunit.xml` and ed
 
 Change the `testsuite` to:
 
-``` xml
+```xml
 <testsuites>
 	<testsuite name="Flower">
 		<directory>src/Flower/Test</directory>
@@ -56,7 +56,7 @@ Windwlaker Provides some useful TestCase to extends asserts.
 
 ### `AbstractBaseTestCase`
 
-``` php
+```php
 use Windwalker\Test\TestCase\AbstractBaseTestCase;
 
 class ModelTest extends AbstractBaseTestCase
@@ -80,7 +80,7 @@ class ModelTest extends AbstractBaseTestCase
 
 ### `AbstractDomTestCase`
 
-``` php
+```php
 class ModelTest extends AbstractDomTestCase
 {
 

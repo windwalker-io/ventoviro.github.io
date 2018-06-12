@@ -17,7 +17,7 @@ Windwalker user system is extendable, before we start use user auth, we must do 
 `UserHandlerInterface` help us handler user CRUD and login/logout actions, create a Model implements `UserHandlerInterface`
 in your package.
 
-``` php
+```php
 namespace Flower\Model;
 
 use Windwalker\Core\Model\DatabaseModelRepository;
@@ -73,7 +73,7 @@ class UserModel extends DatabaseModelRepository implements UserHandlerInterface
 
 Use this simple schema to create user table, see [Migration](../db/migration.html):
 
-``` php
+```php
 $this->createTable('users', function (Schema $sc)
 {
     $sc->primary('id')->comment('Primary Key');
@@ -90,7 +90,7 @@ $this->createTable('users', function (Schema $sc)
 
 And you can add seeder to generate fake user data:
 
-``` php
+```php
 $faker = \Faker\Factory::create();
 
 // Please do not use `pass123456` in production site
@@ -115,7 +115,7 @@ foreach (range(1, 50) as $i)
 
 Add this handler to `etc/app/web.php`:
 
-``` php
+```php
 // ...
 
 
@@ -133,7 +133,7 @@ Add this handler to `etc/app/web.php`:
 
 Now we can do CRUD for user table:
 
-``` php
+```php
 use Windwalker\Core\User\User;
 
 $user = User::get(1); // get User ID=1
@@ -146,7 +146,7 @@ User::delete(1); // Delete User ID=1
 
 ### Get User
 
-``` php
+```php
 use Windwalker\Core\User\User;
 
 // Get a user by id
@@ -158,7 +158,7 @@ $user = User::get(array('username' => 'christina'));
 
 ### Save User
 
-``` php
+```php
 use Windwalker\Crypt\Password;
 
 $user->username = 'riaok3784';
@@ -172,7 +172,7 @@ User::save($user);
 
 ### Delete User
 
-``` php
+```php
 // Delete by id
 User::delete(12);
 
@@ -194,7 +194,7 @@ This image described how authentication methods working.
 
 We create a method class to find user from database.
 
-``` php
+```php
 namespace Flower\User;
 
 use Flower\Model\UserModel;
@@ -255,7 +255,7 @@ class DatabaseMethod extends AbstractMethod
 
 And register to `etc/app/web.php`:
 
-``` php
+```php
 
 // ...
 
@@ -276,7 +276,7 @@ OK now we can login User by credential.
 
 ### Login User
 
-``` php
+```php
 // Prepare user data
 $credential = new Credential;
 $credential->username = 'richael2123';
@@ -294,13 +294,13 @@ catch (AuthenticateFailException $e)
 
 Remember me:
 
-``` php
+```php
 $bool = User::login($credential, true);
 ```
 
 Our UserHandler set user login data to session `user` key, see `$_SESSION['user']`:
 
-``` php
+```php
 show($_SESSION);
 
 Array
@@ -326,7 +326,7 @@ Array
 
 ### Logout User
 
-``` php
+```php
 $bool = User::logout();
 ```
 
@@ -334,7 +334,7 @@ $bool = User::logout();
 
 Use `makeUserLoggedIn()` to force login a user data to session without authentication.
 
-``` php
+```php
 $user = [
     'username' => 'richael2123',
     'name' => 'Richael'
@@ -345,7 +345,7 @@ User::makeUserLoggedIn($user);
 
 ### Get Current User
 
-``` php
+```php
 $user = User::get();
 
 // Check user is logged-in
@@ -359,7 +359,7 @@ $user->isGuest();
 
 This is an example to auth user from remote server.
 
-``` php
+```php
 use Windwalker\Http\HttpClient;
 
 // ...
@@ -396,7 +396,7 @@ class RemoteMethod extends AbstractMethod
 
 Then add this class to `etc/app/web.php` so Windwalker will check two methods to find user.
 
-``` php
+```php
 // ...
 
     'user' => [
@@ -415,7 +415,7 @@ Then add this class to `etc/app/web.php` so Windwalker will check two methods to
 
 If your method class dependent on other classes, just add it on constructor, The Ioc container will auto inject it:
 
-``` php
+```php
 use Windwalker\Core\Application\WebApplication;
 
 class DatabaseMethod extends AbstractMethod
@@ -434,7 +434,7 @@ class DatabaseMethod extends AbstractMethod
 
 You can check a user has access to login or not, use listener to listen `onUserAuthorisation` event:
 
-``` php
+```php
 namespace Flower\Listener;
 
 use Windwalker\Core\User\Exception\AuthenticateFailException;
@@ -467,7 +467,7 @@ class UserAuthListener
 
 Then register it to `etc/app/web.php`:
 
-``` php
+```php
 // ...
 
     'listeners' => [

@@ -16,7 +16,7 @@ For SQL and programming, this 3 integers will be  **Total**, **Limit**, and **Of
 
 Some times we will fetch items from database by SQL which looks like this:
 
-``` sql
+```sql
 SELECT * 
 FROM sakuras
 WHERE state = 1
@@ -27,7 +27,7 @@ LIMIT 0, 20
 
 This is a common way to count total rows by remove `LIMIT` element and select `COUNT(*)`.
 
-``` sql
+```sql
 SELECT COUNT(*) 
 FROM sakuras
 WHERE state = 1
@@ -41,7 +41,7 @@ Use the second query we'll fetch total rows of first query without limit.
 
 Use `SQL_CALC_FOUND_ROWS` in only MySQL.
 
-``` php
+```php
 SELECT SQL_CALC_FOUND_ROWS *
 FROM sakuras
 WHERE state = 1
@@ -59,7 +59,7 @@ If you add `group` in your SQL, the `COUNT(*)` will be incorrect, we must use an
 
 This is the main query of yours.
 
-``` sql
+```sql
 SELECT *
 FROM sakuras AS a
     LEFT JOIN flowers AS b ON a.flower_id = b.id
@@ -72,7 +72,7 @@ GROUP a.id
 
 Remove `LIMIT` then execute this SQL:
 
-``` sql
+```sql
 SELECT *
 FROM sakuras AS a
     LEFT JOIN flowers AS b ON a.flower_id = b.id
@@ -84,7 +84,7 @@ GROUP a.id
 
 And use `ReaderCommand::count()`:
 
-``` php
+```php
 $total = $db->getReader($sql)->count();
 ```
 
@@ -92,7 +92,7 @@ $total = $db->getReader($sql)->count();
 
 This is an example to fetch rows and total: 
 
-``` php
+```php
 $limit = 20;
 $page  = $input->get('page', 1);
 $start = ($page - 1) * $limit;
@@ -127,7 +127,7 @@ $paginData = $pagination->getResult();
 
 `PaginationResult` to an object contains pagination information, you can get pages data from this object:
 
-``` php
+```php
 $paginData = $pagination->getResult();
 
 $paginData->getFirst();    // page number
@@ -144,7 +144,7 @@ print_r($paginData->getAll());
 
 The output is:
 
-``` html
+```html
 Array
 (
     [1] => first
@@ -171,19 +171,19 @@ You can use this array to build your pagination HTML.
 
 `render()` method will auto render pagination HTML, the default template is `windwalker.pagination.default`.
 
-``` php
+```php
 echo $pagination->render()
 ```
 
 Set custom template:
 
-``` php
+```php
 $pagination->template('mytemplate.pagination', 'edge')->render();
 ```
 
 Set custom route for building page URL.
 
-``` php
+```php
 $pagination->route('tag')->render();
 
 // OR add package
@@ -193,13 +193,13 @@ $pagination->route('package@tag')->render();
 
 Sometimes we may need more params in URL query:
 
-``` php
+```php
 $pagination->route('tag', ['title' => $title])->render();
 ```
 
 Set Router object to Pagination if you have custom Router object.
 
-``` php
+```php
 echo $pagination->setRouter($router)
     ->route('tag', ['title' => $title])
     ->template('mytemplate.pagination', 'edge')
@@ -210,7 +210,7 @@ echo $pagination->setRouter($router)
 
 Windwalker supports simple pagination if you have a big table and you don't want to count totals.
 
-``` php
+```php
 // Use -1 as total.
 echo (new Pagination($current, $limit, -1))
     ->template('windwalker.pagination.simple')
@@ -219,6 +219,6 @@ echo (new Pagination($current, $limit, -1))
 
 Or quick create by static:
 
-``` php
+```php
 echo Pagination::simple($current, $limit)->render();
 ```

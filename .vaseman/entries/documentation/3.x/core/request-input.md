@@ -11,7 +11,7 @@ redirect:
 Last section we have learned how to make controller work, now it's time to see how the application receives HTTP request queries and respond.
 In Windwalker you may access input queries using `Input` object. Below is how it works:
 
-``` php
+```php
 // src/Flower/Controller/Sakuras/GetController.php
 
 class GetController extends AbstractController
@@ -28,7 +28,7 @@ class GetController extends AbstractController
 
 ### Get Input at Anywhere
 
-``` php
+```php
 // Use global Ioc class
 $input = Ioc::getInput();
 
@@ -43,7 +43,7 @@ $this->input;
 
 Input object is a container of web request data and superglobals.
 
-``` php
+```php
 use Windwalker\IO\Input;
 
 $input = new Input;
@@ -67,7 +67,7 @@ get request data by Input object keeps us away from unsafe string injection.
 
 The default filter type is `CMD`. We can use other filter type:
 
-``` php
+```php
 // mysite.com/?flower=<p>to be, or not to be.</p>;
 
 $input->get('flower'); // tobeornottobe (Default cmd filter)
@@ -85,7 +85,7 @@ More filter usage please see: [Windwalker Filter](https://github.com/ventoviro/w
 
 Get data as an array.
 
-``` php
+```php
 // mysite.com/?flower[1]=sakura&flower[2]=olive;
 
 $input->getArray('flower'); // Array( [1] => sakura [2] => olive)
@@ -96,7 +96,7 @@ $input->getArray('flower', null, '.', 'int');
 
 Use `compact()` method
 
-``` php
+```php
 // mysite.com/?flower=sakura&foo=bar&king=Richard
 
 // Get all request
@@ -131,7 +131,7 @@ $input->compact(array(
 
 If we want to get value of `foo[bar][baz]`, just use `get('foo.bar.baz')`:
 
-``` php
+```php
 $value = $input->get('foo.bar.baz', 'default', InputFilter::STRING);
 
 $input->set('foo.bar.baz', $data);
@@ -145,7 +145,7 @@ $input->set('foo/bar/baz', $data, '/');
 
 We can get other methods as a new input object.
 
-``` php
+```php
 $post = $input->post;
 
 $value = $post->get('foo', 'bar');
@@ -158,7 +158,7 @@ $delete = $input->delete;
 
 ## Get SUPER GLOBALS
 
-``` php
+```php
 $env     = $input->env;
 $session = $input->session;
 $cookie  = $input->cookie;
@@ -171,7 +171,7 @@ See: [SUPER GLOBALS](http://php.net/manual/en/language.variables.superglobals.ph
 
 ### Get method of current request:
 
-``` php
+```php
 $method = $input->getMethod();
 ```
 
@@ -186,7 +186,7 @@ Windwalker Http package convert nested `$_FILES` variables to a set of `Uploaded
 
 Suppose we have this HTML form.
 
-``` html
+```html
 <form action="..." enctype="multipart/form-data" method="post">
     <input type="file" name="flower[sakura]" />
     <input type="file" name="flower[rose]" />
@@ -196,7 +196,7 @@ Suppose we have this HTML form.
 
 Then we get files in controller:
 
-``` php
+```php
 // controller::doExecute()
 
 use Windwalker\Http\Helper\UploadedFileHelper;

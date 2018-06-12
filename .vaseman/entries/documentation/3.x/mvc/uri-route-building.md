@@ -10,7 +10,7 @@ Sometimes you may put your application at sub folder of a domain, Windwalker pro
 
 If our application located at `http://domain.com/sites/windwalker/` and we open `/flower/sakura?foo=bar` page, we may use this code to get uri data:
 
-``` php
+```php
 $uri = \Windwalker\Ioc::getUriData();
 
 // Get Base path
@@ -38,7 +38,7 @@ we use relative url.
 
 Add host and base path.
 
-``` php
+```php
 echo $link = $uri->root . '/romeo/and/juliet';
 
 // OR
@@ -54,7 +54,7 @@ http://domain.com/sites/windwalker/romeo/and/juliet
 
 Or only add base path by `path` variable.
 
-``` php
+```php
 echo $uri->path . '/flower/sakura';
 
 // OR
@@ -64,13 +64,13 @@ echo $uri->path() . '/flower/sakura';
 
 We'll get a uri start from root, so the relative path will not break.
 
-``` html
+```html
 /sites/windwalker/flower/sakura
 ```
 
 ### Use Method Call
 
-``` php
+```php
 $uri->root('flower/sakura');
 $uri->path('flower/sakura');
 ```
@@ -79,7 +79,7 @@ $uri->path('flower/sakura');
 
 View has already included uri object as a global variable.
 
-``` html
+```html
 <link href="<?php echo $uri->path; ?>/asset/css/bootstrap.min.css">
 
 OR
@@ -89,7 +89,7 @@ OR
 
 The output will be:
 
-``` html
+```html
 <link href="/sites/windwalker/media/css/bootstrap.min.css">
 ```
 
@@ -101,7 +101,7 @@ Every route in Windwalker has a key, we called it **route name** or **route prof
 
 For example, this is the routing file:
 
-``` yaml
+```yaml
 flower_page:
     pattern: /flower/page/(id)-(alias).html
     controller: Flower\Controller\Page
@@ -109,7 +109,7 @@ flower_page:
 
 Then we can build this route by `CoreRouter::route()`
 
-``` php
+```php
 use Windwalker\Core\CoreRouter;
 
 echo CoreRouter::route('flower_page', ['id' => 25, 'alias' => 'foo-bar-baz']);
@@ -117,7 +117,7 @@ echo CoreRouter::route('flower_page', ['id' => 25, 'alias' => 'foo-bar-baz']);
 
 The output will be:
 
-``` html
+```html
 flower/page/25-foo-bar-baz.html
 ```
 
@@ -127,7 +127,7 @@ This is a very useful function that you can change roue name but won't worry of 
 
 If your routes is definded in a package, you must add package alias before route name, and separate by at (`@`):
 
-``` php
+```php
 use Windwalker\Core\CoreRouter;
 
 CoreRouter::route('flower@sakuras', array('page' => $page));
@@ -135,7 +135,7 @@ CoreRouter::route('flower@sakuras', array('page' => $page));
 
 Or use PackageRouter, we can ignore package prefix, Package will auto add it:
 
-``` php
+```php
 $package = PackageHelper::getPackage('flower');
 
 // No necessary to add 'flower:'
@@ -149,7 +149,7 @@ $package->router->route('user@login');
 
 If we print URL in HTML, we must encode some special chars.
 
-``` php
+```php
 // In php engine
 // URL: /flower/sakuras?foo=bar&baz=yoo
 
@@ -170,7 +170,7 @@ The printed URL will be:
 
 Router has 3 mode, `RAW`, `PATH` or `FULL`:
 
-``` php
+```php
 echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_RAW);
 echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_PATH);
 echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_FULL);
@@ -178,7 +178,7 @@ echo CoreRouter::route('flower@sakuras', array(), Router::TYPE_FULL);
 
 Result:
 
-``` html
+```html
 flower/sakuras
 /sites/windwalker/flower/sakuras
 http://domain.com/sites/windwalker/flower/sakuras
@@ -190,7 +190,7 @@ The RAW route used to store in database, the PATH route used to print in HTML, t
 
 If you are in controller, we can use PackageRouter to build route, this way is more safer because we can auto get current package routes.
 
-``` php
+```php
 // Original way, we have to know package name
 use Windwalker\Core\CoreRouter;
 
@@ -206,13 +206,13 @@ $this->setRedirect($route);
 
 View has also includes package router, just build route like this:
 
-``` html
+```html
 <a href="<?php echo $router->route('sakura', ['id' => 25]); ?>">Link</a>
 ```
 
 In Blade or Edge
 
-``` php
+```php
 <a href="{{ $router->route('sakura', ['id' => 25]) }}">Link</a>
 
 OR
@@ -226,7 +226,7 @@ OR
 
 In Twig
 
-``` php
+```php
 <a href="{{ router.route('sakura', ['id' => 25]) }}">Link</a>
 ```
 

@@ -10,7 +10,7 @@ Authorisation service is s simple ACL manager to help us manage user access.
 
 ## Add A Policy To Check Access
 
-``` php
+```php
 use Windwalker\Core\User\User;
 use Windwalker\Core\User\UserDataInterface;
 
@@ -28,7 +28,7 @@ User::authorise('can.edit.article', $user, $article); // boolean
 
 ## Use Class Policy
 
-``` php
+```php
 use Windwalker\Core\Application\WebApplication;
 
 class CanEditArticlePolicy implements \Windwalker\Authorisation\PolicyInterface
@@ -45,7 +45,7 @@ User::addPolicy('can.edit.article', new CanEditArticlePolicy);
 
 Or register in config:
 
-``` php
+```php
 // etc/app/web.php
 
 // ...
@@ -60,7 +60,7 @@ Or register in config:
 
 If your policy dependent on other classes, just add it on constructor, The Ioc container will auto inject it:
 
-``` php
+```php
 use Windwalker\Core\Application\WebApplication;
 
 class CanEditArticlePolicy implements \Windwalker\Authorisation\PolicyInterface
@@ -77,7 +77,7 @@ class CanEditArticlePolicy implements \Windwalker\Authorisation\PolicyInterface
 
 ## Use PolicyProvider to Register Multiple Policies
 
-``` php
+```php
 use Windwalker\Authorisation\AuthorisationInterface;
 use Windwalker\Authorisation\PolicyProviderInterface;
 
@@ -98,7 +98,7 @@ User::registerPolicyProvider(new ArticlePolicyProvider);
 
 Also, you can register provider in `etc/app/web.php`:
 
-``` php
+```php
 // ...
 
     'user' => [
@@ -111,7 +111,7 @@ Also, you can register provider in `etc/app/web.php`:
 
 If your provider dependent on other classes, just add it on constructor, The Ioc container will auto inject it:
 
-``` php
+```php
 use Windwalker\Core\Application\WebApplication;
 use Windwalker\Authorisation\PolicyProviderInterface;
 
@@ -131,7 +131,7 @@ class ArticlePolicyProvider implements PolicyProviderInterface
 
 Use `@auth` or `@can` directive:
 
-``` php
+```php
 @can('article.edit', $user)
     <a href="#">Edit</a>
 @else

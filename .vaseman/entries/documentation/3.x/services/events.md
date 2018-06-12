@@ -29,7 +29,7 @@ So, if any listener has the method which matched the event, dispatcher will call
 
 Create an event object named `onBeforeContentSave`, and set some arguments.
 
-``` php
+```php
 use Windwalker\Event\Event;
 
 $event = new Event('onBeforeContentSave');
@@ -42,7 +42,7 @@ $event->setArgument('content', $content);
 
 Create your listener:
 
-``` php
+```php
 use Windwalker\Event\EventInterface;
 
 class ContentListener
@@ -61,7 +61,7 @@ class ContentListener
 
 Add listener to Dispatcher:
 
-``` php
+```php
 $dispatcher = \Windwalker\Ioc::getDispatcher();
 
 // OR
@@ -74,7 +74,7 @@ $dispatcher->addListener(new ContentListener);
 
 Then we trigger the event we created:
 
-``` php
+```php
 // Trigger the onBeforeContentSave
 $dispatcher->triggerEvent($event);
 
@@ -89,7 +89,7 @@ Then we can do many things we want.
 
 Event can access like array:
 
-``` php
+```php
 // Set
 $event['data'] = $data;
 
@@ -105,13 +105,13 @@ There can be two types of listeners, using class or closure.
 
 Using class, just new an instance
 
-``` php
+```php
 $dispatcher->addListener(new ContentListener);
 ```
 
 You may provides priority for every methods.
 
-``` php
+```php
 use Windwalker\Event\ListenerPriority;
 
 // Add priorities
@@ -131,7 +131,7 @@ $dispatcher->addListener(new ContentListener, ContentListener::getPriorities());
 
 If using closure, you must provide the priority and an event name to listen.
 
-``` php
+```php
 $dispatcher->addListener(
     function (EventInterface $event)
     {
@@ -143,7 +143,7 @@ $dispatcher->addListener(
 
 Or use `listen()` method.
 
-``` php
+```php
 $dispatcher->listen('onContentSave', function (EventInterface $event)
 {
     // Do something
@@ -156,7 +156,7 @@ $dispatcher->listen('onContentSave', function (EventInterface $event)
 
 This is the most normal way to trigger an event.
 
-``` php
+```php
 $event = new Event('onFlowerBloom');
 
 $event->setArgument('flower', 'sakura');
@@ -166,7 +166,7 @@ $dispatcher->triggerEvent($event);
 
 Add arguments when triggering event, the arguments will merge with previous arguments you set.
 
-``` php
+```php
 $args = array(
     'foo' => 'bar'
 );
@@ -178,7 +178,7 @@ $dispatcher->triggerEvent($event, $args);
 
 We can add an event into Dispatcher, then use event name to raise it laster.
 
-``` php
+```php
 $event = new Event('onFlowerBloom');
 
 $event->setArgument('flower', 'sakura');
@@ -194,7 +194,7 @@ $dispatcher->triggerEvent('onFlowerBloom');
 
 We don't need create event first, just trigger a string as event name, Dispatcher will create an event instantly.
 
-``` php
+```php
 $args = array(
     'foo' => 'bar'
 );
@@ -206,7 +206,7 @@ $dispatcher->triggerEvent('onCloudMoving', $args);
 
 If you stop an event, the next listeners in the queue won't be called.
 
-``` php
+```php
 class ContentListener
 {
     public function onBeforeContentSave(EventInterface $event)
@@ -221,7 +221,7 @@ class ContentListener
 
 In PHP 5.4 or higher, you can use `DispatcherAwareTrait`.
 
-``` php
+```php
 use Windwalker\Event\DispatcherAwareInterface;
 use Windwalker\Event\DispatcherAwareTrait;
 

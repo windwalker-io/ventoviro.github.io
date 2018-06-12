@@ -6,7 +6,7 @@ title: Structure Object
 
 ## Getting Started
 
-``` php
+```php
 use Windwalker\Structure\Structure;
 
 $structure = new Structure;
@@ -21,7 +21,7 @@ $value = $structure->get('foo');
 
 ## Load config by Structure
 
-``` php
+```php
 use Windwalker\Structure\Structure;
 
 $structure = new Structure;
@@ -42,7 +42,7 @@ $structure->loadFile($root . '/config/config.json', 'json');
 
 ### Get value
 
-``` php
+```php
 $structure->get('foo');
 
 // Get a non-exists value and return default
@@ -55,7 +55,7 @@ $structure->get('foo') ?: 'default';
 
 ### Set value
 
-``` php
+```php
 // Set value
 $structure->set('bar', $value);
 
@@ -65,7 +65,7 @@ $structure->def('bar', $default);
 
 ### Accessing children value by path
 
-``` php
+```php
 $json = '{
 	"parent" : {
 		"child" : "Foo"
@@ -83,7 +83,7 @@ $structure->set('parent.child', $value);
 
 Support `push / pop / shift / unshift` methods.
 
-``` php
+```php
 $structure->set('foo.bar', array('fisrt', 'second'));
 
 $structure->push('foo.bar', 'third');
@@ -94,7 +94,7 @@ $structure->get('foo.bar');
 
 ### Use other separator
 
-``` php
+```php
 $structure->setSeparator('/');
 
 $data = $structure->get('foo/bar');
@@ -104,7 +104,7 @@ $data = $structure->get('foo/bar');
 
 The `Structure` class implements `ArrayAccess` so the properties of the structure can be accessed as an array. Consider the following examples:
 
-``` php
+```php
 // Set a value in the structure.
 $structure['foo'] = 'bar';
 
@@ -122,7 +122,7 @@ if (isset($structure['foo']))
 
 #### Using load* methods to merge two config files.
 
-``` php
+```php
 $json1 = '{
     "field" : {
         "keyA" : "valueA",
@@ -153,7 +153,7 @@ Array(
 
 #### Merge Another Structure
 
-``` php
+```php
 $object1 = '{
 	"foo" : "foo value",
 	"bar" : {
@@ -177,19 +177,19 @@ $structure1->merge($structure2);
 
 If you just want to merge first level, do not hope recursive:
 
-``` php
+```php
 $structure1->merge($structure2, false); // Set param 2 to false that Structure will only merge first level
 ```
 
 Merge to a child node:
 
-``` php
+```php
 $structure->mergeTo('foo.bar', $anotherStructure);
 ```
 
 ## Dump to file.
 
-``` php
+```php
 $structure->toString();
 
 $structure->toString('xml');
@@ -199,7 +199,7 @@ $structure->toString('ini');
 
 ## Dump to one dimension
 
-``` php
+```php
 $array = array(
     'flower' => array(
         'sunflower' => 'light',
@@ -230,7 +230,7 @@ Array
 
 Add Symfony YAML component in `composer.json`
 
-``` json
+```json
 {
 	"require-dev": {
 		"symfony/yaml": "~3.0"
@@ -240,7 +240,7 @@ Add Symfony YAML component in `composer.json`
 
 Using `yaml` format
 
-``` php
+```php
 $structure->loadFile($yamlFile, 'yaml');
 
 $structure->loadString('foo: bar', 'yaml');
@@ -251,7 +251,7 @@ $structure->toString('yaml');
 
 ## StructureHelper
 
-``` php
+```php
 use Windwalker\Structure\StructureHelper;
 
 StructureHelper::loadFaile($file, $format); // File to array

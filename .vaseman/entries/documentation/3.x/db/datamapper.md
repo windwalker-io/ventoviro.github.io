@@ -6,7 +6,7 @@ title: DataMapper
 
 ## Create a DataMapper
 
-``` php
+```php
 use Windwalker\DataMapper\DataMapper;
 
 $fooMapper = new DataMapper('#__foo');
@@ -18,7 +18,7 @@ $fooSet = $fooMapper->find(array('id' => 1));
 
 You can also create a class to operate specific table:
 
-``` php
+```php
 class FooMapper extends DataMapper
 {
     protected $table = '#__foo';
@@ -35,25 +35,25 @@ Find method will fetch rows from table, and return `DataSet` class.
 
 Get id = 1 record
 
-``` php
+```php
 $fooSet = $fooMapper->find(array('id' => 1));
 ```
 
 Fetch published = 1, and sort by `date`
 
-``` php
+```php
 $fooSet = $fooMapper->find(array('published' => 1), 'date');
 ```
 
 Fetch published = 1, language = en-US, sort by `date` DESC and start with `30`, limit `10`.
 
-``` php
+```php
 $fooSet = $fooMapper->find(array('published' => 1, 'language' => 'en-US'), 'date DESC', 30, 10);
 ```
 
 Using array, will be `IN` condition:
 
-``` php
+```php
 $fooSet = $fooMapper->find(array('id' => array(1,2,3))); // WHERE id IN (1,2,3)
 ```
 
@@ -61,7 +61,7 @@ $fooSet = $fooMapper->find(array('id' => array(1,2,3))); // WHERE id IN (1,2,3)
 
 Just return one row.
 
-``` php
+```php
 $foo = $dooMapper->findOne(array('published' => 1), 'date');
 ```
 
@@ -71,7 +71,7 @@ Equal to `find(array(), $order, $start, $limit)`.
 
 ### Find With Custom Query
 
-``` php
+```php
 $fooMapper = new DataMapper('#__foo');
 
 $fooMapper->where('a = "b"') // Simple where
@@ -112,7 +112,7 @@ Using DataSet to wrap every data, then send this object to create() method, thes
 
 ### create()
 
-``` php
+```php
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 
@@ -160,7 +160,7 @@ Windwalker\Data\DataSet Object
 
 Only insert one row, do not need DataSet.
 
-``` php
+```php
 $data = new Data;
 $data->title = 'Foo';
 $data->auhor = 'Magneto';
@@ -175,7 +175,7 @@ Update methods help us update rows in table.
 
 ### update()
 
-``` php
+```php
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 
@@ -199,7 +199,7 @@ $fooMapper->update($dataset);
 
 Just update one row.
 
-``` php
+```php
 $data = new Data;
 $data->id = 1;
 $data->title = 'Foo';
@@ -212,7 +212,7 @@ $fooMapper->updateOne($data);
 UpdateAll is different from update method, we just send one data object, but using conditions as where
 to update every row match these conditions. We don't need primary key for updateAll().
 
-``` php
+```php
 $data = new Data;
 $data->published = 0;
 
@@ -225,7 +225,7 @@ Delete rows by conditions.
 
 ### delete()
 
-``` php
+```php
 $boolean = $fooMapper->delete(array('author' => 'Jean Grey'));
 ```
 
@@ -233,7 +233,7 @@ $boolean = $fooMapper->delete(array('author' => 'Jean Grey'));
 
 Use `newRelation()` to create a DataMapper and join other tables.
 
-``` php
+```php
 use Windwalker\DataMapper\DataMapper;
 
 $items = DataMapper::newRelation('flower', '#__flower')
@@ -247,7 +247,7 @@ $items = DataMapper::newRelation('flower', '#__flower')
 
 The Join query will be:
 
-``` sql
+```sql
 SELECT `flower`.`id`,
 	`flower`.`catid`,
 	`flower`.`title`,
@@ -274,7 +274,7 @@ GROUP BY category.id
 
 Where condition will auto add alias if not provided.
 
-``` php
+```php
 $fooMapper->find(array(
     'foo.id' => 3 // This is correct condition
     'state' => 1 // This field may cause column conflict, DataMapper will auto covert it to `foo.state` => 1
@@ -283,13 +283,13 @@ $fooMapper->find(array(
 
 Reset all tables and query:
 
-``` php
+```php
 $fooMapper->reset();
 ```
 
 ### Using OR Condition
 
-``` php
+```php
 $fooMapper->addTable(
     'category',
     '#__categories',
@@ -300,7 +300,7 @@ $fooMapper->addTable(
 
 ### Group
 
-``` php
+```php
 $fooMapper->group('category.id');
 ```
 
@@ -308,7 +308,7 @@ $fooMapper->group('category.id');
 
 Using Compare objects help us set some where conditions which hard to use array to defind.
 
-``` php
+```php
 $fooSet = $fooMapper->find(
     array(
         new GteCompare('id', 5),
@@ -321,7 +321,7 @@ $fooSet = $fooMapper->find(
 
 This will generate where conditions like below:
 
-``` sql
+```sql
 WHERE `id` >= '5'
     AND `name` != 'bar'
     AND `published` < '1'
@@ -343,13 +343,13 @@ WHERE `id` >= '5'
 
 ### Custom Compare
 
-``` php
+```php
 echo (string) new Compare('title', '%flower%', 'LIKE');
 ```
 
 Will be
 
-``` sql
+```sql
 `title` LIKE `%flower%`
 ```
 
@@ -365,7 +365,7 @@ Add `"windwalker/event": "~3.0"` to `composer.json`.
 
 Then we are able to use hooks after every operations.
 
-``` php
+```php
 class FooListener
 {
     public function onAfterCreate(Event $event)
@@ -389,7 +389,7 @@ $mapper->create($dataset);
 
 Extends DataMapper:
 
-``` php
+```php
 class SakuraMapper extends DataMapper
 {
     protected $table = 'saluras';
@@ -437,7 +437,7 @@ Available events:
 
 ## Static Access
 
-``` php
+```php
 use Windwalker\Core\DataMapper\CoreDataMapper;
 
 class ArticleMapper extends CoreDataMapper
@@ -448,6 +448,6 @@ class ArticleMapper extends CoreDataMapper
 
 Now you can call all methods statically:
 
-``` php
+```php
 $articles = ArticleMapper::find(['state' => 1]);
 ```

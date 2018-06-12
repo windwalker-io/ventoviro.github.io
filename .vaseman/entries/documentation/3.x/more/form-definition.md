@@ -9,7 +9,7 @@ title: Form Definition
 Windwalker provides a simple interface to define form field. Just create a class extends to `Windwalker\Core\Form\AbstractFieldDefinition`
 and add field type by `$this->{type}('{name}')`.
 
-``` php
+```php
 <?php
 
 use Windwalker\Core\Form\AbstractFieldDefinition;
@@ -38,7 +38,7 @@ class EditDefinition extends AbstractFieldDefinition
 
 Then register this class to `Form`:
 
-``` php
+```php
 use Windwalker\Form\Form;
 
 $form = new Form;
@@ -49,7 +49,7 @@ echo $form->renderFields('basic');
 
 The output:
 
-``` php
+```php
 <div id="input-id-control" class="hidden-field ">
     <label id="input-id-label" for="input-id"></label>
     <input type="hidden" name="id" id="input-id" />
@@ -68,7 +68,7 @@ The output:
 
 You can also use `add()` method to add custom field class:
 
-``` php
+```php
 use Windwalker\Form\Field\AbstractField;
 
 class MyField extends AbstractField
@@ -77,7 +77,7 @@ class MyField extends AbstractField
 }
 ```
 
-``` php
+```php
 // in AbstractFieldDefinition
 
 $this->add('field_name', new MyField);
@@ -108,7 +108,7 @@ If you have a lot of custom fields, you can register them to `AbstractFieldDefin
 First, you must put all fields in one folder with same namespace, and all field classes' name should follows `{Name}Field` rule.
 And create a `trait` with boot method.
 
-``` php
+```php
 /**
  * The MyFieldTrait class.
  *
@@ -127,7 +127,7 @@ trait MyFieldTrait
 
 Use this trait in your definition class, then you are able to use `foo()` to get `MyPackage\Field\FooField`:
 
-``` php
+```php
 class EditDefinition extends AbstractFieldDefinition
 {
 	use MyFieldTrait;
@@ -144,7 +144,7 @@ class EditDefinition extends AbstractFieldDefinition
 
 If your field naming convention not follows default rule, you can add a method to create it.
 
-``` php
+```php
 trait MyFieldTrait
 {
 	// ...

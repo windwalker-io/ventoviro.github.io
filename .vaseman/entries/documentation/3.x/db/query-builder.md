@@ -8,7 +8,7 @@ title: Query Builder
 
 Query Builder help you organize SQL syntax and provides multi-database syntax support. Use Database object to get Query object:
 
-``` php
+```php
 $db = Ioc::getDatabase();
 
 $query = $db->getQuery(true); // TRUE means get a new query
@@ -16,7 +16,7 @@ $query = $db->getQuery(true); // TRUE means get a new query
 
 In DatabaseModel
 
-``` php
+```php
 $query = $this->db->getQuery(true);
 ```
 
@@ -24,7 +24,7 @@ $query = $this->db->getQuery(true);
 
 This is a example of simple select syntax with where condition.
 
-``` php
+```php
 $query->select('*')
     ->from('shakespeare')
     ->where('year <= 1616');
@@ -34,7 +34,7 @@ echo $query;
 
 The result:
 
-``` sql
+```sql
 SELECT *
 FROM shakespeare
 WHERE year <= 1616
@@ -42,7 +42,7 @@ WHERE year <= 1616
 
 ### More Select Options
 
-``` php
+```php
 $query->select(array('title', 'meta', 'read'))
     ->from('shakespeare')
     ->where('year <= 1616')
@@ -55,7 +55,7 @@ echo $query;
 
 Result:
 
-``` sql
+```sql
 SELECT title, meta, read
 FROM shakespeare
 WHERE year <= 1616
@@ -68,7 +68,7 @@ LIMIT 15
 
 For common use, Mysql and some databases use this limit syntax:
 
-``` sql
+```sql
 LIMIT {limit}
 # OR
 LIMIT {offset}, {limit}
@@ -81,7 +81,7 @@ We must use `limit(3, 0)` to generate `LIMIT 0, 3` because it is more semantic o
 
 `where()` method support array as argument.
 
-``` php
+```php
 $query->select('*')
     ->from('shakespeare')
     ->where(array('year <= 1616', 'published > 0'));
@@ -91,7 +91,7 @@ echo $query;
 
 Result
 
-``` sql
+```sql
 SELECT *
 FROM shakespeare
 WHERE year <= 1616
@@ -100,7 +100,7 @@ WHERE year <= 1616
 
 There are many ways you can use `where()` method:
 
-``` php
+```php
 // Use array
 $query->where(array('a = b', 'c = d')); // a = b AND c = d
 
@@ -118,7 +118,7 @@ See [Query Format](#format)
 
 `orWhere()`:
 
-``` php
+```php
 $query->select('*')
     ->from('shakespeare')
     ->where('year <= 1616')
@@ -132,7 +132,7 @@ echo $query;
 
 Result
 
-``` sql
+```sql
 SELECT *
 FROM shakespeare
 WHERE year <= 1616
@@ -141,7 +141,7 @@ WHERE year <= 1616
 
 Build where by callback:
 
-``` php
+```php
 $query->orWhere(function (Query $query)
 {
     $query->where("foo = 'bar'")
@@ -151,7 +151,7 @@ $query->orWhere(function (Query $query)
 
 You can use `QueryElement` to create an `()` element:
 
-``` php
+```php
 echo $query->element('()', $conditions, ' OR ');
 
 // Result also: '(foo = 'bar' OR flower = 'sakura')'
@@ -161,7 +161,7 @@ echo $query->element('()', $conditions, ' OR ');
 
 Sometimes we may use the reserve word of SQL, so we have to quote it to make sure syntax correct.
 
-``` php
+```php
 $query->select('*')
     ->from($query->quoteName('shakespeare'))
     ->where($query->qn('year') . ' <= 1616'); // qn() is alias of quoteName
@@ -171,7 +171,7 @@ echo $query;
 
 Result
 
-``` sql
+```sql
 SELECT *
 FROM `shakespeare`
 WHERE `year` <= 1616
@@ -179,7 +179,7 @@ WHERE `year` <= 1616
 
 Quote name and alias
 
-``` php
+```php
 $query->quoteName('a.title AS a_title'); // `a`.`title` AS `a_title`
 ```
 
@@ -187,7 +187,7 @@ $query->quoteName('a.title AS a_title'); // `a`.`title` AS `a_title`
 
 using `quote()` to quote normal string and [escape](#pass-pdo-into-query-object) it.
 
-``` php
+```php
 $query->select('*')
     ->from($query->quoteName('shakespeare'))
     ->where($query->qn('year') . ' <= 1616')
@@ -199,7 +199,7 @@ echo $query;
 
 Result
 
-``` sql
+```sql
 SELECT *
 FROM `shakespeare`
 WHERE `year` <= 1616
@@ -209,13 +209,13 @@ WHERE `year` <= 1616
 
 Quote array
 
-``` php
+```php
 $query->quote(array(1, 2, 3)); // array("'1'", "'2'", "'3'")
 ```
 
 ## Join
 
-``` php
+```php
 $query->select('a.*, b.*')
     ->from('shakespeare AS a')
     ->join('LEFT', 'libraries AS b', 'a.id = b.work_id')
@@ -226,7 +226,7 @@ echo $query
 
 Result
 
-``` sql
+```sql
 SELECT a.*, b.*
     FROM shakespeare AS a
     LEFT JOIN libraries AS b ON a.id = b.work_id
@@ -235,7 +235,7 @@ SELECT a.*, b.*
 
 Multi-conditions
 
-``` php
+```php
 $query->join('LEFT', 'libraries AS b', array('a.id = b.work_id', 'a.foo < b.bar')); // Will be AND
 
 $query->join('LEFT', 'libraries AS b', 'a.id = b.work_id OR a.foo < b.bar');
@@ -250,7 +250,7 @@ Support Join Type:
 
 ## Insert
 
-``` php
+```php
 $query->insert('shakespeare')
     ->columns(array('title', 'year'))
     ->values("'The Tragedy of Julius Caesar', 1599")
@@ -261,7 +261,7 @@ echo $query;
 
 Result
 
-``` sql
+```sql
 INSERT INTO shakespeare
 (title, year)
 VALUES
@@ -271,7 +271,7 @@ VALUES
 
 Values can be array
 
-``` php
+```php
 $query->insert('shakespeare')
     ->columns(array('title', 'year'))
     ->values(
@@ -295,7 +295,7 @@ $query->insert('shakespeare')
 
 ## Update
 
-``` php
+```php
 $query->update('shakespeare')
     ->set('modified = "2014-10-09"')
     ->set('version = version + 1')
@@ -306,7 +306,7 @@ echo $query;
 
 Result
 
-``` sql
+```sql
 UPDATE shakespeare
 SET
     modified = "2014-10-09",
@@ -316,26 +316,26 @@ WHERE year <= 1616
 
 Use array
 
-``` php
+```php
 $query->set(array('modified = "2014-10-09"', 'version = version + 1'));
 ```
 
 ## Delete
 
-``` php
+```php
 $query->delete('shakespeare')
     ->where('year > 1616');
 ```
 
 Result
 
-``` sql
+```sql
 DELETE shakespeare WHERE year > 1616
 ```
 
 ## Format
 
-``` php
+```php
 echo $query->format('%n = %q', 'title', 'Caesar'); // `title` = 'Caesar'
 ```
 
@@ -383,7 +383,7 @@ Z - Replacement text is the result of $this->nullDate(true).
 
 ### Usage:
 
-``` php
+```php
 $query->format('SELECT %1$n FROM %2$n WHERE %3$n = %4$a', 'foo', '#__foo', 'bar', 1);
 
 //Returns: SELECT `foo` FROM `#__foo` WHERE `bar` = 1
@@ -398,7 +398,7 @@ The argument index used for unspecified tokens is incremented only when used.
 
 We can bind params to our query string:
 
-``` php
+```php
 // Bind data
 $query->where('title = :title')
     ->bind('title', 'Hamlet');
@@ -419,7 +419,7 @@ $db->setQuery($query)->loadAll();
 
 An easy way to build expression or function syntax.
 
-``` php
+```php
 echo $query->expression('FUNCTION', 'a', 'b', 'c');
 
 // FUNCTION(a, b, c)
@@ -427,7 +427,7 @@ echo $query->expression('FUNCTION', 'a', 'b', 'c');
 
 The benefit to using `expression()` is that it will auto fit different databases.
 
-``` php
+```php
 $mysqlQuery->expression('CONCAT', array('a', 'b', 'c'));
 
 // CONCAT(a, b, c)
@@ -447,7 +447,7 @@ $sqliteQuery->expression('CONCAT', array('a', 'b', 'c'), "';'");
 
 Short alias
 
-``` php
+```php
 echo $query->expr('FUNCTION', 'a', 'b', 'c');
 ```
 
@@ -455,7 +455,7 @@ echo $query->expr('FUNCTION', 'a', 'b', 'c');
 
 Help you build a value list:
 
-``` php
+```php
 echo $query->element('WHERE', array('a = b', 'c = d'), ' OR ');
 // OR create Element object
 echo new QueryElement('WHERE', array('a = b', 'c = d'), ' OR ');
@@ -463,13 +463,13 @@ echo new QueryElement('WHERE', array('a = b', 'c = d'), ' OR ');
 // WHERE a = b OR c = d
 ```
 
-``` php
+```php
 echo new QueryElement('()', array('a = b', 'c = d'), ' OR ');
 
 // (a = b OR c = d)
 ```
 
-``` php
+```php
 echo new QueryElement('IN()', array(1, 2, 3, 4));
 
 // IN(1, 2, 3, 4)

@@ -9,7 +9,7 @@ title: View and Templating
 In controller, you can do anything you want, but if you hope to render some template, the View object will help you. 
 In this case, we create a default `HtmlView` to render template:
 
-``` php
+```php
 // /src/Flower/Controller/Sakuras/GetController.php
 
 class GetController extends Controller
@@ -25,7 +25,7 @@ class GetController extends Controller
 
 Then create a php file in `/templates/default.php`. This template will be rendered.
 
-``` php
+```php
 <?php
 // templates/default.php
 ?>
@@ -37,7 +37,7 @@ Hello World
 But this is not a good position to locate template, we will hope it at `templates/flower/sakuras`.
 So add this code to push controller config into View, View will know every thing about Controller:
 
-``` php
+```php
 // /src/Flower/Controller/Sakuras/GetController.php
 
 $view = new HtmlView;
@@ -89,7 +89,7 @@ If you set locale in config `language.locale`, the current and default locale wi
 
 The `foo.bar.baz` will matched `foo/bar/baz.php` file. If you didn't set any layout name, `default` will instead.
 
-``` php
+```php
 // Will find: edit.php
 $view->setLayout('edit')->render();
 
@@ -101,7 +101,7 @@ $view->setLayout('foo.bar.baz')->render();
 
 Windwalker View use `SplPriorityQueue` to sort paths, if we want to add path, we should provide the priority flag.
 
-``` php
+```php
 use Windwalker\Utilities\Queue\Priority;
 
 // ...
@@ -115,7 +115,7 @@ $view->addPath('/my/template/path2', Priority::NORMAL);
 Add paths to global that we don't need to set it every time, you must run this code before controller executed,
 for example, you can run in `onAfterInitialise` event (See [Event](../more/event.html)) , `YourPackage::initialise()` or `Application::initialise()`:
 
-``` php
+```php
 // Add global paths
 \Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/path', Priority::ABOVE_NORMAL);
 ```
@@ -127,7 +127,7 @@ See also: [Windwalker View](https://github.com/ventoviro/windwalker/tree/staging
 
 View can maintain some data and use it in template:
 
-``` php
+```php
 // Set it when construct
 $view = new PhpHtmlView(array('foo' => 'bar'));
 
@@ -140,7 +140,7 @@ $view['foo'] = 'bar';
 
 Then we can get this variables in template:
 
-``` php
+```php
 <?php
 // templates/flower/sakuras/default.php
 
@@ -152,7 +152,7 @@ Hello <?php echo $foo;?>
 
 We are still using default View, but it is not so customizable. Let's extend it to a new View object:
 
-``` php
+```php
 <?php
 // src/Flower/View/SakurasHtmlView.php
 
@@ -172,7 +172,7 @@ class SakurasHtmlView extends HtmlView
 Always remember add `Html` in view name, sometimes we will need `JsonView` or `XmlView`.
 Now we can create this view in controller:
 
-``` php
+```php
 <?php
 // /src/Flower/Controller/Sakuras/GetController.php
 
@@ -207,13 +207,13 @@ this package provides a simple interface similar to Twig that support template e
 Use `load()` to load other template file as a block. The first argument is file path, the second argument is new data
 to merge with original data.
 
-``` php
+```php
 echo $this->load('sub.template', array('bar' => 'baz'));
 ```
 
 Example to load `foo/article.php`:
 
-``` html
+```html
 <?php
 // foo/article.php
 ?>
@@ -231,7 +231,7 @@ parent template. (`extends` in php is a reserved string, so we can only use `ext
 
 For example, this is the parent `_global/html.php` template:
 
-``` html
+```html
 <!-- _global/html.php -->
 <Doctype html>
 <html>
@@ -250,7 +250,7 @@ For example, this is the parent `_global/html.php` template:
 
 And we can extends it in our View:
 
-``` html
+```html
 <?php
 // foo/article.php
 $this->extend('_global.html');
@@ -268,7 +268,7 @@ $this->extend('_global.html');
 
 The result will be:
 
-``` html
+```html
 <Doctype html>
 <html>
 <head>
@@ -289,7 +289,7 @@ The result will be:
 
 We can echo parent data in a block:
 
-``` html
+```html
 <?php $this->block('body');?>
     <?php echo $this->parent(); ?>
     <article>
@@ -301,7 +301,7 @@ We can echo parent data in a block:
 
 Result:
 
-``` html
+```html
 <h2>Home page</h2>
 <article>
     <h2>Article</h2>
@@ -318,7 +318,7 @@ All Blade templates should use the `.blade.php` extension.
 
 There are 2 ways to use Blade engine in View, first is directly create it.
 
-``` php
+```php
 use Windwalker\Core\View\BladeHtmlView;
 
 // Use Blade view
@@ -331,7 +331,7 @@ echo $view->setLayout('flower.sakura')->render();
 
 The second is extend it.
 
-``` php
+```php
 use Windwalker\Core\View\HtmlView;
 
 class SakuraHtmlView extends HtmlView
@@ -348,7 +348,7 @@ echo $view->setLayout('flower.sakura')->render();
 
 In Blade template we don't need to use `$data`, all properties are at top level:
 
-``` php
+```php
 {{ $item->title }}
 
 {!! $uri['base.path'] !!}
@@ -362,13 +362,13 @@ Twig is a well-known template language for PHP, created by Sensio. It uses a syn
 
 There are 2 ways to use Twig engine, similar to Blade engine:
 
-``` php
+```php
 $view = $this->getView('sakura', 'html', 'twig');
 ```
 
 OR
 
-``` php
+```php
 use Windwalker\Core\View\HtmlView;
 
 class SakuraHtmlView extends HtmlView

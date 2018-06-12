@@ -8,7 +8,7 @@ title: Form Builder
 
 Create a new form instance and add fields into it.
 
-``` php
+```php
 use Windwalker\Form\Field\TextareaField;
 use Windwalker\Form\Form;
 use Windwalker\Form\Field\TextField;
@@ -26,7 +26,7 @@ echo $form->renderFields();
 
 Render all fields, and we get this HTML output.
 
-``` html
+```html
 <div id="username-control" class="text-field ">
     <label id="username-label" for="username">Username</label>
     <input type="text" name="username" id="username" />
@@ -51,7 +51,7 @@ Render all fields, and we get this HTML output.
 
 `add()` is a simple alias of `addField()` to make Field support chaining.
 
-``` php
+```php
 $form->add('username', new TextField)
     ->label('Username')
     ->setClass('input-large')
@@ -62,7 +62,7 @@ $form->add('username', new TextField)
 
 ### Using XML as Configuration
 
-``` xml
+```xml
 <form>
     <field
         name="username"
@@ -78,7 +78,7 @@ $form->add('username', new TextField)
 </form>
 ```
 
-``` php
+```php
 $form = new Form;
 
 $form->loadFile('form.xml');
@@ -86,7 +86,7 @@ $form->loadFile('form.xml');
 
 ## Form Control
 
-``` php
+```php
 $control = 'user';
 
 $form = new Form($control);
@@ -98,7 +98,7 @@ echo $form->renderFields();
 
 The result will make name as an array.
 
-``` html
+```html
 <div id="user-username-control" class="text-field ">
     <label id="user-username-label" for="user-username">Username</label>
     <input type="text" name="user[username]" id="user-username" />
@@ -111,7 +111,7 @@ The result will make name as an array.
 
 Fieldset is a category of fields, we can filter our fields by fieldset:
 
-``` php
+```php
 $form = new Form;
 
 $form->addField(new TextField('flower', 'Flower'), 'plant');
@@ -131,7 +131,7 @@ echo $form->renderFields();
 
 Use callback to wrap fieldset.
 
-``` php
+```php
 $form->fieldset('plant', function (Form $form)
 {
 	$form->addField(new TextField('flower', 'Flower'));
@@ -147,7 +147,7 @@ $form->fieldset('animal', function (Form $form)
 
 Using XML
 
-``` xml
+```xml
 <form>
     <fieldset name="plant">
         <field name="flower" label="Flower"/>
@@ -165,7 +165,7 @@ Using XML
 
 Group is like fieldset as a category of fields, but it will make name of fields to be array:
 
-``` php
+```php
 $form = new Form;
 
 $form->addField(new TextField('flower', 'Flower'), null, 'earth');
@@ -180,7 +180,7 @@ echo $form->renderFields(null, 'animal');
 
 Now we can use fieldset and group to organize our fields.
 
-``` php
+```php
 $form = new Form;
 
 $form->addField(new TextField('flower', 'Flower'), 'plant', 'earth');
@@ -204,7 +204,7 @@ echo $form->renderFields();
 
 Use callback to wrap group:
 
-``` php
+```php
 $form->group('earth', function (Form $form)
 {
 	$form->addField(new TextField('flower', 'Flower'));
@@ -214,7 +214,7 @@ $form->group('earth', function (Form $form)
 
 Wrap with fieldset and group:
 
-``` php
+```php
 $form->wrap('plant', 'earth', function (Form $form)
 {
 	$form->addField(new TextField('flower', 'Flower'));
@@ -229,7 +229,7 @@ $form->wrap('animal', 'sky', function (Form $form)
 
 Using XML
 
-``` xml
+```xml
 <form>
     <group name="earth">
         <fieldset name="plant">
@@ -253,7 +253,7 @@ Using XML
 
 Control and group supports multi-level by `/` or `.` separator:
 
-``` php
+```php
 $form = new Form('foo/bar');
 
 $form->group('egg/bread', ...);
@@ -263,7 +263,7 @@ $form->group('egg/bread', ...);
 
 ### Name & Label
 
-``` php
+```php
 $form->addField(new TextField('name', 'Label'));
 ```
 
@@ -271,7 +271,7 @@ $form->addField(new TextField('name', 'Label'));
 You can set some attributes to field by `set()` or `setAttribute()`, this method will only allow standard
  HTML attributes inject to latest rendered result.
 
-``` php
+```php
 $form->addField(new TextField('name'))
     ->label('Label')
     ->set('id', 'my-name')
@@ -284,7 +284,7 @@ $form->addField(new TextField('name'))
 If you want to set custom data attributes to make your inputs work with some JS frameworks (e.g. Vue, Angular, Bootstrap),
 you can use `attr()` to directly set HTML attributes.
 
-``` php
+```php
 $form->addField(new TextField('name'))
     ->label('Label')
     ->set('class', 'col-md-8 form-input')
@@ -300,7 +300,7 @@ You can also set attribute to input wrapper and label, use `controlAttr()` and `
 
 ### Required, Disabled and Readonly
 
-``` php
+```php
 $form->addField(new TextField('name', 'Label'))
     ->set('id', 'my-name')
     ->required()
@@ -309,7 +309,7 @@ $form->addField(new TextField('name', 'Label'))
 
 Set to false.
 
-``` php
+```php
 $form->addField(new TextField('name', 'Label'))
     ->set('id', 'my-name')
     ->required(false)
@@ -318,7 +318,7 @@ $form->addField(new TextField('name', 'Label'))
 
 ### XML
 
-``` xml
+```xml
 <field
     name="name"
     label="Label"
@@ -330,7 +330,7 @@ $form->addField(new TextField('name', 'Label'))
 
 ## Filter
 
-``` php
+```php
 use Windwalker\Filter\InputFilter;
 
 $form->addField(new TextField('id', 'ID'))
@@ -350,7 +350,7 @@ $values = $form->getValues(); // Array(id = 123)
 
 ## Validate
 
-``` php
+```php
 $form->addField(new TextField('name', 'Name'))
 	->required();
 
@@ -379,7 +379,7 @@ $results[1]->getMessage(); // Field Name value not allow empty.
 
 ### Select List
 
-``` php
+```php
 use Windwalker\Form\Field\ListField;
 use Windwalker\Html\Option;
 
@@ -398,7 +398,7 @@ echo $selectField->render();
 
 The output is:
 
-``` html
+```html
 <div id="flower-control" class="list-field ">
     <label id="flower-label" for="flower">Flower</label>
     <select name="flower" id="flower" class="stub-flower">
@@ -411,13 +411,13 @@ The output is:
 
 Multiple List
 
-``` php
+```php
 $selectField->set('multiple', true);
 ```
 
 ### RadioList
 
-``` php
+```php
 $form->addField(new RadioList('flower', 'Flower'))
     ->addOption(new Option('Yes', 1))
     ->addOption(new Option('No', 0));
@@ -425,7 +425,7 @@ $form->addField(new RadioList('flower', 'Flower'))
 
 We can also add options in constructor:
 
-``` php
+```php
 $field = new RadioList(
     'flower',
     'Flower',
@@ -470,7 +470,7 @@ See every fields' `prepare()` method you will know available attributes.
 
 ### Custom TextField.
 
-``` php
+```php
 namespace MyCode\Fields;
 
 class FooField extends TextField
@@ -488,12 +488,12 @@ class FooField extends TextField
 
 For XML
 
-``` php
+```php
 \Windwalker\Form\FieldHelper::addNamespace('MyCode\Filter');
 ```
 
 
-``` xml
+```xml
 <field
     name="foo"
     type="foo"
@@ -502,7 +502,7 @@ For XML
 
 ### Custom List field
 
-``` php
+```php
 namespace MyCode\Fields;
 
 class UsersField extends ListField
@@ -525,7 +525,7 @@ class UsersField extends ListField
 
 ## Custom Filter
 
-``` php
+```php
 namespace MyCode\Filter;
 
 class MyFilter implements FilterInterface
@@ -542,11 +542,11 @@ class MyFilter implements FilterInterface
 
 For XML
 
-``` php
+```php
 \Windwalker\Form\FilterHelper::addNamespace('MyCode\Filter');
 ```
 
-``` xml
+```xml
 <field
     name="foo"
     type="text"
@@ -556,7 +556,7 @@ For XML
 
 ## Custom Validator
 
-``` php
+```php
 namespace MyCode\Validator;
 
 use Windwalker\Validator\AbstractValidator;
@@ -575,11 +575,11 @@ class MyValidator extends AbstractValidator
 
 For XML
 
-``` php
+```php
 \Windwalker\Form\ValidatorHelper::addNamespace('MyCode\Validator');
 ```
 
-``` xml
+```xml
 <field
     name="foo"
     type="text"
@@ -591,7 +591,7 @@ For XML
 
 If you wish to override core HTML output, use `FormRendererInterface` to render your fields.
 
-``` php
+```php
 class MyFormRenderer implements \Windwalker\Form\Renderer\FormRendererInterface
 {
 	public function renderField(AbstractField $field, array $attribs = array())

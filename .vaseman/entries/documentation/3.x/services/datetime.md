@@ -16,7 +16,7 @@ All PHP DateTime functions are able to use on Windwalker `Chronos`, see [PHP Dat
 
 Chronos supports Timezone as string.
 
-``` php
+```php
 use Windwalker\Core\DateTime\Chronos;
 
 $dt = new Chronos('now', 'Asia/Taipei');
@@ -30,13 +30,13 @@ $time = Chronos::current('Y-m-d');
 
 Auto set default timezone so you won't get PHP default timezone notice.
 
-``` php
+```php
 $dt = new Chronos('now', null);
 ```
 
 Auto get global timezone, if you set timezone in Windwalker config, DateTime will auto load it.
 
-``` php
+```php
 $dt = new Chronos('now', true);
 
 // OR
@@ -54,7 +54,7 @@ Chronos::toFormat($date, 'Y/m/d');
 
 Chronos provides easy methods to convert timezone.
 
-``` php
+```php
 $date = '2015-03-31 12:00:00';
 
 $date = Chronos::toServerTime($date, [format], [to tz]);
@@ -69,7 +69,7 @@ $date = Chronos::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');
 
 ## Simple Properties
 
-``` php
+```php
 $datetime = new Chronos;
 
 $datetime->daysinmonth;
@@ -88,7 +88,7 @@ $datetime->year;
 
 ## Pre-define Formats
 
-``` php
+```php
 $datetime = new Chronos;
 
 $datetime->toSql();
@@ -105,7 +105,7 @@ $date->format(Chronos::FORMAT_YMD_HIS);
 
 Add `true` to get local time, otherwise you will get UTC time.
 
-``` php
+```php
 $datetime = new Chronos('now', 'Asia/Taipei');
 
 $datetime->format('Y/m/d H:i:s', true);

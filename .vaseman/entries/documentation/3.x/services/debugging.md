@@ -18,7 +18,7 @@ You will see a debug console at the bottom of page.
 
 By default, `dev.php` only support `localhost`, you can add allow IPs to `secret.yml` so that you can open dev mode from remote.
 
-``` yaml
+```yaml
 dev:
     allow_ips:
         - 127.0.0.1
@@ -41,7 +41,7 @@ show($data1, $data2, $data3, 7);
 Debug console will auto push to page when system close, but sometimes we won't want it to show if in ajax or api call.
 Add this line to close it.
 
-``` php
+```php
 use Windwalker\Debugger\Helper\DebuggerHelper;
 
 class AjaxController extends Controller
@@ -72,7 +72,7 @@ Windwlker will log last 100 page requests information to help us track system pr
 
 If you need to log some important information to debug, you can use `DebugHelper` to add custom data.
 
-``` php
+```php
 DebuggerHelper::addCustomData('My data', "It's not who I am underneath, but it's what I do that defines me.");
 ```
 
@@ -82,7 +82,7 @@ Go to system page.
 
 You can add multiple data with same key, it will be wrapped with array.
 
-``` php
+```php
 foreach ($list as $item)
 {
     DebuggerHelper::addCustomData('test-data', $item);
@@ -93,7 +93,7 @@ foreach ($list as $item)
 
 If you queued flash messages to session, you can see them in debug console before they showed in page:
 
-``` php
+```php
 // In controller
 
 $this->addMessage(['Hello', 'World'], 'warning');
@@ -111,7 +111,7 @@ Now you can see queued messages in debug console.
 
 Sometimes you must log some debug information to help you developing, you can use debug messages:
 
-``` php
+```php
 // In controller
 
 DebuggerHelper::addMessage('Test message1');
@@ -137,7 +137,7 @@ Then add `?class=Flower\Mail\CheckoutMessage` to URL and you can test your mail 
 
 Windwalker includes [Monolog](https://github.com/Seldaek/monolog) to help us log debugging information.
 
-``` php
+```php
 use Windwalker\Core\Logger\Logger;
 
 Logger::log('flower', Logger::INFO, 'log text');
@@ -156,7 +156,7 @@ The first argument is channel & log file name, this will create a file at `logs/
 
 Add some data at line last.
 
-``` php
+```php
 Logger::log('flower', Logger::INFO, 'log text', array('foo' => 'bar'));
 ```
 
@@ -168,7 +168,7 @@ Logger::log('flower', Logger::INFO, 'log text', array('foo' => 'bar'));
 
 We can use proxy methods to log data:
 
-``` php
+```php
 Logger::debug('channel', 'log text');
 Logger::info('channel', 'log text');
 Logger::notice('channel', 'log text');
@@ -212,7 +212,7 @@ The log levels are described by [RFC5424](http://tools.ietf.org/html/rfc5424)
 
 You can create a channel with level code, all levels below this level will not logged.
 
-``` php
+```php
 Logger::createChannel('sakura', Logger::ERROR);
 
 Logger::debug('sakura', 'log text'); // This won't log

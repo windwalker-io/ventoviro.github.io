@@ -22,13 +22,13 @@ The Nested Command Structure
 
 If we type:
 
-``` bash
+```bash
 php cli/console commandA commandC foo bar -a -bc -d=e --flower=sakura
 ```
 
 Then we will been direct to `CommandC` class, and the following `foo bar` will be arguments.
 
-``` php
+```php
 class CommandC extend AbstractCommand
 {
     public function execute()
@@ -46,7 +46,7 @@ class CommandC extend AbstractCommand
 
 This is an example FlowerCommand declaration:
 
-``` php
+```php
 use Windwalker\Console\Command\Command;
 
 class FlowerCommand extends Command
@@ -76,7 +76,7 @@ class FlowerCommand extends Command
 
 We can add our Commands in `src/Windwalker/Console/Application.php`:
 
-``` php
+```php
 // src/Windwalker/Console/Application.php
 
 public function registerCommands()
@@ -97,7 +97,7 @@ public function registerCommands()
 
 Then type `php windwlaker -h` will see our new command:
 
-``` bash
+```bash
 Commands:
 
   migration    Database migration system.
@@ -111,7 +111,7 @@ Commands:
 
 If we create commands in package `Command` folder, every commands will be auto registered to Console:
 
-``` php
+```php
 // src/Flower/Command/FlowerCommand.php
 
 namespace Flower\Command;
@@ -129,7 +129,7 @@ class FlowerCommand extends Command
 
 We can use this code to get arguments and options, setting them in `FooCommand`.
 
-``` php
+```php
 // src/Flower/Command/FlowerCommand.php
 
 public function initialise()
@@ -173,7 +173,7 @@ public function doExecute()
 
 If we type:
 
-``` bash
+```bash
 $ php windwlaker flower Asika --yell
 
 ## OR
@@ -200,7 +200,7 @@ we can use `addCommand()` method. Now we add two `sakura` and `rose` command und
 
 We declare `SakuraCommand` and `RoseCommand` class first.
 
-``` php
+```php
 // src/Flower/Command/Flower/SakuraCommand.php
 
 namespace Flower\Command\Flower;
@@ -236,7 +236,7 @@ class SakuraCommand extends Command
 
 Then register them to `FlowerCommand`:
 
-``` php
+```php
 <?php
 // src/Flower/Command/FlowerCommand.php
 
@@ -254,7 +254,7 @@ public function initialise()
 
 OK, let's typing:
 
-``` bash
+```bash
 php windwlaker flower sakura
 ```
 
@@ -266,7 +266,7 @@ This is Sakura Command executing code.
 
 And typing
 
-``` bash
+```bash
 $ cli/console.php flower sakura bloom
 ```
 
@@ -279,7 +279,7 @@ Argument1: bloom
 
 ### Get Child by Path
 
-``` php
+```php
 $command = $console->getCommand('flower/sakura'); // SakuraCommand
 
 // OR
@@ -291,7 +291,7 @@ $command = $command->getChild('foo/bar/baz');
 
 Prompter is a set of dialog tools help us asking questions from user.
 
-``` php
+```php
 $prompter = new \Windwalker\Console\Prompter\TextPrompter;
 
 $name = $prompter->ask('Tell me your name:', 'default');
@@ -299,7 +299,7 @@ $name = $prompter->ask('Tell me your name:', 'default');
 
 OR set question in constructor.
 
-``` php
+```php
 $prompter = new TextPrompter('Tell me your name: ', $this->io);
 
 // If argument not exists, auto ask user.
@@ -308,7 +308,7 @@ $name = $this->getArgument(0, $prompter);
 
 ### Validate Input Value
 
-``` php
+```php
 $prompter = new \Windwalker\Console\Prompter\ValidatePrompter;
 
 $prompter->setAttempt(3);
@@ -331,7 +331,7 @@ Please enter username:
 
 We can set closure to validate our rule:
 
-``` php
+```php
 $prompter->setAttempt(3)
     ->setNoValidMessage('No valid number.')
     ->setHandler(
@@ -359,7 +359,7 @@ No valid number.
 
 If validate fail, we can choose shut down our process:
 
-``` php
+```php
 // ...
 
 $prompter->failToClose(true, 'Number validate fail and close');
@@ -384,7 +384,7 @@ Number validate fail and close
 
 ### Select List
 
-``` php
+```php
 $options = array(
     's' => 'sakura',
     'r' => 'Rose',
@@ -413,7 +413,7 @@ You choose: r
 
 BooleanPrompter convert input string to boolean type, the (y, yes, 1) weill be `true`, (n, no, 0, null) will be `false`.
 
-``` php
+```php
 $prompter = new \Windwalker\Console\Prompter\BooleanPrompter;
 
 $result = $prompter->ask('Do you wan to do this [Y/n]: ');

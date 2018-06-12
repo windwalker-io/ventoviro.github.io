@@ -24,7 +24,7 @@ write some keys in `secret.dist.yml`.
 
 For example, we can prepare some empty keys in `secret.dist.yml` then push this file to VCS.
 
-``` yaml
+```yaml
 ## secret.dist.yml
 
 ## Keep NULL to notice developers fill this data.
@@ -35,7 +35,7 @@ amazon:
 
 When Someone clone this project, they must copy `secret.dist.yml` to `secret.yml` and fill the keys.
 
-``` yaml
+```yaml
 ## secret.yml
 
 ## Fill real data to use.
@@ -48,7 +48,7 @@ amazon:
 
 If you set a config in config.yml
 
-``` yaml
+```yaml
 ## config.yml
 
 foo: bar
@@ -56,7 +56,7 @@ foo: bar
 
 You can override it in secret.yml
 
-``` yaml
+```yaml
 ## secret.yml
 
 foo: yoo
@@ -81,12 +81,12 @@ customize your system process.
 
 In Application, you can use `get()` to get config.
 
-``` php
+```php
 // Use Ioc get Application then get config
 $value = Ioc::getApplication()->get('foo', [default value]);
 ```
 
-``` php
+```php
 // Get config in controller
 $value = $this->app->get('foo', [default value]);
 
@@ -96,7 +96,7 @@ $this->app->set('foo', 'baz');
 
 Get config by Config object.
 
-``` php
+```php
 // In everywhere
 $config = Ioc::getConfig();
 
@@ -113,7 +113,7 @@ Config is a Structure object, please see [Structure Object](../more/structure.ht
 
 If you have multi-level config:
 
-``` yaml
+```yaml
 morning:
     break:
         first: egg
@@ -121,7 +121,7 @@ morning:
 
 Please use dot (`.`) as separator:
 
-``` php
+```php
 $config->get('morning.break.first'); // sakura
 
 // OR get data by array access
@@ -134,7 +134,7 @@ $config['morning.break.first']; // sakura
 Open `src/app/windwalker.php` (or `web.php`, `console.php`), add new config file at `configs` element. Windwalker supports `php`, `json` and `yaml` format
 to save config.
 
-``` php
+```php
 // ...
     'configs' => [
         500 => WINDWALKER_ETC . '/my-config.yml'
@@ -149,7 +149,7 @@ We use numeric keys to support sorting of config files, the bigger is later load
 Every packages has their own configs. If you have a `FlowerPackage` and it's alias is `flower`, create a file to `etc/package/flower.php`.
 The Package object will auto load this config file.
 
-``` php
+```php
 <?php
 // etc/package/flower.php
 
@@ -160,7 +160,7 @@ return [
 
 You can get package config from package object:
 
-``` php
+```php
 $package = PackageHelper::getPackage('flower');
 
 $package->get('foo'); // bar
@@ -168,7 +168,7 @@ $package->get('foo'); // bar
 
 ## Description of `config.yaml`
 
-``` yaml
+```yaml
 system:
     # Enanle debug mode, will disable cache, and log some errors.
     debug: false

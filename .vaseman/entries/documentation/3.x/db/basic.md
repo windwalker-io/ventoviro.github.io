@@ -8,7 +8,7 @@ title: Basic Database Usage
 
 In a new project, you should rename `/etc/secret.dist.yml` to `/etc/secret.yml`, and fill your database account information:
 
-``` yaml
+```yaml
 database:
     driver: mysql
     host: localhost
@@ -22,13 +22,13 @@ database:
 
 In DatabaseModel, you can get internal DB object.
 
-``` php
+```php
 $this->db;
 ```
 
 Or in other context, use IoC container to get Database:
 
-``` php
+```php
 $db = \Windwalker\Ioc::getDatabase();
 
 $db = $container->get('system.database');
@@ -38,7 +38,7 @@ $db = $container->get('system.database');
 
 This is an example of insert data.
 
-``` php
+```php
 $db = DatabaseFactory::getDbo();
 
 $sql = 'INSERT INTO foo_table (title, state) VALUES ("Flower", 1)';
@@ -54,7 +54,7 @@ $db->execute();
 
 This will fetch multiple rows from table, and every record will be an object.
 
-``` php
+```php
 $sql = 'SELECT * FROM foo_table WHERE state = 1';
 
 $db->setQuery($sql);
@@ -64,7 +64,7 @@ $items = $db->loadAll();
 
 Customize:
 
-``` php
+```php
 // Custom object class
 $items = $db->loadAll(null, 'MyObject');
 
@@ -80,7 +80,7 @@ $items = $db->loadAll('id', 'assoc');
 
 ### Fetch one row
 
-``` php
+```php
 $sql = 'SELECT * FROM foo_table WHERE id = 3';
 
 $db->setQuery($sql);
@@ -101,7 +101,7 @@ $items = $db->loadAll('assoc');
 
 Add `prefix` in options when you create DB object, then DB object will auto replace all `#__` with prefix in every query:
 
-``` php
+```php
 $options = array(
     'host'     => 'localhost',
     'user'     => 'db_user',
@@ -119,7 +119,7 @@ $items = $db->setQuery('SELECT * FROM #__articles')->loadAll();
 
 ## Iterating Over Results
 
-``` php
+```php
 $iterator = $db->setQuery('SELECT * FROM #__articles WHERE state = 1')->getIterator();
 
 foreach ($iterator as $row)
@@ -130,7 +130,7 @@ foreach ($iterator as $row)
 
 It allows also to count the results.
 
-``` php
+```php
 $count = count($iterator);
 ```
 
@@ -159,13 +159,13 @@ If debugging is enabled (using `setDebug(true)`), all queries are logged with a 
 
 Add this to `composer.json` require block.
 
-``` json
+```json
 "monolog/monolog" : "1.*"
 ```
 
 Then we push Monolog into Database instance.
 
-``` php
+```php
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\PsrLogMessageProcessor;

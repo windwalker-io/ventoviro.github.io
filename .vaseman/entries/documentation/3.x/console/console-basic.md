@@ -10,13 +10,13 @@ Windwalker Console is a powerful CLI tool set to help us do many things. It is b
 
 To use Windwalker console, type this command in terminal:
 
-``` bash
+```bash
 php windwlaker
 ```
 
 You will see this help information:
 
-``` bash
+```bash
 Windwalker Console - version: 3.x
 ------------------------------------------------------------
 
@@ -62,7 +62,7 @@ Add a marco to console so we can batch run a set of commands.
 
 Write your scripts in `etc/config.yml`
 
-``` yaml
+```yaml
 # ...
 
 console:
@@ -85,7 +85,7 @@ console:
 
 Then you can run your custom script by:
 
-``` bash
+```bash
 $ php windwalker run prepare
 $ php windwalker run deploy
 ```
@@ -94,7 +94,7 @@ $ php windwalker run deploy
 
 If you wish your script can auto answer questions, you can use this format:
 
-``` yaml
+```yaml
 console:
     script:
         prepare:
@@ -137,7 +137,7 @@ Use `$ php windwalker run --list` to list all scripts
 
 You can add your custom command by editing `etc/app/console.php`:
 
-``` php
+```php
 // ...
 
 'console' => [

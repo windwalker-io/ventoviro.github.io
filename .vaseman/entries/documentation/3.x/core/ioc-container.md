@@ -19,19 +19,19 @@ We also support service provider to help developers build their service in a uni
 
 Use internal container in controller and Application:
 
-``` php
+```php
 $session = $this->container->get('system.session');
 ```
 
 Or use static method in `Ioc` class to get it:
 
-``` php
+```php
 $container = \Windwalker\Ioc::factory(); // This container is singleton
 ```
 
 Now we can store objects into it.
 
-``` php
+```php
 $input = new Input;
 
 $container->set('my.input', $input);
@@ -41,7 +41,7 @@ $input = $container->get('my.input');
 
 Or get it by `Ioc:get()` statically:
 
-``` php
+```php
 \Windwalker\Ioc::get('my.input');
 ```
 
@@ -49,7 +49,7 @@ Or get it by `Ioc:get()` statically:
 
 Every package will use a child container, if the key in child container not found, container will search from parent:
 
-``` php
+```php
 // Get FlowerPackage container
 $container = Ioc::factory('flower');
 
@@ -65,7 +65,7 @@ $rose = $container->get('rose');
 
 Directly get object from sub container by `Ioc`:
 
-``` php
+```php
 \Windwalker\Ioc::get('sakura', 'flower');
 ```
 
@@ -73,7 +73,7 @@ Directly get object from sub container by `Ioc`:
 
 Sometimes we will hope not create object instantly, we can use callback to create object.
 
-``` php
+```php
 // Set a closure into it
 $container->set('input', function(Container $container)
 {
@@ -90,7 +90,7 @@ But if we use `set()` method to set callback, this object will be recreated when
 
 Use `set('foo', $object, true)` or `share('foo', $object)` to make an object singleton, we'll always get the same instance.
 
-``` php
+```php
 // Share a closure
 $container->share('input', function(Container $container)
 {
@@ -111,7 +111,7 @@ $newInput = $container->get('input', Container::FORCE_NEW);
 
 Use `protect()` to prevent others override your important object.
 
-``` php
+```php
 $container->protect(
     'input',
     function(Container $container)
@@ -130,7 +130,7 @@ $container->set('input', $otherInput);
 
 ## Alias
 
-``` php
+```php
 $container->share('system.application', $app)
     ->alias('app', 'system.application');
 
@@ -144,7 +144,7 @@ $app = $container->get('app');
 
 Container can help us create an object and auto inject required arguments to constructor.
 
-``` php
+```php
 use Windwalker\IO\Input;
 use Windwalker\Structure\Structure;
 
@@ -172,7 +172,7 @@ $myObject->config; // Structure
 
 Container can help us create an object and auto inject required arguments to constructor.
 
-``` php
+```php
 use Windwalker\IO\Input;
 use Windwalker\Structure\Structure;
 
@@ -199,7 +199,7 @@ $myObject->config; // Structure
 Create object will new an instance instantly and set this class into container, we can get new instance everytime
 when we get it by class name.
 
-``` php
+```php
 $myObject = $container->createObject('MyClass');
 
 // Now we can get this class with new instance from container
@@ -208,7 +208,7 @@ $anotherMyObject = $container->get('MyObject');
 
 Use `createSharedObject()` to set object as singleton.
 
-``` php
+```php
 // Now this object is singleton
 $myObject = $container->createSharedObject('MyClass');
 ```
@@ -220,7 +220,7 @@ We can override this un-hinted arguments:
 
 This is a constructor without default value and class hinted.
 
-``` php
+```php
 class AnotherClass
 {
     public function _construct(ModelInterface $model, $config)
@@ -235,7 +235,7 @@ $container->newInstance('AnotherClass', ['config' => ['foo' => 'bar']]);
 
 You can set multiple level arguments:
 
-``` php
+```php
 use Windwalker\Model\ModelInterface;
 
 // ... AnotherClass
@@ -256,7 +256,7 @@ $container->newInstance('AnotherClass', $config);
 
 We can set a class as prepared, then it will be created when we really need it:
 
-``` php
+```php
 $container->prepareObject('MyClass');
 
 // If we get MyClass, this class will be created.
@@ -265,7 +265,7 @@ $myObject = $container->get('MyClass');
 
 Add second argument if you want to configure something after object created:
 
-``` php
+```php
 $container->prepareObject('MyClass', function (MyClass $myClass, Container $container)
 {
     $myClass->debug = true;
@@ -276,7 +276,7 @@ $container->prepareObject('MyClass', function (MyClass $myClass, Container $cont
 
 We can also prepare a shared object:
 
-``` php
+```php
 
 // This objct will be singleton
 $container->prepareSharedObject('MyClass'[, extending]);
@@ -286,7 +286,7 @@ $container->prepareSharedObject('MyClass'[, extending]);
 
 We can prepare some named arguments which will be injected to constructor when object creating.
 
-``` php
+```php
 // Set class meta
 $container->whenCreating('MyModel')
     ->setArgumemt('config', $config)
@@ -299,7 +299,7 @@ $object = $container->newInstance('MyModel');
 
 Or just created it instantly:
 
-``` php
+```php
 $container->whenCreating('MyClass')
     ->setArgumemt('config', $config)
     ->setArgument('db', $db)
@@ -314,7 +314,7 @@ instead the dependency object.
 Here is a class which dependent to an interface, we can bind a sub class to container then container will use `MyModel`
 to be instance of `ModelInterface` and inject it to `MyClass`.
 
-``` php
+```php
 use Windwalker\Model\ModelInterface;
 use Windwalker\Structure\Structure;
 
@@ -347,7 +347,7 @@ $myObject->model; // MyModel
 
 Use `bind()` to quickly bind a class without callback, container will use `newInstance()` to create it when needed.
 
-``` php
+```php
 $container->bind('Windwalker\Model\ModelInterface', 'MyModel');
 
 // `MyModel` will auto created because we bind it to `ModelInterface`
@@ -356,13 +356,13 @@ $container->createObject('MyClass');
 
 Use `bindShared()` to bind a class as singleton:
 
-``` php
+```php
 $container->bindShared('Windwalker\Model\ModelInterface', 'MyModel');
 ```
 
 You can add callback as second argument, this way is totally same as `share()` and `set()`:
 
-``` php
+```php
 $container->bind('Windwalker\Model\ModelInterface', function (Contaienr $container)
 {
     return new MyObject;
@@ -374,7 +374,7 @@ $container->bind('Windwalker\Model\ModelInterface', function (Contaienr $contain
 Container allows you to extend an object, the new instance or closure will wrap the original one and you can do more
 extending configuration, this is a sample:
 
-``` php
+```php
 // Create an item first
 $container->share('flower', function()
 {
@@ -399,7 +399,7 @@ $flower->name; // sakura
 
 The `ContainerAwareInterface` help us get and set Container as a system, constructor, we often use it on application or controller classes.
 
-``` php
+```php
 use Windwalker\DI\ContainerAwareInterface
 
 class MyController implements ContainerAwareInterface
@@ -427,7 +427,7 @@ class MyController implements ContainerAwareInterface
 
 In PHP 5.4, you can use `ContainerAwareTrait` to create an aware object.
 
-``` php
+```php
 class MyController implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
@@ -444,7 +444,7 @@ class MyController implements ContainerAwareInterface
 Service providers is an useful way to encapsulate logic of creating objects and services.
 Just implements the `Windwalker\DI\ServiceProviderInterface`.
 
-``` php
+```php
 use Windwalker\DI\Container
 use Windwalker\DI\ServiceProviderInterface
 
@@ -477,7 +477,7 @@ $container->registerServiceProvider(new DatabaseServiceProvider);
 `\Windwalker\Ioc` provides a easy way to get system objects, the benefit to use these methods is that IDE can identify
 what object we get, and provides auto-complete:
 
-``` php
+```php
 $db    = \Windwalker\Ioc::getDatabase();
 $input = \Windwalker\Ioc::getInput();
 $app   = \Windwalker\Ioc::getApplication();
@@ -487,7 +487,7 @@ $app   = \Windwalker\Ioc::getApplication();
 
 If you want to add your own object in `Ioc`, edit the `/src/Windwalker/Ioc.php` file:
 
-``` php
+```php
 <?php
 // /src/Windwalker/Ioc.php`
 
@@ -509,7 +509,7 @@ abstract class Ioc extends \Windwalker\Core\Ioc
 
 Now you can use this method in everywhere.
 
-``` php
+```php
 \Windwalker\Ioc::getMyObject();
 ```
 
@@ -517,12 +517,12 @@ Now you can use this method in everywhere.
 
 Windwalker has a Facade class to help us use proxy pattern to call object methods statically
 
-``` php
+```php
 // Create a object into conteiner
 $container->share('my.router', new Router);
 ```
 
-``` php
+```php
 use Windwalker\Core\Facade\AbstractProxyFacade;
 
 class MyRouter extends AbstractProxyFacade
@@ -534,7 +534,7 @@ class MyRouter extends AbstractProxyFacade
 
 Now just call the Router methods statically from `MyRouter`.
 
-``` php
+```php
 MyRouter::route('route');
 
 // Same as...
@@ -544,7 +544,7 @@ $container->get('my.router')->route('route');
 
 To make IDE support auto-complete, we can add PhpDoc to class.
 
-``` php
+```php
 /**
  * The Router class.
  *

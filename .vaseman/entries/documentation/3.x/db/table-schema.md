@@ -8,7 +8,7 @@ title: Table and Schema
 
 Get Table Command.
 
-``` php
+```php
 $table = $db->getTable('#__articles');
 ```
 
@@ -16,7 +16,7 @@ $table = $db->getTable('#__articles');
 
 Create a new table.
 
-``` php
+```php
 use Windwalker\Database\Schema\Schema;
 
 $table = $db->getTable('#__articles');
@@ -54,7 +54,7 @@ Available types in `Schema` object:
 
 ### Using Column type objects:
 
-``` php
+```php
 use Windwalker\Database\Schema\Schema;
 use Windwalker\Database\Schema\Column\Varchar;
 
@@ -75,7 +75,7 @@ Windwalker supports MySQL and Postgresql now, and we'll add more database driver
 For example, Postgresql has no `datatime` type, but MySQL does, so if we create a table with `datetime`, Windwalker will
  convert this type to `timestamp` if we use postgresql driver.
 
-``` php
+```php
     // ...
 
     $schema->datetime('created'); // Will be `timestamp` if use pgsql
@@ -85,7 +85,7 @@ For example, Postgresql has no `datatime` type, but MySQL does, so if we create 
 
 We can get type detail by `DataType` class.
 
-``` php
+```php
 use Windwalker\Database\Driver\Mysql\MysqlType;
 use Windwalker\Database\Driver\Postgresql\PostgresqlType;
 use Windwalker\Database\Schema\DataType;
@@ -114,20 +114,20 @@ MysqlType::getDefaultValue(DataType::TINYINT); // `0`
 
 We can add a single name or a set of columns name, the index name will auto created.
 
-``` php
+```php
 $schema->addIndex('foo'); // idx_tablename_foo
 $schema->addIndex(array('foo', 'bar')); // idx_tablename_foo_bar
 ```
 
 You can also set a custom name
 
-``` php
+```php
 $schema->addIndex(array('foo', 'bar'), 'idx_custom_name');
 ```
 
 ## update()
 
-``` php
+```php
 // Will add category_id column and a index
 $table->create(function (Schema $schema)
 {
@@ -141,7 +141,7 @@ $table->create(function (Schema $schema)
 
 If table exists, using update, otherwise use insert.
 
-``` php
+```php
 // Will create table if not exists, and add columns if not in table.
 $table->save(function (Schema $schema)
 {
@@ -161,7 +161,7 @@ $table->save(function (Schema $schema)
 
 Instantly drop column.
 
-``` php
+```php
 $table = $db->getTable('#__articles');
 
 $table->dropColumn('state');
@@ -171,7 +171,7 @@ $table->dropColumn('state');
 
 Instantly drop index.
 
-``` php
+```php
 use Windwalker\Database\Schema\Key;
 
 $table = $db->getTable('#__articles');
@@ -181,7 +181,7 @@ $table->dropIndex(Key::TYPE_INDEX, 'idx_state');
 
 ## changeColumn() & modifyColumn()
 
-``` php
+```php
 // Modify `foo` column to new type or length
 $table->modifyColumn(
 	(new Varchar('foo'))->length(123)->comment('Foo')
@@ -193,7 +193,7 @@ $table->changeColumn('foo', new Varchar('new_name'));
 
 ## Rename Table
 
-``` php
+```php
 $table = $db->getTable('#__foo');
 
 $newTable = $table->rename('#__bar');
@@ -201,7 +201,7 @@ $newTable = $table->rename('#__bar');
 
 ## Truncate Table
 
-``` php
+```php
 $table = $db->getTable('#__foo');
 
 $table->truncate();
@@ -209,7 +209,7 @@ $table->truncate();
 
 ## Get Column
 
-``` php
+```php
 // Get full columns data
 $table->getColumnDetails();
 

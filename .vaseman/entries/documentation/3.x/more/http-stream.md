@@ -8,7 +8,7 @@ title: Http and Stream
 
 HttpClient is a simple class to make restful request.
 
-``` php
+```php
 use Windwalker\Http\HttpClient;
 
 $http = new HttpClient;
@@ -21,7 +21,7 @@ $response = $http->get('http://example.com/?foo=bar');
 
 ### Other Methods
 
-``` php
+```php
 $http = new HttpClient;
 
 // The post data can be query string or array
@@ -45,7 +45,7 @@ $response = $http->request('POST', 'http://example.com/?foo=bar', 'this=is&post=
 
 Psr7 Request is a immutable object, you have to get the return object every operation.
 
-``` php
+```php
 use Windwalker\Http\Request;
 
 $request = new Request;
@@ -79,7 +79,7 @@ $response = $http->send($request);
 
 Use Uri and Json output.
 
-``` php
+```php
 use Windwalker\Http\Request;
 use Windwalker\Uri\PsrUri;
 
@@ -110,7 +110,7 @@ $response->getStatusCode(); // 200 is OK
 
 Now support Curl and Steam 2 transports.
 
-``` php
+```php
 use Windwalker\Http\Transport\CurlTransport;
 
 $options = array(
@@ -125,7 +125,7 @@ $http = new HttpClient(array(), $transport);
 
 Set custom CURL options:
 
-``` php
+```php
 $options = array(
     'options' => array(
         CURLOPT_SSL_VERIFYHOST => false,
@@ -144,7 +144,7 @@ $http = new HttpClient($httpOptions, new CurlTransport($options));
 
 ### Download Remote File
  
-``` php
+```php
 $http = new HttpClient;
 
 $dest = '/path/to/local/file.zip';
@@ -161,7 +161,7 @@ if ($response->getStatusCode() != 200)
 
 Response object holds a Stream object to store returned string.
 
-``` php
+```php
 // The return value is: 'FOO BAR'
 $body = $response->getBody();
 
@@ -181,7 +181,7 @@ $body->getSize(); // 7
 
 Use `AsyncHttpClient` to send multiple async requests.
 
-``` php
+```php
 use Windwalker\Http\AsyncHttpClient;
 
 $http = new \Windwalker\Http\AsyncHttpClient;
@@ -205,7 +205,7 @@ $errors = $http->getErrors();
 
 Use callback:
 
-``` php
+```php
 $http->resolve(function ($responses, $errors, $http)
 {
 	foreach ($responses as $response)
@@ -221,7 +221,7 @@ $http->resolve(function ($responses, $errors, $http)
 
 The methods provided in the `Uri` class allow you to manipulate all aspects of a uri. For example, suppose you wanted to set a new uri, add in a port, and then also post a username and password to authenticate a .htaccess security file. You could use the following syntax:
 
-``` php
+```php
 // new uri object
 $uri = new Windwalker\Uri\Uri;
 
@@ -241,7 +241,7 @@ myUser:myPass@http://localhost:8888
 
 If you wanted to add a specific filepath after the host you could use the `setPath()` method:
 
-``` php
+```php
 // set path
 $uri->setPath('path/to/file.php');
 ```
@@ -254,7 +254,7 @@ myUser:myPass@http://localhost:8888path/to/file.php
 
 Adding a URL query:
 
-``` php
+```php
 // url query
 $uri->setQuery('foo=bar');
 ```
@@ -271,7 +271,7 @@ myUser:myPass@http://localhost:8888path/to/file.php?foo=bar
 
 This object is also immutable, so we must get return value as new object every change.
 
-``` php
+```php
 $uri = (new PsrUri('http://example.com'))
     ->withScheme('https')
     ->withUserInfo('user', 'pass')
@@ -288,7 +288,7 @@ Stream is a powerful stream wrapper.
 
 Read write data to memory:
 
-``` php
+```php
 $stream = new Stream('php://memory', 'wb+');
 
 $stream->write('Foo Bar');
@@ -307,7 +307,7 @@ $stream->getContents(); // get: Foo Bar
 
 Read data from `php://input`
 
-``` php
+```php
 $stream = new PhpInputSteam;
 
 $data = $stream->__toString(); // foo=bar
@@ -317,7 +317,7 @@ $query = \Windwalker\Uri\UriHelper::parseQuery($data); // array('foo' => 'bar')
 
 Read file:
 
-``` php
+```php
 $stream = new Stream('/path/to/file.txt', 'r+');
 
 $stream->__toString(); // Read
@@ -328,7 +328,7 @@ $steam->write('new string'); // Write
 
 Quick copy stream.
 
-``` php
+```php
 // Remote source
 $src = new Stream('http://example/test.txt');
 
@@ -347,7 +347,7 @@ $data = $dest->getContents();
 
 Windwalker Http provides a set of formatted Responses to return data with different formats.
 
-``` php
+```php
 $response = new \Windwalker\Http\Response\HtmlResponse('<html> ... </html>');
 $response = new \Windwalker\Http\Response\JsonResponse(array('foo' => 'bar'), 200, $headers);
 $response = new \Windwalker\Http\Response\XmlResponse(new \SimpleXMLElement('<root />'), 200, $headers);

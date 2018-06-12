@@ -11,7 +11,7 @@ as default, you must install `"swiftmailer/swiftmailer": "~5.0"` first.
 
 Then add your mail server information to `etc/secret.yml`:
 
-``` yaml
+```yaml
 # ...
 
 mail:
@@ -44,7 +44,7 @@ Currently available transports:
 
 ## Create Message
 
-``` php
+```php
 use Windwalker\Core\Mailer\Mailer;
 
 /** @var  $message \Windwalker\Core\Mailer\MailMessage */
@@ -65,7 +65,7 @@ Mailer::send($message);
 
 You can use array as a set of mail to `to()`, `from()`, `cc()` and `bcc()`.
 
-``` php
+```php
 $message->to(['foo@mail.com', 'bar@mail.com']);
 
 // OR
@@ -80,7 +80,7 @@ $message->to([
 
 Use view to render mail in controller:
 
-``` php
+```php
 $view = $this->getView('Mail');
 
 $view['user'] = User::get();
@@ -92,7 +92,7 @@ $message->body($view->setLayout('mail.notify')->render());
 
 Or use message built-in render method:
 
-``` php
+```php
 // ...
 
 $message->renderBody('mail.notify', $data, 'edge');
@@ -104,7 +104,7 @@ Mailer::send($message);
 
 Use file path.
 
-``` php
+```php
 $message->attach('/path/to/file.pdf');
 $message->attach('/path/to/file2.pdf', , 'downloaded2.pdf', 'application/pdf');
 
@@ -112,7 +112,7 @@ Mailer::send($message);
 ```
 Use `MailAttachment` class:
 
-``` php
+```php
 use Windwalker\Core\Mailer\MailAttachment;
 
 $message->attach(new MailAttachment('/path/to/fil.pdf'));
@@ -128,7 +128,7 @@ $message->attach($attachment, 'test.html');
 
 You can declare some message classes to quickly re-use them.
 
-``` php
+```php
 namespace Flower\Mail;
 
 // ...
@@ -154,7 +154,7 @@ class CheckoutMessage extends MailMessage
 
 Now just create this instance to send mail:
 
-``` php
+```php
 use Flower\Mail\CheckoutMessage;
 
 Mailer::send(CheckoutMessage::create($user, $product));
@@ -167,7 +167,7 @@ some email clients which does not support outside CSS.
 
 To enable CSS inliner, you must install `"tijsverkoyen/css-to-inline-styles": "~2.0"` first, and add this listener to `etc/app/windwalker.php`:
 
-``` php
+```php
 // etc/app/windwalker.php or web.php
 
     'listeners' => [
@@ -177,7 +177,7 @@ To enable CSS inliner, you must install `"tijsverkoyen/css-to-inline-styles": "~
 
 Now write your mail template with some styles and send mail:
 
-``` php
+```php
 @extends('_global.mail-wrapper')
 
 <!-- Your base mail styles -->
@@ -210,7 +210,7 @@ Now write your mail template with some styles and send mail:
 
 This mail template will be compiled to:
 
-``` html
+```html
 <div id="my-mail-wrapper" style="...">
     <h1 style="color: #444444;">Hello</h1>
     <p style="line-height: 1.5;">

@@ -8,7 +8,7 @@ title: Read and Write Database
 
 Reader is a command object that help us read records from database, this is a simple example to use Reader.
 
-``` php
+```php
 $reader = $db->getReader();
 
 $items = $reader->setQuery($sql)->loadObjectList();
@@ -22,7 +22,7 @@ $items = $db->getReader($sql)->loadObjectList();
 
 Every reader is a different query statement.
 
-``` php
+```php
 $stat1 = $db->getReader($sql1);
 $stat2 = $db->getReader($sql2);
 
@@ -37,7 +37,7 @@ foreach ($stat1 as $item1)
 
 Return an array, every element is a record and wrap with an object. This method is same as `$db->loadAll()`:
 
-``` php
+```php
 $sql = 'SELECT * FROM foo_table WHERE state = 1';
 
 $reader = $db->getReader($sql);
@@ -49,7 +49,7 @@ The return value is an array contains all records we found, every record will be
 
 We can set object class to store records:
 
-``` php
+```php
 $items = $reader->loadObjectList(null, 'Windwalker\\Data\\Data');
 
 // bool(true)
@@ -58,7 +58,7 @@ var_dump($items[0] instanceof \Windwalker\Data\Data);
 
 Use column values as array index. For example, we can use id as array indexes:
 
-``` php
+```php
 $items = $reader->loadObjectList('id');
 
 // True
@@ -69,7 +69,7 @@ $items = $reader->loadObjectList('id');
 
 Return only one record and wrap with an object.  This method is same as `$db->loadOne()`:
 
-``` php
+```php
 $sql = 'SELECT * FROM foo_table WHERE id = 1';
 
 $reader = $db->getReader($sql);
@@ -79,7 +79,7 @@ $item = $reader->loadObject();
 
 The `$item` will be a `stdClass`  object or `false` (If no any records found). we can set object class:
 
-``` php
+```php
 $item = $reader->loadObject('MyObject');
 ```
 
@@ -90,7 +90,7 @@ Then the object will be an instance of `MyObject`.
 Same as `$db->loadAll('array')`, returns an array and every element is an array indexed by column number as
 returned in your result set, starting at column 0, we can set a column as index:
 
-``` php
+```php
 $reader = $db->getReader($sql);
 
 $items = $reader->loadArrayList();
@@ -101,7 +101,7 @@ $items = $reader->loadArrayList('id'); // Use id as index
 
 Returns an array indexed by column number as returned in your result set, starting at column 0:
 
-``` php
+```php
 $reader = $db->getReader($sql);
 
 $item = $reader->loadArray();
@@ -111,7 +111,7 @@ $item = $reader->loadArray();
 
 Returns an array and every element is an associative array indexed by column name.
 
-``` php
+```php
 $reader = $db->getReader($sql);
 
 $items = $reader->loadAssocList();
@@ -122,7 +122,7 @@ $items = $reader->loadAssocList('id'); // Use id as index
 
 Returns an associative array indexed by column name.
 
-``` php
+```php
 $reader = $db->getReader($sql);
 
 $item = $reader->loadAssoc();
@@ -132,7 +132,7 @@ $item = $reader->loadAssoc();
 
 Fetch values of a column field, please select only one column in this query:
 
-``` php
+```php
 $titles = $db->getReader('SELECT title FROM article_table')->loadColumn();
 ```
 
@@ -140,7 +140,7 @@ $titles = $db->getReader('SELECT title FROM article_table')->loadColumn();
 
 Fetch only one cell as a value:
 
-``` php
+```php
 // Get article id = 3 title
 $title = $db->getReader('SELECT title FROM article_table WHERE id = 3')->loadResult();
 
@@ -153,7 +153,7 @@ $id = $db->getReader('SELECT LAST_INSERT_ID()')->loadResult();
 
 ### Run as Iterator
 
-``` php
+```php
 $reader = $db->getReader($sql);
 
 foreach ($reader as $item)
@@ -172,7 +172,7 @@ See: [PHP.net / PDOStatement::fetch](http://php.net/manual/en/pdostatement.fetch
 
 Using a query we set into DB object to fetch records.
 
-``` php
+```php
 $sql = 'SELECT * FROM foo_table WHERE state = 1';
 
 $db->setQuery($sql);
@@ -198,7 +198,7 @@ The return value is an array contains all records we found.
 
 We can only get first record and ignore others:
 
-``` php
+```php
 $db->setQuery($sql);
 
 $item = $db->loadOne();
@@ -246,7 +246,7 @@ Writer object provide us an interface to write data into database.
 Using an object or array to store data into a table, argument 3 is the name of primary key that will be added
 to data object if insert success:
 
-``` php
+```php
 $data = array(
 	'title' => 'Sakura',
 	'created' => '2014-03-02'
@@ -274,7 +274,7 @@ echo $data->id;
 
 Insert many records:
 
-``` php
+```php
 $dataSet = array(
     array(
         'title' => 'Sakura',
@@ -296,7 +296,7 @@ echo $dataSet[0]['id'];
 
 Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:
 
-``` php
+```php
 $data = new stdClass;
 
 $data->id = 1;
@@ -313,7 +313,7 @@ Also we can use array instead of object as data.
 
 Same as `update()` but update every record in an array.
 
-``` php
+```php
 $dataSet = array(
     $data1,
     $data2
@@ -326,7 +326,7 @@ $db->getWriter()->updateMultiple('#__articles', $dataSet, 'id');
 
 Using where conditions to update some values to every records which matched this condition.
 
-``` php
+```php
 $data = new stdClass;
 
 $data->state = 0;
@@ -337,7 +337,7 @@ $db->getWriter()->updateBatch('#__articles', $data, array('author' => 15));
 
 Using other conditions:
 
-``` php
+```php
 $conditions = array(
     'author' => 15,
     'updated < "2014-03-02"',
@@ -360,7 +360,7 @@ if not exists, it will use `insert` to store data.
 
 Use conditions to delete data.
 
-``` php
+```php
 $db->getWriter()->delete('table', array('id' => 5));
 ```
 
@@ -378,7 +378,7 @@ Count the affected rows of last query.
 
 ### Start Transaction
 
-``` php
+```php
 $tran = $this->db->getTransaction()->start();
 
 try
@@ -401,7 +401,7 @@ $tran->commit();
 
 How to get Database Command:
 
-``` php
+```php
 $database = $db->getDatabase('flower');
 ```
 
@@ -409,7 +409,7 @@ $database = $db->getDatabase('flower');
 
 Create a new database.
 
-``` php
+```php
 $database = $db->getDatabase('flower');
 
 $database->create();
@@ -419,7 +419,7 @@ $database->create();
 
 Drop a database.
 
-``` php
+```php
 $database = $db->getDatabase('flower');
 
 $database->drop();
@@ -429,7 +429,7 @@ $database->drop();
 
 Rename a database.
 
-``` php
+```php
 $database = $db->getDatabase('flower');
 
 // The return value is a new command object
@@ -442,7 +442,7 @@ $newDatabaseCommand->getName(); // flower2
 
 Get table name list.
 
-``` php
+```php
 $database = $db->getDatabase('flower');
 
 $tables = $database->getTables();

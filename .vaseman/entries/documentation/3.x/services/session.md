@@ -10,7 +10,7 @@ redirect:
 
 Session configuration is in `/etc/config.yml`.
 
-``` yaml
+```yaml
 session:
     handler: native
     expire_time: 15
@@ -20,7 +20,7 @@ By default, Windwalker use php native to handler session data. The expire time u
 
 ## Get Session Object
 
-``` php
+```php
 $session = \Windwalker\Ioc::getSession();
 
 // OR
@@ -30,7 +30,7 @@ $session = $container->get('system.session');
 
 ## Store And Get Session Data
 
-``` php
+```php
 $session->set('flower', 'sakura');
 
 $data = $session->get('flower', 'default');
@@ -40,7 +40,7 @@ $session->exists('animal'); // bool
 
 ## Restart Session
 
-``` php
+```php
 $session->restart();
 ```
 
@@ -52,13 +52,13 @@ Session bag is a data storage to store data, we can add many bags to Session obj
 
 Get Default Bag
 
-``` php
+```php
 $session->getBag('default');
 ```
 
 Get data from default bag.
 
-``` php
+```php
 $session->get('foo');
 
 // OR
@@ -67,7 +67,7 @@ $session->getBag('default')->get('foo');
 
 ### Use Custom Bags
 
-``` php
+```php
 use Windwalker\Session\Bag\SessionBag;
 
 $session->setBag('mybag', new SessionBag);
@@ -81,7 +81,7 @@ $myBag->get('foo', 'default');
 
 We can use Namespace to get data from bags
 
-``` php
+```php
 // Get form default bag
 $session->get('foo', 'default', 'mybag');
 
@@ -96,7 +96,7 @@ $session->set('foo', 'bar', 'mybag');
 
 Flash bag is a data temporary storage, if we take data out, the bag will be clear.
 
-``` php
+```php
 $session->addFlash('Save success.', 'info');
 $session->addFlash('Login Fail.', 'error');
 
@@ -111,7 +111,7 @@ $session->getFlashBag()->all();
 
 Windwalker Session provides many handlers to storage session, edit the config file.
 
-``` yaml
+```yaml
 session:
     handler: memcached
     expire_time: 15
@@ -121,7 +121,7 @@ session:
 
 Before using database session, we have to add table schema information to session config.
 
-``` yaml
+```yaml
 session:
     handler: database
     expire_time: 15

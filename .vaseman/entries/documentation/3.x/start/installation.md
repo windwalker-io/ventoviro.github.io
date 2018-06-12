@@ -16,13 +16,13 @@ Windwalker 3.x requires PHP 5.6 or later.
 
 Install via [Composer](https://getcomposer.org/)
 
-``` bash
+```bash
 $ composer create-project windwalker/starter project_dir ~3.0
 ```
 
 After project file downloaded, the installation script will ask you some information to initial system environment.
 
-``` bash
+```bash
 > Windwalker\Composer\StarterInstaller::rootInstall
 
 Salt to generate secret [Windwalker-577f076209eff]:
@@ -49,7 +49,7 @@ The [Starter](https://github.com/ventoviro/windwalker-starter) package is a defa
 
 If you just want to use Windwalker as a library, add `windwalker/framework` as your project's dependencies in `composer.json`.
 
-``` json
+```json
 {
     "require": {
         "windwalker/framework": "~3.0"
@@ -61,7 +61,7 @@ If you just want to use Windwalker as a library, add `windwalker/framework` as y
 
 You can also pick any child packages rather than the complete framework set. This is an example to install Session and Form package:
 
-``` json
+```json
 {
     "require": {
         "windwalker/session": "~3.0",

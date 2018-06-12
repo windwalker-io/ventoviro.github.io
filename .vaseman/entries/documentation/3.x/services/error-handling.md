@@ -14,7 +14,7 @@ Windwalker's error handling system overrided the native PHP error handler to pro
 
 Most of time, we throw exception object to change the program process if error occurred:
 
-``` php
+```php
 try
 {
     if (/* Something error */)
@@ -30,14 +30,14 @@ catch (Exception $e)
 
 If you didn't catch exception and throw it to the top level:
 
-``` php
+```php
 // no catch() to fetch this exception
 throw new Exception('Error message');
 ```
 
 The exception you thrown will not be caught and shows a `Uncaught Exception error` in native PHP.
 
-``` php
+```php
 Fatal error: Uncaught Exception: Error message in Command line code:xxx
 ```
 
@@ -55,7 +55,7 @@ See [Debugging and Logging](debugging.html)
 
 Without DEBUG mode, Windwalker contains a default error handler to handle error page. Let's throw an Exception to show error page.
 
-``` php
+```php
 throw new \Exception('Something wrong~~~');
 ```
 
@@ -63,7 +63,7 @@ throw new \Exception('Something wrong~~~');
 
 Override error template to `simple` or `empty` in `config.yml`, so you can hide information in production site.
 
-``` yaml
+```yaml
 # etc/config.yml
 
 error:
@@ -86,7 +86,7 @@ The Simple error page.
 You are allow to create a custom pretty error page, for instance, most site will have a designed 404 page.
 Override the `error.template` to your one:
 
-``` yaml
+```yaml
 error:
     template: flower.error.default
     engine: edge
@@ -94,7 +94,7 @@ error:
 
 You are also allow to rewrite default error handler to render your own page:
 
-``` php
+```php
 use Windwalker\Core\Error\ErrorHandler;
 use Windwalker\Core\Widget\WidgetHelper;
 
@@ -109,7 +109,7 @@ ErrorHandler::addHandler(function ($e)
 
 Use Package controller to render error page, so you are able to organize error page as a package MVC.
 
-``` php
+```php
 ErrorHandler::addHandler(function ($e)
 {
     echo PackageHelper::getPackage()->executeTask('Error/GetController', ['e' => $e])->getBody();
@@ -137,7 +137,7 @@ Windwalker use `ErrorHandler` class to handle all custom error process.
 
 In Application, Windwalker use this code to register PHP error handler to it own.
 
-``` php
+```php
 \Windwalker\Core\Error\ErrorHandler::register();
 
 // Register shot-down function so you can catch fatal error
@@ -146,7 +146,7 @@ In Application, Windwalker use this code to register PHP error handler to it own
 
 ### Set Error Level
 
-``` php
+```php
 ErrorHandler::register(true, E_ALL);
 ```
 
@@ -154,7 +154,7 @@ ErrorHandler::register(true, E_ALL);
 
 If you want to use other error handler, you can restore all error handler have set.
 
-``` php
+```php
 \Windwalker\Core\Error\ErrorHandler::restore();
 ```
 
@@ -162,7 +162,7 @@ If you want to use other error handler, you can restore all error handler have s
 
 You can log errors when every time error occurred. Add this line in `etc/web.php`:
 
-``` php
+```php
 // ...
 
     'error' => [
@@ -174,13 +174,13 @@ You can log errors when every time error occurred. Add this line in `etc/web.php
 
 Now Windwalker will log error in `logs/error.log`
 
-``` log
+```log
 [2016-07-09 08:52:18] error.ERROR: Something wrong~~~ {"code":0} []
 ```
 
 You can write your own Log Handler by add callback as handler.
 
-``` php
+```php
 /**
  * @param \Exception|\Throwable $e
  */

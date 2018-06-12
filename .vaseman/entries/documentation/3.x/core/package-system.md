@@ -31,7 +31,7 @@ Then anyone can install it by composer.
 
 We will use `Flower` as example package. Create a php class in `/src/Flower/FlowerPackage.php`:
 
-``` php
+```php
 <?php
 // /src/Flower/FlowerPackage.php
 
@@ -46,7 +46,7 @@ class FlowerPackage extends AbstractPackage
 
 Then add this package to `/etc/windwalker.php` file (or `web.php` if you only want it run in web environment):
 
-``` php
+```php
 // etc/app/windwalker.php
 
 // ...
@@ -67,7 +67,7 @@ but sometimes if there has package name conflict, we can try to use different al
 
 Create `/src/Flower/routing.yml`, then add some routes:
 
-``` yaml
+```yaml
 ## /src/Flower/routing.yml
 
 sakura:
@@ -88,7 +88,7 @@ the package will auto find this controller. For example: `controller: Sakura` wi
 
 We have to register this routes to root routing file. Open `/etc/routing.yml` And add this route profile.
 
-``` yaml
+```yaml
 ## /etc/routing.yml
 
 flower:
@@ -99,7 +99,7 @@ flower:
 The `package: flower` tells Windwalker to import all Flower package's routes, and all patterns will prefix with: `/flower/...`,
 the compiled routes will look like:
 
-``` yaml
+```yaml
 flower@sakura:
     pattern: /flower/sakura(/id)
     controller: Sakura
@@ -116,7 +116,7 @@ flower@roses:
 Use browser open `/flower/sakuras`, Windwalker will find `Flower\Controller\Sakuras\GetController` to render page.
 We can create a controller to match this route:
 
-``` php
+```php
 <?php
 // src/Flower/Controller/Sakuras/GetController.php
 
@@ -139,7 +139,7 @@ About how routing and controller work, please see [Routing](routing.html) sectio
 
 Use `PackageResolver`.
 
-``` php
+```php
 $resolver = $container->get('package.resolver');
 
 $resolver->getPackage('flower'); // Get flower package
@@ -151,7 +151,7 @@ $resoler->addPackage('alias', $package); // Add new package
 
 Use `PackageHelper`, this class is a facade of `PackageResolver`.
 
-``` php
+```php
 use Windwalker\Core\Package\PackageHelper;
 
 PackageHelper::getPackage('flower'); // Get flower package
@@ -163,7 +163,7 @@ PackageHelper::addPackage('alias', $package); // Add new package
 
 You can also get package from Application.
 
-``` php
+```php
 $app = Ioc::getApplication();
 
 $app->getPackage([$alias|null]); // NULL will get current package
@@ -173,7 +173,7 @@ $app->getPackage([$alias|null]); // NULL will get current package
 
 After registering package to Windwalker, we can run
 
-``` php
+```php
 $ php windwlaker package install <package_alias>
 ```
 

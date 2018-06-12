@@ -326,7 +326,7 @@ array(3) {
 
 ### flatten
 
-``` php
+```php
 use Windwalker\Utilities\ArrayHelper;
 
 $array = array(
@@ -353,7 +353,7 @@ echo $flatted2['flower/olive']; // 'peace'
 
 Recursive merge two array.
 
-``` php
+```php
 use Windwalker\Utilities\ArrayHelper;
 
 $array2 = array(
@@ -385,7 +385,7 @@ Array
 
 Check an array matched our query condition.
 
-``` php
+```php
 $array = array(
     'id' => 1,
     'title' => 'Julius Caesar',
@@ -412,7 +412,7 @@ $bool = ArrayHelper::match($data, array('id >=' => 2));
 
 Find element matched array in array.
 
-``` php
+```php
 $data = array(
     array(
         'id' => 1,

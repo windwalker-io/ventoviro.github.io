@@ -11,7 +11,7 @@ Blade template files, but has more powerful extending interfaces.
 
 Get Edge View in Controller
 
-``` php
+```php
 $view = $this->getView('sakura', 'html', 'edge');
 
 $view->set('title', 'Hello World~~~!');
@@ -19,7 +19,7 @@ $view->set('title', 'Hello World~~~!');
 
 Or set renderer in view class:
 
-``` php
+```php
 use Windwalker\Core\View\HtmlView;
 
 class SakuraHtmlView extends HtmlView
@@ -30,13 +30,13 @@ class SakuraHtmlView extends HtmlView
 
 Then we create a template file in `src/Flower/Templates/sakura/default.edge.php` or (`default.blade.php`):
 
-``` php
+```php
 <h1>{{ $title }}</h1>
 ```
 
 Result:
 
-``` html
+```html
 <h1>Hello World~~~!</h1>
 ```
 
@@ -48,13 +48,13 @@ Most of Edge syntax are same as Blade.
 
 Display a variable by `{{ ... }}`
 
-``` php
+```php
 Hello {{ $title }}
 ```
 
 Unescaped echoing.
 
-``` php
+```php
 My name is {!! $form->input('name') !!}
 ```
 
@@ -64,7 +64,7 @@ My name is {!! $form->input('name') !!}
 
 Use `@if ... @else` directive.
 
-``` php
+```php
 @if (count($flower) == 1)
     I have one flower!
 @elseif (count($flower) > 1)
@@ -76,7 +76,7 @@ Use `@if ... @else` directive.
 
 Unless directive
 
-``` html
+```html
 @unless ($user->isAdmin())
     You are not logged in.
 @endunless
@@ -86,7 +86,7 @@ Unless directive
 
 Edge provides simple directives similar to PHP loop structure.
 
-``` php
+```php
 @for ($i = 0; $i < 10; $i++)
     The current value is {{ $i }}
 @endfor
@@ -108,7 +108,7 @@ Edge provides simple directives similar to PHP loop structure.
 
 You might need to break or skip a loop.
 
-``` php
+```php
 @foreach ($users as $user)
 
     @if (!$user->id)
@@ -126,7 +126,7 @@ You might need to break or skip a loop.
 
 Or add conditions to these two directives.
 
-``` php
+```php
 @continue(!$user->id)
 
 @break($user->id >= 10)
@@ -136,7 +136,7 @@ Or add conditions to these two directives.
 
 We can define some sections in a root template.
 
-``` html
+```html
 <!-- tmpl/layouts/root.edge.php -->
 <html>
     <head>
@@ -152,7 +152,7 @@ We can define some sections in a root template.
 
 Now we can add an child template to extends root template.
 
-``` php
+```php
 @extends('layouts.root')
 
 @section('page_title', 'My Page Title')
@@ -164,7 +164,7 @@ Now we can add an child template to extends root template.
 
 The final template rendered:
 
-``` html
+```html
 <html>
     <head>
         <title>My Page Title</title>
@@ -181,7 +181,7 @@ More directive and usages please see [Blade](https://laravel.com/docs/5.2/blade#
 
 We can create Extension class to add multiple directives and global variables to Edge.
 
-``` php
+```php
 class MyExtension implements \Windwalker\Edge\Extension\EdgeExtensionInterface
 {
 	public function getName()
@@ -227,7 +227,7 @@ class MyExtension implements \Windwalker\Edge\Extension\EdgeExtensionInterface
 
 Use our new directive:
 
-``` php
+```php
 <h1>@upper('hello')</h2>
 
 <!-- Result: <h1>HELLO</h1> -->

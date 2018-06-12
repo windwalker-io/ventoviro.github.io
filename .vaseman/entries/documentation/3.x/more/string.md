@@ -145,7 +145,7 @@ $str->reject(callable $callback);
 
 Simple variable replace.
 
-``` php
+```php
 use Windwalker\String\SimpleTemplate;
 
 $string = 'Hello my name is: {{ name }}~~~!!!';
@@ -155,7 +155,7 @@ SimpleTemplate::render($string, array('name' => 'Simon')); // Hello my name is S
 
 Multi-level variable.
 
-``` php
+```php
 $string = 'Hello my name is: {{ user.name }} and ID is: {{ user.id }}~~~!!!';
 
 $array = array(
@@ -171,7 +171,7 @@ SimpleTemplate::render($string, $array); // Hello my name is Simon and ID is: 12
 Custom Tags:
 
 
-``` php
+```php
 $string = 'Hello my name is: {$ name $}~~~!!!';
 
 SimpleTemplate::render($string, array('name' => 'Simon'), array('{$', '$}'); // Hello my name is Simon~~~!!!
@@ -181,7 +181,7 @@ SimpleTemplate::render($string, array('name' => 'Simon'), array('{$', '$}'); // 
 
 Utf8String is a wrap of `phputf8` library:
 
-``` php
+```php
 use Windwalker\String\Utf8String;
 
 $string = '這是一個最美的小情歌';
@@ -245,7 +245,7 @@ Utf8String::unicode_to_utf16($string);
 
 isEmpty()
 
-``` php
+```php
 use Windwalker\String\StringHelper;
 
 StringHelper::isEmpty('');      // true
@@ -256,7 +256,7 @@ StringHelper::isEmpty(null);    // true
 
 isZero()
 
-``` php
+```php
 StringHelper::isZero(0);    // true
 StringHelper::isZero('0');  // true
 StringHelper::isZero('');   // false
@@ -267,7 +267,7 @@ StringHelper::isZero(null); // false
 
 An useful method to quate a string.
 
-``` php
+```php
 // Default quote is `"`
 StringHelper::quote('foo'); // "foo"
 
@@ -282,36 +282,36 @@ StringHelper::backquote('foo'); // `foo`
 
 increment()
 
-``` php
+```php
 StringHelper::increment('Title'); // Title (2)
 StringHelper::increment('Title', StringHelper::INCREMENT_STYLE_DASH); // Title-2
 ```
 
 at()
 
-``` php
+```php
 StringHelper::at('歡迎光臨', 2); // 光
 ```
 
 collapseWhitespace()
 
-``` php
+```php
 StringHelper::collapseWhitespace('Welcome   to   Windwalker'); // 'Welcome to Windwalker'
 ```
 
 endsWith()
 
-``` php
+```php
 StringHelper::endsWith('歡迎光臨', '光臨' [, $caseSensive = true]); // true
 ```
 
 startsWith()
 
-``` php
+```php
 StringHelper::startsWith('歡迎光臨', '歡迎' [, $caseSensive = true]); // true
 ```
 
-``` php
+```php
 // Default callback is array_push
 StringHelper::explode('.', 'foo.bar', 3); // array('foo', 'bar', null);
 
@@ -328,7 +328,7 @@ list($foo, $bar, $yoo) = StringHelper::explode('.', 'foo.bar', 3);
 
 ## StringInflector
 
-``` php
+```php
 use Windwalker\String\StringInflector;
 
 $inflector = StringInflector::getInstance();

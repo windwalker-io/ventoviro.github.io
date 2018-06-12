@@ -24,13 +24,13 @@ to the newest version: `20150421_AddTableIndex`
 
 To create a migration version, you may use `migration create` command in console:
 
-``` bash
+```bash
 php windwalker migration create InitFlowerTable
 ```
 
 You'll see this info:
 
-``` html
+```html
 Migration version: 20150101091434_InitFlowerTable.php created.
 File path: /your/project/path/migrations/20150101091434_InitFlowerTable.php
 ```
@@ -39,7 +39,7 @@ File path: /your/project/path/migrations/20150101091434_InitFlowerTable.php
 
 You may also create migration to other position by `--dir` or `--package`
 
-``` bash
+```bash
 ## Create to custom directory
 php windwalker migration create InitFlowerTable --dir=resources/migrations
 
@@ -52,7 +52,7 @@ php windwalker migration create InitFlowerTable --package=flower
 This is a new migration file. The `up()` method will run if your version is lower than latest version. The `down()` method
 will run if you migrate to older version.
 
-``` php
+```php
 <?php
 // src/resources/migrations/20150101091434_InitFlowerTable.php
 
@@ -83,7 +83,7 @@ class InitFlowerTable extends AbstractMigration
 
 Here is an example to create a table:
 
-``` php
+```php
 use Windwalker\Core\Migration\AbstractMigration;
 use Windwalker\Core\Migration\Schema;
 use Windwalker\Database\Schema\Column;
@@ -137,11 +137,11 @@ See other schema operations: [Table and Schema](table-schema.html)
 
 Use this command to show migration status.
 
-``` bash
+```bash
 php windwalker migration status
 ```
 
-``` bash
+```bash
  Status  Version         Migration Name
 -----------------------------------------
   down   20141105131929  AcmeInit
@@ -152,13 +152,13 @@ php windwalker migration status
 
 Use `migrate` command to start migrating:
 
-``` bash
+```bash
 php windwalker migration migrate
 ```
 
 Terminal will show migrating process.
 
-``` html
+```html
 Migration UP the version: 20141105131929_AcmeInit
 ------------------------------------------------------------
 Success
@@ -180,13 +180,13 @@ You can also use command to change mode `$ php windwalker system mode [dev|prod]
 
 ### Run Package Migration
 
-``` bash
+```bash
 php windwalker migration migrate --package=flower
 ```
 
 ### Migrate to Specific Version
  
-``` bash
+```bash
 php windwalker migration migrate 20141105131929
 ```
 
@@ -201,7 +201,7 @@ Windwalker also provides a simple way to help you create fixtures for easy testi
 
 Every time after you installed Windwalker, there will be a `MainSeeder.php` in `/resources/seeders`:
  
-``` php
+```php
 <?php
 // resources/seeders/MainSeeder.php
 
@@ -223,7 +223,7 @@ If you didn't add `--class` option, this file will be seeder default entry, we c
 
 Add new Seeder file (Use IDE or code editor)
 
-``` php
+```php
 // resources/seeders/FlowerSeeder.php
 
 /**
@@ -258,7 +258,7 @@ class FlowerSeeder extends \Windwalker\Core\Seeder\AbstractSeeder
 
 Then call this seeder in default MainSeeder:
 
-``` php
+```php
 class MainSeeder extends AbstractSeeder
 {
 	public function doExecute()
@@ -285,13 +285,13 @@ class MainSeeder extends AbstractSeeder
 
 Now, use `seed import` command:
 
-``` bash
+```bash
 php windwalker seed import
 ```
 
 You will see this output, it means seeder execute success:
 
-``` html
+```html
 Import seeder FlowerSeeder
   (20) -
   Import completed...
@@ -311,7 +311,7 @@ Seeder executed.
 
 Package Seeder is allow to use namespace as class name. Add `--package|-p` to use package default `MainSeeder`.
 
-``` php
+```php
 // src/FlowerPackage/Seeder/FlowerSeeder.php
 
 use Windwalker\Core\Seeder\AbstractSeeder;
@@ -326,7 +326,7 @@ class FlowerSeeder extends AbstractSeeder
 
 Run this command to execute package seeder:
 
-``` bash
+```bash
 ## Choose class if your seeder has namespace
 php windwalker seed import --class=Flower\Seeder\MySeeder
  
@@ -338,7 +338,7 @@ php windwalker seed import -p=flower
 
 Windwalker includes [PHP Faker](https://github.com/fzaninotto/Faker) to help you generate random fake data.
 
-``` php
+```php
 class ArticleSeeder extends AbstractSeeder
 {
 	public function doExecute()

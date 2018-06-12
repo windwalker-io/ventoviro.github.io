@@ -10,7 +10,7 @@ Windwalker Record is a simple ActiveRecord to operate database row.
 
 ### New a instance.
 
-``` php
+```php
 use Windwalker\Record\Record;
 
 // Record object for users table
@@ -19,7 +19,7 @@ $user = new Record('users');
 
 Or create a class:
 
-``` php
+```php
 use Windwalker\Record\Record;
 
 class UserRecord extends Record
@@ -32,7 +32,7 @@ $user = new UserRecord;
 
 ### Load A Record
 
-``` php
+```php
 $user->load(25); // Load by primary key
 
 $user->load(array('alias' => $alias)); // Load by field name.
@@ -40,7 +40,7 @@ $user->load(array('alias' => $alias)); // Load by field name.
 
 Check row exists
 
-``` php
+```php
 try
 {
 	$record->load(25);
@@ -53,7 +53,7 @@ catch (NoResultException $e)
 
 ### Bind Data
 
-``` php
+```php
 $data = array(
     'name'     => 'Sakura',
     'username' => 'sakura',
@@ -77,7 +77,7 @@ If we have a table with only 3 columns:
 
 The fields which not in this table will be remove after binding data.
 
-``` php
+```php
 $user->alias; // null
 ```
 
@@ -89,7 +89,7 @@ That makes our fields in Record will always same as DB table.
 
 If primary not exists, Record will create a new row in table.
 
-``` php
+```php
 $data = array(
     'name'     => 'Sakura',
     'username' => 'sakura',
@@ -107,7 +107,7 @@ echo $user->id; // Auto generated id
 
 If primary key exists, Record will update it.
 
-``` php
+```php
 $data = array(
     'id'       => 30,
     'name'     => 'Sakura',
@@ -124,7 +124,7 @@ $user->store();
 
 Check method help you validate data.
 
-``` php
+```php
 class UserRecord extends Record
 {
     // ...
@@ -143,7 +143,7 @@ class UserRecord extends Record
 
 Then we call `validate()` before `store()`.
 
-``` php
+```php
 $user->bind($data)
     ->validate()
     ->store();
@@ -151,7 +151,7 @@ $user->bind($data)
 
 ### Delete
 
-``` php
+```php
 $user->load(30);
 $result = $user->delete(); // boolean
 
@@ -167,7 +167,7 @@ Mutator and accessor is a setter and getter to do some extra modification when y
 
 This is an example of mutator:
 
-``` php
+```php
 class ArticleRecord extends Record
 {
     protected function setCreatedDateValue($value)
@@ -185,7 +185,7 @@ class ArticleRecord extends Record
 Use camel-case style to define a method, then when you access the `created_date` field, this method will
  be auto executed.
 
-``` php
+```php
 $articleRecord->created_date = new \DateTime('now');
 
 echo $articleRecord->created_date; // 2016-03-02 12:30:29
@@ -193,7 +193,7 @@ echo $articleRecord->created_date; // 2016-03-02 12:30:29
 
 And an example of accessor:
 
-``` php
+```php
 class ArticleRecord extends Record
 {
     protected function getCreatedDateValue($value)
@@ -205,7 +205,7 @@ class ArticleRecord extends Record
 
 And now you can get `DateTime` object back:
 
-``` php
+```php
 echo $articleRecord->created_date->format('Y-m-d H:i:s'); // 2016-03-02 12:30:29
 ```
 
@@ -273,7 +273,7 @@ Name: `categories`
 
 Every nested set should have a root node.
 
-``` php
+```php
 $cat = new NestedRecord('categories');
 
 $cat->createRoot();
@@ -285,7 +285,7 @@ NOTE: The root node id is `1`.
 
 Set as first child of ROOT
 
-``` php
+```php
 $cat->bind($data)
     ->setLocation(1, NestedRecord::LOCATION_FIRST_CHILD)
     ->store();
@@ -293,7 +293,7 @@ $cat->bind($data)
 
 Now we will have a new node and it id is `2`. Create a new node as last child of `2`.
 
-``` php
+```php
 $cat->bind($data)
     ->setLocation(2, NestedRecord::LOCATION_LAST_CHILD)
     ->store();
@@ -310,7 +310,7 @@ Available positions:
 
 #### Re Ordering
 
-``` php
+```php
 $cat->move(1); // move up
 $cat->move(-1); // Move down
 ```
@@ -319,7 +319,7 @@ $cat->move(-1); // Move down
 
 Move to node `3` as last child.
 
-``` php
+```php
 $cat->moveByReference(3, NestedRecord::LOCATION_LAST_CHILD);
 ```
 
@@ -327,7 +327,7 @@ $cat->moveByReference(3, NestedRecord::LOCATION_LAST_CHILD);
 
 If a tree was not correct, using rebuild to reset all `lft`, `rgt` of this branch.
 
-``` php
+```php
 $cat->load(5);
 $cat->rebuild(); // Rebuild node: 5 and it's children.
 ```
@@ -336,7 +336,7 @@ $cat->rebuild(); // Rebuild node: 5 and it's children.
 
 Method to get an array of nodes from a given node to its root.
 
-``` php
+```php
 $path = $cat->getPath();
 ```
 
@@ -344,7 +344,7 @@ $path = $cat->getPath();
 
 Method to get a node and all its child nodes.
 
-``` php
+```php
 $records = $cat->getTree();
 ```
 
@@ -354,7 +354,7 @@ Record has an event system that we can process logic before & after every DB ope
 
 Add event methods in your Record class.
 
-``` php
+```php
 class UserRecord extends Record
 {
 	public function onAfterLoad(Event $event)
@@ -366,7 +366,7 @@ class UserRecord extends Record
 
 Or add listeners to Dispatcher (You must install `windwalker/event` first).
 
-``` php
+```php
 // Use listener object
 $record->getDispatcher()->addListener(new MyRecordListener);
 

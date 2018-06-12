@@ -16,7 +16,7 @@ Widget object is a convenience tool to help us render HTML blocks, you can consi
 
 First, add a template file in `/templates/sidebar/news.php`, this is a news widget.
 
-``` php
+```php
 <ul class="nav news">
 	<?php foreach ($articles as $article): ?>
 	<li>
@@ -30,7 +30,7 @@ First, add a template file in `/templates/sidebar/news.php`, this is a news widg
 
 Now we can use this widget in anywhere, remember add data when rendering it:
 
-``` php
+```php
 use Windwalker\Core\Widget\Widget;
 
 $news = new Widget('sidebar.news');
@@ -43,7 +43,7 @@ $news = (new Widget('sidebar.news'))->render(['articles' => $articles]);
 
 It will be useful to render widgets in View `prepareData()`, then we can print theses widgets to view template:
 
-``` php
+```php
 class SakurasHtmlView extends HtmlView
 {
 	protected function prepareData($data)
@@ -63,7 +63,7 @@ class SakurasHtmlView extends HtmlView
 
 By default, widget will find templates from these paths:
 
-``` html
+```html
 - {ROOT}/src/{package}/Templates/{Locale}
 - {ROOT}/src/{package}/Templates
 - {ROOT}/templates
@@ -72,7 +72,7 @@ By default, widget will find templates from these paths:
 
 You can add your custom path to Widget:
 
-``` php
+```php
 use Windwalker\Utilities\Queue\PriorityQueue;
 
 $widget->addPath('/my/widget/path', PriorityQueue::HIGH);
@@ -85,7 +85,7 @@ you need to add priority to set the ordering of this path.
 
 By default, Widget will auto guess current package, but you can set custom package to direct to different template paths.
 
-``` php
+```php
 // Add package name, Widget will auto resolve package
 $news = new Widget('sidebar.news', 'php', 'package_name');
 
@@ -98,13 +98,13 @@ $news = new Widget('sidebar.news', 'php', $package);
 
 Add your path to global RendererHelper that Widget will always contain this path:
 
-``` php
+```php
 \Windwalker\Core\Renderer\RendererHelper::addGlobalPath('/my/widget/path', PriorityQueue::ABOVE_NORMAL);
 ```
 
 ### Add Shared Variables
 
-``` php
+```php
 $widget = new Widget('flower.sakura');
 $widget->set('foo', 'bar');
 
@@ -136,7 +136,7 @@ Now all messages in Windwalker will select your template since the new file path
 
 Similar to View, Windwalker Widget support Blade and Twig engine, you may just create it by newing it:
 
-``` php
+```php
 use Windwalker\Core\Widget\WidgetHelper;
 
 // Use constant
@@ -152,7 +152,7 @@ WidgetHelper::createWidget('sidebar.news', 'twig');
 
 Use WidgetHelper to quickly render page.
 
-``` php
+```php
 use Windwalker\Core\Widget\WidgetHelper;
 
 $html = WidgetHelper::render('foo.bar', $data, WidgetHelper::EDGE);
@@ -162,7 +162,7 @@ $html = WidgetHelper::render('foo.bar', $data, WidgetHelper::EDGE);
 
 Create custom Widget class to quickly render specific template.
 
-``` php
+```php
 use Windwalker\DataMapper\DataMapper;
 
 class NewsWidget extends Widget
@@ -189,7 +189,7 @@ class NewsWidget extends Widget
 }
 ```
 
-``` php
+```php
 echo (new NewsWidget)->render();
 ```
 
@@ -199,13 +199,13 @@ WidgetHelper instance has been inject to global renderer variables, we can use i
 
 In php template
 
-``` php
+```php
 <?php echo $widget->render('sidebar.news', $data, 'edge'); ?>
 ```
 
 In Blade or Edge
 
-``` php
+```php
 {!! $widget->render('sidebar.news', $data, 'edge') !!}
 
 OR
@@ -215,6 +215,6 @@ OR
 
 Twig
 
-``` twig
+```twig
 {{ widget.render('sidebar .news', data, 'edge') | raw }}
 ```

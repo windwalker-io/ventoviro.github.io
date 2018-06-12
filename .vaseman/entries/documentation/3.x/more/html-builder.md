@@ -12,7 +12,7 @@ This is a convenience class to create XML and HTML element in an OO way.
 
 DomElement and DomElements is use to create XML elements.
 
-``` php
+```php
 use Windwalker\Dom\DomElement;
 
 $attrs = array('id' => 'foo', 'class' => 'bar');
@@ -22,13 +22,13 @@ echo $dom = (string) new DomElement('field', 'Content', $attrs);
 
 Output:
 
-``` xml
+```xml
 <field id="foo" class="bar">Content</field>
 ```
 
 Add Children
 
-``` php
+```php
 use Windwalker\Dom\DomElement;
 
 $attrs = array('id' => 'foo', 'class' => 'bar');
@@ -43,7 +43,7 @@ echo $dom = (string) new DomElement('field', $content, $attrs);
 
 The output will be:
 
-``` xml
+```xml
 <field id="foo" class="bar">
     <option value="1">Yes</option>
     <option value="0">No</option>
@@ -54,7 +54,7 @@ The output will be:
 
 HtmlElement is use to create HTML elements, some specific tags will force to unpaired.
 
-``` php
+```php
 use Windwalker\Dom\HtmlElement;
 
 $attrs = array(
@@ -67,13 +67,13 @@ $html = (string) new HtmlElement('button', 'Click', $attrs);
 
 Then we will get this HTML:
 
-``` html
+```html
 <button class="btn btn-mini" onclick="return false;">Click</button>
 ```
 
 #### Get Attributes by Array Access
 
-``` php
+```php
 $class = $html['class'];
 ```
 
@@ -81,7 +81,7 @@ $class = $html['class'];
 
 It is a collection of HtmlElement set.
 
-``` php
+```php
 $html = new HtmlElements(
     array(
         new HtmlElement('p', $content, $attrs),
@@ -95,7 +95,7 @@ echo $html;
 
 OR we can iterate it:
 
-``` php
+```php
 foreach ($html as $element)
 {
     echo $element;
@@ -104,7 +104,7 @@ foreach ($html as $element)
 
 ### Attributes
 
-``` php
+```php
 $html = new HtmlElement('input', array(
     'data-string' => 'string',
     'data-empty' => '',
@@ -123,7 +123,7 @@ echo $html;
 
 Result
 
-``` html
+```html
 <input data-string="string" data-empty="" data-true checked="checked" disabled="disabled">
 ```
 
@@ -131,7 +131,7 @@ Result
 
 `DomFormatter` and `HtmlFormatter` will help us format `XML` / `HTML` string.
 
-``` php
+```php
 $xml = '<field id="foo" class="bar"><option value="1">Yes</option><option value="0">No</option></field>';
 
 DomFormatter::format($xml);
@@ -139,7 +139,7 @@ DomFormatter::format($xml);
 
 Result
 
-``` xml
+```xml
 <field id="foo" class="bar">
     <option value="1">Yes</option>
     <option value="0">No</option>

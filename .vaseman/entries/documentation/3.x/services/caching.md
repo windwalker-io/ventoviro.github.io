@@ -10,7 +10,7 @@ redirect:
 
 Using cache will be very easy in Windwalker, the cache configuration is located at `/etc/config.yml`.
 
-``` yaml
+```yaml
 cache:
     enabled: 0
     storage: file
@@ -50,7 +50,7 @@ just change serializer option.
 
 Windwalker contains a global main cache object that you can configure it in `config.yml`.
 
-``` php
+```php
 $cache = Ioc::getCache();
 
 // OR
@@ -71,7 +71,7 @@ $cache->exists('key');
 
 We can still create our own custom cache objects:
 
-``` php
+```php
 $cacheManager = $container->get('cache.manager');
 
 $cache = $cacheManager->getCache('mycache_name', 'file'); // Every name will be singleton object.
@@ -87,7 +87,7 @@ If you set `cache.enabled` to `false` or in DEBUG mode, all cache created from `
 
 You can set ignore global to make cache manager ignore config settings.
 
-``` php
+```php
 CacheFactory::ignoreGlobal(true);
 ```
 
@@ -96,7 +96,7 @@ CacheFactory::ignoreGlobal(true);
 When debug property in global config se to `true` or `cache.disabled` set to `true`, the cache storage will auto set to `NullStorage`, cache can still be used
  but no work.
 
-``` php
+```php
 // If cache disabled
 $cache = \Windwalker\Ioc::getCache();
 
@@ -121,7 +121,7 @@ return $data;
 
 CacheFactory is a cache creator, it will store each cache object as singleton by different name and options.
 
-``` php
+```php
 use Windwalker\Core\Cache\CacheFactory;
 
 $myFileCache = CacheFactory::getCache('cache_name', 'file');
@@ -132,7 +132,7 @@ The default cache is array cache, it means our data only keep in array but will 
 
 ### Custom Cache Options
 
-``` php
+```php
 $options = array(
     'cache_dir' => WINDWALKLER_CACHE, // Only for file storage
     'cache_time' => 999 // minutes
@@ -150,7 +150,7 @@ This is default storage, which will store data in itself and will not depends on
 The `RuntimeArrayStorage` use static property to storage data, which means all data will live in current runtime
 no matter how many times you create it.
 
-``` php
+```php
 $cache = CacheFactory::getCache('my_cache', 'array');
 $cache = CacheFactory::getCache('my_cache', 'runtime_array');
 ```
@@ -159,7 +159,7 @@ $cache = CacheFactory::getCache('my_cache', 'runtime_array');
 
 Create a cache with `FileStorage` and set a path to store files.
 
-``` php
+```php
 $cache = CacheFactory::getCache('my_cache', 'file');
 
 $cache->set('flower', array('sakura'));
@@ -175,7 +175,7 @@ a:1:{i:0;s:6:"sakura";}
 
 Group is a subfolder of your storage path.
 
-``` php
+```php
 $cache = CacheFactory::getCache('mygroup', 'file');
 
 $cache->set('mygroup', array('sakura'));
@@ -188,7 +188,7 @@ The file wil store at `{ROOT}/cache/mygroup/~5a46b8253d07320a14cace9b4dcbf80f93d
 If your cache folder are exposure on web environment, we have to make our cache files unable to access. The argument 3
  of `FileStorage` is use to deny access.
 
-``` php
+```php
 $cache = CacheFactory::getCache('mygroup', 'file', 'php', ['deny_access' => true]);
 
 $cache->set('flower', array('sakura'));
@@ -198,7 +198,7 @@ The stored file will be a PHP file with code to deny access:
 
 `/your/cache/path/mygroup/~5a46b8253d07320a14cace9b4dcbf80f93dcef04.php`
 
-``` php
+```php
 <?php die("Access Deny"); ?>a:1:{i:0;s:6:"sakura";}
 ```
 
@@ -218,7 +218,7 @@ The stored file will be a PHP file with code to deny access:
 The default `PhpSerializer` (`php`) will make our data be php serialized string, if you want to use other format,
 just change serializer at second argument of Cache object.
 
-``` php
+```php
 $cache = CacheFactory::getCache('my_cache', 'file', 'json');
 
 $cache->set('flower', array('flower' => 'sakura'));
@@ -234,7 +234,7 @@ The stored cache file is:
 
 Sometimes we may need to store whole html as static page cache. `StringSerializer` (`string`) or `RawSerializer` (`raw`) helps us save raw data as string:
 
-``` php
+```php
 $cache = CacheFactory::getCache('my_cache', 'file', 'string');
 
 $url = 'http://mysite.com/foo/bar/baz';
@@ -257,7 +257,7 @@ echo $html;
 
 This serializer can save array data as a php file, will be useful when we need to cache config data.
 
-``` php
+```php
 $cache = CacheFactory::getCache('my_cache', 'file', 'php_file');
 
 $config = array('foo' => 'bar');
@@ -269,7 +269,7 @@ $cache->get('config.name'); // Array( [foo] => bar )
 
 The cache file will be:
 
-``` php
+```php
 <?php
 
 return array (
@@ -290,7 +290,7 @@ return array (
 Windwalker Cache Storage are all follows [PSR6](http://www.php-fig.org/psr/psr-6/), so you can use other libraries'
 CacheItemPool object as storage, you can also directly use Storage object.
 
-``` php
+```php
 use Windwalker\Cache\Item\CacheItem;
 use Windwalker\Cache\Storage\FileStorage;
 

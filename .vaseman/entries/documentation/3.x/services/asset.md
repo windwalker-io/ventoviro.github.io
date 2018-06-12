@@ -8,7 +8,7 @@ title: Asset Manager
 
 Windwalker stores asset files in `/www/asset`, we can get the path or full URL of this folder:
 
-``` php
+```php
 use Windwalker\Core\Asset\Asset;
 
 echo Asset::path(); // /path/to/windwalker/asset
@@ -17,13 +17,13 @@ echo Asset::root(); // http://domain.com/path/to/windwlaker/asset
 
 You can simply use `$asset->path` in view template:
 
-``` php
+```php
 <script src="<?php echo $asset->path; ?>/js/bootstrap.js"></script>
 ```
 
 Or use method call:
 
-``` php
+```php
 <script src="<?php echo $asset->path('js/bootstrap.js'); ?>"></script>
 ```
 
@@ -31,7 +31,7 @@ Or use method call:
 
 Add `asset.uri` to config if you store assets in cloud storage:
 
-``` yaml
+```yaml
 asset:
     uri: https://foo.s3.amazonaws.com/assets
 ```
@@ -40,7 +40,7 @@ Now `$asset->path` and `$asset->root` will be `https://foo.s3.amazonaws.com/asse
 
 ## Use Asset to Include CSS & JS
 
-``` php
+```php
 use Windwalker\Core\Asset\Asset;
 
 Asset::addCSS('css/bootstrap.css');
@@ -57,7 +57,7 @@ $asset->addJS('js/bootstrap.js');
 
 Windwalker will auto includes these files in `<head>`:
 
-``` php
+```php
 <link rel="stylesheet" href="/windwalker/www/asset/css/bootstrap.css?ee8f77834fabe4188265a599a77f2c21" />
 
 <script src="/windwalker/www/asset/js/bootstrap.js?ee8f77834fabe4188265a599a77f2c21"></script>
@@ -65,7 +65,7 @@ Windwalker will auto includes these files in `<head>`:
 
 If you are not use default template, you must confirm your template has rendered styles and scripts:
 
-``` php
+```php
 <?php echo $asset->renderStyles(true); ?>
 
 <?php echo $asset->renderScripts(true); ?>
@@ -78,7 +78,7 @@ there has no min file.
 
 And in DEBUG mode, Windwalker will force include uncompressed file if exists, otherwise fallback to min file.
 
-``` php
+```php
 // If `bootstrap.css` exists but `bootstrap.min.css` not
 Asset::addCSS('css/bootstrap.min.css'); // bootstrap.css
 Asset::addCSS('css/bootstrap.css'); // bootstrap.css
@@ -100,7 +100,7 @@ Asset::addCSS('css/bootstrap.css'); // bootstrap.min.css
 
 If you want to override an asset's URL, for instance, to modify a 3rd party scripts, you can use asset alias:
 
-``` php
+```php
 Asset::alias('js/my-grid.js', 'phoenix/js/grid.js');
 
 Asset::addJS('phoenix/js/grid.min.js');
@@ -116,13 +116,13 @@ version not changed, but can be refresh if any file has been modified.
 
 You can add your own version to specific asset file:
 
-``` php
+```php
 Asset::addCSS('css/bootstrap.css', md5('1.0.5'));
 ```
 
 Or add an md5 sum in cache folder, so all assets will use this cached version that make better performance.
 
-``` bash
+```bash
 $ php windwlaker asset makesum
 Create SUM: d9edf273fc270b99e1c5a0f5d9a96b3d at {ROOT}/cache/asset/MD5SUM
 ```
@@ -134,7 +134,7 @@ the old assets files and will break your front-end application.
 
 Sometimes your Widget need push a JS template to the bottom of `<body>`, we can wrap this template by `AssetTemplate`:
 
-``` php
+```php
 <script>
     alert(jQuery('#hello').html());
 </script>
@@ -148,7 +148,7 @@ Sometimes your Widget need push a JS template to the bottom of `<body>`, we can 
 
 Make sure your template has render asset template as bottom of body:
 
-``` php
+```php
 ...
 
 <?php echo $asset->getTemplate()->renderTemplates(); ?>
@@ -157,7 +157,7 @@ Make sure your template has render asset template as bottom of body:
 
 Simple tag in Edge and Blade:
 
-``` php
+```php
 @assetTemplate('asset.name')
 <script id="hello" type="text/template">
     <h1>Hello {{ $content }}</h1>
@@ -171,7 +171,7 @@ Simple tag in Edge and Blade:
 
 This is an example to load a `sakura.js` and init it for different HTML selectors, and it is dependent on `flower.js`.
 
-``` php
+```php
 namespace Flower\Script;
 
 use Windwalker\Core\Asset\AbstractScript;
@@ -241,7 +241,7 @@ JS;
 
 Now use this code to include `sakura.js` every where:
 
-``` php
+```php
 \Flower\Script\FlowerScript::sakura('.mySakura', array('foo' => 'baz'));
 ```
 
@@ -250,7 +250,7 @@ Now use this code to include `sakura.js` every where:
 Put your package asset files to `{package}/Resources/asset`, then you can run this command to sync asset files to
 web public root.
 
-``` bash
+```bash
 $ php windwalker asset sync
 ```
 
@@ -259,7 +259,7 @@ You can also add `--hard` to hard copy all asset files to public folder.
 
 Change public asset folder by modifying `etc/config.yml`:
 
-``` yaml
+```yaml
 asset:
     folder: asset
 ```

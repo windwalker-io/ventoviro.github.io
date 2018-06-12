@@ -13,7 +13,7 @@ or ActiveRecord and help us do more database operation logic.
 
 `ModelRepository` is a very simple class without and DB access. This is an example of using it:
 
-``` php
+```php
 use Windwalker\Core\Model\ModelRepository;
 
 class MyModel extends ModelRepository
@@ -30,7 +30,7 @@ class MyModel extends ModelRepository
 }
 ```
 
-``` php
+```php
 // In controller
 $model = new MyModel;
 
@@ -43,7 +43,7 @@ $model->save($item);
 
 Set source to ModelRepository:
 
-``` php
+```php
 // FileFinder is just an example
 $model = new MyModel(null, null, new FileFinder);
 
@@ -55,7 +55,7 @@ $this->source->find(...);
 
 We can use `DatabaseModelRepository` to operate Database, here is a CRUD example, `db` is preset in Model so we can get it quickly:
 
-``` php
+```php
 use Windwalker\Core\Model\DatabaseModelRepository;
 
 class FlowerModel extends DatabaseModelRepository
@@ -99,7 +99,7 @@ class FlowerModel extends DatabaseModelRepository
 
 DataMapper is a easy way to help us operate database:
 
-``` php
+```php
 use Windwalker\Core\Model\DatabaseModelRepository;
 
 class FlowerModel extends DatabaseModelRepository
@@ -134,7 +134,7 @@ See [DataMapper](../db/datamapper.html)
 
 You can also use ActiveRecord to handle data saving.
 
-``` php
+```php
 use Windwalker\Core\Model\DatabaseModelRepository;
 
 class FlowerModel extends DatabaseModelRepository
@@ -180,7 +180,7 @@ See [ActiveRecord](../db/active-record.html)
 Model support a usage similar to NullObject pattern, if we call some method start with `get*()` or `load*()`, and this method not exists,
 Model will not raise error but only return `null`.
 
-``` php
+```php
 use Windwalker\Core\Model\Model;
 
 // This is default model, does not have any custom methods
@@ -199,7 +199,7 @@ So, we can use default Model to provide empty data for some object but won't bre
 Windwalker Model is stateful design, use state pattern can help ue create flexible data provider. 
 For example, we can change this state to get different data.
 
-``` php
+```php
 class MyModel extends DatabaseModel
 {
     // ...
@@ -249,7 +249,7 @@ if (!$users)
 
 Using `get()` and `set()`
 
-``` php
+```php
 // Same as getState()->get();
 $model->get('where.author', 5);
 
@@ -259,7 +259,7 @@ $model->set('list.ordering', 'RAND()');
 
 ##### State ArrayAccess
 
-``` php
+```php
 // Same as getState()->get();
 $data = $model['list.ordering'];
 
@@ -274,7 +274,7 @@ page load, will not exists in next page loading, and won't affected by global co
 
 This is an example to use cache in Model:
 
-``` php
+```php
 use Windwalker\Core\Model\Model;
 
 class MyModel extends Model
@@ -300,7 +300,7 @@ class MyModel extends Model
 Model state is dynamic, so if we change state, the cache key should be refresh that we can make sure we get same data when state is same,
 but get new data if state is changed.
  
-``` php
+```php
 public function getData()
 {
 	// Will generate a id look like: d967f4557f17dd542ece0f8a7b57b4f697c9b189
@@ -323,7 +323,7 @@ public function getData()
 
 If you trace `getCacheId()` at the parent, you will see:
 
-``` php
+```php
 public function getCacheId($id = null)
 {
 	$id = $id . json_encode($this->state->toArray());
@@ -334,7 +334,7 @@ public function getCacheId($id = null)
 
 So override cache id rule is very easy, we can add some custom elements to hash:
 
-``` php
+```php
 public function getCacheId($id = null)
 {
 	$id .= json_encode($this->get('query.filter'));
@@ -354,7 +354,7 @@ public function getCacheId($id = null)
  
 There is a simple way to quickly use cache, `fetch()` will auto check the cache exists or not and execute the callback to get data:
 
-``` php
+```php
 public function getData()
 {
 	$callback = function()
