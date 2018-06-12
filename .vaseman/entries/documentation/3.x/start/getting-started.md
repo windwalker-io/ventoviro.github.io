@@ -8,6 +8,19 @@ This chapter, we'll start a simple page with MVC to show how to develop simple w
 
 We assume you install Windwalker in `http://localhost/windwalker`, so you must use `http://localhost/windwalker/www` to open Windwalker home page.
 
+## Enable Simple Route
+
+Set `routing.simple_route` to TRUE to make sure we can develop our app in a simpler mode.
+
+```yaml
+# etc/config.yml
+
+# ...
+
+routing:
+    simple_route: true
+```
+
 ## Create First Controller
 
 Let's create a php class in `src/Flower/Controller/Sakura/GetContrtoller.php`.
@@ -171,7 +184,7 @@ Our namespace start with `Flower\`, in Windwalker, we call this "Flower package"
  class, but controller and routing are works because Windwalker has a default simple routing help us mapping controller
  with URL, so `/flower/sakura` will auto direct to `Flower\Controller\Sakura\GetController`.
 
-Simple routing is very slow so we can disable it in `etc/config.yml`
+Simple routing has low performance so we can disable it in `etc/config.yml`
 
 ```yaml
 # etc/config.yml

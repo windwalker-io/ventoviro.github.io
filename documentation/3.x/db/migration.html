@@ -396,7 +396,7 @@ class InitFlowerTable extends AbstractMigration
             $schema-&gt;char('language')-&gt;length(7)-&gt;comment('Language');
             $schema-&gt;text('params')-&gt;comment('Params');
 
-            $schema-&gt;addIndex('alias');
+            $schema-&gt;addIndex('alias(150)');
             $schema-&gt;addIndex('language');
             $schema-&gt;addIndex('created_by');
         }, true);
@@ -411,6 +411,12 @@ class InitFlowerTable extends AbstractMigration
     }
 }</code></pre>
 <p>See other schema operations: <a href="table-schema.html">Table and Schema</a></p>
+<h3>Charset and Collation</h3>
+<p>After Windwalker 3.4, default charset set to <code>utf8mb4</code>, you will unable to add index to <code>varchar(255)</code> since it will make key length too long.</p>
+<p>Consider use <code>-&gt;length(190)</code> or limit key length by <code>$schema-&gt;addIndex('alias(150)')</code>.</p>
+<p>If you want to set default charset back to <code>utf8</code>, add:</p>
+<pre><code class="language-php">AbstractMigration::#defaultCharset = AbstractMigration::CHARSET_UTF8;</code></pre>
+<p>at first migration class.</p>
 <h3>Check Status</h3>
 <p>Use this command to show migration status.</p>
 <pre><code class="language-bash">php windwalker migration status</code></pre>

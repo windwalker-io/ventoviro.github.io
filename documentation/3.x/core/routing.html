@@ -311,23 +311,7 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Simple Routing</h2>
-<p>Windwalker will auto map URL to package and controller.</p>
-<ul>
-<li><code>/flower/sakura</code> ==&gt; <code>Flower\Controller\Sakura\GetController</code></li>
-<li><code>/foo/bar/baz</code> ==&gt; <code>Foo\Bar\Controller\Baz\GetController</code></li>
-</ul>
-<p>The <code>flower</code> and <code>foo/bar</code> will be namespace of this controller, and the last part (<code>sakura</code>, <code>baz</code>) will be controller name.</p>
-<p><code>GetController</code> is auto added, which means this is a default <code>GET</code> request, similar to <code>indexAction</code> in other frameworks.
-Since Windwalker uses single action controller, a controller class only handle one action.</p>
-<p>If you send a <code>POST</code> request, the <code>SaveController</code> will be called instead. So we can use RESTful methods to handle our CRUD.</p>
-<p>Simple routing has low performance so we can disable it in <code>etc/config.yml</code></p>
-<pre><code class="language-yaml"># etc/config.yml
-
-routing:
-    simple_route: false</code></pre>
-<p>After disabled simple routing, we must register route profile to every page.</p>
-<h2>Register Routing</h2>
+                    <h2>Register Routing</h2>
 <p>Open <code>/etc/routing.yml</code> and add a new route profile.</p>
 <pre><code class="language-yaml">sakura:
     pattern: /flower/sakura

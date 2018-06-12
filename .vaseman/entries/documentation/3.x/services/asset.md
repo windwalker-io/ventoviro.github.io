@@ -96,6 +96,42 @@ Asset::addCSS('css/bootstrap.min.css'); // bootstrap.min.css
 Asset::addCSS('css/bootstrap.css'); // bootstrap.min.css
 ```
 
+### Include With SRI
+
+You can add Subresource Integrity to your asset file if you include it from CDN.
+
+```php
+$asset->addCSS('https://cdn.net/bootstrap.min.css', ['sri' => 'sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB']);
+$asset->addJS('https://cdn.net/bootstrap.min.js', ['sri' => 'sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T']);
+```
+
+Result:
+
+```html
+<link href="https://cdn.net/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<script src="https://cdn.net/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+```
+
+### Custom Attributes
+
+```php
+$asset->addJS('foo.js', [], ['async' => true, 'onload' => 'foo();']);
+```
+
+Result:
+
+```html
+<script src="foo.js" async onload="foo();"></script>
+```
+
+### Check File Exists
+
+```php
+if ($asset->exists('js/i18n/kr.js')) {
+    $asset->addJS('js/i18n/kr.js');
+}
+```
+
 ## Alias
 
 If you want to override an asset's URL, for instance, to modify a 3rd party scripts, you can use asset alias:
@@ -241,7 +277,7 @@ Now use this code to include `sakura.js` every where:
 \Flower\Script\FlowerScript::sakura('.mySakura', array('foo' => 'baz'));
 ```
 
-## Sync Package Assets
+## Link/Sync Package Assets
 
 Put your package asset files to `{package}/Resources/asset`, then you can run this command to sync asset files to
 web public root.

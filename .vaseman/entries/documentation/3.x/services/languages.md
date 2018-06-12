@@ -323,3 +323,11 @@ Twig
 {{ 'windwalker.language.test.flower' | sprintf('foo', 'bar') }}
 {{ 'windwalker.language.test.flower' | plural(5) }}
 ```
+
+## Short Function Alias
+
+Use `__()` or `trans()` instead full class call: `Translator::translate()`.
+
+You can add more arguments as `Translator::sprintf()`: `__($string, 'Hello');`
+
+And `plural($string, 3)` as `Translator::plural()`

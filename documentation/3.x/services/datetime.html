@@ -387,6 +387,23 @@ $datetime-&gt;toUnix(Chronos::TZ_LOCALE); // Same as true</code></pre>
 
 // Use different DB instance
 Chronos::getSqlFormat($db);</code></pre>
+<p>Also, you can get null date as empty date string:</p>
+<pre><code class="language-php">Chronos::getNullDate() === $emptyDate;</code></pre>
+<h2>Date Compare</h2>
+<p>You can use <code>compare()</code> to quickly compare two dates without create <code>DateTime</code> object.</p>
+<pre><code class="language-php">// 0: equal, 1: less than, 0: larger than.
+$result = Chronos::compare('now', $date);</code></pre>
+<p>Or use operator to compare:</p>
+<pre><code class="language-php">$boolean = Chronos::compare('now', '2018-03-02', '&lt;');</code></pre>
+<p>Supported operators:</p>
+<ul>
+<li><code>=</code></li>
+<li><code>!=</code></li>
+<li><code>&gt;</code>, <code>gt</code></li>
+<li><code>&gt;=</code>, <code>gte</code></li>
+<li><code>&lt;</code>, <code>lt</code></li>
+<li><code>&lt;=</code>, <code>lte</code></li>
+</ul>
                         <hr />
 
     <p class="text-center inner-top-sm">

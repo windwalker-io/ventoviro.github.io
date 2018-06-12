@@ -486,6 +486,10 @@ $config-&gt;get('language.loaded');</code></pre>
 <pre><code class="language-php">{{ 'windwalker.language.test.flower' | lang }}
 {{ 'windwalker.language.test.flower' | sprintf('foo', 'bar') }}
 {{ 'windwalker.language.test.flower' | plural(5) }}</code></pre>
+<h2>Short Function Alias</h2>
+<p>Use <code>__()</code> or <code>trans()</code> instead full class call: <code>Translator::translate()</code>.</p>
+<p>You can add more arguments as <code>Translator::sprintf()</code>: <code>__($string, 'Hello');</code></p>
+<p>And <code>plural($string, 3)</code> as <code>Translator::plural()</code></p>
                         <hr />
 
     <p class="text-center inner-top-sm">

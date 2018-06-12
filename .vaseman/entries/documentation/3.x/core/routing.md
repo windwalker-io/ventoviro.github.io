@@ -6,31 +6,6 @@ redirect:
 
 ---
 
-## Simple Routing
-
-Windwalker will auto map URL to package and controller.
-
-- `/flower/sakura` ==> `Flower\Controller\Sakura\GetController`
-- `/foo/bar/baz` ==> `Foo\Bar\Controller\Baz\GetController`
-
-The `flower` and `foo/bar` will be namespace of this controller, and the last part (`sakura`, `baz`) will be controller name.
-
-`GetController` is auto added, which means this is a default `GET` request, similar to `indexAction` in other frameworks.
- Since Windwalker uses single action controller, a controller class only handle one action.
-
-If you send a `POST` request, the `SaveController` will be called instead. So we can use RESTful methods to handle our CRUD.
-
-Simple routing has low performance so we can disable it in `etc/config.yml`
-
-```yaml
-# etc/config.yml
-
-routing:
-    simple_route: false
-```
-
-After disabled simple routing, we must register route profile to every page.
-
 ## Register Routing
 
 Open `/etc/routing.yml` and add a new route profile.

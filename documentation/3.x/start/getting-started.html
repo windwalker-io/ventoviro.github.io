@@ -313,6 +313,14 @@
                 <article class="article-content">
                     <p>This chapter, we'll start a simple page with MVC to show how to develop simple web application in Windwalker.</p>
 <p>We assume you install Windwalker in <code>http://localhost/windwalker</code>, so you must use <code>http://localhost/windwalker/www</code> to open Windwalker home page.</p>
+<h2>Enable Simple Route</h2>
+<p>Set <code>routing.simple_route</code> to TRUE to make sure we can develop our app in a simpler mode.</p>
+<pre><code class="language-yaml"># etc/config.yml
+
+# ...
+
+routing:
+    simple_route: true</code></pre>
 <h2>Create First Controller</h2>
 <p>Let's create a php class in <code>src/Flower/Controller/Sakura/GetContrtoller.php</code>.</p>
 <p>The <code>Flower</code> is package name, and <code>Sakura</code> is controller name, <code>GetController</code> means it is a default <code>GET</code> action, this equals to
@@ -428,7 +436,7 @@ add some new features.</p>
 <p>Our namespace start with <code>Flower\</code>, in Windwalker, we call this &quot;Flower package&quot;, currently we haven't create package
 class, but controller and routing are works because Windwalker has a default simple routing help us mapping controller
 with URL, so <code>/flower/sakura</code> will auto direct to <code>Flower\Controller\Sakura\GetController</code>.</p>
-<p>Simple routing is very slow so we can disable it in <code>etc/config.yml</code></p>
+<p>Simple routing has low performance so we can disable it in <code>etc/config.yml</code></p>
 <pre><code class="language-yaml"># etc/config.yml
 
 routing:

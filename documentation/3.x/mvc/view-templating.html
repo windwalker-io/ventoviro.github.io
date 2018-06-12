@@ -692,6 +692,14 @@ class SakurasJsonView extends StructureView
 }</code></pre>
 <p>In the example, a page will use different format by URL <code>format=html|json</code> and the destination view returned different content for client.</p>
 <p>You can create your <code>ResponseFactory::create($format)</code> and every thing will be automatically.</p>
+<h2>Helpers</h2>
+<h3>HTML Escape</h3>
+<p>Use <code>echo html_escape($string)</code> to escape HTML in PHP. If you want to convert <code>\n</code> to <code>&lt;br&gt;</code>, add second argument as TRUE.</p>
+<pre><code class="language-php">&lt;?php echo html_escape($string, true); ?&gt;</code></pre>
+<h3>Edge HTML Attributes Binding</h3>
+<p>Use <code>@attr()</code> to bind an attribute to variables:</p>
+<pre><code class="language-html">&lt;input type="text" @attr('required', $isRequired) /&gt;</code></pre>
+<p>The binding rule please see: <a href="https://github.com/ventoviro/windwalker-dom#attributes">https://github.com/ventoviro/windwalker-dom#attributes</a></p>
                         <hr />
 
     <p class="text-center inner-top-sm">

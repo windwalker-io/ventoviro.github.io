@@ -123,3 +123,33 @@ $otherLibrary->getDateTime()->format(Chronos::getSqlFormat());
 // Use different DB instance
 Chronos::getSqlFormat($db);
 ```
+
+Also, you can get null date as empty date string:
+
+```php
+Chronos::getNullDate() === $emptyDate;
+```
+
+## Date Compare
+
+You can use `compare()` to quickly compare two dates without create `DateTime` object.
+
+```php
+// 0: equal, 1: less than, 0: larger than.
+$result = Chronos::compare('now', $date);
+```
+
+Or use operator to compare:
+
+```php
+$boolean = Chronos::compare('now', '2018-03-02', '<');
+```
+
+Supported operators:
+
+- `=`
+- `!=`
+- `>`, `gt`
+- `>=`, `gte`
+- `<`, `lt`
+- `<=`, `lte`

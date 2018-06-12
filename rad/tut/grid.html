@@ -192,20 +192,24 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Articles List Manager</h2>
-<p>We must add more information to article grid page. Open <code>Model/ArticlesModel.php</code>, add some joined table to article.</p>
-<pre><code class="language-php">// src/Blog/Admin/Model/ArticlesModel.php
+<p>We must add more information to article grid page. Open <code>Repository/ArticlesRepository.php</code>, add some joined table to article.</p>
+<p>Use <code>from()</code> ... <code>leftJoin()</code> ...</p>
+<pre><code class="language-php">// src/Blog/Admin/Repository/ArticlesRepository.php
 
 // ...
 
-class ArticlesModel extends ListModel
+class ArticlesRepository extends ListRepository
 {
     // ...
 
     protected function configureTables()
     {
-        $this-&gt;addTable('article', Table::ARTICLES)
-            -&gt;addTable('category', Table::CATEGORIES, 'category.id = article.category_id');
+        $this-&gt;from('article', Table::ARTICLES)
+            -&gt;leftJoin('category', Table::CATEGORIES, 'category.id = article.category_id');
     }</code></pre>
+<p>Or just <code>addTable()</code>, the first <code>addTable()</code> will be <code>from()</code> and others will be join.</p>
+<pre><code class="language-php">$this-&gt;addTable('article', Table::ARTICLES)
+    -&gt;addTable('category', Table::CATEGORIES, 'category.id = article.category_id');</code></pre>
 <p>After table joined, let's add some data in grid template.</p>
 <pre><code class="language-php">&lt;!-- src/Blog/Admin/Templates/articles/articles.blade.php --&gt;
 
@@ -254,16 +258,16 @@ class ArticlesModel extends ListModel
 <p><img src="https://i.imgur.com/Yeezqqs.jpg" alt="Imgur" /></p>
 <h2>Comment Grid</h2>
 <p>Also, we do same thing to <code>comments</code>.</p>
-<pre><code class="language-php">// src/Blog/Admin/Model/CommentsModel.php
+<pre><code class="language-php">// src/Blog/Admin/Repository/CommentsRepository.php
 
-class CommentsModel extends ListModel
+class CommentsRepository extends ListRepository
 {
     // ...
 
     protected function configureTables()
     {
-        $this-&gt;addTable('comment', Table::COMMENTS)
-            -&gt;addTable('article', Table::ARTICLES, 'article.id = comment.article_id');
+        $this-&gt;from('comment', Table::COMMENTS)
+            -&gt;leftJoin('article', Table::ARTICLES, 'article.id = comment.article_id');
     }
 
     // ...</code></pre>
@@ -354,11 +358,11 @@ class CommentsModel extends ListModel
 <p>The result will be:</p>
 <p><img src="https://i.imgur.com/6E5l53f.jpg" alt="Imgur" /></p>
 <h3>Get Joined Fields</h3>
-<p>The <code>ListModel</code> helps us create table join and return object list. All joined fields will add table name alias as prefix.</p>
-<p>For example, if you write this join condition in model:</p>
-<pre><code class="language-php">$this-&gt;addTable('article', Table::ARTICLES)
-    -&gt;addTable('category', Table::CATEGORIES, 'category.id = article.category_id')
-    -&gt;addTable('user', Table::USERS, 'user.id = article.created_by');</code></pre>
+<p>The <code>ListRepository</code> helps us create table join and return object list. All joined fields will add table name alias as prefix.</p>
+<p>For example, if you write this join condition in repository:</p>
+<pre><code class="language-php">$this-&gt;from('article', Table::ARTICLES)
+    -&gt;leftJoin('category', Table::CATEGORIES, 'category.id = article.category_id')
+    -&gt;leftJoin('user', Table::USERS, 'user.id = article.created_by');</code></pre>
 <p>Then you can get property in view by this way:</p>
 <pre><code class="language-php">foreach ($items as $item)
 {

@@ -108,3 +108,18 @@ After installed, use browser open `/www` then you will see default landing page.
 | `/README.md` | Readme file |
 | `/composer.json` | Composer configuration file |
 | `.mode` | The env mode config file |
+
+## Apache Alias
+
+If you found Windwalker can not work as expected in Apache Alias, please modify `www/.htaccess`.
+
+If your Alias is `/flower`, then uncomment and change:
+
+```
+# RewriteBase /
+```
+to
+ 
+```
+RewriteBase /flower/
+```

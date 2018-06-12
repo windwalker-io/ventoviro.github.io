@@ -487,3 +487,23 @@ class GetController extends AbstractController
 In the example, a page will use different format by URL `format=html|json` and the destination view returned different content for client.
  
 You can create your `ResponseFactory::create($format)` and every thing will be automatically.
+
+## Helpers
+
+### HTML Escape
+
+Use `echo html_escape($string)` to escape HTML in PHP. If you want to convert `\n` to `<br>`, add second argument as TRUE.
+
+```php
+<?php echo html_escape($string, true); ?>
+```
+
+### Edge HTML Attributes Binding
+
+Use `@attr()` to bind an attribute to variables:
+
+```html
+<input type="text" @attr('required', $isRequired) />
+```
+
+The binding rule please see: https://github.com/ventoviro/windwalker-dom#attributes

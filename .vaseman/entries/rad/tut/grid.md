@@ -7,22 +7,31 @@ title: Prepare Grid View
 
 ## Articles List Manager
 
-We must add more information to article grid page. Open `Model/ArticlesModel.php`, add some joined table to article.
+We must add more information to article grid page. Open `Repository/ArticlesRepository.php`, add some joined table to article.
+
+Use `from()` ... `leftJoin()` ...
 
 ``` php
-// src/Blog/Admin/Model/ArticlesModel.php
+// src/Blog/Admin/Repository/ArticlesRepository.php
 
 // ...
 
-class ArticlesModel extends ListModel
+class ArticlesRepository extends ListRepository
 {
 	// ...
 
 	protected function configureTables()
 	{
-		$this->addTable('article', Table::ARTICLES)
-        	->addTable('category', Table::CATEGORIES, 'category.id = article.category_id');
+		$this->from('article', Table::ARTICLES)
+        	->leftJoin('category', Table::CATEGORIES, 'category.id = article.category_id');
 	}
+```
+
+Or just `addTable()`, the first `addTable()` will be `from()` and others will be join.
+
+```php
+$this->addTable('article', Table::ARTICLES)
+    ->addTable('category', Table::CATEGORIES, 'category.id = article.category_id');
 ```
 
 After table joined, let's add some data in grid template.
@@ -82,16 +91,16 @@ Now Category title has been added to articles view.
 Also, we do same thing to `comments`.
 
 ``` php
-// src/Blog/Admin/Model/CommentsModel.php
+// src/Blog/Admin/Repository/CommentsRepository.php
 
-class CommentsModel extends ListModel
+class CommentsRepository extends ListRepository
 {
 	// ...
 
 	protected function configureTables()
 	{
-		$this->addTable('comment', Table::COMMENTS)
-			->addTable('article', Table::ARTICLES, 'article.id = comment.article_id');
+		$this->from('comment', Table::COMMENTS)
+			->leftJoin('article', Table::ARTICLES, 'article.id = comment.article_id');
 	}
 
 	// ...
@@ -191,14 +200,14 @@ The result will be:
 
 ### Get Joined Fields
 
-The `ListModel` helps us create table join and return object list. All joined fields will add table name alias as prefix.
+The `ListRepository` helps us create table join and return object list. All joined fields will add table name alias as prefix.
 
-For example, if you write this join condition in model:
+For example, if you write this join condition in repository:
 
 ```php
-$this->addTable('article', Table::ARTICLES)
-    ->addTable('category', Table::CATEGORIES, 'category.id = article.category_id')
-    ->addTable('user', Table::USERS, 'user.id = article.created_by');
+$this->from('article', Table::ARTICLES)
+    ->leftJoin('category', Table::CATEGORIES, 'category.id = article.category_id')
+    ->leftJoin('user', Table::USERS, 'user.id = article.created_by');
 ```
 
 Then you can get property in view by this way:

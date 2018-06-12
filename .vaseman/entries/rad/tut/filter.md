@@ -13,7 +13,7 @@ Let's add foreign fields search to articles page.
 Open `Form/articles/GridDefinition.php` and add two new options in search group. It means we told model to search `category.title` and
 `category.alias` two more fields.
 
-The `category.` is what you set in `ListModel::configureTable()`, please see [Grid section](http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields)
+The `category.` is what you set in `ListRepository::configureTable()`, please see [Grid section](http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields)
 to know how it works.
 
 ``` php
@@ -126,7 +126,7 @@ This is the result that we can filter by category ID.
 
 ![Imgur](https://i.imgur.com/R0v5R20.jpg)
 
-The `category.` is what you set in `ListModel::configureTable()`, please see [Grid section](http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields)
+The `category.` is what you set in `ListRepository::configureTable()`, please see [Grid section](http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields)
 to know how it works.
 
 ### Add Date Filter
@@ -170,11 +170,11 @@ class GridDefinition extends AbstractFieldDefinition
 		// ...
 ```
 
-The start and end date use `>=` and `<=` to filter items, not `=`, so we must configure it in `ArticlesModel`.
+The start and end date use `>=` and `<=` to filter items, not `=`, so we must configure it in `ArticlesRepository`.
 
 ``` php
 
-class ArticlesModel extends ListModel
+class ArticlesRepository extends ListRepository
 {
 	// ...
 

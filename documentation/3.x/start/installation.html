@@ -466,6 +466,12 @@ Install complete.</code></pre>
 </tr>
 </tbody>
 </table>
+<h2>Apache Alias</h2>
+<p>If you found Windwalker can not work as expected in Apache Alias, please modify <code>www/.htaccess</code>.</p>
+<p>If your Alias is <code>/flower</code>, then uncomment and change:</p>
+<pre><code># RewriteBase /</code></pre>
+<p>to</p>
+<pre><code>RewriteBase /flower/</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">

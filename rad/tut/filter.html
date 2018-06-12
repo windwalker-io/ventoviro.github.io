@@ -196,7 +196,7 @@
 Let's add foreign fields search to articles page.</p>
 <p>Open <code>Form/articles/GridDefinition.php</code> and add two new options in search group. It means we told model to search <code>category.title</code> and
 <code>category.alias</code> two more fields.</p>
-<p>The <code>category.</code> is what you set in <code>ListModel::configureTable()</code>, please see <a href="http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields">Grid section</a>
+<p>The <code>category.</code> is what you set in <code>ListRepository::configureTable()</code>, please see <a href="http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields">Grid section</a>
 to know how it works.</p>
 <pre><code class="language-php">// src/Blog/Admin/Articles/GridDefinition.php
 
@@ -284,7 +284,7 @@ class GridDefinition extends AbstractFieldDefinition
         // ...</code></pre>
 <p>This is the result that we can filter by category ID.</p>
 <p><img src="https://i.imgur.com/R0v5R20.jpg" alt="Imgur" /></p>
-<p>The <code>category.</code> is what you set in <code>ListModel::configureTable()</code>, please see <a href="http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields">Grid section</a>
+<p>The <code>category.</code> is what you set in <code>ListRepository::configureTable()</code>, please see <a href="http://localhost/windwalker/site/rad/tut/grid.html#get-joined-fields">Grid section</a>
 to know how it works.</p>
 <h3>Add Date Filter</h3>
 <p>We add <code>Start Date</code> and <code>End Date</code> to filter a time period.</p>
@@ -322,9 +322,9 @@ class GridDefinition extends AbstractFieldDefinition
                 -&gt;placeholder('End Date');
 
         // ...</code></pre>
-<p>The start and end date use <code>&gt;=</code> and <code>&lt;=</code> to filter items, not <code>=</code>, so we must configure it in <code>ArticlesModel</code>.</p>
+<p>The start and end date use <code>&gt;=</code> and <code>&lt;=</code> to filter items, not <code>=</code>, so we must configure it in <code>ArticlesRepository</code>.</p>
 <pre><code class="language-php">
-class ArticlesModel extends ListModel
+class ArticlesRepository extends ListRepository
 {
     // ...
 

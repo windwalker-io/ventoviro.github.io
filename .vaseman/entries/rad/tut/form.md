@@ -189,7 +189,7 @@ class EditDefinition extends AbstractFieldDefinition
 }
 ```
 
-You will see a Model select field, if you click the `Select an Item` button, will open a modal for select article.
+You will see a Repository select field, if you click the `Select an Item` button, will open a modal for select article.
 
 ![Imgur](https://i.imgur.com/AvKB3xf.jpg)
 
