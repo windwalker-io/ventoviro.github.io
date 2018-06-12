@@ -364,8 +364,7 @@ $html = (string) new HtmlElement('button', 'Click', $attrs);</code></pre>
 
 echo $html;</code></pre>
 <p>OR we can iterate it:</p>
-<pre><code class="language-php">foreach ($html as $element)
-{
+<pre><code class="language-php">foreach ($html as $element) {
     echo $element;
 }</code></pre>
 <h3>Attributes</h3>
@@ -603,8 +602,7 @@ $grid-&gt;setRowCell('b', 'B');
 $grid-&gt;setRowCell('c', 'C');
 
 // Loop 3 rows
-foreach (range(1, 3) as $i)
-{
+foreach (range(1, 3) as $i) {
     // Add a TR with class row-x
     $grid-&gt;addRow(['class' =&gt; 'row-' . $i]);
 
@@ -679,8 +677,7 @@ $grid = new KeyValueGrid;
 
 $grid-&gt;addHeader('Key', 'Value');
 
-foreach ($items as $key =&gt; $value)
-{
+foreach ($items as $key =&gt; $value) {
     $grid-&gt;addItem($key, $value);
 }
 
@@ -708,16 +705,14 @@ $grid-&gt;addHeader('Key', 'Value');
 // Add a row title
 $grid-&gt;addTitle('This is a subtitle');
 
-foreach ($items as $key =&gt; $value)
-{
+foreach ($items as $key =&gt; $value) {
     $grid-&gt;addItem($key, $value);
 }
 
 // Add a row title
 $grid-&gt;addTitle('This is another subtitle');
 
-foreach ($items as $key =&gt; $value)
-{
+foreach ($items as $key =&gt; $value) {
     $grid-&gt;addItem($key, $value);
 }
 

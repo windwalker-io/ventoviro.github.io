@@ -96,8 +96,7 @@ echo $html;
 OR we can iterate it:
 
 ```php
-foreach ($html as $element)
-{
+foreach ($html as $element) {
     echo $element;
 }
 ```
@@ -440,8 +439,7 @@ $grid->setRowCell('b', 'B');
 $grid->setRowCell('c', 'C');
 
 // Loop 3 rows
-foreach (range(1, 3) as $i)
-{
+foreach (range(1, 3) as $i) {
     // Add a TR with class row-x
     $grid->addRow(['class' => 'row-' . $i]);
 
@@ -543,8 +541,7 @@ $grid = new KeyValueGrid;
 
 $grid->addHeader('Key', 'Value');
 
-foreach ($items as $key => $value)
-{
+foreach ($items as $key => $value) {
     $grid->addItem($key, $value);
 }
 
@@ -590,16 +587,14 @@ $grid->addHeader('Key', 'Value');
 // Add a row title
 $grid->addTitle('This is a subtitle');
 
-foreach ($items as $key => $value)
-{
+foreach ($items as $key => $value) {
     $grid->addItem($key, $value);
 }
 
 // Add a row title
 $grid->addTitle('This is another subtitle');
 
-foreach ($items as $key => $value)
-{
+foreach ($items as $key => $value) {
     $grid->addItem($key, $value);
 }
 

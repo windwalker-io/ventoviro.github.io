@@ -389,8 +389,7 @@ $items = $db-&gt;setQuery('SELECT * FROM #__articles')-&gt;loadAll();
 <h2>Iterating Over Results</h2>
 <pre><code class="language-php">$iterator = $db-&gt;setQuery('SELECT * FROM #__articles WHERE state = 1')-&gt;getIterator();
 
-foreach ($iterator as $row)
-{
+foreach ($iterator as $row) {
     // Deal with $row
 }</code></pre>
 <p>It allows also to count the results.</p>

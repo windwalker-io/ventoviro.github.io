@@ -67,8 +67,7 @@ $str = StringObject::create('Hello');
 $str[3]; // Get letter
 
 // Iterator
-foreach ($str as $letter)
-{
+foreach ($str as $letter) {
     echo $letter
 }
 

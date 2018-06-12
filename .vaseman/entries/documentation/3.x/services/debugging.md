@@ -83,8 +83,7 @@ Go to system page.
 You can add multiple data with same key, it will be wrapped with array.
 
 ```php
-foreach ($list as $item)
-{
+foreach ($list as $item) {
     DebuggerHelper::addCustomData('test-data', $item);
 }
 ```

@@ -237,8 +237,7 @@ class FlowerSeeder extends \Windwalker\Core\Seeder\AbstractSeeder
 
 		// Create your fake data...
 
-		foreach ($data as $item)
-		{
+		foreach ($data as $item) {
 			$this->db->getWriter()->insertOne('flowers', $item);
 
 			// Or use DataMapper
@@ -353,11 +352,9 @@ class ArticleSeeder extends AbstractSeeder
 		$articleMapper = new DataMapper('articles');
 
 		// Create articles for every user in database
-		foreach ($users as $user)
-		{
+		foreach ($users as $user) {
 			// Every use 10 articles
-			foreach (range(1, 10) as $i)
-			{
+			foreach (range(1, 10) as $i) {
 				// Use Faker to generate fake data
 				$article = array(
 					'title'     => $faker->sentence(),

@@ -98,8 +98,7 @@ $pass = (new Password)->create('pass123456');
 
 $model = UserModel::getInstance();
 
-foreach (range(1, 50) as $i)
-{
+foreach (range(1, 50) as $i) {
     $data = [
         'name' => $faker->name,
         'username' => $faker->userName,

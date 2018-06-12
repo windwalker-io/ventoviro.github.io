@@ -122,8 +122,7 @@ $items = $db->setQuery('SELECT * FROM #__articles')->loadAll();
 ```php
 $iterator = $db->setQuery('SELECT * FROM #__articles WHERE state = 1')->getIterator();
 
-foreach ($iterator as $row)
-{
+foreach ($iterator as $row) {
     // Deal with $row
 }
 ```

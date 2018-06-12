@@ -355,8 +355,7 @@ $data['flower'] = 'Sunflower';
 echo $data['flower'];</code></pre>
 <h3>Iterator</h3>
 <p><code>Data</code> object can directly use in foreach as iterator:</p>
-<pre><code class="language-php">foreach ($data as $key =&gt; $value)
-{
+<pre><code class="language-php">foreach ($data as $key =&gt; $value) {
     echo $key . ' =&gt; ' . $value;
 }
 
@@ -406,8 +405,7 @@ $dataSet = new DataSet(
 <pre><code class="language-php">$dataSet[] = new Data(array('id' =&gt; 6, 'title' =&gt; 'Lion'));</code></pre>
 <h3>Iterator</h3>
 <p>We can also using iterator to loop all elements:</p>
-<pre><code class="language-php">foreach ($dataSet as $data)
-{
+<pre><code class="language-php">foreach ($dataSet as $data) {
     echo $data-&gt;title;
 }</code></pre>
 <h3>The Batch Getter &amp; Setter</h3>

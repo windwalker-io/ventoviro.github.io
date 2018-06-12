@@ -326,8 +326,7 @@ $items = $db-&gt;getReader($sql)-&gt;loadObjectList();</code></pre>
 $stat2 = $db-&gt;getReader($sql2);
 
 // Thses 2 object will be diferent connection cursors so they can load items parallelly.
-foreach ($stat1 as $item1)
-{
+foreach ($stat1 as $item1) {
     $stat2-&gt;loadObjectList();
 }</code></pre>
 <h3>loadObjectList()</h3>
@@ -397,8 +396,7 @@ $id = $db-&gt;getReader('SELECT LAST_INSERT_ID()')-&gt;loadResult();</code></pre
 <h3>Run as Iterator</h3>
 <pre><code class="language-php">$reader = $db-&gt;getReader($sql);
 
-foreach ($reader as $item)
-{
+foreach ($reader as $item) {
     $item-&gt;title;
 }</code></pre>
 <h3>About PDO Fetch</h3>

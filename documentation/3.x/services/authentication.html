@@ -388,8 +388,7 @@ $pass = (new Password)-&gt;create('pass123456');
 
 $model = UserModel::getInstance();
 
-foreach (range(1, 50) as $i)
-{
+foreach (range(1, 50) as $i) {
     $data = [
         'name' =&gt; $faker-&gt;name,
         'username' =&gt; $faker-&gt;userName,

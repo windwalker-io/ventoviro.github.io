@@ -449,8 +449,7 @@ $files   = Filesystem::files($path, true);
 $items   = Filesystem::items($path, true);</code></pre>
 <p>The simple finder are same as Folder, but it will not scan all files instantly, but returns an Iterator instead,
 we can send this iterator to <code>foreach</code> and do some filter by <code>SplFileInfo</code> object.</p>
-<pre><code class="language-php">foreach ($items as $item)
-{
+<pre><code class="language-php">foreach ($items as $item) {
     if ($item-&gt;isDir() || $item-&gt;isDot()) {
         continue;
     }

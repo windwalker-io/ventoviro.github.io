@@ -226,8 +226,7 @@ The simple finder are same as Folder, but it will not scan all files instantly, 
  we can send this iterator to `foreach` and do some filter by `SplFileInfo` object.
 
 ```php
-foreach ($items as $item)
-{
+foreach ($items as $item) {
     if ($item->isDir() || $item->isDot()) {
         continue;
     }

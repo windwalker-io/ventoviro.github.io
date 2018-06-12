@@ -406,8 +406,7 @@ $query->where('title = :title')
 // Now do execute of this query
 $bounded =& $query->getBounded();
 
-foreach ($bounded as $key => $data)
-{
+foreach ($bounded as $key => $data) {
     $pdoStatement->bindParam($key, $data->value, $data->dataType, $data->length, $data->driverOptions);
 }
 

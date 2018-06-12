@@ -513,8 +513,7 @@ class UsersField extends ListField
 
         $options = array();
 
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             $options[] = new Option($user->name, $user->id);
         }
 

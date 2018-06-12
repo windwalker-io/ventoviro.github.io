@@ -558,8 +558,7 @@ $query-&gt;where('title = :title')
 // Now do execute of this query
 $bounded =&amp; $query-&gt;getBounded();
 
-foreach ($bounded as $key =&gt; $data)
-{
+foreach ($bounded as $key =&gt; $data) {
     $pdoStatement-&gt;bindParam($key, $data-&gt;value, $data-&gt;dataType, $data-&gt;length, $data-&gt;driverOptions);
 }
 

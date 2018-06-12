@@ -79,8 +79,7 @@ echo $data['flower'];
 `Data` object can directly use in foreach as iterator:
 
 ```php
-foreach ($data as $key => $value)
-{
+foreach ($data as $key => $value) {
     echo $key . ' => ' . $value;
 }
 
@@ -166,8 +165,7 @@ $dataSet[] = new Data(array('id' => 6, 'title' => 'Lion'));
 We can also using iterator to loop all elements:
 
 ```php
-foreach ($dataSet as $data)
-{
+foreach ($dataSet as $data) {
     echo $data->title;
 }
 ```

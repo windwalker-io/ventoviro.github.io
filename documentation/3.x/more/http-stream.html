@@ -461,8 +461,7 @@ $http-&gt;get('http://apple.com');
 // Do request and get responses array
 $responses = $http-&gt;resolve();
 
-foreach ($responses as $response)
-{
+foreach ($responses as $response) {
     echo $response-&gt;getBody()-&gt;__toString();
 }
 
@@ -471,8 +470,7 @@ $errors = $http-&gt;getErrors();</code></pre>
 <p>Use callback:</p>
 <pre><code class="language-php">$http-&gt;resolve(function ($responses, $errors, $http)
 {
-    foreach ($responses as $response)
-    {
+    foreach ($responses as $response) {
         echo $response-&gt;getBody()-&gt;__toString();
     }
 });</code></pre>

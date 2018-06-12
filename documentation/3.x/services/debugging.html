@@ -355,8 +355,7 @@ class AjaxController extends Controller
 <p>Go to system page.</p>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/14170215/ff20a048-f75e-11e5-992e-9fc8eaa4105c.jpg" alt="system" /></p>
 <p>You can add multiple data with same key, it will be wrapped with array.</p>
-<pre><code class="language-php">foreach ($list as $item)
-{
+<pre><code class="language-php">foreach ($list as $item) {
     DebuggerHelper::addCustomData('test-data', $item);
 }</code></pre>
 <h3>Debug Flash Messages</h3>

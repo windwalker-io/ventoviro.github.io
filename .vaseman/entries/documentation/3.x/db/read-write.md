@@ -27,8 +27,7 @@ $stat1 = $db->getReader($sql1);
 $stat2 = $db->getReader($sql2);
 
 // Thses 2 object will be diferent connection cursors so they can load items parallelly.
-foreach ($stat1 as $item1)
-{
+foreach ($stat1 as $item1) {
     $stat2->loadObjectList();
 }
 ```
@@ -156,8 +155,7 @@ $id = $db->getReader('SELECT LAST_INSERT_ID()')->loadResult();
 ```php
 $reader = $db->getReader($sql);
 
-foreach ($reader as $item)
-{
+foreach ($reader as $item) {
     $item->title;
 }
 ```
