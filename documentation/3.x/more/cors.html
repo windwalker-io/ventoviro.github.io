@@ -335,7 +335,7 @@ Access-Control-Allow-Origin: *</code></pre>
 <h2>Dynamically Return Allow Origins</h2>
 <p>Use wildcard (<code>*</code>) to Allow-Origin is not recommended, you can save domains which you allowed in system and add them
 to header dynamically.</p>
-<pre><code class="language-php">$allowOrigins = $model-&gt;getMyAllowOrigins();
+<pre><code class="language-php">$allowOrigins = $repo-&gt;getMyAllowOrigins();
 
 $origin = $this-&gt;input-&gt;server-&gt;getUrl('HTTP_ORIGIN');
 

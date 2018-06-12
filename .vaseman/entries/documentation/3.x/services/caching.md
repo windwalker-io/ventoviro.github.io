@@ -105,9 +105,7 @@ if (!$cache->exists('flower')) {
     $data = $flowerMapper->loadAll();
 
     $cache->set('flower', $data);
-}
-else
-{
+} else {
     $data = $cache->get('flower');
 }
 

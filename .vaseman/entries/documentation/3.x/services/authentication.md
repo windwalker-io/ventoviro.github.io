@@ -14,19 +14,19 @@ Windwalker user system is extendable, before we start use user auth, we must do 
 
 ## Create UserHandler
 
-`UserHandlerInterface` help us handler user CRUD and login/logout actions, create a Model implements `UserHandlerInterface`
+`UserHandlerInterface` help us handler user CRUD and login/logout actions, create a Repository implements `UserHandlerInterface`
 in your package.
 
 ```php
-namespace Flower\Model;
+namespace Flower\Repository;
 
-use Windwalker\Core\Model\DatabaseModelRepository;
+use Windwalker\Core\Repository\DatabaseRepository;
 use Windwalker\Core\User\UserData;
 use Windwalker\Core\User\UserDataInterface;
 use Windwalker\Core\User\UserHandlerInterface;
 use Windwalker\Ioc;
 
-class UserModel extends DatabaseModelRepository implements UserHandlerInterface
+class UserRepository extends DatabaseRepository implements UserHandlerInterface
 {
 	protected $table = 'users';
 
@@ -96,7 +96,7 @@ $faker = \Faker\Factory::create();
 // Please do not use `pass123456` in production site
 $pass = (new Password())->create('pass123456');
 
-$model = UserModel::getInstance();
+$repo = UserRepository::getInstance();
 
 foreach (range(1, 50) as $i) {
     $data = [
@@ -106,7 +106,7 @@ foreach (range(1, 50) as $i) {
         'password' => $pass
     ];
 
-    $model->save(new UserData($data));
+    $repo->save(new UserData($data));
 
     $this->outCounting();
 }
@@ -119,7 +119,7 @@ Add this handler to `etc/app/web.php`:
 
 
 	'user' => [
-		'handler' => \Flower\Model\UserModel::class,
+		'handler' => \Flower\Repository\UserRepository::class,
 		'methods' => [
 		],
 		'policies' => [
@@ -196,7 +196,7 @@ We create a method class to find user from database.
 ```php
 namespace Flower\User;
 
-use Flower\Model\UserModel;
+use Flower\Repository\UserRepository;
 use Windwalker\Authentication\Authentication;
 use Windwalker\Authentication\Credential;
 use Windwalker\Authentication\Method\AbstractMethod;
@@ -222,7 +222,7 @@ class DatabaseMethod extends AbstractMethod
 
 		// Get User from database
 		// You can also use User::get(['username' => $credential->username])
-		$user = UserModel::getInstance()->load(['username' => $credential->username]);
+		$user = UserRepository::getInstance()->load(['username' => $credential->username]);
 
 		if ($user->isNull()) {
 			$this->status = Authentication::USER_NOT_FOUND;

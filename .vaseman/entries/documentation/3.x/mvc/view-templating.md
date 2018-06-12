@@ -422,8 +422,8 @@ class SakurasHtmlView extends HtmlView
 	 */
 	protected function prepareData($data)
 	{
-		$data->items = $this->model->getItems();
-		$data->pagination = new Pagination($this->model->get('page'));
+		$data->items = $this->repository->getItems();
+		$data->pagination = new Pagination($this->repository->get('page'));
 		$data->title = 'Sakuras List';
 		$data->metadata = 'Sakuras metadata';
 	}
@@ -446,9 +446,9 @@ class SakurasJsonView extends StructureView
 	 */
 	protected function prepareData($structure)
 	{
-		$page = $this->model->get('page');
+		$page = $this->repository->get('page');
 
-		$structure->set('items', $this->model->getItems());
+		$structure->set('items', $this->repository->getItems());
 		$structure->set('next', $this->router->to('sakuras')->page($page));
 	}
 }

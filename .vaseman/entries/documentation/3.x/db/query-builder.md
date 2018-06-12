@@ -14,7 +14,7 @@ $db = Ioc::getDatabase();
 $query = $db->getQuery(true); // TRUE means get a new query
 ```
 
-In DatabaseModel
+In DatabaseRepository
 
 ```php
 $query = $this->db->getQuery(true);

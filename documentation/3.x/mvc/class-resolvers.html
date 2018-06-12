@@ -331,17 +331,17 @@ we can prepare a set of default controller in other package, and tell windwalker
 }</code></pre>
 <p>Now if <code>Flower\Controller\Sakura\{action}</code> not exists, Windwalker will find controller from <code>Animal\Controller\Sakura\{action}</code>.
 It is flexible to help us organize our packages.</p>
-<h2>View And Model</h2>
-<p>You can also use the same way to add default View and Model paths.</p>
+<h2>View And Repository</h2>
+<p>You can also use the same way to add default View and Repository paths.</p>
 <pre><code class="language-php">$this-&gt;getMvcResolver()-&gt;addNamespace('Animal', Priority::NORMAL);</code></pre>
-<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getModel('Sakura')</code>, and these two classes not exists, Windwalker
+<p>When controller <code>$this-&gt;getView('Sakura')</code> or <code>$this-&gt;getRepository('Sakura')</code>, and these two classes not exists, Windwalker
 will find from Animal package as default object.</p>
 <p>We can also set default path separately.</p>
 <pre><code class="language-php">$mvcResolver = $this-&gt;getMvcResolver();
 
 $mvcResolver-&gt;getControllerResolver()-&gt;addNamespace('Animal\Controller');
 $mvcResolver-&gt;getViewResolver()-&gt;addNamespace('Animal\View');
-$mvcResolver-&gt;getModelResolver()-&gt;addNamespace('Animal\Model');</code></pre>
+$mvcResolver-&gt;getRepositoryResolver()-&gt;addNamespace('Animal\Repository');</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">

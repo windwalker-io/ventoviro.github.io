@@ -1,22 +1,22 @@
 ---
 layout: documentation.twig
-title: Model and Database
+title: Repository and Database
 
 ---
 
-## What is Model
+## What is Repository
 
-Model is an implementation of repository pattern in Windwalker, it maintains some low-layer DB handler like DataMapper
+Repository is a Repository class which implemented the repository pattern in Windwalker, it contains some low-layer DB handler like DataMapper
 or ActiveRecord and help us do more database operation logic.
 
-### ModelRepository
+### Repository
 
-`ModelRepository` is a very simple class without and DB access. This is an example of using it:
+`Repository` is a very simple class without and DB access. This is an example of using it:
 
 ```php
-use Windwalker\Core\Model\ModelRepository;
+use Windwalker\Core\Repository\Repository;
 
-class MyModel extends ModelRepository
+class MyRepository extends Repository
 {
 	public function getItem()
 	{
@@ -32,33 +32,33 @@ class MyModel extends ModelRepository
 
 ```php
 // In controller
-$model = new MyModel();
+$repo = new MyRepository();
 
-$item = $model->getItem();
+$item = $repo->getItem();
 
 // Do something...
 
-$model->save($item);
+$repo->save($item);
 ```
 
-Set source to ModelRepository:
+Set source to Repository:
 
 ```php
 // FileFinder is just an example
-$model = new MyModel(null, null, new FileFinder());
+$repo = new MyRepository(null, null, new FileFinder());
 
-// In model
+// In repository
 $this->source->find(...);
 ```
 
-## Database Model
+## Database Repository
 
-We can use `DatabaseModelRepository` to operate Database, here is a CRUD example, `db` is preset in Model so we can get it quickly:
+We can use `DatabaseRepository` to operate Database, here is a CRUD example, `db` is preset in Repository so we can get it quickly:
 
 ```php
-use Windwalker\Core\Model\DatabaseModelRepository;
+use Windwalker\Core\Repository\DatabaseRepository;
 
-class FlowerModel extends DatabaseModelRepository
+class FlowerRepository extends DatabaseRepository
 {
 	public function getItem($id)
 	{
@@ -75,9 +75,7 @@ class FlowerModel extends DatabaseModelRepository
 	{
 		if ($data->id) {
 			$this->db->getWriter()->updateOne('flowers', $data, 'id');
-		}
-		else
-		{
+		} else {
 			$this->db->getWriter()->insertOne('flowers', $data);
 		}
 	}
@@ -99,14 +97,14 @@ class FlowerModel extends DatabaseModelRepository
 DataMapper is a easy way to help us operate database:
 
 ```php
-use Windwalker\Core\Model\DatabaseModelRepository;
+use Windwalker\Core\Repository\DatabaseRepository;
 
-class FlowerModel extends DatabaseModelRepository
+class FlowerRepository extends DatabaseRepository
 {
     // Add table to make sure DataMapper use corrent DB table.
     protected $table = 'flowers';
 
-    // Keys is optional since Model will set ['id'] as default
+    // Keys is optional since Repository will set ['id'] as default
     // But you can override id if you use `uuid` or multiple primary key.
     protected $keys = 'id';
 
@@ -134,14 +132,14 @@ See [DataMapper](../db/datamapper.html)
 You can also use ActiveRecord to handle data saving.
 
 ```php
-use Windwalker\Core\Model\DatabaseModelRepository;
+use Windwalker\Core\Repository\DatabaseRepository;
 
-class FlowerModel extends DatabaseModelRepository
+class FlowerRepository extends DatabaseRepository
 {
     // Add table to make sure Record use corrent DB table.
     protected $table = 'flowers';
 
-    // Keys is optional since Model will set ['id'] as default
+    // Keys is optional since Repository will set ['id'] as default
     // But you can override id if you use `uuid` or multiple primary key.
     protected $keys = 'id';
 
@@ -176,30 +174,30 @@ See [ActiveRecord](../db/active-record.html)
 
 ## Magic Method
 
-Model support a usage similar to NullObject pattern, if we call some method start with `get*()` or `load*()`, and this method not exists,
-Model will not raise error but only return `null`.
+Repository support a usage similar to NullObject pattern, if we call some method start with `get*()` or `load*()`, and this method not exists,
+Repository will not raise error but only return `null`.
 
 ```php
-use Windwalker\Core\Model\Model;
+use Windwalker\Core\Repository\Repository;
 
-// This is default model, does not have any custom methods
-$model = new Model();
+// This is default repository, does not have any custom methods
+$repo = new Repository();
 
 // These 2 methods will only return null
-$data = $model->getData();
+$data = $repo->getData();
 
-$list = $model->loadList();
+$list = $repo->loadList();
 ```
 
-So, we can use default Model to provide empty data for some object but won't breaking our program.
+So, we can use default Repository to provide empty data for some object but won't breaking our program.
  
-## Model State
+## Repository State
 
-Windwalker Model is stateful design, use state pattern can help ue create flexible data provider. 
+Windwalker Repository is stateful design, use state pattern can help ue create flexible data provider. 
 For example, we can change this state to get different data.
 
 ```php
-class MyModel extends DatabaseModel
+class MyRepository extends DatabaseRepository
 {
     // ...
 
@@ -227,16 +225,16 @@ class MyModel extends DatabaseModel
     }
 }
 
-$model = new MyModel();
+$repo = new MyRepository();
 
-$state = $model->getState();
+$state = $repo->getState();
 
-// Let's change model state
+// Let's change repository state
 $state->set('where.published', 1);
 $state->set('list.ordering', 'birth');
 $state->set('list.direction', 'DESC');
 
-$users = $model->getUsers();
+$users = $repo->getUsers();
 
 if (!$users) {
     $error = $state->get('error');
@@ -249,33 +247,33 @@ Using `get()` and `set()`
 
 ```php
 // Same as getState()->get();
-$model->get('where.author', 5);
+$repo->get('where.author', 5);
 
 // Same as getState()->set();
-$model->set('list.ordering', 'RAND()');
+$repo->set('list.ordering', 'RAND()');
 ```
 
 ##### State ArrayAccess
 
 ```php
 // Same as getState()->get();
-$data = $model['list.ordering'];
+$data = $repo['list.ordering'];
 
 // Same as getState()->set();
-$model['list.ordering'] = 'created_time';
+$repo['list.ordering'] = 'created_time';
 ```
 
-## Model Caching
+## Repository Caching
 
-Windwalker Model provides runtime cache interface help us cache data in Model itself (This runtime cache only life in once
+Windwalker Repository provides runtime cache interface help us cache data in Repository itself (This runtime cache only life in once
 page load, will not exists in next page loading, and won't affected by global configuration).
 
-This is an example to use cache in Model:
+This is an example to use cache in Repository:
 
 ```php
-use Windwalker\Core\Model\Model;
+use Windwalker\Core\Repository\Repository;
 
-class MyModel extends Model
+class MyRepository extends Repository
 {
 	public function getData()
 	{
@@ -294,7 +292,7 @@ class MyModel extends Model
 
 ### Generate Cache id When State Changed
 
-Model state is dynamic, so if we change state, the cache key should be refresh that we can make sure we get same data when state is same,
+Repository state is dynamic, so if we change state, the cache key should be refresh that we can make sure we get same data when state is same,
 but get new data if state is changed.
  
 ```php

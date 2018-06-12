@@ -339,11 +339,11 @@ $news = (new Widget('sidebar.news'))-&gt;render(['articles' =&gt; $articles]);</
 {
     protected function prepareData($data)
     {
-        $data-&gt;items      = $this-&gt;model-&gt;getItems();
-        $data-&gt;categories = $this-&gt;model['Categories']-&gt;getItems();
+        $data-&gt;items      = $this-&gt;repository-&gt;getItems();
+        $data-&gt;categories = $this-&gt;repository['Categories']-&gt;getItems();
 
         $data-&gt;news       = (new Widget('sidebar.news'))-&gt;render(array('articles' =&gt; $data-&gt;items));
-        $data-&gt;pagination = (new Widget('_global.pagination.pagination'))-&gt;render(array('pages' =&gt; $this-&gt;model-&gt;getPagination()));
+        $data-&gt;pagination = (new Widget('_global.pagination.pagination'))-&gt;render(array('pages' =&gt; $this-&gt;repository-&gt;getPagination()));
         $data-&gt;categories = (new Widget('sidebar.categories'))-&gt;render(array('categories' =&gt; $data-&gt;categories));
         $data-&gt;banner     = (new Widget('sidebar.banner'))-&gt;render(array('banner' =&gt; $data-&gt;banner));
     }

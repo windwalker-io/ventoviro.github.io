@@ -41,7 +41,7 @@ Use wildcard (`*`) to Allow-Origin is not recommended, you can save domains whic
  to header dynamically.
 
 ```php
-$allowOrigins = $model->getMyAllowOrigins();
+$allowOrigins = $repo->getMyAllowOrigins();
 
 $origin = $this->input->server->getUrl('HTTP_ORIGIN');
 

@@ -323,7 +323,7 @@ User::addPolicy('can.edit.article', function (UserDataInterface $user, Data $art
 
 // Check access
 $user = User::get();
-$article = $model-&gt;getAtricle();
+$article = $repo-&gt;getAtricle();
 
 User::authorise('can.edit.article', $user, $article); // boolean</code></pre>
 <h2>Use Class Policy</h2>

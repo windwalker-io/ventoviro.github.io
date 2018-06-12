@@ -223,7 +223,7 @@ This is a constructor without default value and class hinted.
 ```php
 class AnotherClass
 {
-    public function _construct(ModelInterface $model, $config)
+    public function _construct(RepositoryInterface $repository, $config)
     {
         $bar = $config['foo']
     }
@@ -236,13 +236,13 @@ $container->newInstance('AnotherClass', ['config' => ['foo' => 'bar']]);
 You can set multiple level arguments:
 
 ```php
-use Windwalker\Model\ModelInterface;
+use Windwalker\Repository\RepositoryInterface;
 
 // ... AnotherClass
 
 $config = [
     'config' => ['foo' => 'bar'],
-    'Windwalker\Model\ModelInterface' => [
+    'Windwalker\Repository\RepositoryInterface' => [
         'options' => $options,
         'db' => DatabaseFactory::getDbo()
     ]
@@ -288,13 +288,13 @@ We can prepare some named arguments which will be injected to constructor when o
 
 ```php
 // Set class meta
-$container->whenCreating('MyModel')
+$container->whenCreating('MyRepository')
     ->setArgumemt('config', $config)
     ->setArgument('db', $db);
 
 // ...
 
-$object = $container->newInstance('MyModel');
+$object = $container->newInstance('MyRepository');
 ```
 
 Or just created it instantly:
@@ -311,59 +311,59 @@ $container->whenCreating('MyClass')
 Sometimes we hope to inject particular object we want, we can bind a class as key to let Container know what you want to
 instead the dependency object.
 
-Here is a class which dependent to an interface, we can bind a sub class to container then container will use `MyModel`
-to be instance of `ModelInterface` and inject it to `MyClass`.
+Here is a class which dependent to an interface, we can bind a sub class to container then container will use `MyRepository`
+to be instance of `RepositoryInterface` and inject it to `MyClass`.
 
 ```php
-use Windwalker\Model\ModelInterface;
+use Windwalker\Repository\RepositoryInterface;
 use Windwalker\Structure\Structure;
 
 class MyClass
 {
-    public $model;
+    public $repository;
     public $config;
 
-    public function __construct(ModelInterface $model, Structure $config)
+    public function __construct(RepositoryInterface $repository, Structure $config)
     {
-        $this->model = $model;
+        $this->repository = $repository;
         $this->config = $config;
     }
 }
 
-class MyModel implement ModelInterface
+class MyRepository implement RepositoryInterface
 {
 }
 
-// Bind MyModel as AbstractModel
-$container->share('Windwalker\Model\ModelInterface', function()
+// Bind MyRepository as AbstractRepository
+$container->share('Windwalker\Repository\RepositoryInterface', function()
 {
-    return new MyModel();
+    return new MyRepository();
 });
 
 $myObject = $container->createObject('MyClass');
 
-$myObject->model; // MyModel
+$myObject->repository; // MyRepository
 ```
 
 Use `bind()` to quickly bind a class without callback, container will use `newInstance()` to create it when needed.
 
 ```php
-$container->bind('Windwalker\Model\ModelInterface', 'MyModel');
+$container->bind('Windwalker\Repository\RepositoryInterface', 'MyRepository');
 
-// `MyModel` will auto created because we bind it to `ModelInterface`
+// `MyRepository` will auto created because we bind it to `RepositoryInterface`
 $container->createObject('MyClass');
 ```
 
 Use `bindShared()` to bind a class as singleton:
 
 ```php
-$container->bindShared('Windwalker\Model\ModelInterface', 'MyModel');
+$container->bindShared('Windwalker\Repository\RepositoryInterface', 'MyRepository');
 ```
 
 You can add callback as second argument, this way is totally same as `share()` and `set()`:
 
 ```php
-$container->bind('Windwalker\Model\ModelInterface', function (Contaienr $container)
+$container->bind('Windwalker\Repository\RepositoryInterface', function (Contaienr $container)
 {
     return new MyObject();
 });

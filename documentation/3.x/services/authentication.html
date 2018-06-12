@@ -315,17 +315,17 @@
 <p>Windwalker user system is extendable, before we start use user auth, we must do some prepare to initial user system.</p>
 <h2>Prepare User System</h2>
 <h2>Create UserHandler</h2>
-<p><code>UserHandlerInterface</code> help us handler user CRUD and login/logout actions, create a Model implements <code>UserHandlerInterface</code>
+<p><code>UserHandlerInterface</code> help us handler user CRUD and login/logout actions, create a Repository implements <code>UserHandlerInterface</code>
 in your package.</p>
-<pre><code class="language-php">namespace Flower\Model;
+<pre><code class="language-php">namespace Flower\Repository;
 
-use Windwalker\Core\Model\DatabaseModelRepository;
+use Windwalker\Core\Repository\DatabaseRepository;
 use Windwalker\Core\User\UserData;
 use Windwalker\Core\User\UserDataInterface;
 use Windwalker\Core\User\UserHandlerInterface;
 use Windwalker\Ioc;
 
-class UserModel extends DatabaseModelRepository implements UserHandlerInterface
+class UserRepository extends DatabaseRepository implements UserHandlerInterface
 {
     protected $table = 'users';
 
@@ -386,7 +386,7 @@ class UserModel extends DatabaseModelRepository implements UserHandlerInterface
 // Please do not use `pass123456` in production site
 $pass = (new Password())-&gt;create('pass123456');
 
-$model = UserModel::getInstance();
+$repo = UserRepository::getInstance();
 
 foreach (range(1, 50) as $i) {
     $data = [
@@ -396,7 +396,7 @@ foreach (range(1, 50) as $i) {
         'password' =&gt; $pass
     ];
 
-    $model-&gt;save(new UserData($data));
+    $repo-&gt;save(new UserData($data));
 
     $this-&gt;outCounting();
 }</code></pre>
@@ -404,7 +404,7 @@ foreach (range(1, 50) as $i) {
 <pre><code class="language-php">// ...
 
     'user' =&gt; [
-        'handler' =&gt; \Flower\Model\UserModel::class,
+        'handler' =&gt; \Flower\Repository\UserRepository::class,
         'methods' =&gt; [
         ],
         'policies' =&gt; [
@@ -454,7 +454,7 @@ User::delete(array('username' =&gt; 'richael3784'));</code></pre>
 <p>We create a method class to find user from database.</p>
 <pre><code class="language-php">namespace Flower\User;
 
-use Flower\Model\UserModel;
+use Flower\Repository\UserRepository;
 use Windwalker\Authentication\Authentication;
 use Windwalker\Authentication\Credential;
 use Windwalker\Authentication\Method\AbstractMethod;
@@ -480,7 +480,7 @@ class DatabaseMethod extends AbstractMethod
 
         // Get User from database
         // You can also use User::get(['username' =&gt; $credential-&gt;username])
-        $user = UserModel::getInstance()-&gt;load(['username' =&gt; $credential-&gt;username]);
+        $user = UserRepository::getInstance()-&gt;load(['username' =&gt; $credential-&gt;username]);
 
         if ($user-&gt;isNull()) {
             $this-&gt;status = Authentication::USER_NOT_FOUND;

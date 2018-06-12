@@ -20,7 +20,7 @@ database:
 
 ## Get Database
 
-In DatabaseModel, you can get internal DB object.
+In `DatabaseRepository`, you can get internal DB object.
 
 ```php
 $this->db;

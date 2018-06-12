@@ -35,15 +35,15 @@ public function boot()
 Now if `Flower\Controller\Sakura\{action}` not exists, Windwalker will find controller from `Animal\Controller\Sakura\{action}`.
 It is flexible to help us organize our packages.
 
-## View And Model
+## View And Repository
 
-You can also use the same way to add default View and Model paths.
+You can also use the same way to add default View and Repository paths.
 
 ```php
 $this->getMvcResolver()->addNamespace('Animal', Priority::NORMAL);
 ```
 
-When controller `$this->getView('Sakura')` or `$this->getModel('Sakura')`, and these two classes not exists, Windwalker
+When controller `$this->getView('Sakura')` or `$this->getRepository('Sakura')`, and these two classes not exists, Windwalker
 will find from Animal package as default object.
 
 We can also set default path separately.
@@ -53,5 +53,5 @@ $mvcResolver = $this->getMvcResolver();
 
 $mvcResolver->getControllerResolver()->addNamespace('Animal\Controller');
 $mvcResolver->getViewResolver()->addNamespace('Animal\View');
-$mvcResolver->getModelResolver()->addNamespace('Animal\Model');
+$mvcResolver->getRepositoryResolver()->addNamespace('Animal\Repository');
 ```

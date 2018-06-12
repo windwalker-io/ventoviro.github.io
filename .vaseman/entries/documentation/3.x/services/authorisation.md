@@ -21,7 +21,7 @@ User::addPolicy('can.edit.article', function (UserDataInterface $user, Data $art
 
 // Check access
 $user = User::get();
-$article = $model->getAtricle();
+$article = $repo->getAtricle();
 
 User::authorise('can.edit.article', $user, $article); // boolean
 ```

@@ -48,11 +48,11 @@ class SakurasHtmlView extends HtmlView
 {
 	protected function prepareData($data)
 	{
-		$data->items      = $this->model->getItems();
-		$data->categories = $this->model['Categories']->getItems();
+		$data->items      = $this->repository->getItems();
+		$data->categories = $this->repository['Categories']->getItems();
 
 		$data->news       = (new Widget('sidebar.news'))->render(array('articles' => $data->items));
-		$data->pagination = (new Widget('_global.pagination.pagination'))->render(array('pages' => $this->model->getPagination()));
+		$data->pagination = (new Widget('_global.pagination.pagination'))->render(array('pages' => $this->repository->getPagination()));
 		$data->categories = (new Widget('sidebar.categories'))->render(array('categories' => $data->categories));
 		$data->banner     = (new Widget('sidebar.banner'))->render(array('banner' => $data->banner));
 	}

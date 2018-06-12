@@ -59,7 +59,7 @@ Windwlaker Provides some useful TestCase to extends asserts.
 ```php
 use Windwalker\Test\TestCase\AbstractBaseTestCase;
 
-class ModelTest extends AbstractBaseTestCase
+class RepositoryTest extends AbstractBaseTestCase
 {
 	public function testFoo()
 	{
@@ -81,7 +81,7 @@ class ModelTest extends AbstractBaseTestCase
 ### `AbstractDomTestCase`
 
 ```php
-class ModelTest extends AbstractDomTestCase
+class RepositoryTest extends AbstractDomTestCase
 {
 
 	public function testFoo()

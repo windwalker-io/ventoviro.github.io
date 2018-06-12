@@ -383,9 +383,7 @@ if (!$cache-&gt;exists('flower')) {
     $data = $flowerMapper-&gt;loadAll();
 
     $cache-&gt;set('flower', $data);
-}
-else
-{
+} else {
     $data = $cache-&gt;get('flower');
 }
 

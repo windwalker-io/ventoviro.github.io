@@ -314,42 +314,42 @@
                     <h2>About MVC Interactions</h2>
 <p>In most MVC practices, there is no direct communication between View and Model. We called it <strong>Passive View</strong>. But there are many
 variants of MVC like: MVVM, MVP etc. </p>
-<p>Windwalker uses a pattern which is similar to <a href="http://goo.gl/p6Rjwl">Supervising Controller</a>, <a href="http://goo.gl/LJPG">MVVM</a> or <a href="http://goo.gl/y3VzE">MVP</a>
-, View can not communicate to Model, but Controller can binding Model to View, then View is able to get data from Model.</p>
-<p>The benefit of this pattern is that View can decide which data they are needed and call Model to get these data.
-And controller's responsibility is just decide binding which models to view. There is a <code>ViewModel</code> between View and Model
-to handle request from View and get data from Model.</p>
+<p>Windwalker uses a pattern which is similar to <a href="http://goo.gl/p6Rjwl">Supervising Controller</a>,
+<a href="http://goo.gl/LJPG">MVVM</a> or <a href="http://goo.gl/y3VzE">MVP</a>
+, View can not communicate to Model or Repository, but Controller can binding Repository to View, then View is able to get data from Repository.</p>
+<p>The benefit of this pattern is that View can decide what data is necessary for this page or layout and call Repository to get data.
+And controller's responsibility is just binding repositories to view. There is a <code>ViewModel</code> between View and Repository
+to handle request from View and get data from Repository.</p>
 <h3>Schematic Diagram</h3>
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg" alt="mvc" /> <img src="https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg" alt="ww-mvc" /></p>
+<p><img src="https://i.imgur.com/gGe4wGc.jpg" alt="mvc" /> <img src="https://i.imgur.com/TRxEg9j.jpg" alt="ww-mvc" /></p>
 <h3>ViewModel</h3>
-<p>View is not directly communicate to Model, there is a <code>ViewModel</code> object between them. You can consider ViewModel
-as a Model manager. </p>
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg" alt="view-model" /></p>
+<p>View is not directly communicate to Repository, there is a <code>ViewModel</code> object between them. You can consider ViewModel
+as a Repository manager. </p>
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg" alt="" /></p>
 <h2>Use ViewModel Pattern in Windwalker</h2>
 <p>This is a traditional MVC usage in controller:</p>
-<pre><code class="language-php">&lt;?php
-// doExecute()
+<pre><code class="language-php">// doExecute()
 
-$model = new FlowerModel();
+$repo = new FlowerRepository();
 $view = new SakurasHtmlView();
 
-$item = $model-&gt;getItem();
+$item = $repo-&gt;getItem();
 
 $view['created'] = $item;
 
 return $view-&gt;render();</code></pre>
-<p>Change some code, we can push Model into View:</p>
+<p>Change some code, we can push Repository into View:</p>
 <pre><code class="language-php">// doExecute()
 
-$model = new FlowerModel();
+$repo = new FlowerRepository();
 $view = new SakurasHtmlView();
 
-$view-&gt;setModel($model);
+$view-&gt;setRepository($repo);
 
-// Or set with prepare model state
-$view-&gt;setModel($model, function (FlowerModel $model)
+// Or set with prepare repo state
+$view-&gt;setRepository($repository, function (FlowerRepository $repo)
 {
-    $model-&gt;set('item.id', $this-&gt;input-&gt;get('id'));
+    $repo-&gt;set('item.id', $this-&gt;input-&gt;get('id'));
 });
 
 return $view-&gt;render();</code></pre>
@@ -358,105 +358,99 @@ return $view-&gt;render();</code></pre>
 {
     protected function prepareData($data)
     {
-        $data-&gt;item = $this-&gt;model-&gt;getItem();
+        $data-&gt;item = $this-&gt;repository-&gt;getItem();
     }
 }</code></pre>
-<p>The <code>$view-&gt;model</code> property is <code>ViewModel</code> object, if we call any method, <code>ViewModel</code> will pass this method to default Model by magic method.
-If Model does not have this method, it will only return <code>null</code>.</p>
+<p>The <code>$view-&gt;repository</code> property is <code>ViewModel</code> object, if we call any method, <code>ViewModel</code> will pass this method to default Model by magic method.
+If Repository does not have this method, it will only return <code>null</code>.</p>
 <p>We can also get data by <code>pipe()</code> or <code>applyData()</code> with a callback and class hint:</p>
 <pre><code class="language-php">// In View
 
 protected function prepareData($data)
 {
     // Use pipe()
-    $this-&gt;pipe(function (FlowerModel $model, $view) use ($data)
+    $this-&gt;pipe(function (FlowerRepository $repo, $view) use ($data)
     {
-        $data-&gt;item = $model-&gt;getItem();
+        $data-&gt;item = $repo-&gt;getItem();
     });
 
     // Use applyData
-    $this-&gt;applyData(function (FlowerModel $model, $data)
+    $this-&gt;applyData(function (FlowerRepository $repository, $data)
     {
-        $data-&gt;item = $model-&gt;getItem();
+        $data-&gt;item = $repository-&gt;getItem();
     });
 
     // ...</code></pre>
-<p>You must make sure Model named with <code>XXXModel</code>, the model will guess their name. you can also set name property when declaring Model class.
-There is some ways to define Model's name:</p>
+<p>You must make sure Repository named with <code>XXXRepository</code>, the Repository will guess their own name. you can also
+set name property when declaring Repository class. There is some ways to define Repository's name:</p>
 <pre><code class="language-php">// Set by config
-$model-&gt;config-&gt;set('name', 'foo');
+$repository-&gt;config-&gt;set('name', 'foo');
 
 // Use class name
-class FooModel extends Model {}
+class FooRepository extends Repository {}
 
 // Use property
-class SomeModel extends Model
+class SomeRepository extends Repository
 {
     protected $name = 'foo';
 }</code></pre>
-<h3>Set Multiple Models</h3>
-<p>We can get many models and push them into one view.</p>
+<h3>Set Multiple Repositories</h3>
+<p>We can get many repositories and push them into one view.</p>
 <pre><code class="language-php">// In Controller::doExecute()
 
-$model = $this-&gt;getModel();
-$roseModel = $this-&gt;getModel('Rose');
-$oliveModel = $this-&gt;getModel('Olive');
+$repository = $this-&gt;getRepository();
+$roseRepo = $this-&gt;getRepository('Rose');
+$oliveRepo = $this-&gt;getRepository('Olive');
 
-$view-&gt;setModel($model, true); // Second argument TRUE as default
-$view-&gt;setModel($roseModel);
-$view-&gt;setModel($oliveModel [, custom name]);
+$view-&gt;setRepository($repository, true); // Second argument TRUE as default
+$view-&gt;setRepository($roseRepo);
+$view-&gt;setRepository($oliveRepo [, custom name]);
 
 return $view-&gt;render();</code></pre>
 <p>Set sub models with custom name alias:</p>
-<pre><code class="language-php">$view-&gt;setModel($model, true); // Second argument TRUE as default
-$view-&gt;addModel('rose', $roseModel);
-$view-&gt;addModel('olive', $oliveModel);</code></pre>
-<p>If you want to set state when setting models, use callback:</p>
-<pre><code class="language-php">$view-&gt;addModel('rose', $this-&gt;getModel('Rose'), function (RoseModel $model)
-{
-    $model-&gt;set('list.page', 5);
+<pre><code class="language-php">$view-&gt;setRepository($repository, true); // Second argument TRUE as default
+$view-&gt;addRepository('rose', $roseRepo);
+$view-&gt;addRepository('olive', $oliveRepo);</code></pre>
+<p>If you want to set state when setting repositories, use callback:</p>
+<pre><code class="language-php">$view-&gt;addRepository('rose', $this-&gt;getRepository('Rose'), function (RoseRepository $repository) {
+    $repository-&gt;set('list.page', 5);
 });</code></pre>
-<p>Use <code>configureModel()</code> or <code>pipe()</code> to configure models after set in View:</p>
-<pre><code class="language-php">$view-&gt;configureModel('rose', function (RoseModel $model, $view)
-{
-    $model-&gt;set('list.limit', 15);
+<p>Use <code>configureRepository()</code> or <code>pipe()</code> to configure models after set in View:</p>
+<pre><code class="language-php">$view-&gt;configureRepository('rose', function (RoseRepository $repository, $view) {
+    $repository-&gt;set('list.limit', 15);
 });
 
 // pipe() will return value:
-$list = $view-&gt;pipe('rose', function (RoseModel $model, $view)
-{
-    $model-&gt;set('list.limit', 15);
-    return $model-&gt;getList();
+$list = $view-&gt;pipe('rose', function (RoseRepository $repository, $view) {
+    $repository-&gt;set('list.limit', 15);
+    return $repository-&gt;getList();
 });</code></pre>
-<h3>Get Sub Models in View</h3>
-<p>Use array access to get different models and call methods in View.</p>
+<h3>Get Sub Repositories in View</h3>
+<p>Use array access to get different repositories and call methods in View.</p>
 <pre><code class="language-php">// In View::prepareData()
 
-$data-&gt;items = $this-&gt;model-&gt;getItems();
-$data-&gt;roses = $this-&gt;model['rose']-&gt;getRoses();
-$data-&gt;olives = $this-&gt;model['olive']-&gt;getOlives();</code></pre>
+$data-&gt;items = $this-&gt;repository-&gt;getItems();
+$data-&gt;roses = $this-&gt;repository['rose']-&gt;getRoses();
+$data-&gt;olives = $this-&gt;repository['olive']-&gt;getOlives();</code></pre>
 <p>If a model not set, and the method name start with <code>get*</code> or <code>load*</code>, it will return <code>null</code>.</p>
-<pre><code class="language-php">$data-&gt;foo = $this-&gt;model['foo']-&gt;getFoo();</code></pre>
-<p>You can also use <code>$this-&gt;pipe()</code> or <code>$this-&gt;applyData()</code>, remember send string as first argument to find model by name alias.</p>
+<pre><code class="language-php">$data-&gt;foo = $this-&gt;repository['foo']-&gt;getFoo();</code></pre>
+<p>You can also use <code>$this-&gt;pipe()</code> or <code>$this-&gt;applyData()</code>, remember send string as first argument to find repository by name alias.</p>
 <pre><code class="language-php">// In view
 
 protected function prepareData($data)
 {
-    $this-&gt;applyData('rose', function (RoseModel $model, Data $data)
-    {
-        $data-&gt;roses = $model-&gt;getList();
+    $this-&gt;applyData('rose', function (RoseRepository $repository, Data $data) {
+        $data-&gt;roses = $repository-&gt;getList();
     });
 
     // Inject dat to cllback
-    $this-&gt;pipe('rose', function (RoseModel $model, $view) use ($data)
-    {
-        $data-&gt;roses = $model-&gt;getList();
+    $this-&gt;pipe('rose', function (RoseRepository $repository, $view) use ($data) {
+        $data-&gt;roses = $repository-&gt;getList();
     });
 
     // Or just return value
-    $data-&gt;roses = $this-&gt;pipe('rose', function (RoseModel $model, $view)
-    {
-        return $model-&gt;getList();
+    $data-&gt;roses = $this-&gt;pipe('rose', function (RoseRepository $repository, $view) {
+        return $repository-&gt;getList();
     });
 
     // ...</code></pre>

@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../../asset/images/favicon.ico" />
 
-    <title>Model and Database | Windwalker - PHP Rapid Development Framework</title>
+    <title>Repository and Database | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Model and Database | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Repository and Database | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -100,7 +100,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Model and Database</h1>
+                    <h1 class="banner-title">Repository and Database</h1>
                 </div>
             </div>
         </section>
@@ -311,14 +311,14 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>What is Model</h2>
-<p>Model is an implementation of repository pattern in Windwalker, it maintains some low-layer DB handler like DataMapper
+                    <h2>What is Repository</h2>
+<p>Repository is a Repository class which implemented the repository pattern in Windwalker, it contains some low-layer DB handler like DataMapper
 or ActiveRecord and help us do more database operation logic.</p>
-<h3>ModelRepository</h3>
-<p><code>ModelRepository</code> is a very simple class without and DB access. This is an example of using it:</p>
-<pre><code class="language-php">use Windwalker\Core\Model\ModelRepository;
+<h3>Repository</h3>
+<p><code>Repository</code> is a very simple class without and DB access. This is an example of using it:</p>
+<pre><code class="language-php">use Windwalker\Core\Repository\Repository;
 
-class MyModel extends ModelRepository
+class MyRepository extends Repository
 {
     public function getItem()
     {
@@ -331,24 +331,24 @@ class MyModel extends ModelRepository
     }
 }</code></pre>
 <pre><code class="language-php">// In controller
-$model = new MyModel();
+$repo = new MyRepository();
 
-$item = $model-&gt;getItem();
+$item = $repo-&gt;getItem();
 
 // Do something...
 
-$model-&gt;save($item);</code></pre>
-<p>Set source to ModelRepository:</p>
+$repo-&gt;save($item);</code></pre>
+<p>Set source to Repository:</p>
 <pre><code class="language-php">// FileFinder is just an example
-$model = new MyModel(null, null, new FileFinder());
+$repo = new MyRepository(null, null, new FileFinder());
 
-// In model
+// In repository
 $this-&gt;source-&gt;find(...);</code></pre>
-<h2>Database Model</h2>
-<p>We can use <code>DatabaseModelRepository</code> to operate Database, here is a CRUD example, <code>db</code> is preset in Model so we can get it quickly:</p>
-<pre><code class="language-php">use Windwalker\Core\Model\DatabaseModelRepository;
+<h2>Database Repository</h2>
+<p>We can use <code>DatabaseRepository</code> to operate Database, here is a CRUD example, <code>db</code> is preset in Repository so we can get it quickly:</p>
+<pre><code class="language-php">use Windwalker\Core\Repository\DatabaseRepository;
 
-class FlowerModel extends DatabaseModelRepository
+class FlowerRepository extends DatabaseRepository
 {
     public function getItem($id)
     {
@@ -365,9 +365,7 @@ class FlowerModel extends DatabaseModelRepository
     {
         if ($data-&gt;id) {
             $this-&gt;db-&gt;getWriter()-&gt;updateOne('flowers', $data, 'id');
-        }
-        else
-        {
+        } else {
             $this-&gt;db-&gt;getWriter()-&gt;insertOne('flowers', $data);
         }
     }
@@ -384,14 +382,14 @@ class FlowerModel extends DatabaseModelRepository
 }</code></pre>
 <h2>Use DataMapper</h2>
 <p>DataMapper is a easy way to help us operate database:</p>
-<pre><code class="language-php">use Windwalker\Core\Model\DatabaseModelRepository;
+<pre><code class="language-php">use Windwalker\Core\Repository\DatabaseRepository;
 
-class FlowerModel extends DatabaseModelRepository
+class FlowerRepository extends DatabaseRepository
 {
     // Add table to make sure DataMapper use corrent DB table.
     protected $table = 'flowers';
 
-    // Keys is optional since Model will set ['id'] as default
+    // Keys is optional since Repository will set ['id'] as default
     // But you can override id if you use `uuid` or multiple primary key.
     protected $keys = 'id';
 
@@ -413,14 +411,14 @@ class FlowerModel extends DatabaseModelRepository
 <p>See <a href="../db/datamapper.html">DataMapper</a></p>
 <h2>Use Record</h2>
 <p>You can also use ActiveRecord to handle data saving.</p>
-<pre><code class="language-php">use Windwalker\Core\Model\DatabaseModelRepository;
+<pre><code class="language-php">use Windwalker\Core\Repository\DatabaseRepository;
 
-class FlowerModel extends DatabaseModelRepository
+class FlowerRepository extends DatabaseRepository
 {
     // Add table to make sure Record use corrent DB table.
     protected $table = 'flowers';
 
-    // Keys is optional since Model will set ['id'] as default
+    // Keys is optional since Repository will set ['id'] as default
     // But you can override id if you use `uuid` or multiple primary key.
     protected $keys = 'id';
 
@@ -451,22 +449,22 @@ class FlowerModel extends DatabaseModelRepository
 }</code></pre>
 <p>See <a href="../db/active-record.html">ActiveRecord</a></p>
 <h2>Magic Method</h2>
-<p>Model support a usage similar to NullObject pattern, if we call some method start with <code>get*()</code> or <code>load*()</code>, and this method not exists,
-Model will not raise error but only return <code>null</code>.</p>
-<pre><code class="language-php">use Windwalker\Core\Model\Model;
+<p>Repository support a usage similar to NullObject pattern, if we call some method start with <code>get*()</code> or <code>load*()</code>, and this method not exists,
+Repository will not raise error but only return <code>null</code>.</p>
+<pre><code class="language-php">use Windwalker\Core\Repository\Repository;
 
-// This is default model, does not have any custom methods
-$model = new Model();
+// This is default repository, does not have any custom methods
+$repo = new Repository();
 
 // These 2 methods will only return null
-$data = $model-&gt;getData();
+$data = $repo-&gt;getData();
 
-$list = $model-&gt;loadList();</code></pre>
-<p>So, we can use default Model to provide empty data for some object but won't breaking our program.</p>
-<h2>Model State</h2>
-<p>Windwalker Model is stateful design, use state pattern can help ue create flexible data provider.
+$list = $repo-&gt;loadList();</code></pre>
+<p>So, we can use default Repository to provide empty data for some object but won't breaking our program.</p>
+<h2>Repository State</h2>
+<p>Windwalker Repository is stateful design, use state pattern can help ue create flexible data provider.
 For example, we can change this state to get different data.</p>
-<pre><code class="language-php">class MyModel extends DatabaseModel
+<pre><code class="language-php">class MyRepository extends DatabaseRepository
 {
     // ...
 
@@ -494,16 +492,16 @@ For example, we can change this state to get different data.</p>
     }
 }
 
-$model = new MyModel();
+$repo = new MyRepository();
 
-$state = $model-&gt;getState();
+$state = $repo-&gt;getState();
 
-// Let's change model state
+// Let's change repository state
 $state-&gt;set('where.published', 1);
 $state-&gt;set('list.ordering', 'birth');
 $state-&gt;set('list.direction', 'DESC');
 
-$users = $model-&gt;getUsers();
+$users = $repo-&gt;getUsers();
 
 if (!$users) {
     $error = $state-&gt;get('error');
@@ -511,23 +509,23 @@ if (!$users) {
 <h5>Simple Way to Access State</h5>
 <p>Using <code>get()</code> and <code>set()</code></p>
 <pre><code class="language-php">// Same as getState()-&gt;get();
-$model-&gt;get('where.author', 5);
+$repo-&gt;get('where.author', 5);
 
 // Same as getState()-&gt;set();
-$model-&gt;set('list.ordering', 'RAND()');</code></pre>
+$repo-&gt;set('list.ordering', 'RAND()');</code></pre>
 <h5>State ArrayAccess</h5>
 <pre><code class="language-php">// Same as getState()-&gt;get();
-$data = $model['list.ordering'];
+$data = $repo['list.ordering'];
 
 // Same as getState()-&gt;set();
-$model['list.ordering'] = 'created_time';</code></pre>
-<h2>Model Caching</h2>
-<p>Windwalker Model provides runtime cache interface help us cache data in Model itself (This runtime cache only life in once
+$repo['list.ordering'] = 'created_time';</code></pre>
+<h2>Repository Caching</h2>
+<p>Windwalker Repository provides runtime cache interface help us cache data in Repository itself (This runtime cache only life in once
 page load, will not exists in next page loading, and won't affected by global configuration).</p>
-<p>This is an example to use cache in Model:</p>
-<pre><code class="language-php">use Windwalker\Core\Model\Model;
+<p>This is an example to use cache in Repository:</p>
+<pre><code class="language-php">use Windwalker\Core\Repository\Repository;
 
-class MyModel extends Model
+class MyRepository extends Repository
 {
     public function getData()
     {
@@ -543,7 +541,7 @@ class MyModel extends Model
     }
 }</code></pre>
 <h3>Generate Cache id When State Changed</h3>
-<p>Model state is dynamic, so if we change state, the cache key should be refresh that we can make sure we get same data when state is same,
+<p>Repository state is dynamic, so if we change state, the cache key should be refresh that we can make sure we get same data when state is same,
 but get new data if state is changed.</p>
 <pre><code class="language-php">public function getData()
 {

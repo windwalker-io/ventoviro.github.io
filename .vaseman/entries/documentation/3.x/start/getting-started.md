@@ -242,21 +242,20 @@ sakura:
 OK, the Sakura page will return. To register a package and routing is a bit of bother, but it will be very
 flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and many developers.
 
-## Model Repository
+## Repository
 
-Windwalker provides a simple `ModelRepository` class to help you organize your data source.
+Windwalker provides a simple `Repository` class to help you organize your data source.
 
-Add SakuraModel class.
+Add SakuraRepository class.
 
 ```php
-<?php
-// src/Flower/Model/SakuraModel.php
+// src/Flower/Repository/SakuraRepository.php
 
-namespace Flower\Model;
+namespace Flower\Repository;
 
-use Windwalker\Core\Model\ModelRepository;
+use Windwalker\Core\Repository\Repository;
 
-class SakuraModel extends ModelRepository
+class SakuraRepository extends Repository
 {
 	public function getContent()
 	{
@@ -269,14 +268,14 @@ class SakuraModel extends ModelRepository
 }
 ```
 
-Use this Model in controller.
+Use this Repository in controller.
 
 ```php
 // ...
 
-/** @var SakuraModel $model */
-$model   = $this->getModel();
-$content = $model->getContent();
+/** @var SakuraRepository $repo */
+$repo   = $this->getModel();
+$content = $repo->getContent();
 
 return $this->renderView('Sakura', 'default', 'edge', ['content' => $content]);
 ```

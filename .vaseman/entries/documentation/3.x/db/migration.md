@@ -169,7 +169,7 @@ Migration UP the version: 20150101091434_InitFlowerTable
 Success
 ```
 
-### Blocked By DEV Model
+### Blocked By DEV Mode
 
 Migration will be blocked if your system in `prod` mode, modify or create `.mode` file in system root to `dev` that can
 allow migration works. Don't forget change back to `prod` after you updated your system.

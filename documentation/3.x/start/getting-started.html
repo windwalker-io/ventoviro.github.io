@@ -475,17 +475,16 @@ sakura:
     controller: Sakura</code></pre>
 <p>OK, the Sakura page will return. To register a package and routing is a bit of bother, but it will be very
 flexible if we want to organize a lot of controllers and routes in the future, if we have a big system and many developers.</p>
-<h2>Model Repository</h2>
-<p>Windwalker provides a simple <code>ModelRepository</code> class to help you organize your data source.</p>
-<p>Add SakuraModel class.</p>
-<pre><code class="language-php">&lt;?php
-// src/Flower/Model/SakuraModel.php
+<h2>Repository</h2>
+<p>Windwalker provides a simple <code>Repository</code> class to help you organize your data source.</p>
+<p>Add SakuraRepository class.</p>
+<pre><code class="language-php">// src/Flower/Repository/SakuraRepository.php
 
-namespace Flower\Model;
+namespace Flower\Repository;
 
-use Windwalker\Core\Model\ModelRepository;
+use Windwalker\Core\Repository\Repository;
 
-class SakuraModel extends ModelRepository
+class SakuraRepository extends Repository
 {
     public function getContent()
     {
@@ -496,12 +495,12 @@ class SakuraModel extends ModelRepository
         ];
     }
 }</code></pre>
-<p>Use this Model in controller.</p>
+<p>Use this Repository in controller.</p>
 <pre><code class="language-php">// ...
 
-/** @var SakuraModel $model */
-$model   = $this-&gt;getModel();
-$content = $model-&gt;getContent();
+/** @var SakuraRepository $repo */
+$repo   = $this-&gt;getModel();
+$content = $repo-&gt;getContent();
 
 return $this-&gt;renderView('Sakura', 'default', 'edge', ['content' =&gt; $content]);</code></pre>
 <p>Modify the template to loop <code>content</code> variable.</p>
