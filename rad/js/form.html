@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
-    <title>Asset Minify | Windwalker - PHP Rapid Development Framework</title>
+    <title>Phoenix Form | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Asset Minify | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Phoenix Form | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -82,7 +82,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Asset Minify</h1>
+                    <h1 class="banner-title">Phoenix Form</h1>
                 </div>
             </div>
         </section>
@@ -153,7 +153,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/js/router.html">Router</a>
             </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../rad/js/form.html">Form Submit</a>
             </li>
                     <li class="">
@@ -190,7 +190,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
             </li>
                     <li class="">
@@ -203,40 +203,49 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Auto Minify Css &amp; JS</h2>
-<p>Windwalker use <code>AssetManager</code> object to control all CSS &amp; JS includes, then render all <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code>
-tags in HTML.</p>
-<p>We can minify all asset files and combine them to one file that can speed up page downloading.</p>
-<p>Use <code>CssMinifyListener</code> and <code>JsMinifyListener</code> in <code>etc/app/web.php</code></p>
-<pre><code class="language-php">// etc/app/web.php
+                    <h2>Phoenix Form</h2>
+<p>PhoenixForm is a HTML form operation helper, include it by:</p>
+<pre><code class="language-php">\Phoenix\Script\PhoenixScript::form('#my-form');</code></pre>
+<p>And you must have a <code>&lt;form id="#admin-form"&gt; ...</code> element in your HTML so Phoenix can operate this form.</p>
+<h2>Submit and RESTful CRUD</h2>
+<p>You can simply use this JS code to submit form:</p>
+<pre><code class="language-js">// Submit with default action defined on &lt;form action="..."&gt;
+Phoenix.submit();
 
-// ...
+// Submit with custom URI and query
+Phoenix.submit('/flower/sakuras', {page: 3});
 
-    'listeners' =&gt; [
-        //...
+// Send POST
+Phoenix.submit('/flower/sakura', data, 'POST');
 
-        700 =&gt; \Phoenix\Listener\CssMinifyListener::class,
-        800 =&gt; \Phoenix\Listener\JsMinifyListener::class
-    ],
-</code></pre>
-<p>Now every page will auto compress included css &amp; js files to one file.</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-GB"&gt;
-&lt;head&gt;
+// Send custom RESTful method, will add `_method` to your params
+Phoenix.submit('/flower/sakura', data, 'POST', 'PUT');</code></pre>
+<p>In PHP template, it wil look like:</p>
+<pre><code class="language-html">Phoenix.submit('{{ $router-&gt;route('sakura') }}', {page: 3});</code></pre>
+<p>Use simple methods:</p>
+<pre><code class="language-js">// GET
+Phoenix.get('/flower/sakura/25', query);
 
-    &lt;title&gt;Sakura Edit&lt;/title&gt;
+// POST
+Phoenix.post('/flower/sakura/25', query);
 
-    &lt;!-- ... --&gt;
+// POST with custom method
+Phoenix.post('/flower/sakura/25', query, 'PUT');
 
-    &lt;link rel="stylesheet" href="/path/site/www/asset/min/15d2969be82c4ac02c53fe8ead5600fd.css?f2d3c5f7211348644ed0a74575011f6c" /&gt;
+// PUT
+Phoenix.put('/flower/sakura/25', query);
 
-    &lt;script src="/path/site/www/asset/min/e2f3ce2ebbd95d65021ce52872f5e355.js?f2d3c5f7211348644ed0a74575011f6c"&gt;&lt;/script&gt;
-</code></pre>
-<p>You must modify your <code>.gitignore</code> file to ignore <code>www/asset/min</code> folder, and add a cron to clear cache files.</p>
+// PATCH
+Phoenix.patch('/flower/sakura/25', query);
+
+// DELETE
+Phoenix.sendDelete('/flower/sakura/25', query);</code></pre>
+<p>On click event in HTML element:</p>
+<pre><code class="language-html">&lt;button type="button" onclick="Phoenix.post()"&gt;&lt;/button&gt;</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/more/asset-minify.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/form.md">improve</a> this document.
     </p>
                 </article>
             </div>

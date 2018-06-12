@@ -20,10 +20,10 @@ Include Crypto:
 ```js
 var text = 'Windwalker';
 var key = 'dfG9O34F';
-var secret = Phoenix.Crypto.encrypt(key, text);
+var secret = Phoenix.encrypt(key, text);
 
 console.log(secret);
-console.log(Phoenix.Crypto.decrypt(key, secret));
+console.log(Phoenix.decrypt(key, secret));
 ```
 
 Output:
@@ -38,10 +38,10 @@ Windwalker
 Simple methods to wrap `btoa()` and `atob()`
 
 ```js
-var base64 = Phoenix.Crypto.base64Encode('Hello');
+var base64 = Phoenix.base64Encode('Hello');
 
 console.log(base64);
-console.log(Phoenix.Crypto.base64Decode(base64));
+console.log(Phoenix.base64Decode(base64));
 ```
 
 Output:
@@ -56,7 +56,7 @@ Hello
 A JS md5 implementation, will be useful if you need an identify when you generating elements in frontend.
 
 ```js
-Phoenix.Crypto.md5('Windwalker'); // fa0a731220e28af75afba7135723015e
+Phoenix.md5('Windwalker'); // fa0a731220e28af75afba7135723015e
 ```
 
 ## UUID v4
@@ -64,11 +64,20 @@ Phoenix.Crypto.md5('Windwalker'); // fa0a731220e28af75afba7135723015e
 UUID is useful if you need to generate random ID for dynamic elements.
 
 ```js
-Phoenix.Crypto.uuid4();
+Phoenix.uuid4();
 ```
 
 The result:
 
 ```
 46a37daa-ef63-4b0c-9b4c-ec7008b19b70
+```
+
+## Uniqid
+
+This method same as PHP `uniqid()`
+
+```js
+Phoenix.uniqid();
+Phoenix.uniqid('Prefix', true);
 ```

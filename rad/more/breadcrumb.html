@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
-    <title>Asset Minify | Windwalker - PHP Rapid Development Framework</title>
+    <title>Breadcrumb | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Asset Minify | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Breadcrumb | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -82,7 +82,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Asset Minify</h1>
+                    <h1 class="banner-title">Breadcrumb</h1>
                 </div>
             </div>
         </section>
@@ -181,7 +181,7 @@
            <li class="nav-header">
         <h3 class="slab-font">More</h3>
     </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../rad/more/breadcrumb.html">Breadcrumb</a>
             </li>
                     <li class="">
@@ -190,7 +190,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
             </li>
                     <li class="">
@@ -203,40 +203,33 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Auto Minify Css &amp; JS</h2>
-<p>Windwalker use <code>AssetManager</code> object to control all CSS &amp; JS includes, then render all <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code>
-tags in HTML.</p>
-<p>We can minify all asset files and combine them to one file that can speed up page downloading.</p>
-<p>Use <code>CssMinifyListener</code> and <code>JsMinifyListener</code> in <code>etc/app/web.php</code></p>
-<pre><code class="language-php">// etc/app/web.php
+                    <h2>Create Breadcrumb</h2>
+<p>Create breadcrumb in Phoenix is very easy.</p>
+<pre><code class="language-php">// In Package
+\Phoenix\Breadcrumb\Breadcrumb::push('Home', $uri-&gt;root);
 
-// ...
-
-    'listeners' =&gt; [
-        //...
-
-        700 =&gt; \Phoenix\Listener\CssMinifyListener::class,
-        800 =&gt; \Phoenix\Listener\JsMinifyListener::class
-    ],
-</code></pre>
-<p>Now every page will auto compress included css &amp; js files to one file.</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-GB"&gt;
-&lt;head&gt;
-
-    &lt;title&gt;Sakura Edit&lt;/title&gt;
-
-    &lt;!-- ... --&gt;
-
-    &lt;link rel="stylesheet" href="/path/site/www/asset/min/15d2969be82c4ac02c53fe8ead5600fd.css?f2d3c5f7211348644ed0a74575011f6c" /&gt;
-
-    &lt;script src="/path/site/www/asset/min/e2f3ce2ebbd95d65021ce52872f5e355.js?f2d3c5f7211348644ed0a74575011f6c"&gt;&lt;/script&gt;
-</code></pre>
-<p>You must modify your <code>.gitignore</code> file to ignore <code>www/asset/min</code> folder, and add a cron to clear cache files.</p>
+// In View
+\Phoenix\Breadcrumb\Breadcrumb::push('Articles', $router-&gt;route('articles'));
+\Phoenix\Breadcrumb\Breadcrumb::push('Article Edit', '', true); // Third arg is active</code></pre>
+<p>Then render it in template:</p>
+<pre><code class="language-html">{!! \Phoenix\Breadcrumb\Breadcrumb::render() !!}</code></pre>
+<p>The result:</p>
+<p><img src="https://i.imgur.com/YfNmboh.jpg" alt="" /></p>
+<h2>Other Methods</h2>
+<pre><code class="language-php">\Phoenix\Breadcrumb\Breadcrumb::pop();
+\Phoenix\Breadcrumb\Breadcrumb::map();
+\Phoenix\Breadcrumb\Breadcrumb::render();
+\Phoenix\Breadcrumb\Breadcrumb::getItems();
+\Phoenix\Breadcrumb\Breadcrumb::setItems($items: Data[]);
+\Phoenix\Breadcrumb\Breadcrumb::get($index);
+\Phoenix\Breadcrumb\Breadcrumb::set($index, $item: Data);</code></pre>
+<p>Breadcrumb is a DataSet object and it stores Data object as an iterator.</p>
+<h2>Override Template:</h2>
+<p>Please override <code>phoenix/bootstrap/ui/breadcrumbs.blade.php</code></p>
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/more/asset-minify.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/more/breadcrumb.md">improve</a> this document.
     </p>
                 </article>
             </div>

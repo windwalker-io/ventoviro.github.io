@@ -148,6 +148,15 @@
                 <a class="withripple" href="../../rad/js/core.html">Phoenix Core</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/helpers.html">Helpers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/router.html">Router</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/form.html">Form Submit</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/grid.html">Grid</a>
             </li>
                     <li class="">
@@ -173,6 +182,9 @@
         <h3 class="slab-font">More</h3>
     </li>
                     <li class="">
+                <a class="withripple" href="../../rad/more/breadcrumb.html">Breadcrumb</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
                     <li class="">
@@ -195,92 +207,43 @@
 <p>Phoenix provides a set of useful scripts to help us operate form and input, these scripts based on jQuery so every developers
 can easily learn how to use and integrate it with their own scripts.</p>
 <h2>Phoenix Core</h2>
-<p>Phoenix core script is a HTML form operation helper, it will auto included if you generate a phoenix admin template,
+<p>Phoenix core script will auto included if you generate a phoenix admin template,
 but you can also include it manually in everywhere with first argument as css selector.</p>
 <pre><code class="language-php">// In View class
-\Phoenix\Script\PhoenixScript::core();
-
-// Custom selector
-\Phoenix\Script\PhoenixScript::core('#my-form');
-
-// Custom selector and use other variable name.
-\Phoenix\Script\PhoenixScript::core('#my-form', 'MyPhoenix');
+\Phoenix\Script\PhoenixScript::phoenix();
 
 // In Template
-&lt;?php \Phoenix\Script\PhoenixScript::core(); ?&gt;
+&lt;?php \Phoenix\Script\PhoenixScript::phoenix(); ?&gt;
 
 OR
 
-@php(\Phoenix\Script\PhoenixScript::core())</code></pre>
+@php(\Phoenix\Script\PhoenixScript::phoenix())</code></pre>
 <p>The <code>jquery.js</code> and <code>phoenix.js</code> will be auto included to HTML head.</p>
-<p>And you must have a <code>&lt;form id="#admin-form"&gt; ...</code> element in your HTML so Phoenix can operate this form.</p>
-<h2>Submit and RESTful CRUD</h2>
-<p>You can simply use this JS code to submit form:</p>
-<pre><code class="language-js">// Submit with default action defined on &lt;form action="..."&gt;
-Phoenix.submit();
-
-// Submit with custom URI and query
-Phoenix.submit('/flower/sakuras', {page: 3});
-
-// Send POST
-Phoenix.submit('/flower/sakura', data, 'POST');
-
-// Send custom RESTful method, will add `_method` to your params
-Phoenix.submit('/flower/sakura', data, 'POST', 'PUT');</code></pre>
-<p>Use simple methods:</p>
-<pre><code class="language-js">// GET
-Phoenix.get('/flower/sakura/25', query);
-
-// POST
-Phoenix.post('/flower/sakura/25', query);
-
-// POST with custom method
-Phoenix.post('/flower/sakura/25', query, 'PUT');
-
-// PUT
-Phoenix.put('/flower/sakura/25', query);
-
-// PATCH
-Phoenix.patch('/flower/sakura/25', query);
-
-// DELETE
-Phoenix.sendDelete('/flower/sakura/25', query);</code></pre>
-<p>On click event in HTML element:</p>
-<pre><code class="language-html">&lt;button type="button" onclick="Phoenix.post()"&gt;&lt;/button&gt;</code></pre>
-<h2>Routes</h2>
-<p>Use <code>Router</code> to print route to HTML.</p>
-<pre><code class="language-php">&lt;button type="button" onclick="Phoenix.post('{{ $router-&gt;route('sakura', ['id' =&gt; 25]) }}')"&gt;&lt;/button&gt;</code></pre>
-<p>The output</p>
-<pre><code class="language-html">&lt;button type="button" onclick="Phoenix.post('/flower/sakura/25')"&gt;&lt;/button&gt;</code></pre>
-<h3>Use Phoenix JS Router:</h3>
-<p>Add route settings in PHP</p>
-<pre><code class="language-php">\Phoenix\Script\PhoenixScript::addRoute('sakura_save', $router-&gt;route('sakura', ['id' =&gt; 25]));</code></pre>
-<p>And get this route by <code>Phoenix.Router</code>:</p>
-<pre><code class="language-html">&lt;button type="button" onclick="Phoenix.post(Phoenix.Router.route('sakura_save'))"&gt;&lt;/button&gt;</code></pre>
-<p>Get route in anywhere, for example, use it in ajax call:</p>
-<pre><code class="language-js">$.ajax({
-    url: Phoenix.Router.route('sakura_save'),
-    data: data,
-
-    // ...
-}).done(...)</code></pre>
+<h2>Uri</h2>
+<p>Use <code>uri()</code> to get uri data, same as php <code>$uri-&gt;path</code> in template.</p>
+<pre><code class="language-js">Phoenix.uri('path');
+Phoenix.uri('root');
+Phoenix.uri('full');</code></pre>
+<p>Use <code>asset()</code> to get asset path:</p>
+<pre><code class="language-js">Phoenix.asset('path');
+Phoenix.asset('root');</code></pre>
 <h2>Variable Storage</h2>
 <p>Phoenix can store some variables from PHP and push to frontend. Use this code in PHP:</p>
-<pre><code class="language-php">PhoenixScript::store('item', $data);
-PhoenixScript::store('title', 'Hello');</code></pre>
+<pre><code class="language-php">PhoenixScript::data('item', $data);
+PhoenixScript::data('title', 'Hello');</code></pre>
 <p>In frontend, use this JS to get value:</p>
 <pre><code class="language-php">// Get object
-var item = Phoenix.Sotre.item;
+var item = Phoenix.data('item');
 
 var id = item.id;
 
 // Get string
-var title = Phoenix.Sotre.title.toUpperCase();</code></pre>
+var title = Phoenix.data('title').toUpperCase();</code></pre>
 <p>It is useful if you are using Vue.js and you want to push a lot of data structure to vue instance:</p>
 <pre><code class="language-js">new Vue({
     el: '#app',
     data: {
-        item: Phoenix.Store.item
+        item: Phoenix.data('item')
     }
 });</code></pre>
 <h2>Translate</h2>
@@ -289,10 +252,10 @@ var title = Phoenix.Sotre.title.toUpperCase();</code></pre>
 <p>Add language key to JS by php:</p>
 <pre><code class="language-php">\Phoenix\Script\PhoenixScript::translate('flower.message.sakura');</code></pre>
 <p>Now you can get this language string in JS:</p>
-<pre><code class="language-js">Phoenix.Translator.translate('flower.message.sakura'); // Sakura
+<pre><code class="language-js">Phoenix.__('flower.message.sakura'); // Sakura
 
 // You can also use sprintf() and plural()
-Phoenix.Translator.sprintf('flower.message.sakura', 'arg1', 'arg2');
+Phoenix.__('flower.message.sakura', 'arg1', 'arg2');
 Phoenix.Translator.plural('flower.message.sakura', 3);</code></pre>
 <p>See <a href="../../documentation/3.x/services/languages.html">Translator</a></p>
 <h2>Messages</h2>
@@ -308,9 +271,57 @@ Phoenix.addMessage('Hello World', 'danger');</code></pre>
 <pre><code class="language-js">Phoenix.addMessage(['Foo', 'Bar'], 'info');</code></pre>
 <p>Remove messages:</p>
 <pre><code class="language-js">Phoenix.removeMessages();</code></pre>
-<h3>Keep Alive</h3>
-<p>If you are writing a form with long textarea, you will hope the session do not expired, use <code>keepAlive()</code> in php.</p>
-<pre><code class="language-php">PhoenixScript::keepAlive();</code></pre>
+<h2>Events</h2>
+<p>Phoenix has it's own event system and very easy to use:</p>
+<h3>Listen A Custom Event</h3>
+<pre><code class="language-js">Phoenix.on('my.event', function () {
+    // ...
+});</code></pre>
+<p>Only listen once:</p>
+<pre><code class="language-js">Phoenix.once('my.event', function () {
+    // ...
+});</code></pre>
+<h3>Trigger Event</h3>
+<pre><code class="language-js">Phoenix.trigger('my.event');</code></pre>
+<p>Trigger with params:</p>
+<pre><code class="language-js">Phoenix.trigger('my.event', 'Flower', 'Sakura');</code></pre>
+<p>Listen with params:</p>
+<pre><code class="language-js">Phoenix.on('my.event', function (arg1, arg2) {
+    // ...
+});</code></pre>
+<h3>Stop Listening</h3>
+<pre><code class="language-js">Phoenix.off('my.event');</code></pre>
+<h3>Get Listeners</h3>
+<pre><code class="language-js">var listeners = Phoenix.listeners('my.events');</code></pre>
+<h2>Plugin Creator</h2>
+<p>Phoenix help us create jQuery plugin quickly.</p>
+<pre><code class="language-js">Phoenix.plugin('flower', class Flower {
+  constructor(arg1, arg2) {
+    // ...
+  }
+});
+
+// Use this plugin
+var instance = $('.hello').flower('arg1', 'arg2');
+
+// Call again will get same instance.
+var instance2 = $('.hello').flower('arg1', 'arg2');
+
+instance === instance2;</code></pre>
+<h2>Loaded Event</h2>
+<p>Phoenix provides a <code>loaded</code> event to make sure your script can run after page and something initialised.</p>
+<pre><code class="language-js">// By default, loaded is same as dom ready event
+Phoenix.on('loaded', function () {
+    // ...
+});</code></pre>
+<p>But you can add <code>wait()</code> to make phoenix loaded deferred. For example, this code make phoenix wait web components ready.</p>
+<pre><code class="language-js">Phoenix.wait(function (resolve) {
+    window.addEventListener('WebComponentsReady', function() {
+        // Call resolve() to complete loaded
+        resolve();
+    });
+});</code></pre>
+<p>All <code>wait()</code> callback will push to a queue, if queue all completed, Phoenix will trigger <code>loaded</code> event. </p>
                         <hr />
 
     <p class="text-center inner-top-sm">

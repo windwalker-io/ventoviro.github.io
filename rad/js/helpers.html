@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
-    <title>Asset Minify | Windwalker - PHP Rapid Development Framework</title>
+    <title>Helpers | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Asset Minify | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Helpers | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -82,7 +82,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Asset Minify</h1>
+                    <h1 class="banner-title">Helpers</h1>
                 </div>
             </div>
         </section>
@@ -147,7 +147,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/js/core.html">Phoenix Core</a>
             </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../rad/js/helpers.html">Helpers</a>
             </li>
                     <li class="">
@@ -190,7 +190,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
             </li>
                     <li class="">
@@ -203,40 +203,33 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Auto Minify Css &amp; JS</h2>
-<p>Windwalker use <code>AssetManager</code> object to control all CSS &amp; JS includes, then render all <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code>
-tags in HTML.</p>
-<p>We can minify all asset files and combine them to one file that can speed up page downloading.</p>
-<p>Use <code>CssMinifyListener</code> and <code>JsMinifyListener</code> in <code>etc/app/web.php</code></p>
-<pre><code class="language-php">// etc/app/web.php
-
-// ...
-
-    'listeners' =&gt; [
-        //...
-
-        700 =&gt; \Phoenix\Listener\CssMinifyListener::class,
-        800 =&gt; \Phoenix\Listener\JsMinifyListener::class
-    ],
-</code></pre>
-<p>Now every page will auto compress included css &amp; js files to one file.</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-GB"&gt;
-&lt;head&gt;
-
-    &lt;title&gt;Sakura Edit&lt;/title&gt;
-
-    &lt;!-- ... --&gt;
-
-    &lt;link rel="stylesheet" href="/path/site/www/asset/min/15d2969be82c4ac02c53fe8ead5600fd.css?f2d3c5f7211348644ed0a74575011f6c" /&gt;
-
-    &lt;script src="/path/site/www/asset/min/e2f3ce2ebbd95d65021ce52872f5e355.js?f2d3c5f7211348644ed0a74575011f6c"&gt;&lt;/script&gt;
-</code></pre>
-<p>You must modify your <code>.gitignore</code> file to ignore <code>www/asset/min</code> folder, and add a cron to clear cache files.</p>
+                    <p>Use <code>\Phoenix\Script\PhoenixScript::phoenix();</code> load phoenix js and also includes helpers.</p>
+<h3>Keep Alive</h3>
+<p>If you are writing a form with long textarea, you will hope the session do not expired, use <code>keepAlive()</code> in php.</p>
+<pre><code class="language-php">PhoenixScript::keepAlive();</code></pre>
+<h2>Load Script</h2>
+<p>Load JS dynamically.</p>
+<pre><code class="language-js">Phoenix.loadScript('js/foo.js');</code></pre>
+<p>Load multiple files and do something after all loaded:</p>
+<pre><code class="language-js">Phoenix.loadScript(['js/foo.js', 'js/bar.js'])
+  .done(function () { // or then()
+      // ...
+  });</code></pre>
+<p>Auto detect min file like <code>AssetManager</code></p>
+<pre><code class="language-js">// Load foo.min.js without DEBUG mode
+// Load foo.js in DEBUG mode
+Phoenix.loadScript('js/foo.min.js');</code></pre>
+<p>JS cannot check file exists, if you have only compressed or un-compress file, add second argument to FALSE so Phoenix
+will not auto convert file name.</p>
+<pre><code class="language-js">Phoenix.loadScript('js/foo.min.js', false); // Always load js/foo.min.js</code></pre>
+<h2>sprintf() and vsprintf()</h2>
+<p>Phoenix fork sprintf() in it-self to reduce request times.</p>
+<pre><code class="language-js">Phoenix.sprintf('Hello: %s', 'Simon');
+Phoenix.vprintf('Hello: %s', ['Simon']);</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/more/asset-minify.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/helpers.md">improve</a> this document.
     </p>
                 </article>
             </div>

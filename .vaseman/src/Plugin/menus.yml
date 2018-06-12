@@ -195,6 +195,9 @@ rad:
         js/jquery: jQuery
         js/libraries: Base Libraries
         js/core: Phoenix Core
+        js/helpers: Helpers
+        js/router: Router
+        js/form: Form Submit
         js/grid: Grid
         js/ajax: Ajax
         js/fields-dependent: Fields Dependent
@@ -203,6 +206,7 @@ rad:
         js/bootstrap: Bootstrap
         js/vue: Vue
     More:
+        more/breadcrumb: Breadcrumb
         more/gen-field: Field Generation
         more/record: Record Fields
         more/asset-minify: Asset Minify

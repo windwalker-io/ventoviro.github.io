@@ -148,6 +148,15 @@
                 <a class="withripple" href="../../rad/js/core.html">Phoenix Core</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/helpers.html">Helpers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/router.html">Router</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/form.html">Form Submit</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/grid.html">Grid</a>
             </li>
                     <li class="">
@@ -172,6 +181,9 @@
            <li class="nav-header">
         <h3 class="slab-font">More</h3>
     </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/more/breadcrumb.html">Breadcrumb</a>
+            </li>
                     <li class="">
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
@@ -289,6 +301,38 @@ $('#admin-form').validation().addField($('.input-myfield'));
 
 // Validate one input
 $('#admin-form').validation().validate($('.input-myfield'))</code></pre>
+<h2>Events</h2>
+<h3>After Validate Success</h3>
+<p>Phoenix Validation will trigger <code>phoenix.validate.success</code> event after validate success and prepare to submit form, this
+event is helpful if you want to disabled the submit button.</p>
+<pre><code class="language-html">&lt;script&gt;
+$('#admin-form').on('phoenix.validate.success', function (e) {
+    $('.submit-button').attr('disabled');
+});
+&lt;/script&gt;</code></pre>
+<h3>Validate Response</h3>
+<p>When call validation, every form field will trigger <code>phoenix.validate.{state}</code>, for example:</p>
+<pre><code class="language-js">$('#input-url').on('phoenix.validate.fail', function (event) {
+    // event.input
+    // event.state
+    // event.help
+    alert('Wrong URL format.');
+});</code></pre>
+<p>Supported state:</p>
+<ul>
+<li>success</li>
+<li>fail (Wrong format)</li>
+<li>none (Clear response)</li>
+<li>empty (Required and empty)</li>
+</ul>
+<p>There will also trigger a global event: <code>validation.response</code></p>
+<pre><code class="language-js">Phoenix.on('validation.response', function (params) {
+    // Params: $input, state, help, validation (validation object)
+    if (params.$input.attr('name') === 'url' &amp;&amp; state === 'fail') {
+      alert('...');
+    }
+});</code></pre>
+<p>There has also a <code>validation.remove</code> event when all response clear.</p>
                         <hr />
 
     <p class="text-center inner-top-sm">

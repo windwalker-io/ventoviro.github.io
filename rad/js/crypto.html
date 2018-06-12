@@ -148,6 +148,15 @@
                 <a class="withripple" href="../../rad/js/core.html">Phoenix Core</a>
             </li>
                     <li class="">
+                <a class="withripple" href="../../rad/js/helpers.html">Helpers</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/router.html">Router</a>
+            </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/js/form.html">Form Submit</a>
+            </li>
+                    <li class="">
                 <a class="withripple" href="../../rad/js/grid.html">Grid</a>
             </li>
                     <li class="">
@@ -172,6 +181,9 @@
            <li class="nav-header">
         <h3 class="slab-font">More</h3>
     </li>
+                    <li class="">
+                <a class="withripple" href="../../rad/more/breadcrumb.html">Breadcrumb</a>
+            </li>
                     <li class="">
                 <a class="withripple" href="../../rad/more/gen-field.html">Field Generation</a>
             </li>
@@ -198,30 +210,34 @@
 <h2>Encrypt/Decrypt Text</h2>
 <pre><code class="language-js">var text = 'Windwalker';
 var key = 'dfG9O34F';
-var secret = Phoenix.Crypto.encrypt(key, text);
+var secret = Phoenix.encrypt(key, text);
 
 console.log(secret);
-console.log(Phoenix.Crypto.decrypt(key, secret));</code></pre>
+console.log(Phoenix.decrypt(key, secret));</code></pre>
 <p>Output:</p>
 <pre><code>NTEsMTUsNDEsOTMsNTYsODIsODgsNDUsMSwyMA==
 Windwalker</code></pre>
 <h2>Base64</h2>
 <p>Simple methods to wrap <code>btoa()</code> and <code>atob()</code></p>
-<pre><code class="language-js">var base64 = Phoenix.Crypto.base64Encode('Hello');
+<pre><code class="language-js">var base64 = Phoenix.base64Encode('Hello');
 
 console.log(base64);
-console.log(Phoenix.Crypto.base64Decode(base64));</code></pre>
+console.log(Phoenix.base64Decode(base64));</code></pre>
 <p>Output:</p>
 <pre><code class="language-js">SGVsbG8=
 Hello</code></pre>
 <h2>MD5</h2>
 <p>A JS md5 implementation, will be useful if you need an identify when you generating elements in frontend.</p>
-<pre><code class="language-js">Phoenix.Crypto.md5('Windwalker'); // fa0a731220e28af75afba7135723015e</code></pre>
+<pre><code class="language-js">Phoenix.md5('Windwalker'); // fa0a731220e28af75afba7135723015e</code></pre>
 <h2>UUID v4</h2>
 <p>UUID is useful if you need to generate random ID for dynamic elements.</p>
-<pre><code class="language-js">Phoenix.Crypto.uuid4();</code></pre>
+<pre><code class="language-js">Phoenix.uuid4();</code></pre>
 <p>The result:</p>
 <pre><code>46a37daa-ef63-4b0c-9b4c-ec7008b19b70</code></pre>
+<h2>Uniqid</h2>
+<p>This method same as PHP <code>uniqid()</code></p>
+<pre><code class="language-js">Phoenix.uniqid();
+Phoenix.uniqid('Prefix', true);</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">

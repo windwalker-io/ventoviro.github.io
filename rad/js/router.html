@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../asset/images/favicon.ico" />
 
-    <title>Asset Minify | Windwalker - PHP Rapid Development Framework</title>
+    <title>Router | Windwalker - PHP Rapid Development Framework</title>
 
     <meta name="description" content="">
     <meta name="generator" content="The Time Machine">
 
-    <meta property="og:title" content="Asset Minify | Windwalker - PHP Rapid Development Framework">
+    <meta property="og:title" content="Router | Windwalker - PHP Rapid Development Framework">
     <meta property="og:site_name" content="Windwalker Framework">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -82,7 +82,7 @@
         <section id="banner" class="container text-center">
             <div class="row">
                 <div class="banner-content col-md-10">
-                    <h1 class="banner-title">Asset Minify</h1>
+                    <h1 class="banner-title">Router</h1>
                 </div>
             </div>
         </section>
@@ -150,7 +150,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/js/helpers.html">Helpers</a>
             </li>
-                    <li class="">
+                    <li class="active">
                 <a class="withripple" href="../../rad/js/router.html">Router</a>
             </li>
                     <li class="">
@@ -190,7 +190,7 @@
                     <li class="">
                 <a class="withripple" href="../../rad/more/record.html">Record Fields</a>
             </li>
-                    <li class="active">
+                    <li class="">
                 <a class="withripple" href="../../rad/more/asset-minify.html">Asset Minify</a>
             </li>
                     <li class="">
@@ -203,40 +203,60 @@
 
             <div class="col-md-9">
                 <article class="article-content">
-                    <h2>Auto Minify Css &amp; JS</h2>
-<p>Windwalker use <code>AssetManager</code> object to control all CSS &amp; JS includes, then render all <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code>
-tags in HTML.</p>
-<p>We can minify all asset files and combine them to one file that can speed up page downloading.</p>
-<p>Use <code>CssMinifyListener</code> and <code>JsMinifyListener</code> in <code>etc/app/web.php</code></p>
-<pre><code class="language-php">// etc/app/web.php
+                    <p>Use <code>\Phoenix\Script\PhoenixScript::phoenix();</code> load phoenix js and also includes router js.</p>
+<h2>Use PHP Print Routes</h2>
+<p>Use <code>Router</code> to print route to HTML.</p>
+<pre><code class="language-php">&lt;button type="button" onclick="Phoenix.post('{{ $router-&gt;route('sakura', ['id' =&gt; 25]) }}')"&gt;&lt;/button&gt;</code></pre>
+<p>The output</p>
+<pre><code class="language-html">&lt;button type="button" onclick="Phoenix.post('/flower/sakura/25')"&gt;&lt;/button&gt;</code></pre>
+<h2>Use Phoenix JS Router</h2>
+<p>Add route settings in PHP</p>
+<pre><code class="language-php">\Phoenix\Script\PhoenixScript::addRoute('sakura_save', $router-&gt;route('sakura', ['id' =&gt; 25]));</code></pre>
+<p>And get this route by <code>Phoenix.Router</code>:</p>
+<pre><code class="language-html">&lt;button type="button" onclick="Phoenix.post(Phoenix.route('sakura_save'))"&gt;&lt;/button&gt;</code></pre>
+<p>Get route in anywhere, for example, use it in ajax call:</p>
+<pre><code class="language-js">$.ajax({
+    url: Phoenix.route('sakura_save'),
+    data: data,
 
-// ...
-
-    'listeners' =&gt; [
-        //...
-
-        700 =&gt; \Phoenix\Listener\CssMinifyListener::class,
-        800 =&gt; \Phoenix\Listener\JsMinifyListener::class
-    ],
-</code></pre>
-<p>Now every page will auto compress included css &amp; js files to one file.</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-GB"&gt;
-&lt;head&gt;
-
-    &lt;title&gt;Sakura Edit&lt;/title&gt;
-
-    &lt;!-- ... --&gt;
-
-    &lt;link rel="stylesheet" href="/path/site/www/asset/min/15d2969be82c4ac02c53fe8ead5600fd.css?f2d3c5f7211348644ed0a74575011f6c" /&gt;
-
-    &lt;script src="/path/site/www/asset/min/e2f3ce2ebbd95d65021ce52872f5e355.js?f2d3c5f7211348644ed0a74575011f6c"&gt;&lt;/script&gt;
-</code></pre>
-<p>You must modify your <code>.gitignore</code> file to ignore <code>www/asset/min</code> folder, and add a cron to clear cache files.</p>
+    // ...
+}).done(function () {
+    // ...
+})</code></pre>
+<h2>Add Query</h2>
+<p>Use second argument as URL query.</p>
+<pre><code class="language-js">Phoenix.route('sakura_save', {id: 123}); // /sakura/save?id=1</code></pre>
+<p>This will be useful if you write an AJAX updater:</p>
+<pre><code class="language-js">function updateItem(id, data) {
+  $.post(
+    Phoenix.route('sakura', {id: id}), 
+    data
+  );
+}</code></pre>
+<h2>State Control</h2>
+<p>Phoenix Router can help you control browser history state.</p>
+<p>Push a new history:</p>
+<pre><code class="language-js">Phoenix.Router.push({
+  uri: '/article/view',
+  title: 'Article Title',
+  state: {...}
+});</code></pre>
+<p>Replace a history:</p>
+<pre><code class="language-js">Phoenix.Router.replace({
+  uri: '/article/view',
+  title: 'Article Title',
+  state: {...}
+});</code></pre>
+<p>Get current history state:</p>
+<pre><code class="language-js">var state = Phoenix.Router.state();</code></pre>
+<p>Other methods as window.history proxies:</p>
+<pre><code class="language-js">Phoenix.Router.back();
+Phoenix.Router.forward();
+Phoenix.Router.go(-1);</code></pre>
                         <hr />
 
     <p class="text-center inner-top-sm">
-        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/more/asset-minify.md">improve</a> this document.
+        If you found a typo or error, please help us <a target="_blank" href="https://github.com/ventoviro/ventoviro.github.io/tree/master/.vaseman/entries/rad/js/router.md">improve</a> this document.
     </p>
                 </article>
             </div>

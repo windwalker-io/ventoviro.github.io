@@ -153,3 +153,51 @@ $('#admin-form').validation().addField($('.input-myfield'));
 // Validate one input
 $('#admin-form').validation().validate($('.input-myfield'))
 ```
+
+## Events
+
+### After Validate Success
+
+Phoenix Validation will trigger `phoenix.validate.success` event after validate success and prepare to submit form, this
+event is helpful if you want to disabled the submit button.
+
+```html
+<script>
+$('#admin-form').on('phoenix.validate.success', function (e) {
+    $('.submit-button').attr('disabled');
+});
+</script>
+```
+
+### Validate Response
+
+When call validation, every form field will trigger `phoenix.validate.{state}`, for example:
+
+```js
+$('#input-url').on('phoenix.validate.fail', function (event) {
+    // event.input
+    // event.state
+    // event.help
+    alert('Wrong URL format.');
+});
+```
+
+Supported state:
+
+- success
+- fail (Wrong format)
+- none (Clear response)
+- empty (Required and empty)
+
+There will also trigger a global event: `validation.response`
+
+```js
+Phoenix.on('validation.response', function (params) {
+    // Params: $input, state, help, validation (validation object)
+    if (params.$input.attr('name') === 'url' && state === 'fail') {
+      alert('...');
+    }
+});
+```
+
+There has also a `validation.remove` event when all response clear.
