@@ -3,13 +3,6 @@ $(document).ready(function() {
   // Init Material
   $.material.init();
 
-  // Code Block
-  $('.article-content pre code').each(function(i, block) {
-    var $this = $(this);
-
-    $this.attr('class', 'language-' + $this.attr('class'));
-  });
-
   // Smooth scroll
   setTimeout(function ()
   {
