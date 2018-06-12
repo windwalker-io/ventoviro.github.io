@@ -19,14 +19,14 @@ The benefit of this pattern is that View can decide what data is necessary for t
 
 ### Schematic Diagram
 
-![mvc](https://i.imgur.com/gGe4wGc.jpg) ![ww-mvc](https://i.imgur.com/TRxEg9j.jpg)
+![mvc](https://i.imgur.com/gGe4wGc.jpg) ![ww-mvc](https://i.imgur.com/RwdJCAm.jpg)
 
 ### ViewModel
 
 View is not directly communicate to Repository, there is a `ViewModel` object between them. You can consider ViewModel 
 as a Repository manager. 
 
-![](https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg)
+![](https://i.imgur.com/rYwg6xk.jpg)
 
 ## Use ViewModel Pattern in Windwalker
 

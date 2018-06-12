@@ -166,7 +166,7 @@
                 <a class="withripple" href="../../../documentation/3.x/mvc/edge.html">Edge Templates</a>
             </li>
                     <li class="">
-                <a class="withripple" href="../../../documentation/3.x/mvc/model-database.html">Model and Database</a>
+                <a class="withripple" href="../../../documentation/3.x/mvc/database-repository.html">Database and Repository</a>
             </li>
                     <li class="active">
                 <a class="withripple" href="../../../documentation/3.x/mvc/view-model.html">ViewModel</a>
@@ -321,11 +321,11 @@ variants of MVC like: MVVM, MVP etc. </p>
 And controller's responsibility is just binding repositories to view. There is a <code>ViewModel</code> between View and Repository
 to handle request from View and get data from Repository.</p>
 <h3>Schematic Diagram</h3>
-<p><img src="https://i.imgur.com/gGe4wGc.jpg" alt="mvc" /> <img src="https://i.imgur.com/TRxEg9j.jpg" alt="ww-mvc" /></p>
+<p><img src="https://i.imgur.com/gGe4wGc.jpg" alt="mvc" /> <img src="https://i.imgur.com/RwdJCAm.jpg" alt="ww-mvc" /></p>
 <h3>ViewModel</h3>
 <p>View is not directly communicate to Repository, there is a <code>ViewModel</code> object between them. You can consider ViewModel
 as a Repository manager. </p>
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587061/82da36ac-911b-11e4-9da8-772dcd40e9b6.jpg" alt="" /></p>
+<p><img src="https://i.imgur.com/rYwg6xk.jpg" alt="" /></p>
 <h2>Use ViewModel Pattern in Windwalker</h2>
 <p>This is a traditional MVC usage in controller:</p>
 <pre><code class="language-php">// doExecute()

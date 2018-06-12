@@ -23,7 +23,7 @@ documentation:
             mvc/class-resolvers: Class Resolvers
             mvc/view-templating: View and Templating
             mvc/edge: Edge Templates
-            mvc/model-database: Model and Database
+            mvc/database-repository: Database and Repository
             mvc/view-model: ViewModel
             mvc/uri-route-building: URI and Route Building
         Database:

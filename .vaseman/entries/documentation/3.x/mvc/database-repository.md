@@ -1,17 +1,17 @@
 ---
 layout: documentation.twig
-title: Repository and Database
+title: Database and Repository
 
 ---
 
 ## What is Repository
 
-Repository is a Repository class which implemented the repository pattern in Windwalker, it contains some low-layer DB handler like DataMapper
+Repository is a class which implemented the repository pattern in Windwalker, it contains some low-layer DB handler like DataMapper
 or ActiveRecord and help us do more database operation logic.
 
 ### Repository
 
-`Repository` is a very simple class without and DB access. This is an example of using it:
+`Repository` is a very simple class without any DB access. This is an example of using it:
 
 ```php
 use Windwalker\Core\Repository\Repository;
