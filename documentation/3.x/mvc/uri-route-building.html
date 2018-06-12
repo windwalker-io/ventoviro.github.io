@@ -439,7 +439,9 @@ it will only echo a <code>#</code> to make sure system won't break.</p>
 <h3>Use Chaining Methods</h3>
 <p>After Windwalker 3.2, we provides a powerful route builder, just use chaining methods to configure your route string.</p>
 <p>In controller or package:</p>
-<pre><code class="language-php">$this-&gt;router-&gt;to('sakura', ['id' =&gt; 25])-&gt;path();</code></pre>
+<pre><code class="language-php">$this-&gt;redirect(
+    $this-&gt;router-&gt;to('sakura', ['id' =&gt; 25])-&gt;path()-&gt;__toString()
+);</code></pre>
 <p>In View template:</p>
 <pre><code class="language-php">{{ $router-&gt;to('sakuras')-&gt;id(25)-&gt;page(2)-&gt;full() }}</code></pre>
 <p>Available methods:</p>

@@ -237,7 +237,9 @@ After Windwalker 3.2, we provides a powerful route builder, just use chaining me
 In controller or package:
 
 ```php
-$this->router->to('sakura', ['id' => 25])->path();
+$this->redirect(
+    $this->router->to('sakura', ['id' => 25])->path()->__toString()
+);
 ```
 
 In View template:

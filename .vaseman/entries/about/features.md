@@ -61,26 +61,27 @@ You can add many logic before or after `doExecute()` if you override the parent 
 Windwalker uses a pattern which is similar to [Supervising Controller](http://goo.gl/p6Rjwl), [MVVM](http://goo.gl/LJPG) or [MVP](http://goo.gl/y3VzE)
 , View can not communicate to Model, but Controller can binding Model to View, then View is able to get data from Model.
 
-![mvc](https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg) ![ww-mvc](https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg)
+![mvc](https://i.imgur.com/gGe4wGc.jpg) ![ww-mvc](https://i.imgur.com/RwdJCAm.jpg)
 
 See: [ViewModel](../documentation/3.x/mvc/view-model.html)
 
-## Stateful Model
+## Repository and State Control
 
-Windwalker Model is stateful design, use state pattern can help ue create flexible data provider. For example, we can change this state to get different data.
+Windwalker Repository is stateful design, use state pattern will help us create flexible data provider. 
+For example, we can change this state to get different data.
 
 ``` php
-$model = new MyModel;
+$repo = new MyRepository;
 
-// Let's change model state
-$model->set('where.published', 1);
-$model->set('list.ordering', 'birth');
-$model->set('list.direction', 'DESC');
+// Let's change repository state
+$repo->set('where.published', 1);
+$repo->set('list.ordering', 'birth');
+$repo->set('list.direction', 'DESC');
 
-$users = $model->getUsers();
+$users = $repo->getUsers();
 ```
 
-See: [Model State](../documentation/3.x/mvc/model-database.html#model-state)
+See: [Model State](../documentation/3.x/mvc/database-repository.html#repository-state)
 
 ## Multiple Template Engines
 
@@ -170,8 +171,8 @@ $table->create(function (Schema $schema)
     $schema->text('content')->allowNull(false)->comment('Content');
 
     $schema->addIndex('category_id');
-    $schema->addIndex(array('category_id', 'title'));
-    $schema->addUniqueKey('slug');
+    $schema->addIndex(['category_id', 'title']);
+    $schema->addUniqueKey('slug(150)');
 }, true);
 ```
 
@@ -195,10 +196,8 @@ See: [Error Handling](../documentation/3.x/services/error-handling.html)
 ``` php
 $items = Filesystem::items($path);
 
-foreach ($files as $file)
-{
-    if ($file->isDir())
-    {
+foreach ($files as $file) {
+    if ($file->isDir()) {
         continue;
     }
 }
@@ -207,8 +206,7 @@ foreach ($files as $file)
 Check permission bigger than 755.
 
 ``` php
-$closure = function($current, $key, $iterator)
-{
+$closure = function($current, $key, $iterator) {
     return Path::getPermissions($current->getPath()) >= 755;
 };
 
@@ -288,13 +286,11 @@ use Windwalker\Profiler\Banchmark;
 
 $benchmark = new Benchmark;
 
-$benchmark->addTask('task1', function()
-{
+$benchmark->addTask('task1', function() {
     md5(uniqid());
 });
 
-$benchmark->->addTask('task2', function()
-{
+$benchmark->->addTask('task2', function() {
     sha1(uniqid());
 });
 
@@ -319,7 +315,7 @@ Utf8 string handler
 ``` php
 use Windwalker\String\Utf8String;
 
-echo Utf8String::substr('這是中文字', 0, 3);
+echo str('這是中文字', 0, 3)->truncate(3, '...')->__toString();
 ```
 
 String Inflector

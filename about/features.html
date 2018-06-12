@@ -151,19 +151,20 @@ You can add many logic before or after <code>doExecute()</code> if you override 
 <h2>ViewModel Pattern</h2>
 <p>Windwalker uses a pattern which is similar to <a href="http://goo.gl/p6Rjwl">Supervising Controller</a>, <a href="http://goo.gl/LJPG">MVVM</a> or <a href="http://goo.gl/y3VzE">MVP</a>
 , View can not communicate to Model, but Controller can binding Model to View, then View is able to get data from Model.</p>
-<p><img src="https://cloud.githubusercontent.com/assets/1639206/5587060/82d753f6-911b-11e4-85b8-3ccd08599c95.jpg" alt="mvc" /> <img src="https://cloud.githubusercontent.com/assets/1639206/5591914/9ddd2b42-91d6-11e4-9a6a-81fb427f4a54.jpg" alt="ww-mvc" /></p>
+<p><img src="https://i.imgur.com/gGe4wGc.jpg" alt="mvc" /> <img src="https://i.imgur.com/RwdJCAm.jpg" alt="ww-mvc" /></p>
 <p>See: <a href="../documentation/3.x/mvc/view-model.html">ViewModel</a></p>
-<h2>Stateful Model</h2>
-<p>Windwalker Model is stateful design, use state pattern can help ue create flexible data provider. For example, we can change this state to get different data.</p>
-<pre><code class="language-php">$model = new MyModel;
+<h2>Repository and State Control</h2>
+<p>Windwalker Repository is stateful design, use state pattern will help us create flexible data provider.
+For example, we can change this state to get different data.</p>
+<pre><code class="language-php">$repo = new MyRepository;
 
-// Let's change model state
-$model-&gt;set('where.published', 1);
-$model-&gt;set('list.ordering', 'birth');
-$model-&gt;set('list.direction', 'DESC');
+// Let's change repository state
+$repo-&gt;set('where.published', 1);
+$repo-&gt;set('list.ordering', 'birth');
+$repo-&gt;set('list.direction', 'DESC');
 
-$users = $model-&gt;getUsers();</code></pre>
-<p>See: <a href="../documentation/3.x/mvc/model-database.html#model-state">Model State</a></p>
+$users = $repo-&gt;getUsers();</code></pre>
+<p>See: <a href="../documentation/3.x/mvc/database-repository.html#repository-state">Model State</a></p>
 <h2>Multiple Template Engines</h2>
 <h3>Extendible PHP Engine</h3>
 <p>Windwalker PHP Engine is able to extends parent template which similar to Blade or Twig:</p>
@@ -221,8 +222,8 @@ $asset-&gt;addCSS('css/my-style.min.css');
     $schema-&gt;text('content')-&gt;allowNull(false)-&gt;comment('Content');
 
     $schema-&gt;addIndex('category_id');
-    $schema-&gt;addIndex(array('category_id', 'title'));
-    $schema-&gt;addUniqueKey('slug');
+    $schema-&gt;addIndex(['category_id', 'title']);
+    $schema-&gt;addUniqueKey('slug(150)');
 }, true);</code></pre>
 <p>See: <a href="../documentation/3.x/db/table-schema.html">Table and Schema</a></p>
 <h3>DataType Mapping</h3>
@@ -235,16 +236,13 @@ the difference of data type between databases, Windwalker will auto handle it.</
 <h2>Spl Iterable Filesystem</h2>
 <pre><code class="language-php">$items = Filesystem::items($path);
 
-foreach ($files as $file)
-{
-    if ($file-&gt;isDir())
-    {
+foreach ($files as $file) {
+    if ($file-&gt;isDir()) {
         continue;
     }
 }</code></pre>
 <p>Check permission bigger than 755.</p>
-<pre><code class="language-php">$closure = function($current, $key, $iterator)
-{
+<pre><code class="language-php">$closure = function($current, $key, $iterator) {
     return Path::getPermissions($current-&gt;getPath()) &gt;= 755;
 };
 
@@ -304,13 +302,11 @@ echo $select;</code></pre>
 
 $benchmark = new Benchmark;
 
-$benchmark-&gt;addTask('task1', function()
-{
+$benchmark-&gt;addTask('task1', function() {
     md5(uniqid());
 });
 
-$benchmark-&gt;-&gt;addTask('task2', function()
-{
+$benchmark-&gt;-&gt;addTask('task2', function() {
     sha1(uniqid());
 });
 
@@ -328,7 +324,7 @@ task2 =&gt; 207.049847 ms
 <p>Utf8 string handler</p>
 <pre><code class="language-php">use Windwalker\String\Utf8String;
 
-echo Utf8String::substr('這是中文字', 0, 3);</code></pre>
+echo str('這是中文字', 0, 3)-&gt;truncate(3, '...')-&gt;__toString();</code></pre>
 <p>String Inflector</p>
 <pre><code class="language-php">use Windwalker\String\StringInflector;
 
