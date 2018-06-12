@@ -398,13 +398,21 @@ MysqlType::getDefaultValue(DataType::TINYINT); // `0`</code></pre>
 $schema-&gt;addIndex(array('foo', 'bar')); // idx_tablename_foo_bar</code></pre>
 <p>You can also set a custom name</p>
 <pre><code class="language-php">$schema-&gt;addIndex(array('foo', 'bar'), 'idx_custom_name');</code></pre>
+<p>After 3.4, Windwalker use <code>utf8mb4</code> as default charset, The <code>varchar(255)</code> type may receive
+<strong>Error: Specified key was too long; max key length is 767 bytes</strong> error message and unable to set index, you can
+add index length to solve this problem.</p>
+<pre><code class="language-php">$schema-&gt;addIndex('foo(150)');</code></pre>
 <h2>update()</h2>
+<h2>update()</h2>
+<p>In <code>update()</code> method, if a column exists, it will be modified. If a column is not exists, it will be created.</p>
 <pre><code class="language-php">// Will add category_id column and a index
-$table-&gt;create(function (Schema $schema)
+$table-&gt;update(function (Schema $schema)
 {
     $schema-&gt;integer('category_id')-&gt;signed(false)-&gt;allowNull(false)-&gt;comment('Cat Key');
 
     $schema-&gt;addIndex('category_id');
+
+    $schema-&gt;char('title')-&gt;length(15); // If title exists, it will change to `char(15)`
 });</code></pre>
 <h2>save()</h2>
 <p>If table exists, using update, otherwise use insert.</p>
@@ -434,10 +442,14 @@ $table = $db-&gt;getTable('#__articles');
 
 $table-&gt;dropIndex(Key::TYPE_INDEX, 'idx_state');</code></pre>
 <h2>changeColumn() &amp; modifyColumn()</h2>
-<pre><code class="language-php">// Modify `foo` column to new type or length
+<pre><code class="language-php">use Windwalker\Database\Schema\Column;
+
+// Modify `foo` column to new type or length
 $table-&gt;modifyColumn(
-    (new Varchar('foo'))-&gt;length(123)-&gt;comment('Foo')
+    (new Column('foo', 'varchar'))-&gt;length(123)-&gt;comment('Foo')
 );
+
+use Windwalker\Database\Schema\Column\Varchar;
 
 // Modify column `foo` to varchar and rename it to `new_name`
 $table-&gt;changeColumn('foo', new Varchar('new_name'));</code></pre>

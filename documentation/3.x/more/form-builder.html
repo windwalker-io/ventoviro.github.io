@@ -531,14 +531,17 @@ second param, this method will be a getter to return attribute value.</p>
     -&gt;set('id', 'my-name')
     -&gt;required(false)
     -&gt;disabled(false);</code></pre>
-<h3>XML</h3>
-<pre><code class="language-xml">&lt;field
-    name="name"
-    label="Label"
-    id="my-name"
-    required="true"
-    disabled="false"
-/&gt;</code></pre>
+<h3>Wrap by Elements</h3>
+<p>Use <code>wrap()</code> to wrap field by HTML elements to support Web Components or Vue.js pattern.</p>
+<pre><code class="language-php">$form-&gt;addField(new TextField('name', 'Label'))
+    -&gt;wrap(new HtmlElement('transition', null, ['name' =&gt; 'fade']))
+    -&gt;wrap(new HtmlElement('dom-repeat', null, ['items' =&gt; 'sakuras']));</code></pre>
+<p>Result:</p>
+<pre><code class="language-html">&lt;transition name="fade"&gt;
+    &lt;dom-repeat items="sakuras"&gt;
+        {Your field}
+    &lt;/dom-repeat&gt;
+&lt;/transition&gt;</code></pre>
 <h2>Filter</h2>
 <pre><code class="language-php">use Windwalker\Filter\InputFilter;
 
