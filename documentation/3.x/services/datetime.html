@@ -348,7 +348,7 @@ $date = Chronos::toLocalTime($date, [format], [to tz]);
 $date = Chronos::convert($date, [from], [to], [format]);
 $date = Chronos::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');</code></pre>
 <h2>Simple Properties</h2>
-<pre><code class="language-php">$datetime = new Chronos;
+<pre><code class="language-php">$datetime = new Chronos();
 
 $datetime-&gt;daysinmonth;
 $datetime-&gt;dayofweek;
@@ -363,7 +363,7 @@ $datetime-&gt;ordinal;
 $datetime-&gt;week;
 $datetime-&gt;year;</code></pre>
 <h2>Pre-define Formats</h2>
-<pre><code class="language-php">$datetime = new Chronos;
+<pre><code class="language-php">$datetime = new Chronos();
 
 $datetime-&gt;toSql();
 $datetime-&gt;toISO8601();

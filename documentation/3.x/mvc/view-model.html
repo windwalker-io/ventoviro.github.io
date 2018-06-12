@@ -330,8 +330,8 @@ as a Model manager. </p>
 <pre><code class="language-php">&lt;?php
 // doExecute()
 
-$model = new FlowerModel;
-$view = new SakurasHtmlView;
+$model = new FlowerModel();
+$view = new SakurasHtmlView();
 
 $item = $model-&gt;getItem();
 
@@ -341,8 +341,8 @@ return $view-&gt;render();</code></pre>
 <p>Change some code, we can push Model into View:</p>
 <pre><code class="language-php">// doExecute()
 
-$model = new FlowerModel;
-$view = new SakurasHtmlView;
+$model = new FlowerModel();
+$view = new SakurasHtmlView();
 
 $view-&gt;setModel($model);
 

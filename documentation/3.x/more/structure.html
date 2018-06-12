@@ -314,7 +314,7 @@
                     <h2>Getting Started</h2>
 <pre><code class="language-php">use Windwalker\Structure\Structure;
 
-$structure = new Structure;
+$structure = new Structure();
 
 // Set a value in the structure.
 $structure-&gt;set('foo', 'bar');
@@ -325,7 +325,7 @@ $value = $structure-&gt;get('foo');
 <h2>Load config by Structure</h2>
 <pre><code class="language-php">use Windwalker\Structure\Structure;
 
-$structure = new Structure;
+$structure = new Structure();
 
 // Load by string
 $structure-&gt;loadString('{"foo" : "bar"}');

@@ -314,7 +314,7 @@
                     <h3>Simple Validate Process</h3>
 <pre><code class="language-php">use Windwalker\Validator\Rule\EmailValidator;
 
-$validator = new EmailValidator;
+$validator = new EmailValidator();
 
 $validator-&gt;validate('sakura@flower.com'); // bool(true)
 
@@ -369,7 +369,7 @@ class MyValidator extends AbstractValidator
     }
 }
 
-$validator = new MyValidator;
+$validator = new MyValidator();
 
 $validator-&gt;validate('foo');</code></pre>
 <h3>Extends Regex Validator</h3>

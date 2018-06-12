@@ -32,7 +32,7 @@ $container = \Windwalker\Ioc::factory(); // This container is singleton
 Now we can store objects into it.
 
 ```php
-$input = new Input;
+$input = new Input();
 
 $container->set('my.input', $input);
 
@@ -77,7 +77,7 @@ Sometimes we will hope not create object instantly, we can use callback to creat
 // Set a closure into it
 $container->set('input', function(Container $container)
 {
-    return new Input;
+    return new Input();
 });
 
 // Will call this closure when we get it
@@ -94,7 +94,7 @@ Use `set('foo', $object, true)` or `share('foo', $object)` to make an object sin
 // Share a closure
 $container->share('input', function(Container $container)
 {
-    return new Input;
+    return new Input();
 });
 
 // Will will always get same instance
@@ -116,7 +116,7 @@ $container->protect(
     'input',
     function(Container $container)
     {
-        return new Input;
+        return new Input();
     },
     true // Shared or not
 );
@@ -337,7 +337,7 @@ class MyModel implement ModelInterface
 // Bind MyModel as AbstractModel
 $container->share('Windwalker\Model\ModelInterface', function()
 {
-    return new MyModel;
+    return new MyModel();
 });
 
 $myObject = $container->createObject('MyClass');
@@ -365,7 +365,7 @@ You can add callback as second argument, this way is totally same as `share()` a
 ```php
 $container->bind('Windwalker\Model\ModelInterface', function (Contaienr $container)
 {
-    return new MyObject;
+    return new MyObject();
 });
 ```
 
@@ -379,7 +379,7 @@ extending configuration, this is a sample:
 $container->share('flower', function()
 {
     // Create a empty object
-    return new Flower;
+    return new Flower();
 });
 
 $container->extend('flower', function($origin, Container $container)
@@ -465,11 +465,11 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 
     public function getQuery(Container $container)
     {
-        return new MysqlQueery;
+        return new MysqlQueery();
     }
 }
 
-$container->registerServiceProvider(new DatabaseServiceProvider);
+$container->registerServiceProvider(new DatabaseServiceProvider());
 ```
 
 ## Ioc Class
@@ -519,7 +519,7 @@ Windwalker has a Facade class to help us use proxy pattern to call object method
 
 ```php
 // Create a object into conteiner
-$container->share('my.router', new Router);
+$container->share('my.router', new Router());
 ```
 
 ```php

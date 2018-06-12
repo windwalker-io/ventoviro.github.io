@@ -16,7 +16,7 @@ class GetController extends Controller
 {
 	protected function doExecute()
 	{
-		$view = new HtmlView;
+		$view = new HtmlView();
 
 		return $view->render();
 	}
@@ -40,7 +40,7 @@ So add this code to push controller config into View, View will know every thing
 ```php
 // /src/Flower/Controller/Sakuras/GetController.php
 
-$view = new HtmlView;
+$view = new HtmlView();
 
 // Push config into View
 $view->setConfig($this->config);
@@ -468,11 +468,11 @@ class GetController extends AbstractController
         switch ($format)
         {
             case 'html':
-                $this->response = new HtmlResponse;
+                $this->response = new HtmlResponse();
                 break;
 
             case 'json':
-                $this->response = new JsonResponse;
+                $this->response = new JsonResponse();
                 break;
                 
             // More formats...

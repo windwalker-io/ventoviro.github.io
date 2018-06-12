@@ -27,7 +27,7 @@ class UserRecord extends Record
     protected $table = 'users';
 }
 
-$user = new UserRecord;
+$user = new UserRecord();
 ```
 
 ### Load A Record
@@ -366,7 +366,7 @@ Or add listeners to Dispatcher (You must install `windwalker/event` first).
 
 ```php
 // Use listener object
-$record->getDispatcher()->addListener(new MyRecordListener);
+$record->getDispatcher()->addListener(new MyRecordListener());
 
 // Use callback
 $record->getDispatcher()->listen('onAfterStore', function (Event $event)

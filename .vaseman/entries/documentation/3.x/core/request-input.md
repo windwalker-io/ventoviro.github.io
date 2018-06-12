@@ -46,7 +46,7 @@ Input object is a container of web request data and superglobals.
 ```php
 use Windwalker\IO\Input;
 
-$input = new Input;
+$input = new Input();
 
 // To get $_REQUEST['flower']
 $input->get('flower', 'default');

@@ -9,7 +9,7 @@ title: Validation
 ```php
 use Windwalker\Validator\Rule\EmailValidator;
 
-$validator = new EmailValidator;
+$validator = new EmailValidator();
 
 $validator->validate('sakura@flower.com'); // bool(true)
 
@@ -84,7 +84,7 @@ class MyValidator extends AbstractValidator
 	}
 }
 
-$validator = new MyValidator;
+$validator = new MyValidator();
 
 $validator->validate('foo');
 ```

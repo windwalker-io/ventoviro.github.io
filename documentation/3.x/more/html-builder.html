@@ -502,7 +502,7 @@ echo new UList([
 
 // OR
 
-echo (new UList)
+echo (new UList())
     -&gt;item('new ListItem('Foo'))
     -&gt;item('Bar', ['class' =&gt; 'baz']);</code></pre>
 <p>Output</p>
@@ -511,7 +511,7 @@ echo (new UList)
     &lt;li class="baz"&gt;Bar&lt;/li&gt;
 &lt;/ul&gt;</code></pre>
 <h3>OL List</h3>
-<pre><code class="language-php">echo (new OList)
+<pre><code class="language-php">echo (new OList())
     -&gt;item('new ListItem('Foo'))
     -&gt;item('Bar', ['class' =&gt; 'baz']);</code></pre>
 <p>Output</p>
@@ -524,19 +524,19 @@ echo (new UList)
 use Windwalker\Html\Enum\DListDescription;
 use Windwalker\Html\Enum\DListTitle;
 
-echo (new DList)
+echo (new DList())
     -&gt;addDescription('Foo', 'foo desc')
     -&gt;addDescription('Bar', 'bar desc');
 
 // OR
 
-echo (new DList)
+echo (new DList())
     -&gt;title('Foo')-&gt;desc('foo desc')
     -&gt;title('Bar')-&gt;desc('bar desc');
 
 // OR
 
-echo (new DList)
+echo (new DList())
     -&gt;item(new DListTitle('Foo'))-&gt;item(new DListDescription('foo desc'))
     -&gt;item(new DListTitle('Bar'))-&gt;item(new DListDescription('bar desc'));</code></pre>
 <p>Output</p>
@@ -673,7 +673,7 @@ $items = [
     'Yoo' =&gt; 'yoo value',
 ];
 
-$grid = new KeyValueGrid;
+$grid = new KeyValueGrid();
 
 $grid-&gt;addHeader('Key', 'Value');
 
@@ -698,7 +698,7 @@ echo $grid;</code></pre>
     'Yoo' =&gt; 'yoo value',
 ];
 
-$grid = new KeyValueGrid;
+$grid = new KeyValueGrid();
 
 $grid-&gt;addHeader('Key', 'Value');
 
@@ -748,7 +748,7 @@ $grid-&gt;configure($items, function (KeyValueGrid $grid, $key, $value)
 <h3>Audio</h3>
 <pre><code class="language-php">use Windwalker\Html\Media\Audio;
 
-echo (new Audio)
+echo (new Audio())
     -&gt;controls(true)
     -&gt;autoplay(true)
     -&gt;loop(true)
@@ -768,7 +768,7 @@ echo (new Audio)
 <h3>Video</h3>
 <pre><code class="language-php">use Windwalker\Html\Media\Video;
 
-echo (new Video)
+echo (new Video())
     -&gt;controls(true)
     -&gt;autoplay(true)
     -&gt;loop(true)

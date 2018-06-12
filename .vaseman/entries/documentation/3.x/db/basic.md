@@ -6,7 +6,7 @@ title: Basic Database Usage
 
 ## Configure Database
 
-In a new project, you should rename `/etc/secret.dist.yml` to `/etc/secret.yml`, and fill your database account information:
+In a new project(), you should rename `/etc/secret.dist.yml` to `/etc/secret.yml`, and fill your database account information:
 
 ```yaml
 database:
@@ -177,7 +177,7 @@ $logger = new Logger('sql');
 $logger->pushHandler(new StreamHandler('path/to/log/sql.log', Logger::DEBUG));
 
 // Use PSR-3 logger processor that we can replace {sql} with context like array('sql' => 'XXX')
-$logger->pushProcessor(new PsrLogMessageProcessor);
+$logger->pushProcessor(new PsrLogMessageProcessor());
 
 // Push into DB
 $db->addMiddleware(new DbLoggingMiddleware($logger));

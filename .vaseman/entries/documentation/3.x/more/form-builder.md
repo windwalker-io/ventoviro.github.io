@@ -14,7 +14,7 @@ use Windwalker\Form\Form;
 use Windwalker\Form\Field\TextField;
 use Windwalker\Form\Field\PasswordField;
 
-$form = new Form;
+$form = new Form();
 
 $form->addField(new TextField('username', 'Username'));
 $form->addField(new PasswordField('password', 'Password'));
@@ -52,7 +52,7 @@ Render all fields, and we get this HTML output.
 `add()` is a simple alias of `addField()` to make Field support chaining.
 
 ```php
-$form->add('username', new TextField)
+$form->add('username', new TextField())
     ->label('Username')
     ->setClass('input-large')
     ->defauleValue('foo')
@@ -79,7 +79,7 @@ $form->add('username', new TextField)
 ```
 
 ```php
-$form = new Form;
+$form = new Form();
 
 $form->loadFile('form.xml');
 ```
@@ -112,7 +112,7 @@ The result will make name as an array.
 Fieldset is a category of fields, we can filter our fields by fieldset:
 
 ```php
-$form = new Form;
+$form = new Form();
 
 $form->addField(new TextField('flower', 'Flower'), 'plant');
 $form->addField(new TextField('tree', 'Tree'), 'plant');
@@ -166,7 +166,7 @@ Using XML
 Group is like fieldset as a category of fields, but it will make name of fields to be array:
 
 ```php
-$form = new Form;
+$form = new Form();
 
 $form->addField(new TextField('flower', 'Flower'), null, 'earth');
 $form->addField(new TextField('bird', 'Bird'), null, 'sky');
@@ -181,7 +181,7 @@ echo $form->renderFields(null, 'animal');
 Now we can use fieldset and group to organize our fields.
 
 ```php
-$form = new Form;
+$form = new Form();
 
 $form->addField(new TextField('flower', 'Flower'), 'plant', 'earth');
 $form->addField(new TextField('tree', 'Tree'), 'plant', 'earth');
@@ -355,7 +355,7 @@ $form->addField(new TextField('name', 'Name'))
 	->required();
 
 $form->addField(new TextField('email', 'Email'))
-	->addValidator(new EmailValidator);
+	->addValidator(new EmailValidator());
 
 // Prepare data
 $data['name'] = null;
@@ -536,7 +536,7 @@ class MyFilter implements FilterInterface
 }
 
 (new TextField('foo', 'Foo'))
-    ->addFilter(new MyFilter);
+    ->addFilter(new MyFilter());
 ```
 
 For XML
@@ -569,7 +569,7 @@ class MyValidator extends AbstractValidator
 }
 
 (new TextField('foo', 'Foo'))
-    ->addFilter(new MyValidator);
+    ->addFilter(new MyValidator());
 ```
 
 For XML
@@ -614,5 +614,5 @@ class MyFormRenderer implements \Windwalker\Form\Renderer\FormRendererInterface
 	}
 }
 
-$form->setRenderer(new MyFormRenderer);
+$form->setRenderer(new MyFormRenderer());
 ```

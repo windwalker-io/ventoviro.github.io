@@ -465,7 +465,7 @@ echo $data['id'];
 
 // OR using object
 
-$data = new stdClass;
+$data = new stdClass();
 
 $data-&gt;title = 'Sakura';
 $data-&gt;created = '2014-03-02';
@@ -493,7 +493,7 @@ $db-&gt;getWriter()-&gt;insertMultiple('#__articles', $dataSet, 'id');
 echo $dataSet[0]['id'];</code></pre>
 <h3>updateOne()</h3>
 <p>Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:</p>
-<pre><code class="language-php">$data = new stdClass;
+<pre><code class="language-php">$data = new stdClass();
 
 $data-&gt;id = 1;
 $data-&gt;title = 'Sakura2';
@@ -512,7 +512,7 @@ $db-&gt;getWriter()-&gt;updateOne('#__articles', $data, 'id');
 $db-&gt;getWriter()-&gt;updateMultiple('#__articles', $dataSet, 'id');</code></pre>
 <h3>updateBatch()</h3>
 <p>Using where conditions to update some values to every records which matched this condition.</p>
-<pre><code class="language-php">$data = new stdClass;
+<pre><code class="language-php">$data = new stdClass();
 
 $data-&gt;state = 0;
 

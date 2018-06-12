@@ -257,7 +257,7 @@ echo $data['id'];
 
 // OR using object
 
-$data = new stdClass;
+$data = new stdClass();
 
 $data->title = 'Sakura';
 $data->created = '2014-03-02';
@@ -295,7 +295,7 @@ echo $dataSet[0]['id'];
 Using an object or array to update a record into a table, argument 3 is the where key value that we added to query:
 
 ```php
-$data = new stdClass;
+$data = new stdClass();
 
 $data->id = 1;
 $data->title = 'Sakura2';
@@ -325,7 +325,7 @@ $db->getWriter()->updateMultiple('#__articles', $dataSet, 'id');
 Using where conditions to update some values to every records which matched this condition.
 
 ```php
-$data = new stdClass;
+$data = new stdClass();
 
 $data->state = 0;
 

@@ -320,7 +320,7 @@ class GetController extends Controller
 {
     protected function doExecute()
     {
-        $view = new HtmlView;
+        $view = new HtmlView();
 
         return $view-&gt;render();
     }
@@ -335,7 +335,7 @@ Hello World</code></pre>
 So add this code to push controller config into View, View will know every thing about Controller:</p>
 <pre><code class="language-php">// /src/Flower/Controller/Sakuras/GetController.php
 
-$view = new HtmlView;
+$view = new HtmlView();
 
 // Push config into View
 $view-&gt;setConfig($this-&gt;config);
@@ -676,11 +676,11 @@ class SakurasJsonView extends StructureView
         switch ($format)
         {
             case 'html':
-                $this-&gt;response = new HtmlResponse;
+                $this-&gt;response = new HtmlResponse();
                 break;
 
             case 'json':
-                $this-&gt;response = new JsonResponse;
+                $this-&gt;response = new JsonResponse();
                 break;
 
             // More formats...

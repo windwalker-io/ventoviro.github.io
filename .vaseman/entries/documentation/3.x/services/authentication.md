@@ -94,7 +94,7 @@ And you can add seeder to generate fake user data:
 $faker = \Faker\Factory::create();
 
 // Please do not use `pass123456` in production site
-$pass = (new Password)->create('pass123456');
+$pass = (new Password())->create('pass123456');
 
 $model = UserModel::getInstance();
 
@@ -164,7 +164,7 @@ $user->username = 'riaok3784';
 $user->password = 'abc1234';
 
 // Hash password
-$user->password = (new Password)->create($user->password);
+$user->password = (new Password())->create($user->password);
 
 User::save($user);
 ```
@@ -231,7 +231,7 @@ class DatabaseMethod extends AbstractMethod
 		}
 
 		// User found, then we check password
-		if (!(new Password)->verify($credential->password, $user->password)) {
+		if (!(new Password())->verify($credential->password, $user->password)) {
 			$this->status = Authentication::INVALID_PASSWORD;
 
 			return false;
@@ -273,7 +273,7 @@ OK now we can login User by credential.
 
 ```php
 // Prepare user data
-$credential = new Credential;
+$credential = new Credential();
 $credential->username = 'richael2123';
 $credential->password = '12345678';
 
@@ -364,7 +364,7 @@ class RemoteMethod extends AbstractMethod
     public function authenticate(Credential $credential)
     {
         // Use HttpClient to get remote json data
-        $response = (new HttpClient)->get('http://myapiserver.com/user/auth', [
+        $response = (new HttpClient())->get('http://myapiserver.com/user/auth', [
             'username' => $credential->username,
             'password' => $credential->password
         ]);

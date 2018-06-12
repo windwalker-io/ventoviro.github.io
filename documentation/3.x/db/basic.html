@@ -312,7 +312,7 @@
             <div class="col-md-9">
                 <article class="article-content">
                     <h2>Configure Database</h2>
-<p>In a new project, you should rename <code>/etc/secret.dist.yml</code> to <code>/etc/secret.yml</code>, and fill your database account information:</p>
+<p>In a new project(), you should rename <code>/etc/secret.dist.yml</code> to <code>/etc/secret.yml</code>, and fill your database account information:</p>
 <pre><code class="language-yaml">database:
     driver: mysql
     host: localhost
@@ -427,7 +427,7 @@ $logger = new Logger('sql');
 $logger-&gt;pushHandler(new StreamHandler('path/to/log/sql.log', Logger::DEBUG));
 
 // Use PSR-3 logger processor that we can replace {sql} with context like array('sql' =&gt; 'XXX')
-$logger-&gt;pushProcessor(new PsrLogMessageProcessor);
+$logger-&gt;pushProcessor(new PsrLogMessageProcessor());
 
 // Push into DB
 $db-&gt;addMiddleware(new DbLoggingMiddleware($logger));

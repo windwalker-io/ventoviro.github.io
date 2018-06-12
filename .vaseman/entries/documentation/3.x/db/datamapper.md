@@ -24,7 +24,7 @@ class FooMapper extends DataMapper
     protected $table = '#__foo';
 }
 
-$data = (new FooMapper)->findAll();
+$data = (new FooMapper())->findAll();
 ```
 
 ## Find Records
@@ -116,7 +116,7 @@ Using DataSet to wrap every data, then send this object to create() method, thes
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 
-$data1 = new Data;
+$data1 = new Data();
 $data1->title = 'Foo';
 $data1->auhor = 'Magneto';
 
@@ -161,7 +161,7 @@ Windwalker\Data\DataSet Object
 Only insert one row, do not need DataSet.
 
 ```php
-$data = new Data;
+$data = new Data();
 $data->title = 'Foo';
 $data->auhor = 'Magneto';
 
@@ -179,7 +179,7 @@ Update methods help us update rows in table.
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 
-$data1 = new Data;
+$data1 = new Data();
 $data1->id = 1;
 $data1->title = 'Foo';
 
@@ -200,7 +200,7 @@ $fooMapper->update($dataset);
 Just update one row.
 
 ```php
-$data = new Data;
+$data = new Data();
 $data->id = 1;
 $data->title = 'Foo';
 
@@ -213,7 +213,7 @@ UpdateAll is different from update method, we just send one data object, but usi
 to update every row match these conditions. We don't need primary key for updateAll().
 
 ```php
-$data = new Data;
+$data = new Data();
 $data->published = 0;
 
 $fooMapper->updateAll($data, array('author' => 'Mystique'));
@@ -379,7 +379,7 @@ class FooListener
 $mapper = new DataMapper('table');
 
 // Add object as listener
-$mapper->getDispatcher()->addListener(new FooListener);
+$mapper->getDispatcher()->addListener(new FooListener());
 
 // Use listen() to add a callback as listener
 $mapper->getDispatcher()->listen('onAfterUpdate', function () { ... });

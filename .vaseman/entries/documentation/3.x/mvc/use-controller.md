@@ -252,7 +252,7 @@ use Windwalker\Http\Response\JsonResponse;
 
 // in doExecute()
 
-$this->response = new JsonResponse;
+$this->response = new JsonResponse();
 
 // The returned data will auto convert to json
 return ['foo' => 'bar'];
@@ -519,7 +519,7 @@ Actually, all params of constructor can be ignored because the global IoC contai
  
 ```php
 // Every dependency will be provided by IoC
-$child = new ChildController;
+$child = new ChildController();
 ```
 
 But you can force push some params you needed:
@@ -544,7 +544,7 @@ $result = $this->hmvc('Flower\Controller\Rose\SaveController', array('data' => $
 
 // OR
 
-$result = $this->hmvc(new ChildController, $this->input);
+$result = $this->hmvc(new ChildController(), $this->input);
 ```
 
 ## Middlewares

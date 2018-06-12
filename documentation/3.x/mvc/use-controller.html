@@ -504,7 +504,7 @@ otherwise controller will call <code>processSuccess()</code> to handle success l
 
 // in doExecute()
 
-$this-&gt;response = new JsonResponse;
+$this-&gt;response = new JsonResponse();
 
 // The returned data will auto convert to json
 return ['foo' =&gt; 'bar'];</code></pre>
@@ -687,7 +687,7 @@ to solve many of the scalability issues already mentioned. HMVC was first descri
 }</code></pre>
 <p>Actually, all params of constructor can be ignored because the global IoC container will handle this dependency.</p>
 <pre><code class="language-php">// Every dependency will be provided by IoC
-$child = new ChildController;</code></pre>
+$child = new ChildController();</code></pre>
 <p>But you can force push some params you needed:</p>
 <pre><code class="language-php">$newInput = new Input(array('foo' =&gt; 'bar'));
 
@@ -703,7 +703,7 @@ $child = new ChildController(null, $subContainer-&gt;get('package'), $subContain
 
 // OR
 
-$result = $this-&gt;hmvc(new ChildController, $this-&gt;input);</code></pre>
+$result = $this-&gt;hmvc(new ChildController(), $this-&gt;input);</code></pre>
 <h2>Middlewares</h2>
 <p>Windwalker Controller supports middleware pattern, you can add middlewares in <code>middleware</code> property when class declaring:</p>
 <pre><code class="language-php">class GetController extends AbstractController

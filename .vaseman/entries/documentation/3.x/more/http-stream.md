@@ -11,7 +11,7 @@ HttpClient is a simple class to make restful request.
 ```php
 use Windwalker\Http\HttpClient;
 
-$http = new HttpClient;
+$http = new HttpClient();
 
 $response = $http->get('http://example.com/?foo=bar');
 
@@ -22,7 +22,7 @@ $response = $http->get('http://example.com/?foo=bar');
 ### Other Methods
 
 ```php
-$http = new HttpClient;
+$http = new HttpClient();
 
 // The post data can be query string or array
 $response = $http->post('http://example.com/?foo=bar', array('post_data' => 'data'));
@@ -48,7 +48,7 @@ Psr7 Request is a immutable object, you have to get the return object every oper
 ```php
 use Windwalker\Http\Request;
 
-$request = new Request;
+$request = new Request();
 
 // Note: You have to get the return value.
 // Every change will return new object.
@@ -71,7 +71,7 @@ $request = new Request(
 // This is a POST request so we write post data to body
 $request->getBody()->write('this=is&post=data');
 
-$http = new HttpClient;
+$http = new HttpClient();
 
 // Send request
 $response = $http->send($request);
@@ -83,7 +83,7 @@ Use Uri and Json output.
 use Windwalker\Http\Request;
 use Windwalker\Uri\PsrUri;
 
-$request = (new Request)
+$request = (new Request())
     ->withUri(new PsrUri('http://example.com'))
     ->withMethod('POST')
     ->withAddedHeader('Authorization', 'Bearer ' . $token)
@@ -145,7 +145,7 @@ $http = new HttpClient($httpOptions, new CurlTransport($options));
 ### Download Remote File
  
 ```php
-$http = new HttpClient;
+$http = new HttpClient();
 
 $dest = '/path/to/local/file.zip';
 
@@ -216,7 +216,7 @@ $http->resolve(function ($responses, $errors, $http)
 
 `Uri` is a simple Uri object to modify URL but not Psr UriInterface.
 
-The methods provided in the `Uri` class allow you to manipulate all aspects of a uri. For example, suppose you wanted to set a new uri, add in a port, and then also post a username and password to authenticate a .htaccess security file. You could use the following syntax:
+The methods provided in the `Uri` class allow you to manipulate all aspects of a uri. For example, suppose you wanted to set a new uri(), add in a port, and then also post a username and password to authenticate a .htaccess security file. You could use the following syntax:
 
 ```php
 // new uri object
@@ -305,7 +305,7 @@ $stream->getContents(); // get: Foo Bar
 Read data from `php://input`
 
 ```php
-$stream = new PhpInputSteam;
+$stream = new PhpInputSteam();
 
 $data = $stream->__toString(); // foo=bar
 

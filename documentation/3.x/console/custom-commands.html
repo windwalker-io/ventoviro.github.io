@@ -377,7 +377,7 @@ public function registerCommands()
      */
 
     // Your commands here.
-    $this-&gt;addCommand(new FlowerCommand);
+    $this-&gt;addCommand(new FlowerCommand());
 }</code></pre>
 <p>Then type <code>php windwlaker -h</code> will see our new command:</p>
 <pre><code class="language-bash">Commands:
@@ -497,8 +497,8 @@ use Flower\Command\Flower\RoseCommand;
 
 public function initialise()
 {
-    $this-&gt;addCommand(new SakuraCommand)
-        -&gt;addCommand(new RoseCommand);
+    $this-&gt;addCommand(new SakuraCommand())
+        -&gt;addCommand(new RoseCommand());
 }</code></pre>
 <p>OK, let's typing:</p>
 <pre><code class="language-bash">php windwlaker flower sakura</code></pre>

@@ -40,7 +40,7 @@ class CanEditArticlePolicy implements \Windwalker\Authorisation\PolicyInterface
 }
 
 // Add to UserManager
-User::addPolicy('can.edit.article', new CanEditArticlePolicy);
+User::addPolicy('can.edit.article', new CanEditArticlePolicy());
 ```
 
 Or register in config:
@@ -93,7 +93,7 @@ class ArticlePolicyProvider implements PolicyProviderInterface
 }
 
 // Register policies
-User::registerPolicyProvider(new ArticlePolicyProvider);
+User::registerPolicyProvider(new ArticlePolicyProvider());
 ```
 
 Also, you can register provider in `etc/app/web.php`:

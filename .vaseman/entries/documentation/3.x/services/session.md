@@ -70,7 +70,7 @@ $session->getBag('default')->get('foo');
 ```php
 use Windwalker\Session\Bag\SessionBag;
 
-$session->setBag('mybag', new SessionBag);
+$session->setBag('mybag', new SessionBag());
 
 // Get data
 $myBag = $session->getBag('mybag');

@@ -32,7 +32,7 @@ class MyModel extends ModelRepository
 
 ```php
 // In controller
-$model = new MyModel;
+$model = new MyModel();
 
 $item = $model->getItem();
 
@@ -45,7 +45,7 @@ Set source to ModelRepository:
 
 ```php
 // FileFinder is just an example
-$model = new MyModel(null, null, new FileFinder);
+$model = new MyModel(null, null, new FileFinder());
 
 // In model
 $this->source->find(...);
@@ -183,7 +183,7 @@ Model will not raise error but only return `null`.
 use Windwalker\Core\Model\Model;
 
 // This is default model, does not have any custom methods
-$model = new Model;
+$model = new Model();
 
 // These 2 methods will only return null
 $data = $model->getData();
@@ -227,7 +227,7 @@ class MyModel extends DatabaseModel
     }
 }
 
-$model = new MyModel;
+$model = new MyModel();
 
 $state = $model->getState();
 

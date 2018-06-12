@@ -324,7 +324,7 @@ $fooSet = $fooMapper-&gt;find(array('id' =&gt; 1));</code></pre>
     protected $table = '#__foo';
 }
 
-$data = (new FooMapper)-&gt;findAll();</code></pre>
+$data = (new FooMapper())-&gt;findAll();</code></pre>
 <h2>Find Records</h2>
 <p>Find method will fetch rows from table, and return <code>DataSet</code> class.</p>
 <h3>find()</h3>
@@ -379,7 +379,7 @@ $fooMapper-&gt;where('a = "b"') // Simple where
 <pre><code class="language-php">use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 
-$data1 = new Data;
+$data1 = new Data();
 $data1-&gt;title = 'Foo';
 $data1-&gt;auhor = 'Magneto';
 
@@ -415,7 +415,7 @@ $return = $fooMapper-&gt;create($dataset);</code></pre>
 )</code></pre>
 <h3>createOne()</h3>
 <p>Only insert one row, do not need DataSet.</p>
-<pre><code class="language-php">$data = new Data;
+<pre><code class="language-php">$data = new Data();
 $data-&gt;title = 'Foo';
 $data-&gt;auhor = 'Magneto';
 
@@ -426,7 +426,7 @@ $fooMapper-&gt;createOne($data);</code></pre>
 <pre><code class="language-php">use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 
-$data1 = new Data;
+$data1 = new Data();
 $data1-&gt;id = 1;
 $data1-&gt;title = 'Foo';
 
@@ -442,7 +442,7 @@ $dataset = new DataSet(array($data1, $data2));
 $fooMapper-&gt;update($dataset);</code></pre>
 <h3>updateOne()</h3>
 <p>Just update one row.</p>
-<pre><code class="language-php">$data = new Data;
+<pre><code class="language-php">$data = new Data();
 $data-&gt;id = 1;
 $data-&gt;title = 'Foo';
 
@@ -450,7 +450,7 @@ $fooMapper-&gt;updateOne($data);</code></pre>
 <h3>updateAll()</h3>
 <p>UpdateAll is different from update method, we just send one data object, but using conditions as where
 to update every row match these conditions. We don't need primary key for updateAll().</p>
-<pre><code class="language-php">$data = new Data;
+<pre><code class="language-php">$data = new Data();
 $data-&gt;published = 0;
 
 $fooMapper-&gt;updateAll($data, array('author' =&gt; 'Mystique'));</code></pre>
@@ -598,7 +598,7 @@ GROUP BY category.id</code></pre>
 $mapper = new DataMapper('table');
 
 // Add object as listener
-$mapper-&gt;getDispatcher()-&gt;addListener(new FooListener);
+$mapper-&gt;getDispatcher()-&gt;addListener(new FooListener());
 
 // Use listen() to add a callback as listener
 $mapper-&gt;getDispatcher()-&gt;listen('onAfterUpdate', function () { ... });

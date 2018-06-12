@@ -42,7 +42,7 @@ Then register this class to `Form`:
 use Windwalker\Form\Form;
 
 $form = new Form();
-$form->defineFormFields(new EditDefinition());
+$form->defineFormFields(new EditDefinition);
 
 echo $form->renderFields('basic');
 ```
@@ -80,7 +80,7 @@ class MyField extends AbstractField
 ```php
 // in AbstractFieldDefinition
 
-$this->add('field_name', new MyField());
+$this->add('field_name', new MyField);
 ```
 
 There has three methods: `fieldset()`, `group()` and `wrap()` are alias to methods with same name in `Form`, See [Form Builder](form-builder.html)

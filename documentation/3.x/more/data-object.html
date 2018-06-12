@@ -365,12 +365,12 @@ $data = $data-&gt;map(function ($value, $key)
 });</code></pre>
 <h3>Null Data</h3>
 <p>In PHP, an empty object means not empty, so this code will return FALSE:</p>
-<pre><code class="language-php">$data = new Data; // Data object with no properties
+<pre><code class="language-php">$data = new Data(); // Data object with no properties
 
 // IS NULL?
 var_dump(empty($data)); // bool(false)</code></pre>
 <p>So we use <code>isNull()</code> method to detect whether object is empty or not, this is similar to <a href="http://en.wikipedia.org/wiki/Null_Object_pattern">Null Object pattern</a>:</p>
-<pre><code class="language-php">$data = new Data;
+<pre><code class="language-php">$data = new Data();
 
 // IS NULL?
 var_dump($data-&gt;isNull()); // bool(true)</code></pre>

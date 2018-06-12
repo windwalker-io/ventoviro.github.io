@@ -326,7 +326,7 @@ class UserRecord extends Record
     protected $table = 'users';
 }
 
-$user = new UserRecord;</code></pre>
+$user = new UserRecord();</code></pre>
 <h3>Load A Record</h3>
 <pre><code class="language-php">$user-&gt;load(25); // Load by primary key
 
@@ -602,7 +602,7 @@ $cat-&gt;rebuild(); // Rebuild node: 5 and it's children.</code></pre>
 }</code></pre>
 <p>Or add listeners to Dispatcher (You must install <code>windwalker/event</code> first).</p>
 <pre><code class="language-php">// Use listener object
-$record-&gt;getDispatcher()-&gt;addListener(new MyRecordListener);
+$record-&gt;getDispatcher()-&gt;addListener(new MyRecordListener());
 
 // Use callback
 $record-&gt;getDispatcher()-&gt;listen('onAfterStore', function (Event $event)

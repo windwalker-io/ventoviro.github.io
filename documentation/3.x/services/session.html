@@ -344,7 +344,7 @@ $session-&gt;getBag('default')-&gt;get('foo');</code></pre>
 <h3>Use Custom Bags</h3>
 <pre><code class="language-php">use Windwalker\Session\Bag\SessionBag;
 
-$session-&gt;setBag('mybag', new SessionBag);
+$session-&gt;setBag('mybag', new SessionBag());
 
 // Get data
 $myBag = $session-&gt;getBag('mybag');

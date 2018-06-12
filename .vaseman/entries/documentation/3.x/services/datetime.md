@@ -70,7 +70,7 @@ $date = Chronos::convert($date, 'Asia/Taipei', 'Asia/Tokyo', 'Y-m-d H:i:s');
 ## Simple Properties
 
 ```php
-$datetime = new Chronos;
+$datetime = new Chronos();
 
 $datetime->daysinmonth;
 $datetime->dayofweek;
@@ -89,7 +89,7 @@ $datetime->year;
 ## Pre-define Formats
 
 ```php
-$datetime = new Chronos;
+$datetime = new Chronos();
 
 $datetime->toSql();
 $datetime->toISO8601();

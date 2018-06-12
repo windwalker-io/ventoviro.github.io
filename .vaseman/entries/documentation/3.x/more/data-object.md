@@ -94,7 +94,7 @@ $data = $data->map(function ($value, $key)
 In PHP, an empty object means not empty, so this code will return FALSE:
 
 ```php
-$data = new Data; // Data object with no properties
+$data = new Data(); // Data object with no properties
 
 // IS NULL?
 var_dump(empty($data)); // bool(false)
@@ -103,7 +103,7 @@ var_dump(empty($data)); // bool(false)
 So we use `isNull()` method to detect whether object is empty or not, this is similar to [Null Object pattern](http://en.wikipedia.org/wiki/Null_Object_pattern):
 
 ```php
-$data = new Data;
+$data = new Data();
 
 // IS NULL?
 var_dump($data->isNull()); // bool(true)

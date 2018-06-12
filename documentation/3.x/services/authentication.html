@@ -384,7 +384,7 @@ class UserModel extends DatabaseModelRepository implements UserHandlerInterface
 <pre><code class="language-php">$faker = \Faker\Factory::create();
 
 // Please do not use `pass123456` in production site
-$pass = (new Password)-&gt;create('pass123456');
+$pass = (new Password())-&gt;create('pass123456');
 
 $model = UserModel::getInstance();
 
@@ -436,7 +436,7 @@ $user-&gt;username = 'riaok3784';
 $user-&gt;password = 'abc1234';
 
 // Hash password
-$user-&gt;password = (new Password)-&gt;create($user-&gt;password);
+$user-&gt;password = (new Password())-&gt;create($user-&gt;password);
 
 User::save($user);</code></pre>
 <h3>Delete User</h3>
@@ -489,7 +489,7 @@ class DatabaseMethod extends AbstractMethod
         }
 
         // User found, then we check password
-        if (!(new Password)-&gt;verify($credential-&gt;password, $user-&gt;password)) {
+        if (!(new Password())-&gt;verify($credential-&gt;password, $user-&gt;password)) {
             $this-&gt;status = Authentication::INVALID_PASSWORD;
 
             return false;
@@ -521,7 +521,7 @@ class DatabaseMethod extends AbstractMethod
 <h2>Login and Logout</h2>
 <h3>Login User</h3>
 <pre><code class="language-php">// Prepare user data
-$credential = new Credential;
+$credential = new Credential();
 $credential-&gt;username = 'richael2123';
 $credential-&gt;password = '12345678';
 
@@ -585,7 +585,7 @@ class RemoteMethod extends AbstractMethod
     public function authenticate(Credential $credential)
     {
         // Use HttpClient to get remote json data
-        $response = (new HttpClient)-&gt;get('http://myapiserver.com/user/auth', [
+        $response = (new HttpClient())-&gt;get('http://myapiserver.com/user/auth', [
             'username' =&gt; $credential-&gt;username,
             'password' =&gt; $credential-&gt;password
         ]);

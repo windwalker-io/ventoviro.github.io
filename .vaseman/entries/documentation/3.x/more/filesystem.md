@@ -325,7 +325,7 @@ class MyComparator implements FileComparatorInterface
    }
 }
 
-$files = Filesystem::find($path, new MyComparator, true);
+$files = Filesystem::find($path, new MyComparator(), true);
 ```
 
 ### Advanced Comparator
@@ -335,9 +335,9 @@ We can create our own comparator like an finder object.
 ```php
 // This is just an example
 
-$comparator = new MyAdvancedComparator;
+$comparator = new MyAdvancedComparator();
 
-$comparator->setTimeGreaterThan(new DataTime)
+$comparator->setTimeGreaterThan(new DataTime())
     ->setExtension('ini|php')
     ->setSize('< 2M')
     ->setPermission('>= 644');
@@ -473,7 +473,7 @@ Find by Comparator
 This comparator object may contain the filter logic, but not prepared yet.
 
 ```php
-$comparator = new FileComparator;
+$comparator = new FileComparator();
 
 foreach($path->findAll(FileComparatorInterface $comparator, true) as $file)
 {

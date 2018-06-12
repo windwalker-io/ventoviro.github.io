@@ -60,7 +60,7 @@ use Windwalker\Database\Schema\Column\Varchar;
 
     // ...
 
-    $schema->add('title', new Varchar)->allowNull(false)->comment('Title');
+    $schema->add('title', new Varchar())->allowNull(false)->comment('Title');
 
     // ...
 ```

@@ -315,14 +315,14 @@
 <p>HttpClient is a simple class to make restful request.</p>
 <pre><code class="language-php">use Windwalker\Http\HttpClient;
 
-$http = new HttpClient;
+$http = new HttpClient();
 
 $response = $http-&gt;get('http://example.com/?foo=bar');
 
 // This is PSR7 ResponseInterface
 (string) $response-&gt;getBody();</code></pre>
 <h3>Other Methods</h3>
-<pre><code class="language-php">$http = new HttpClient;
+<pre><code class="language-php">$http = new HttpClient();
 
 // The post data can be query string or array
 $response = $http-&gt;post('http://example.com/?foo=bar', array('post_data' =&gt; 'data'));
@@ -343,7 +343,7 @@ $response = $http-&gt;request('POST', 'http://example.com/?foo=bar', 'this=is&am
 <p>Psr7 Request is a immutable object, you have to get the return object every operation.</p>
 <pre><code class="language-php">use Windwalker\Http\Request;
 
-$request = new Request;
+$request = new Request();
 
 // Note: You have to get the return value.
 // Every change will return new object.
@@ -366,7 +366,7 @@ $request = new Request(
 // This is a POST request so we write post data to body
 $request-&gt;getBody()-&gt;write('this=is&amp;post=data');
 
-$http = new HttpClient;
+$http = new HttpClient();
 
 // Send request
 $response = $http-&gt;send($request);</code></pre>
@@ -374,7 +374,7 @@ $response = $http-&gt;send($request);</code></pre>
 <pre><code class="language-php">use Windwalker\Http\Request;
 use Windwalker\Uri\PsrUri;
 
-$request = (new Request)
+$request = (new Request())
     -&gt;withUri(new PsrUri('http://example.com'))
     -&gt;withMethod('POST')
     -&gt;withAddedHeader('Authorization', 'Bearer ' . $token)
@@ -423,7 +423,7 @@ $httpOptions = array(
 
 $http = new HttpClient($httpOptions, new CurlTransport($options));</code></pre>
 <h3>Download Remote File</h3>
-<pre><code class="language-php">$http = new HttpClient;
+<pre><code class="language-php">$http = new HttpClient();
 
 $dest = '/path/to/local/file.zip';
 
@@ -476,7 +476,7 @@ $errors = $http-&gt;getErrors();</code></pre>
 });</code></pre>
 <h2>Uri</h2>
 <p><code>Uri</code> is a simple Uri object to modify URL but not Psr UriInterface.</p>
-<p>The methods provided in the <code>Uri</code> class allow you to manipulate all aspects of a uri. For example, suppose you wanted to set a new uri, add in a port, and then also post a username and password to authenticate a .htaccess security file. You could use the following syntax:</p>
+<p>The methods provided in the <code>Uri</code> class allow you to manipulate all aspects of a uri. For example, suppose you wanted to set a new uri(), add in a port, and then also post a username and password to authenticate a .htaccess security file. You could use the following syntax:</p>
 <pre><code class="language-php">// new uri object
 $uri = new Windwalker\Uri\Uri;
 
@@ -527,7 +527,7 @@ $stream-&gt;__toString(); // get: Foo Bar
 $stream-&gt;rewind();
 $stream-&gt;getContents(); // get: Foo Bar</code></pre>
 <p>Read data from <code>php://input</code></p>
-<pre><code class="language-php">$stream = new PhpInputSteam;
+<pre><code class="language-php">$stream = new PhpInputSteam();
 
 $data = $stream-&gt;__toString(); // foo=bar
 

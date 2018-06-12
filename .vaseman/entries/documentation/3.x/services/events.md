@@ -34,7 +34,7 @@ use Windwalker\Event\Event;
 
 $event = new Event('onBeforeContentSave');
 
-$content = new stdClass;
+$content = new stdClass();
 
 $event->setArgument('title', 'My content');
 $event->setArgument('content', $content);
@@ -69,7 +69,7 @@ $dispatcher = \Windwalker\Ioc::getDispatcher();
 $dispatcher = $container->get('dispatcher');
 
 // Attach listener
-$dispatcher->addListener(new ContentListener);
+$dispatcher->addListener(new ContentListener());
 ```
 
 Then we trigger the event we created:
@@ -106,7 +106,7 @@ There can be two types of listeners, using class or closure.
 Using class, just new an instance
 
 ```php
-$dispatcher->addListener(new ContentListener);
+$dispatcher->addListener(new ContentListener());
 ```
 
 You may provides priority for every methods.
@@ -116,7 +116,7 @@ use Windwalker\Event\ListenerPriority;
 
 // Add priorities
 $dispatcher->addListener(
-    new ContentListener,
+    new ContentListener(),
     array(
         'onBeforeContentSave' => ListenerPriority::LOW,
         'onAfterContentSave' => ListenerPriority::HIGH
@@ -124,7 +124,7 @@ $dispatcher->addListener(
 );
 
 // Or using an inner method to get all methods
-$dispatcher->addListener(new ContentListener, ContentListener::getPriorities());
+$dispatcher->addListener(new ContentListener(), ContentListener::getPriorities());
 ```
 
 ### Closure Listeners

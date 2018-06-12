@@ -341,8 +341,8 @@ class EditDefinition extends AbstractFieldDefinition
 <p>Then register this class to <code>Form</code>:</p>
 <pre><code class="language-php">use Windwalker\Form\Form;
 
-$form = new Form;
-$form-&gt;defineFormFields(new EditDefinition);
+$form = new Form();
+$form-&gt;defineFormFields(new EditDefinition());
 
 echo $form-&gt;renderFields('basic');</code></pre>
 <p>The output:</p>
@@ -368,7 +368,7 @@ class MyField extends AbstractField
 }</code></pre>
 <pre><code class="language-php">// in AbstractFieldDefinition
 
-$this-&gt;add('field_name', new MyField);</code></pre>
+$this-&gt;add('field_name', new MyField());</code></pre>
 <p>There has three methods: <code>fieldset()</code>, <code>group()</code> and <code>wrap()</code> are alias to methods with same name in <code>Form</code>, See <a href="form-builder.html">Form Builder</a></p>
 <h3>Available Fields</h3>
 <ul>

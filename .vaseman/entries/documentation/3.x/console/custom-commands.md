@@ -91,7 +91,7 @@ public function registerCommands()
      */
 
     // Your commands here.
-    $this->addCommand(new FlowerCommand);
+    $this->addCommand(new FlowerCommand());
 }
 ```
 
@@ -243,8 +243,8 @@ use Flower\Command\Flower\RoseCommand;
 
 public function initialise()
 {
-    $this->addCommand(new SakuraCommand)
-        ->addCommand(new RoseCommand);
+    $this->addCommand(new SakuraCommand())
+        ->addCommand(new RoseCommand());
 }
 ```
 

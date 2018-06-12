@@ -289,7 +289,7 @@ echo new UList([
 
 // OR
 
-echo (new UList)
+echo (new UList())
     ->item('new ListItem('Foo'))
     ->item('Bar', ['class' => 'baz']);
 ```
@@ -306,7 +306,7 @@ Output
 ### OL List
 
 ```php
-echo (new OList)
+echo (new OList())
     ->item('new ListItem('Foo'))
     ->item('Bar', ['class' => 'baz']);
 ```
@@ -327,19 +327,19 @@ use Windwalker\Html\Enum\DList;
 use Windwalker\Html\Enum\DListDescription;
 use Windwalker\Html\Enum\DListTitle;
 
-echo (new DList)
+echo (new DList())
     ->addDescription('Foo', 'foo desc')
     ->addDescription('Bar', 'bar desc');
 
 // OR
 
-echo (new DList)
+echo (new DList())
     ->title('Foo')->desc('foo desc')
     ->title('Bar')->desc('bar desc');
 
 // OR
 
-echo (new DList)
+echo (new DList())
     ->item(new DListTitle('Foo'))->item(new DListDescription('foo desc'))
     ->item(new DListTitle('Bar'))->item(new DListDescription('bar desc'));
 ```
@@ -537,7 +537,7 @@ $items = [
     'Yoo' => 'yoo value',
 ];
 
-$grid = new KeyValueGrid;
+$grid = new KeyValueGrid();
 
 $grid->addHeader('Key', 'Value');
 
@@ -580,7 +580,7 @@ $items = [
     'Yoo' => 'yoo value',
 ];
 
-$grid = new KeyValueGrid;
+$grid = new KeyValueGrid();
 
 $grid->addHeader('Key', 'Value');
 
@@ -663,7 +663,7 @@ $grid->configure($items, function (KeyValueGrid $grid, $key, $value)
 ```php
 use Windwalker\Html\Media\Audio;
 
-echo (new Audio)
+echo (new Audio())
     ->controls(true)
     ->autoplay(true)
     ->loop(true)
@@ -692,7 +692,7 @@ See [HTML5 Audio Tag](http://www.w3schools.com/html/html5_audio.asp) and [Tag So
 ```php
 use Windwalker\Html\Media\Video;
 
-echo (new Video)
+echo (new Video())
     ->controls(true)
     ->autoplay(true)
     ->loop(true)

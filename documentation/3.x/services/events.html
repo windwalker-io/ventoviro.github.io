@@ -327,7 +327,7 @@ called observers, and notifies them automatically of any state changes, usually 
 
 $event = new Event('onBeforeContentSave');
 
-$content = new stdClass;
+$content = new stdClass();
 
 $event-&gt;setArgument('title', 'My content');
 $event-&gt;setArgument('content', $content);</code></pre>
@@ -354,7 +354,7 @@ class ContentListener
 $dispatcher = $container-&gt;get('dispatcher');
 
 // Attach listener
-$dispatcher-&gt;addListener(new ContentListener);</code></pre>
+$dispatcher-&gt;addListener(new ContentListener());</code></pre>
 <p>Then we trigger the event we created:</p>
 <pre><code class="language-php">// Trigger the onBeforeContentSave
 $dispatcher-&gt;triggerEvent($event);
@@ -374,13 +374,13 @@ $data = $event['data'];</code></pre>
 <p>There can be two types of listeners, using class or closure.</p>
 <h3>Class Listeners</h3>
 <p>Using class, just new an instance</p>
-<pre><code class="language-php">$dispatcher-&gt;addListener(new ContentListener);</code></pre>
+<pre><code class="language-php">$dispatcher-&gt;addListener(new ContentListener());</code></pre>
 <p>You may provides priority for every methods.</p>
 <pre><code class="language-php">use Windwalker\Event\ListenerPriority;
 
 // Add priorities
 $dispatcher-&gt;addListener(
-    new ContentListener,
+    new ContentListener(),
     array(
         'onBeforeContentSave' =&gt; ListenerPriority::LOW,
         'onAfterContentSave' =&gt; ListenerPriority::HIGH
@@ -388,7 +388,7 @@ $dispatcher-&gt;addListener(
 );
 
 // Or using an inner method to get all methods
-$dispatcher-&gt;addListener(new ContentListener, ContentListener::getPriorities());</code></pre>
+$dispatcher-&gt;addListener(new ContentListener(), ContentListener::getPriorities());</code></pre>
 <h3>Closure Listeners</h3>
 <p>If using closure, you must provide the priority and an event name to listen.</p>
 <pre><code class="language-php">$dispatcher-&gt;addListener(

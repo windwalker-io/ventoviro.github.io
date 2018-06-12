@@ -35,8 +35,8 @@ This is a traditional MVC usage in controller:
 <?php
 // doExecute()
 
-$model = new FlowerModel;
-$view = new SakurasHtmlView;
+$model = new FlowerModel();
+$view = new SakurasHtmlView();
 
 $item = $model->getItem();
 
@@ -50,8 +50,8 @@ Change some code, we can push Model into View:
 ```php
 // doExecute()
 
-$model = new FlowerModel;
-$view = new SakurasHtmlView;
+$model = new FlowerModel();
+$view = new SakurasHtmlView();
 
 $view->setModel($model);
 

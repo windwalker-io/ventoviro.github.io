@@ -434,7 +434,7 @@ $queue = Ioc::getQueue();</code></pre>
 <p>Then push it to queue:</p>
 <pre><code class="language-php">// In controller
 
-$this-&gt;app-&gt;queue-&gt;push(new HelloJob);</code></pre>
+$this-&gt;app-&gt;queue-&gt;push(new HelloJob());</code></pre>
 <p>Now we can wait works handle it later.</p>
 <h3>Add More Information to Job</h3>
 <p>Sometimes you need more information to handle things, add them to constructor:</p>
@@ -460,7 +460,7 @@ $this-&gt;app-&gt;queue-&gt;push(new HelloJob);</code></pre>
 
     public function execute()
     {
-        $imgData = (new HttpClient)-&gt;get($this-&gt;url);
+        $imgData = (new HttpClient())-&gt;get($this-&gt;url);
 
         ImageHelper::load($imgData)
             -&gt;resize($this-&gt;size, $this-&gt;size, $this-&gt;crop)

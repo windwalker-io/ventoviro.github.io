@@ -9,7 +9,7 @@ title: Structure Object
 ```php
 use Windwalker\Structure\Structure;
 
-$structure = new Structure;
+$structure = new Structure();
 
 // Set a value in the structure.
 $structure->set('foo', 'bar');
@@ -24,7 +24,7 @@ $value = $structure->get('foo');
 ```php
 use Windwalker\Structure\Structure;
 
-$structure = new Structure;
+$structure = new Structure();
 
 // Load by string
 $structure->loadString('{"foo" : "bar"}');

@@ -190,7 +190,7 @@ class NewsWidget extends Widget
 ```
 
 ```php
-echo (new NewsWidget)->render();
+echo (new NewsWidget())->render();
 ```
 
 ## Render Widget in Template

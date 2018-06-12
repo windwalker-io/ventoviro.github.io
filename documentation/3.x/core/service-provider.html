@@ -349,7 +349,7 @@ class MongoDBServiceProvider implements ServiceProviderInterface
 }
 </code></pre>
 <p>Register this provider in container:</p>
-<pre><code class="language-php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider);</code></pre>
+<pre><code class="language-php">$container-&gt;registerServiceProvider(new MongoDBServiceProvider());</code></pre>
 <p>Then get this object from Container, the <code>MongoDBConnection</code> will be lazy loading, MongoDB will connected after your first get it:</p>
 <pre><code class="language-php">$mongo = $container-&gt;get('mongo.db');
 

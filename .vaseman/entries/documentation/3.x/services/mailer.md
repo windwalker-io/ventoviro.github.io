@@ -118,7 +118,7 @@ use Windwalker\Core\Mailer\MailAttachment;
 $message->attach(new MailAttachment('/path/to/fil.pdf'));
 
 // Or set custom body
-$attachment = new MailAttachment;
+$attachment = new MailAttachment();
 $attachment->setBody('<html>TEST</html>');
 
 $message->attach($attachment, 'test.html');
@@ -139,7 +139,7 @@ class CheckoutMessage extends MailMessage
     {
         // Prepare default data for test
         $user = $user ? : User::get();
-        $product = $product ? : new Data;
+        $product = $product ? : new Data();
 
         return (new static('You checkout a product'))
             ->to($user->email, $user->name)

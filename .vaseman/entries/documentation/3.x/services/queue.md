@@ -160,7 +160,7 @@ Then push it to queue:
 ```php
 // In controller
 
-$this->app->queue->push(new HelloJob);
+$this->app->queue->push(new HelloJob());
 ```
 
 Now we can wait works handle it later.
@@ -192,7 +192,7 @@ class HelloJob implements JobInterface
 
 	public function execute()
 	{
-	    $imgData = (new HttpClient)->get($this->url);
+	    $imgData = (new HttpClient())->get($this->url);
 	    
 		ImageHelper::load($imgData)
             ->resize($this->size, $this->size, $this->crop)

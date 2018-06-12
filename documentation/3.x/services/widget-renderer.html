@@ -430,7 +430,7 @@ class NewsWidget extends Widget
         $data-&gt;items = (new DataMapper('articles'))-&gt;limit(10, 20)-&gt;find();
     }
 }</code></pre>
-<pre><code class="language-php">echo (new NewsWidget)-&gt;render();</code></pre>
+<pre><code class="language-php">echo (new NewsWidget())-&gt;render();</code></pre>
 <h2>Render Widget in Template</h2>
 <p>WidgetHelper instance has been inject to global renderer variables, we can use it to quickly render widget.</p>
 <p>In php template</p>

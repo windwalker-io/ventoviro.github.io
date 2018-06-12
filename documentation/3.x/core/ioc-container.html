@@ -325,7 +325,7 @@ We also support service provider to help developers build their service in a uni
 <p>Or use static method in <code>Ioc</code> class to get it:</p>
 <pre><code class="language-php">$container = \Windwalker\Ioc::factory(); // This container is singleton</code></pre>
 <p>Now we can store objects into it.</p>
-<pre><code class="language-php">$input = new Input;
+<pre><code class="language-php">$input = new Input();
 
 $container-&gt;set('my.input', $input);
 
@@ -352,7 +352,7 @@ $rose = $container-&gt;get('rose');</code></pre>
 <pre><code class="language-php">// Set a closure into it
 $container-&gt;set('input', function(Container $container)
 {
-    return new Input;
+    return new Input();
 });
 
 // Will call this closure when we get it
@@ -363,7 +363,7 @@ $input = $container-&gt;get('input');</code></pre>
 <pre><code class="language-php">// Share a closure
 $container-&gt;share('input', function(Container $container)
 {
-    return new Input;
+    return new Input();
 });
 
 // Will will always get same instance
@@ -380,7 +380,7 @@ $newInput = $container-&gt;get('input', Container::FORCE_NEW);</code></pre>
     'input',
     function(Container $container)
     {
-        return new Input;
+        return new Input();
     },
     true // Shared or not
 );
@@ -537,7 +537,7 @@ class MyModel implement ModelInterface
 // Bind MyModel as AbstractModel
 $container-&gt;share('Windwalker\Model\ModelInterface', function()
 {
-    return new MyModel;
+    return new MyModel();
 });
 
 $myObject = $container-&gt;createObject('MyClass');
@@ -553,7 +553,7 @@ $container-&gt;createObject('MyClass');</code></pre>
 <p>You can add callback as second argument, this way is totally same as <code>share()</code> and <code>set()</code>:</p>
 <pre><code class="language-php">$container-&gt;bind('Windwalker\Model\ModelInterface', function (Contaienr $container)
 {
-    return new MyObject;
+    return new MyObject();
 });</code></pre>
 <h2>Extending</h2>
 <p>Container allows you to extend an object, the new instance or closure will wrap the original one and you can do more
@@ -562,7 +562,7 @@ extending configuration, this is a sample:</p>
 $container-&gt;share('flower', function()
 {
     // Create a empty object
-    return new Flower;
+    return new Flower();
 });
 
 $container-&gt;extend('flower', function($origin, Container $container)
@@ -633,11 +633,11 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 
     public function getQuery(Container $container)
     {
-        return new MysqlQueery;
+        return new MysqlQueery();
     }
 }
 
-$container-&gt;registerServiceProvider(new DatabaseServiceProvider);</code></pre>
+$container-&gt;registerServiceProvider(new DatabaseServiceProvider());</code></pre>
 <h2>Ioc Class</h2>
 <p><code>\Windwalker\Ioc</code> provides a easy way to get system objects, the benefit to use these methods is that IDE can identify
 what object we get, and provides auto-complete:</p>
@@ -668,7 +668,7 @@ abstract class Ioc extends \Windwalker\Core\Ioc
 <h2>Facade</h2>
 <p>Windwalker has a Facade class to help us use proxy pattern to call object methods statically</p>
 <pre><code class="language-php">// Create a object into conteiner
-$container-&gt;share('my.router', new Router);</code></pre>
+$container-&gt;share('my.router', new Router());</code></pre>
 <pre><code class="language-php">use Windwalker\Core\Facade\AbstractProxyFacade;
 
 class MyRouter extends AbstractProxyFacade

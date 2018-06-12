@@ -331,7 +331,7 @@ class MyModel extends ModelRepository
     }
 }</code></pre>
 <pre><code class="language-php">// In controller
-$model = new MyModel;
+$model = new MyModel();
 
 $item = $model-&gt;getItem();
 
@@ -340,7 +340,7 @@ $item = $model-&gt;getItem();
 $model-&gt;save($item);</code></pre>
 <p>Set source to ModelRepository:</p>
 <pre><code class="language-php">// FileFinder is just an example
-$model = new MyModel(null, null, new FileFinder);
+$model = new MyModel(null, null, new FileFinder());
 
 // In model
 $this-&gt;source-&gt;find(...);</code></pre>
@@ -456,7 +456,7 @@ Model will not raise error but only return <code>null</code>.</p>
 <pre><code class="language-php">use Windwalker\Core\Model\Model;
 
 // This is default model, does not have any custom methods
-$model = new Model;
+$model = new Model();
 
 // These 2 methods will only return null
 $data = $model-&gt;getData();
@@ -494,7 +494,7 @@ For example, we can change this state to get different data.</p>
     }
 }
 
-$model = new MyModel;
+$model = new MyModel();
 
 $state = $model-&gt;getState();
 

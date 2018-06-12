@@ -355,7 +355,7 @@ use Windwalker\Database\Schema\Column\Varchar;
 
     // ...
 
-    $schema-&gt;add('title', new Varchar)-&gt;allowNull(false)-&gt;comment('Title');
+    $schema-&gt;add('title', new Varchar())-&gt;allowNull(false)-&gt;comment('Title');
 
     // ...</code></pre>
 <p>You can create your own Column type if you want, just extends <code>Windwalker\Database\Schema\Column</code> object.</p>

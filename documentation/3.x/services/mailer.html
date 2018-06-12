@@ -395,7 +395,7 @@ Mailer::send($message);</code></pre>
 $message-&gt;attach(new MailAttachment('/path/to/fil.pdf'));
 
 // Or set custom body
-$attachment = new MailAttachment;
+$attachment = new MailAttachment();
 $attachment-&gt;setBody('&lt;html&gt;TEST&lt;/html&gt;');
 
 $message-&gt;attach($attachment, 'test.html');</code></pre>
@@ -411,7 +411,7 @@ class CheckoutMessage extends MailMessage
     {
         // Prepare default data for test
         $user = $user ? : User::get();
-        $product = $product ? : new Data;
+        $product = $product ? : new Data();
 
         return (new static('You checkout a product'))
             -&gt;to($user-&gt;email, $user-&gt;name)
