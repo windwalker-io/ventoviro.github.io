@@ -362,7 +362,7 @@ File output to: /var/www/windwalker/tmp/form/fields/scores.php.tpl</code></pre>
 <section id="footer" class="black-block inner-md text-center">
 
     <div class="container inner-top-md inner-bottom-sm">
-        
+
         <p>
             <a href="https://github.com/ventoviro/windwalker" class="btn" target="_blank">
                 <i class="fa fa-github"></i>
@@ -402,77 +402,7 @@ File output to: /var/www/windwalker/tmp/form/fields/scores.php.tpl</code></pre>
 <script src="../../asset/js/material.min.js"></script>
 <script src="../../asset/js/ripples.min.js"></script>
 <script src="../../asset/js/prism.js"></script>
-<script>
-    $(document).ready(function() {
-
-        // Init Material
-        $.material.init();
-
-        // Code Block
-        $('.article-content pre code').each(function(i, block) {
-            var $this = $(this);
-
-            $this.attr('class', 'language-' + $this.attr('class'));
-        });
-
-        // Smooth scroll
-        setTimeout(function ()
-        {
-            $('body a').smoothScroll({
-                afterScroll:function (event) {
-                    document.location.hash = this.hash
-                }
-            });
-        }, 500);
-
-        // Table style
-        // Convert table style
-        var tables = $('.article-content table');
-
-        tables.addClass('table').addClass('table-striped');
-
-        // Navbar
-        var navTop;
-        var hasColor = false;
-        var nav = $('#nav .navbar');
-
-        processScrollInit();
-        processScroll();
-
-        $(window).on('resize', processScrollInit);
-        $(window).on('scroll', processScroll);
-
-        function processScrollInit()
-        {
-            if (nav.length) {
-                navTop = nav.length && 60;
-
-                // Only apply the scrollspy when the toolbar is not collapsed
-                if (document.body.clientWidth > 480)
-                {
-//                        $('.subhead-collapse').height(nav.height());
-                    nav.scrollspy({offset: {top: nav.offset().top}});
-                }
-            }
-        }
-
-        function processScroll()
-        {
-            if (nav.length) {
-                var scrollTop = $(window).scrollTop();
-
-                if (scrollTop >= navTop && !hasColor) {
-                    hasColor = true;
-                    nav.addClass('navbar-primary');
-                } else if (scrollTop <= navTop && hasColor) {
-                    hasColor = false;
-                    nav.removeClass('navbar-primary');
-                }
-            }
-        }
-    });
-
-</script>
+<script src="../../asset/js/main.js"></script>
 
     <script src="../../asset/js/doc.js"></script>
 
