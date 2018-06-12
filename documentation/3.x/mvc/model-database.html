@@ -363,8 +363,7 @@ class FlowerModel extends DatabaseModelRepository
 
     public function save($data)
     {
-        if ($data-&gt;id)
-        {
+        if ($data-&gt;id) {
             $this-&gt;db-&gt;getWriter()-&gt;updateOne('flowers', $data, 'id');
         }
         else
@@ -506,8 +505,7 @@ $state-&gt;set('list.direction', 'DESC');
 
 $users = $model-&gt;getUsers();
 
-if (!$users)
-{
+if (!$users) {
     $error = $state-&gt;get('error');
 }</code></pre>
 <h5>Simple Way to Access State</h5>
@@ -533,8 +531,7 @@ class MyModel extends Model
 {
     public function getData()
     {
-        if ($this-&gt;cache-&gt;exists('item.data'))
-        {
+        if ($this-&gt;cache-&gt;exists('item.data')) {
             return $this-&gt;cache-&gt;get('item.data');
         }
 
@@ -553,8 +550,7 @@ but get new data if state is changed.</p>
     // Will generate a id look like: d967f4557f17dd542ece0f8a7b57b4f697c9b189
     $id = $this-&gt;getCacheId('item.data');
 
-    if ($this-&gt;cache-&gt;exists($id))
-    {
+    if ($this-&gt;cache-&gt;exists($id)) {
         return $this-&gt;cache-&gt;get($id);
     }
 

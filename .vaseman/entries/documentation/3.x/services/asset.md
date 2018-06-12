@@ -180,16 +180,14 @@ class FlowerScript extends AbstractScript
 {
     public static function jquery()
     {
-        if (!static::inited(__METHOD__))
-        {
+        if (!static::inited(__METHOD__)) {
             static::addJS('js/jquery/jquery.min.js');
         }
     }
 
 	public static function flower()
 	{
-		if (!static::inited(__METHOD__))
-		{
+		if (!static::inited(__METHOD__)) {
 			// flower.js needs jquery.js first
 			static::jquery();
 
@@ -206,8 +204,7 @@ class FlowerScript extends AbstractScript
 	    $args = get_defined_vars();
 
 		// Include asset file first.
-		if (!static::inited(__METHOD__))
-		{
+		if (!static::inited(__METHOD__)) {
 			// sakura.js needs flower.js first
 			static::flower();
 
@@ -216,8 +213,7 @@ class FlowerScript extends AbstractScript
 		}
 
 		// Call only once with same arguments
-		if (!static::inited(__METHOD__, $args))
-		{
+		if (!static::inited(__METHOD__, $args)) {
 			$defaultOptions = array(
 				'foo' => 'bar',
 				'callback' => '\\function () {}' // Start with \\ will not be quoted

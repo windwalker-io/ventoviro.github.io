@@ -355,8 +355,7 @@ $validator-&gt;validate('123'); // bool(false)</code></pre>
 <h3>Error Message</h3>
 <pre><code class="language-php">$validator-&gt;setMessage('This string is not valid');
 
-if (!$validator-&gt;validate('sakura'))
-{
+if (!$validator-&gt;validate('sakura')) {
     throw new \Exception($validator-&gt;getError());
 }</code></pre>
 <h3>Create Your Own Validator</h3>

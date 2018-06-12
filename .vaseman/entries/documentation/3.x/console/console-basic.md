@@ -115,8 +115,7 @@ By default, all commands no metter success or failure will not break script runn
 If you want to stop batch running, just return code `64` in a command:
 
 ```php
-if (...)
-{
+if (...) {
     return 64;
 }
 ```

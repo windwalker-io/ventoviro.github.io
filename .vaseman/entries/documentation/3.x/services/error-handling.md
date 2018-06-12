@@ -17,8 +17,7 @@ Most of time, we throw exception object to change the program process if error o
 ```php
 try
 {
-    if (/* Something error */)
-    {
+    if (/* Something error */) {
         throw new Exception('Error message');
     }
 }

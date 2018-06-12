@@ -562,13 +562,11 @@ list($foo, $bar, $yoo) = StringHelper::explode('.', 'foo.bar', 3);</code></pre>
 $inflector = StringInflector::getInstance();
 $string = 'category';
 
-if ($inflector-&gt;isSingular($string))
-{
+if ($inflector-&gt;isSingular($string)) {
     $string = $inflector-&gt;toPular(); // categories
 }
 
-if ($inflector-&gt;isPlural($string))
-{
+if ($inflector-&gt;isPlural($string)) {
     $string = $inflector-&gt;toSingular(); // category
 }</code></pre>
                         <hr />

@@ -208,16 +208,14 @@ class DatabaseMethod extends AbstractMethod
 	public function authenticate(Credential $credential)
 	{
 		// Do not allow empty username or password
-		if (!$credential->username || !$credential->password)
-		{
+		if (!$credential->username || !$credential->password) {
 			$this->status = Authentication::EMPTY_CREDENTIAL;
 
 			return false;
 		}
 
 		// Do not allow email as username
-		if (strpos($credential->username, '@') !== false)
-		{
+		if (strpos($credential->username, '@') !== false) {
 			$this->status = Authentication::INVALID_USERNAME;
 
 			return false;
@@ -227,16 +225,14 @@ class DatabaseMethod extends AbstractMethod
 		// You can also use User::get(['username' => $credential->username])
 		$user = UserModel::getInstance()->load(['username' => $credential->username]);
 
-		if ($user->isNull())
-		{
+		if ($user->isNull()) {
 			$this->status = Authentication::USER_NOT_FOUND;
 
 			return false;
 		}
 
 		// User found, then we check password
-		if (!(new Password)->verify($credential->password, $user->password))
-		{
+		if (!(new Password)->verify($credential->password, $user->password)) {
 			$this->status = Authentication::INVALID_PASSWORD;
 
 			return false;
@@ -374,8 +370,7 @@ class RemoteMethod extends AbstractMethod
             'password' => $credential->password
         ]);
 
-        if ($response->getStatusCode() != 200)
-        {
+        if ($response->getStatusCode() != 200) {
             $this->status = Authentication::USER_NOT_FOUND;
 
             return false;
@@ -448,8 +443,7 @@ class UserAuthListener
 		/** @var UserDataInterface $user */
 		$user = $event['user'];
 
-		if (!$user->activated)
-		{
+		if (!$user->activated) {
 		    // Return false to result
 			$event['result'] = false;
 
@@ -457,8 +451,7 @@ class UserAuthListener
 			throw new AuthenticateFailException('User not activated');
 		}
 
-		if ($user->is_blocked)
-		{
+		if ($user->is_blocked) {
 			throw new AuthenticateFailException('User is disbaled');
 		}
 	}

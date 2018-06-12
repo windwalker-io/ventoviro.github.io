@@ -655,8 +655,7 @@ $grid->addItems($items);
 // Or run a callback for every item
 $grid->configure($items, function (KeyValueGrid $grid, $key, $value)
 {
-    if ($value)
-    {
+    if ($value) {
         $grid->addItem($key, $value);
     }
 });

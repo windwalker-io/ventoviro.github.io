@@ -380,12 +380,10 @@ class EnGBLocalise implements LocaliseInterface
 {
     public function getPluralSuffix($count = 1)
     {
-        if ($count == 0)
-        {
+        if ($count == 0) {
             return '0';
         }
-        elseif ($count == 1)
-        {
+        elseif ($count == 1) {
             return '';
         }
 

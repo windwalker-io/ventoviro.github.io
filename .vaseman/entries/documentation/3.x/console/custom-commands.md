@@ -150,20 +150,17 @@ public function doExecute()
 {
     $name = #this->getArgument(0);
 
-    if (!$name)
-    {
+    if (!$name) {
         $this->io->in('Please enter a name: ');
     }
 
     $reply = 'Hello ' . $name;
 
-    if ($this->getOption('y'))
-    {
+    if ($this->getOption('y')) {
         $reply = strtoupper($reply);
     }
 
-    if ($this->getOption('q'))
-    {
+    if ($this->getOption('q')) {
         $reply = strtolower($reply);
     }
 
@@ -226,8 +223,7 @@ class SakuraCommand extends Command
 
         $arg1 = $this->getArgument(0);
 
-        if ($arg1)
-        {
+        if ($arg1) {
             $this->out('Argument1: ' . $arg1);
         }
     }

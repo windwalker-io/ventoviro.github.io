@@ -334,13 +334,11 @@ use Windwalker\String\StringInflector;
 $inflector = StringInflector::getInstance();
 $string = 'category';
 
-if ($inflector->isSingular($string))
-{
+if ($inflector->isSingular($string)) {
     $string = $inflector->toPular(); // categories
 }
 
-if ($inflector->isPlural($string))
-{
+if ($inflector->isPlural($string)) {
     $string = $inflector->toSingular(); // category
 }
 ```

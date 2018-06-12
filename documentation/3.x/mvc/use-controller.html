@@ -359,8 +359,7 @@ The benefit is that our controllers will be much more lighter if an action has c
     // Do post-process to return response.
     protected function postExecute($result = null)
     {
-        if ($this-&gt;format == 'json')
-        {
+        if ($this-&gt;format == 'json') {
             return new JsonResponse($this-&gt;data, 200);
         }
 
@@ -468,16 +467,14 @@ otherwise controller will call <code>processSuccess()</code> to handle success l
 {
     protected function doExecute()
     {
-        if (!$data = $this-&gt;input-&gt;getArray('data'))
-        {
+        if (!$data = $this-&gt;input-&gt;getArray('data')) {
             throw new \InvalidArgumentException('No data');
         }
 
         /** @var DatabaseRepositoryRepository $this-&gt;repository */
         $this-&gt;repository-&gt;transactionStart(true);
 
-        if (!$this-&gt;repository-&gt;save($data))
-        {
+        if (!$this-&gt;repository-&gt;save($data)) {
             throw new \RuntimeException('Save fail');
         }
 
@@ -562,14 +559,12 @@ protected function doExecute()
 protected function validate($data)
 {
     // Set one message
-    if (empty($data['name']))
-    {
+    if (empty($data['name'])) {
         throw new ValidateFailException('Please enter user name.');
     }
 
     // Set multiple messages
-    if (...)
-    {
+    if (...) {
         throw new ValidateFailException([
             'Message1',
             'Message2',
@@ -614,8 +609,7 @@ CsrfProtection::validate(true);
 CsrfProtection::validate([bool], 'Sorry your token is invalid');
 
 // Only check and return boolean
-if (! CsrfProtection::checkToken())
-{
+if (! CsrfProtection::checkToken()) {
     throw new \RuntimeException('Invalid Token');
 }</code></pre>
 <p>Use trait to auto check CSRF token:</p>

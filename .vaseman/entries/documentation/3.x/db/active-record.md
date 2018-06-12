@@ -131,8 +131,7 @@ class UserRecord extends Record
 
     public function validate()
     {
-        if (!$this['name'])
-        {
+        if (!$this['name']) {
             throw new InvalidArgumentException('Name empty.');
         }
 
@@ -172,8 +171,7 @@ class ArticleRecord extends Record
 {
     protected function setCreatedDateValue($value)
     {
-        if ($value instanceof \DateTime)
-        {
+        if ($value instanceof \DateTime) {
             $value = $value->format('Y-m-d H:i:s');
         }
 

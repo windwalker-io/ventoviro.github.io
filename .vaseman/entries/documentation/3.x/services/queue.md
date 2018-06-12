@@ -240,8 +240,7 @@ class HelloJob implements JobInterface
 
 	public function execute()
 	{
-		if (/* Failure */)
-		{
+		if (/* Failure */) {
 		    $this->logger->error('error', 'Something wrong...');
 		}
 	}

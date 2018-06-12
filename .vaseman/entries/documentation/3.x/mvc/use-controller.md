@@ -65,8 +65,7 @@ class SaveController extends AbstractController
     // Do post-process to return response.
 	protected function postExecute($result = null)
 	{
-		if ($this->format == 'json')
-		{
+		if ($this->format == 'json') {
 			return new JsonResponse($this->data, 200);
 		}
 
@@ -211,16 +210,14 @@ class SaveController extends AbstractController
 {
 	protected function doExecute()
 	{
-		if (!$data = $this->input->getArray('data'))
-		{
+		if (!$data = $this->input->getArray('data')) {
 			throw new \InvalidArgumentException('No data');
 		}
 
 		/** @var DatabaseRepositoryRepository $this->repository */
 		$this->repository->transactionStart(true);
 
-		if (!$this->repository->save($data))
-		{
+		if (!$this->repository->save($data)) {
 			throw new \RuntimeException('Save fail');
 		}
 
@@ -327,14 +324,12 @@ protected function doExecute()
 protected function validate($data)
 {
     // Set one message
-    if (empty($data['name']))
-    {
+    if (empty($data['name'])) {
         throw new ValidateFailException('Please enter user name.');
     }
 
     // Set multiple messages
-    if (...)
-    {
+    if (...) {
         throw new ValidateFailException([
             'Message1',
             'Message2',
@@ -403,8 +398,7 @@ CsrfProtection::validate(true);
 CsrfProtection::validate([bool], 'Sorry your token is invalid');
 
 // Only check and return boolean
-if (! CsrfProtection::checkToken())
-{
+if (! CsrfProtection::checkToken()) {
     throw new \RuntimeException('Invalid Token');
 }
 ```

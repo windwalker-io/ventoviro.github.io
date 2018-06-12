@@ -66,8 +66,7 @@ $validator->validate('123'); // bool(false)
 ```php
 $validator->setMessage('This string is not valid');
 
-if (!$validator->validate('sakura'))
-{
+if (!$validator->validate('sakura')) {
     throw new \Exception($validator->getError());
 }
 ```

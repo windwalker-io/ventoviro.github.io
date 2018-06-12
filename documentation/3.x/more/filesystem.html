@@ -451,8 +451,7 @@ $items   = Filesystem::items($path, true);</code></pre>
 we can send this iterator to <code>foreach</code> and do some filter by <code>SplFileInfo</code> object.</p>
 <pre><code class="language-php">foreach ($items as $item)
 {
-    if ($item-&gt;isDir() || $item-&gt;isDot())
-    {
+    if ($item-&gt;isDir() || $item-&gt;isDot()) {
         continue;
     }
 

@@ -466,16 +466,14 @@ class DatabaseMethod extends AbstractMethod
     public function authenticate(Credential $credential)
     {
         // Do not allow empty username or password
-        if (!$credential-&gt;username || !$credential-&gt;password)
-        {
+        if (!$credential-&gt;username || !$credential-&gt;password) {
             $this-&gt;status = Authentication::EMPTY_CREDENTIAL;
 
             return false;
         }
 
         // Do not allow email as username
-        if (strpos($credential-&gt;username, '@') !== false)
-        {
+        if (strpos($credential-&gt;username, '@') !== false) {
             $this-&gt;status = Authentication::INVALID_USERNAME;
 
             return false;
@@ -485,16 +483,14 @@ class DatabaseMethod extends AbstractMethod
         // You can also use User::get(['username' =&gt; $credential-&gt;username])
         $user = UserModel::getInstance()-&gt;load(['username' =&gt; $credential-&gt;username]);
 
-        if ($user-&gt;isNull())
-        {
+        if ($user-&gt;isNull()) {
             $this-&gt;status = Authentication::USER_NOT_FOUND;
 
             return false;
         }
 
         // User found, then we check password
-        if (!(new Password)-&gt;verify($credential-&gt;password, $user-&gt;password))
-        {
+        if (!(new Password)-&gt;verify($credential-&gt;password, $user-&gt;password)) {
             $this-&gt;status = Authentication::INVALID_PASSWORD;
 
             return false;
@@ -595,8 +591,7 @@ class RemoteMethod extends AbstractMethod
             'password' =&gt; $credential-&gt;password
         ]);
 
-        if ($response-&gt;getStatusCode() != 200)
-        {
+        if ($response-&gt;getStatusCode() != 200) {
             $this-&gt;status = Authentication::USER_NOT_FOUND;
 
             return false;
@@ -655,8 +650,7 @@ class UserAuthListener
         /** @var UserDataInterface $user */
         $user = $event['user'];
 
-        if (!$user-&gt;activated)
-        {
+        if (!$user-&gt;activated) {
             // Return false to result
             $event['result'] = false;
 
@@ -664,8 +658,7 @@ class UserAuthListener
             throw new AuthenticateFailException('User not activated');
         }
 
-        if ($user-&gt;is_blocked)
-        {
+        if ($user-&gt;is_blocked) {
             throw new AuthenticateFailException('User is disbaled');
         }
     }

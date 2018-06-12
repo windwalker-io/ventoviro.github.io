@@ -379,8 +379,7 @@ but no work.</p>
 $cache = \Windwalker\Ioc::getCache();
 
 // Cache object can be get and operate, but the key will always not exists.
-if (!$cache-&gt;exists('flower'))
-{
+if (!$cache-&gt;exists('flower')) {
     $data = $flowerMapper-&gt;loadAll();
 
     $cache-&gt;set('flower', $data);
@@ -460,8 +459,7 @@ $cache-&gt;set('flower', array('flower' =&gt; 'sakura'));</code></pre>
 
 $url = 'http://mysite.com/foo/bar/baz';
 
-if ($cache-&gt;exists($url))
-{
+if ($cache-&gt;exists($url)) {
     echo $cache-&gt;get($url);
 
     exit();

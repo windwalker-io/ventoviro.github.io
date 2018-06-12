@@ -112,8 +112,7 @@ $structure['foo'] = 'bar';
 $value = $structure['foo'];
 
 // Check if a key in the structure is set.
-if (isset($structure['foo']))
-{
+if (isset($structure['foo'])) {
 	echo 'Say bar.';
 }
 ```

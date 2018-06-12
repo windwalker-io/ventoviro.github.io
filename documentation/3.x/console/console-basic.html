@@ -389,8 +389,7 @@ $ php windwalker run deploy</code></pre>
 <h3>Stop Running</h3>
 <p>By default, all commands no metter success or failure will not break script running.</p>
 <p>If you want to stop batch running, just return code <code>64</code> in a command:</p>
-<pre><code class="language-php">if (...)
-{
+<pre><code class="language-php">if (...) {
     return 64;
 }</code></pre>
 <p>Or throw an exception with code <code>64</code>:</p>

@@ -367,8 +367,7 @@ You can disable memory wipe by <code>ignoreMemzero()</code> (But we don't recomm
 <pre><code class="language-php">// Add this code in a listener or anywhere before your application 
 $cipher = Crypto::getCipher();
 
-if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher)
-{
+if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher) {
     $cipher-&gt;ignoreMemzero(true);
 }
 

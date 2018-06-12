@@ -408,8 +408,7 @@ $user-&gt;store();</code></pre>
 
     public function validate()
     {
-        if (!$this['name'])
-        {
+        if (!$this['name']) {
             throw new InvalidArgumentException('Name empty.');
         }
 
@@ -435,8 +434,7 @@ $result = $user-&gt;delete(array('username' =&gt; $username)); // boolean</code>
 {
     protected function setCreatedDateValue($value)
     {
-        if ($value instanceof \DateTime)
-        {
+        if ($value instanceof \DateTime) {
             $value = $value-&gt;format('Y-m-d H:i:s');
         }
 

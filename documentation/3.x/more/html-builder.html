@@ -745,8 +745,7 @@ echo $grid;</code></pre>
 // Or run a callback for every item
 $grid-&gt;configure($items, function (KeyValueGrid $grid, $key, $value)
 {
-    if ($value)
-    {
+    if ($value) {
         $grid-&gt;addItem($key, $value);
     }
 });</code></pre>

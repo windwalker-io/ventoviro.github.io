@@ -449,8 +449,7 @@ use Windwalker\Http\Helper\UploadedFileHelper;
 /** @var  $file  UploadedFileInterface */
 $file = $this-&gt;input-&gt;files-&gt;get('flower.sakura');
 
-if ($file-&gt;getError())
-{
+if ($file-&gt;getError()) {
     throw new \RuntimeException('Upload fail: ' . UploadedFileHelper::getUploadMessage($file-&gt;getError()), 500);
 }
 

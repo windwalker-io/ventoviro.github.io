@@ -339,8 +339,7 @@ to header dynamically.</p>
 
 $origin = $this-&gt;input-&gt;server-&gt;getUrl('HTTP_ORIGIN');
 
-if (in_array($origin, $allowOrigins))
-{
+if (in_array($origin, $allowOrigins)) {
     $this-&gt;response = CorsHandler::create($this-&gt;response)
         -&gt;allowOrigin($origin)
         -&gt;getResponse();

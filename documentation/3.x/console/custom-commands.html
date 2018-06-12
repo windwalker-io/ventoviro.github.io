@@ -422,20 +422,17 @@ public function doExecute()
 {
     $name = #this-&gt;getArgument(0);
 
-    if (!$name)
-    {
+    if (!$name) {
         $this-&gt;io-&gt;in('Please enter a name: ');
     }
 
     $reply = 'Hello ' . $name;
 
-    if ($this-&gt;getOption('y'))
-    {
+    if ($this-&gt;getOption('y')) {
         $reply = strtoupper($reply);
     }
 
-    if ($this-&gt;getOption('q'))
-    {
+    if ($this-&gt;getOption('q')) {
         $reply = strtolower($reply);
     }
 
@@ -484,8 +481,7 @@ class SakuraCommand extends Command
 
         $arg1 = $this-&gt;getArgument(0);
 
-        if ($arg1)
-        {
+        if ($arg1) {
             $this-&gt;out('Argument1: ' . $arg1);
         }
     }

@@ -73,8 +73,7 @@ class FlowerModel extends DatabaseModelRepository
 
 	public function save($data)
 	{
-		if ($data->id)
-		{
+		if ($data->id) {
 			$this->db->getWriter()->updateOne('flowers', $data, 'id');
 		}
 		else
@@ -239,8 +238,7 @@ $state->set('list.direction', 'DESC');
 
 $users = $model->getUsers();
 
-if (!$users)
-{
+if (!$users) {
     $error = $state->get('error');
 }
 ```
@@ -281,8 +279,7 @@ class MyModel extends Model
 {
 	public function getData()
 	{
-		if ($this->cache->exists('item.data'))
-		{
+		if ($this->cache->exists('item.data')) {
 			return $this->cache->get('item.data');
 		}
 
@@ -306,8 +303,7 @@ public function getData()
 	// Will generate a id look like: d967f4557f17dd542ece0f8a7b57b4f697c9b189
 	$id = $this->getCacheId('item.data');
 
-	if ($this->cache->exists($id))
-	{
+	if ($this->cache->exists($id)) {
 		return $this->cache->get($id);
 	}
 

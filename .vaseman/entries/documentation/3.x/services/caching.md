@@ -101,8 +101,7 @@ When debug property in global config se to `true` or `cache.disabled` set to `tr
 $cache = \Windwalker\Ioc::getCache();
 
 // Cache object can be get and operate, but the key will always not exists.
-if (!$cache->exists('flower'))
-{
+if (!$cache->exists('flower')) {
     $data = $flowerMapper->loadAll();
 
     $cache->set('flower', $data);
@@ -239,8 +238,7 @@ $cache = CacheFactory::getCache('my_cache', 'file', 'string');
 
 $url = 'http://mysite.com/foo/bar/baz';
 
-if ($cache->exists($url))
-{
+if ($cache->exists($url)) {
     echo $cache->get($url);
 
     exit();

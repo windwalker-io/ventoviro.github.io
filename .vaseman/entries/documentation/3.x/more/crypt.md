@@ -88,8 +88,7 @@ You can disable memory wipe by `ignoreMemzero()` (But we don't recommend to do t
 // Add this code in a listener or anywhere before your application 
 $cipher = Crypto::getCipher();
 
-if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher)
-{
+if ($cipher instanceof \Windwalker\Crypt\Cipher\SodiumCipher) {
     $cipher->ignoreMemzero(true);
 }
 

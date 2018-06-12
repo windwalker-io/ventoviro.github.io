@@ -45,8 +45,7 @@ $allowOrigins = $model->getMyAllowOrigins();
 
 $origin = $this->input->server->getUrl('HTTP_ORIGIN');
 
-if (in_array($origin, $allowOrigins))
-{
+if (in_array($origin, $allowOrigins)) {
     $this->response = CorsHandler::create($this->response)
         ->allowOrigin($origin)
         ->getResponse();

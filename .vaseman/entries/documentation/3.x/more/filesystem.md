@@ -228,8 +228,7 @@ The simple finder are same as Folder, but it will not scan all files instantly, 
 ```php
 foreach ($items as $item)
 {
-    if ($item->isDir() || $item->isDot())
-    {
+    if ($item->isDir() || $item->isDot()) {
         continue;
     }
 

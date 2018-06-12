@@ -151,8 +151,7 @@ $dest = '/path/to/local/file.zip';
 
 $response = $http->download('http://example.com/file.zip', $dest);
 
-if ($response->getStatusCode() != 200)
-{
+if ($response->getStatusCode() != 200) {
     // Error
 }
 ```
