@@ -343,13 +343,13 @@ The benefit is that our controllers will be much more lighter if an action has c
     {
         $this-&gt;user   = $this-&gt;input-&gt;getArray('user');
         $this-&gt;format = $this-&gt;input-&gt;get('format', 'json');
-        $this-&gt;model  = $this-&gt;getModel('User');
+        $this-&gt;repository  = $this-&gt;getRepository('User');
     }
 
     // Do real save logic
     protected function doExecute()
     {
-        $this-&gt;moddel
+        $this-&gt;repository
             -&gt;validate($this-&gt;user)
             -&gt;save($this-&gt;user);
 
@@ -388,33 +388,33 @@ $this-&gt;input-&gt;header-&gt;get('foo');
 $this-&gt;input-&gt;server-&gt;get('foo');
 $this-&gt;input-&gt;env-&gt;get('foo');
 $this-&gt;input-&gt;cookie-&gt;get('foo');</code></pre>
-<h2>Use Model and View Object</h2>
-<p>If your model and view object located in your package, and follows Windwalker naming convention, you can get Model and View by getter in controller.</p>
+<h2>Use Repository and View Object</h2>
+<p>If your repository and view object located in your package, and follows Windwalker naming convention, you can get Repository and View by getter in controller.</p>
 <pre><code class="language-php">// In doExecute()
 
-// File: src/Flower/Model/SakuraModel.php
-// Class: Flower\Model\SakuraModel
-$this-&gt;getModel('Sakura');
+// File: src/Flower/Repository/SakuraRepository.php
+// Class: Flower\Repository\SakuraRepository
+$this-&gt;getRepository('Sakura');
 
 // File: src/Flower/View/Sakura/SakuraHtmlView
 // Class: Flower\View\Sakura\SakuraHtmlView
  $this-&gt;getView('Sakura', 'html');
 
-// Get other models and views
-$this-&gt;getModel('Rose'); // RoseModel
+// Get other repositorys and views
+$this-&gt;getRepository('Rose'); // RoseRepository
 $this-&gt;getView('Rose', 'json'); // RoseJsonView</code></pre>
-<p>If you didn't tell getter the view or model name, it will use controller name as default:</p>
+<p>If you didn't tell getter the view or repository name, it will use controller name as default:</p>
 <pre><code class="language-php">// In doExecute()
 
-// SakuraModel
-$this-&gt;getModel();
+// SakuraRepository
+$this-&gt;getRepository();
 
 // SakuraHtmlView
 $this-&gt;getView();
 
 // SakuraJsonView
 $this-&gt;getView(null, 'json');</code></pre>
-<p>See <a href="view-templating.html">View</a> and <a href="model-database.html">Model</a></p>
+<p>See <a href="view-templating.html">View</a> and <a href="repository-database.html">Repository</a></p>
 <h2>Delegating Tasks</h2>
 <p>Controller <code>delegate()</code> method supports us handle multiple tasks in one controller if we need dispatch different handlers.</p>
 <pre><code class="language-php">protected function doExecute()
@@ -473,10 +473,10 @@ otherwise controller will call <code>processSuccess()</code> to handle success l
             throw new \InvalidArgumentException('No data');
         }
 
-        /** @var DatabaseModelRepository $this-&gt;model */
-        $this-&gt;model-&gt;transactionStart(true);
+        /** @var DatabaseRepositoryRepository $this-&gt;repository */
+        $this-&gt;repository-&gt;transactionStart(true);
 
-        if (!$this-&gt;model-&gt;save($data))
+        if (!$this-&gt;repository-&gt;save($data))
         {
             throw new \RuntimeException('Save fail');
         }
@@ -486,14 +486,14 @@ otherwise controller will call <code>processSuccess()</code> to handle success l
 
     public function processSuccess()
     {
-        $this-&gt;model-&gt;transactionCommit(true);
+        $this-&gt;repository-&gt;transactionCommit(true);
 
         return true;
     }
 
     public function processFailure(\Exception $e = null)
     {
-        $this-&gt;model-&gt;transactionRollback(true);
+        $this-&gt;repository-&gt;transactionRollback(true);
 
         $this-&gt;addMessage($e-&gt;getMessage(), 'warning');
         $this-&gt;setRedirect($this-&gt;router-&gt;route('user'));
@@ -542,7 +542,7 @@ class GetController extends AbstractController
 <h2>Validate Middleware</h2>
 <p>Add <code>ValidateErrorHandlingMiddleware</code> so controller can catch <code>ValidateFailException</code> to handle multiple invalid data messages.</p>
 <pre><code class="language-php">use Windwalker\Core\Controller\Middleware\ValidateErrorHandlingMiddleware;
-use Windwalker\Core\Model\Exception\ValidateFailException;
+use Windwalker\Core\Repository\Exception\ValidateFailException;
 
 // ...
 
@@ -556,7 +556,7 @@ protected function doExecute()
 
     $this-&gt;validate($data);
 
-    return $this-&gt;model-&gt;save($data);
+    return $this-&gt;repository-&gt;save($data);
 }
 
 protected function validate($data)
@@ -578,16 +578,16 @@ protected function validate($data)
     }
 }</code></pre>
 <h2>Controller Config</h2>
-<p>You can set some config in <code>$this-&gt;config</code> and pass it into View and Model, then they will know everything about this controller.</p>
+<p>You can set some config in <code>$this-&gt;config</code> and pass it into View and Repository, then they will know everything about this controller.</p>
 <pre><code class="language-php">// In doExecute()
 
 $this-&gt;config-&gt;set('package.name', 'other_package_name');
 
 $view-&gt;setConfig($this-&gt;config);
-$model-&gt;setConfig($this-&gt;config);
+$repository-&gt;setConfig($this-&gt;config);
 
 // Then View will find template from other package</code></pre>
-<p>If you use getter to get View and Model, config will auto set into them.</p>
+<p>If you use getter to get View and Repository, config will auto set into them.</p>
 <p>Config is a Structure object, see: <a href="../more/structure.html">Windwalker Structure</a></p>
 <h2>CSRF Token</h2>
 <p>Windwalker provides a simple CSRF token generator, please add this line to your HTML form:</p>
@@ -638,13 +638,13 @@ $this-&gt;redirect();</code></pre>
 <p>We can override redirect target anywhere when executing.</p>
 <pre><code class="language-php">// In doExecute()
 
-$model-&gt;save($data);
+$repository-&gt;save($data);
 
 $this-&gt;setRedirect('pages.html', 'Save success', 'success');
 
 try
 {
-    $model-&gt;saveRelations($data);
+    $repository-&gt;saveRelations($data);
 }
 catch (Exception $e)
 {
@@ -673,7 +673,7 @@ $this-&gt;setRedirect('url.html', 'Message', 'type');</code></pre>
 
 $this-&gt;addMessage('Message'); // This action no use</code></pre>
 <h2>HMVC</h2>
-<p>The Hierarchical-Model-View-Controller (HMVC) pattern is a direct extension to the MVC pattern that manages
+<p>The Hierarchical-Repository-View-Controller (HMVC) pattern is a direct extension to the MVC pattern that manages
 to solve many of the scalability issues already mentioned. HMVC was first described in a blog post entitled
 <a href="http://goo.gl/jecFUK">HMVC: The layered pattern for developing strong client tiers</a> on the JavaWorld web site in July 2000. </p>
 <p><img src="https://cloud.githubusercontent.com/assets/1639206/5586880/993f66de-9115-11e4-8551-6f6c3f0f0058.png" alt="mvc-hmvc" /></p>

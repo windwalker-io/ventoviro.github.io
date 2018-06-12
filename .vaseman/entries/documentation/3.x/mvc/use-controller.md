@@ -49,13 +49,13 @@ class SaveController extends AbstractController
 	{
 		$this->user   = $this->input->getArray('user');
 		$this->format = $this->input->get('format', 'json');
-		$this->model  = $this->getModel('User');
+		$this->repository  = $this->getRepository('User');
 	}
 
     // Do real save logic
 	protected function doExecute()
 	{
-		$this->moddel
+		$this->repository
 		    ->validate($this->user)
 		    ->save($this->user);
 
@@ -102,33 +102,33 @@ $this->input->env->get('foo');
 $this->input->cookie->get('foo');
 ```
 
-## Use Model and View Object
+## Use Repository and View Object
 
-If your model and view object located in your package, and follows Windwalker naming convention, you can get Model and View by getter in controller.
+If your repository and view object located in your package, and follows Windwalker naming convention, you can get Repository and View by getter in controller.
 
 ``` php
 // In doExecute()
 
-// File: src/Flower/Model/SakuraModel.php
-// Class: Flower\Model\SakuraModel
-$this->getModel('Sakura');
+// File: src/Flower/Repository/SakuraRepository.php
+// Class: Flower\Repository\SakuraRepository
+$this->getRepository('Sakura');
 
 // File: src/Flower/View/Sakura/SakuraHtmlView
 // Class: Flower\View\Sakura\SakuraHtmlView
  $this->getView('Sakura', 'html');
 
-// Get other models and views
-$this->getModel('Rose'); // RoseModel
+// Get other repositorys and views
+$this->getRepository('Rose'); // RoseRepository
 $this->getView('Rose', 'json'); // RoseJsonView
 ```
 
-If you didn't tell getter the view or model name, it will use controller name as default:
+If you didn't tell getter the view or repository name, it will use controller name as default:
 
 ``` php
 // In doExecute()
 
-// SakuraModel
-$this->getModel();
+// SakuraRepository
+$this->getRepository();
 
 // SakuraHtmlView
 $this->getView();
@@ -137,7 +137,7 @@ $this->getView();
 $this->getView(null, 'json');
 ```
 
-See [View](view-templating.html) and [Model](model-database.html)
+See [View](view-templating.html) and [Repository](repository-database.html)
 
 ## Delegating Tasks
 
@@ -216,10 +216,10 @@ class SaveController extends AbstractController
 			throw new \InvalidArgumentException('No data');
 		}
 
-		/** @var DatabaseModelRepository $this->model */
-		$this->model->transactionStart(true);
+		/** @var DatabaseRepositoryRepository $this->repository */
+		$this->repository->transactionStart(true);
 
-		if (!$this->model->save($data))
+		if (!$this->repository->save($data))
 		{
 			throw new \RuntimeException('Save fail');
 		}
@@ -229,14 +229,14 @@ class SaveController extends AbstractController
 
 	public function processSuccess()
 	{
-		$this->model->transactionCommit(true);
+		$this->repository->transactionCommit(true);
 
 		return true;
 	}
 
 	public function processFailure(\Exception $e = null)
 	{
-		$this->model->transactionRollback(true);
+		$this->repository->transactionRollback(true);
 
 		$this->addMessage($e->getMessage(), 'warning');
 		$this->setRedirect($this->router->route('user'));
@@ -307,7 +307,7 @@ Add `ValidateErrorHandlingMiddleware` so controller can catch `ValidateFailExcep
 
 ``` php
 use Windwalker\Core\Controller\Middleware\ValidateErrorHandlingMiddleware;
-use Windwalker\Core\Model\Exception\ValidateFailException;
+use Windwalker\Core\Repository\Exception\ValidateFailException;
 
 // ...
 
@@ -321,7 +321,7 @@ protected function doExecute()
 
     $this->validate($data);
 
-    return $this->model->save($data);
+    return $this->repository->save($data);
 }
 
 protected function validate($data)
@@ -346,7 +346,7 @@ protected function validate($data)
 
 ## Controller Config
 
-You can set some config in `$this->config` and pass it into View and Model, then they will know everything about this controller.
+You can set some config in `$this->config` and pass it into View and Repository, then they will know everything about this controller.
 
 ``` php
 // In doExecute()
@@ -354,12 +354,12 @@ You can set some config in `$this->config` and pass it into View and Model, then
 $this->config->set('package.name', 'other_package_name');
 
 $view->setConfig($this->config);
-$model->setConfig($this->config);
+$repository->setConfig($this->config);
 
 // Then View will find template from other package
 ```
 
-If you use getter to get View and Model, config will auto set into them.
+If you use getter to get View and Repository, config will auto set into them.
 
 Config is a Structure object, see: [Windwalker Structure](../more/structure.html)
 
@@ -445,13 +445,13 @@ We can override redirect target anywhere when executing.
 ``` php
 // In doExecute()
 
-$model->save($data);
+$repository->save($data);
 
 $this->setRedirect('pages.html', 'Save success', 'success');
 
 try
 {
-	$model->saveRelations($data);
+	$repository->saveRelations($data);
 }
 catch (Exception $e)
 {
@@ -497,7 +497,7 @@ $this->addMessage('Message'); // This action no use
 
 ## HMVC
 
-The Hierarchical-Model-View-Controller (HMVC) pattern is a direct extension to the MVC pattern that manages 
+The Hierarchical-Repository-View-Controller (HMVC) pattern is a direct extension to the MVC pattern that manages 
 to solve many of the scalability issues already mentioned. HMVC was first described in a blog post entitled 
 [HMVC: The layered pattern for developing strong client tiers](http://goo.gl/jecFUK) on the JavaWorld web site in July 2000. 
 
