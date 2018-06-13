@@ -46,11 +46,9 @@ class GetController extends AbstractController
     {
         $page = $this->input->getInt('page', 1);
 
-        $repository = $this->getModel();
+        $sakuras = $this->getRepository()->getSakuras($page, 15);
 
-        return $this->getView()
-            ->set('items', $repository->getSakuras($page, 15))
-            ->render();
+        return $this->renderView('Sakura', 'default', 'edge', compact('sakuras'));
     }
 }
 ```
