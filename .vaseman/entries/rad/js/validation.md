@@ -12,10 +12,11 @@ Phoenix provides a built-in JS validation object to help us do front-end form va
 Include Phoenix Validation:
 
 ``` php
-\Phoenix\Script\PhoenixScript::formValidation();
+\Phoenix\Script\PhoenixScript::validation();
 
 // Custom selector and options
-\Phoenix\Script\PhoenixScript::formValidation('#my-form', [
+\Phoenix\Script\PhoenixScript::validation('#my-form', [
+    'events' => ['change']
     'scroll' => [
         'enabled'  => true,
         'offset'   => -100,
@@ -45,43 +46,62 @@ OR just add it to HTML
 
 Then Validation will block form submit action if this input is empty, and auto scroll to this input:
 
-![required](https://cloud.githubusercontent.com/assets/1639206/17024215/9e40782e-4f89-11e6-8c23-06d97085d8df.gif)
+![required](https://i.imgur.com/yW8lDO6.gif)
 
 > You can also add `required` to class attribute to enable validation.
 
 ## Validate Values
 
+### Use HTML5 Input Validation
+
+If you use HTML5 inputs with special types, for example, `<inpug type="email">`, the validator will auto use 
+HTML5 validation to check values.
+
+You can also add `pattern` attribute to check by your own rules.
+
+```php
+$this->text('title')
+    ->label('Title')
+    ->pattern('^[0-9]{9}$');
+```
+
+![](https://i.imgur.com/9L1eGY3.jpg)
+
+### Built-in JS Validators
+
 We can check input values matches some formats or not, and show warning and hint.
 
-Add `validate-xxx` class to form field:
+Add `data-validate="{validator}"` attribute to form field:
 
 ``` php
 // In FieldDefinition
 
 $this->text('url')
     ->label('URL')
-    ->setClass('validate-url');
+    ->attr('data-validate', 'url');
 
 ```
 
 Now if input has value and it not matches the format you set, validator will show warning to this input:
 
-![p-2016-07-21-006](https://cloud.githubusercontent.com/assets/1639206/17024500/bac3484a-4f8a-11e6-9150-98a1efee5b91.jpg)
+![p-2016-07-21-006](https://i.imgur.com/d3zQ1sP.jpg)
 
 > Validator will be ignored if input has no value, only checked if user typed something in this input.
 
+You can add multiple validators with separated by `|`. `->attr('data-validate', 'a|b|c')`
+
 Available Default Validators:
 
-- `validate-password`
-- `validate-numeric`
-- `validate-email`
-- `validate-url`
-- `validate-alnum`
-- `validate-color`
-- `validate-creditcard`
-- `validate-ip`
+- `password`
+- `numeric`
+- `email`
+- `url`
+- `alnum`
+- `color`
+- `creditcard`
+- `ip`
 
-## Add Custom Validator
+## Add Custom JS Validator
 
 You can add your own validators in runtime. Here we add a password check validator.
 
@@ -91,53 +111,46 @@ var validation = $('#admin-form').validation();
 
 // Add validator
 validation.addValidator('password-confirm', function (value, $input) {
-    return /^\S[\S ]{2,98}\S$/.test(value) && $('.input-password').val() == value;
+    return /^\S[\S ]{2,98}\S$/.test(value) && $('#input-password').val() === value;
 })
 ```
 
-Then add `validate-password-confirm` class to input.
+Then add `data-validate="password-confirm"` class to input.
 
 This validator will check password value that is valid string and matches the `input.input-password` value.
 
 ### Hint Text
 
-We can add text hint to a validator:
+HTML5 validation has there return status:
 
-```js
-// Add validator
-validation.addValidator('url', function(value, element) {
-    value = punycode.toASCII(value);
-    var regex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i;
-    return regex.test(value);
-}, {notice: 'Not a valid URL'})
-```
+- value-missing
+- type-mismatch
+- pattern-mismatch
+- too-long
+- too-short
+- range-underflow
+- range-overflow
+- step-mismatch
+- bad-input
+- custom-error
 
-![p-2016-07-21-007](https://cloud.githubusercontent.com/assets/1639206/17025137/329497be-4f8d-11e6-8d70-cf15f37a3642.jpg)
-
-You can also use callback to generate hint text:
-
-```js
-// Add validator
-validation.addValidator('url', function(value, element) {
-    // ...
-}, {notice: function ($input, validation) {
-    return 'Input: ' + $input.attr('name') + ' is invalid.';
-}})
-```
-
-### Hint Text By HTML Attributes
-
-Use `data-{type}-message` to configure your messages.
+If you want to custom `type-mismatch` message, use `data-{type}-message` attribute.
 
 ```php
-$this->text('email')
-    ->addClass('validate-email')
-    ->attr('data-warinig-message', 'Please enter vaild email.');
-    ->attr('data-error-message', 'Please enter your email.');
-    ->attr('data-success-message', 'OK');
+// In FieldDefinition
+
+$this->text('url')
+    ->label('URL')
+    ->attr('data-type-mismatch-message', 'Please enter valid URL');
 ```
 
-Only support `success`, `warning`, `error` types.
+Result:
+
+![](https://i.imgur.com/WGkCB3c.jpg)
+
+###  Message for Custom Validators
+
+Custom validators uses `custom-error` status, so just add `data-custom-error-message` attribute.
 
 ## Call Validation By JS
 
