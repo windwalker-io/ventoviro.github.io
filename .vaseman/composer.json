@@ -1,0 +1,10 @@
+{
+    "minimum-stability": "beta",
+    "require": {
+    },
+    "config": {
+        "platform": {
+            "php": "8.0.5"
+        }
+    }
+}
