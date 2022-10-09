@@ -14,7 +14,7 @@
 
                 <ul class="fs-6">
                     <li>
-                        Pure <strong>PHP 8.x</strong> environment.
+                        Modern <strong>PHP 8.x</strong> environment.
                     </li>
                     <li>
                         <strong>31</strong> useful standalone components.
@@ -26,7 +26,7 @@
                         <strong>Domain-driven</strong> file structure.
                     </li>
                     <li>
-                        Built-in ORM and <strong>DataMapper</strong>
+                        Built-in <strong>ViewModel</strong> and <strong>ORM</strong>.
                     </li>
                     <li>
                         Better <strong>IDE</strong> friendly supports.
