@@ -1,0 +1,55 @@
+/**
+ * Part of earth project.
+ *
+ * @copyright  Copyright (C) 2018 {ORGANIZATION}. All rights reserved.
+ * @license    GNU General Public License version 2 or later;
+ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap");
+body {
+  padding-bottom: 20px; }
+
+[uni-cloak] * {
+  pointer-events: none; }
+
+.navbar-brand img {
+  height: 35px;
+  margin-top: -8px; }
+
+.view-home {
+  margin-top: 0 !important; }
+  .view-home .l-main-nav {
+    display: none; }
+  .view-home .l-hero {
+    height: 100vh; }
+  .view-home .browser-window {
+    border-radius: 7px;
+    overflow: hidden; }
+    .view-home .browser-window .top-bar {
+      background-color: #12171f;
+      height: 27px;
+      position: relative; }
+    .view-home .browser-window .circles {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      position: absolute;
+      top: 8px;
+      left: 10px; }
+    .view-home .browser-window .circle {
+      width: 10px;
+      height: 10px;
+      background-color: #ccc;
+      border-radius: 10px; }
+      .view-home .browser-window .circle--red {
+        background-color: #dc3545; }
+      .view-home .browser-window .circle--yellow {
+        background-color: #ffc107; }
+      .view-home .browser-window .circle--green {
+        background-color: #198754; }
+    .view-home .browser-window .content {
+      border: 1px solid rgba(33, 37, 41, 0.5); }
+      .view-home .browser-window .content pre {
+        margin: 0;
+        font-size: .875rem !important; }
+
+/*# sourceMappingURL=main.css.map */

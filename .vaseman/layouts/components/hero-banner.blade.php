@@ -1,4 +1,7 @@
-<div class="bg-light py-5">
+<?php
+$attributes = $attributes->class('py-5');
+?>
+<div {!! $attributes !!}>
     <div class="container">
         {!! $slot or '' !!}
     </div>

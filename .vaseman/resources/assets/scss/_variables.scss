@@ -1,7 +1,11 @@
 
 // Override variables
-// $theme-colors: ( 'primary': #007bff );
+$primary: #252f3f;
+$font-family-sans-serif: Inter, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+$color-contrast-dark: $primary;
 
 @import "./node_modules/bootstrap/scss/functions";
 @import "./node_modules/bootstrap/scss/variables";
 @import "./node_modules/bootstrap/scss/mixins";
+@import "./node_modules/bootstrap/scss/maps";

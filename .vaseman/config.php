@@ -14,6 +14,10 @@ return [
         'name' => 'Vaseman'
     ],
 
+    'og' => [
+        'image' => 'https://i.imgur.com/1HHxwsI.jpg'
+    ],
+
     // Which folders you want to generate (Array)
     'folders' => [
         'entries' => '',

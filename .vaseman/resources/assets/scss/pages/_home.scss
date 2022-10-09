@@ -1,1 +1,59 @@
 
+.view-home {
+  margin-top: 0 !important;
+
+  .l-main-nav {
+    display: none;
+  }
+
+  .l-hero {
+    height: 100vh;
+  }
+
+  .browser-window {
+    border-radius: 7px;
+    overflow: hidden;
+
+    .top-bar {
+      background-color: darken($primary, 10%);
+      height: 27px;
+      position: relative;
+    }
+
+    .circles {
+      display: flex;
+      position: absolute;
+      top: 8px;
+      left: 10px;
+    }
+
+    .circle {
+      width: 10px;
+      height: 10px;
+      background-color: #ccc;
+      border-radius: 10px;
+
+      &--red {
+        background-color: $danger;
+      }
+
+      &--yellow {
+        background-color: $warning;
+      }
+
+      &--green {
+        background-color: $green-500;
+      }
+    }
+
+    .content {
+      border: 1px solid rgba($dark, .5);
+
+      pre {
+        margin: 0;
+        font-size: .875rem !important;
+      }
+    }
+  }
+}
+

@@ -1,10 +1,90 @@
 @extends('global.body')
 
 @section('content')
-    <x-hero-banner>
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a href="#" class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+    <x-hero-banner class="l-hero text-bg-primary d-flex align-items-center justify-content-center">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="mb-4">
+                    <img src="{{ $asset->path('images/logo-cw-h.svg') }}" alt="Windwalker logo"
+                        style="height: 75px">
+                </h1>
+                <p class="fs-3">
+                    The Next Generation PHP Framework
+                </p>
+
+                <ul class="fs-6">
+                    <li>
+                        Pure <strong>PHP 8.x</strong> environment.
+                    </li>
+                    <li>
+                        <strong>31</strong> useful standalone components.
+                    </li>
+                    <li>
+                        Powerful <strong>DI</strong> engine.
+                    </li>
+                    <li>
+                        <strong>Domain-driven</strong> file structure.
+                    </li>
+                    <li>
+                        Built-in ORM and <strong>DataMapper</strong>
+                    </li>
+                    <li>
+                        Better <strong>IDE</strong> friendly supports.
+                    </li>
+                </ul>
+
+                <p class="mt-5">
+                    <a class="btn btn-light btn-lg"
+                        href="{{ $uri->path('documentation') }}">
+                        <i class="fa-solid fa-file-lines"></i>
+                        4.x Documentation
+                    </a>
+                    <a class="btn btn-dark btn-lg" target="_blank"
+                        href="https://github.com/windwalker-io/framework">
+                        <i class="fa-brands fa-github"></i>
+                        GitHub
+                    </a>
+                </p>
+            </div>
+
+            <div class="col-lg-6">
+                <div>
+                    <div class="browser-window">
+                        <div class="top-bar">
+                            <div class="circles gap-2">
+                                <div class="circle circle--red"></div>
+                                <div class="circle circle--yellow"></div>
+                                <div class="circle circle--green"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <pre><code class="language-php">#[ViewModel(
+    layout: 'article-list',
+    js: 'article-list.js'
+)]
+class ArticleListView implements ViewModelInterface
+{
+    public function __construct(
+        #[Autowire]
+        protected ArticleRepository $repository,
+    ) {}
+
+    public function prepare(AppContext $app, View $view): array
+    {
+        [$id, $page] = $app->input('id', 'page')->values()->dump();
+
+        $items = $this->repository->getListSelector()
+            ->where('category_id', $id)
+            ->page($page);
+
+        return compact('items');
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </x-hero-banner>
 
     <div class="container">

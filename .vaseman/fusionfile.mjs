@@ -19,9 +19,9 @@ export async function up() {
   // Watch end
 
   let cmd = 'vaseman up ..';
+  cmd += ' --hard';
 
   if (process.env.NODE_ENV === 'production') {
-    cmd += ' --hard';
     cmd += ' --asset-version';
   }
 
@@ -76,7 +76,6 @@ export async function images() {
 export async function install() {
   return installVendors(
     [
-      '@fortawesome/fontawesome-free',
       'bootstrap',
       'jquery'
     ]

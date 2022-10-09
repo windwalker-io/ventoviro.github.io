@@ -8,7 +8,7 @@
 @section('header')
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <nav class="l-main-nav navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ $uri->path() }}">
                     <img src="{{ $asset->path('images/logo-cw-h.svg') }}"
@@ -23,16 +23,31 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                                href="{{ $uri->path() }}">
-                                Home
-                            </a>
-                        </li>
+
                     </ul>
 
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                    {{--  Right Menu  --}}
+                        {{--<li class="nav-item">--}}
+                        {{--    <a class="nav-link active" aria-current="page"--}}
+                        {{--        href="{{ $uri->path() }}">--}}
+                        {{--        About--}}
+                        {{--    </a>--}}
+                        {{--</li>--}}
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                                href="{{ $uri->path('documentation') }}">
+                                <i class="fa-solid fa-file-lines"></i>
+                                Documentation
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                                target="_blank"
+                                href="https://github.com/windwalker-io/framework">
+                                <i class="fa-brands fa-github"></i>
+                                Github
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
