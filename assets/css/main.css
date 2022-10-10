@@ -20,7 +20,15 @@ body {
   .view-home .l-main-nav {
     display: none; }
   .view-home .l-hero {
-    height: 100vh; }
+    height: 100vh;
+    position: relative; }
+    .view-home .l-hero .c-banner-arrow {
+      position: absolute;
+      left: 50%;
+      bottom: 1.5rem;
+      -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+              transform: translateY(-50%); }
   .view-home .browser-window {
     border-radius: 7px;
     overflow: hidden; }
@@ -50,6 +58,6 @@ body {
       border: 1px solid rgba(33, 37, 41, 0.5); }
       .view-home .browser-window .content pre {
         margin: 0;
-        font-size: .875rem !important; }
+        font-size: 13px !important; }
 
 /*# sourceMappingURL=main.css.map */
