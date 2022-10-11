@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 return [
     'project' => [
-        'name' => 'Vaseman'
+        'name' => 'Windwalker - PHP Rapid Development Framework'
     ],
 
     'og' => [
@@ -30,7 +30,7 @@ return [
 
     // Plugin classes with namespace (Array)
     'plugins' => [
-        //
+        \App\Plugin\DataPlugin::class
     ],
 
     'components' => [

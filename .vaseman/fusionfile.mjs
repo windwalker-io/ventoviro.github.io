@@ -14,7 +14,8 @@ export async function up() {
   fusion.watch([
     './entries/**/*',
     './layouts/**/*',
-    './assets/**/*'
+    './assets/**/*',
+    './resources/data/**/*',
   ]);
   // Watch end
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <link rel="shortcut icon" href="../assets/images/logo-icon.png?8fac63d9f5e3ac8955f98313" />
+    <link rel="shortcut icon" href="../assets/images/logo-icon.png?8999f4dd56995d65a17d0fb9" />
 
     <title>Markdown Text | Vaseman</title>
 
@@ -13,17 +13,17 @@
 
         
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-    <link href="../assets/css/bootstrap.css?8fac63d9f5e3ac8955f98313" rel="stylesheet" />
-        <link href="../assets/css/main.css?8fac63d9f5e3ac8955f98313" rel="stylesheet">
+    <link href="../assets/css/bootstrap.css?8999f4dd56995d65a17d0fb9" rel="stylesheet" />
+        <link href="../assets/css/main.css?8999f4dd56995d65a17d0fb9" rel="stylesheet">
 
     </head>
-<body class="view-article layout-markdown route-article-markdown" style="margin-top: 56px">
+<body class="view-home layout-article\markdown route-article\markdown" style="margin-top: 56px">
 
     <header class="l-main-header">
         <nav class="l-main-nav navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="../">
-                    <img src="../assets/images/logo-cw-h.svg?8fac63d9f5e3ac8955f98313"
+                    <img src="../assets/images/logo-cw-h.svg?8999f4dd56995d65a17d0fb9"
                         alt="LOGO"
                         style="height: 25px;"
                     />
@@ -100,7 +100,7 @@ i18n with plurals support and easy syntax.</li>
 <p>(c) (C) (r) (R) (tm) (TM) (p) (P) +-</p>
 <p>test.. test... test..... test?..... test!....</p>
 <p>!!!!!! ???? ,,  -- ---</p>
-<p>&quot;Smartypants, double quotes&quot; and 'single quotes'</p>
+<p>"Smartypants, double quotes" and 'single quotes'</p>
 <h2>Emphasis</h2>
 <p><strong>This is bold text</strong></p>
 <p><strong>This is bold text</strong></p>
@@ -121,13 +121,19 @@ i18n with plurals support and easy syntax.</li>
 <p>Unordered</p>
 <ul>
 <li>Create a list by starting a line with <code>+</code>, <code>-</code>, or <code>*</code></li>
-<li>Sub-lists are made by indenting 2 spaces:
-<ul>
-<li>Marker character change forces new list start:</li>
+<li>Sub-lists are made by indenting 2 spaces:<ul>
+<li>Marker character change forces new list start:<ul>
 <li>Ac tristique libero volutpat at</li>
+</ul>
+<ul>
 <li>Facilisis in pretium nisl aliquet</li>
+</ul>
+<ul>
 <li>Nulla volutpat aliquam velit</li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>Very easy!</li>
 </ul>
 <p>Ordered</p>
@@ -160,7 +166,7 @@ i18n with plurals support and easy syntax.</li>
 line 1 of code
 line 2 of code
 line 3 of code</code></pre>
-<p>Block code &quot;fences&quot;</p>
+<p>Block code "fences"</p>
 <pre><code>Sample text here...</code></pre>
 <p>Syntax highlighting</p>
 <pre><code class="language-js">var foo = function (bar) {
@@ -248,15 +254,14 @@ console.log(foo(5));</code></pre>
 <p>Inline footnote^[Text of inline footnote] definition.</p>
 <p>Duplicated footnote reference<sup id="fnref2:second"><a href="#fn:second" class="footnote-ref">2</a></sup>.</p>
 <h3><a href="https://github.com/markdown-it/markdown-it-deflist">Definition lists</a></h3>
-<dl>
-<dt>Term 1</dt>
-<dd><p>Definition 1
-with lazy continuation.</p></dd>
-<dt>Term 2 with <em>inline markup</em></dt>
-<dd><p>Definition 2</p>
-<pre><code>{ some code, part of Definition 2 }</code></pre>
-<p>Third paragraph of definition 2.</p></dd>
-</dl>
+<p>Term 1</p>
+<p>:   Definition 1
+with lazy continuation.</p>
+<p>Term 2 with <em>inline markup</em></p>
+<p>:   Definition 2</p>
+<pre><code>    { some code, part of Definition 2 }
+
+Third paragraph of definition 2.</code></pre>
 <p><em>Compact style:</em></p>
 <p>Term 1
 ~ Definition 1</p>
@@ -265,13 +270,23 @@ with lazy continuation.</p></dd>
 ~ Definition 2b</p>
 <h3><a href="https://github.com/markdown-it/markdown-it-abbr">Abbreviations</a></h3>
 <p>This is HTML abbreviation example.</p>
-<p>It converts &quot;HTML&quot;, but keep intact partial entries like &quot;xxxHTMLyyy&quot; and so on.</p>
+<p>It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.</p>
 <h3><a href="https://github.com/markdown-it/markdown-it-container">Custom containers</a></h3>
-<dl>
-<dt>::: warning</dt>
-<dt><em>here be dragons</em></dt>
-<dd>::</dd>
-</dl>
+<p>::: warning
+<em>here be dragons</em>
+:::</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn:first">
+<p>Footnote <strong>can have markup</strong></p>
+<p>and multiple paragraphs.&#160;<a href="#fnref1:first" rev="footnote" class="footnote-backref">&#8617;</a></p>
+</li>
+<li id="fn:second">
+<p>Footnote text.&#160;<a href="#fnref1:second" rev="footnote" class="footnote-backref">&#8617;</a> <a href="#fnref2:second" rev="footnote" class="footnote-backref">&#8617;</a></p>
+</li>
+</ol>
+</div>
                                     </div>
             </div>
 
@@ -283,7 +298,7 @@ with lazy continuation.</p></dd>
                                 href="../article/article.html">Blade</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active"
+                            <a class="nav-link "
                                 href="../article/markdown.html">Markdown</a>
                         </li>
                         <li class="nav-item">
