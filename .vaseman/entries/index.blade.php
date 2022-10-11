@@ -1,5 +1,9 @@
 @extends('global.body')
 
+@push('script')
+    <script src="{{ $asset->path('js/home.js') }}"></script>
+@endpush
+
 @section('content')
     <x-hero-banner class="l-hero text-bg-primary d-flex align-items-center justify-content-center">
         <div class="row align-items-center">
@@ -186,6 +190,14 @@ class ArticleListView implements ViewModelInterface
                 <div class="col-lg-6 col-md-8">
                     <pre><code class="language-bash">$ composer create-project windwalker/starter</code></pre>
                 </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <a class="btn btn-primary btn-lg"
+                    href="{{ $uri->path('documentation') }}">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Documentation
+                </a>
             </div>
         </section>
 

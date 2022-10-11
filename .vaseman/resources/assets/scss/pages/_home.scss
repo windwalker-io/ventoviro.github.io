@@ -1,9 +1,11 @@
 
-.view-home {
+.route-index {
   margin-top: 0 !important;
 
-  .l-main-nav {
+  .l-main-header {
     display: none;
+    position: relative;
+    z-index: 3;
   }
 
   .l-hero {

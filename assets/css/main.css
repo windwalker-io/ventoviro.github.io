@@ -15,48 +15,50 @@ body {
   height: 35px;
   margin-top: -8px; }
 
-.view-home {
+.route-index {
   margin-top: 0 !important; }
-  .view-home .l-main-nav {
-    display: none; }
-  .view-home .l-hero {
+  .route-index .l-main-header {
+    display: none;
+    position: relative;
+    z-index: 3; }
+  .route-index .l-hero {
     height: 100vh;
     position: relative; }
-    .view-home .l-hero .c-banner-arrow {
+    .route-index .l-hero .c-banner-arrow {
       position: absolute;
       left: 50%;
       bottom: 1.5rem;
       -webkit-transform: translateY(-50%);
           -ms-transform: translateY(-50%);
               transform: translateY(-50%); }
-  .view-home .browser-window {
+  .route-index .browser-window {
     border-radius: 7px;
     overflow: hidden; }
-    .view-home .browser-window .top-bar {
+    .route-index .browser-window .top-bar {
       background-color: #12171f;
       height: 27px;
       position: relative; }
-    .view-home .browser-window .circles {
+    .route-index .browser-window .circles {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
       position: absolute;
       top: 8px;
       left: 10px; }
-    .view-home .browser-window .circle {
+    .route-index .browser-window .circle {
       width: 10px;
       height: 10px;
       background-color: #ccc;
       border-radius: 10px; }
-      .view-home .browser-window .circle--red {
+      .route-index .browser-window .circle--red {
         background-color: #dc3545; }
-      .view-home .browser-window .circle--yellow {
+      .route-index .browser-window .circle--yellow {
         background-color: #ffc107; }
-      .view-home .browser-window .circle--green {
+      .route-index .browser-window .circle--green {
         background-color: #198754; }
-    .view-home .browser-window .content {
+    .route-index .browser-window .content {
       border: 1px solid rgba(33, 37, 41, 0.5); }
-      .view-home .browser-window .content pre {
+      .route-index .browser-window .content pre {
         margin: 0;
         font-size: 13px !important; }
 

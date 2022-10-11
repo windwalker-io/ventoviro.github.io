@@ -76,8 +76,7 @@ export async function images() {
 export async function install() {
   return installVendors(
     [
-      'bootstrap',
-      'jquery'
+
     ]
   );
 }

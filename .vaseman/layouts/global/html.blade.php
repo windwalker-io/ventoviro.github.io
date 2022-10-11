@@ -14,7 +14,6 @@
     @stack('meta')
     @yield('meta')
 
-    {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />--}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <link href="{{ $asset->path('css/bootstrap.css') }}" rel="stylesheet" />
     @stack('style')
@@ -22,11 +21,11 @@
 
     @stack('head')
 </head>
-<body class="{{ $helper->page->bodyClass() }}" style="margin-top: 50px">
+<body class="{{ $helper->page->bodyClass() }}" style="margin-top: 56px">
 @yield('superbody')
 
-<script src="{{ $asset->path('vendor/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ $asset->path('vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/cefe7e8fb3.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
