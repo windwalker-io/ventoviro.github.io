@@ -35,6 +35,7 @@ return [
 
     'components' => [
         'hero-banner' => 'components.hero-banner',
+        'doc-banner' => 'components.doc-banner',
         'breadcrumb' => 'components.breadcrumb',
         'pagination' => 'components.pagination',
     ],

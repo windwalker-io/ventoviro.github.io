@@ -16,7 +16,7 @@ return [
         'attributes' => new MenuItem(
             title: 'Attributes',
             description: 'PHP8 Attributes decorator component.',
-            extra: ['wip' => true]
+            extra: []
         ),
 
         'di' => new MenuItem(
