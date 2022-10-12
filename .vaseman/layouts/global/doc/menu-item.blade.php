@@ -12,4 +12,8 @@ $active = $menuRoute === $currentRoute;
         class="nav-link ps-0 {{ $active ? 'active text-success fw-bold' : '' }}">
         {{ $menuItem->title }}
     </a>
+
+    @if ($active)
+        <div data-toc></div>
+    @endif
 </li>

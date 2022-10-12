@@ -8,26 +8,28 @@ menu: components/attributes
 
 # Available Types & Actions
 
-Currently, there has 7 types, You can use `registerAttribute()` to control attribute working scope.
+Currently, there has `7` types, You can use `registerAttribute()` to control attribute working scope.
 
-- `CLASSES`: Same with `Attribute::TARGET_CLASS`
-- `CLASS_CONSTANTS`: Same with `Attribute::TARGET_CLASS_CONSTANT`
-- `METHODS`: Same with `Attribute::TARGET_METHOD`
-- `FUNCTIONS`: Same with `Attribute::TARGET_FUNCTION`
-- `CALLABLE`: **Special type only provided by `AttributeType`.**
-- `PROPERTIES`: Same with `Attribute::TARGET_PROPERTY`
-- `PARAMETERS`: Same with `Attribute::TARGET_PARAMETER`
+- `AttributeType::CLASSES`: Same with `Attribute::TARGET_CLASS`
+- `AttributeType::CLASS_CONSTANTS`: Same with `Attribute::TARGET_CLASS_CONSTANT`
+- `AttributeType::METHODS`: Same with `Attribute::TARGET_METHOD`
+- `AttributeType::FUNCTIONS`: Same with `Attribute::TARGET_FUNCTION`
+- `AttributeType::CALLABLE`: **Special type only provided by `AttributeType`.**
+- `AttributeType::PROPERTIES`: Same with `Attribute::TARGET_PROPERTY`
+- `AttributeType::PARAMETERS`: Same with `Attribute::TARGET_PARAMETER`
 
 ## Object & Classes
 
 ```php
 use Windwalker\Attributes\AttributesResolver;
 use Windwalker\Attributes\AttributeType;
-$attributes = new AttributesResolver();
+
 // Work on Class and Object
 $attributes->registerAttribute(\Decorator::class, AttributeType::CLASSES);
+
 // Decorate existing object
 $object = $attributes->decorateObject($object);
+
 // Create object from class and decorate it.
 $object = $attributes->createObject(\Foo::class, ...$args);
 ```
@@ -37,7 +39,7 @@ $object = $attributes->createObject(\Foo::class, ...$args);
 ```php
 use Windwalker\Attributes\AttributesResolver;
 use Windwalker\Attributes\AttributeType;
-$attributes = new AttributesResolver();
+
 // Work on method and function.
 $attributes->registerAttribute(\AOP::class, AttributeType::METHODS | AttributeType::FUNCTIONS);
 $object = $attributes->resolveMethods(new SomObject());
@@ -53,9 +55,10 @@ This type works on methods, functions, closures and any callable.
 ```php
 use Windwalker\Attributes\AttributesResolver;
 use Windwalker\Attributes\AttributeType;
-$attributes = new AttributesResolver();
+
 // Work on method, function, Closure or callable.
 $attributes->registerAttribute(\Autowire::class, AttributeType::CALLABLE);
+
 $result = $attributes->call($callable, ...$args);
 ```
 
@@ -64,13 +67,15 @@ $result = $attributes->call($callable, ...$args);
 ```php
 use Windwalker\Attributes\AttributesResolver;
 use Windwalker\Attributes\AttributeType;
-$attributes = new AttributesResolver();
+
 // Work on object properties
 $attributes->registerAttribute(\Inject::class, AttributeType::PROPERTIES);
+
 $object = new class {
     #[\Inject]
     protected ?\Foo $foo = null;
 };
+
 $object = $attributes->resolveProperties($object);
 ```
 
@@ -79,14 +84,16 @@ $object = $attributes->resolveProperties($object);
 ```php
 use Windwalker\Attributes\AttributesResolver;
 use Windwalker\Attributes\AttributeType;
-$attributes = new AttributesResolver();
+
 // Work on callable parameters.
 $attributes->registerAttribute(\StrUpper::class, AttributeType::PROPERTIES);
+
 $func = function (
     #[\StrUpper]
     $foo    
 ) {
     return $foo;
 };
+
 $result = $attributes->call($func, ['flower'], /* $context to bind this */); // "FLOWER"
 ```

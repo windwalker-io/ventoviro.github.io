@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <link rel="shortcut icon" href="../../../assets/images/logo-icon.png?edabfa90b1b2298d9345af74" />
+    <link rel="shortcut icon" href="../../../assets/images/logo-icon.png?8599777cee52388e3602c019" />
 
     <title>Getting Started | Attributes | Windwalker - PHP Rapid Development Framework</title>
 
     <meta property="og:image" content="https://i.imgur.com/1HHxwsI.jpg">
 
         
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-    <link href="../../../assets/css/bootstrap.css?edabfa90b1b2298d9345af74" rel="stylesheet" />
-        <link href="../../../assets/css/main.css?edabfa90b1b2298d9345af74" rel="stylesheet">
+        <link href="https://unpkg.com/prism-themes@1.9.0/themes/prism-dracula.css" rel="stylesheet" />
+    <link href="../../../assets/css/bootstrap.css?8599777cee52388e3602c019" rel="stylesheet" />
+        <link href="../../../assets/css/main.css?8599777cee52388e3602c019" rel="stylesheet">
 
     </head>
 <body class="view-home layout-documentation\components\attributes\write-attributes-handlers route-documentation\components\attributes\write-attributes-handlers" style="margin-top: 56px">
@@ -23,7 +23,7 @@
         <nav class="l-main-nav navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="../../../">
-                    <img src="../../../assets/images/logo-cw-h.svg?edabfa90b1b2298d9345af74"
+                    <img src="../../../assets/images/logo-cw-h.svg?8599777cee52388e3602c019"
                         alt="LOGO"
                         style="height: 25px;"
                     />
@@ -87,25 +87,30 @@
         class="nav-link ps-0 ">
         Introduction
     </a>
-</li>
+
+    </li>
                                                                                                 <li class="nav-item">
     <a href="../../../documentation/components/attributes/available-type-actions.html"
         class="nav-link ps-0 ">
         Available Types &amp; Actions
     </a>
-</li>
+
+    </li>
                                                                                                 <li class="nav-item">
     <a href="../../../documentation/components/attributes/write-attributes-handlers.html"
         class="nav-link ps-0 active text-success fw-bold">
         Write Your Own Attribute Handlers
     </a>
-</li>
+
+            <div data-toc></div>
+    </li>
                                                                                                 <li class="nav-item">
     <a href="../../../documentation/components/attributes/misc.html"
         class="nav-link ps-0 ">
         Miscellaneous
     </a>
-</li>
+
+    </li>
                                                                                                 <li class="nav-item">
                                 <div class="nav-link text-dark fw-bold ps-0">
                                     Use in Framework
@@ -117,14 +122,16 @@
         class="nav-link ps-0 ">
         Use In Framework
     </a>
-</li>
+
+    </li>
                                                                     </ul>
                             </li>
                                                             </ul>
             </div>
 
             <div class="col-lg-9">
-                <h1>Write Your Own Attribute Handlers</h1>
+                <article class="article-content" data-content>
+                    <h1>Write Your Own Attribute Handlers</h1>
 <h2>Object &amp; Classes</h2>
 <p>This is a Decorator example:</p>
 <pre><code class="language-php">use Windwalker\Attributes\AttributeHandler;
@@ -158,16 +165,21 @@ by the class and pass <code>...$args</code> to constructor.</p>
 <p>Example:</p>
 <pre><code class="language-php">use Windwalker\Attributes\AttributesResolver;
 use Windwalker\Attributes\AttributeType;
+
 #[\Decorator(\Component::class, ['template' =&gt; 'foo.php'])]
 class Foo 
 {
     //
 }
+
 $attributes = new AttributesResolver();
+
 // Work on Class and Object
 $attributes-&gt;registerAttribute(\Decorator::class, AttributeType::CLASSES);
+
 // Decorate existing object
 $component = $attributes-&gt;decorateObject($object);
+
 // Create object from class and decorate it.
 $component = $attributes-&gt;createObject(\Foo::class, ...$args);</code></pre>
 <h2>Use Custom Object Builder</h2>
@@ -339,7 +351,8 @@ $object = new class {
 };
 $attributes = new AttributesResolver();
 $attributes-&gt;registerAttribute(\Wrapper::class, \Attribute::TARGET_PROPERTY);
-$object = $attributes-&gt;resolveProperties($object);</code></pre>            </div>
+$object = $attributes-&gt;resolveProperties($object);</code></pre>                </article>
+            </div>
         </div>
     </div>
 
@@ -384,5 +397,6 @@ $object = $attributes-&gt;resolveProperties($object);</code></pre>            </
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
+    <script src="../../../assets/js/doc.js?8599777cee52388e3602c019"></script>
 </body>
 </html>

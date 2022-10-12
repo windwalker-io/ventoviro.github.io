@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <link rel="shortcut icon" href="../../../assets/images/logo-icon.png?f35dbd30dfc3d3f5c72e146c" />
+    <link rel="shortcut icon" href="../../../assets/images/logo-icon.png?eee5dffba2f6927c22e90697" />
 
     <title>Getting Started | Attributes | Windwalker - PHP Rapid Development Framework</title>
 
     <meta property="og:image" content="https://i.imgur.com/1HHxwsI.jpg">
 
         
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-    <link href="../../../assets/css/bootstrap.css?f35dbd30dfc3d3f5c72e146c" rel="stylesheet" />
-        <link href="../../../assets/css/main.css?f35dbd30dfc3d3f5c72e146c" rel="stylesheet">
+        <link href="https://unpkg.com/prism-themes@1.9.0/themes/prism-dracula.css" rel="stylesheet" />
+    <link href="../../../assets/css/bootstrap.css?eee5dffba2f6927c22e90697" rel="stylesheet" />
+        <link href="../../../assets/css/main.css?eee5dffba2f6927c22e90697" rel="stylesheet">
 
     </head>
 <body class="view-home layout-documentation\components\attributes\misc route-documentation\components\attributes\misc" style="margin-top: 56px">
@@ -23,7 +23,7 @@
         <nav class="l-main-nav navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="../../../">
-                    <img src="../../../assets/images/logo-cw-h.svg?f35dbd30dfc3d3f5c72e146c"
+                    <img src="../../../assets/images/logo-cw-h.svg?eee5dffba2f6927c22e90697"
                         alt="LOGO"
                         style="height: 25px;"
                     />
@@ -87,25 +87,30 @@
         class="nav-link ps-0 ">
         Introduction
     </a>
-</li>
+
+    </li>
                                                                                                 <li class="nav-item">
     <a href="../../../documentation/components/attributes/available-type-actions.html"
         class="nav-link ps-0 ">
         Available Types &amp; Actions
     </a>
-</li>
+
+    </li>
                                                                                                 <li class="nav-item">
     <a href="../../../documentation/components/attributes/write-attributes-handlers.html"
         class="nav-link ps-0 ">
         Write Your Own Attribute Handlers
     </a>
-</li>
+
+    </li>
                                                                                                 <li class="nav-item">
     <a href="../../../documentation/components/attributes/misc.html"
         class="nav-link ps-0 active text-success fw-bold">
         Miscellaneous
     </a>
-</li>
+
+            <div data-toc></div>
+    </li>
                                                                                                 <li class="nav-item">
                                 <div class="nav-link text-dark fw-bold ps-0">
                                     Use in Framework
@@ -117,14 +122,16 @@
         class="nav-link ps-0 ">
         Use In Framework
     </a>
-</li>
+
+    </li>
                                                                     </ul>
                             </li>
                                                             </ul>
             </div>
 
             <div class="col-lg-9">
-                <h1>Miscellaneous</h1>
+                <article class="article-content" data-content>
+                    <h1>Miscellaneous</h1>
 <h2>About <code>AttributeHandler</code></h2>
 <p><code>AttributeHandler</code> is the only parameter of our attribute processor.</p>
 <pre><code class="language-php">use Windwalker\Attributes\AttributeHandler;
@@ -258,7 +265,8 @@ AttributesAccessor::runAttributeIfExists(
 <td>This will run <code>resolveProperties()</code>, <code>resolveConstants()</code> and <code>resolveConstants()</code> one time.</td>
 </tr>
 </tbody>
-</table>            </div>
+</table>                </article>
+            </div>
         </div>
     </div>
 
@@ -303,5 +311,6 @@ AttributesAccessor::runAttributeIfExists(
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
+    <script src="../../../assets/js/doc.js?eee5dffba2f6927c22e90697"></script>
 </body>
 </html>

@@ -26,6 +26,7 @@ First, you must create your own Attributes. This is a simple example wrapper to 
 ```php
 use Windwalker\Attributes\AttributeHandler;
 use Windwalker\Attributes\AttributeInterface;
+
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class Wrapper implements AttributeInterface
 {
@@ -51,14 +52,16 @@ Then, register this attribute to resolver.
 ```php
 use Windwalker\Attributes\AttributesResolver;
 use Windwalker\Attributes\AttributeType;
+
 $attributes = new AttributesResolver();
 $attributes->registerAttribute(\Wrapper::class, AttributeType::CLASSES);
-// Now, try to wrap an object.
-            
+
+// Now, try to wrap an object.  
 #[\Wrapper] 
 class Foo {
     
 }
+
 $foo = new \Foo();
 $foo = $attributes->decorateObject($foo);
 $foo instanceof \Wrapper;

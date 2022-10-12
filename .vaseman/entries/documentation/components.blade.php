@@ -33,10 +33,10 @@ $sections = $docTree['pages']['components'] ?? [];
                             <div class="col mb-4">
                                 <div class="card h-100 shadow-sm">
                                     <div class="card-body">
-                                        <div class="mb-1 d-flex slign-items-center">
-                                            <code style="color: var(--bs-success)">
+                                        <div class="mb-1 d-flex align-items-center">
+                                            <span class="font-monospace" style="color: var(--bs-success)">
                                                 windwalker/{{ $package }}
-                                            </code>
+                                            </span>
                                             @if ($wip)
                                                 <span class="ms-auto badge border border-secondary text-secondary">WIP</span>
                                             @endif

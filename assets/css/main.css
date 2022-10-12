@@ -5,6 +5,41 @@
  * @license    GNU General Public License version 2 or later;
  */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap");
+code {
+  color: #495057;
+  background-color: #e9ecef;
+  padding-inline: .25rem;
+  border-radius: 3px; }
+
+.article-content {
+  font-size: 18px; }
+  .article-content h2, .article-content h3, .article-content h4, .article-content h5, .article-content h6 {
+    margin-top: 1.25em;
+    margin-bottom: .5em;
+    offset-anchor: 10rem;
+    position: relative; }
+    .article-content h2 > .anchor-icon, .article-content h3 > .anchor-icon, .article-content h4 > .anchor-icon, .article-content h5 > .anchor-icon, .article-content h6 > .anchor-icon {
+      margin-left: .5em;
+      content: "<i class=\"far fa-link\"></i>";
+      font-family: "Font Awesome 6 Free", sans-serif;
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+              transform: translateY(-50%);
+      font-size: .75em;
+      opacity: 0;
+      -webkit-transition: all .3s;
+      -o-transition: all .3s;
+      transition: all .3s; }
+    .article-content h2:hover .anchor-icon, .article-content h3:hover .anchor-icon, .article-content h4:hover .anchor-icon, .article-content h5:hover .anchor-icon, .article-content h6:hover .anchor-icon {
+      opacity: 1; }
+  .article-content a.heading-link {
+    text-decoration: none; }
+  .article-content pre > code {
+    font-size: 15px;
+    padding: 0; }
+
 body {
   padding-bottom: 20px; }
 

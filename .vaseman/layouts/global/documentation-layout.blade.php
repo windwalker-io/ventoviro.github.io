@@ -21,6 +21,10 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
 
 @extends('global.body')
 
+@push('script')
+    <script src="{{ $asset->path('js/doc.js') }}"></script>
+@endpush
+
 @section('body')
     <x-doc-banner :part="$config['part'] ?? ''">
         {{ $config['chapter'] ?? '' }}
@@ -55,7 +59,9 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
             </div>
 
             <div class="col-lg-9">
-                @yield('content', $content ?? '')
+                <article class="article-content" data-content>
+                    @yield('content', $content ?? '')
+                </article>
             </div>
         </div>
     </div>

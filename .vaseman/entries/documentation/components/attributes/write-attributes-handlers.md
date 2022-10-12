@@ -51,16 +51,21 @@ Example:
 ```php
 use Windwalker\Attributes\AttributesResolver;
 use Windwalker\Attributes\AttributeType;
+
 #[\Decorator(\Component::class, ['template' => 'foo.php'])]
 class Foo 
 {
     //
 }
+
 $attributes = new AttributesResolver();
+
 // Work on Class and Object
 $attributes->registerAttribute(\Decorator::class, AttributeType::CLASSES);
+
 // Decorate existing object
 $component = $attributes->decorateObject($object);
+
 // Create object from class and decorate it.
 $component = $attributes->createObject(\Foo::class, ...$args);
 ```
