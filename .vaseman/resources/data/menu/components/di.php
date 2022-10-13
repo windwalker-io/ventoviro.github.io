@@ -12,8 +12,12 @@ declare(strict_types=1);
 use App\Menu\MenuItem;
 
 return [
-    'index' => new MenuItem(
-        title: 'Introduction',
-        extra: []
-    ),
+    'name' => 'DI',
+    'part' => 'Components',
+    'items' => [
+        'index' => new MenuItem(
+            title: 'Introduction',
+            extra: []
+        ),
+    ]
 ];
