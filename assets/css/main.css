@@ -40,6 +40,10 @@ code {
     font-size: 15px;
     padding: 0; }
 
+#toc .nav-link.active {
+  color: #46b480 !important;
+  font-weight: bold; }
+
 body {
   padding-bottom: 20px; }
 

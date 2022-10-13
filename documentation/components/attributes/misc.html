@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <link rel="shortcut icon" href="../../../assets/images/logo-icon.png?eee5dffba2f6927c22e90697" />
+    <link rel="shortcut icon" href="../../../assets/images/logo-icon.png?9c2a4b321b6cde3102e717b1" />
 
     <title>Getting Started | Attributes | Windwalker - PHP Rapid Development Framework</title>
 
@@ -13,17 +13,17 @@
 
         
         <link href="https://unpkg.com/prism-themes@1.9.0/themes/prism-dracula.css" rel="stylesheet" />
-    <link href="../../../assets/css/bootstrap.css?eee5dffba2f6927c22e90697" rel="stylesheet" />
-        <link href="../../../assets/css/main.css?eee5dffba2f6927c22e90697" rel="stylesheet">
+    <link href="../../../assets/css/bootstrap.css?9c2a4b321b6cde3102e717b1" rel="stylesheet" />
+        <link href="../../../assets/css/main.css?9c2a4b321b6cde3102e717b1" rel="stylesheet">
 
     </head>
-<body class="view-home layout-documentation\components\attributes\misc route-documentation\components\attributes\misc" style="margin-top: 56px">
+<body class="view-documentation-components-attributes layout-misc route-documentation-components-attributes-misc" style="margin-top: 56px">
 
     <header class="l-main-header">
         <nav class="l-main-nav navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="../../../">
-                    <img src="../../../assets/images/logo-cw-h.svg?eee5dffba2f6927c22e90697"
+                    <img src="../../../assets/images/logo-cw-h.svg?9c2a4b321b6cde3102e717b1"
                         alt="LOGO"
                         style="height: 25px;"
                     />
@@ -63,20 +63,42 @@
     <div class="text-bg-success py-4" part="Components">
     <div class="container">
         <div class="gap-2">
-            <div class="mb-1 text-light  fw-bold" style="--bs-text-opacity: .75; margin-top: -0.5rem;">
-                Components
+            <div class="mb-1  fw-bold"
+                style="margin-top: -0.5rem;">
+                <a
+                    class="link-light"
+                    style="text-decoration: none; opacity: .85; "
+                >
+                    Components
+                </a>
             </div>
             <h2 class="m-0 text-uppercase fw-bold">
                         Attributes
-     
+
+              
             </h2>
-        </div>
+                             
+            <div class="breadcrumb m-0">
+    <a class="breadcrumb-item link-primary small"
+        href="../../../documentation/"
+        style="text-decoration: none">
+        Documentation
+    </a>
+
+            <a class="breadcrumb-item link-primary small"
+            href="../../../documentation/components.html"
+            style="text-decoration: none">
+            Components
+        </a>
+    </div>
+         
+                    </div>
     </div>
 </div>
 
-    <div class="container my-5">
+    <div class="l-documentation container my-5">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="l-documentation__menu col-lg-3">
                 <h5 class="fw-bold">
                     Menu: Attributes
                 </h5>
@@ -87,30 +109,25 @@
         class="nav-link ps-0 ">
         Introduction
     </a>
-
-    </li>
+</li>
                                                                                                 <li class="nav-item">
     <a href="../../../documentation/components/attributes/available-type-actions.html"
         class="nav-link ps-0 ">
         Available Types &amp; Actions
     </a>
-
-    </li>
+</li>
                                                                                                 <li class="nav-item">
-    <a href="../../../documentation/components/attributes/write-attributes-handlers.html"
+    <a href="../../../documentation/components/attributes/write-handlers.html"
         class="nav-link ps-0 ">
-        Write Your Own Attribute Handlers
+        Writing Handlers
     </a>
-
-    </li>
+</li>
                                                                                                 <li class="nav-item">
     <a href="../../../documentation/components/attributes/misc.html"
         class="nav-link ps-0 active text-success fw-bold">
         Miscellaneous
     </a>
-
-            <div data-toc></div>
-    </li>
+</li>
                                                                                                 <li class="nav-item">
                                 <div class="nav-link text-dark fw-bold ps-0">
                                     Use in Framework
@@ -122,15 +139,19 @@
         class="nav-link ps-0 ">
         Use In Framework
     </a>
-
-    </li>
+</li>
                                                                     </ul>
                             </li>
                                                             </ul>
             </div>
 
-            <div class="col-lg-9">
-                <article class="article-content" data-content>
+            <div class="col-lg-7 l-documentation__body">
+                <article class="article-content" data-content
+                    data-bs-spy="scroll"
+                    data-bs-target="#toc"
+                    data-bs-root-margin="0px 0px -100px"
+                    data-bs-smooth-scroll="true"
+                >
                     <h1>Miscellaneous</h1>
 <h2>About <code>AttributeHandler</code></h2>
 <p><code>AttributeHandler</code> is the only parameter of our attribute processor.</p>
@@ -267,6 +288,16 @@ AttributesAccessor::runAttributeIfExists(
 </tbody>
 </table>                </article>
             </div>
+
+            <div class="col-lg-2 l-documentation__toc">
+                <div class="sticky-top" style="top: 65px">
+                    <h5>Table of Contents</h5>
+
+                    <div data-toc>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -311,6 +342,6 @@ AttributesAccessor::runAttributeIfExists(
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
-    <script src="../../../assets/js/doc.js?eee5dffba2f6927c22e90697"></script>
+    <script src="../../../assets/js/doc.js?9c2a4b321b6cde3102e717b1"></script>
 </body>
 </html>

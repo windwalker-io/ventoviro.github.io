@@ -28,11 +28,15 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
 @section('body')
     <x-doc-banner :part="$config['part'] ?? ''">
         {{ $config['chapter'] ?? '' }}
+
+        <x-slot name="bottom">
+            @include('components.doc.breadcrumb')
+        </x-slot>
     </x-doc-banner>
 
-    <div class="container my-5">
+    <div class="l-documentation container my-5">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="l-documentation__menu col-lg-3">
                 <h5 class="fw-bold">
                     Menu: {{ $config['chapter'] }}
                 </h5>
@@ -40,7 +44,7 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
                 <ul class="nav flex-column">
                     @foreach ($menu as $alias => $menuItem)
                         @if ($menuItem instanceof MenuItem)
-                            @include('global.doc.menu-item', compact('menuItem', 'alias'))
+                            @include('components.doc.menu-item', compact('menuItem', 'alias'))
                         @elseif (is_array($menuItem))
                             <li class="nav-item">
                                 <div class="nav-link text-dark fw-bold ps-0">
@@ -49,7 +53,7 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
 
                                 <ul class="nav flex-column nav--submenu ps-3">
                                     @foreach ($menuItem as $alias => $menuItem)
-                                        @include('global.doc.menu-item', compact('menuItem', 'alias'))
+                                        @include('components.doc.menu-item', compact('menuItem', 'alias'))
                                     @endforeach
                                 </ul>
                             </li>
@@ -58,10 +62,25 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
                 </ul>
             </div>
 
-            <div class="col-lg-9">
-                <article class="article-content" data-content>
+            <div class="col-lg-7 l-documentation__body">
+                <article class="article-content" data-content
+                    data-bs-spy="scroll"
+                    data-bs-target="#toc"
+                    data-bs-root-margin="0px 0px -100px"
+                    data-bs-smooth-scroll="true"
+                >
                     @yield('content', $content ?? '')
                 </article>
+            </div>
+
+            <div class="col-lg-2 l-documentation__toc">
+                <div class="sticky-top" style="top: 65px">
+                    <h5>Table of Contents</h5>
+
+                    <div data-toc>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -18,6 +18,10 @@ return [
         'image' => 'https://i.imgur.com/1HHxwsI.jpg'
     ],
 
+    'doc' => [
+        'components_count' => 31
+    ],
+
     // Which folders you want to generate (Array)
     'folders' => [
         'entries' => '',

@@ -20,8 +20,8 @@ return [
         title: 'Available Types & Actions',
         extra: []
     ),
-    'write-attributes-handlers' => new MenuItem(
-        title: 'Write Your Own Attribute Handlers',
+    'write-handlers' => new MenuItem(
+        title: 'Writing Handlers',
         extra: []
     ),
     'misc' => new MenuItem(

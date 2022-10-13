@@ -1,6 +1,6 @@
 ---
 layout: global.documentation-layout
-title: Getting Started
+title: Introduction
 part: Components
 chapter: Attributes
 menu: components/attributes
@@ -13,10 +13,77 @@ and help developers construct the attribute processors.
 
 ## Installation
 
-This package is currently in Alpha, you must allow dev version in your composer settings.
+Install by composer.
 
 ```bash
 composer require windwaker/attributes ^4.0
+```
+
+## Use in Windwalker
+
+In Windwalker framework, attributes works with DI Container.
+
+At `/etc/di.php`, you can register your own attributes:
+
+```php
+use Windwalker\Attributes\AttributeType;
+
+    // ...
+
+        'attributes' => [
+            MyAttribute::class => AttributeType::CLASSES
+        ]
+    ]
+
+    // ...
+```
+
+Then add it to your class:
+
+```php
+
+#[MyAttribute]
+class MyClass
+{
+    // ...
+}
+```
+
+Now you can inject this class or create it by container, attributes will auto work:
+
+```php
+// Make it
+$app->make(MyClass::class);
+
+$container->newInstance(MyClass::class);
+
+// Or inject it
+public function __construct(MyClass $my)
+{}
+```
+
+
+## Use as Standalone Component
+
+Just create `AttributesResolver` object and register attributes.
+
+```php
+use Windwalker\Attributes\AttributesResolver;
+use Windwalker\Attributes\AttributeType;
+
+$attributes = new AttributesResolver();
+$attributes->registerAttribute(\Wrapper::class, AttributeType::CLASSES);
+
+// Now, try to wrap an object.  
+#[\Wrapper] 
+class Foo {
+    
+}
+
+$foo = new \Foo();
+$foo = $attributes->decorateObject($foo);
+$foo instanceof \Wrapper;
+$foo->inner instanceof \Foo;
 ```
 
 ## Getting Started

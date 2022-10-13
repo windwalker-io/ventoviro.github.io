@@ -16,7 +16,7 @@ title: Documentation
                                 Components
                             </h5>
                             <span class="badge bg-secondary rounded-pill">
-                                31
+                                {{ $config['doc']['components_count'] ?? 31 }}
                             </span>
                         </div>
                     </div>

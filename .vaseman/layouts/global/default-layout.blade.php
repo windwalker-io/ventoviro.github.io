@@ -6,6 +6,7 @@
             <h2 class="m-0 text-uppercase">
                 {{ $config['title'] ?? '' }}
             </h2>
+            @yield('breadcrumb')
         </div>
     </div>
 

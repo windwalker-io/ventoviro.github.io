@@ -1,5 +1,6 @@
 ---
 title: Components
+part: Components
 ---
 <?php
 
@@ -16,6 +17,10 @@ $sections = $docTree['pages']['components'] ?? [];
 ?>
 
 @extends('global.default-layout')
+
+@section('breadcrumb')
+    @include('components.doc.breadcrumb')
+@stop
 
 @section('content')
     <div>

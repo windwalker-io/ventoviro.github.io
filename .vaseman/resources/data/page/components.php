@@ -22,7 +22,7 @@ return [
         'di' => new MenuItem(
             title: 'DI',
             description: 'A powerful PHP Dependency Injection library / IoC Container.',
-            extra: ['wip' => true]
+            extra: []
         ),
 
         'promise' => new MenuItem(
