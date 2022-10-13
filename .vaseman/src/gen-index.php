@@ -14,12 +14,13 @@ $components = include __DIR__ . '/../resources/data/components.php';
 $docRoot = __DIR__ . '/../entries/documentation/components';
 
 foreach ($components as $component) {
+    $cName = ucfirst($component);
     $content = <<<MD
 ---
 layout: global.documentation-layout
 title: Introduction
 part: Components
-chapter: 
+chapter: $cName
 menu: components/$component
 ---
 
@@ -48,9 +49,11 @@ composer require windwalker/$component ^4.0
 ...
 
 MD;
-    $file = $docRoot . '/index.md';
+    $file = $docRoot . '/' . $component . '/index.md';
 
-    if (is_file($file)) {
+    if (!is_file($file)) {
+        mkdir(dirname($file));
+
         file_put_contents($file, $content);
     }
 
