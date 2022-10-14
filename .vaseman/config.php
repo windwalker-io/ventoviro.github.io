@@ -51,6 +51,6 @@ return [
     ],
     
     'assets' => [
-        'append_version' => true
+        'append_version' => false
     ]
 ];
