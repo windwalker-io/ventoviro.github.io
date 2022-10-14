@@ -21,6 +21,16 @@
     <link href="{{ $asset->path('css/main.css') }}" rel="stylesheet">
 
     @stack('head')
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MYMEG7N4RV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-MYMEG7N4RV');
+    </script>
 </head>
 <body class="{{ $helper->page->bodyClass() }}" style="margin-top: 56px">
 @yield('superbody')
