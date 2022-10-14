@@ -9,8 +9,11 @@
   }
 
   .l-hero {
-    height: 100vh;
     position: relative;
+
+    @include media-breakpoint-up(lg) {
+      height: 100vh;
+    }
 
     .c-banner-arrow {
       position: absolute;

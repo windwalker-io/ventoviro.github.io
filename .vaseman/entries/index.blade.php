@@ -7,7 +7,7 @@
 @section('content')
     <x-hero-banner class="l-hero text-bg-primary d-flex align-items-center justify-content-center">
         <div class="row align-items-center">
-            <div class="col-lg-6">
+            <div class="col-lg-6 mb-5 mb-lg-0">
                 <h1 class="mb-4">
                     <img src="{{ $asset->path('images/logo-cw-h.svg') }}" alt="Windwalker logo"
                         style="height: 75px">

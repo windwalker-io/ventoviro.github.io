@@ -17,8 +17,3 @@ Thumbs.db
 .env.local
 .env*.local
 !.env.dist
-
-# Ignore deploy files
-/assets
-**/*.html
-!.vaseman/**/*.html

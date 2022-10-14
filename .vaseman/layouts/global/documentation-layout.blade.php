@@ -36,7 +36,7 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
 
     <div class="l-documentation container my-5">
         <div class="row">
-            <div class="l-documentation__menu col-lg-3">
+            <div class="l-documentation__menu col-lg-3 mb-5 mb-lg-0">
                 <h5 class="fw-bold">
                     Menu: {{ $menu['name'] }}
                 </h5>
@@ -62,7 +62,7 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
                 </ul>
             </div>
 
-            <div class="col-lg-7 l-documentation__body">
+            <div class="l-documentation__body col-lg-7 mb-5 mb-lg-0">
                 <article class="article-content" data-content
                     data-bs-spy="scroll"
                     data-bs-target="#toc"

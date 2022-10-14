@@ -64,7 +64,7 @@
         <div class="">
             <hr class="mt-0" />
 
-            <footer class="container d-flex align-items-center justify-content-between">
+            <footer class="container d-flex flex-column flex-lg-row align-items-center justify-content-between">
                 <div>
                     &copy; Windwalker {{ date('Y') }} - Made by
                     <a target="_blank" href="https://lyrasoft.net"
