@@ -30,7 +30,7 @@ $sections = $docTree['pages']['components'] ?? [];
                 <section class="l-section l-section--{{ $className }} mb-5">
                     <h3>{{ $section }}</h3>
 
-                    <div class="row row-cols-3 row-cols-md-2 mt-4">
+                    <div class="row row-cols-lg-3 row-cols-2 mt-4">
                         @foreach ($components as $package => $component)
                             <?php
                             $wip = $component->extra['wip'] ?? false;
