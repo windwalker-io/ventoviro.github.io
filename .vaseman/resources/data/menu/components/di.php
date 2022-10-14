@@ -19,5 +19,9 @@ return [
             title: 'Introduction',
             extra: []
         ),
+        'basic-usage' => new MenuItem(
+            title: 'Basic Usage',
+            extra: []
+        ),
     ]
 ];
