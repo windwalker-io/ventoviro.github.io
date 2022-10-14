@@ -11,7 +11,7 @@ and help developers construct the attribute processors.
 
 ## Installation
 
-Install by composer.
+Install via composer.
 
 ```bash
 composer require windwaker/attributes ^4.0

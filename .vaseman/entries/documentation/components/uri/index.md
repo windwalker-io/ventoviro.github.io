@@ -12,7 +12,7 @@ This document is work in process.
 
 ## Installation
 
-Install by composer
+Install via composer
 
 ```bash
 composer require windwalker/uri ^4.0
