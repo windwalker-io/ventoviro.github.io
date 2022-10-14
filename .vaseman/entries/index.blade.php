@@ -27,15 +27,18 @@
                         Powerful <strong>DI</strong> engine.
                     </li>
                     <li>
-                        <strong>Domain-driven</strong> file structure.
-                    </li>
-                    <li>
                         Built-in <strong>ViewModel</strong> and <strong>ORM</strong>.
                     </li>
                     <li>
                         Better <strong>IDE</strong> friendly supports.
                     </li>
                 </ul>
+
+                <p>
+                    <img alt="GitHub" src="https://img.shields.io/github/license/windwalker-io/framework?style=for-the-badge">
+                    <img alt="Packagist Version" src="https://img.shields.io/packagist/v/windwalker/framework?label=version&style=for-the-badge">
+                    <img alt="Packagist PHP Version" src="https://img.shields.io/packagist/dependency-v/windwalker/framework/php?style=for-the-badge">
+                </p>
 
                 <p class="mt-5">
                     <a class="btn btn-light btn-lg"
