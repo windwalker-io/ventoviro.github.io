@@ -17,6 +17,12 @@ jobs:
                 node-version: [14.x]
         steps:
             - uses: actions/checkout@v1
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                php-version: 8.0
+            - name: Install Vaseman
+              run: composer global require asika/vaseman ^4.0 --prefer-dist --no-suggest --no-progress
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
@@ -26,7 +32,7 @@ jobs:
                   npm i yarn -g
                   cd .vaseman
                   yarn install
-                  yarn build:prod
+                  PATH="$PATH:$COMPOSER_VENDOR/bin/" yarn build:prod
                   cd ..
             - name: Commit files
               run: |
@@ -39,7 +45,6 @@ jobs:
                   git config --local user.name $USER_NAME
                   git config --local user.email $USER_EMAIL
                   git status
-                  git remote add origin https://$MY_SECRET@github.com/$GITHUB_REPOSITORY.git
                   git checkout -b gh-pages
                   git add --all
                   git commit -m "deploy to Github pages"
