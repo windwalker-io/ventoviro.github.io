@@ -27,7 +27,7 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
 
 @section('body')
     <x-doc-banner :part="$config['part'] ?? ''">
-        {{ $config['chapter'] ?? '' }}
+        {{ $menu['name'] ?? '' }}
 
         <x-slot name="bottom">
             @include('components.doc.breadcrumb')
@@ -38,11 +38,11 @@ $menu = include PROJECT_DATA_ROOT . '/resources/data/menu/' . $menuName . '.php'
         <div class="row">
             <div class="l-documentation__menu col-lg-3">
                 <h5 class="fw-bold">
-                    Menu: {{ $config['chapter'] }}
+                    Menu: {{ $menu['name'] }}
                 </h5>
 
                 <ul class="nav flex-column">
-                    @foreach ($menu as $alias => $menuItem)
+                    @foreach ($menu['items'] ?? [] as $alias => $menuItem)
                         @if ($menuItem instanceof MenuItem)
                             @include('components.doc.menu-item', compact('menuItem', 'alias'))
                         @elseif (is_array($menuItem))

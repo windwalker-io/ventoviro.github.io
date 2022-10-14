@@ -18,9 +18,9 @@ $sections = $docTree['pages']['components'] ?? [];
 
 @extends('global.default-layout')
 
-@section('breadcrumb')
-    @include('components.doc.breadcrumb')
-@stop
+{{--@section('breadcrumb')--}}
+{{--    @include('components.doc.breadcrumb')--}}
+{{--@stop--}}
 
 @section('content')
     <div>

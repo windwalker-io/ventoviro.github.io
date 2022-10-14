@@ -1,10 +1,12 @@
 <?php
+
 $menuRoute = $config['menu'];
 $segments = explode('/', $menuRoute);
 array_pop($segments);
 
 $part = implode('/', $segments);
 ?>
+
 <div class="breadcrumb m-0">
     <a class="breadcrumb-item link-primary small"
         href="{{ $uri->path('documentation/') }}"
@@ -12,11 +14,11 @@ $part = implode('/', $segments);
         Documentation
     </a>
 
-    @if ($config['part'])
+    @if ($menu['part'] ?? null)
         <a class="breadcrumb-item link-primary small"
             href="{{ $part ? $uri->path('documentation/' . $part . '.html') : '#' }}"
             style="text-decoration: none">
-            {{ $config['part'] }}
+            {{ $menu['part'] }}
         </a>
     @endif
 </div>

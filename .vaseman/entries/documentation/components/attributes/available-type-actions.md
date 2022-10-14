@@ -1,8 +1,6 @@
 ---
 layout: global.documentation-layout
 title: Getting Started
-part: Components
-chapter: Attributes
 menu: components/attributes
 ---
 
