@@ -30,7 +30,7 @@ $input = $container->get('input');
 
 ## Lazy Loading
 
-Sometimes we will hope not create object instantly, we can use callback to create object.
+Sometimes we will hope not to create object instantly, we can use callback to create object.
 
 ```php
 // Set a closure into it
@@ -97,12 +97,17 @@ $app = $container->get('app');
 
 ### New Instance
 
-Container can help us create an object and auto inject required arguments to constructor.
+Container can help us create object and automatic inject required arguments to constructor.
 
 ```php
 use Windwalker\IO\Input;
 use Windwalker\Structure\Structure;
 
+// Prepare dependencies into container
+$container->share(Input::class, $input);
+$container->share(Collection::class, $config);
+
+// Define a class
 class MyClass
 {
     public function __construct(public Input $input, public Collection $config)
@@ -110,10 +115,34 @@ class MyClass
     }
 }
 
+// And create it.
 $myObject = $container->newInstance(MyClass::class);
 
+// Now dependencies will be automatic injected
 $myObject->input; // Input
-$myObject->config; // Structure
+$myObject->config; // Collection
+```
+
+### Autowire
+
+If you try to create an object with dependencies which is not set in container, container will throw exception.
+
+```php
+class MyCar
+{
+    public function __construct(public Wheel $wheel, public Light $light)
+    {
+    }
+}
+
+// @throw DefinitionResolveException
+$container->newInstance(MyCar::class, [], Container::AUTO_WIRE);
+```
+
+You can add autowire settings to options.
+
+```php
+$car = $container->newInstance(MyCar::class, [], Container::AUTO_WIRE);
 ```
 
 ### Create Object
@@ -154,7 +183,7 @@ class AnotherClass
 }
 
 // Let's create this object with custom arguments:
-$container->newInstance('AnotherClass', ['config' => ['foo' => 'bar']]);
+$container->newInstance(AnotherClass::class, ['config' => ['foo' => 'bar']]);
 ```
 
 You can set multiple level arguments:
@@ -172,7 +201,7 @@ $config = [
     ]
 ];
 
-$container->newInstance('AnotherClass', $config);
+$container->newInstance(AnotherClass::class, $config);
 ```
 
 
@@ -181,17 +210,16 @@ $container->newInstance('AnotherClass', $config);
 We can set a class as prepared, then it will be created when we really need it:
 
 ```php
-$container->prepareObject('MyClass');
+$container->prepareObject(MyClass::class);
 
 // If we get MyClass, this class will be created.
-$myObject = $container->get('MyClass');
+$myObject = $container->get(MyClass::class);
 ```
 
 Add second argument if you want to configure something after object created:
 
 ```php
-$container->prepareObject('MyClass', function (MyClass $myClass, Container $container)
-{
+$container->prepareObject(MyClass::class, function (MyClass $myClass, Container $container) {
     $myClass->debug = true;
     
     return $myClass;
@@ -202,8 +230,8 @@ We can also prepare a shared object:
 
 ```php
 
-// This objct will be singleton
-$container->prepareSharedObject('MyClass'[, extending]);
+// This object will be singleton
+$container->prepareSharedObject(MyClass::class[, extending]);
 ```
 
 ### Prepare Creating Arguments
@@ -212,19 +240,19 @@ We can prepare some named arguments which will be injected to constructor when o
 
 ```php
 // Set class meta
-$container->whenCreating('MyModel')
+$container->whenCreating(MyModel::class)
     ->setArgumemt('config', $config)
     ->setArgument('db', $db);
 
 // ...
 
-$object = $container->newInstance('MyModel');
+$object = $container->newInstance(MyModel::class);
 ```
 
 Or just created it instantly:
 
 ```php
-$container->whenCreating('MyClass')
+$container->whenCreating(MyModel::class)
     ->setArgumemt('config', $config)
     ->setArgument('db', $db)
     ->newInstance();
@@ -232,39 +260,32 @@ $container->whenCreating('MyClass')
 
 ## Binding Classes
 
-Sometimes we hope to inject particular object we want, we can bind a class as key to let Container know what you want to
-instead the dependency object.
+Sometimes when we are creating object, we may want to inject particular class which wer want, and different 
+from origin dependencies.
 
-Here is a class which dependent to an interface, we can bind a sub class to container then container will use `MyModel`
-to be instance of `ModelInterface` and inject it to `MyClass`.
+For example: Here is a class which dependent to `ModelInterface`, we can bind a subclass to container then container 
+will use `MyModel` class to be an instance of `ModelInterface` and inject it to `MyClass`.
 
 ```php
 use Windwalker\Model\ModelInterface;
-use Windwalker\Structure\Structure;
+use Windwalker\Data\Collection;
 
 class MyClass
 {
-    public $model;
-    public $config;
-
-    public function __construct(ModelInterface $model, Structure $config)
+    public function __construct(public ModelInterface $model, public Collection $config)
     {
-        $this->model = $model;
-        $this->config = $config;
+        
     }
 }
 
-class MyModel implement ModelInterface
+class MyModel implements ModelInterface
 {
 }
 
-// Bind MyModel as AbstractModel
-$container->share('Windwalker\Model\ModelInterface', function()
-{
-    return new MyModel;
-});
+// Bind MyModel as ModelInterface
+$container->share(ModelInterface::class, fn () => new MyModel());
 
-$myObject = $container->createObject('MyClass');
+$myObject = $container->createObject(MyClass::class);
 
 $myObject->model; // MyModel
 ```
@@ -272,25 +293,22 @@ $myObject->model; // MyModel
 Use `bind()` to quickly bind a class without callback, container will use `newInstance()` to create it when needed.
 
 ```php
-$container->bind('Windwalker\Model\ModelInterface', 'MyModel');
+$container->bind(ModelInterface::class, MyModel::class);
 
 // `MyModel` will auto created because we bind it to `ModelInterface`
-$container->createObject('MyClass');
+$container->createObject(MyClass::class);
 ```
 
 Use `bindShared()` to bind a class as singleton:
 
 ```php
-$container->bindShared('Windwalker\Model\ModelInterface', 'MyModel');
+$container->bindShared(ModelInterface::class, MyModel::class);
 ```
 
 You can add callback as second argument, this way is totally same as `share()` and `set()`:
 
 ```php
-$container->bind('Windwalker\Model\ModelInterface', function (Contaienr $container)
-{
-    return new MyObject;
-});
+$container->bind(ModelInterface::class, fn () => new MyObject());
 ```
 
 ## Extending
@@ -299,19 +317,17 @@ Container allows you to extend an object, the new instance or closure will wrap 
 extending configuration, this is a sample:
 
 ```php
-// Create an item first
-$container->share('flower', function()
-{
-    // Create a empty object
-    return new Flower;
+// Create an object first
+$container->share('flower', function() {
+    // Create an empty object
+    return new Flower();
 });
 
-$container->extend('flower', function($origin, Container $container)
-{
+$container->extend('flower', function(Flower $flower, Container $container) {
     // Set a property to this object
-    $origin->name = 'sakura';
+    $flower->name = 'sakura';
 
-    return $origin;
+    return $flower;
 });
 
 $flower = $container->get('flower');
