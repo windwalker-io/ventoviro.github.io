@@ -42,6 +42,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active"
+                                href="{{ $uri->path('status.html') }}">
+                                <i class="fa-solid fa-signal"></i>
+                                Status
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active"
                                 target="_blank"
                                 href="https://github.com/windwalker-io/framework">
                                 <i class="fa-brands fa-github"></i>
