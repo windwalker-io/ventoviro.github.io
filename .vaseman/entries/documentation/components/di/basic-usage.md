@@ -136,7 +136,7 @@ class MyCar
 }
 
 // @throw DefinitionResolveException
-$container->newInstance(MyCar::class, [], Container::AUTO_WIRE);
+$container->newInstance(MyCar::class);
 ```
 
 You can add autowire settings to options.
