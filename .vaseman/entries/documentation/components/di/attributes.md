@@ -6,7 +6,7 @@ menu: components/di
 
 # Attributes
 
-Container can resolve attributes as decorator, by default, there has 2 basic attributes you can use.
+Container can resolve attributes as decorator, by default, there has some basic attributes you can use.
 
 ## #[Autowire]
 
