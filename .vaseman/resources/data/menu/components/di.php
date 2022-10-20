@@ -27,5 +27,9 @@ return [
             title: 'Attributes',
             extra: []
         ),
+        'parameters' => new MenuItem(
+            title: 'Parameters',
+            extra: []
+        ),
     ]
 ];

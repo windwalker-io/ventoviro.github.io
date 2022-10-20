@@ -334,3 +334,37 @@ $flower = $container->get('flower');
 
 $flower->name; // sakura
 ```
+
+## Calling Function
+
+Container can execute any callable:
+
+```php
+$result = $container->call($closure);
+
+$result = $container->call([$object, 'method']);
+
+$result = $container->call($invokalbeObject);
+```
+
+You can also add arguments:
+
+```php
+$closure = function (Sakura $sakura, int $numbers = 3) {
+    
+};
+
+// Add argument with name
+$result = $container->call($closure, [
+    'sakura' => new Sakura(),
+    'numbers' => 5
+]);
+
+// Add argument with class type, and ignore optional argument.
+$result = $container->call($closure, [
+    Sakura::class => new Sakura()
+]);
+
+// Use Autowire
+$result = $container->call($closure, [], Container::AUTO_WIRE);
+```
