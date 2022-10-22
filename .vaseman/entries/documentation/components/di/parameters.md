@@ -149,16 +149,43 @@ Below is not work:
 
 ```php
 [
-    'cache' => create(
+    'log' => create(
         Logger::class,
         // This will not work, Container won't resolve this factories
         handlers: [
-            fn (Container) => $container->newInstance(FileLogHandler::class), 
-            fn (Container) => $container->newInstance(AwsLogHandler::class), 
-            create(RedisLogHandler::class), 
+            \Windwalker\ref('log_handlers.file'), 
+            \Windwalker\ref('log_handlers.mail'), 
+            \Windwalker\ref('log_handlers.redis'),
         ]
-    )
+    ),
+    'log_handlers' => [
+        'file' => FileLogHandler::class,
+        'mail' => MailLogHandler::class,
+        'redis' => RedisLogHandler::class,
+    ]
 ]
 ```
 
+Use this instead.
+
+```php
+[
+    'log' => create(
+        Logger::class,
+        // This will not work, Container won't resolve this factories
+        handlers: function (Container $container) {
+            return [
+                $container->resolve(\Windwalker\ref('log_handlers.file')), 
+                $container->resolve(\Windwalker\ref('log_handlers.mail')), 
+                $container->resolve(\Windwalker\ref('log_handlers.redis')),
+            ];
+        }
+    ),
+    // ...
+]
+```
+
+-----
+
+WIP...
 

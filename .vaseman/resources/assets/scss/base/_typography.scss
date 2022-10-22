@@ -6,6 +6,34 @@ code {
   border-radius: 3px;
 }
 
+pre code {
+  background-color: inherit;
+}
+
+code[class*="language-"], pre[class*="language-"] {
+  background-color: #282a36;
+
+  .delimiter.punctuation, .attribute-class-name {
+    color: #BBB529;
+  }
+
+  //.token.property, .token.constant, .token.variable {
+  //  color: #a5f3e1;
+  //}
+  //
+  //.token.delimiter, .token.boolean, .token.keyword, .token.selector, .token.important, .token.atrule {
+  //  color: #5c86ab;
+  //}
+
+  .token.boolean {
+    color: #cc7832;
+  }
+
+  .token.argument-name {
+    color: #6897bb;
+  }
+}
+
 .article-content {
   font-size: 18px;
 

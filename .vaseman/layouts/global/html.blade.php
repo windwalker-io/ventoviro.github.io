@@ -15,7 +15,7 @@
     @yield('meta')
 
     {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />--}}
-    <link href="https://unpkg.com/prism-themes@1.9.0/themes/prism-dracula.css" rel="stylesheet" />
+    <link href="https://unpkg.com/prism-themes@1.9.0/themes/prism-darcula.css" rel="stylesheet" />
     <link href="{{ $asset->path('css/bootstrap.css') }}" rel="stylesheet" />
     @stack('style')
     <link href="{{ $asset->path('css/main.css') }}" rel="stylesheet">
