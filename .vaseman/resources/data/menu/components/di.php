@@ -31,5 +31,9 @@ return [
             title: 'Parameters',
             extra: []
         ),
+        'multi-levels' => new MenuItem(
+            title: 'Multi Levels',
+            extra: []
+        ),
     ]
 ];

@@ -132,3 +132,14 @@ You can also direct a class name:
     {}
 ```
 
+## Register new Attributes
+
+```php
+use Windwalker\DI\Attributes\AttributeType;
+
+$resolver = $container->getAttributesResolver();
+
+$resolver->registerAttribute(MyAttribute::class, AttributeType::CLASSES);
+```
+
+See [Attributes Component](../attributes/)

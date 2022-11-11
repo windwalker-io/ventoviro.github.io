@@ -183,6 +183,71 @@ Use this instead.
 
 ## About `resolve()`
 
-`resolve()` is a universal method to handle any object or parameter definitions of Container.
+`resolve()` is a method to handle any object or parameter definitions of Container.
 
-WIP...
+```php
+// Send a class name or id, if this name exists in container, will get it.
+$container->resolve('foo');
+$container->resolve(Foo::class);
+
+// Send a class name which is not set, will create it.
+$container->resolve(SomeClass::class);
+
+// Send a definition object, will resolve this definition.
+$container->resolve(
+    new \Windwalker\DI\Definition\StoreDefinition(
+        SomeClass::class
+    )
+);
+
+// Send a callback, will call it as factory.
+$container->resolve(function (\Windwalker\DI\Container $container) {
+    return $container->newInstance(SomeObject::class, ['foo' => $container->get('foo')]);
+});
+
+// Send a params ref, will get this param value and resolve it
+$container->resolve(\Windwalker\ref('foo.bar.classname'));
+
+// Same as 
+$container->resolveParam('foo.bar.classname');
+```
+
+## Merge
+
+You may merge a config array to an exists position.
+
+```php
+$container->mergeParameters(
+    'foo.bar',
+    [
+        'yoo' => 'The data you want to merge'
+    ]
+);
+```
+
+By default, `mergeParameters()` won't override exists values, only merge values not exists in Container.
+If you want to override them, add flag:
+
+```php
+$container->mergeParameters(
+    'foo.bar',
+    [
+        'yoo' => 'The data you want to merge'
+    ],
+    $container::MERGE_OVERRIDE
+);
+```
+
+Also supports recursive:
+
+```php
+$container->mergeParameters(
+    'foo.bar',
+    [
+        'yoo' => [
+            'goo' => 'The data you want to merge'
+        ]
+    ],
+    $container::MERGE_RECURSIVE
+);
+```

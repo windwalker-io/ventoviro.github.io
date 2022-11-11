@@ -139,7 +139,7 @@ class MyCar
 $container->newInstance(MyCar::class);
 ```
 
-You can add autowire settings to options.
+You can add autowire flag to options, the dependency object will auto create and inject it.
 
 ```php
 $car = $container->newInstance(MyCar::class, [], Container::AUTO_WIRE);
