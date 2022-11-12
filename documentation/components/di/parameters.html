@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link rel="shortcut icon" href="../../../assets/images/logo-icon.png?510957c6828052ba825d7d4c" />
+
+    <title>Parameters | Windwalker - PHP Rapid Development Framework</title>
+
+    <meta property="og:image" content="https://i.imgur.com/1HHxwsI.jpg">
+
+        
+        <link href="https://unpkg.com/prism-material-themes@1.0.4/themes/material-default.css" rel="stylesheet" />
+    <link href="../../../assets/css/bootstrap.css?510957c6828052ba825d7d4c" rel="stylesheet" />
+        <link href="../../../assets/css/main.css?510957c6828052ba825d7d4c" rel="stylesheet">
+
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MYMEG7N4RV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-MYMEG7N4RV');
+    </script>
+</head>
+<body class="view-documentation-components-di layout-parameters route-documentation-components-di-parameters" style="margin-top: 56px">
+
+    <header class="l-main-header">
+        <nav class="l-main-nav navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="../../../">
+                    <img src="../../../assets/images/logo-cw-h.svg?510957c6828052ba825d7d4c"
+                        alt="LOGO"
+                        style="height: 25px;"
+                    />
+                </a>
+                <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    </ul>
+
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                                                                                                                                                                        <li class="nav-item">
+                            <a class="nav-link active"
+                                href="../../../documentation">
+                                <i class="fa-solid fa-file-lines"></i>
+                                Documentation
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                                href="../../../status.html">
+                                <i class="fa-solid fa-signal"></i>
+                                Status
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                                target="_blank"
+                                href="https://github.com/windwalker-io/framework">
+                                <i class="fa-brands fa-github"></i>
+                                Github
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="text-bg-success py-4" part="">
+    <div class="container">
+        <div class="gap-2">
+            <div class="mb-1  fw-bold"
+                style="margin-top: -0.5rem;">
+                <a
+                    class="link-light"
+                    style="text-decoration: none; opacity: .85; "
+                >
+                    
+                </a>
+            </div>
+            <h2 class="m-0 text-uppercase fw-bold">
+                        DI
+
+              
+            </h2>
+                             
+            <div class="breadcrumb m-0">
+    <a class="breadcrumb-item link-primary small"
+        href="../../../documentation/"
+        style="text-decoration: none">
+        Documentation
+    </a>
+
+            <a class="breadcrumb-item link-primary small"
+            href="../../../documentation/components.html"
+            style="text-decoration: none">
+            Components
+        </a>
+    
+            <a class="breadcrumb-item link-primary small"
+            style="text-decoration: none">
+            DI
+        </a>
+    </div>
+         
+                    </div>
+    </div>
+</div>
+
+    <div class="l-documentation container my-5">
+        <div class="row">
+            <div class="l-documentation__menu col-lg-3 mb-5 mb-lg-0">
+                <div class="sticky-top" style="top: 65px">
+                    <h5 class="fw-bold">
+                        Menu: DI
+                    </h5>
+
+                    <ul class="nav flex-column">
+                                                                                    <li class="nav-item">
+    <a href="../../../documentation/components/di/index.html"
+        class="nav-link ps-0 ">
+        Introduction
+    </a>
+</li>
+                                                                                                                <li class="nav-item">
+    <a href="../../../documentation/components/di/basic-usage.html"
+        class="nav-link ps-0 ">
+        Basic Usage
+    </a>
+</li>
+                                                                                                                <li class="nav-item">
+    <a href="../../../documentation/components/di/attributes.html"
+        class="nav-link ps-0 ">
+        Attributes
+    </a>
+</li>
+                                                                                                                <li class="nav-item">
+    <a href="../../../documentation/components/di/parameters.html"
+        class="nav-link ps-0 active text-success fw-bold">
+        Parameters
+    </a>
+</li>
+                                                                                                                <li class="nav-item">
+    <a href="../../../documentation/components/di/multi-levels.html"
+        class="nav-link ps-0 ">
+        Multi Levels
+    </a>
+</li>
+                                                                        </ul>
+                </div>
+            </div>
+
+            <div class="l-documentation__body col-lg-7 mb-5 mb-lg-0">
+                <article class="article-content" data-content
+                    data-bs-spy="scroll"
+                    data-bs-target="#toc"
+                    data-bs-root-margin="0px 0px -100px"
+                    data-bs-smooth-scroll="true"
+                >
+                    <h1>Parameters</h1>
+<p>Container can create a parameters structure to resolve object and dependencies.</p>
+<h2>Resolve Factories</h2>
+<p>This is a sample parameters, we set a class name as param: <code>car</code>, then we can use <code>resolve()</code> to create it.</p>
+<pre><code class="language-php">use Windwalker\DI\Parameters;
+
+$container-&gt;setParameters(
+    [
+        'car' =&gt; MyCar::class
+    ]
+);
+
+class MyCar
+{}
+
+$car = $container-&gt;resolve($container-&gt;getParam('car'));
+
+// Same as 
+
+$car = $container-&gt;resolve(MyCar::class);</code></pre>
+<p>Most of all, object may have some constructor arguments, we can use <code>\Windwalker\DI\create()</code> to define the factory
+with some custom arguments.</p>
+<pre><code class="language-php">use Windwalker\DI\Parameters;
+
+use function Windwalker\DI\create;
+
+$container-&gt;setParameters(
+    [
+        // Define factory by create()
+        'car' =&gt; create(
+            MyCar::class,
+            crew: 4
+        )
+    ]
+);
+
+class MyCar
+{
+    public function __construct(public int $crew)
+    {}
+}
+
+$car = $container-&gt;resolve($container-&gt;getParam('car'));
+// Same as
+$car = $container-&gt;resolve(\Windwalker\ref('car'));
+// Same as
+$car = $container-&gt;resolveParam('car');</code></pre>
+<h3>Define Factory with Dependencies</h3>
+<p>You may need a class with dependencies, for example:</p>
+<pre><code class="language-php">class CachePool
+{
+    public function __construct(protected StorageInterface $storage)
+    {}
+}</code></pre>
+<p>There are 2 ways to handle dependencies, one is use callback:</p>
+<pre><code class="language-php">[
+    'cache' =&gt; create(
+        fn (Container $container) =&gt; new CachePool(
+            // Also handle FileStorage's dependencies
+            $container-&gt;newInstance(
+                FileStorage::class,
+                path: '/path/to/storage/cache',
+                ttl: 300
+            )
+        )
+    )
+]</code></pre>
+<p>The second is use configuration with <code>ref()</code>, <code>ref()</code> is a wrapper to make <code>Container::getParams()</code> direct to another
+position:</p>
+<pre><code class="language-php">[
+    'cache' =&gt; create(
+        CachePool::class,
+        storage: \Windwalker\ref('storages.file')
+    ),
+    'storages' =&gt; [
+        'file' =&gt; FileStorage::class
+    ] 
+]</code></pre>
+<p>Or a callback of argument, the first level closure will resolve as argument factory:</p>
+<pre><code class="language-php">[
+    'cache' =&gt; create(
+        CachePool::class,
+        storage: fn (Container $container) =&gt; -&gt;newInstance(
+            FileStorage::class,
+            path: '/path/to/storage/cache',
+            ttl: 300
+        )
+    )
+]</code></pre>
+<p>If you want to set a pure closure into it, use <code>\Windwalker\raw()</code> to wrap it.</p>
+<pre><code class="language-php">create(
+    Runner::class,
+    // Use raw() to wrap closure
+    task: \Windwalker\raw(
+        function () {
+            // ...
+        }
+    )
+)</code></pre>
+<h3>Array of Objects</h3>
+<p>Container can only handle first level of callback, for an array of objects, you must use callback factory
+to handle dependencies:</p>
+<p>Below is not work:</p>
+<pre><code class="language-php">[
+    'log' =&gt; create(
+        Logger::class,
+        // This will not work, Container won't resolve this factories
+        handlers: [
+            \Windwalker\ref('log_handlers.file'), 
+            \Windwalker\ref('log_handlers.mail'), 
+            \Windwalker\ref('log_handlers.redis'),
+        ]
+    ),
+    'log_handlers' =&gt; [
+        'file' =&gt; FileLogHandler::class,
+        'mail' =&gt; MailLogHandler::class,
+        'redis' =&gt; RedisLogHandler::class,
+    ]
+]</code></pre>
+<p>Use this instead.</p>
+<pre><code class="language-php">[
+    'log' =&gt; create(
+        Logger::class,
+        handlers: function (Container $container) {
+            return [
+                $container-&gt;resolveParam('log_handlers.file'), 
+                $container-&gt;resolveParam('log_handlers.mail'), 
+                $container-&gt;resolveParam('log_handlers.redis'),
+            ];
+        }
+    ),
+    // ...
+]</code></pre>
+<hr />
+<h2>About <code>resolve()</code></h2>
+<p><code>resolve()</code> is a method to handle any object or parameter definitions of Container.</p>
+<pre><code class="language-php">// Send a class name or id, if this name exists in container, will get it.
+$container-&gt;resolve('foo');
+$container-&gt;resolve(Foo::class);
+
+// Send a class name which is not set, will create it.
+$container-&gt;resolve(SomeClass::class);
+
+// Send a definition object, will resolve this definition.
+$container-&gt;resolve(
+    new \Windwalker\DI\Definition\StoreDefinition(
+        SomeClass::class
+    )
+);
+
+// Send a callback, will call it as factory.
+$container-&gt;resolve(function (\Windwalker\DI\Container $container) {
+    return $container-&gt;newInstance(SomeObject::class, ['foo' =&gt; $container-&gt;get('foo')]);
+});
+
+// Send a params ref, will get this param value and resolve it
+$container-&gt;resolve(\Windwalker\ref('foo.bar.classname'));
+
+// Same as 
+$container-&gt;resolveParam('foo.bar.classname');</code></pre>
+<h2>Merge</h2>
+<p>You may merge a config array to an exists position.</p>
+<pre><code class="language-php">$container-&gt;mergeParameters(
+    'foo.bar',
+    [
+        'yoo' =&gt; 'The data you want to merge'
+    ]
+);</code></pre>
+<p>By default, <code>mergeParameters()</code> won't override exists values, only merge values not exists in Container.
+If you want to override them, add flag:</p>
+<pre><code class="language-php">$container-&gt;mergeParameters(
+    'foo.bar',
+    [
+        'yoo' =&gt; 'The data you want to merge'
+    ],
+    $container::MERGE_OVERRIDE
+);</code></pre>
+<p>Also supports recursive:</p>
+<pre><code class="language-php">$container-&gt;mergeParameters(
+    'foo.bar',
+    [
+        'yoo' =&gt; [
+            'goo' =&gt; 'The data you want to merge'
+        ]
+    ],
+    $container::MERGE_RECURSIVE
+);</code></pre>                </article>
+
+                                <div class="mt-6 border-top pt-4">
+                    Found a typo? Something is wrong in this documentation?
+                    <a class="btn btn-outline-secondary btn-sm"
+                        href="https://github.com/windwalker-io/windwalker-io.github.io/tree/master/.vaseman/entries/documentation/components/di/parameters.md"
+                        target="_blank">
+                        <i class="far fa-pencil"></i>
+                        Make an edit
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-2 l-documentation__toc">
+                <div class="sticky-top" style="top: 65px">
+                    <h5>Table of Contents</h5>
+
+                    <div data-toc>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="copyright">
+        <div class="">
+            <hr class="mt-0" />
+
+            <footer class="container d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                <div>
+                    &copy; Windwalker 2022 - Made by
+                    <a target="_blank" href="https://lyrasoft.net"
+                        style="text-decoration: none"
+                    >
+                        LYRASOFT
+                    </a>
+                </div>
+
+                <div>
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://windwalker-io.github.io/site-legacy"
+                                target="_blank">
+                                3.x Docs
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/windwalker-io"
+                                target="_blank">
+                                GitHub
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/cefe7e8fb3.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script src="../../../assets/js/doc.js?510957c6828052ba825d7d4c"></script>
+</body>
+</html>
