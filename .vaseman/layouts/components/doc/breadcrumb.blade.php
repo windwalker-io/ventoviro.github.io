@@ -21,4 +21,11 @@ $part = implode('/', $segments);
             {{ $menu['part'] }}
         </a>
     @endif
+
+    @if ($menu['name'] ?? '')
+        <a class="breadcrumb-item link-primary small"
+            style="text-decoration: none">
+            {{ $menu['name'] ?? '' }}
+        </a>
+    @endif
 </div>

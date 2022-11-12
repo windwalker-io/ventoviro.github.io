@@ -178,7 +178,7 @@ return [
         'renderer' => new MenuItem(
             title: 'Renderer',
             description: 'A multiple template engine adapter, supports Plates / Blade / Mustache / Twig etc.',
-            extra: ['wip' => true]
+            extra: []
         ),
     ],
 
