@@ -4,6 +4,7 @@ import DefaultTheme from 'vitepress/theme';
 import { computed } from 'vue';
 import { flatComponents } from '../data/components';
 import { componentRoutePrefix } from '../store/routing-store';
+import icon from '../../public/images/logo-icon.png';
 // import { register } from 'swiper/element/bundle';
 // register();
 
@@ -44,7 +45,10 @@ const isComponent = computed(() => !!page.value.frontmatter.component);
 
   <template #doc-before>
     <div v-if="isComponent" class="c-card" style="margin-bottom: 2rem; padding: 1.5rem; ">
-      <div style="display: flex; gap: .5rem; margin-bottom: .5rem;">
+      <div style="display: flex; gap: .5rem; margin-bottom: .5rem; align-items: center">
+        <img :src="icon"
+            style="height: 30px"
+            alt="Windwalker">
         <a :href="`/${componentRoutePrefix}/${component.alias}/`">
           <h2 style="font-size: 1.5rem;">{{ component.title }}</h2>
         </a>

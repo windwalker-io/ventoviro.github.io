@@ -230,3 +230,11 @@ $resolver->registerAttribute(MyAttribute::class, AttributeType::CLASSES);
 ```
 
 See [Attributes Component](../attributes/)
+
+## Ignore Attributes
+
+Use `Container::IGNORE_ATTRIBUTES` to make all attributes don't work:
+
+```php
+$container->newInstance(Foo::class, options: Container::IGNORE_ATTRIBUTES);
+```

@@ -85,6 +85,8 @@ $container->set('input', $otherInput);
 
 ## Alias
 
+Set an alias to service ID that you can use alias to get service:
+
 ```php
 $container->share('system.application', $app)
     ->alias('app', 'system.application');
@@ -92,6 +94,17 @@ $container->share('system.application', $app)
 // Same as system.application
 $app = $container->get('app');
 ```
+
+Set alias by class name:
+
+```php
+$container->prepareSharedObject(SystemApp::class)
+    ->alias(MainApp::class, SystemApp::class);
+
+// Same as `SystemApp::class`
+$app = $container->get(MainApp::class);
+```
+
 
 ## Creating Objects
 
@@ -368,3 +381,5 @@ $result = $container->call($closure, [
 // Use Autowire
 $result = $container->call($closure, [], Container::AUTO_WIRE);
 ```
+
+
