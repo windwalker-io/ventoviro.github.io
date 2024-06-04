@@ -18,7 +18,7 @@ composer require windwalker/promise ^4.0
 
 ## Use in Windwalker
 
-Use any component which is support async calling, the promise will be return value:
+To utilize any component supporting asynchronous calls, a promise will be returned as the value:
 
 ```php
 // Http Client
@@ -34,6 +34,8 @@ $file->deleteAsync()->then(fn () => ...);
 
 ## Use as Standalone Component
 
+Simply initiate Promise object which like ES syntax.
+
 ```php
 use Windwalker\Promise\Promise;
 
@@ -48,11 +50,11 @@ $promise->wait();
 
 ### How Promise Works in Pure PHP
 
-PHP is synchronous, if we run PHP in Apache module, FPM or CGI, there won't be any asynchronous process.
+PHP is inherently synchronous. When run in an Apache module, FPM, or CGI, there are no asynchronous processes.
 
-Windwalker Promise makes a queue to store all your async tasks, it will wait until PHP process end (For example, when the process shutdown or running to the end), and run the all tasks.
+Windwalker Promise creates a queue to manage all your asynchronous tasks. It waits until the PHP process ends (for example, when the process shuts down or runs to completion) and then executes all the tasks.
 
-For example, below codes trying to send mail asynchronous, when `runAndSendMail()` completed, the promise then task will push to a global task queue and not running instantly, this task will be executed after whole process end, so user won't experience a block when system trying to send mail. 
+For instance, the following code attempts to send mail asynchronously. Once `runAndSendMail()` completes, the promise tasks are added to a global queue and not executed immediately. These tasks will be performed after the entire process ends, preventing the user from experiencing any delay when the system tries to send an email.
 
 ```php
 use Windwalker\Promise\Promise;
@@ -63,7 +65,7 @@ function runAndSendMail() {
     // Start to send mail
     return Promise::resolved()
         ->then(function () {
-            // This will run after process end
+            // This will run after the process ends
             Mailer::send(...);
         });
 }
@@ -73,14 +75,14 @@ runAndSendMail()->then(...);
 
 ### Force Wait
 
-If you want to force all async tasks run, you may use `wait()` to make PHP wait and block:
+To force all asynchronous tasks to run, you can use `wait()` to make PHP pause and block:
 
 ```php
 $promise = runAndSendMail();
 
-// This will run through all tasks and block
+// This will process all tasks and block
 $promise->wait();
 
-// After all tasks executed, process will resume
+// After all tasks executed, the process will resume
 ```
 

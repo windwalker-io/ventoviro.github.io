@@ -52,6 +52,7 @@ export const groupedComponents: ComponentSet = {
     'promise': {
       title: 'Promise',
       description: 'PHP Promise/A+ library with ES like interface.',
+      menu: () => import('./menu/components/promise'),
       extra: {},
     },
 
