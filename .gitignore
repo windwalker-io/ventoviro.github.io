@@ -18,7 +18,11 @@ Thumbs.db
 .env*.local
 !.env.dist
 
+# Lib #
+/node_modules
+
 # Ignore deploy files
+.vitepress/cache
+.vitepress/dist
 /assets
-**/*.html
 !.vaseman/**/*.html

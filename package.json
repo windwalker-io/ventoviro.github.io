@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "lodash-es": "^4.17.21",
+    "vitepress": "^1.2.2"
+  },
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  }
+}

@@ -1,7 +1,7 @@
 ---
-layout: global.documentation-layout
+layout: doc
 title: Attributes
-menu: components/di
+component: di
 ---
 
 # Attributes
@@ -10,8 +10,8 @@ Container can resolve attributes as decorator, by default, there has some basic 
 
 ## #[Autowire]
 
-For example, if you create a class with dependencies which has not set to container, 
-you will get error. 
+For example, if you create a class with dependencies which has not set to container,
+you will get error.
 
 ```php
 class Flower
@@ -57,7 +57,7 @@ More about using attribute decorators, please see [Attributes Document](../attri
 
 ## #[Inject]
 
-`#[Inject]` is an attribute to make Container inject object to a property. The class which you want to inject, should 
+`#[Inject]` is an attribute to make Container inject object to a property. The class which you want to inject, should
 be set into Container before you inject it.
 
 ```php
@@ -101,7 +101,7 @@ Or directly set a class name:
 
 ## #[Service]
 
-`#[Service]` is similar to `#[Autowire], it will create a new object if class haven't set into Container. 
+`#[Service]` is similar to `#[Autowire], it will create a new object if class haven't set into Container.
 But after first created it, then it will always get same object.
 
 ```php
@@ -132,6 +132,8 @@ You can also direct a class name:
     {}
 ```
 
+### Declare Service
+
 `#[Service]` Can also declare a class as singleton service id Container, just add it to any class:
 
 ```php
@@ -152,12 +154,37 @@ Then you don't need to register this class, just get it, this class will auto cr
 $foo = $container->get(Foo::class);
 ```
 
+### Provided In
+
+The argument `providedIn:` use to declare that this service can only provide for particular level of Container. For example, this code declare that `Foo` class can only provide for level 2:
+
+```php
+#[Service(providedIn: 2)]
+class Foo {}
+```
+
+```php
+// Level 1
+$foo = $parentContainer->get(Foo::class); // Error
+
+// Level 2
+$foo = $parentContainer->createChild()->get(Foo::class); // OK
+```
+
+The `providedIn:` argument accepts `int` and `array`:
+
+```php
+#[Service(providedIn: [2, 3, 4])]
+class Foo {}
+```
+
+
 ## `#[Isolation]`
 
 `#[Isolation]` attribute use to isolate services between parent and child Container. As default, if a service can found from parent, Container will not create a new one.
 
 ```php
-$parentContainer->prepareSharedOvject(Foo::class);
+$parentContainer->prepareSharedObject(Foo::class);
 
 $foo1 = $parentContainer->get(Foo::class);
 
@@ -181,7 +208,7 @@ class Foo
 
 // ...
 
-$parentContainer->prepareSharedOvject(Foo::class);
+$parentContainer->prepareSharedObject(Foo::class);
 
 $foo1 = $parentContainer->get(Foo::class);
 
