@@ -52,7 +52,7 @@ export const groupedComponents: ComponentSet = {
     'promise': {
       title: 'Promise',
       description: 'PHP Promise/A+ library with ES like interface.',
-      extra: { 'wip': true },
+      extra: {},
     },
 
     'reactor': {
