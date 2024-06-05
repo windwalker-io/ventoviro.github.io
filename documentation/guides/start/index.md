@@ -72,7 +72,7 @@ or start the php server:
 php windwalker server:start
 ```
 
-Then open http://localhost:8000 to see the homepage.
+Then open `http://localhost:8000` to see the homepage.
 
 ### Install Default Database Files
 
