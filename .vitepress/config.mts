@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 import { flatComponents, getComponentsSidebar } from './data/components';
-import { componentRoutePrefix } from './store/routing-store';
+import { guidesSidebar } from './data/guides';
+import { componentRoutePrefix, guideRoutePrefix } from './store/routing-store';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -34,7 +35,7 @@ export default defineConfig({
       {
         text: 'Documentations',
         items: [
-          { text: 'Guide', link: '#' },
+          { text: 'Guide', link: `/${guideRoutePrefix}/start/` },
           { text: 'Framework', link: '#' },
           { text: 'Components', link: `/${componentRoutePrefix}/` },
         ]
@@ -45,7 +46,8 @@ export default defineConfig({
     ],
 
     sidebar: {
-      [`/${componentRoutePrefix}`]: await getComponentsSidebar()
+      [`/${guideRoutePrefix}`]: guidesSidebar.value,
+      [`/${componentRoutePrefix}`]: await getComponentsSidebar(),
     },
 
     // sidebar: [
