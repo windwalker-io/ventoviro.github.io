@@ -170,6 +170,7 @@ Handling: App\Entity\Article
     - categoryId (category_id)
     - title (title)
     - image (image)
+    - state (state)
     - content (content)
     - created (created)
     - createdBy (created_by)
@@ -197,6 +198,8 @@ class Article implements EntityInterface
     protected string $title = '';
     #[Column('image')]
     protected string $image = '';
+    #[Column('state')]
+    protected int $state = 0;
     #[Column('content')]
     protected string $content = '';
     #[Column('created')]
@@ -280,6 +283,8 @@ Handling: App\Entity\Article
     - setTitle
     - getImage
     - setImage
+    - getState
+    - setState
     - getContent
     - setContent
     - getCreated
@@ -355,6 +360,7 @@ $seeder->import(
             $item = $mapper->createEntity();
             $item->setTitle($faker->sentence(2));
             $item->setImage($faker->imageUrl(800, 600));
+            $item->setState(random_int(0, 1));
             $item->setContent($faker->paragraph(40));
             $item->setState(random_int(0, 1));
             $item->setCreatedBy(1); // Currently no User, set to 1

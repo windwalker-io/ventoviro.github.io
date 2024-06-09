@@ -149,3 +149,19 @@ success.
 | vendor        | External libraries                                                           |
 | views         | Template files                                                               |
 | www           | Public directory                                                             |
+
+## CLI Auto-Completion
+
+Windwlaker Console currently supports auto-completion on macOS `zsh` terminal. If you want to enable it, run this command once:
+
+```shell
+php windwalker completion
+
+source ~/.zshrc
+```
+
+And now Windwalker auto-completion have registered to your zsh profile and can work for every Windwalker project. You can auto complete any commands or arguments when you're using console interface.
+
+
+![auto-completion](https://github.com/windwalker-io/framework/assets/1639206/1a946e9e-8b54-4a0f-bde1-4b828b310cd8)
+
