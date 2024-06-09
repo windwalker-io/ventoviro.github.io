@@ -74,6 +74,13 @@ php windwalker server:start
 
 Then open `http://localhost:8000` to see the homepage.
 
+![home](https://github.com/lyrasoft/ww4tut/assets/1639206/2134e4b7-6caa-41b0-ac2b-cc69f3944b0e)
+
+Go to: `http://localhost:8000/admin` to see a simple fake dashboard.
+
+![dashboard](https://github.com/lyrasoft/ww4tut/assets/1639206/9ad6fa6a-8466-4332-b34e-aeab916e45e7)
+
+
 ### Install Default Database Files
 
 If you want to use database, please install `windwalker/database` and `windwalker/orm` first:
@@ -126,7 +133,7 @@ Import seeder: Acme Seeder (/acme-seeder.php)
 Open the project URL `http://{site}/www/admin/acme`, and if you see the following list, it means
 success.
 
-{image}
+![acme](https://github.com/lyrasoft/ww4tut/assets/1639206/60bd49ec-454d-44b3-ae35-6554d318807e)
 
 ## Directory Structures
 

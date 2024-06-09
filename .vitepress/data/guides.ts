@@ -10,7 +10,11 @@ export const guidesSidebar = computed<DefaultTheme.Sidebar>(() => {
         {
           text: 'Installation',
           link: `/${guideRoutePrefix}/start/`
-        }
+        },
+        {
+          text: 'Debugging',
+          link: `/${guideRoutePrefix}/start/debugging`
+        },
       ]
     },
     {
@@ -18,8 +22,12 @@ export const guidesSidebar = computed<DefaultTheme.Sidebar>(() => {
       items: [
         {
           text: 'Getting Started',
-          link: `/${guideRoutePrefix}/mvc/`
-        }
+          link: `/${guideRoutePrefix}/mvc/getting-started`
+        },
+        {
+          text: 'Modeling',
+          link: `/${guideRoutePrefix}/mvc/modeling`
+        },
       ]
     }
   ];
