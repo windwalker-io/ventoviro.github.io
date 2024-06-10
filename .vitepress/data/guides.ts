@@ -28,6 +28,10 @@ export const guidesSidebar = computed<DefaultTheme.Sidebar>(() => {
           text: 'Modeling',
           link: `/${guideRoutePrefix}/mvc/modeling`
         },
+        {
+          text: 'View',
+          link: `/${guideRoutePrefix}/mvc/view`
+        },
       ]
     }
   ];

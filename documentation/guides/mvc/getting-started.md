@@ -157,7 +157,7 @@ Simply add this line to add title to browser:
 
 If you want to set more metadata, try use `#[ViewMetadata]` with another method. You amy inject any service or view data into this method through declaring the arguments.
 
-The `HtmlFrame` is a useful object that help you configure HTML header and body. See [HtmlFrame Service](../../services/html-frame.md)
+The `HtmlFrame` is a useful object that help you configure HTML header and body. See [HtmlFrame Service](../../framework/html-frame.md)
 
 ```php
 use Windwalker\Core\Attributes\ViewMetadata; // [!code ++]
